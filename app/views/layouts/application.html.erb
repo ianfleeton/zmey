@@ -5,6 +5,12 @@
   <title>Untitled</title>
 </head>
 <body>
+  <ul id="primary_nav">
+    <li><%= link_to 'Home', :controller => 'welcome' %></li>
+    <% primary_pages.each do |p| %>
+    <li><%= link_to h(p.name), page_url(p) %></li>
+    <% end %>
+  </ul>
 <%= yield %>
 </body>
 </html>

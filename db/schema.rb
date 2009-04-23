@@ -9,22 +9,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090423191057) do
+ActiveRecord::Schema.define(:version => 20090423213302) do
 
   create_table "pages", :force => true do |t|
-    t.string   "title",      :default => "", :null => false
-    t.string   "slug",       :default => "", :null => false
-    t.integer  "website_id",                 :null => false
+    t.string   "title",       :default => "", :null => false
+    t.string   "slug",        :default => "", :null => false
+    t.integer  "website_id",                  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name",        :default => "", :null => false
+    t.string   "keywords",    :default => "", :null => false
+    t.string   "description", :default => "", :null => false
   end
 
   add_index "pages", ["slug"], :name => "index_pages_on_slug"
   add_index "pages", ["website_id"], :name => "index_pages_on_website_id"
 
   create_table "websites", :force => true do |t|
-    t.string   "subdomain"
-    t.string   "domain"
+    t.string   "subdomain",  :null => false
+    t.string   "domain",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

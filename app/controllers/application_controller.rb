@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
+  protected
+
   def set_cookie_domain(domain)
     cookies = session.instance_eval("@dbprot")
     unless cookies.blank?
