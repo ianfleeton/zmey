@@ -47,3 +47,14 @@ body {
 }
 
 #header span { display: none; }
+
+h1 { color: #c00; font-size: 16px; margin: 12px 0; }
+
+#footer {
+	background: #4580D5;
+	color: #fff;
+	border-top: 1px solid #333;
+	font-size: 11px;
+	line-height: 24px;
+	text-align: center;
+}
