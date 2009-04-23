@@ -5,6 +5,26 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
+  def set_cookie_domain(domain)
+    cookies = session.instance_eval("@dbprot")
+    unless cookies.blank?
+      cookies.each do |cookie|
+        options = cookie.instance_eval("@cookie_options")
+        options["domain"] = domain unless options.blank?
+      end
+    end
+  end
+
+  def require_website
+    @website = Website.for(request.host, request.subdomains)
+    if @website
+      if request.host == @website.domain
+        set_cookie_domain(@website.domain)
+      end
+    else
+      redirect_to "http://#{MAIN_HOST}:#{request.port}"
+    end
+  end
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
 end
