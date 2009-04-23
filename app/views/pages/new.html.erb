@@ -1,0 +1,15 @@
+<h1>New Page</h1>
+
+<div class="form">
+	<%= error_messages_for :page -%>
+
+	<fieldset>
+		<legend>Add a new page</legend>
+    <% form_for :page, @page, :url => { :action => "create" } do |form| %>
+    <%= render :partial => 'form', :object => form %>
+
+    <%= submit_tag "Create New Page" %>
+
+  <% end %>
+  </fieldset>
+</div>

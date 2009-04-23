@@ -58,3 +58,48 @@ h1 { color: #c00; font-size: 16px; margin: 12px 0; }
 	line-height: 24px;
 	text-align: center;
 }
+
+/**
+ * forms
+ */
+
+.fieldWithErrors {
+	display: inline;
+}
+.fieldWithErrors label {
+	color: red;
+}
+
+.form legend {
+  font-weight: bold;
+}
+.form fieldset { 
+	margin: 0 0 12px 0;
+	border: 1px solid #ECE6D2;
+	padding: 8px 12px;
+	background-color: #FCFBF7;
+	line-height: 24px;
+}
+.form div {
+	line-height: 24px;
+	margin-bottom: 12px;
+}
+.form .text {
+	width: 450px;
+}
+.form .short {
+	width: 200px;
+}
+.form .tiny {
+	width: 100px;
+}
+.form .radio {
+	vertical-align: top;
+}
+.form textarea.short {
+	width: 300px; height: 72px;
+}
+.form textarea.large {
+	width: 640px;
+	height: 420px;
+}
