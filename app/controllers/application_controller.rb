@@ -18,10 +18,10 @@ class ApplicationController < ActionController::Base
   end
 
   def require_website
-    @website = Website.for(request.host, request.subdomains)
-    if @website
-      if request.host == @website.domain
-        set_cookie_domain(@website.domain)
+    @w = Website.for(request.host, request.subdomains)
+    if @w
+      if request.host == @w.domain
+        set_cookie_domain(@w.domain)
       end
     else
       redirect_to "http://#{MAIN_HOST}:#{request.port}"

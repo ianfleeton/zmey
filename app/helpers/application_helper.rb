@@ -7,6 +7,6 @@ module ApplicationHelper
   end
 
   def primary_pages
-    Page.find(:all, :conditions => {:website_id => @website})
+    Page.find(:all, :conditions => {:website_id => @w})
   end
 end

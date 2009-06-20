@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090423213302) do
+ActiveRecord::Schema.define(:version => 20090620153114) do
 
   create_table "pages", :force => true do |t|
     t.string   "title",       :default => "", :null => false
@@ -26,10 +26,11 @@ ActiveRecord::Schema.define(:version => 20090423213302) do
   add_index "pages", ["website_id"], :name => "index_pages_on_website_id"
 
   create_table "websites", :force => true do |t|
-    t.string   "subdomain",  :null => false
-    t.string   "domain",     :null => false
+    t.string   "subdomain",                             :null => false
+    t.string   "domain",                                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "google_analytics_code", :default => "", :null => false
   end
 
 end

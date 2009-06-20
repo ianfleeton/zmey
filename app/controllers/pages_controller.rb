@@ -2,11 +2,11 @@ class PagesController < ApplicationController
   before_filter :require_website
 
   def index
-    @pages = Page.find(:all, :conditions => { :website_id => @website })
+    @pages = Page.find(:all, :conditions => { :website_id => @w })
   end
 
   def show
-    @page = Page.find_by_slug_and_website_id(params[:slug], @website)
+    @page = Page.find_by_slug_and_website_id(params[:slug], @w)
     render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found" if @page.nil?
   end
   
@@ -16,7 +16,7 @@ class PagesController < ApplicationController
 
   def create
     @page = Page.new(params[:page])
-    @page.website_id = @website.id
+    @page.website_id = @w.id
 
     if @page.save
       flash[:notice] = "Successfully added new page."
