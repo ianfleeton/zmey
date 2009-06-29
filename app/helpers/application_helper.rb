@@ -6,6 +6,10 @@ module ApplicationHelper
     end 
   end
 
+  def body_id
+    request.host.gsub!('.','-')
+  end
+
   def primary_pages
     Page.find(:all, :conditions => {:website_id => @w})
   end
