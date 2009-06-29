@@ -5,7 +5,19 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
+  helper_method :admin?
+
   protected
+
+  def admin?
+    true # stub
+  end
+
+  def admin_required
+    unless admin?
+      redirect_to :controller => 'sessions', :action => 'new'
+    end
+  end
 
   def set_cookie_domain(domain)
     cookies = session.instance_eval("@dbprot")

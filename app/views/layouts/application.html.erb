@@ -4,15 +4,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><% if @title %><%= h(@title) %><% else %>Untitled<% end %></title>
   <%= stylesheet_link_tag "screen", :media => "screen" %>
+	<%= javascript_include_tag :defaults %>
 </head>
 <body>
 <div id="wrapper">
   <a id="header"><span>Website</span></a>
   <ul id="primary_nav">
     <li><%= link_to 'Home', :controller => 'welcome' %></li>
-    <% primary_pages.each do |p| %>
+    <% primary_pages.each do |p| -%>
     <li><%= link_to h(p.name), page_url(p) %></li>
-    <% end %>
+    <% end -%>
+    <li><%= link_to 'Enquiries', new_enquiry_path %></li>
   </ul>
 <%= yield %>
 <div id="footer">

@@ -1,0 +1,36 @@
+<h1>Listing enquiries</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Organisation</th>
+    <th>Address</th>
+    <th>Country</th>
+    <th>Postcode</th>
+    <th>Telephone</th>
+    <th>Email</th>
+    <th>Fax</th>
+    <th>Enquiry</th>
+    <th>Call back</th>
+    <th>Hear about</th>
+  </tr>
+
+<% @enquiries.each do |enquiry| %>
+  <tr>
+    <td><%=h enquiry.name %></td>
+    <td><%=h enquiry.organisation %></td>
+    <td><%=h enquiry.address %></td>
+    <td><%=h enquiry.country %></td>
+    <td><%=h enquiry.postcode %></td>
+    <td><%=h enquiry.telephone %></td>
+    <td><%=h enquiry.email %></td>
+    <td><%=h enquiry.fax %></td>
+    <td><%=h enquiry.enquiry %></td>
+    <td><%=h enquiry.call_back %></td>
+    <td><%=h enquiry.hear_about %></td>
+    <td><%= link_to 'Show', enquiry %></td>
+    <td><%= link_to 'Edit', edit_enquiry_path(enquiry) %></td>
+    <td><%= link_to 'Destroy', enquiry, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

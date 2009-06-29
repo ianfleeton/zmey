@@ -1,0 +1,73 @@
+<h1>New enquiry</h1>
+
+<%= flash_notice %>
+
+<script type="text/javascript">
+function prepareForm() {
+  $('no_ajax').hide();
+  <%= remote_function :url => { :action => 'current_time' } %>
+}
+Event.observe(window, 'load', prepareForm);
+</script>
+
+<p id="no_ajax">You need to have Javascript switched on to use this enquiry form</p>
+
+<p>Please complete all fields marked with an asterisk (<span class="required">*</span>)</p>
+
+<% form_for(@enquiry, :url => '/enquiries/create') do |f|
+  # url is hard-coded to prevent REST request going to /enquiries/ POST
+  # while this did work, if the users refreshed (GET) after submitting
+  # then they would be kicked from a page reserved for admins
+%>
+  <%= f.error_messages %>
+  <span id="current_time">
+    <!-- current time placed here by AJAX request -->
+  </span>
+  <p>
+    <%= f.label :name %> <span class="required">*</span><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :organisation %><br />
+    <%= f.text_field :organisation %>
+  </p>
+  <p>
+    <%= f.label :address %><br />
+    <%= f.text_area :address, :rows => 4 %>
+  </p>
+  <p>
+    <%= f.label :country %><br />
+    <%= f.select :country, country_options %>
+  </p>
+  <p>
+    <%= f.label :postcode %><br />
+    <%= f.text_field :postcode %>
+  </p>
+  <p>
+    <%= f.label :telephone %> <span class="required">*</span><br />
+    <%= f.text_field :telephone %>
+  </p>
+  <p>
+    <%= f.label :email %> <span class="required">*</span><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :fax %><br />
+    <%= f.text_field :fax %>
+  </p>
+  <p>
+    <%= f.label :enquiry, 'Your enquiry' %> <span class="required">*</span><br />
+    <%= f.text_area :enquiry, :rows => 6 %>
+  </p>
+  <p>
+    <%= f.label :call_back, 'Please call me back' %><br />
+    <%= f.select :call_back, call_back_options %>
+  </p>
+  <p>
+    <%= f.label :hear_about, 'Where did you hear about us?' %><br />
+    <%= f.select :hear_about, hear_about_options %>
+  </p>
+  <p>
+    <%= f.submit 'Send Enquiry' %>
+  </p>
+<% end %>
