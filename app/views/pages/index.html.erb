@@ -1,7 +1,7 @@
 <h1>Pages</h1>
 <ul>
   <% @pages.each do |p| %>
-  <li><%= link_to h(p.name), page_url(p) %></li>
+  <li><%= link_to h(p.name), page_url(p) %> (<%= link_to 'Edit', :controller => 'pages', :action => 'edit', :id => p.id %>)</li>
   <% end %>
   <%= content_tag(:li, 'No pages') if @pages.empty? %>
 </ul>

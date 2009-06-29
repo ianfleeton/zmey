@@ -14,6 +14,21 @@ class PagesController < ApplicationController
     end
   end
   
+  def edit
+    @page = Page.find(params[:id])
+  end
+
+  def update
+    @page = Page.find(params[:id])
+
+    if @page.update_attributes(params[:page])
+      flash[:notice] = 'Page saved.'
+      redirect_to page_path(@page)
+    else
+      render :action => 'edit'
+    end
+  end
+
   def new
     @page = Page.new
   end
