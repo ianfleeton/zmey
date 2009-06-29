@@ -5,10 +5,10 @@ require 'brightbox/passenger'
 
 # The name of your application.  Used for deployment directory and filenames
 # and Apache configs. Should be unique on the Brightbox
-set :application, "yesl_website"
+set :application, "yeslwebsite"
 
 # Primary domain name of your application. Used in the Apache configs
-set :domain, "youresol-001.vm.brightbox.net"
+set :domain, "yeslwebsite.youresol-001.vm.brightbox.net"
 
 ## List of servers
 server "youresol-001.vm.brightbox.net", :app, :web, :db, :primary => true
@@ -21,6 +21,7 @@ set(:deploy_to) { File.join("", "home", user, application) }
 set :repository, "."
 set :scm, :none
 set :deploy_via, :copy
+set :copy_exclude, [".git", "log"]
 
 ### Other options you can set ##
 # Comma separated list of additional domains for Apache
@@ -29,13 +30,14 @@ set :deploy_via, :copy
 ## Dependencies
 # Set the commands and gems that your application requires. e.g.
 # depend :remote, :gem, "will_paginate", ">=2.2.2"
+depend :remote, :gem, 'haml', '>=2.0.9'
 # depend :remote, :command, "brightbox"
 # 
 # Gem with a source (such as github)
 # depend :remote, :gem, "tmm1-amqp", ">=0.6.0", :source => "http://gems.github.com"
 # 
 # Specify your specific Rails version if it is not vendored
-# depend :remote, :gem, "rails", "=2.2.2"
+depend :remote, :gem, "rails", "=2.3.2"
 
 ## Local Shared Area
 # These are the list of files and directories that you want
