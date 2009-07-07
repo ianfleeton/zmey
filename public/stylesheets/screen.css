@@ -4,6 +4,14 @@ body {
 	font-family: 'Lucida Grande', Verdana, Helvetica, Arial, sans-serif;
 }
 
+.clear {
+  clear: both;
+  margin: 0;
+  padding: 0;
+  line-height: 1px;
+  font-size: 1px;
+}
+
 #wrapper {
 	background: #fff;
 	border: 1px solid #222;
@@ -109,4 +117,30 @@ h1 { color: #c00; font-size: 16px; margin: 12px 0; }
 .form textarea.large {
 	width: 640px;
 	height: 420px;
+}
+
+#images_list li {
+  float: left;
+  list-style: none;
+  width: 100px;
+  height: 100px;
+}
+
+#images_list .image_thumbnail {
+  text-align: center;
+  background: #fff;
+  padding: 2px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #ccc;
+  width: 64px;
+  height: 64px;
+}
+#images_list .image_thumbnail a img {
+  border: none;
+}
+#images_list .image_name {
+  font-size: 10px;
+  text-align: center;
+  overflow: hidden;
 }

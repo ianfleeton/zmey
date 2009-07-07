@@ -13,4 +13,16 @@ module ApplicationHelper
   def primary_pages
     Page.find(:all, :conditions => {:website_id => @w})
   end
+  
+  def truncate(string, length)
+    if string.length > length * 1.1
+      string[0,length].rstrip + '...'
+    else
+      string
+    end
+  end
+
+  def clear
+    content_tag('p', '&nbsp;', {:class => 'clear'})
+  end
 end

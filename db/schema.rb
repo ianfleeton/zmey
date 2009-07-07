@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090629173316) do
+ActiveRecord::Schema.define(:version => 20090707153403) do
 
   create_table "enquiries", :force => true do |t|
     t.string   "name",         :default => "", :null => false
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(:version => 20090629173316) do
     t.text     "enquiry",                      :null => false
     t.string   "call_back",    :default => "", :null => false
     t.string   "hear_about",   :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "images", :force => true do |t|
+    t.integer  "website_id", :default => 0,  :null => false
+    t.string   "name",       :default => "", :null => false
+    t.string   "filename",   :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
