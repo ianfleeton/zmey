@@ -4,6 +4,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "pat
 # http://github.com/brynary/webrat
 
 Given /^I am on (.+)$/ do |page_name|
+  header 'Host', 'www.guitar-gear.com'
   visit path_to(page_name)
 end
 
@@ -99,12 +100,12 @@ Then /^I should not see "([^\"]*)"$/ do |text|
 end
 
 Then /^the "([^\"]*)" field should contain "([^\"]*)"$/ do |field, value|
-      field_labeled(field).value.should =~ /#{value}/
-  end
+  field_labeled(field).value.should =~ /#{value}/
+end
 
 Then /^the "([^\"]*)" field should not contain "([^\"]*)"$/ do |field, value|
-      field_labeled(field).value.should_not =~ /#{value}/
-  end
+  field_labeled(field).value.should_not =~ /#{value}/
+end
     
 Then /^the "([^\"]*)" checkbox should be checked$/ do |label|
   field_labeled(label).should be_checked
@@ -112,4 +113,11 @@ end
 
 Then /^I should be on (.+)$/ do |page_name|
   URI.parse(current_url).path.should == path_to(page_name)
+end
+
+Then /^I should be redirected to (.+)$/ do |page_name|
+  request.headers['HTTP_REFERER'].should_not be_nil
+  request.headers['HTTP_REFERER'].should_not == request.request_uri
+  visit url_for response.redirected_to()
+  Then "I should be on #{page_name}"
 end

@@ -1,0 +1,39 @@
+Feature: Creating new pages
+
+  As a site owner with new content
+  I want to create new pages on my website
+  
+  Scenario: Form for creating a new page displays
+  
+    Given I am on the new page page
+    Then I should see "New Page"
+    And I should see "Title"
+    And I should see "Meta tags"
+    And I should see "Content"
+
+  Scenario: Creating a new page without filling in any details
+  
+    Given I am on the new page page
+    And I press "Create New Page"
+    Then I should see "6 errors"
+    
+  Scenario: Creating a new page with a bad slug
+  
+    Given I am on the new page page
+    And I fill in "Slug" with "*"
+    And I press "Create New Page"
+    Then I should see "Slug can only contain letters, numbers and hyphens"
+    
+  Scenario: Creating a new page
+  
+    Given I am on the new page page
+    And I fill in "Title" with "Buying a Guitar - A Rich Idiot's Guide"
+    And I fill in "Name" with "Buying a Guitar"
+    And I fill in "Slug" with "guitar-buying-faq"
+    And I fill in "Keywords" with "lorem ipsum"
+    And I fill in "Description" with "dolor sit"
+    And I press "Create New Page"
+    Then I should be on the create page page
+    And I should be redirected to the new page page
+    And I should see "added new page"
+    And a new page should exist with the slug "guitar-buying-faq"

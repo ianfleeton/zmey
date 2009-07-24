@@ -19,6 +19,12 @@ module NavigationHelpers
     
     # Add more page name => path mappings here
     
+    when /the new page page/
+      url_for :controller => 'pages', :action => 'new', :only_path => true
+
+    when /the create page page/
+      url_for :controller => 'pages', :action => 'create', :only_path => true
+    
     else
       raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
         "Now, go and add a mapping in features/support/paths.rb"
