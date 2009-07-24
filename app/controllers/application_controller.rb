@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :admin?
 
+  before_filter :require_website
+
   protected
 
   def admin?

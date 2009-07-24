@@ -1,6 +1,4 @@
 class ImagesController < ApplicationController
-  before_filter :require_website
-
   def index
     @images = Image.find(:all, :conditions => { :website_id => @w })
   end

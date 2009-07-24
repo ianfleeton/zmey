@@ -3,7 +3,6 @@ class EnquiriesController < ApplicationController
   # spam protection based on Jack Born's Safer Contact Forms Without CAPTCHA's
   # http://15daysofjquery.com/examples/contact-forms/
   
-  before_filter :require_website
   before_filter :admin_required, :except => [:new, :create, :thank_you, :current_time]
   
   # GET /enquiries

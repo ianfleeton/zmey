@@ -1,6 +1,4 @@
 class PagesController < ApplicationController
-  before_filter :require_website
-
   def index
     @pages = Page.find(:all, :conditions => { :website_id => @w })
   end
