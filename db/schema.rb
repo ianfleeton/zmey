@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(:version => 20090707153403) do
   add_index "pages", ["website_id"], :name => "index_pages_on_website_id"
 
   create_table "websites", :force => true do |t|
-    t.string   "subdomain",                             :null => false
-    t.string   "domain",                                :null => false
+    t.string   "subdomain",             :default => "", :null => false
+    t.string   "domain",                :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "google_analytics_code", :default => "", :null => false
