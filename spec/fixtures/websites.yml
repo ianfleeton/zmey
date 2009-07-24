@@ -5,3 +5,10 @@ guitar_gear:
   google_analytics_code: UA-0000000-1
   name: Guitar Gear
   email: guitargear@example.org
+
+website_without_analytics:
+  id: 2
+  subdomain: no-analytics
+  domain: www.no-analytics.com
+  name: No Analytics
+  email: noanalytics@example.org
