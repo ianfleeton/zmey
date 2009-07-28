@@ -1,0 +1,9 @@
+<h1>Websites</h1>
+<%= flash_notice %>
+
+<p><%= link_to 'Add a new website', new_website_path %></p>
+<ul>
+  <% @websites.each do |w| -%>
+  <li><%= link_to h(w.name), edit_website_path(w) %></li>
+  <% end -%>
+</ul>
