@@ -4,7 +4,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "pat
 # http://github.com/brynary/webrat
 
 Given /^I am on (.+)$/ do |page_name|
-  header 'Host', 'www.guitar-gear.com'
+  header 'Host', (@host.nil? ? 'www.guitar-gear.com' : @host)
   visit path_to(page_name)
 end
 
