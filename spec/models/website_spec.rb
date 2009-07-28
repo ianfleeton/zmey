@@ -20,7 +20,11 @@ describe Website do
       @website.should_not be_valid
     end
 
-    it "should keep Google Analytics codes unique"
+    it "should keep Google Analytics codes unique" do
+      @website.save
+      @copy = @website.clone
+      @copy.save.should be_false
+    end
 
   end
 end
