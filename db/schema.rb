@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090724165325) do
+ActiveRecord::Schema.define(:version => 20090728094438) do
 
   create_table "enquiries", :force => true do |t|
     t.string   "name",         :default => "", :null => false
@@ -49,6 +49,18 @@ ActiveRecord::Schema.define(:version => 20090724165325) do
 
   add_index "pages", ["slug"], :name => "index_pages_on_slug"
   add_index "pages", ["website_id"], :name => "index_pages_on_website_id"
+
+  create_table "users", :force => true do |t|
+    t.string   "email",                 :default => "",    :null => false
+    t.string   "name",                  :default => "",    :null => false
+    t.string   "encrypted_password"
+    t.string   "salt"
+    t.string   "forgot_password_token", :default => "",    :null => false
+    t.boolean  "admin",                 :default => false, :null => false
+    t.integer  "manages_website_id",    :default => 0,     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "websites", :force => true do |t|
     t.string   "subdomain",                             :null => false

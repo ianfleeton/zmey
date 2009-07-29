@@ -1,0 +1,34 @@
+<h1>Join &#8212; Create An Account</h1>
+<div class="form">
+	<%= error_messages_for :user -%>
+	
+	<fieldset>
+    <% if admin? %>
+    <legend>New user details</legend>
+    <% else %>
+		<legend>Your details</legend>
+		<% end %>
+		<% form_for :user, :url => { :action => "create" } do |form| %>
+			<div>
+				<%= form.label :name %>:<br />
+				<%= form.text_field :name, :class => "short" %>
+			</div>
+			<div>
+				<%= form.label :email %>:<br />
+				<%= form.text_field :email, :class => "short" %><br />
+				<small>Kept under lock and key. We hate spam too!</small>
+			</div>
+			<div>
+				<%= form.label :password %>:<br />
+				<%= form.password_field :password, :class => "short" %>
+			</div>
+			<div>
+				<%= form.label :password_confirmation %>:<br />
+				<%= form.password_field :password_confirmation,
+				 						:class => "short" %>
+			</div>
+			
+			<%= submit_tag "Join!" %>
+		<% end %>
+	</fieldset>
+</div>
