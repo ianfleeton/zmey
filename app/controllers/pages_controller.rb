@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   def index
+    @title = 'Pages'
     @pages = Page.find(:all, :conditions => { :website_id => @w })
   end
 
