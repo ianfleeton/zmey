@@ -6,7 +6,6 @@
       <th>Name</th>
       <th>Email</th>
       <th>Admin</th>
-      <th>Free Search</th>
     </tr>
   </thead>
   <tbody>
@@ -14,8 +13,7 @@
     <tr>
       <td><%= link_to h(u.name), :controller => 'users', :action => 'show', :id => u %></td>
       <td><%= mail_to u.email, u.email %>&nbsp;</td>
-      <td><%= 'Y' if u.admin? %></td>
-      <td><%= 'Y' if u.free_search? %></td>
+      <td><%= image_for_admin_status(u) %></td>
     </tr>
   <% end -%>
   </tbody>

@@ -1,15 +1,10 @@
 <h1><% if admin? %><%= link_to "Users", :action => "index" %>
-	&rarr; <% end %>Your Account</h1>
+	&rarr; <% end %><%= @user.name %>&#8217;s Account</h1>
 
 <%= flash_notice %>
 
 <div class="details">
 	<h2><%= h @user.name %> <%= image_for_admin_status(@user) %></h2>
-
-  <p>
-    You have <%= SearchTokenPurchase.tokens_for_user(@user) %> search tokens.
-    <%= link_to 'Buy more tokens', :controller => 'burials', :action => 'buy_search_tokens' %>.
-  </p>
 
 	<p class="email"><strong>Your registered email address:</strong> <%= mail_to h(@user.email) %></p>
 
