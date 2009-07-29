@@ -17,6 +17,7 @@
     <li><%= link_to 'Enquiries', new_enquiry_path %></li>
     <% if logged_in? -%>
     <li><%= link_to h(@current_user.name) + '&#8217;s Account', :controller => 'users', :action => 'show', :id => @current_user %></li>
+    <li><%= link_to 'Sign Out', :controller => 'sessions', :action => 'destroy' %></li>
     <% else -%>
     <li><%= link_to 'Join', :controller => 'users', :action => 'new' %><li>
     <li><%= link_to 'Sign In', :controller => 'sessions', :action => 'new' %><li>
