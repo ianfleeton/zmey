@@ -15,6 +15,12 @@
     <li><%= link_to h(p.name), page_url(p) %></li>
     <% end -%>
     <li><%= link_to 'Enquiries', new_enquiry_path %></li>
+    <% if logged_in? -%>
+    <li><%= link_to h(@current_user.name) + '&#8217;s Account', :controller => 'users', :action => 'show', :id => @current_user %></li>
+    <% else -%>
+    <li><%= link_to 'Join', :controller => 'users', :action => 'new' %><li>
+    <li><%= link_to 'Sign In', :controller => 'sessions', :action => 'new' %><li>
+    <% end -%>
   </ul>
 <%= yield %>
 <div id="footer">
