@@ -5,14 +5,18 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  helper_method :admin?
+  helper_method :logged_in?, :admin?
 
   before_filter :require_website
 
   protected
 
+  def logged_in?
+    @current_user.is_a?(User)
+  end
+
   def admin?
-    true # stub
+    logged_in? and @current_user.admin
   end
 
   def admin_required
