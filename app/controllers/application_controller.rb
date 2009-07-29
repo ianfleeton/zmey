@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :admin?
 
-  before_filter :require_website
+  before_filter :require_website, :initialize_user
 
   protected
 
@@ -23,6 +23,11 @@ class ApplicationController < ActionController::Base
     unless admin?
       redirect_to :controller => 'sessions', :action => 'new'
     end
+  end
+
+  # setup user info on each page
+  def initialize_user
+    @current_user = User.find_by_id(session[:user])
   end
 
   def set_cookie_domain(domain)
