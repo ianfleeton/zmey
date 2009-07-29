@@ -1,0 +1,25 @@
+<h1>Sign In</h1>
+
+<p><strong>Don&#8217;t have an account yet? <%= link_to 'Create your account now', :controller => 'users', :action => 'new' %> &#8212; it&#8217;s easy and takes less than a minute.</strong></p>
+
+<%= flash_notice %>
+
+<div class="form">
+	<fieldset>
+	<legend>Enter email/password</legend>
+	<% form_tag :action => "create" do %>
+		<div>
+			<label for="email">Email: </label><br />
+			<%= text_field_tag :email, params[:email], :class => "short" %>
+		</div>
+		<div>
+			<label for="password">Password: </label><br />
+			<%= password_field_tag :password, params[:password],
+			 					   :class => "short" %><br />
+      <small><%= link_to 'Forgotten your password?', :controller => 'users', :action => 'forgot_password' %></small>
+		</div>
+		
+		<%= submit_tag "Login" %>
+	<% end %>
+	</fieldset>
+</div>
