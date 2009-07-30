@@ -15,7 +15,7 @@ Feature: Creating new pages
   
     Given I am on the new page page
     And I press "Create New Page"
-    Then I should see "6 errors"
+    Then I should see "5 errors"
     
   Scenario: Creating a new page with a bad slug
   
