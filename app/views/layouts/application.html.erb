@@ -11,7 +11,6 @@
 <div id="wrapper">
   <a id="header"><span>Website</span></a>
   <ul id="primary_nav">
-    <li><%= link_to 'Home', :controller => 'welcome' %></li>
     <% primary_pages.each do |p| -%>
     <li><%= link_to h(p.name), page_url(p) %></li>
     <% end -%>
