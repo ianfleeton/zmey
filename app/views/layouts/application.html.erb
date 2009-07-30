@@ -4,6 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><% if @title %><%= h(@title) %><% else %><%= h @w.name %><% end %></title>
   <%= stylesheet_link_tag "screen", :media => "screen" %>
+  <%= stylesheet_link_tag @w.css_url, :media => "screen" unless @w.css_url.blank? %>
 	<%= javascript_include_tag :defaults %>
 </head>
 <body id="<%= body_id %>">
@@ -19,11 +20,13 @@
     <li><%= link_to h(@current_user.name) + '&#8217;s Account', :controller => 'users', :action => 'show', :id => @current_user %></li>
     <li><%= link_to 'Sign Out', :controller => 'sessions', :action => 'destroy' %></li>
     <% else -%>
-    <li><%= link_to 'Join', :controller => 'users', :action => 'new' %><li>
-    <li><%= link_to 'Sign In', :controller => 'sessions', :action => 'new' %><li>
+    <li><%= link_to 'Join', :controller => 'users', :action => 'new' %></li>
+    <li><%= link_to 'Sign In', :controller => 'sessions', :action => 'new' %></li>
     <% end -%>
   </ul>
+  <div id="content">
 <%= yield %>
+  </div>
 <div id="footer">
   ©<%= Date.today.year %> <%= h(@w.name) %>. All rights reserved.
   <a href="http://www.yesl.co.uk/">Ruby on Rails development</a> by Your e Solutions Ltd.
