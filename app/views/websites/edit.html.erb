@@ -1,0 +1,16 @@
+<h1>Edit Website</h1>
+<%= flash_notice %>
+
+<div class="form">
+	<%= error_messages_for :website -%>
+
+	<fieldset>
+		<legend>Edit website</legend>
+    <% form_for @website do |form| %>
+    <%= render :partial => 'form', :object => form %>
+
+    <%= submit_tag "Save" %>
+
+  <% end %>
+  </fieldset>
+</div>

@@ -7,6 +7,10 @@ class WebsitesController < ApplicationController
     @website = Website.new
   end
   
+  def edit
+    @website = Website.find(params[:id])
+  end
+  
   def create
     @website = Website.new(params[:website])
 
@@ -15,6 +19,17 @@ class WebsitesController < ApplicationController
       redirect_to :action => "index"
     else
       render :action => "new"
+    end
+  end
+
+  def update
+    @website = Website.find(params[:id])
+
+    if @website.update_attributes(params[:website])
+      flash[:notice] = 'Website saved.'
+      redirect_to websites_path
+    else
+      render :action => 'edit'
     end
   end
 end
