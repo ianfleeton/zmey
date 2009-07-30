@@ -7,7 +7,7 @@ Given /^a website with tracking code$/ do
 end
 
 Then /^I should find the correct tracking code$/ do
-  response.should contain(websites(:website_without_analytics).google_analytics_code)
+  response.should contain(websites(:guitar_gear).google_analytics_code)
 end
 
 Then /^I should not find tracking code$/ do
