@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  website_id: 1
+  sku: MyString
+  name: MyString
+  price: 9.99
+  image_id: 1
+  description: MyText
+  in_stock: false
+
+two:
+  website_id: 1
+  sku: MyString
+  name: MyString
+  price: 9.99
+  image_id: 1
+  description: MyText
+  in_stock: false

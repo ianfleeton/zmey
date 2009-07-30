@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090728094438) do
+ActiveRecord::Schema.define(:version => 20090730163509) do
 
   create_table "enquiries", :force => true do |t|
     t.string   "name",         :default => "", :null => false
@@ -50,6 +50,18 @@ ActiveRecord::Schema.define(:version => 20090728094438) do
   add_index "pages", ["slug"], :name => "index_pages_on_slug"
   add_index "pages", ["website_id"], :name => "index_pages_on_website_id"
 
+  create_table "products", :force => true do |t|
+    t.integer  "website_id"
+    t.string   "sku",                                        :default => "",   :null => false
+    t.string   "name",                                       :default => "",   :null => false
+    t.decimal  "price",       :precision => 10, :scale => 3, :default => 0.0,  :null => false
+    t.integer  "image_id"
+    t.text     "description",                                                  :null => false
+    t.boolean  "in_stock",                                   :default => true, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email",                 :default => "",    :null => false
     t.string   "name",                  :default => "",    :null => false
@@ -70,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20090728094438) do
     t.string   "google_analytics_code", :default => "", :null => false
     t.string   "name",                  :default => "", :null => false
     t.string   "email",                 :default => "", :null => false
+    t.text     "css_url",                               :null => false
   end
 
 end
