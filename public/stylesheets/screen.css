@@ -4,6 +4,10 @@ body {
 	font-family: 'Lucida Grande', Verdana, Helvetica, Arial, sans-serif;
 }
 
+div, li, p, td {
+  font-size: 13px;
+}
+
 .clear {
   clear: both;
   margin: 0;
