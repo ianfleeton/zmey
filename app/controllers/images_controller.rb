@@ -9,8 +9,8 @@ class ImagesController < ApplicationController
 
   def create
     @image = Image.new(params[:image])
-    # TODO: change to admin's website ID
-    @image.website_id = @w
+
+    @image.website_id = @w.id
     
     if @image.save
       flash[:notice] = 'Image uploaded.'
