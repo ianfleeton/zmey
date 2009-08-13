@@ -16,6 +16,14 @@ div, li, p, td {
   font-size: 1px;
 }
 
+#flash_notice {
+  padding: 10px;
+  color: #000;
+  border: 1px solid #edebcd;
+  background: #fefdec;
+  font-size: 11px;
+}
+
 #wrapper {
 	background: #fff;
 	border: 1px solid #222;
