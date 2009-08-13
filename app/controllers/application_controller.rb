@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
         set_cookie_domain(@w.domain)
       end
     else
-      redirect_to "http://#{MAIN_HOST}:#{request.port}"
+      render :template => "public/404.html", :layout => false, :status => 404
     end
   end
   # Scrub sensitive parameters from your log
