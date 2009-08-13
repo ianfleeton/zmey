@@ -15,14 +15,7 @@ class WebsitesController < ApplicationController
     @website = Website.new(params[:website])
 
     if @website.save
-      # create home page
-      @home_page = Page.create(
-        :title => @website.name,
-        :name => 'Home',
-        :keywords => 'change me',
-        :description => 'change me',
-        :content => 'Welcome to ' + @website.name
-      ) {|hp| hp.website_id = @website}
+      Page.create_home_page @website
       
       flash[:notice] = "Successfully added new website."
       redirect_to :action => "index"

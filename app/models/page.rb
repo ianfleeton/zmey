@@ -6,6 +6,16 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :website_id, :case_sensitive => false
   validates_uniqueness_of :name, :scope => :website_id, :case_sensitive => false
 
+  def self.create_home_page website
+    Page.create(
+      :title => website.name,
+      :name => 'Home',
+      :keywords => 'change me',
+      :description => 'change me',
+      :content => 'Welcome to ' + website.name
+    ) {|hp| hp.website_id = website.id}
+  end
+
   def to_param
     slug
   end
