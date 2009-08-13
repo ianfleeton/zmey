@@ -15,7 +15,7 @@ class WebsitesController < ApplicationController
     @website = Website.new(params[:website])
 
     if @website.save
-      Page.create_home_page @website
+      Page.bootstrap @website
       
       flash[:notice] = "Successfully added new website."
       redirect_to :action => "index"

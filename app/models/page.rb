@@ -1,4 +1,6 @@
 class Page < ActiveRecord::Base
+  acts_as_tree
+
   attr_protected :website_id
   validates_presence_of :title, :name, :keywords, :description
   validates_format_of :slug, :with => /\A[-a-z0-9]+\Z/, :message => 'can only contain letters, numbers and hyphens', :allow_blank => true
@@ -6,14 +8,42 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :website_id, :case_sensitive => false
   validates_uniqueness_of :name, :scope => :website_id, :case_sensitive => false
 
-  def self.create_home_page website
-    Page.create(
+  def self.bootstrap website
+    primary_nav_page = create_navigation website, 'primary'
+    create_home_page website, primary_nav_page
+  end
+
+  def self.create_home_page website, nav_page
+    create(
       :title => website.name,
       :name => 'Home',
       :keywords => 'change me',
       :description => 'change me',
-      :content => 'Welcome to ' + website.name
+      :content => 'Welcome to ' + website.name,
+      :parent_id => nav_page.id
     ) {|hp| hp.website_id = website.id}
+  end
+  
+  def self.create_navigation website, slug
+    create(
+      :title => slug.titleize + ' Navigation',
+      :name => slug.titleize + ' Navigation',
+      :slug => slug,
+      :keywords => slug,
+      :description => slug
+    ) {|hp| hp.website_id = website.id}
+  end
+
+  def self.navs website_id
+    navs = Array.new
+    nav_roots = Page.all(:conditions => ['website_id = ? AND parent_id IS NULL', website_id])
+    nav_roots.each do |nr|
+      nav = Navigation.new
+      nav.id_attribute = nr.slug.gsub('-', '_') + '_nav'
+      nav.pages = Page.all(:conditions => ['parent_id = ?', nr.id])
+      navs << nav 
+    end
+    navs
   end
 
   def to_param

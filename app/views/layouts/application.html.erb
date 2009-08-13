@@ -10,10 +10,12 @@
 <body id="<%= body_id %>">
 <div id="wrapper">
   <a id="header"><span><%= h @w.name %></span></a>
-  <ul id="primary_nav">
-    <% primary_pages.each do |p| -%>
+  <% Page.navs(@w).each do |nav| %>
+  <ul id="<%= nav.id_attribute %>">
+  <% nav.pages.each do |p| %>
     <li><%= link_to h(p.name), page_url(p) %></li>
-    <% end -%>
+  <% end %>
+  <% if nav.id_attribute == 'primary_nav' -%>
     <li><%= link_to 'Enquiries', new_enquiry_path %></li>
     <% if logged_in? -%>
     <li><%= link_to h(@current_user.name) + '&#8217;s Account', :controller => 'users', :action => 'show', :id => @current_user %></li>
@@ -22,7 +24,9 @@
     <li><%= link_to 'Join', :controller => 'users', :action => 'new' %></li>
     <li><%= link_to 'Sign In', :controller => 'sessions', :action => 'new' %></li>
     <% end -%>
+  <% end %>
   </ul>
+  <% end %>
   <div id="content">
 <%= yield %>
   </div>

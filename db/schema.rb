@@ -9,7 +9,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090730163509) do
+ActiveRecord::Schema.define(:version => 20090813162208) do
+
+  create_table "attributes", :force => true do |t|
+    t.integer  "product_id"
+    t.string   "name",       :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attributes", ["product_id"], :name => "index_attributes_on_product_id"
+
+  create_table "choices", :force => true do |t|
+    t.integer  "attribute_id", :default => 0, :null => false
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "choices", ["attribute_id"], :name => "index_choices_on_attribute_id"
 
   create_table "enquiries", :force => true do |t|
     t.string   "name",         :default => "", :null => false
@@ -45,8 +63,10 @@ ActiveRecord::Schema.define(:version => 20090730163509) do
     t.string   "keywords",    :default => "", :null => false
     t.string   "description", :default => "", :null => false
     t.text     "content",                     :null => false
+    t.integer  "parent_id"
   end
 
+  add_index "pages", ["parent_id"], :name => "index_pages_on_parent_id"
   add_index "pages", ["slug"], :name => "index_pages_on_slug"
   add_index "pages", ["website_id"], :name => "index_pages_on_website_id"
 
