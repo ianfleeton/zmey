@@ -9,7 +9,7 @@
 </head>
 <body id="<%= body_id %>">
 <div id="wrapper">
-  <a id="header"><span>Website</span></a>
+  <a id="header"><span><%= h @w.name %></span></a>
   <ul id="primary_nav">
     <% primary_pages.each do |p| -%>
     <li><%= link_to h(p.name), page_url(p) %></li>
