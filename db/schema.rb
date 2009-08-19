@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090813162208) do
+ActiveRecord::Schema.define(:version => 20090819164635) do
 
   create_table "attributes", :force => true do |t|
     t.integer  "product_id"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20090813162208) do
     t.string   "description", :default => "", :null => false
     t.text     "content",                     :null => false
     t.integer  "parent_id"
+    t.integer  "position",    :default => 0,  :null => false
   end
 
   add_index "pages", ["parent_id"], :name => "index_pages_on_parent_id"

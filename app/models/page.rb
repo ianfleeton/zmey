@@ -1,5 +1,6 @@
 class Page < ActiveRecord::Base
-  acts_as_tree
+  acts_as_tree :order => :position
+  acts_as_list :scope => :parent_id
 
   attr_protected :website_id
   validates_presence_of :title, :name, :keywords, :description
