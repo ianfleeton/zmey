@@ -1,2 +1,6 @@
 <%= flash_notice %>
 <%= textilize(@page.content) %>
+<% @page.product_placements.each do |placement| %>
+  <% product = placement.product %>
+  <%= h product.name %>
+<% end %>

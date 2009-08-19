@@ -2,6 +2,9 @@ class Page < ActiveRecord::Base
   acts_as_tree :order => :position
   acts_as_list :scope => :parent_id
 
+  has_many :product_placements, :order => :position
+  has_many :products, :through => :product_placement
+
   attr_protected :website_id
   validates_presence_of :title, :name, :keywords, :description
   validates_format_of :slug, :with => /\A[-a-z0-9]+\Z/, :message => 'can only contain letters, numbers and hyphens', :allow_blank => true
