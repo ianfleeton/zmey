@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_filter :find_product, :only => [:show, :edit, :update]
 
   def index
-    @products = Product.all
+    @products = Product.all(:conditions => {:website_id => @w.id})
   end
   
   def show
@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
   
   def create
     @product = Product.new(params[:product])
-    @product.website_id = @w
+    @product.website_id = @w.id
 
     if @product.save
       flash[:notice] = "Successfully added new product."
