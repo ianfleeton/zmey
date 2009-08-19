@@ -25,7 +25,7 @@ set :copy_exclude, [".git", "log"]
 
 ### Other options you can set ##
 # Comma separated list of additional domains for Apache
-# set :domain_aliases, "www.example.com,dev.example.com"
+set :domain_aliases, "companyregistrationsuk.co.uk"
 
 ## Dependencies
 # Set the commands and gems that your application requires. e.g.
@@ -37,7 +37,7 @@ depend :remote, :gem, 'haml', '>=2.0.9'
 # depend :remote, :gem, "tmm1-amqp", ">=0.6.0", :source => "http://gems.github.com"
 # 
 # Specify your specific Rails version if it is not vendored
-depend :remote, :gem, "rails", "=2.3.2"
+depend :remote, :gem, "rails", "=2.3.3"
 
 ## Local Shared Area
 # These are the list of files and directories that you want
