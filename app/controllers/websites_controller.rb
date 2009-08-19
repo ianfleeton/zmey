@@ -1,4 +1,6 @@
 class WebsitesController < ApplicationController
+  before_filter :admin_required
+  
   def index
     @websites = Website.find(:all)
   end

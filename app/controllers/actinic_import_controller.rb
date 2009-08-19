@@ -1,4 +1,6 @@
 class ActinicImportController < ApplicationController
+  before_filter :admin_required
+
   def index
   end
   def import_csv

@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  before_filter :admin_required, :except => [:show]
+
   def index
     @title = 'Pages'
     @pages = Page.find(:all, :conditions => { :website_id => @w })
