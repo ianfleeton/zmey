@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090820122214) do
+ActiveRecord::Schema.define(:version => 20090820185745) do
 
   create_table "attributes", :force => true do |t|
     t.integer  "product_id"
@@ -19,6 +19,19 @@ ActiveRecord::Schema.define(:version => 20090820122214) do
   end
 
   add_index "attributes", ["product_id"], :name => "index_attributes_on_product_id"
+
+  create_table "basket_items", :force => true do |t|
+    t.integer  "basket_id",  :default => 0, :null => false
+    t.integer  "product_id", :default => 0, :null => false
+    t.integer  "quantity",   :default => 1, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "baskets", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "choices", :force => true do |t|
     t.integer  "attribute_id", :default => 0, :null => false
