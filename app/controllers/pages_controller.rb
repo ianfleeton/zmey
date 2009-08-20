@@ -10,6 +10,10 @@ class PagesController < ApplicationController
     @page = Page.find_by_slug_and_website_id(params[:slug], @w)
     if @page
       @title = @page.title
+      if admin?
+        # set up objects for admin use
+        @product_placement = ProductPlacement.new
+      end
     else
       render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found"
     end
