@@ -36,6 +36,17 @@
 <div id="footer">
   ©<%= Date.today.year %> <%= h(@w.name) %>. All rights reserved.
   <a href="http://www.yesl.co.uk/">Ruby on Rails development</a> by Your e Solutions Ltd.
+  <% if admin? -%>
+  <br />
+  <strong>Admin quick links:</strong>
+  <%= link_to 'Websites', websites_url %>
+  &middot;
+  <%= link_to 'Pages', :controller => 'pages' %>
+  &middot;
+  <%= link_to 'Products', products_url %>
+  &middot;
+  <%= link_to 'Images', :controller => 'images' %>
+  <% end %>
 </div>
 </div><!--#wrapper-->
 <div id="bottom"></div>
