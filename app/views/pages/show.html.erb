@@ -2,5 +2,35 @@
 <%= textilize(@page.content) %>
 <% @page.product_placements.each do |placement| %>
   <% product = placement.product %>
-  <%= h product.name %>
+  <div class="product">
+    <h2><%= h product.name %></h2>
+    <% unless product.image.nil? -%>
+    <p class="product_image">
+    <%= image_tag(product.image.url(200)) %>
+    </p>
+    <% end -%>
+    <div class="product_detail">
+      <div class="product_description">
+        <%= textilize(product.description) %>
+      </div>
+      <p class="product_price">
+        Price:
+        <%= formatted_price(product.price) %>
+      </p>
+    </div>
+    <% if admin? -%>
+    <p><%= link_to 'Edit ' + h(product.name), edit_product_path(product) %></p>
+    <%= button_to "Remove from page", product_placement_path(placement), :method => :delete %>
+    <% end -%>
+  </div>
 <% end %>
+<% if admin? -%>
+<h2>Admin Controls</h2>
+<!-- I probably need moving to product_placement/_form.html -->
+<% form_for @product_placement do |form| %>
+<input type="hidden" name="product_placement[page_id]" value="<%= @page.id %>" />
+<%= form.collection_select :product_id, @w.products, :id, :name %>
+<%= submit_tag 'Add Product' %>
+<% end %>
+<p><%= link_to 'Edit this page', :action => 'edit', :id => @page.id %></p>
+<% end -%>
