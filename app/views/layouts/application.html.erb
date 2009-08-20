@@ -8,8 +8,11 @@
 	<%= javascript_include_tag :defaults %>
 </head>
 <body id="<%= body_id %>">
+<div id="top"></div>
 <div id="wrapper">
-  <a id="header"><span><%= h @w.name %></span></a>
+  <div id="header">
+    <a href="/"><span><%= h @w.name %></span></a>
+  </div>
   <% Page.navs(@w).each do |nav| %>
   <ul id="<%= nav.id_attribute %>">
   <% nav.pages.each do |p| %>
@@ -35,6 +38,7 @@
   <a href="http://www.yesl.co.uk/">Ruby on Rails development</a> by Your e Solutions Ltd.
 </div>
 </div><!--#wrapper-->
+<div id="bottom"></div>
 <% unless @w.google_analytics_code.empty? -%>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
