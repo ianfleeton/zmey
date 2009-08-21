@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090820185745) do
+ActiveRecord::Schema.define(:version => 20090821140658) do
 
   create_table "attributes", :force => true do |t|
     t.integer  "product_id"
@@ -41,6 +41,13 @@ ActiveRecord::Schema.define(:version => 20090820185745) do
   end
 
   add_index "choices", ["attribute_id"], :name => "index_choices_on_attribute_id"
+
+  create_table "countries", :force => true do |t|
+    t.string   "name",               :default => "", :null => false
+    t.string   "iso_3166_1_alpha_2", :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "enquiries", :force => true do |t|
     t.string   "name",         :default => "", :null => false
@@ -129,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20090820185745) do
     t.string   "email",                 :default => "",    :null => false
     t.text     "css_url",                                  :null => false
     t.boolean  "use_default_css",       :default => false, :null => false
+    t.boolean  "shop",                  :default => false, :null => false
   end
 
 end
