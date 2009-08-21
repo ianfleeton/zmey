@@ -1,0 +1,7 @@
+<h1>Basket</h1>
+<%= flash_notice %>
+<% if @basket.basket_items.empty? -%>
+<p>Your basket is empty.</p>
+<% else -%>
+<%= render :partial => 'basket', :object => @basket, :locals => {:can_update => true} %>
+<% end -%>

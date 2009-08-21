@@ -1,0 +1,36 @@
+<% form_tag :controller => 'basket', :action => 'update' do %>
+<table id="basket">
+  <thead>
+    <tr>
+      <th>Ref</th>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Cost</th>
+      <% if can_update -%>
+      <th>Remove Item</th>
+      <% end -%>
+    </tr>
+  </thead>
+  <tbody>
+    <% @basket.basket_items.each do |item| -%>
+    <tr>
+      <td><%= h item.product.sku %></td>
+      <td><%= h item.product.name %></td>
+      <td><input name="qty[<%= item.id %>]" size="2" maxlength="7" value="<%= item.quantity %>" /></td>
+      <td><%= formatted_price(item.product.price) %></td>
+      <td><%= formatted_price(item.quantity * item.product.price) %></td>
+      <% if can_update %>
+      <td><input type="submit" value="Remove Item" name="remove_item[<%= item.id %>]" /></td>
+      <% end -%>
+    </tr>
+    <% end -%>
+  </tbody>
+</table>
+<% if can_update -%>
+<p class="basket_buttons">
+<input type="submit" name="update_quantities" value="Update Quantities" />
+<input type="submit" name="checkout" value="Checkout" />
+</p>
+<% end -%>
+<% end %>

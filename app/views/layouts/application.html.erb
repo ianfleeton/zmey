@@ -27,6 +27,9 @@
     <li><%= link_to 'Join', :controller => 'users', :action => 'new' %></li>
     <li><%= link_to 'Sign In', :controller => 'sessions', :action => 'new' %></li>
     <% end -%>
+    <% if @w.shop? -%>
+    <li><%= link_to 'View Basket', :controller => 'basket' %></li>
+    <% end -%>
   <% end %>
   </ul>
   <% end %>
