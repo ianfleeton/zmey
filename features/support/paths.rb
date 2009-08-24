@@ -19,6 +19,9 @@ module NavigationHelpers
     
     # Add more page name => path mappings here
     
+    when /the login page/
+      url_for :controller => 'sessions', :action => 'new', :only_path => true
+    
     when /the new page page/
       url_for :controller => 'pages', :action => 'new', :only_path => true
 

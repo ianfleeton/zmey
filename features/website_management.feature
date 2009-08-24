@@ -5,14 +5,16 @@ Feature: Website Management
   I want to be able to administer websites from a web-based interface
   
   Scenario: See a list of websites
-    Given I am on the list websites page
+    Given I am logged in as an administrator
+    When I am on the list websites page
     Then I should see "Websites"
     And I should see a list of websites
     And I should see links to edit websites
     And I should see a link to add a new website
     
   Scenario: Form for creating a new website displays
-    Given I am on the new website page
+    Given I am logged in as an administrator
+    When I am on the new website page
     Then I should see "New Website"
     And I should see "Subdomain"
     And I should see "Domain"
@@ -21,7 +23,8 @@ Feature: Website Management
     And I should see "Email"
 
   Scenario: Creating a new website
-    Given I am on the new website page
+    Given I am logged in as an administrator
+    When I am on the new website page
     And I fill in "Subdomain" with "acme"
     And I fill in "Domain" with "www.acme.com"
     And I fill in "Google Analytics code" with "UA-0000000-2"

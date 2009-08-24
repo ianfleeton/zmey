@@ -5,7 +5,8 @@ Feature: Creating new pages
   
   Scenario: Form for creating a new page displays
   
-    Given I am on the new page page
+    Given I am logged in as an administrator
+    When I am on the new page page
     Then I should see "New Page"
     And I should see "Title"
     And I should see "Meta tags"
@@ -13,20 +14,23 @@ Feature: Creating new pages
 
   Scenario: Creating a new page without filling in any details
   
-    Given I am on the new page page
+    Given I am logged in as an administrator
+    When I am on the new page page
     And I press "Create New Page"
     Then I should see "5 errors"
     
   Scenario: Creating a new page with a bad slug
   
-    Given I am on the new page page
+    Given I am logged in as an administrator
+    When I am on the new page page
     And I fill in "Slug" with "*"
     And I press "Create New Page"
     Then I should see "Slug can only contain letters, numbers and hyphens"
     
   Scenario: Creating a new page
   
-    Given I am on the new page page
+    Given I am logged in as an administrator
+    When I am on the new page page
     And I fill in "Title" with "Buying a Guitar - A Rich Idiot's Guide"
     And I fill in "Name" with "Buying a Guitar"
     And I fill in "Slug" with "guitar-buying-faq"

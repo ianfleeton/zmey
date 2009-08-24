@@ -1,3 +1,17 @@
+Given /^I am logged in as an administrator$/ do
+  @current_user = User.create!(
+    :email => 'a@b.c',
+    :name => 'Admin',
+    :password => 'admin'
+  ) { |u| u.admin = true }
+
+  Given "I am on the login page"
+  fill_in("Email", :with => 'a@b.c') 
+  fill_in("Password", :with => 'admin') 
+  click_button("Login")
+  visit url_for response.redirected_to()
+end
+
 Then /^I should see a list of websites$/ do
   Then "I should see \"#{websites(:guitar_gear).name}\""
   Then "I should see \"#{websites(:website_without_analytics).name}\""
