@@ -1,0 +1,39 @@
+<h1>Checkout</h1>
+<%= flash_notice %>
+<h2>Delivery Address</h2>
+<% form_for @address do |f| %>
+<div>
+  <%= f.label :full_name %>:<br />
+  <%= f.text_field :full_name %>
+</div>
+<div>
+  <%= f.label :address_line_1 %>:<br />
+  <%= f.text_field :address_line_1 %>
+</div>
+<div>
+  <%= f.label :address_line_2 %>:<br />
+  <%= f.text_field :address_line_2 %>
+</div>
+<div>
+  <%= f.label :town_city, 'Town/city' %>:<br />
+  <%= f.text_field :town_city %>
+</div>
+<div>
+  <%= f.label :county %>:<br />
+  <%= f.text_field :county %>
+</div>
+<div>
+  <%= f.label :postcode %>:<br />
+  <%= f.text_field :postcode %>
+</div>
+<div>
+  <%= f.label :country_id %>:<br />
+  <%= collection_select :address, :country_id, Country.all, :id, :name %>
+</div>
+<div>
+  <%= f.label :phone_number %>:<br />
+  <%= f.text_field :phone_number %>
+</div>
+<%= submit_tag 'Next' %>
+<% end %>
+<%= render :partial => 'basket', :object => @basket, :locals => {:can_update => false} %>

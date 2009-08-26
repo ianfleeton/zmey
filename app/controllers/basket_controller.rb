@@ -35,6 +35,9 @@ class BasketController < ApplicationController
   end
   
   def checkout
+    redirect_to :action => 'index' and return if @basket.basket_items.empty?
+    
+    @address = Address.new
   end
   
   protected

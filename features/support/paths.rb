@@ -19,6 +19,12 @@ module NavigationHelpers
     
     # Add more page name => path mappings here
     
+    when /the checkout page/
+      url_for :controller => 'basket', :action => 'checkout', :only_path => true
+
+    when /the view basket page/
+      url_for :controller => 'basket', :only_path => true
+
     when /the login page/
       url_for :controller => 'sessions', :action => 'new', :only_path => true
     
