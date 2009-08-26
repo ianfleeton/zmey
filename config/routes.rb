@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   #     admin.resources :products
   #   end
 
+  map.resources :addresses
   map.resources :enquiries, :collection => { :thank_you => :get }
   map.resources :websites
   map.resources :products
