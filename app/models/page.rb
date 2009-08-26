@@ -2,7 +2,7 @@ class Page < ActiveRecord::Base
   acts_as_tree :order => :position
   acts_as_list :scope => :parent_id
 
-  has_many :product_placements, :order => :position
+  has_many :product_placements, :order => :position, :include => :product
   has_many :products, :through => :product_placement
 
   attr_protected :website_id
