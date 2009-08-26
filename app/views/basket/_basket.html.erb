@@ -17,7 +17,13 @@
     <tr>
       <td><%= h item.product.sku %></td>
       <td><%= h item.product.name %></td>
-      <td><input name="qty[<%= item.id %>]" size="2" maxlength="7" value="<%= item.quantity %>" /></td>
+      <td>
+      <% if can_update -%>
+      <input name="qty[<%= item.id %>]" size="2" maxlength="7" value="<%= item.quantity %>" />
+      <% else -%>
+      <%= item.quantity %>
+      <% end -%>
+      </td>
       <td><%= formatted_price(item.product.price) %></td>
       <td><%= formatted_price(item.quantity * item.product.price) %></td>
       <% if can_update %>
