@@ -4,13 +4,10 @@
 <div class="form">
 	<%= error_messages_for :website -%>
 
-	<fieldset>
-		<legend>Add a new website</legend>
     <% form_for @website do |form| %>
     <%= render :partial => 'form', :object => form %>
 
     <%= submit_tag "Create New Website" %>
 
   <% end %>
-  </fieldset>
 </div>
