@@ -29,6 +29,7 @@
     <% end -%>
     <% if @w.shop? -%>
     <li><%= link_to 'View Basket', :controller => 'basket' %></li>
+    <li><%= link_to 'Checkout', :controller => 'basket', :action => 'checkout' %></li>
     <% end -%>
   <% end %>
   </ul>
@@ -51,6 +52,11 @@
   <%= link_to 'Images', :controller => 'images' %>
   <% end %>
 </div>
+<% if @w.rbswp_active? -%>
+<div id="rbswp_logos">
+<script type="text/javascript" src="https://select.worldpay.com/wcc/logo?instId=<%= @w.rbswp_installation_id %>"></script>
+</div>
+<% end -%>
 </div><!--#wrapper-->
 <div id="bottom"></div>
 <% unless @w.google_analytics_code.empty? -%>
