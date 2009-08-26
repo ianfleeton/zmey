@@ -31,7 +31,6 @@ Feature: Website Management
     And I fill in "Name" with "Acme Corporation"
     And I fill in "Email" with "sales@acmecorporation.com"
     And I press "Create New Website"
-    Then I should be on the create website page
-    And I should be redirected to the list websites page
+    Then I should be on the list websites page
     And I should see "added new website"
     And a new website should exist with the domain "www.acme.com"
