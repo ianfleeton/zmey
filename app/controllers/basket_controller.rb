@@ -36,8 +36,10 @@ class BasketController < ApplicationController
   
   def checkout
     redirect_to :action => 'index' and return if @basket.basket_items.empty?
-    
-    @address = Address.new
+
+    @address = nil
+    @address = Address.find_by_id(session[:address_id]) if session[:address_id]
+    @address = Address.new if @address.nil?
   end
   
   protected

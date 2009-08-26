@@ -1,0 +1,36 @@
+<div>
+  <%= form.label :full_name %>:<br />
+  <%= form.text_field :full_name %>
+</div>
+<div>
+  <%= form.label :email_address %>:<br />
+  <%= form.text_field :email_address %> <small>We hate spam too!</small>
+</div>
+<div>
+  <%= form.label :address_line_1 %>:<br />
+  <%= form.text_field :address_line_1 %>
+</div>
+<div>
+  <%= form.label :address_line_2 %>:<br />
+  <%= form.text_field :address_line_2 %>
+</div>
+<div>
+  <%= form.label :town_city, 'Town/city' %>:<br />
+  <%= form.text_field :town_city %>
+</div>
+<div>
+  <%= form.label :county %>:<br />
+  <%= form.text_field :county %>
+</div>
+<div>
+  <%= form.label :postcode %>:<br />
+  <%= form.text_field :postcode %>
+</div>
+<div>
+  <%= form.label :country_id %>:<br />
+  <%= collection_select :address, :country_id, Country.all, :id, :name %>
+</div>
+<div>
+  <%= form.label :phone_number %>:<br />
+  <%= form.text_field :phone_number %>
+</div>

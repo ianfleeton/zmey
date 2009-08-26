@@ -1,0 +1,8 @@
+<h1>Change Address</h1>
+<div class="form">
+<%= error_messages_for :address -%>
+<% form_for @address do |f| %>
+  <%= render :partial => 'form', :object => f %>
+  <%= submit_tag 'Save' %>
+<% end %>
+</div>
