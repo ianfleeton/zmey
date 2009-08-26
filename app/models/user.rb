@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # unencrypted password
   attr_accessor :password
   
-  attr_protected :admin, :free_search
+  attr_protected :admin
     
   # validation
   validates_length_of     :email, :within => 3..100

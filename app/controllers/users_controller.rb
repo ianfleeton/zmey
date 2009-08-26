@@ -39,7 +39,6 @@ class UsersController < ApplicationController
     # only administrators can update protected attributes
     if admin?
       @user.admin = params[:user][:admin]
-      @user.free_search = params[:user][:free_search]
     end
     if @user.update_attributes(params[:user])
       flash[:notice] = "User successfully updated."
