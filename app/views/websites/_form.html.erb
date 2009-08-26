@@ -43,3 +43,34 @@
 	<%= form.radio_button :shop, false, :class => "radio" %> 
 	<label for="website_shop">No</label> 
 </div>
+
+<fieldset>
+<legend>RBS WorldPay</legend>
+
+<div>
+	<label for="website_rbswp_active_true">Active?:</label>
+	<%= form.radio_button :rbswp_active, true, :class => "radio" %> 
+	<label for="website_rbswp_active_true">Yes</label> 
+	<%= form.radio_button :rbswp_active, false, :class => "radio" %> 
+	<label for="website_rbswp_active">No</label> 
+</div>
+
+<div>
+	<label for="website_rbswp_test_mode">Mode?:</label>
+	<%= form.radio_button :rbswp_test_mode, false, :class => "radio" %> 
+	<label for="website_rbswp_test_mode">Production</label> 
+	<%= form.radio_button :rbswp_test_mode, true, :class => "radio" %> 
+	<label for="website_rbswp_test_mode_true">Test</label> 
+</div>
+
+<div>
+	<%= form.label :rbswp_installation_id, 'Installation ID' %>:<br />
+	<%= form.text_field :rbswp_installation_id, :class => "text" %>
+</div>
+
+<div>
+	<%= form.label :rbswp_payment_response_password, 'Payment response password' %>:<br />
+	<%= form.text_field :rbswp_payment_response_password, :class => "text" %>
+</div>
+
+</fieldset>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090821175721) do
+ActiveRecord::Schema.define(:version => 20090826104305) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -141,16 +141,20 @@ ActiveRecord::Schema.define(:version => 20090821175721) do
   end
 
   create_table "websites", :force => true do |t|
-    t.string   "subdomain",                                :null => false
-    t.string   "domain",                                   :null => false
+    t.string   "subdomain",                                          :null => false
+    t.string   "domain",                                             :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "google_analytics_code", :default => "",    :null => false
-    t.string   "name",                  :default => "",    :null => false
-    t.string   "email",                 :default => "",    :null => false
-    t.text     "css_url",                                  :null => false
-    t.boolean  "use_default_css",       :default => false, :null => false
-    t.boolean  "shop",                  :default => false, :null => false
+    t.string   "google_analytics_code",           :default => "",    :null => false
+    t.string   "name",                            :default => "",    :null => false
+    t.string   "email",                           :default => "",    :null => false
+    t.text     "css_url",                                            :null => false
+    t.boolean  "use_default_css",                 :default => false, :null => false
+    t.boolean  "shop",                            :default => false, :null => false
+    t.boolean  "rbswp_active",                    :default => false, :null => false
+    t.string   "rbswp_installation_id",           :default => "",    :null => false
+    t.string   "rbswp_payment_response_password", :default => "",    :null => false
+    t.boolean  "rbswp_test_mode",                 :default => false, :null => false
   end
 
 end
