@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090826162009) do
+ActiveRecord::Schema.define(:version => 20090827153806) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -88,6 +88,22 @@ ActiveRecord::Schema.define(:version => 20090826162009) do
     t.datetime "updated_at"
   end
 
+  create_table "order_lines", :force => true do |t|
+    t.integer  "order_id",                                     :default => 0,   :null => false
+    t.integer  "product_id",                                   :default => 0,   :null => false
+    t.string   "product_sku",                                  :default => "",  :null => false
+    t.string   "product_name",                                 :default => "",  :null => false
+    t.decimal  "product_price", :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.decimal  "tax_amount",    :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.integer  "quantity",                                     :default => 0,   :null => false
+    t.decimal  "line_total",    :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_lines", ["order_id"], :name => "index_order_lines_on_order_id"
+  add_index "order_lines", ["product_id"], :name => "index_order_lines_on_product_id"
+
   create_table "orders", :force => true do |t|
     t.integer  "user_id"
     t.string   "order_number",                                   :default => "",  :null => false
@@ -106,11 +122,13 @@ ActiveRecord::Schema.define(:version => 20090826162009) do
     t.decimal  "total",           :precision => 10, :scale => 3, :default => 0.0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "website_id",                                     :default => 0,   :null => false
   end
 
   add_index "orders", ["created_at"], :name => "index_orders_on_created_at"
   add_index "orders", ["email_address"], :name => "index_orders_on_email_address"
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
+  add_index "orders", ["website_id"], :name => "index_orders_on_website_id"
 
   create_table "pages", :force => true do |t|
     t.string   "title",       :default => "", :null => false
@@ -129,6 +147,31 @@ ActiveRecord::Schema.define(:version => 20090826162009) do
   add_index "pages", ["parent_id"], :name => "index_pages_on_parent_id"
   add_index "pages", ["slug"], :name => "index_pages_on_slug"
   add_index "pages", ["website_id"], :name => "index_pages_on_website_id"
+
+  create_table "payments", :force => true do |t|
+    t.integer  "order_id"
+    t.string   "service_provider"
+    t.string   "installation_id"
+    t.string   "cart_id"
+    t.string   "description"
+    t.string   "amount"
+    t.string   "currency"
+    t.boolean  "test_mode"
+    t.string   "name"
+    t.string   "address"
+    t.string   "postcode"
+    t.string   "country"
+    t.string   "telephone"
+    t.string   "fax"
+    t.string   "email"
+    t.string   "transaction_id"
+    t.string   "transaction_status"
+    t.string   "transaction_time"
+    t.text     "raw_auth_message"
+    t.boolean  "accepted"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "product_placements", :force => true do |t|
     t.integer  "page_id",    :default => 0, :null => false

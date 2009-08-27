@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title><%= @w.name %></title>
+<style type="text/css">
+p {
+  text-align: center;
+  font-size: 18px;
+	font-family: arial, helvetica, sans-serif;
+}
+#layout {
+	border: 2px solid #ca8902;
+	background: #fee848;
+	padding: 8px;
+	margin: 8px;
+	color: #000;
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+a {
+  display: block;
+  background: #fff;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 0;
+	border: 2px solid #ca8902;
+	color: #00f;
+}
+</style>
+</head>
+<body>
+<WPDISPLAY ITEM=banner>
+  <div id="layout">
+    <p><strong><%= @message %></strong></p>
+    <p>
+      <a href="<%= url_for :controller => 'basket', :action => 'receipt', :only_path => false %>">Continue</a>
+    </p>
+  </div>
+</body>
+</html>

@@ -1,8 +1,8 @@
 class BasketController < ApplicationController
-  before_filter :find_basket
+  before_filter :find_basket, :except => [:receipt]
   
   before_filter :require_delivery_address, :only => 'place_order'
-  before_filter :require_order, :only => 'select_payment_method'
+  before_filter :require_order, :only => [:select_payment_method, :receipt]
 
   def index
   end
@@ -46,16 +46,38 @@ class BasketController < ApplicationController
   end
 
   def place_order
+    # Delete previous unpaid order, if any
+    if session[:order_id] && @order = Order.find_by_id(session[:order_id])
+      @order.destroy if @order.status == Order::WAITING_FOR_PAYMENT
+    end
+
     @order = Order.new
+    @order.website_id = @w.id
     @order.user_id = @current_user.id if logged_in?
     @order.copy_address @address
+    @basket.basket_items.each do |i|
+      @order.order_lines << OrderLine.new(
+        :product_id => i.product.id,
+        :product_sku => i.product.sku,
+        :product_name => i.product.name,
+        :product_price => i.product.price,
+        :tax_amount => 0,
+        :quantity => i.quantity,
+        :line_total => i.product.price * i.quantity
+      )
+    end
     @order.status = Order::WAITING_FOR_PAYMENT
+    @order.shipping_method = 'Standard Shipping'
     @order.save!
     session[:order_id] = @order.id
     redirect_to :action => 'select_payment_method'
   end
 
   def select_payment_method
+  end
+
+  def receipt
+    redirect_to :action => 'index' and return unless @order.status == Order::PAYMENT_RECEIVED
   end
   
   protected
