@@ -1,0 +1,24 @@
+<h1>Choose How You Would Like to Pay</h1>
+
+<% if @w.rbswp_active? -%>
+<form action="https://select<%= (@w.rbswp_test_mode? ? '-test' : '') %>.worldpay.com/wcc/purchase" method="post">
+<input type="hidden" name="cartId" value="<%= @order.order_number %>" />
+<input type="hidden" value="<%= @w.rbswp_installation_id %>" name="instId" />
+<input type="hidden" value="<%= @order.total %>" name="amount" />
+<input type="hidden" value="Web purchase" name="desc" />
+<input type="hidden" value="GBP" name="currency" />
+<% if @w.rbswp_test_mode? -%>
+<input type="hidden" value="100" name="testMode" />
+<% end -%>
+<input type="hidden" value="<%= h(@order.full_name) %>" name="name" />
+
+
+<input type="hidden" value="<%= address_for_rbswp(@order) %>" name="address" />
+<input type="hidden" value="<%= h(@order.postcode) %>" name="postcode" />
+<input type="hidden" value="<%= @order.country.iso_3166_1_alpha_2 %>" name="country" />
+<input type="hidden" name="tel" value="<%= h(@order.phone_number) %>" />
+<input type="hidden" value="<%= h(@order.email_address) %>" name="email" />
+
+<input name="submit" type="submit" class="button" value="Proceed to RBS WorldPay" />
+</form>
+<% end -%>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090826155447) do
+ActiveRecord::Schema.define(:version => 20090826162009) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -87,6 +87,30 @@ ActiveRecord::Schema.define(:version => 20090826155447) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "orders", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "order_number",                                   :default => "",  :null => false
+    t.string   "email_address",                                  :default => "",  :null => false
+    t.string   "full_name",                                      :default => "",  :null => false
+    t.string   "address_line_1",                                 :default => "",  :null => false
+    t.string   "address_line_2",                                 :default => "",  :null => false
+    t.string   "town_city",                                      :default => "",  :null => false
+    t.string   "county",                                         :default => "",  :null => false
+    t.string   "postcode",                                       :default => "",  :null => false
+    t.integer  "country_id",                                     :default => 0,   :null => false
+    t.string   "phone_number",                                   :default => "",  :null => false
+    t.decimal  "shipping_amount", :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.string   "shipping_method",                                :default => "",  :null => false
+    t.integer  "status",                                         :default => 0,   :null => false
+    t.decimal  "total",           :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["created_at"], :name => "index_orders_on_created_at"
+  add_index "orders", ["email_address"], :name => "index_orders_on_email_address"
+  add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
 
   create_table "pages", :force => true do |t|
     t.string   "title",       :default => "", :null => false
