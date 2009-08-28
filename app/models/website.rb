@@ -11,6 +11,7 @@ class Website < ActiveRecord::Base
   validates_presence_of :rbswp_payment_response_password, :if => Proc.new { |website| website.rbswp_active? }
   
   has_many :products, :order => :name
+  has_many :orders, :order => 'created_at DESC'
   
   def self.for(domain, subdomains)
     website = find_by_domain(domain)
