@@ -49,4 +49,12 @@ class PagesController < ApplicationController
       render :action => "new"
     end
   end
+
+  def destroy
+    @page = Page.find(params[:id])
+    @page.destroy
+    flash[:notice] = "Page deleted."
+    redirect_to :action => "index"
+  end
+
 end
