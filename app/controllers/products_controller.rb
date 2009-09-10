@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   before_filter :admin_required, :except => [:show]
 
   def index
-    @products = Product.all(:conditions => {:website_id => @w.id})
+    @products = Product.all(:conditions => {:website_id => @w.id}, :order => :name)
   end
   
   def show
