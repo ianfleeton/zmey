@@ -25,4 +25,14 @@ module ApplicationHelper
   def clear
     content_tag('p', '&nbsp;', {:class => 'clear'})
   end
+  
+  def nav_link_to name, options = {}, html_options = nil, class_name = ''
+    class_name = 'n_' + name.downcase.gsub(' ', '_') if class_name.empty?
+    if current_page? options
+      class_name += ' n_current'
+      content_tag(:li, name, :class => class_name)
+    else
+      content_tag(:li, link_to(name, options, html_options), :class => class_name)
+    end
+  end
 end
