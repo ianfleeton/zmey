@@ -5,6 +5,7 @@ class BasketController < ApplicationController
   before_filter :require_order, :only => [:select_payment_method, :receipt]
 
   def index
+    @page = params[:page_id] ? Page.find_by_id(params[:page_id]) : nil
   end
 
   def add
@@ -26,7 +27,11 @@ class BasketController < ApplicationController
     end
     item.save
     flash[:notice] = 'Added to basket'
-    redirect_to request.referrer    
+    if params[:page_id].nil?
+      redirect_to :action => 'index'
+    else
+      redirect_to :action => 'index', :page_id => params[:page_id]
+    end
   end
   
   def update

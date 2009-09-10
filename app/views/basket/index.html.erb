@@ -1,5 +1,8 @@
 <h1>Basket</h1>
 <%= flash_notice %>
+<% if @page -%>
+<p><%= link_to 'Continue shopping&hellip;', page_url(@page) %></p>
+<% end -%>
 <% if @basket.basket_items.empty? -%>
 <p>Your basket is empty.</p>
 <% else -%>
