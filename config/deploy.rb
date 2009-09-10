@@ -25,7 +25,7 @@ set :copy_exclude, [".git", "log"]
 
 ### Other options you can set ##
 # Comma separated list of additional domains for Apache
-set :domain_aliases, "companyregistrationsuk.co.uk, sage-training.org.uk"
+set :domain_aliases, "companyregistrationsuk.co.uk,sage-training.org.uk,shop.bluebellwood.org"
 
 ## Dependencies
 # Set the commands and gems that your application requires. e.g.
@@ -54,7 +54,7 @@ depend :remote, :gem, "rails", "=2.3.3"
 #
 # The shared area is prepared with 'deploy:setup' and all the shared
 # items are symlinked in when the code is updated.
-# set :local_shared_dirs, %w(public/upload)
+set :local_shared_dirs, %w(public/up)
 # set :local_shared_files, %w(config/database.yml)
 
 ## Global Shared Area
