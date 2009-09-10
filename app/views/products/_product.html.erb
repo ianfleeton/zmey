@@ -1,2 +1,46 @@
 <div class="product">
+  <h2><%= h product.name %></h2>
+  <% unless product.image.nil? -%>
+  <p class="product_image">
+  <%= image_tag(product.image.url(200)) %>
+  </p>
+  <% end -%>
+  <div class="product_detail">
+    <% form_tag :controller => 'basket', :action => 'add' do |form| %>
+    <input type="hidden" name="product_id" value="<%= product.id %>" />
+    <% if defined? page -%>
+    <input type="hidden" name="page_id" value="<%= page.id %>" />
+    <% end -%>
+    <div class="product_description">
+      <%= textilize(product.description) %>
+    </div>
+    <% unless product.features.empty? %>
+    <div class="product_features">
+      <% product.features.each do |feature| -%>
+      <p>
+        <%= h feature.name %>:
+        <% case feature.ui_type
+        when Feature::TEXT_FIELD %>
+          <input type="text" name="feature[<%= feature.id %>]" />
+        <% end %>
+      </p>
+      <% end -%>
+    </div>
+    <% end -%>
+    <p class="product_price">
+      Price:
+      <%= formatted_price(product.price) %>
+    </p>
+    <%= submit_tag 'Add to Basket' %>
+    <% end %>
+  </div>
+  <% if admin? -%>
+  <p>
+    <%= link_to 'Edit ' + h(product.name), edit_product_path(product) %><br />
+    <%= link_to 'Add feature to ' + h(product.name), new_feature_path(:product_id => product.id) %>
+  </p>
+  <% if defined? placement -%>
+  <%= button_to "Remove from page", product_placement_path(placement), :method => :delete %>
+  <% end -%>
+  <% end -%>
 </div>
