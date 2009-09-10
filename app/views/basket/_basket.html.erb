@@ -25,12 +25,20 @@
       <% end -%>
       </td>
       <td><%= formatted_price(item.product.price) %></td>
-      <td><%= formatted_price(item.quantity * item.product.price) %></td>
+      <td><%= formatted_price(item.line_total) %></td>
       <% if can_update %>
       <td><input type="submit" value="Remove Item" name="remove_item[<%= item.id %>]" /></td>
       <% end -%>
     </tr>
     <% end -%>
+    <tr class="basket_total">
+      <td class="empty" colspan="3">&nbsp;</td>
+      <th>Total:</th>
+      <td><%= formatted_price @basket.total %></td>
+      <% if can_update %>
+      <td class="empty">&nbsp;</td>
+      <% end %>
+    </tr>
   </tbody>
 </table>
 <% if can_update -%>
