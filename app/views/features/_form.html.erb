@@ -1,0 +1,24 @@
+<%= form.hidden_field :product_id %>
+<div>
+	<%= form.label :name %>:<br />
+	<%= form.text_field :name, :class => "text" %>
+</div>
+
+<div>
+  <%= form.label :ui_type, 'Display as a' %>:<br />
+  <select id="feature_ui_type" name="feature[ui_type]">
+    <option value="<%= Feature::TEXT_FIELD %>">Text field</option>
+    <option value="<%= Feature::TEXT_AREA %>">Text area</option>
+    <option value="<%= Feature::CHECK_BOX %>">Check box</option>
+    <option value="<%= Feature::RADIO_BUTTONS %>">Radio button set</option>
+    <option value="<%= Feature::DROP_DOWN %>">Drop down menu</option>
+  </select>
+</div>
+
+<div>
+	Required?: 
+	<%= form.radio_button :required, true, :class => "radio" %> 
+	<label for="feature_required_true">Yes</label> 
+	<%= form.radio_button :required, false, :class => "radio" %> 
+	<label for="feature_required">No</label> 
+</div>

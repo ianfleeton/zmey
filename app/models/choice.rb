@@ -1,3 +1,3 @@
 class Choice < ActiveRecord::Base
-  belongs_to :attribute
+  belongs_to :feature
 end

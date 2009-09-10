@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090827153806) do
+ActiveRecord::Schema.define(:version => 20090909122226) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -26,14 +26,28 @@ ActiveRecord::Schema.define(:version => 20090827153806) do
     t.string   "email_address",  :default => "", :null => false
   end
 
-  create_table "attributes", :force => true do |t|
-    t.integer  "product_id"
-    t.string   "name",       :default => "", :null => false
+  create_table "feature_selections", :force => true do |t|
+    t.integer  "basket_item_id", :default => 0,     :null => false
+    t.integer  "feature_id",   :default => 0,     :null => false
+    t.integer  "choice_id"
+    t.text     "customer_text",                     :null => false
+    t.boolean  "checked",        :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "attributes", ["product_id"], :name => "index_attributes_on_product_id"
+  add_index "feature_selections", ["basket_item_id"], :name => "index_feature_selections_on_basket_item_id"
+
+  create_table "features", :force => true do |t|
+    t.integer  "product_id"
+    t.string   "name",       :default => "",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "ui_type",    :default => 0,    :null => false
+    t.boolean  "required",   :default => true, :null => false
+  end
+
+  add_index "features", ["product_id"], :name => "index_features_on_product_id"
 
   create_table "basket_items", :force => true do |t|
     t.integer  "basket_id",  :default => 0, :null => false
@@ -49,13 +63,13 @@ ActiveRecord::Schema.define(:version => 20090827153806) do
   end
 
   create_table "choices", :force => true do |t|
-    t.integer  "attribute_id", :default => 0, :null => false
+    t.integer  "feature_id", :default => 0, :null => false
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "choices", ["attribute_id"], :name => "index_choices_on_attribute_id"
+  add_index "choices", ["feature_id"], :name => "index_choices_on_feature_id"
 
   create_table "countries", :force => true do |t|
     t.string   "name",               :default => "", :null => false

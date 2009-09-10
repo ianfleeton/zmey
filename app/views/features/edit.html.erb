@@ -1,0 +1,15 @@
+<h1>Edit Feature</h1>
+<%= flash_notice %>
+<div class="form">
+	<%= error_messages_for :feature -%>
+
+	<fieldset>
+		<legend>Edit feature</legend>
+    <% form_for @feature do |form| %>
+    <%= render :partial => 'form', :object => form %>
+
+    <%= submit_tag "Update Feature" %>
+
+  <% end %>
+  </fieldset>
+</div>

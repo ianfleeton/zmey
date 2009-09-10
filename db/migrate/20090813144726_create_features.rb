@@ -1,15 +1,15 @@
-class CreateAttributes < ActiveRecord::Migration
+class CreateFeatures < ActiveRecord::Migration
   def self.up
-    create_table :attributes do |t|
+    create_table :features do |t|
       t.integer :product_id
       t.string :name, :default => '', :null => false
 
       t.timestamps
     end
-    add_index :attributes, :product_id
+    add_index :features, :product_id
   end
 
   def self.down
-    drop_table :attributes
+    drop_table :features
   end
 end
