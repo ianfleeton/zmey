@@ -16,14 +16,26 @@ class BasketController < ApplicationController
     end
     quantity = params[:quantity].to_i
     quantity = 1 if quantity < 1
-    item = BasketItem.find_by_basket_id_and_product_id(@basket.id, product.id)
+
+    feature_selections = get_feature_selections
+    unless flash[:notice].nil?
+      redirect_to request.referrer and return
+    end
+    feature_descriptions = BasketItem.describe_feature_selections(feature_selections)
+
+    # Look for an item that is in our basket, has the same product ID
+    # and also has the same feature selections by the user.
+    # For example, a T-shirt product with a single SKU may come in green or red,
+    # each of which should appear as a separate entry in our basket.
+    item = BasketItem.find_by_basket_id_and_product_id_and_feature_descriptions(@basket.id, product.id, feature_descriptions)
     if item
       item.quantity += quantity
     else
       item = BasketItem.new(
         :basket_id => @basket.id,
         :product_id => product.id,
-        :quantity => quantity)
+        :quantity => quantity,
+        :feature_selections => feature_selections)
     end
     item.save
     flash[:notice] = 'Added to basket'
@@ -86,6 +98,31 @@ class BasketController < ApplicationController
   end
   
   protected
+
+  # Creates an array of FeatureSeletions based on the form input from
+  # adding an item to the basket.
+  # It will set flash[:notice] if it encounters any errors.
+  def get_feature_selections
+    f_selections = Array.new
+    unless params[:feature].nil?
+      params[:feature].each_pair do |feature_id, value|
+        puts feature_id + ': ' + value
+        feature = Feature.find(feature_id)
+        f_selection = FeatureSelection.new
+        f_selection.feature_id = feature.id
+        case feature.ui_type
+        when Feature::TEXT_FIELD
+          f_selection.customer_text = value
+          if value.empty? and feature.required?
+            flash[:notice] = 'Please specify: ' + feature.name
+            return
+          end
+        end
+        f_selections << f_selection
+      end
+    end
+    f_selections
+  end
 
   # get valid order or send user back to checkout
   def require_order
