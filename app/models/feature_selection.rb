@@ -5,11 +5,11 @@ class FeatureSelection < ActiveRecord::Base
     d = feature.name + ': '
     case feature.ui_type
     when Feature::TEXT_FIELD, Feature::TEXT_AREA
-      name += customer_text
+      d += customer_text
     when Feature::CHECK_BOX
-      name += checked ? 'Yes' : 'No'
+      d += checked ? 'Yes' : 'No'
     when Feature::DROP_DOWN, Feature::RADIO_BUTTONS
-      name += choice.name
+      d += choice.name
     end
   end
 end
