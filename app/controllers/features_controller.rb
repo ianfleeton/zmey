@@ -1,5 +1,6 @@
 class FeaturesController < ApplicationController
   before_filter :admin_required
+  before_filter :find_feature, :only => [:edit, :destroy]
   def new
     @feature = Feature.new
     @feature.product_id = params[:product_id]
@@ -20,10 +21,19 @@ class FeaturesController < ApplicationController
   end
   
   def edit
-    @feature = Feature.find(params[:id])
+  end
+  
+  def destroy
+    @feature.destroy
+    flash[:notice] = "Feature deleted."
+    redirect_to edit_product_path(@feature.product)
   end
   
   protected
+  
+  def find_feature
+    @feature = Feature.find(params[:id])
+  end
   
   def product_valid?
     if Product.find_by_id_and_website_id(@feature.product_id, @w.id)
