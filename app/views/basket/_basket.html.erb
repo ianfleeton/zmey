@@ -16,7 +16,15 @@
     <% @basket.basket_items.each do |item| -%>
     <tr>
       <td><%= h item.product.sku %></td>
-      <td><%= h item.product.name %></td>
+      <td>
+        <%= h item.product.name %>
+        <% unless item.feature_descriptions.empty? -%>
+          <br />
+          <small>
+            <%= h(item.feature_descriptions) %>
+          </small>
+        <% end -%>
+      </td>
       <td>
       <% if can_update -%>
       <input name="qty[<%= item.id %>]" size="2" maxlength="7" value="<%= item.quantity %>" />
