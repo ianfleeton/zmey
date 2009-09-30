@@ -36,6 +36,9 @@
 	<label for="website_use_default_css">No</label> 
 </div>
 
+<fieldset>
+<legend>Shop Settings</legend>
+
 <div>
 	<label for="website_shop_true">Shop?:</label>
 	<%= form.radio_button :shop, true, :class => "radio" %> 
@@ -43,6 +46,16 @@
 	<%= form.radio_button :shop, false, :class => "radio" %> 
 	<label for="website_shop">No</label> 
 </div>
+
+<div>
+	<label for="website_skip_payment_true">Skip payment?:</label>
+	<%= form.radio_button :skip_payment, true, :class => "radio" %> 
+	<label for="website_skip_payment_true">Yes</label> 
+	<%= form.radio_button :skip_payment, false, :class => "radio" %> 
+	<label for="website_skip_payment">No</label> 
+</div>
+
+</fieldset>
 
 <fieldset>
 <legend>RBS WorldPay</legend>

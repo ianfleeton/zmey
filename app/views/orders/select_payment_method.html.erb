@@ -1,0 +1,106 @@
+<h1>Choose How You Would Like to Pay</h1>
+
+<% if @w.rbswp_active? -%>
+  <% if @w.skip_payment? -%>
+  <h2>Skipping payment for RBS WorldPay</h2>
+  <p>The correct values are entered below and can be changed for testing.
+    <code>callbackPW</code> is neither displayed nor verified in this test mode.</p>
+  <form action="/payments/rbs_worldpay_callback">
+    <div>
+      <input type="submit" value="Skip RBS WorldPay payment" />
+    </div>
+    <div>
+      <label>instId</label>:<br />
+      <input type="text" name="instId" value="<%= @w.rbswp_installation_id %>" />
+    </div>
+    <div>
+      <label>cartId</label>:<br />
+      <input type="text" name="cartId" value="<%= @order.order_number %>" />
+    </div>
+    <div>
+      <label>desc</label>:<br />
+      <input type="text" name="desc" value="Web purchase" />
+    </div>
+    <div>
+      <label>amount</label>:<br />
+      <input type="text" name="amount" value="<%= @order.total %>" />
+    </div>
+    <div>
+      <label>currency</label>:<br />
+      <input type="text" name="currency" value="GBP" />
+    </div>
+    <div>
+      <label>testMode</label>:<br />
+      <input type="text" name="testMode" value="100" />
+    </div>
+    <div>
+      <label>name</label>:<br />
+      <input type="text" name="name" value="<%= h(@order.full_name) %>" />
+    </div>
+    <div>
+      <label>address</label>:<br />
+      <textarea name="address"><%= address_for_rbswp(@order) %></textarea>
+    </div>
+    <div>
+      <label>postcode</label>:<br />
+      <input type="text" name="postcode" value="<%= h(@order.postcode) %>" />
+    </div>
+    <div>
+      <label>country</label>:<br />
+      <input type="text" name="country" value="<%= @order.country.iso_3166_1_alpha_2 %>" />
+    </div>
+    <div>
+      <label>tel</label>:<br />
+      <input type="text" name="tel" value="" />
+    </div>
+    <div>
+      <label>fax</label>:<br />
+      <input type="text" name="fax" value="" />
+    </div>
+    <div>
+      <label>email</label>:<br />
+      <input type="text" name="email" value="<%= h(@order.email_address) %>" />
+    </div>
+    <div>
+      <label>transId</label>:<br />
+      <input type="text" name="transId" value="SKIPPED" />
+    </div>
+    <div>
+      <label>transStatus</label>:<br />
+      <input type="text" name="transStatus" value="Y" />
+    </div>
+    <div>
+      <label>transTime</label>:<br />
+      <input type="text" name="transTime" value="SKIPPED" />
+    </div>
+    <div>
+      <label>RawAuthMessage</label>:<br />
+      <input type="text" name="RawAuthMessage" value="SKIPPED" />
+    </div>
+    <div>
+      <input type="submit" value="Skip RBS WorldPay payment" />
+    </div>
+  </form>
+  <% else -%>
+<form action="https://select<%= (@w.rbswp_test_mode? ? '-test' : '') %>.worldpay.com/wcc/purchase" method="post">
+<input type="hidden" name="cartId" value="<%= @order.order_number %>" />
+<input type="hidden" value="<%= @w.rbswp_installation_id %>" name="instId" />
+<input type="hidden" value="<%= @order.total %>" name="amount" />
+<input type="hidden" value="Web purchase" name="desc" />
+<input type="hidden" value="GBP" name="currency" />
+<% if @w.rbswp_test_mode? -%>
+<input type="hidden" value="100" name="testMode" />
+<% end -%>
+<input type="hidden" value="<%= h(@order.full_name) %>" name="name" />
+
+
+<input type="hidden" value="<%= address_for_rbswp(@order) %>" name="address" />
+<input type="hidden" value="<%= h(@order.postcode) %>" name="postcode" />
+<input type="hidden" value="<%= @order.country.iso_3166_1_alpha_2 %>" name="country" />
+<input type="hidden" name="tel" value="<%= h(@order.phone_number) %>" />
+<input type="hidden" value="<%= h(@order.email_address) %>" name="email" />
+
+<input name="submit" type="submit" class="button" value="Proceed to RBS WorldPay" />
+</form>
+  <% end -%>
+<% end -%>

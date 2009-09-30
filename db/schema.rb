@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090929143923) do
+ActiveRecord::Schema.define(:version => 20090930131629) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -240,6 +240,7 @@ ActiveRecord::Schema.define(:version => 20090929143923) do
     t.string   "rbswp_payment_response_password", :default => "",    :null => false
     t.boolean  "rbswp_test_mode",                 :default => false, :null => false
     t.boolean  "can_users_create_accounts",       :default => true,  :null => false
+    t.boolean  "skip_payment",                    :default => false, :null => false
   end
 
 end

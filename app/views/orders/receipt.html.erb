@@ -15,7 +15,15 @@
 
   <% @order.order_lines.each do |line| -%>
   <tr>
-    <td><%= h line.product_name %></td>
+    <td>
+      <%= h line.product_name %>
+      <% unless line.feature_descriptions.empty? -%>
+        <br />
+        <small>
+          <%= h(line.feature_descriptions) %>
+        </small>
+      <% end -%>
+    </td>
     <td><%= line.quantity %></td>
     <td class="price_column"><%= formatted_price(line.line_total)  %></td>
   </tr>

@@ -1,8 +1,7 @@
 class BasketController < ApplicationController
-  before_filter :find_basket, :except => [:receipt]
+  before_filter :find_basket
   
   before_filter :require_delivery_address, :only => 'place_order'
-  before_filter :require_order, :only => [:select_payment_method, :receipt]
 
   def index
     @page = params[:page_id] ? Page.find_by_id(params[:page_id]) : nil
@@ -81,21 +80,14 @@ class BasketController < ApplicationController
         :tax_amount => 0,
         :quantity => i.quantity,
         :line_total => i.product.price * i.quantity,
-        :feature_descriptions = i.feature_descriptions
+        :feature_descriptions => i.feature_descriptions
       )
     end
     @order.status = Order::WAITING_FOR_PAYMENT
     @order.shipping_method = 'Standard Shipping'
     @order.save!
     session[:order_id] = @order.id
-    redirect_to :action => 'select_payment_method'
-  end
-
-  def select_payment_method
-  end
-
-  def receipt
-    redirect_to :action => 'index' and return unless @order.status == Order::PAYMENT_RECEIVED
+    redirect_to :controller => 'orders', :action => 'select_payment_method'
   end
   
   protected
@@ -123,15 +115,6 @@ class BasketController < ApplicationController
       end
     end
     f_selections
-  end
-
-  # get valid order or send user back to checkout
-  def require_order
-    @order = session[:order_id] ? Order.find_by_id(session[:order_id]) : nil
-    if @order.nil?
-      flash[:notice] = "We couldn't find an order for you."
-      redirect_to :action => 'checkout'
-    end
   end
 
   # get valid delivery address or send user back to checkout

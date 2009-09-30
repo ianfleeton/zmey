@@ -10,6 +10,7 @@ class PaymentsController < ApplicationController
   end
   
   def show
+    @payment = Payment.find(params[:id])
   end
 
   def rbs_worldpay_callback
@@ -37,7 +38,7 @@ class PaymentsController < ApplicationController
 
     if params[:transStatus].nil? or params[:transStatus] != 'Y'
       @message = 'No payment was made'
-    elsif params[:callbackPW].nil? or params[:callbackPW] != @w.rbswp_payment_response_password
+    elsif !@w.skip_payment? and (params[:callbackPW].nil? or params[:callbackPW] != @w.rbswp_payment_response_password)
       @message = FAILURE_MESSAGE
     elsif params[:cartId].nil?
       @message = FAILURE_MESSAGE
