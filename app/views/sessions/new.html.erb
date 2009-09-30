@@ -1,6 +1,8 @@
 <h1>Sign In</h1>
 
+<% if @w.can_users_create_accounts? -%>
 <p><strong>Don&#8217;t have an account yet? <%= link_to 'Create your account now', :controller => 'users', :action => 'new' %> &#8212; it&#8217;s easy and takes less than a minute.</strong></p>
+<% end -%>
 
 <%= flash_notice %>
 

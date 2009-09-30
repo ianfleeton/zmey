@@ -12,6 +12,9 @@ class UsersController < ApplicationController
   end
 
   def new
+    unless @w.can_users_create_accounts? or admin?
+      redirect_to page_url ''
+    end
     @user = User.new
   end
   

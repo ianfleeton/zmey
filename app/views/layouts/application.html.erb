@@ -24,7 +24,9 @@
     <%= nav_link_to h(@current_user.name) + '&#8217;s Account', {:controller => 'users', :action => 'show', :id => @current_user}, nil, 'n_account' %>
     <%= nav_link_to 'Sign Out', :controller => 'sessions', :action => 'destroy' %>
     <% else -%>
+    <% if @w.can_users_create_accounts? -%>
     <%= nav_link_to 'Join', :controller => 'users', :action => 'new' %>
+    <% end -%>
     <%= nav_link_to 'Sign In', :controller => 'sessions', :action => 'new' %>
     <% end -%>
     <% if @w.shop? -%>

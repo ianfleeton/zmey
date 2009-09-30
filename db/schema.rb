@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090910151447) do
+ActiveRecord::Schema.define(:version => 20090929143923) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20090910151447) do
     t.integer  "quantity",             :default => 1, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "feature_descriptions"
+    t.text     "feature_descriptions",                :null => false
   end
 
   create_table "baskets", :force => true do |t|
@@ -104,16 +104,17 @@ ActiveRecord::Schema.define(:version => 20090910151447) do
   end
 
   create_table "order_lines", :force => true do |t|
-    t.integer  "order_id",                                     :default => 0,   :null => false
-    t.integer  "product_id",                                   :default => 0,   :null => false
-    t.string   "product_sku",                                  :default => "",  :null => false
-    t.string   "product_name",                                 :default => "",  :null => false
-    t.decimal  "product_price", :precision => 10, :scale => 3, :default => 0.0, :null => false
-    t.decimal  "tax_amount",    :precision => 10, :scale => 3, :default => 0.0, :null => false
-    t.integer  "quantity",                                     :default => 0,   :null => false
-    t.decimal  "line_total",    :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.integer  "order_id",                                            :default => 0,   :null => false
+    t.integer  "product_id",                                          :default => 0,   :null => false
+    t.string   "product_sku",                                         :default => "",  :null => false
+    t.string   "product_name",                                        :default => "",  :null => false
+    t.decimal  "product_price",        :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.decimal  "tax_amount",           :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.integer  "quantity",                                            :default => 0,   :null => false
+    t.decimal  "line_total",           :precision => 10, :scale => 3, :default => 0.0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "feature_descriptions",                                                 :null => false
   end
 
   add_index "order_lines", ["order_id"], :name => "index_order_lines_on_order_id"
@@ -238,6 +239,7 @@ ActiveRecord::Schema.define(:version => 20090910151447) do
     t.string   "rbswp_installation_id",           :default => "",    :null => false
     t.string   "rbswp_payment_response_password", :default => "",    :null => false
     t.boolean  "rbswp_test_mode",                 :default => false, :null => false
+    t.boolean  "can_users_create_accounts",       :default => true,  :null => false
   end
 
 end
