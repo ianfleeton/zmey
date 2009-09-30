@@ -80,7 +80,8 @@ class BasketController < ApplicationController
         :product_price => i.product.price,
         :tax_amount => 0,
         :quantity => i.quantity,
-        :line_total => i.product.price * i.quantity
+        :line_total => i.product.price * i.quantity,
+        :feature_descriptions = i.feature_descriptions
       )
     end
     @order.status = Order::WAITING_FOR_PAYMENT
