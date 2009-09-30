@@ -1,6 +1,6 @@
 class FeaturesController < ApplicationController
   before_filter :admin_required
-  before_filter :find_feature, :only => [:edit, :destroy]
+  before_filter :find_feature, :only => [:edit, :destroy, :update]
   def new
     @feature = Feature.new
     @feature.product_id = params[:product_id]
@@ -17,6 +17,15 @@ class FeaturesController < ApplicationController
       redirect_to product_path(@feature.product)
     else
       render :action => "new"
+    end
+  end
+  
+  def update
+    if @feature.update_attributes(params[:feature])
+      flash[:notice] = "Feature successfully updated."
+      redirect_to product_path(@feature.product.id)
+    else
+      render :action => "edit"
     end
   end
   
