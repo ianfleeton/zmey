@@ -1,3 +1,4 @@
+# coding: utf-8
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def flash_notice 
@@ -24,6 +25,14 @@ module ApplicationHelper
 
   def clear
     content_tag('p', '&nbsp;', {:class => 'clear'})
+  end
+  
+  def tick_cross yes
+    if yes
+      '✔'
+    else
+      '✘'
+    end
   end
   
   def nav_link_to name, options = {}, html_options = nil, class_name = ''
