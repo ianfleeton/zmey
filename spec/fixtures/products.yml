@@ -1,0 +1,7 @@
+amplifier:
+  id: 1
+  sku: AMP
+  name: Amplifier
+  price: 200.00
+  description: A powerful amp that goes to 11!
+  in_stock: true

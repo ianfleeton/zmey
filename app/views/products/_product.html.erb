@@ -23,6 +23,9 @@
         when Feature::TEXT_FIELD %>
           <input type="text" name="feature[<%= feature.id %>]" />
         <% end %>
+        <% if admin? -%>
+        <%= link_to 'Edit feature', edit_feature_path(feature.id) %>
+        <% end -%>
       </p>
       <% end -%>
     </div>
