@@ -76,6 +76,10 @@ div, li, p, td {
 
 #header span { display: none; }
 
+#content {
+  padding: 12px 24px;
+}
+
 h1 { color: #c00; font-size: 16px; margin: 12px 0; }
 
 #footer {
