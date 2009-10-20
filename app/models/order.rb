@@ -16,6 +16,17 @@ class Order < ActiveRecord::Base
     session[:order_id] ? find_by_id(session[:order_id]) : nil
   end
   
+  def self.purge_old_unpaid(age = 1.month)
+    self.destroy_all(["created_at < ? and status = ?", Time.now - age, Order::WAITING_FOR_PAYMENT])
+  end
+  
+  def status_description
+    {
+      WAITING_FOR_PAYMENT => 'Waiting for payment',
+      PAYMENT_RECEIVED => 'Payment received'
+    }[status]
+  end
+  
   def payment_received?
     status == Order::PAYMENT_RECEIVED
   end

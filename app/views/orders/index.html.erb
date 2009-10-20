@@ -1,5 +1,5 @@
 <h1>Orders</h1>
-
+<%= flash_notice %>
 <table id="orders">
   <thead>
     <tr>
@@ -14,7 +14,7 @@
       <td><%= formatted_price(o.total) %></td>
       <td><%= o.created_at %></td>
       <td><%= h o.full_name %></td>
-      <td><%= o.status %></td>
+      <td><%= o.status_description %></td>
     </tr>
   <% end -%>
   </tbody>

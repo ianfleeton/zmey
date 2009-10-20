@@ -14,6 +14,12 @@ class OrdersController < ApplicationController
     redirect_to :controller => 'basket', :action => 'index' and return unless @order.payment_received?
   end
 
+  def purge_old_unpaid
+    Order.purge_old_unpaid
+    flash[:notice] = 'Old and unpaid orders purged.'
+    redirect_to :action => 'index'
+  end
+
   protected
 
   # get valid order or send user back to checkout
