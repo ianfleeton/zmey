@@ -44,7 +44,7 @@ class Page < ActiveRecord::Base
     nav_roots.each do |nr|
       nav = Navigation.new
       nav.id_attribute = nr.slug.gsub('-', '_') + '_nav'
-      nav.pages = Page.all(:conditions => ['parent_id = ?', nr.id])
+      nav.pages = Page.all(:conditions => ['parent_id = ?', nr.id], :order => :position)
       navs << nav 
     end
     navs
