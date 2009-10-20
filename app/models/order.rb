@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
   # Associations
   belongs_to :country
   has_many :order_lines, :dependent => :delete_all
+  has_many :payments, :dependent => :delete_all
   # Order statuses
   WAITING_FOR_PAYMENT = 1
   PAYMENT_RECEIVED    = 2
