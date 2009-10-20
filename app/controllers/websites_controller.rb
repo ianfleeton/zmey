@@ -1,8 +1,9 @@
 class WebsitesController < ApplicationController
   before_filter :admin_required
+  before_filter :find_website, :only => [:edit, :update, :destroy]
   
   def index
-    @websites = Website.find(:all)
+    @websites = Website.find(:all, :order => :name)
   end
   
   def new
@@ -10,7 +11,6 @@ class WebsitesController < ApplicationController
   end
   
   def edit
-    @website = Website.find(params[:id])
   end
   
   def create
@@ -27,13 +27,23 @@ class WebsitesController < ApplicationController
   end
 
   def update
-    @website = Website.find(params[:id])
-
     if @website.update_attributes(params[:website])
       flash[:notice] = 'Website saved.'
       redirect_to websites_path
     else
       render :action => 'edit'
     end
+  end
+  
+  def destroy
+    @website.destroy
+    flash[:notice] = "Website deleted."
+    redirect_to :action => "index"
+  end
+  
+  protected
+  
+  def find_website
+    @website = Website.find(params[:id])
   end
 end
