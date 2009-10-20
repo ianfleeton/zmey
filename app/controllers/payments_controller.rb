@@ -42,7 +42,7 @@ class PaymentsController < ApplicationController
       @message = FAILURE_MESSAGE
     elsif params[:cartId].nil?
       @message = FAILURE_MESSAGE
-    elsif params[:testMode] and !@w.rbswp_test_mode?
+    elsif params[:testMode] and !@w.rbswp_test_mode? and params[:testMode] != '0'
       @message = FAILURE_MESSAGE      
     else
       @message = 'Payment received'
