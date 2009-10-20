@@ -13,7 +13,7 @@
     <tr>
       <td><%= link_to h(u.name), :controller => 'users', :action => 'show', :id => u %></td>
       <td><%= mail_to u.email, u.email %>&nbsp;</td>
-      <td><%= image_for_admin_status(u) %></td>
+      <td><%= tick u.admin %></td>
     </tr>
   <% end -%>
   </tbody>

@@ -27,12 +27,16 @@ module ApplicationHelper
     content_tag('p', '&nbsp;', {:class => 'clear'})
   end
   
-  def tick_cross yes
+  def tick_cross yes, show_cross=true
     if yes
-      '✔'
-    else
-      '✘'
+      '<span class="tick">✔</span>'
+    elsif show_cross
+      '<span class="cross">✘</span>'
     end
+  end
+  
+  def tick yes
+    tick_cross yes, false
   end
   
   def nav_link_to name, options = {}, html_options = nil, class_name = ''
