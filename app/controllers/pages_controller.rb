@@ -1,9 +1,10 @@
 class PagesController < ApplicationController
   before_filter :admin_required, :except => [:show]
+  before_filter :find_page, :only => [:edit, :update, :destroy, :move_up, :move_down]
 
   def index
     @title = 'Pages'
-    @pages = Page.find(:all, :conditions => { :website_id => @w })
+    @pages = Page.find(:all, :conditions => { :website_id => @w, :parent_id => nil }, :order => :position)
   end
 
   def show
@@ -20,12 +21,19 @@ class PagesController < ApplicationController
   end
   
   def edit
-    @page = Page.find(params[:id])
+  end
+
+  def move_up
+    @page.move_higher
+    moved
+  end
+  
+  def move_down
+    @page.move_lower
+    moved
   end
 
   def update
-    @page = Page.find(params[:id])
-
     if @page.update_attributes(params[:page])
       flash[:notice] = 'Page saved.'
       redirect_to page_path(@page)
@@ -51,10 +59,19 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    @page = Page.find(params[:id])
     @page.destroy
     flash[:notice] = "Page deleted."
     redirect_to :action => "index"
   end
 
+  protected
+  
+  def find_page
+    @page = Page.find(params[:id])
+  end
+  
+  def moved
+    flash[:notice] = 'Moved'
+    redirect_to :action => 'index'
+  end
 end

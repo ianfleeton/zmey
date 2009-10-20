@@ -1,9 +1,11 @@
 <h1>Pages</h1>
 <%= flash_notice %>
 <p><%= link_to 'New page', :action => 'new' %></p>
-<ul>
-  <% @pages.each do |p| %>
-  <li><%= link_to h(p.name), page_url(p) %> (<%= link_to 'Edit', :controller => 'pages', :action => 'edit', :id => p.id %>)</li>
-  <% end %>
-  <%= content_tag(:li, 'No pages') if @pages.empty? %>
-</ul>
+
+<table>
+<% @pages.each do |p| %>
+  <%= page_tree p %>
+<% end %>
+
+<%= content_tag(:tr, content_tag(:td, 'No pages')) if @pages.empty? %>
+</table>

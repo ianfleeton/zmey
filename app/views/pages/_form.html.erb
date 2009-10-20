@@ -10,7 +10,12 @@
 
 <div>
 	<%= form.label :slug %>:<br />
-	<%= form.text_field :slug, :class => "text" %>
+	http://<%= request.host %>/<%= form.text_field :slug, :class => "text" %>
+</div>
+
+<div>
+  <%= form.label :parent_id, 'Parent page or navigation' %>:<br />
+  <%= form.collection_select :parent_id, @w.pages, :id, :name, {:include_blank => '-- No parent --'} %>
 </div>
 
 <fieldset>
