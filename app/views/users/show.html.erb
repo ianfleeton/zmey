@@ -6,8 +6,10 @@
 <div class="details">
 	<h2><%= h @user.name %> <%= image_for_admin_status(@user) %></h2>
 
-	<p class="email"><strong>Your registered email address:</strong> <%= mail_to h(@user.email) %></p>
-
+	<p class="email"><strong><%= h @user.name %>&#8217;s registered email address:</strong> <%= mail_to h(@user.email) %></p>
+<% unless @user.managed_website.nil? -%>
+  <p>Website manager for <%= h @user.managed_website.name %></p>
+<% end -%>
 <% if admin? %>	
 	<p class="modify">
 		<%= link_to "edit", :action => "edit", :id => @user.id %> |
