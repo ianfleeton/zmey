@@ -6,4 +6,8 @@ class Basket < ActiveRecord::Base
     basket_items.each {|i| total += i.line_total}
     total
   end
+  
+  def self.purge_old(age = 1.month)
+    self.destroy_all(["created_at < ?", Time.now - age])
+  end
 end

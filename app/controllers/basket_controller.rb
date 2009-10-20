@@ -90,6 +90,12 @@ class BasketController < ApplicationController
     redirect_to :controller => 'orders', :action => 'select_payment_method'
   end
   
+  def purge_old
+    Basket.purge_old
+    flash[:notice] = 'Old baskets purged.'
+    redirect_to :action => 'index'
+  end
+  
   protected
 
   # Creates an array of FeatureSeletions based on the form input from
