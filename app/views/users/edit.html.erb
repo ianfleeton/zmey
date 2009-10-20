@@ -23,6 +23,10 @@
 		<%= form.radio_button :admin, false, :class => "radio" %> 
 		<label for="user_admin">No</label> 
 	</div>
+  <div>
+    <%= form.label :manages_website_id, 'Manager for website' %>:<br />
+    <%= form.collection_select :manages_website_id, Website.all(:order => :name), :id, :name, {:include_blank => '-- Does not manage a website --'} %>
+  </div>
 <% end %>
 	
 	<%= submit_tag "Save", :class => "submit" %> &nbsp; 

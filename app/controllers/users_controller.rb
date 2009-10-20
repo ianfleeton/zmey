@@ -42,6 +42,7 @@ class UsersController < ApplicationController
     # only administrators can update protected attributes
     if admin?
       @user.admin = params[:user][:admin]
+      @user.manages_website_id = params[:user][:manages_website_id]
     end
     if @user.update_attributes(params[:user])
       flash[:notice] = "User successfully updated."

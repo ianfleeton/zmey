@@ -2,8 +2,11 @@ class User < ActiveRecord::Base
   # unencrypted password
   attr_accessor :password
   
-  attr_protected :admin
-    
+  attr_protected :admin, :manages_website_id
+
+  # associations
+  belongs_to :managed_website, :foreign_key => :manages_website_id, :class_name => 'Website'
+
   # validation
   validates_length_of     :email, :within => 3..100
   validates_uniqueness_of :email, :case_sensitive => false, :message => 'has already been taken. If you have forgotten your password you can request a new one.'
