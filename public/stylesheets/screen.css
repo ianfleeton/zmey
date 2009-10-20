@@ -45,13 +45,21 @@ div, li, p, td {
 
 #primary_nav li {
 	float: left;
+	line-height: 24px;
+}
+
+#primary_nav .n_current, #primary_nav a {
+  padding: 0 20px;
+}
+
+#primary_nav .n_current {
+  color: yellow;
 }
 
 #primary_nav a {
 	display: block;
 	height: 24px;
 	line-height: 24px;
-	padding: 0 20px;
 	color: #fff;
 	text-decoration: none;
 }
