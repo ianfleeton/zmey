@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090930131629) do
+ActiveRecord::Schema.define(:version => 20091102203722) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -70,7 +70,10 @@ ActiveRecord::Schema.define(:version => 20090930131629) do
     t.string   "hear_about",   :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "website_id",   :default => 0,  :null => false
   end
+
+  add_index "enquiries", ["website_id"], :name => "index_enquiries_on_website_id"
 
   create_table "feature_selections", :force => true do |t|
     t.integer  "basket_item_id", :default => 0,     :null => false
@@ -94,6 +97,14 @@ ActiveRecord::Schema.define(:version => 20090930131629) do
   end
 
   add_index "features", ["product_id"], :name => "index_attributes_on_product_id"
+
+  create_table "forums", :force => true do |t|
+    t.string  "name",       :default => "",    :null => false
+    t.integer "website_id", :default => 0,     :null => false
+    t.boolean "locked",     :default => false, :null => false
+  end
+
+  add_index "forums", ["website_id"], :name => "index_forums_on_website_id"
 
   create_table "images", :force => true do |t|
     t.integer  "website_id", :default => 0,  :null => false
@@ -189,6 +200,17 @@ ActiveRecord::Schema.define(:version => 20090930131629) do
     t.datetime "updated_at"
   end
 
+  create_table "posts", :force => true do |t|
+    t.integer  "topic_id",   :default => 0,  :null => false
+    t.text     "content",                    :null => false
+    t.string   "author",     :default => "", :null => false
+    t.string   "email",      :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["topic_id"], :name => "index_posts_on_topic_id"
+
   create_table "product_placements", :force => true do |t|
     t.integer  "page_id",    :default => 0, :null => false
     t.integer  "product_id", :default => 0, :null => false
@@ -211,6 +233,21 @@ ActiveRecord::Schema.define(:version => 20090930131629) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "topics", :force => true do |t|
+    t.string   "topic",            :default => "", :null => false
+    t.integer  "forum_id",         :default => 0,  :null => false
+    t.integer  "posts_count",      :default => 0,  :null => false
+    t.integer  "views",            :default => 0,  :null => false
+    t.integer  "last_post_id",     :default => 0,  :null => false
+    t.string   "last_post_author", :default => "", :null => false
+    t.datetime "last_post_at",                     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"
+  add_index "topics", ["last_post_at"], :name => "index_topics_on_last_post_at"
 
   create_table "users", :force => true do |t|
     t.string   "email",                 :default => "",    :null => false
@@ -241,6 +278,7 @@ ActiveRecord::Schema.define(:version => 20090930131629) do
     t.boolean  "rbswp_test_mode",                 :default => false, :null => false
     t.boolean  "can_users_create_accounts",       :default => true,  :null => false
     t.boolean  "skip_payment",                    :default => false, :null => false
+    t.boolean  "blog_id"
   end
 
 end
