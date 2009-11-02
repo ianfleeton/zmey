@@ -15,6 +15,7 @@ class Website < ActiveRecord::Base
   has_many :pages, :order => 'name', :dependent => :destroy
   has_many :images, :dependent => :destroy
   has_many :forums, :dependent => :destroy
+  has_many :enquiries, :dependent => :destroy
   belongs_to :blog, :class_name => 'Forum'
   
   def self.for(domain, subdomains)

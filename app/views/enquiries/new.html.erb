@@ -2,15 +2,7 @@
 
 <%= flash_notice %>
 
-<script type="text/javascript">
-function prepareForm() {
-  $('no_ajax').hide();
-  <%= remote_function :url => { :action => 'current_time' } %>
-}
-Event.observe(window, 'load', prepareForm);
-</script>
-
-<p id="no_ajax">You need to have Javascript switched on to use this enquiry form</p>
+<%= render :partial => 'spam/spam' %>
 
 <p>Please complete all fields marked with an asterisk (<span class="required">*</span>)</p>
 
