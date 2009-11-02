@@ -6,6 +6,6 @@ class AddWebsiteIdToOrders < ActiveRecord::Migration
 
   def self.down
     remove_index :orders, :website_id
-    remove_column :orders
+    remove_column :orders, :website_id
   end
 end
