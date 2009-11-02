@@ -1,0 +1,14 @@
+<h1>Forums</h1>
+<%= flash_notice %>
+<% if @forums.empty? -%>
+<p>There are no forums.</p>
+<% else -%>
+<ul id="forums_list">
+  <% @forums.each do |forum| %>
+  <li><%= link_to h(forum.name), forum %></li>
+  <% end -%>
+</ul>
+<% end -%>
+<% if admin? -%>
+<p><%= link_to 'New forum', :action => 'new' %></p>
+<% end -%>

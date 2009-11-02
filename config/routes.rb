@@ -36,6 +36,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :websites
   map.resources :products
   map.resources :product_placements
+  map.resources :forums
+  
+  map.new_topic 'topics/new/:forum_id', :controller => 'topics', :action => 'new'
+  map.topic 'topics/show/:id', :controller => 'topics', :action => 'show'
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => 'pages', :action => 'show', :slug => ''

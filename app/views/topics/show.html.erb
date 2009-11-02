@@ -1,0 +1,46 @@
+<h1><%= link_to h(@topic.forum.name), @topic.forum %> &rarr; <%= h @topic.topic %></h1>
+<%= flash_notice %>
+<% if admin? -%>
+<% form_tag :action => 'destroy', :id => @topic do %>
+  <%= submit_tag 'Delete Topic' %>
+<% end %>
+<% end %>
+<% @topic.posts.each do |p| %>
+<div class="post">
+  <p><%= gravatar(p.email) %> <%= h(p.content).gsub(/\n/, '<br />') %></p>
+  <p class="post_details">Posted <%= format_date(p.created_at) %> by <%= h p.author %></p>
+</div>
+  <% if admin? -%>
+    <p><%= link_to('Edit Post', :action => 'edit_post', :post_id => p.id) %></p>
+    <% unless @topic.posts.first == p -%>
+      <% form_tag :action => 'destroy_post', :post_id => p.id do %>
+        <%= submit_tag 'Delete Post' %>
+      <% end %>
+    <% end -%>
+  <% end -%>
+<% end %>
+<%= clear %>
+<h2>Reply to &#8220;<%= h @topic.topic %>&#8221;</h2>
+<%= error_messages_for :post -%>
+<%= render :partial => 'spam/spam' %>
+
+<% form_for :post, :url => {:action => 'create_reply'} do |f| %>
+<span id="current_time">
+  <!-- current time placed here by AJAX request -->
+</span>
+
+<%= f.hidden_field :topic_id %>
+<div>
+<%= f.label :content, 'Your message' %>:<br />
+<%= f.text_area :content %>
+</div>
+<div>
+<%= f.label :author, 'Your name' %>:<br />
+<%= f.text_field :author %>
+</div>
+<div>
+<%= f.label :email, 'Your email address (required but not shown)' %>:<br />
+<%= f.text_field :email %>
+</div>
+<%= f.submit 'Post reply' %>
+<% end %>

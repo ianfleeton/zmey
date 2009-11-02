@@ -1,0 +1,12 @@
+<div id="blog_sidebar">
+  <h2><%= h(blog_sidebar.name) %></h2>
+  <% blog_sidebar.topics.each do |t| %>
+  <div class="blog_post">
+    <h3><%= h t.topic %></h3>
+    <%= textilize(truncate(t.posts.first.content, 200)) %>
+    <p class="created_at">
+      <%= format_date(t.last_post_at) %>
+    </p>
+  </div>
+  <% end %>
+</div><!--#blog_sidebar-->

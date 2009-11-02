@@ -11,6 +11,9 @@ class PagesController < ApplicationController
     @page = Page.find_by_slug_and_website_id(params[:slug], @w)
     if @page
       @title = @page.title
+      if request.path == '/'
+        @blog = @w.blog
+      end
       if admin?
         # set up objects for admin use
         @product_placement = ProductPlacement.new

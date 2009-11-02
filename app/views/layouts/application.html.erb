@@ -5,6 +5,9 @@
   <title><% if @title %><%= h(@title) %><% else %><%= h @w.name %><% end %></title>
   <%= stylesheet_link_tag "screen", :media => "screen" if @w.use_default_css? %>
   <%= stylesheet_link_tag @w.css_url, :media => "screen" unless @w.css_url.blank? %>
+  <% unless @w.blog_id.nil? %>
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/forums/feed/<%= @w.blog_id_before_type_cast %>" />
+  <% end %>
 	<%= javascript_include_tag :defaults %>
 </head>
 <body id="<%= body_id %>">
@@ -37,6 +40,9 @@
   </ul>
   <% end %>
   <div id="content">
+    <% if !@blog.nil? %>
+    <%= render :partial => 'forums/blog_sidebar', :object => @blog %>
+    <% end %>
 <%= yield %>
   </div>
 <div id="footer">
@@ -52,6 +58,8 @@
   <%= link_to 'Products', products_url %>
   &middot;
   <%= link_to 'Images', :controller => 'images' %>
+  &middot;
+  <%= link_to 'Forums', :controller => 'forums' %>
   <% end %>
 </div>
 <% if @w.rbswp_active? -%>

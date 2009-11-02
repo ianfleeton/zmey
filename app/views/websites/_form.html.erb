@@ -24,6 +24,11 @@
 </div>
 
 <div>
+  <%= form.label :blog_id %>:<br />
+  <%= form.collection_select :blog_id, Forum.all(:conditions => {:website_id => @w.id}, :order => :name), :id, :name, {:include_blank => '-- No blog --'} %>
+</div>
+
+<div>
 	<%= form.label :css_url, 'CSS URL' %>:<br />
 	<%= form.text_field :css_url, :class => "text" %>
 </div>

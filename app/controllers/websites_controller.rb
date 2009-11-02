@@ -18,6 +18,8 @@ class WebsitesController < ApplicationController
 
     if @website.save
       Page.bootstrap @website
+
+      create_latest_news
       
       flash[:notice] = "Successfully added new website."
       redirect_to :action => "index"
@@ -45,5 +47,37 @@ class WebsitesController < ApplicationController
   
   def find_website
     @website = Website.find(params[:id])
+  end
+
+  def create_latest_news
+    # create latest news forum and link it as the website's blog
+    latest_news = Forum.new
+    latest_news.name = 'Latest News'
+    latest_news.website_id = @website.id
+    latest_news.locked = true
+    latest_news.save
+    @website.blog_id = latest_news.id
+    @website.save
+    
+    # create a vapid placeholder topic to introduce the new website
+    topic = Topic.new
+    topic.topic = 'New Website Launched'
+    topic.posts_count = 1
+    topic.forum_id = latest_news.id
+    topic.views = 1
+    topic.save
+
+    post = Post.new
+    post.topic_id = topic.id
+    post.content = 'The new website for ' + @website.name +
+      'is now complete. We hope you find it useful and easy to use.'
+    post.email = @website.email
+    post.author = @wesite.name
+    post.save
+    
+    topic.last_post_id = post.id
+    topic.last_post_author = post.author
+    topic.last_post_at = post.created_at
+    topic.save
   end
 end

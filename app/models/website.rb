@@ -14,6 +14,8 @@ class Website < ActiveRecord::Base
   has_many :orders, :order => 'created_at DESC', :dependent => :destroy
   has_many :pages, :order => 'name', :dependent => :destroy
   has_many :images, :dependent => :destroy
+  has_many :forums, :dependent => :destroy
+  belongs_to :blog, :class_name => 'Forum'
   
   def self.for(domain, subdomains)
     website = find_by_domain(domain)
