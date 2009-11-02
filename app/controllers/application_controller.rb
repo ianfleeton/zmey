@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  helper_method :logged_in?, :admin?
+  helper_method :logged_in?, :admin?, :admin_or_manager?, :manager?
 
   before_filter :require_website, :initialize_user
 
@@ -18,10 +18,25 @@ class ApplicationController < ActionController::Base
   def admin?
     logged_in? and @current_user.admin
   end
+  
+  def manager?
+    logged_in? and @current_user.managed_website == @w
+  end
+  
+  def admin_or_manager?
+    admin? or manager?
+  end
 
   def admin_required
     unless admin?
       flash[:notice] = 'You need to be logged in as an administrator to do that.'
+      redirect_to :controller => 'sessions', :action => 'new'
+    end
+  end
+  
+  def admin_or_manager_required
+    unless admin_or_manager?
+      flash[:notice] = 'You need to be logged in as an administrator or manager to do that.'
       redirect_to :controller => 'sessions', :action => 'new'
     end
   end
@@ -51,6 +66,7 @@ class ApplicationController < ActionController::Base
       render :template => "public/404.html", :layout => false, :status => 404
     end
   end
+
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
 end
