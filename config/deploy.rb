@@ -25,7 +25,7 @@ set :copy_exclude, [".git", "log"]
 
 ### Other options you can set ##
 # Comma separated list of additional domains for Apache
-set :domain_aliases, "companyregistrationsuk.co.uk,sage-training.org.uk,shop.bluebellwood.org,www.trademarkpatent.co.uk"
+set :domain_aliases, "companyregistrationsuk.co.uk,sage-training.org.uk,shop.bluebellwood.org,www.ammis.co.uk,www.trademarkpatent.co.uk,www.wysediscounts.co.uk"
 
 ## Dependencies
 # Set the commands and gems that your application requires. e.g.
