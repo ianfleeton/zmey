@@ -29,6 +29,17 @@
 </div>
 
 <div>
+	<label for="website_can_users_create_accounts_true">Can users create accounts?:</label>
+	<%= form.radio_button :can_users_create_accounts, true, :class => "radio" %> 
+	<label for="website_can_users_create_accounts_true">Yes</label> 
+	<%= form.radio_button :can_users_create_accounts, false, :class => "radio" %> 
+	<label for="website_can_users_create_accounts">No</label> 
+</div>
+
+<fieldset>
+<legend>CSS Settings
+
+<div>
 	<%= form.label :css_url, 'CSS URL' %>:<br />
 	<%= form.text_field :css_url, :class => "text" %>
 </div>
@@ -40,6 +51,8 @@
 	<%= form.radio_button :use_default_css, false, :class => "radio" %> 
 	<label for="website_use_default_css">No</label> 
 </div>
+
+</fieldset>
 
 <fieldset>
 <legend>Shop Settings</legend>
