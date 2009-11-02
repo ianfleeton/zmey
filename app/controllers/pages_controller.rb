@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :admin_required, :except => [:show]
+  before_filter :admin_or_manager_required, :except => [:show]
   before_filter :find_page, :only => [:edit, :update, :destroy, :move_up, :move_down]
 
   def index

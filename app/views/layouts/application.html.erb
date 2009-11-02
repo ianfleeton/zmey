@@ -48,11 +48,13 @@
 <div id="footer">
   ©<%= Date.today.year %> <%= h(@w.name) %>. All rights reserved.
   <a href="http://www.yesl.co.uk/">Ruby on Rails development</a> by Your e Solutions Ltd.
-  <% if admin? -%>
+  <% if admin_or_manager? -%>
   <br />
   <strong>Admin quick links:</strong>
+  <% if admin? %>
   <%= link_to 'Websites', websites_url %>
   &middot;
+  <% end %>
   <%= link_to 'Pages', :controller => 'pages' %>
   &middot;
   <%= link_to 'Products', products_url %>

@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_filter :admin_required
+  before_filter :admin_or_manager_required
 
   def index
     @images = Image.find(:all, :conditions => { :website_id => @w })
