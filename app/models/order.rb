@@ -6,6 +6,7 @@ class Order < ActiveRecord::Base
 
   # Associations
   belongs_to :country
+  belongs_to :basket
   has_many :order_lines, :dependent => :delete_all
   has_many :payments, :dependent => :delete_all
   # Order statuses
@@ -27,6 +28,12 @@ class Order < ActiveRecord::Base
     }[status]
   end
   
+  def empty_basket
+    unless basket.nil?
+      basket.basket_items.clear
+    end
+  end
+
   def payment_received?
     status == Order::PAYMENT_RECEIVED
   end

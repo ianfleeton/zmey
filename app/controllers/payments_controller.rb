@@ -46,9 +46,8 @@ class PaymentsController < ApplicationController
       @message = FAILURE_MESSAGE      
     else
       @message = 'Payment received'
-      @payment.accepted = true      
-      empty_basket
-      update_order
+      @payment.accepted = true
+      clean_up
     end
     @payment.save
     render :layout => false
@@ -56,17 +55,17 @@ class PaymentsController < ApplicationController
   
   private
   
-  def empty_basket
-    if session[:basket_id] && basket = Basket.find_by_id(session[:basket_id])
-      basket.basket_items.clear
-    end
+  def update_order order
+    order.status = Order::PAYMENT_RECEIVED
+    order.save
+    @payment.order_id = order.id
+    OrderNotifier.deliver_notification @w, order
   end
-  
-  def update_order
-    if session[:order_id] && order = Order.find_by_id_and_order_number(session[:order_id], @payment.cart_id)
-      order.status = Order::PAYMENT_RECEIVED
-      order.save
-      @payment.order_id = order.id
+
+  def clean_up
+    if order = Order.find_by_order_number(@payment.cart_id)
+      order.empty_basket
+      update_order order
     end
   end
 end

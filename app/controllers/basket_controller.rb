@@ -85,6 +85,9 @@ class BasketController < ApplicationController
     end
     @order.status = Order::WAITING_FOR_PAYMENT
     @order.shipping_method = 'Standard Shipping'
+    # Store the basket with the order to clean up after payment.
+    # Payment callbacks do not use session information.
+    @order.basket_id = @basket.id
     @order.save!
     session[:order_id] = @order.id
     redirect_to :controller => 'orders', :action => 'select_payment_method'
