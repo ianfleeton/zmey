@@ -32,7 +32,7 @@ class PaymentsController < ApplicationController
     @payment.transaction_id = params[:transId]
     @payment.transaction_status = (params[:transStatus] and params[:transStatus]=='Y')
     @payment.transaction_time = params[:transTime]
-    @payment.raw_auth_message = params[:RawAuthMessage]
+    @payment.raw_auth_message = params[:rawAuthMessage]
     @payment.accepted = false # for now
     @payment.save # this first save is for safety
 
