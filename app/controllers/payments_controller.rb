@@ -21,7 +21,7 @@ class PaymentsController < ApplicationController
     @payment.description = params[:desc]
     @payment.amount = params[:amount]
     @payment.currency = params[:currency]
-    @payment.test_mode = params[:testMode]
+    @payment.test_mode = (params[:testMode] != '0')
     @payment.name = params[:name]
     @payment.address = params[:address]
     @payment.postcode = params[:postcode]
