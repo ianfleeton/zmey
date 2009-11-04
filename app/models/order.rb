@@ -50,6 +50,20 @@ class Order < ActiveRecord::Base
     self.phone_number    = a.phone_number
   end
   
+  def delivery_address
+    Address.new(
+      :email_address => email_address,
+      :full_name => full_name,
+      :address_line_1 => address_line_1,
+      :address_line_2 => address_line_2,
+      :town_city => town_city,
+      :county => county,
+      :postcode => postcode,
+      :country_id => country_id,
+      :phone_number => phone_number
+    )
+  end
+  
   def calculate_total
     self.total = order_lines.inject(shipping_amount) {|sum, l| sum + l.tax_amount + l.quantity * l.product_price}
   end
