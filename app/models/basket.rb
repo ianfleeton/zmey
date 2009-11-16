@@ -8,6 +8,12 @@ class Basket < ActiveRecord::Base
     total
   end
   
+  def apply_shipping?
+    apply = false
+    basket_items.each {|i| apply = true if i.product.apply_shipping?}
+    apply
+  end
+  
   def self.purge_old(age = 1.month)
     self.destroy_all(["created_at < ?", Time.now - age])
   end

@@ -59,6 +59,8 @@ class BasketController < ApplicationController
     @address = nil
     @address = Address.find_by_id(session[:address_id]) if session[:address_id]
     @address = Address.new if @address.nil?
+    
+    @shipping_amount = shipping_amount
   end
 
   def place_order
@@ -85,6 +87,7 @@ class BasketController < ApplicationController
     end
     @order.status = Order::WAITING_FOR_PAYMENT
     @order.shipping_method = 'Standard Shipping'
+    @order.shipping_amount = shipping_amount(0)
     # Store the basket with the order to clean up after payment.
     # Payment callbacks do not use session information.
     @order.basket_id = @basket.id
@@ -166,5 +169,13 @@ class BasketController < ApplicationController
     @basket = Basket.new
     @basket.save
     session[:basket_id] = @basket.id
+  end
+
+  # calculates shipping amount based on the global website shipping amount
+  # and whether shipping is applicable to any products in the basket
+  # returns nil by default if there is no shipping_amount
+  # set return_if_nil to 0, for example, if using in a calculation
+  def shipping_amount(return_if_nil=nil)
+    @basket.apply_shipping? ? @w.shipping_amount : return_if_nil
   end
 end

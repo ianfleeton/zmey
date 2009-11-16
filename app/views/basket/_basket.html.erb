@@ -39,10 +39,20 @@
       <% end -%>
     </tr>
     <% end -%>
+    <% unless shipping_amount.nil? -%>
+    <tr class="shipping_amount">
+      <td class="empty" colspan="3">&nbsp;</td>
+      <th>Shipping amount:</th>
+      <td><%= formatted_price shipping_amount %></td>
+      <% if can_update %>
+      <td class="empty">&nbsp;</td>
+      <% end %>
+    </tr>
+    <% end -%>
     <tr class="basket_total">
       <td class="empty" colspan="3">&nbsp;</td>
       <th>Total:</th>
-      <td><%= formatted_price @basket.total %></td>
+      <td><%= formatted_price @basket.total + (shipping_amount.nil? ? 0 : shipping_amount) %></td>
       <% if can_update %>
       <td class="empty">&nbsp;</td>
       <% end %>
