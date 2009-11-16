@@ -65,6 +65,7 @@ class WebsitesController < ApplicationController
     topic.posts_count = 1
     topic.forum_id = latest_news.id
     topic.views = 1
+    topic.last_post_at = Time.now
     topic.save
 
     post = Post.new
