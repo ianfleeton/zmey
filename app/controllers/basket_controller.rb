@@ -122,6 +122,8 @@ class BasketController < ApplicationController
             flash[:notice] = 'Please specify: ' + feature.name
             return
           end
+        when Feature::DROP_DOWN
+          f_selection.choice_id = value
         end
         f_selections << f_selection
       end

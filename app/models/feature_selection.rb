@@ -1,6 +1,7 @@
 class FeatureSelection < ActiveRecord::Base
   belongs_to :feature
   belongs_to :basket_item
+  belongs_to :choice
   def description
     d = feature.name + ': '
     case feature.ui_type

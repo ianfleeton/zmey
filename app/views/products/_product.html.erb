@@ -22,6 +22,12 @@
         <% case feature.ui_type
         when Feature::TEXT_FIELD %>
           <input type="text" name="feature[<%= feature.id %>]" />
+        <% when Feature::DROP_DOWN %>
+          <select name="feature[<%= feature.id %>]">
+            <% feature.choices.each do |choice| %>
+            <option value="<%= choice.id %>"><%= h choice.name %></option>
+            <% end %>
+          </select>
         <% end %>
         <% if admin? -%>
         <%= link_to 'Edit feature', edit_feature_path(feature.id) %>
