@@ -8,7 +8,7 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
     
-    when /the homepage/
+    when /the home\s?page/
       '/'
     
     # Add more mappings here.
@@ -27,7 +27,7 @@ module NavigationHelpers
 
     when /the create account page/
       url_for :controller => 'users', :action => 'new', :only_path => true
-  
+
     when /the new page page/
       url_for :controller => 'pages', :action => 'new', :only_path => true
 
@@ -36,7 +36,7 @@ module NavigationHelpers
 
     when /the list websites page/
       url_for :controller => 'websites', :only_path => true
-  
+
     when /the new website page/
       new_website_path
 
