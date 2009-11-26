@@ -1,0 +1,9 @@
+one:
+  order_id: 1
+  product_id: 1
+  product_sku: AMP
+  product_name: Amplifier
+  product_price: 9.99
+  tax_amount: 0.00
+  quantity: 1
+  line_total: 9.99
