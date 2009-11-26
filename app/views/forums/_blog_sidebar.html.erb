@@ -5,7 +5,9 @@
     <h3><%= h t.topic %></h3>
     <%= textilize(truncate(t.posts.first.content, 200)) %>
     <p class="created_at">
-      <%= format_date(t.last_post_at) %>
+      <span class="posted">Posted</span> <%= format_date(t.last_post_at) %>
+      <span class="by">by</span>
+      <span class="author"><%= h t.last_post_author %></span>
     </p>
   </div>
   <% end %>
