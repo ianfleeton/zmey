@@ -8,7 +8,9 @@ xml.rss(:version=>"2.0"){
       for topic in @forum.topics
         xml.item do
           xml.title(topic.topic)
-          xml.description(topic.posts.first.content)      
+          xml.description{
+            xml.cdata! textilize(topic.posts.first.content)
+          }
           xml.author(topic.last_post_author)
           xml.pubDate(topic.last_post_at.strftime("%a, %d %b %Y %H:%M:%S %z"))
           url = 'http://' + @w.domain + '/topics/show/' + topic.id.to_s
