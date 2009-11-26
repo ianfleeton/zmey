@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_filter :find_product, :only => [:show, :edit, :update]
-  before_filter :admin_required, :except => [:show]
+  before_filter :admin_or_manager_required, :except => [:show]
 
   def index
     @products = Product.all(:conditions => {:website_id => @w.id}, :order => :name)
@@ -40,7 +40,8 @@ class ProductsController < ApplicationController
   protected
   
   def find_product
-    @product = Product.find(params[:id])
+    @product = Product.find_by_id_and_website_id(params[:id], @w.id)
+    render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found" if @product.nil?
   end
 
 end
