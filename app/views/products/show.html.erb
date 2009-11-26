@@ -1,3 +1,3 @@
 <h1><%= h @product.name %></h1>
 <%= flash_notice %>
-<%= render :partial => 'product', :object => @product %>
+<%= render :partial => 'product', :object => @product, :locals => {:full => true} %>

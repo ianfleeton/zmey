@@ -1,8 +1,14 @@
 <div class="product">
-  <h2><%= h product.name %></h2>
+  <% unless full -%>
+  <h2><%= link_to h(product.name), product_path(product) %></h2>
+  <% end -%>
   <% unless product.image.nil? -%>
   <p class="product_image">
-  <%= image_tag(product.image.url(200)) %>
+    <% if full %>
+    <%= image_tag(product.image.url(400)) %>
+    <% else %>
+    <%= link_to image_tag(product.image.url(200)), product_path(product) %>
+    <% end %>
   </p>
   <% end -%>
   <div class="product_detail">
@@ -12,7 +18,11 @@
     <input type="hidden" name="page_id" value="<%= page.id %>" />
     <% end -%>
     <div class="product_description">
+      <% if full and !product.full_detail.empty? -%>
+      <%= textilize(product.full_detail) %>
+      <% else -%>
       <%= textilize(product.description) %>
+      <% end -%>
     </div>
     <% unless product.features.empty? %>
     <div class="product_features">

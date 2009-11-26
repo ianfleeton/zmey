@@ -2,7 +2,7 @@
 <%= textilize(@page.content) %>
 <% @page.product_placements.each do |placement| %>
   <% product = placement.product %>
-  <%= render :partial => 'products/product', :object => product, :locals => {:placement => placement, :page => @page} %>
+  <%= render :partial => 'products/product', :object => product, :locals => {:placement => placement, :page => @page, :full => false} %>
 <% end %>
 <% if admin? -%>
 <h2>Admin Controls</h2>

@@ -24,6 +24,11 @@
 </div>
 
 <div>
+	<%= form.label :full_detail %>:<br />
+	<%= form.text_area :full_detail, :class => "text" %>
+</div>
+
+<div>
 	<label for="product_apply_shipping_true">Apply shipping?:</label><br />
 	<%= form.radio_button :apply_shipping, true, :class => "radio" %> 
 	<label for="product_apply_shipping_true">Yes</label> 
