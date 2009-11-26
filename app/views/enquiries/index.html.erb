@@ -1,5 +1,9 @@
 <h1>Listing enquiries</h1>
 
+<% if @enquiries.empty? -%>
+<p>No enquiries have been sent yet.</p>
+<% else -%>
+
 <table>
   <tr>
     <th>Name</th>
@@ -24,3 +28,5 @@
   </tr>
 <% end %>
 </table>
+
+<% end -%>
