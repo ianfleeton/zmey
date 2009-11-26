@@ -6,6 +6,7 @@
 *.pdf
 *.odt
 *.gif
+*.graffle
 *.png
 *.doc
 database.yml
