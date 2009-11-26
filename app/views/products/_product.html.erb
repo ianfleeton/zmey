@@ -50,7 +50,7 @@
       Price:
       <%= formatted_price(product.price) %>
     </p>
-    <%= submit_tag 'Add to Basket' %>
+    <span class="add_to_basket"><%= submit_tag 'Add to Basket' %></span>
     <% end %>
   </div>
   <% if admin? -%>
