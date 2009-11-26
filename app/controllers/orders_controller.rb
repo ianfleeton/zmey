@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
-  before_filter :admin_required, :only => [:index]
+  before_filter :admin_or_manager_required, :only => [:index, :show, :destroy]
 
+  before_filter :find_order, :only => [:show, :destroy]
   before_filter :require_order, :only => [:select_payment_method, :receipt]
 
   def index
@@ -13,6 +14,10 @@ class OrdersController < ApplicationController
   def receipt
     redirect_to :controller => 'basket', :action => 'index' and return unless @order.payment_received?
   end
+  
+  def show
+    render :action => 'receipt'
+  end
 
   def purge_old_unpaid
     Order.purge_old_unpaid
@@ -20,9 +25,15 @@ class OrdersController < ApplicationController
     redirect_to :action => 'index'
   end
 
+  def destroy
+    @order.destroy
+    flash[:notice] = "Order deleted."
+    redirect_to :action => "index"
+  end
+
   protected
 
-  # get valid order or send user back to checkout
+  # get valid order from current session or send user back to checkout
   def require_order
     @order = Order.from_session session
     if @order.nil?
@@ -31,4 +42,12 @@ class OrdersController < ApplicationController
     end
   end
 
+  # get specific order
+  def find_order
+    @order = Order.find_by_id_and_website_id(params[:id], @w.id)
+    if @order.nil?
+      flash[:notice] = 'Cannot find order.'
+      redirect_to :action => 'index'
+    end
+  end
 end
