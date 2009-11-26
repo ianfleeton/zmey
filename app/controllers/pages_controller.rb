@@ -36,11 +36,17 @@ class PagesController < ApplicationController
     moved
   end
 
+  # intra-list moving code from
+  # http://blog.airbladesoftware.com/2008/3/19/moving-between-lists-with-acts_as_list
   def update
+    new_position = params[:page].delete(:position).to_i
+    old_parent_id = @page.parent_id
     if @page.update_attributes(params[:page])
+      @page.move_to_position new_position if old_parent_id != @page.parent_id
       flash[:notice] = 'Page saved.'
       redirect_to page_path(@page)
     else
+      @page.position = new_position
       render :action => 'edit'
     end
   end

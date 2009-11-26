@@ -53,4 +53,32 @@ class Page < ActiveRecord::Base
   def to_param
     slug
   end
+
+  # http://blog.airbladesoftware.com/2008/3/19/moving-between-lists-with-acts_as_list
+  def parent_id=(parent_id)
+    p = position
+    remove_from_list if (p && valid?)
+    super
+    insert_at position_in_bounds(p) if (p && valid?)
+  end
+
+  # http://blog.airbladesoftware.com/2008/3/19/moving-between-lists-with-acts_as_list
+  def move_to_position(position)
+    insert_at position_in_bounds(position)
+  end
+  
+  private
+  
+  # http://blog.airbladesoftware.com/2008/3/19/moving-between-lists-with-acts_as_list
+  def position_in_bounds(pos)
+    length = parent.children.length
+    length += 1 unless parent.children.include? self
+    if pos < 1
+      1
+    elsif pos > length
+      length
+    else
+      pos
+    end
+  end
 end
