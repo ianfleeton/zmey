@@ -14,7 +14,7 @@ class PagesController < ApplicationController
       if request.path == '/'
         @blog = @w.blog
       end
-      if admin?
+      if admin_or_manager?
         # set up objects for admin use
         @product_placement = ProductPlacement.new
       end

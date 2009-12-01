@@ -4,15 +4,17 @@
   <% product = placement.product %>
   <%= render :partial => 'products/product', :object => product, :locals => {:placement => placement, :page => @page, :full => false} %>
 <% end %>
-<% if admin? -%>
-<h2>Admin Controls</h2>
-<!-- I probably need moving to product_placement/_form.html -->
-<% unless @w.products.empty? -%>
-<% form_for @product_placement do |form| %>
-<input type="hidden" name="product_placement[page_id]" value="<%= @page.id %>" />
-<%= form.collection_select :product_id, @w.products, :id, :name %>
-<%= submit_tag 'Add Product' %>
-<% end %>
-<% end -%>
-<p><%= link_to 'Edit this page', :action => 'edit', :id => @page.id %></p>
+<% if admin_or_manager? -%>
+<div id="page_admin_controls">
+  <h2>Admin Controls</h2>
+  <!-- I probably need moving to product_placement/_form.html -->
+  <% unless @w.products.empty? -%>
+  <% form_for @product_placement do |form| %>
+  <input type="hidden" name="product_placement[page_id]" value="<%= @page.id %>" />
+  <%= form.collection_select :product_id, @w.products, :id, :name %>
+  <%= submit_tag 'Add Product' %>
+  <% end %>
+  <% end -%>
+  <p><%= link_to 'Edit this page', :action => 'edit', :id => @page.id %></p>
+</div>
 <% end -%>

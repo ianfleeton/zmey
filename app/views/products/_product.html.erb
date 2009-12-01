@@ -53,7 +53,8 @@
     <span class="add_to_basket"><%= submit_tag 'Add to Basket' %></span>
     <% end %>
   </div>
-  <% if admin? -%>
+  <% if admin_or_manager? -%>
+  <div class="product_admin_controls">
   <p>
     <%= link_to 'Edit ' + h(product.name), edit_product_path(product) %><br />
     <%= link_to 'Add feature to ' + h(product.name), new_feature_path(:product_id => product.id) %>
@@ -61,5 +62,6 @@
   <% if defined? placement -%>
   <%= button_to "Remove from page", product_placement_path(placement), :method => :delete %>
   <% end -%>
+  </div>
   <% end -%>
 </div>

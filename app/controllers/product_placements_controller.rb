@@ -1,5 +1,6 @@
 class ProductPlacementsController < ApplicationController
-  before_filter :admin_required
+  before_filter :admin_or_manager_required
+  # TODO: restrict by website
   
   def create
     @product_placement = ProductPlacement.new(params[:product_placement])
