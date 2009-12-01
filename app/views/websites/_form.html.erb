@@ -36,6 +36,14 @@
 	<label for="website_can_users_create_accounts">No</label> 
 </div>
 
+<div>
+	<label for="website_private_true">Private (users must be logged in to view)?:</label>
+	<%= form.radio_button :private, true, :class => "radio" %>
+	<label for="website_private_true">Yes</label>
+	<%= form.radio_button :private, false, :class => "radio" %>
+	<label for="website_private">No</label>
+</div>
+
 <fieldset>
 <legend>CSS Settings
 

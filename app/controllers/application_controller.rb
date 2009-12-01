@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_filter :require_website, :initialize_user
-
+  before_filter :require_website, :initialize_user, :protect_private_website
+  
   protected
 
   def logged_in?
@@ -64,6 +64,13 @@ class ApplicationController < ActionController::Base
       end
     else
       render :template => "public/404.html", :layout => false, :status => 404
+    end
+  end
+  
+  def protect_private_website
+    if @w.private? && !logged_in?
+      flash[:notice] = 'You must be logged in to view this website.'
+      redirect_to :controller => 'sessions', :action => 'new'
     end
   end
 

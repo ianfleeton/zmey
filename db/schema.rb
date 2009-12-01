@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091123174900) do
+ActiveRecord::Schema.define(:version => 20091130110416) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -284,6 +284,7 @@ ActiveRecord::Schema.define(:version => 20091123174900) do
     t.boolean  "skip_payment",                                                   :default => false, :null => false
     t.boolean  "blog_id"
     t.decimal  "shipping_amount",                 :precision => 10, :scale => 3, :default => 0.0,   :null => false
+    t.boolean  "private",                                                        :default => false, :null => false
   end
 
 end
