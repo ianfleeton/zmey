@@ -65,6 +65,8 @@ class Image < ActiveRecord::Base
   end
 
   def extension
-    filename.split(".").last
+    e = filename.split(".").last
+    e = '' if e.nil?
+    e
   end
 end
