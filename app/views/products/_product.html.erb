@@ -1,4 +1,4 @@
-<div class="product">
+<div class="product<%= ' full_product' if full %>">
   <% unless full -%>
   <h2><%= link_to h(product.name), product_path(product) %></h2>
   <% end -%>
