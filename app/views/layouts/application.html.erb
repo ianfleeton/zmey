@@ -6,9 +6,9 @@
   <%= stylesheet_link_tag "screen", :media => "screen" if @w.use_default_css? %>
   <%= stylesheet_link_tag "admin", :media => "screen" %>
   <%= stylesheet_link_tag @w.css_url, :media => "screen" unless @w.css_url.blank? %>
-  <% unless @w.blog_id.nil? or !@w.blog_id %>
+<% if @w.blog_id -%>
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/forums/feed/<%= @w.blog_id_before_type_cast %>" />
-  <% end %>
+<% end -%>
 	<%= javascript_include_tag :defaults %>
 </head>
 <body id="<%= body_id %>">
