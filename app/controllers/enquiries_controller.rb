@@ -34,6 +34,7 @@ class EnquiriesController < ApplicationController
       @enquiry.name = @current_user.name
       @enquiry.email = @current_user.email
     end
+    @enquiry.enquiry = params[:enquiry] unless params[:enquiry].nil?
 
     respond_to do |format|
       format.html { render :layout => 'application' } # new.html.erb
