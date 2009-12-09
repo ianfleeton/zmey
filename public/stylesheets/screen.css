@@ -172,3 +172,11 @@ form.button-to {
   text-align: center;
   overflow: hidden;
 }
+
+/**
+ * Products
+ */
+
+.product .quantity input {
+  width: 3em;
+}
