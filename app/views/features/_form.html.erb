@@ -7,11 +7,11 @@
 <div>
   <%= form.label :ui_type, 'Display as a' %>:<br />
   <select id="feature_ui_type" name="feature[ui_type]">
-    <option value="<%= Feature::TEXT_FIELD %>">Text field</option>
-    <option value="<%= Feature::TEXT_AREA %>">Text area</option>
-    <option value="<%= Feature::CHECK_BOX %>">Check box</option>
-    <option value="<%= Feature::RADIO_BUTTONS %>">Radio button set</option>
-    <option value="<%= Feature::DROP_DOWN %>">Drop down menu</option>
+    <option value="<%= Feature::TEXT_FIELD %>"<%= ' selected="selected"' if @feature.ui_type==Feature::TEXT_FIELD %>>Text field</option>
+    <option value="<%= Feature::TEXT_AREA %>"<%= ' selected="selected"' if @feature.ui_type==Feature::TEXT_AREA %>>Text area</option>
+    <option value="<%= Feature::CHECK_BOX %>"<%= ' selected="selected"' if @feature.ui_type==Feature::CHECK_BOX %>>Check box</option>
+    <option value="<%= Feature::RADIO_BUTTONS %>"<%= ' selected="selected"' if @feature.ui_type==Feature::RADIO_BUTTONS %>>Radio button set</option>
+    <option value="<%= Feature::DROP_DOWN %>"<%= ' selected="selected"' if @feature.ui_type==Feature::DROP_DOWN %>>Drop down menu</option>
   </select>
 </div>
 
