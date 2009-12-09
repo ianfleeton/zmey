@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_filter :find_user, :except => [:index, :new, :create, :forgot_password, :forgot_password_send]
   before_filter :admin_or_same_user_required, :only => [:show, :edit]
-  before_filter :admin_required, :only => [:index, :destroy]
+  before_filter :admin_required, :only => [:destroy]
+  before_filter :admin_or_manager_required, :only => [:index]
 
   def index
     @users = @w.users
