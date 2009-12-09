@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_filter :admin_required, :only => [:index, :destroy]
 
   def index
-    @users = User.find(:all, :order => "name")
+    @users = @w.users
   end
   
   def show
@@ -21,6 +21,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     @user.admin = false
+    @user.website_id = @w.id
     
     if @user.save
       unless admin?
