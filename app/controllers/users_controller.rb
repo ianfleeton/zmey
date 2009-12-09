@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     @user.website_id = @w.id
     
     if @user.save
-      unless admin?
+      unless admin_or_manager?
         @current_user  = @user
         session[:user] = @user.id
       end
