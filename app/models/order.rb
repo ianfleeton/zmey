@@ -12,6 +12,7 @@ class Order < ActiveRecord::Base
   # Order statuses
   WAITING_FOR_PAYMENT = 1
   PAYMENT_RECEIVED    = 2
+  PAYMENT_ON_ACCOUNT  = 3
   
   def self.from_session session
     session[:order_id] ? find_by_id(session[:order_id]) : nil
@@ -24,7 +25,8 @@ class Order < ActiveRecord::Base
   def status_description
     {
       WAITING_FOR_PAYMENT => 'Waiting for payment',
-      PAYMENT_RECEIVED => 'Payment received'
+      PAYMENT_RECEIVED => 'Payment received',
+      PAYMENT_ON_ACCOUNT => 'Payment on account'
     }[status]
   end
   

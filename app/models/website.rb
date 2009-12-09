@@ -27,4 +27,8 @@ class Website < ActiveRecord::Base
     end
     website
   end
+  
+  def only_accept_payment_on_account?
+    accept_payment_on_account and !(rbswp_active)
+  end
 end

@@ -100,7 +100,15 @@ class BasketController < ApplicationController
     @order.basket_id = @basket.id
     @order.save!
     session[:order_id] = @order.id
-    redirect_to :controller => 'orders', :action => 'select_payment_method'
+    if @w.only_accept_payment_on_account?
+      @order.status = Order::PAYMENT_ON_ACCOUNT
+      @order.save
+      OrderNotifier.deliver_notification @w, @order
+      @order.empty_basket
+      redirect_to :controller => 'orders', :action => 'receipt'
+    else
+      redirect_to :controller => 'orders', :action => 'select_payment_method'
+    end
   end
   
   def purge_old

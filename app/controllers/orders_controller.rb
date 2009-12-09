@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
   end
 
   def receipt
-    redirect_to :controller => 'basket', :action => 'index' and return unless @order.payment_received?
+    redirect_to :controller => 'basket', :action => 'index' and return unless (@order.payment_received? or @order.status==Order::PAYMENT_ON_ACCOUNT)
   end
   
   def show
