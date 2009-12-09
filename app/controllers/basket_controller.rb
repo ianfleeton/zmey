@@ -58,7 +58,14 @@ class BasketController < ApplicationController
 
     @address = nil
     @address = Address.find_by_id(session[:address_id]) if session[:address_id]
-    @address = Address.new if @address.nil?
+    if @address.nil?
+      @address = Address.new
+      if logged_in?
+        @address.user_id = @current_user.id
+        @address.email_address = @current_user.email
+        @address.full_name = @current_user.name
+      end
+    end
     
     @shipping_amount = shipping_amount
   end
