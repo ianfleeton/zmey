@@ -1,0 +1,18 @@
+#page_admin_controls, .product_admin_controls {
+  background-image: url(/images/admin_stripes.png);
+  background-repeat: repeat-x;
+  border: 1px solid #333;
+  background-color: #eef;
+  padding: 12px 12px 12px 12px;
+  margin: 4px 0;
+}
+
+#page_admin_controls h2 {
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+#page_admin_controls p {
+  font-size: 12px;
+  margin: 4px 0;
+}
