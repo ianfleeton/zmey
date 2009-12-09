@@ -71,6 +71,7 @@ class Page < ActiveRecord::Base
   
   # http://blog.airbladesoftware.com/2008/3/19/moving-between-lists-with-acts_as_list
   def position_in_bounds(pos)
+    return 1 if parent.nil?
     length = parent.children.length
     length += 1 unless parent.children.include? self
     if pos < 1
