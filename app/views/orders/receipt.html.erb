@@ -4,7 +4,8 @@
 
 <p>Order placed: <%= h @order.created_at %></p>
 
-        
+<p>Order status: <%= @order.status_description %></p>
+
 <h2>Deliver to</h2>
 
 <%= format_address @order %>
