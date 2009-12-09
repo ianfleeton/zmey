@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091130110416) do
+ActiveRecord::Schema.define(:version => 20091206203648) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -236,6 +236,7 @@ ActiveRecord::Schema.define(:version => 20091130110416) do
     t.datetime "updated_at"
     t.boolean  "apply_shipping",                                :default => true, :null => false
     t.text     "full_detail",                                                     :null => false
+    t.integer  "tax_type",                                      :default => 1,    :null => false
   end
 
   create_table "topics", :force => true do |t|
@@ -263,7 +264,10 @@ ActiveRecord::Schema.define(:version => 20091130110416) do
     t.integer  "manages_website_id",    :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "website_id",            :default => 0,     :null => false
   end
+
+  add_index "users", ["website_id"], :name => "index_users_on_website_id"
 
   create_table "websites", :force => true do |t|
     t.string   "subdomain",                                                                         :null => false
@@ -285,6 +289,7 @@ ActiveRecord::Schema.define(:version => 20091130110416) do
     t.boolean  "blog_id"
     t.decimal  "shipping_amount",                 :precision => 10, :scale => 3, :default => 0.0,   :null => false
     t.boolean  "private",                                                        :default => false, :null => false
+    t.boolean  "accept_payment_on_account",                                      :default => false, :null => false
   end
 
 end
