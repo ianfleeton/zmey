@@ -5,8 +5,8 @@
       <th>Ref</th>
       <th>Item</th>
       <th>Quantity</th>
-      <th>Price</th>
-      <th>Cost</th>
+      <th class="price">Price</th>
+      <th class="line_total">Cost</th>
       <% if can_update -%>
       <th>Remove Item</th>
       <% end -%>
@@ -32,8 +32,8 @@
       <%= item.quantity %>
       <% end -%>
       </td>
-      <td><%= formatted_price(item.product.price) %></td>
-      <td><%= formatted_price(item.line_total) %></td>
+      <td class="price"><%= formatted_price(item.product.price) %></td>
+      <td class="line_total"><%= formatted_price(item.line_total) %></td>
       <% if can_update %>
       <td><input type="submit" value="Remove Item" name="remove_item[<%= item.id %>]" /></td>
       <% end -%>
