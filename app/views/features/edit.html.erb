@@ -13,3 +13,21 @@
   <% end %>
   </fieldset>
 </div>
+<h2>Choices</h2>
+<% if @feature.choices.empty? -%>
+<p>This feature has no choices.</p>
+<% else -%>
+<table>
+<% @feature.choices.each do |choice| -%>
+  <tr>
+    <td>
+      <%= link_to h(choice.name), edit_choice_path(choice) %>
+    </td>
+    <td>
+      <td><%= button_to "Delete", choice_path(choice), :method => :delete %></td>
+    </td>
+  </tr>
+<% end -%>
+</table>
+<% end -%>
+<p><%= link_to 'Add choice', new_choice_path(:feature_id => @feature.id) %></p>

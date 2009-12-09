@@ -1,0 +1,12 @@
+<h1>New Choice for &#8220;<%= h @feature.name %>&#8221;</h1>
+<%= flash_notice %>
+<div class="form">
+	<%= error_messages_for :choice -%>
+
+  <% form_for @choice do |form| %>
+  <%= render :partial => 'form', :object => form %>
+
+  <%= submit_tag "Add New Choice" %>
+
+  <% end %>
+</div>
