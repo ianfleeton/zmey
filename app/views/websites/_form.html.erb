@@ -25,7 +25,7 @@
 
 <div>
   <%= form.label :blog_id %>:<br />
-  <%= form.collection_select :blog_id, Forum.all(:conditions => {:website_id => @w.id}, :order => :name), :id, :name, {:include_blank => '-- No blog --'} %>
+  <%= form.collection_select :blog_id, Forum.all(:conditions => {:website_id => @website.id}, :order => :name), :id, :name, {:include_blank => '-- No blog --'} %>
 </div>
 
 <div>
