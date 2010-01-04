@@ -71,7 +71,7 @@ class WebsitesController < ApplicationController
     post = Post.new
     post.topic_id = topic.id
     post.content = 'The new website for ' + @website.name +
-      'is now complete. We hope you find it useful and easy to use.'
+      ' is now complete. We hope you find it useful and easy to use.'
     post.email = @website.email
     post.author = @website.name
     post.save
