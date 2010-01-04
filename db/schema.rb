@@ -296,7 +296,7 @@ ActiveRecord::Schema.define(:version => 20091209204255) do
     t.boolean  "rbswp_test_mode",                                                :default => false, :null => false
     t.boolean  "can_users_create_accounts",                                      :default => true,  :null => false
     t.boolean  "skip_payment",                                                   :default => false, :null => false
-    t.boolean  "blog_id"
+    t.integer  "blog_id"
     t.decimal  "shipping_amount",                 :precision => 10, :scale => 3, :default => 0.0,   :null => false
     t.boolean  "private",                                                        :default => false, :null => false
     t.boolean  "accept_payment_on_account",                                      :default => false, :null => false

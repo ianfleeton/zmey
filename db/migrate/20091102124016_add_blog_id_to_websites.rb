@@ -1,6 +1,6 @@
 class AddBlogIdToWebsites < ActiveRecord::Migration
   def self.up
-    add_column :websites, :blog_id, :boolean, :default => nil, :null => true
+    add_column :websites, :blog_id, :integer, :default => nil, :null => true
   end
 
   def self.down
