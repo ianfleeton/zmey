@@ -4,12 +4,21 @@ class Product < ActiveRecord::Base
 
   has_many :pages, :through => :product_placement
   has_many :features, :dependent => :destroy
+  has_many :quantity_prices, :order => :quantity, :dependent => :delete_all
   belongs_to :image
 
   # Tax types
   NO_TAX = 1
   INC_VAT = 2
   EX_VAT = 3
+  
+  def price_at_quantity(q)
+    p = price
+    if q > 1 and !quantity_prices.empty?
+      quantity_prices.each {|qp| p = qp.price if q >= qp.quantity}
+    end
+    p
+  end
   
   def tax_amount
     if tax_type == Product::EX_VAT

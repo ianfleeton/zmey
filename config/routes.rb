@@ -33,6 +33,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :addresses
   map.resources :features
   map.resources :choices
+  map.resources :quantity_prices
   map.resources :enquiries, :collection => { :thank_you => :get }
   map.resources :websites
   map.resources :orders, :collection => { :receipt => :get, :select_payment_method => :get, :purge_old_unpaid => :get }

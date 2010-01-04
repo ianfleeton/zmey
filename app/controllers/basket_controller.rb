@@ -85,10 +85,10 @@ class BasketController < ApplicationController
         :product_id => i.product.id,
         :product_sku => i.product.sku,
         :product_name => i.product.name,
-        :product_price => i.product.price,
+        :product_price => i.product.price_at_quantity(i.quantity),
         :tax_amount => 0,
         :quantity => i.quantity,
-        :line_total => i.product.price * i.quantity,
+        :line_total => i.product.price_at_quantity(i.quantity) * i.quantity,
         :feature_descriptions => i.feature_descriptions
       )
     end

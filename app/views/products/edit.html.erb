@@ -22,7 +22,21 @@
 <div class="feature">
   <p><%= h feature.name %> <%= link_to "Edit", edit_feature_path(feature) %></p>
   <% form_tag feature_path(feature), :method => :delete do -%>
-    <input type="submit" value="Delete" />
+    <input type="submit" value="Delete Feature" />
   <% end -%>
 </div>
 <% end -%>
+
+<h2>Quantity&#8208;based pricing</h2>
+<% if @product.quantity_prices.empty? -%>
+<p>This product is not using quantity&#8208;based pricing.</p>
+<% end -%>
+
+<% quantity_prices_table(@product) do |qp| %>
+  <td>
+    <%= link_to 'Edit', edit_quantity_price_path(qp) %>
+    <%= button_to "Delete", quantity_price_path(qp), :method => :delete %>
+  </td>
+<% end %>
+
+<p><%= link_to 'Add a quantity/price rule', new_quantity_price_path(:product_id => @product.id) %>

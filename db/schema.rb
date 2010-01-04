@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091206203648) do
+ActiveRecord::Schema.define(:version => 20091209204255) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -238,6 +238,16 @@ ActiveRecord::Schema.define(:version => 20091206203648) do
     t.text     "full_detail",                                                     :null => false
     t.integer  "tax_type",                                      :default => 1,    :null => false
   end
+
+  create_table "quantity_prices", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "quantity",                                  :default => 0,   :null => false
+    t.decimal  "price",      :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "quantity_prices", ["product_id"], :name => "index_quantity_prices_on_product_id"
 
   create_table "topics", :force => true do |t|
     t.string   "topic",            :default => "", :null => false

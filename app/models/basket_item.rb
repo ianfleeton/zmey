@@ -5,7 +5,7 @@ class BasketItem < ActiveRecord::Base
   before_save :update_features
 
   def line_total
-    quantity * product.price
+    quantity * product.price_at_quantity(quantity)
   end
 
   def self.describe_feature_selections fs

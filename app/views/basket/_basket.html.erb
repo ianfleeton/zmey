@@ -32,7 +32,7 @@
       <%= item.quantity %>
       <% end -%>
       </td>
-      <td class="price"><%= formatted_price(item.product.price) %></td>
+      <td class="price"><%= formatted_price(item.product.price_at_quantity(item.quantity)) %></td>
       <td class="line_total"><%= formatted_price(item.line_total) %></td>
       <% if can_update %>
       <td><input type="submit" value="Remove Item" name="remove_item[<%= item.id %>]" /></td>
