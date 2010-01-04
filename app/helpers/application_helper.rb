@@ -27,11 +27,19 @@ module ApplicationHelper
     content_tag('p', '&nbsp;', {:class => 'clear'})
   end
   
+  def a_tick
+    '<span class="tick">✔</span>'
+  end
+  
+  def a_cross
+    '<span class="cross">✘</span>'
+  end
+  
   def tick_cross yes, show_cross=true
     if yes
-      '<span class="tick">✔</span>'
+      a_tick
     elsif show_cross
-      '<span class="cross">✘</span>'
+      a_cross
     end
   end
   
