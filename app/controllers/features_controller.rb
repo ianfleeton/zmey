@@ -33,7 +33,6 @@ class FeaturesController < ApplicationController
   end
   
   def destroy
-    redirect_to products_path and return unless product_valid?
     @feature.destroy
     flash[:notice] = "Feature deleted."
     redirect_to edit_product_path(@feature.product)
@@ -43,6 +42,7 @@ class FeaturesController < ApplicationController
   
   def find_feature
     @feature = Feature.find(params[:id])
+    redirect_to products_path and return unless product_valid?
   end
   
   def product_valid?
