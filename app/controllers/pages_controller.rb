@@ -76,7 +76,10 @@ class PagesController < ApplicationController
   protected
   
   def find_page
-    @page = Page.find(params[:id])
+    @page = Page.find_by_id_and_website_id(params[:id], @w.id)
+    unless @page
+      render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found"
+    end
   end
   
   def moved
