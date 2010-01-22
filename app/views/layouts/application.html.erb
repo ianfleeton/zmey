@@ -25,7 +25,7 @@
   <% if nav.id_attribute == 'primary_nav' -%>
     <%= nav_link_to 'Enquiries', new_enquiry_path %>
     <% if logged_in? -%>
-    <%= nav_link_to h(@current_user.name) + '&#8217;s Account', {:controller => 'users', :action => 'show', :id => @current_user}, nil, 'n_account' %>
+    <%= nav_link_to 'My Account', {:controller => 'users', :action => 'show', :id => @current_user}, nil, 'n_account' %>
     <%= nav_link_to 'Sign Out', :controller => 'sessions', :action => 'destroy' %>
     <% else -%>
     <% if @w.can_users_create_accounts? -%>
