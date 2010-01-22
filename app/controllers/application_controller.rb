@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_filter :require_website, :initialize_user, :protect_private_website
+  before_filter :require_website, :initialize_user, :protect_private_website, :initialize_tax_display
   
   protected
 
@@ -71,6 +71,18 @@ class ApplicationController < ActionController::Base
     if @w.private? && !logged_in?
       flash[:notice] = 'You must be logged in to view this website.'
       redirect_to :controller => 'sessions', :action => 'new'
+    end
+  end
+
+  def initialize_tax_display
+    @inc_tax = false
+
+    unless @w.vat_number.empty?
+      @inc_tax = @w.show_vat_inclusive_prices
+      # override with user's preference
+      unless session[:inc_tax].nil?
+        @inc_tax = session[:inc_tax]
+      end
     end
   end
 
