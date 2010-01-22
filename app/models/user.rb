@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :website
+  has_many :orders, :order => 'created_at DESC', :dependent => :nullify
   
   # unencrypted password
   attr_accessor :password
