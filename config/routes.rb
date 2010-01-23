@@ -36,10 +36,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :quantity_prices
   map.resources :enquiries, :collection => { :thank_you => :get }
   map.resources :websites
-  map.resources :orders, :collection => { :receipt => :get, :select_payment_method => :get, :purge_old_unpaid => :get }
+  map.resources :orders, :collection => { :my => :get, :receipt => :get, :select_payment_method => :get, :purge_old_unpaid => :get }
   map.resources :products
-  map.resources :product_placements
+  map.resources :product_placements, :collection => { :move_up => :post, :move_down => :post }
   map.resources :forums
+  map.resources :users, :collection => {:forgot_password => :get, :forgot_password_new => :get, :forgot_password_send => :post} do |user|
+    user.resources :orders
+  end
   
   map.new_topic 'topics/new/:forum_id', :controller => 'topics', :action => 'new'
   map.topic 'topics/show/:id', :controller => 'topics', :action => 'show'
