@@ -4,8 +4,8 @@ class BasketItem < ActiveRecord::Base
   has_many :feature_selections, :order => :id, :dependent => :delete_all
   before_save :update_features
 
-  def line_total
-    quantity * product.price_at_quantity(quantity)
+  def line_total(inc_tax)
+    quantity * (inc_tax ? product.price_inc_tax(quantity) : product.price_ex_tax(quantity))
   end
 
   def self.describe_feature_selections fs

@@ -6,5 +6,5 @@
 <% if @basket.basket_items.empty? -%>
 <p>Your basket is empty.</p>
 <% else -%>
-<%= render :partial => 'basket', :object => @basket, :locals => {:can_update => true, :shipping_amount => nil} %>
+<%= render :partial => 'basket', :object => @basket, :locals => {:can_update => true, :shipping_amount => nil, :inc_tax => @inc_tax} %>
 <% end -%>

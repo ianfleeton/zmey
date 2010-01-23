@@ -14,6 +14,15 @@
 </div>
 
 <div>
+  <%= form.label :tax_type %>:<br />
+  <select id="product_tax_type" name="product[tax_type]">
+    <option value="<%= Product::NO_TAX %>"<%= ' selected="selected"' if @product.tax_type==Product::NO_TAX %>>No tax</option>
+    <option value="<%= Product::INC_VAT %>"<%= ' selected="selected"' if @product.tax_type==Product::INC_VAT %>>Price includes VAT</option>
+    <option value="<%= Product::EX_VAT %>"<%= ' selected="selected"' if @product.tax_type==Product::EX_VAT %>>Price excludes VAT</option>
+  </select>
+</div>
+
+<div>
 	<%= form.label :image_id %>:<br />
   <%= select :product, :image_id, image_options %>
 </div>

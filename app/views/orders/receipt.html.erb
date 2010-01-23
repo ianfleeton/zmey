@@ -12,7 +12,7 @@
  
 <table id="receipt">
 
-  <tr><th>Product</th><th class="qty">Qty</th><th class="price">Price Inc VAT</th></tr>
+  <tr><th>Product</th><th class="qty">Qty</th><th class="price">Price</th></tr>
 
   <% @order.order_lines.each do |line| -%>
   <tr>
@@ -33,10 +33,21 @@
     <th colspan="2"><%= h @order.shipping_method %>:</th>
     <td class="price shipping_amount"><%= formatted_price(@order.shipping_amount) %></td>
   </tr>
-        
+  <% unless @w.vat_number.empty? -%>
+  <tr>
+    <th colspan="2">VAT:</th>
+    <td class="price vat"><%= formatted_price(@order.tax_total) %></td>
+  </tr>
+  <% end -%>
   <tr>
     <th colspan="2">Order total:</th>
     <td class="price total"><%= formatted_price(@order.total) %></td>
   </tr>
   
 </table>
+
+<% unless @w.vat_number.empty? -%>
+<p>
+  VAT number: <%= h(@w.vat_number) %>
+</p>
+<% end -%>

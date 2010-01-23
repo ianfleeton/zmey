@@ -12,6 +12,10 @@ You have ordered:
 <% end %>
 <%= @order.shipping_method %>: <%= formatted_gbp_price(@order.shipping_amount) %>
 
+<% unless @website.vat_number.empty? -%>
+VAT: <%= formatted_gbp_price(@order.tax_total) %>
+<% end -%>
+
 Order total: <%= formatted_gbp_price(@order.total) %>
 
 To be delivered to:

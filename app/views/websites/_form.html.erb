@@ -63,6 +63,24 @@
 </fieldset>
 
 <fieldset>
+<legend>Tax Settings</legend>
+
+<div>
+	<%= form.label :vat_number, 'VAT number' %>:<br />
+	<%= form.text_field :vat_number, :class => "text" %>
+</div>
+
+<div>
+	<label for="show_vat_inclusive_prices_true">Show VAT-inclusive prices?:</label>
+	<%= form.radio_button :show_vat_inclusive_prices, true, :class => "radio" %>
+	<label for="show_vat_inclusive_prices_true">Yes</label>
+	<%= form.radio_button :show_vat_inclusive_prices, false, :class => "radio" %>
+	<label for="show_vat_inclusive_prices">No</label>
+</div>
+
+</fieldset>
+
+<fieldset>
 <legend>Shop Settings</legend>
 
 <div>

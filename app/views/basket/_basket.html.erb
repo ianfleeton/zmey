@@ -32,8 +32,8 @@
       <%= item.quantity %>
       <% end -%>
       </td>
-      <td class="price"><%= formatted_price(item.product.price_at_quantity(item.quantity)) %></td>
-      <td class="line_total"><%= formatted_price(item.line_total) %></td>
+      <td class="price"><%= formatted_price(item.product.price_with_tax(item.quantity, inc_tax)) %></td>
+      <td class="line_total"><%= formatted_price(item.line_total(inc_tax)) %></td>
       <% if can_update %>
       <td><input type="submit" value="Remove Item" name="remove_item[<%= item.id %>]" /></td>
       <% end -%>
@@ -41,8 +41,7 @@
     <% end -%>
     <% unless shipping_amount.nil? -%>
     <tr class="shipping_amount">
-      <td class="empty" colspan="3">&nbsp;</td>
-      <th>Shipping amount:</th>
+      <th colspan="4">Shipping amount:</th>
       <td><%= formatted_price shipping_amount %></td>
       <% if can_update %>
       <td class="empty">&nbsp;</td>
@@ -50,13 +49,28 @@
     </tr>
     <% end -%>
     <tr class="basket_total">
-      <td class="empty" colspan="3">&nbsp;</td>
-      <th>Total:</th>
-      <td><%= formatted_price @basket.total + (shipping_amount.nil? ? 0 : shipping_amount) %></td>
+      <th colspan="4">Basket total<% unless @w.vat_number.empty? %><% if inc_tax %> inc VAT<% else %> ex VAT<% end %><% end %>:</th>
+      <td><% basket_total = @basket.total(inc_tax) + (shipping_amount.nil? ? 0 : shipping_amount) %><%= formatted_price basket_total %></td>
       <% if can_update %>
       <td class="empty">&nbsp;</td>
       <% end %>
     </tr>
+    <% if !@w.vat_number.empty? && !@inc_tax %>
+    <tr class="vat_amount">
+      <th colspan="4">VAT:</th>
+      <td><% vat_total = @basket.vat_total %><%= formatted_price vat_total %></td>
+      <% if can_update %>
+      <td class="empty">&nbsp;</td>
+      <% end %>
+    </tr>
+    <tr class="total">
+      <th colspan="4">Total:</th>
+      <td><%= formatted_price(basket_total + vat_total) %></td>
+      <% if can_update %>
+      <td class="empty">&nbsp;</td>
+      <% end %>
+    </tr>
+    <% end %>
   </tbody>
 </table>
 <% if can_update -%>

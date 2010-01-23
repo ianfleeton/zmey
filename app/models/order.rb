@@ -67,7 +67,14 @@ class Order < ActiveRecord::Base
   end
   
   def calculate_total
-    self.total = order_lines.inject(shipping_amount) {|sum, l| sum + l.tax_amount + l.quantity * l.product_price}
+    t = order_lines.inject(shipping_amount) {|sum, l| sum + l.tax_amount + l.quantity * l.product_price}
+    t = t + 0.001 # in case of x.x499999
+    t = (t * 100).round.to_f / 100
+    self.total = t
+  end
+  
+  def tax_total
+    order_lines.inject(0) {|sum, l| sum + l.tax_amount}
   end
 
   # create an order number

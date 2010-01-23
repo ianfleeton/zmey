@@ -2,9 +2,16 @@ class Basket < ActiveRecord::Base
   # basket items are destroyed so that their feature selections can be cleaned up
   has_many :basket_items, :dependent => :destroy
   has_one :order, :dependent => :nullify
-  def total
+
+  def total(inc_tax)
     total = 0.0
-    basket_items.each {|i| total += i.line_total}
+    basket_items.each {|i| total += i.line_total(inc_tax)}
+    total
+  end
+
+  def vat_total
+    total = 0.0
+    basket_items.each {|i| total += i.product.tax_amount(i.quantity) * i.quantity}
     total
   end
   

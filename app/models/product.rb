@@ -11,7 +11,11 @@ class Product < ActiveRecord::Base
   NO_TAX = 1
   INC_VAT = 2
   EX_VAT = 3
+
+  VAT_RATE = 0.175
   
+  # the price of a single product when quantity q is purchased as entered
+  # by the merchant -- tax is not considered
   def price_at_quantity(q)
     p = price
     if q > 1 and !quantity_prices.empty?
@@ -19,28 +23,43 @@ class Product < ActiveRecord::Base
     end
     p
   end
-  
-  def tax_amount
+
+  # the amount of tax for a single product when quantity q is purchased
+  def tax_amount(q=1)
     if tax_type == Product::EX_VAT
-      price * 0.15
+      price_at_quantity(q) * Product::VAT_RATE
+    elsif tax_type == Product::INC_VAT
+      price_at_quantity(q) - price_ex_tax(q)
     else
       0
     end
   end
   
-  def price_ex_tax
+  # the price exclusive of tax for a single product when quantity q is purchased
+  def price_ex_tax(q=1)
     if tax_type == Product::INC_VAT
-      price / 1.15
+      price_at_quantity(q) / (Product::VAT_RATE + 1)
     else
-      price
+      price_at_quantity(q)
     end
   end
-  
-  def price_inc_tax
+
+  # the price inclusive of tax for a single product when quantity q is purchased
+  def price_inc_tax(q=1)
     if tax_type == Product::EX_VAT
-      price + tax_amount
+      price_at_quantity(q) + tax_amount(q)
     else
-      price
+      price_at_quantity(q)
+    end
+  end
+
+  # the price for a single product when quantity q is purchased with tax included
+  # if inc_tax is true or tax excluded if inc_tax is false
+  def price_with_tax(q, inc_tax)
+    if inc_tax
+      price_inc_tax(q)
+    else
+      price_ex_tax(q)
     end
   end
 end

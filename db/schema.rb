@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091209204255) do
+ActiveRecord::Schema.define(:version => 20100105104550) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -296,10 +296,12 @@ ActiveRecord::Schema.define(:version => 20091209204255) do
     t.boolean  "rbswp_test_mode",                                                :default => false, :null => false
     t.boolean  "can_users_create_accounts",                                      :default => true,  :null => false
     t.boolean  "skip_payment",                                                   :default => false, :null => false
-    t.integer  "blog_id"
+    t.boolean  "blog_id"
     t.decimal  "shipping_amount",                 :precision => 10, :scale => 3, :default => 0.0,   :null => false
     t.boolean  "private",                                                        :default => false, :null => false
     t.boolean  "accept_payment_on_account",                                      :default => false, :null => false
+    t.string   "vat_number",                                                     :default => "",    :null => false
+    t.boolean  "show_vat_inclusive_prices",                                      :default => false, :null => false
   end
 
 end
