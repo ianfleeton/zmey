@@ -5,8 +5,7 @@
 	 
 	<fieldset> 
 	<legend>Edit User Details</legend> 
-	<% form_for :user, :url => { :action => "update", 
-								 :id => @user.id } do |form| %> 
+	<% form_for @user do |form| %>
 	<div> 
 		<%= form.label :name %>:<br /> 
 		<%= form.text_field :name, :size => 35, :class => "text" %> 
