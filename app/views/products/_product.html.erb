@@ -63,6 +63,12 @@
   </p>
   <% if defined? placement -%>
   <%= button_to "Remove from page", product_placement_path(placement), :method => :delete %>
+  <% unless placement.first? %>
+  <%= button_to "Move Up", :controller => 'product_placements', :action => 'move_up', :id => placement.id %>
+  <% end %>
+  <% unless placement.last? %>
+  <%= button_to "Move Down", :controller => 'product_placements', :action => 'move_down', :id => placement.id %>
+  <% end %>
   <% end -%>
   </div>
   <% end -%>
