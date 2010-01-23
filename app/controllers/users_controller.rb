@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :find_user, :except => [:index, :new, :create, :forgot_password, :forgot_password_send]
-  before_filter :admin_or_same_user_required, :only => [:show, :edit]
+  before_filter :admin_or_manager_or_same_user_required, :only => [:show, :edit]
   before_filter :admin_required, :only => [:destroy]
   before_filter :admin_or_manager_required, :only => [:index]
 
@@ -13,7 +13,8 @@ class UsersController < ApplicationController
   end
 
   def new
-    unless @w.can_users_create_accounts? or admin?
+    unless @w.can_users_create_accounts? or admin_or_manager?
+      flash[:notice] = 'New user accounts cannot be created.'
       redirect_to page_url ''
     end
     @user = User.new
@@ -25,13 +26,15 @@ class UsersController < ApplicationController
     @user.website_id = @w.id
     
     if @user.save
-      unless admin_or_manager?
+      if admin_or_manager?
+        flash[:notice] = "New user account has been created."
+        redirect_to users_path
+      else
         @current_user  = @user
         session[:user] = @user.id
+        flash[:notice] = "Your account has been created."
+        redirect_to :action => "show", :id => @user.id
       end
-
-      flash[:notice] = "Your account has been created."
-      redirect_to :action => "show", :id => @user.id
     else
       render :action => "new"
     end
@@ -109,8 +112,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def admin_or_same_user_required
-    if !admin? and (!logged_in? or @current_user != @user)
+  def admin_or_manager_or_same_user_required
+    if !admin_or_manager? and (!logged_in? or @current_user != @user)
       redirect_to :controller => 'sessions', :action => 'new'
       return
     end
