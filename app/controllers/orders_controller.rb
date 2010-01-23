@@ -1,13 +1,20 @@
 class OrdersController < ApplicationController
-  before_filter :admin_or_manager_required, :only => [:index, :show, :destroy]
+  before_filter :admin_or_manager_required, :only => [:destroy]
 
   before_filter :find_order, :only => [:show, :destroy]
   before_filter :require_order, :only => [:select_payment_method, :receipt]
+  before_filter :user_required, :only => [:show]
 
   def index
-    @orders = @w.orders
+    if params[:user_id]
+      @orders = User.find(params[:user_id]).orders
+      @can_delete = false
+    else
+      @orders = @w.orders
+      @can_delete = true
+    end
   end
-
+  
   def select_payment_method
   end
 
@@ -16,7 +23,12 @@ class OrdersController < ApplicationController
   end
   
   def show
-    render :action => 'receipt'
+    if admin_or_manager? or @current_user.id==@order.user_id
+      render :action => 'receipt'
+    else
+      flash[:notice] = 'You do not have permission to view that order.'
+      redirect_to :root
+    end
   end
 
   def purge_old_unpaid
