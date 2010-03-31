@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_filter :require_website, :initialize_user, :protect_private_website, :initialize_tax_display
+  before_filter :set_timezone, :require_website, :initialize_user, :protect_private_website, :initialize_tax_display
   
   protected
 
@@ -46,6 +46,10 @@ class ApplicationController < ActionController::Base
       flash[:notice] = 'You need to be logged in as an administrator or manager to do that.'
       redirect_to :controller => 'sessions', :action => 'new'
     end
+  end
+
+  def set_timezone
+    Time.zone = 'London'
   end
 
   # setup user info on each page
