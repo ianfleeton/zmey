@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  website_id: 
+  prompt: MyString
+  date_format: MyString
+  week_commencing_day: 
+  number_of_initial_days_to_skip: 
+  skip_after_time_of_day: MyString
+  skip_bank_holidays: false
+  skip_saturdays: false
+  skip_sundays: false
+
+two:
+  website_id: 
+  prompt: MyString
+  date_format: MyString
+  week_commencing_day: 
+  number_of_initial_days_to_skip: 
+  skip_after_time_of_day: MyString
+  skip_bank_holidays: false
+  skip_saturdays: false
+  skip_sundays: false

@@ -80,6 +80,14 @@ class BasketController < ApplicationController
     @order.website_id = @w.id
     @order.user_id = @current_user.id if logged_in?
     @order.copy_address @address
+
+    unless params[:preferred_delivery_date].nil?
+      @order.preferred_delivery_date = Date.strptime(params[:preferred_delivery_date],
+        @w.preferred_delivery_date_settings.date_format)
+      @order.preferred_delivery_date_prompt = @w.preferred_delivery_date_settings.prompt
+      @order.preferred_delivery_date_format = @w.preferred_delivery_date_settings.date_format
+    end
+
     @basket.basket_items.each do |i|
       @order.order_lines << OrderLine.new(
         :product_id => i.product.id,

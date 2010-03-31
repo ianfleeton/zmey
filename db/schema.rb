@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100105104550) do
+ActiveRecord::Schema.define(:version => 20100218195407) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -133,24 +133,27 @@ ActiveRecord::Schema.define(:version => 20100105104550) do
 
   create_table "orders", :force => true do |t|
     t.integer  "user_id"
-    t.string   "order_number",                                   :default => "",  :null => false
-    t.string   "email_address",                                  :default => "",  :null => false
-    t.string   "full_name",                                      :default => "",  :null => false
-    t.string   "address_line_1",                                 :default => "",  :null => false
-    t.string   "address_line_2",                                 :default => "",  :null => false
-    t.string   "town_city",                                      :default => "",  :null => false
-    t.string   "county",                                         :default => "",  :null => false
-    t.string   "postcode",                                       :default => "",  :null => false
-    t.integer  "country_id",                                     :default => 0,   :null => false
-    t.string   "phone_number",                                   :default => "",  :null => false
-    t.decimal  "shipping_amount", :precision => 10, :scale => 3, :default => 0.0, :null => false
-    t.string   "shipping_method",                                :default => "",  :null => false
-    t.integer  "status",                                         :default => 0,   :null => false
-    t.decimal  "total",           :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.string   "order_number",                                                  :default => "",  :null => false
+    t.string   "email_address",                                                 :default => "",  :null => false
+    t.string   "full_name",                                                     :default => "",  :null => false
+    t.string   "address_line_1",                                                :default => "",  :null => false
+    t.string   "address_line_2",                                                :default => "",  :null => false
+    t.string   "town_city",                                                     :default => "",  :null => false
+    t.string   "county",                                                        :default => "",  :null => false
+    t.string   "postcode",                                                      :default => "",  :null => false
+    t.integer  "country_id",                                                    :default => 0,   :null => false
+    t.string   "phone_number",                                                  :default => "",  :null => false
+    t.decimal  "shipping_amount",                :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.string   "shipping_method",                                               :default => "",  :null => false
+    t.integer  "status",                                                        :default => 0,   :null => false
+    t.decimal  "total",                          :precision => 10, :scale => 3, :default => 0.0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "website_id",                                     :default => 0,   :null => false
+    t.integer  "website_id",                                                    :default => 0,   :null => false
     t.integer  "basket_id"
+    t.date     "preferred_delivery_date"
+    t.string   "preferred_delivery_date_prompt"
+    t.string   "preferred_delivery_date_format"
   end
 
   add_index "orders", ["basket_id"], :name => "index_orders_on_basket_id"
@@ -212,6 +215,23 @@ ActiveRecord::Schema.define(:version => 20100105104550) do
   end
 
   add_index "posts", ["topic_id"], :name => "index_posts_on_topic_id"
+
+  create_table "preferred_delivery_date_settings", :force => true do |t|
+    t.integer  "website_id",                     :default => 0,                         :null => false
+    t.string   "prompt",                         :default => "Preferred delivery date", :null => false
+    t.string   "date_format",                    :default => "%a %d %b"
+    t.integer  "number_of_dates_to_show",        :default => 5,                         :null => false
+    t.string   "rfc2822_week_commencing_day"
+    t.integer  "number_of_initial_days_to_skip", :default => 1,                         :null => false
+    t.string   "skip_after_time_of_day"
+    t.boolean  "skip_bank_holidays",             :default => true,                      :null => false
+    t.boolean  "skip_saturdays",                 :default => true,                      :null => false
+    t.boolean  "skip_sundays",                   :default => true,                      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "preferred_delivery_date_settings", ["website_id"], :name => "index_preferred_delivery_date_settings_on_website_id"
 
   create_table "product_placements", :force => true do |t|
     t.integer  "page_id",    :default => 0, :null => false
@@ -302,6 +322,7 @@ ActiveRecord::Schema.define(:version => 20100105104550) do
     t.boolean  "accept_payment_on_account",                                      :default => false, :null => false
     t.string   "vat_number",                                                     :default => "",    :null => false
     t.boolean  "show_vat_inclusive_prices",                                      :default => false, :null => false
+    t.text     "terms_and_conditions",                                           :default => false, :null => false
   end
 
 end

@@ -10,7 +10,8 @@ class Website < ActiveRecord::Base
   # these details are required only if RBS WorldPay is active
   validates_presence_of :rbswp_installation_id, :if => Proc.new { |website| website.rbswp_active? }
   validates_presence_of :rbswp_payment_response_password, :if => Proc.new { |website| website.rbswp_active? }
-  
+
+  has_one :preferred_delivery_date_settings, :dependent => :delete
   has_many :products, :order => :name, :dependent => :destroy
   has_many :orders, :order => 'created_at DESC', :dependent => :destroy
   has_many :pages, :order => 'name', :dependent => :destroy
