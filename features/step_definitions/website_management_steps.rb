@@ -8,7 +8,7 @@ Given /^I am logged in as an administrator$/ do
   Given "I am on the login page"
   fill_in("Email", :with => @current_user.email)
   fill_in("Password", :with => @current_user.password)
-  click_button("Login")
+  click_button(I18n.t('login'))
   visit url_for response.redirected_to()
 end
 

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_filter :set_timezone, :require_website, :initialize_user, :protect_private_website, :initialize_tax_display
+  before_filter :set_timezone, :require_website, :initialize_user, :set_locale, :protect_private_website, :initialize_tax_display
   
   protected
 
@@ -95,6 +95,25 @@ class ApplicationController < ActionController::Base
         @inc_tax = session[:inc_tax]
       end
     end
+  end
+
+  def set_locale
+    session[:locale] = params[:locale] if params[:locale]
+    I18n.locale = session[:locale] || @w.default_locale
+
+    locale_path = "#{LOCALES_DIRECTORY}#{I18n.locale}.yml"
+
+    unless I18n.load_path.include? locale_path
+      I18n.load_path << locale_path
+      I18n.backend.send(:init_translations)
+    end
+
+  rescue Exception => err
+    logger.error err
+    flash.now[:notice] = "#{I18n.locale} translation not available"
+
+    I18n.load_path -= [locale_path]
+    I18n.locale = session[:locale] = I18n.default_locale
   end
 
   # Scrub sensitive parameters from your log

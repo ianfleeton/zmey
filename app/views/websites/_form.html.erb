@@ -24,6 +24,11 @@
 </div>
 
 <div>
+	<%= form.label :default_locale %>:<br />
+	<%= form.text_field :default_locale, :class => "text" %>
+</div>
+
+<div>
   <%= form.label :blog_id %>:<br />
   <%= form.collection_select :blog_id, Forum.all(:conditions => {:website_id => @website.id}, :order => :name), :id, :name, {:include_blank => '-- No blog --'} %>
 </div>

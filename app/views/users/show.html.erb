@@ -6,7 +6,7 @@
 <div class="details">
 	<h2><%= h @user.name %> <%= image_for_admin_status(@user) %></h2>
 
-	<p class="email"><strong><%= h @user.name %>&#8217;s registered email address:</strong> <%= mail_to h(@user.email) %></p>
+	<p class="email"><strong><%= h @user.name %>&#8217;s <%= I18n.translate('users.show.registered_email_address') %>:</strong> <%= mail_to h(@user.email) %></p>
 <% if @w.shop? -%>
   <p><%= link_to(h(@user.name) + '&#8217;s orders', user_orders_path(@user)) %></p>
 <% end -%>

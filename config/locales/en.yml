@@ -2,4 +2,28 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  add_to_cart: Add to Basket
+  cart: Basket
+  checkout: Checkout
+  continue_shopping: Continue shopping
+  cost: Cost
+  forgot_your_password: Forgotten your password?
+  login: Sign In
+  logout: Sign Out
+  my_account: My Account
+  password: Password
+  price: Price
+  quantity: Qty
+  register: Join
+  view_cart: View Basket
+
+  controllers:
+    enquiries: Enquiries
+    images: Images
+    pages: Pages
+    products: Products
+    users: Users
+
+  users:
+    show:
+      registered_email_address: registered email address

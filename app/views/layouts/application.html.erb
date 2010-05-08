@@ -23,19 +23,19 @@
     <%= nav_link_to h(p.name), page_url(p) %>
   <% end %>
   <% if nav.id_attribute == 'primary_nav' -%>
-    <%= nav_link_to 'Enquiries', new_enquiry_path %>
+    <%= nav_link_to I18n.t('controllers.enquiries'), new_enquiry_path %>
     <% if logged_in? -%>
-    <%= nav_link_to 'My Account', {:controller => 'users', :action => 'show', :id => @current_user}, nil, 'n_account' %>
-    <%= nav_link_to 'Sign Out', :controller => 'sessions', :action => 'destroy' %>
+    <%= nav_link_to I18n.t('my_account'), {:controller => 'users', :action => 'show', :id => @current_user}, nil, 'n_account' %>
+    <%= nav_link_to I18n.t('logout'), :controller => 'sessions', :action => 'destroy' %>
     <% else -%>
     <% if @w.can_users_create_accounts? -%>
-    <%= nav_link_to 'Join', :controller => 'users', :action => 'new' %>
+    <%= nav_link_to I18n.t('register'), :controller => 'users', :action => 'new' %>
     <% end -%>
-    <%= nav_link_to 'Sign In', :controller => 'sessions', :action => 'new' %>
+    <%= nav_link_to I18n.t('login'), :controller => 'sessions', :action => 'new' %>
     <% end -%>
     <% if @w.shop? -%>
-    <%= nav_link_to 'View Basket', :controller => 'basket' %>
-    <%= nav_link_to 'Checkout', :controller => 'basket', :action => 'checkout' %>
+    <%= nav_link_to I18n.t('view_cart'), :controller => 'basket' %>
+    <%= nav_link_to I18n.t('checkout'), :controller => 'basket', :action => 'checkout' %>
     <% end -%>
   <% end %>
   </ul>
@@ -56,19 +56,19 @@
   <%= link_to 'Websites', websites_url %>
   &middot;
   <% end %>
-  <%= link_to 'Enquiries', enquiries_url %>
+  <%= link_to I18n.t('controllers.enquiries'), enquiries_url %>
   &middot;
-  <%= link_to 'Pages', :controller => 'pages' %>
+  <%= link_to I18n.t('controllers.pages'), :controller => 'pages' %>
   &middot;
-  <%= link_to 'Products', products_url %>
+  <%= link_to I18n.t('controllers.products'), products_url %>
   &middot;
   <%= link_to 'Orders', orders_url %>
   &middot;
-  <%= link_to 'Images', :controller => 'images' %>
+  <%= link_to I18n.t('controllers.images'), :controller => 'images' %>
   &middot;
   <%= link_to 'Forums', :controller => 'forums' %>
   &middot;
-  <%= link_to 'Users', :controller => 'users' %>
+  <%= link_to I18n.t('controllers.users'), :controller => 'users' %>
   <% end %>
 </div>
 <% if @w.rbswp_active? -%>

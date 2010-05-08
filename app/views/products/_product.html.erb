@@ -47,11 +47,11 @@
     </div>
     <% end -%>
     <p class="product_price">
-      Price:
+      <%= I18n.t('price') %>:
       <%= formatted_price(product.price_with_tax(1, @inc_tax)) %><%= tax_explanation(product) %>
     </p>
-    <span class="quantity"><label>Qty: <input type="text" name="quantity" value="1" /></label></span>
-    <span class="add_to_basket"><%= submit_tag 'Add to Basket' %></span>
+    <span class="quantity"><label><%= I18n.t('quantity') %>: <input type="text" name="quantity" value="1" /></label></span>
+    <span class="add_to_basket"><%= submit_tag I18n.t('add_to_cart') %></span>
     <% quantity_prices_table(product) %>
     <% end %>
   </div>

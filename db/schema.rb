@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100218195407) do
+ActiveRecord::Schema.define(:version => 20100507155143) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -322,7 +322,8 @@ ActiveRecord::Schema.define(:version => 20100218195407) do
     t.boolean  "accept_payment_on_account",                                      :default => false, :null => false
     t.string   "vat_number",                                                     :default => "",    :null => false
     t.boolean  "show_vat_inclusive_prices",                                      :default => false, :null => false
-    t.text     "terms_and_conditions",                                           :default => false, :null => false
+    t.text     "terms_and_conditions",                                                              :null => false
+    t.string   "default_locale",                                                 :default => "en",  :null => false
   end
 
 end

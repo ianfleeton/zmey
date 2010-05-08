@@ -4,9 +4,9 @@
     <tr>
       <th>Ref</th>
       <th>Item</th>
-      <th>Quantity</th>
-      <th class="price">Price</th>
-      <th class="line_total">Cost</th>
+      <th><%= I18n.t('quantity') %></th>
+      <th class="price"><%= I18n.t('price') %></th>
+      <th class="line_total"><%= I18n.t('cost') %></th>
       <% if can_update -%>
       <th>Remove Item</th>
       <% end -%>
@@ -76,7 +76,7 @@
 <% if can_update -%>
 <p class="basket_buttons">
 <input type="submit" name="update_quantities" value="Update Quantities" />
-<input type="submit" name="checkout" value="Checkout" />
+<input type="submit" name="checkout" value="<%= I18n.t('checkout') %>" />
 </p>
 <% end -%>
 <% end %>
