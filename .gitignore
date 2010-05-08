@@ -8,6 +8,7 @@
 *.gif
 *.graffle
 *.png
+*.psd
 *.doc
 database.yml
 rerun.txt
