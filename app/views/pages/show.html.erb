@@ -1,5 +1,19 @@
 <%= flash_notice %>
 <%= textilize(@page.content) %>
+<% unless @page.children.empty? -%>
+<div id="child_pages">
+  <% @page.children.each do |child| -%>
+  <div class="child_page">
+    <p class="child_page_image">
+      <% unless child.image.nil? -%>
+      <%= link_to image_tag(child.image.url(@w.page_thumbnail_size)), page_path(child) %>
+      <% end -%>
+    </p>
+    <%= link_to child.name, page_path(child) %>
+  </div>
+  <% end -%>
+</div>
+<% end -%>
 <% @page.product_placements.each do |placement| %>
   <% product = placement.product %>
   <%= render :partial => 'products/product', :object => product, :locals => {:placement => placement, :page => @page, :full => false} %>
