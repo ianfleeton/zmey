@@ -3,6 +3,9 @@ class Image < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => :website_id
   attr_protected :website_id
 
+  has_many :pages, :dependent => :nullify
+  has_many :products, :dependent => :nullify
+
   before_save   :determine_filename
   after_save    :write_file
   after_destroy :delete_files

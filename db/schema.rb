@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100507155143) do
+ActiveRecord::Schema.define(:version => 20100513152205) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(:version => 20100507155143) do
     t.text     "content",                     :null => false
     t.integer  "parent_id"
     t.integer  "position",    :default => 0,  :null => false
+    t.integer  "image_id"
   end
 
   add_index "pages", ["parent_id"], :name => "index_pages_on_parent_id"
@@ -324,6 +325,10 @@ ActiveRecord::Schema.define(:version => 20100507155143) do
     t.boolean  "show_vat_inclusive_prices",                                      :default => false, :null => false
     t.text     "terms_and_conditions",                                                              :null => false
     t.string   "default_locale",                                                 :default => "en",  :null => false
+    t.integer  "page_image_size",                                                :default => 400
+    t.integer  "page_thumbnail_size",                                            :default => 200
+    t.integer  "product_image_size",                                             :default => 400
+    t.integer  "product_thumbnail_size",                                         :default => 200
   end
 
 end

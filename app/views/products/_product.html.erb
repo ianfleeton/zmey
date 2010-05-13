@@ -5,9 +5,9 @@
   <% unless product.image.nil? -%>
   <p class="product_image">
     <% if full %>
-    <%= image_tag(product.image.url(400)) %>
+    <%= image_tag(product.image.url(@w.product_image_size)) %>
     <% else %>
-    <%= link_to image_tag(product.image.url(200)), product_path(product) %>
+    <%= link_to image_tag(product.image.url(@w.product_thumbnail_size)), product_path(product) %>
     <% end %>
   </p>
   <% end -%>

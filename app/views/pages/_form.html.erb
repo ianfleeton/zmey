@@ -18,6 +18,11 @@
   <%= form.collection_select :parent_id, @w.pages, :id, :name, {:include_blank => '-- No parent --'} %>
 </div>
 
+<div>
+  <%= form.label :image_id %>:<br />
+  <%= select :page, :image_id, image_options %>
+</div>
+
 <fieldset>
   <legend>Meta tags</legend>
   <div>
