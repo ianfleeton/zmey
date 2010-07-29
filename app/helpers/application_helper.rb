@@ -1,10 +1,18 @@
 # coding: utf-8
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  def flash_notice 
-    if flash[:notice] 
-      content_tag('div', h(flash[:notice]), {:id => "flash_notice"}) 
-    end 
+  def flash_notice
+    notice = ''
+    if flash[:now]
+      notice = flash[:now]
+      flash[:now] = nil
+    end
+    if flash[:notice]
+      notice += ' ' + flash[:notice]
+    end
+    unless notice.empty?
+      content_tag('div', h(notice), {:id => "flash_notice"})
+    end
   end
 
   def body_id
