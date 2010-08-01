@@ -37,7 +37,7 @@ class BasketController < ApplicationController
         :feature_selections => feature_selections)
     end
     item.save
-    flash[:notice] = 'Added to basket'
+    flash[:notice] = 'Added to basket.'
     if params[:page_id].nil?
       redirect_to :action => 'index'
     else
@@ -49,7 +49,7 @@ class BasketController < ApplicationController
     update_quantities if params[:update_quantities]
     remove_item if params[:remove_item]
     redirect_to :action => 'checkout' and return if params[:checkout]
-    flash[:notice] = 'Basket updated'
+    flash[:notice] = 'Basket updated.'
     redirect_to :action => 'index'
   end
   
