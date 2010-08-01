@@ -14,7 +14,7 @@ en:
   password: Password
   price: Price
   quantity: Qty
-  register: Join
+  register: Sign Up
   view_cart: View Basket
 
   controllers:
