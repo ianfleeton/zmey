@@ -56,7 +56,7 @@ module ApplicationHelper
   end
   
   def nav_link_to name, options = {}, html_options = nil, class_name = ''
-    class_name = 'n_' + name.downcase.gsub(' ', '_') if class_name.empty?
+    class_name = 'n_' + name.downcase.gsub(' ', '_').gsub('&amp;', 'and') if class_name.empty?
     if current_page? options
       class_name += ' n_current'
       content_tag(:li, name, :class => class_name)
