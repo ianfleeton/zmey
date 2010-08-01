@@ -353,6 +353,7 @@ ActiveRecord::Schema.define(:version => 20100729172707) do
     t.integer  "page_thumbnail_size",                                            :default => 200
     t.integer  "product_image_size",                                             :default => 400
     t.integer  "product_thumbnail_size",                                         :default => 200
+    t.boolean  "render_blog_before_content",                                     :default => true,  :null => false
   end
 
 end

@@ -56,10 +56,13 @@
   </ul>
   <% end %>
   <div id="content">
-    <% if !@blog.nil? %>
+    <% if !@blog.nil? && @w.render_blog_before_content? %>
     <%= render :partial => 'forums/blog_sidebar', :object => @blog %>
     <% end %>
 <%= yield %>
+    <% if !@blog.nil? && !@w.render_blog_before_content? %>
+    <%= render :partial => 'forums/blog_sidebar', :object => @blog %>
+    <% end %>
   </div>
 <div id="footer">
   ©<%= Date.today.year %> <%= h(@w.name) %>. All rights reserved.

@@ -3,6 +3,7 @@ class Website < ActiveRecord::Base
   validates_format_of :google_analytics_code, :with => /\AUA-\d\d\d\d\d\d(\d)?(\d)?-\d\Z/, :allow_blank => true
   validates_presence_of :name
   validates_inclusion_of :private, :in => [true, false]
+  validates_inclusion_of :render_blog_before_content, :in => [true, false]
   
   # RBS WorldPay validations
   validates_inclusion_of :rbswp_active, :in => [true, false]
