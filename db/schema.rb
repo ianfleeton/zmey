@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100513152205) do
+ActiveRecord::Schema.define(:version => 20100729172707) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -52,6 +52,16 @@ ActiveRecord::Schema.define(:version => 20100513152205) do
   create_table "countries", :force => true do |t|
     t.string   "name",               :default => "", :null => false
     t.string   "iso_3166_1_alpha_2", :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "discounts", :force => true do |t|
+    t.integer  "website_id",             :default => 0,  :null => false
+    t.string   "name",                   :default => "", :null => false
+    t.string   "coupon",                 :default => "", :null => false
+    t.string   "reward_type",            :default => "", :null => false
+    t.integer  "free_products_group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -233,6 +243,20 @@ ActiveRecord::Schema.define(:version => 20100513152205) do
   end
 
   add_index "preferred_delivery_date_settings", ["website_id"], :name => "index_preferred_delivery_date_settings_on_website_id"
+
+  create_table "product_group_placements", :force => true do |t|
+    t.integer  "product_id",       :default => 0, :null => false
+    t.integer  "product_group_id", :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "product_groups", :force => true do |t|
+    t.integer  "website_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "product_placements", :force => true do |t|
     t.integer  "page_id",    :default => 0, :null => false

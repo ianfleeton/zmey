@@ -64,7 +64,7 @@ class PaymentsController < ApplicationController
 
   def clean_up
     if order = Order.find_by_order_number(@payment.cart_id)
-      order.empty_basket
+      order.empty_basket(session)
       update_order order
     end
   end

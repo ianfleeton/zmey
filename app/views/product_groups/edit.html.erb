@@ -1,0 +1,41 @@
+<h1>Edit Product Group</h1>
+<%= flash_notice %>
+
+<div class="form">
+	<%= error_messages_for :product_group -%>
+
+	<fieldset>
+		<legend>Edit product group</legend>
+    <% form_for @product_group do |form| %>
+    <%= render :partial => 'form', :object => form %>
+
+    <%= submit_tag "Save" %>
+
+  <% end %>
+  </fieldset>
+</div>
+
+<h2>Products in this group</h2>
+
+<% unless @w.products.empty? -%>
+<% form_for @product_group_placement do |form| -%>
+<input type="hidden" name="product_group_placement[product_group_id]" value="<%= @product_group.id %>" />
+<%= form.collection_select :product_id, @w.products, :id, :name %>
+<%= submit_tag 'Add Product' %>
+<% end -%>
+<% end -%>
+
+<% if @product_group.products.empty? -%>
+
+<p>There are no products in this group yet.</p>
+<% else -%>
+<table>
+<% @product_group.product_group_placements.each do |placement| -%>
+  <tr><td><%= h placement.product.name %></td>
+    <td><% form_tag product_group_placement_path(placement), :method => :delete do -%>
+      <input type="submit" value="Remove from group" /></td>
+    <% end -%>
+  </tr>
+<% end -%>
+</table>
+<% end -%>

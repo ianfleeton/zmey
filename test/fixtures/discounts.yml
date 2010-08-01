@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  coupon: MyString
+  reward_type: MyString
+  free_products_group_id: 1
+
+two:
+  name: MyString
+  coupon: MyString
+  reward_type: MyString
+  free_products_group_id: 1

@@ -6,6 +6,8 @@ class Product < ActiveRecord::Base
   has_many :features, :dependent => :destroy
   has_many :quantity_prices, :order => :quantity, :dependent => :delete_all
   belongs_to :image
+  has_many :product_group_placements
+  has_many :product_groups, :through => :product_group_placements
 
   # Tax types
   NO_TAX = 1

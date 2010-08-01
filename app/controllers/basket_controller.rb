@@ -2,6 +2,8 @@ class BasketController < ApplicationController
   before_filter :find_basket
   
   before_filter :require_delivery_address, :only => 'place_order'
+  before_filter :invalidate_coupons, :only => [:index]
+  before_filter :calculate_discounts, :only => [:index, :checkout, :place_order]
 
   def index
     @page = params[:page_id] ? Page.find_by_id(params[:page_id]) : nil
@@ -100,6 +102,17 @@ class BasketController < ApplicationController
         :feature_descriptions => i.feature_descriptions
       )
     end
+    @discount_lines.each do |dl|
+      @order.order_lines << OrderLine.new(
+        :product_id => 0,
+        :product_sku => 'DISCOUNT',
+        :product_name => dl.name,
+        :product_price => dl.price_adjustment,
+        :tax_amount => dl.tax_adjustment,
+        :quantity => 1,
+        :line_total => dl.price_adjustment
+      )
+    end
     @order.status = Order::WAITING_FOR_PAYMENT
     @order.shipping_method = 'Standard Shipping'
     @order.shipping_amount = shipping_amount(0)
@@ -112,7 +125,7 @@ class BasketController < ApplicationController
       @order.status = Order::PAYMENT_ON_ACCOUNT
       @order.save
       OrderNotifier.deliver_notification @w, @order
-      @order.empty_basket
+      @order.empty_basket(session)
       redirect_to :controller => 'orders', :action => 'receipt'
     else
       redirect_to :controller => 'orders', :action => 'select_payment_method'
@@ -124,8 +137,68 @@ class BasketController < ApplicationController
     flash[:notice] = 'Old baskets purged.'
     redirect_to :action => 'index'
   end
-  
+
+  def enter_coupon
+    discount = Discount.find_by_coupon_and_website_id(params[:coupon_code].upcase, @w.id)
+    if(discount.nil?)
+      flash[:notice] = 'Sorry, your coupon code was not recognised.'
+    else
+      if session_contains_coupon? discount.coupon
+        flash[:notice] = 'This coupon has already been applied.'
+      else
+        flash[:notice] = 'Your coupon has been applied to your basket.'
+        add_coupon_to_session(discount.coupon)
+        run_trigger_for_coupon_discount(discount)
+      end
+    end
+    redirect_to :action => 'index'
+  end
+
+  def remove_coupon
+    unless session[:coupons].nil?
+      session[:coupons].subtract [params[:coupon_code].upcase]
+    end
+    flash[:notice] = 'Your coupon has been removed.'
+    redirect_to :action => 'index'
+  end
+
   protected
+
+  def session_contains_coupon?(coupon)
+    return false if session[:coupons].nil?
+    return session[:coupons].include? coupon
+  end
+
+  def add_coupon_to_session(coupon)
+    if session[:coupons].nil?
+      session[:coupons] = Set.new
+    end
+    session[:coupons] << coupon
+  end
+
+  def run_trigger_for_coupon_discount(discount)
+    if discount.reward_type.to_sym == :free_products
+      add_free_products(discount.free_products_group.products)
+    end
+  end
+
+  def add_free_products(products)
+    products.each do |product|
+      item = BasketItem.find_by_basket_id_and_product_id(@basket.id, product.id)
+      unless item
+        item = BasketItem.new(
+          :basket_id => @basket.id,
+          :product_id => product.id,
+          :quantity => 1)
+      end
+      item.save
+    end
+    flash[:notice] += ' Free stuff has been added to your basket.'
+  end
+
+  def invalidate_coupons
+    #flash[:now] = "Invalid coupon(s) have been removed from your basket. "
+  end
 
   # Creates an array of FeatureSeletions based on the form input from
   # adding an item to the basket.
@@ -202,5 +275,31 @@ class BasketController < ApplicationController
   # set return_if_nil to 0, for example, if using in a calculation
   def shipping_amount(return_if_nil=nil)
     @basket.apply_shipping? ? @w.shipping_amount : return_if_nil
+  end
+
+  def calculate_discounts
+    @discount_lines = Array.new
+    @w.discounts.each do |discount|
+      if discount.coupon && session_contains_coupon?(discount.coupon)
+        if discount.reward_type.to_sym == :free_products
+          discount_free_products(discount.free_products_group.products)
+        end
+      end
+    end
+  end
+
+  def discount_free_products products
+    products.each do |product|
+      @basket.basket_items.each do |basket_item|
+        if product.id == basket_item.product_id
+          discount_line = DiscountLine.new
+          discount_line.name = 'Free ' + product.name
+          discount_line.price_adjustment = -product.price_ex_tax
+          discount_line.tax_adjustment = -product.tax_amount
+          @discount_lines << discount_line
+          break
+        end
+      end
+    end
   end
 end

@@ -1,0 +1,21 @@
+<div>
+	<%= form.label :name %>:<br />
+	<%= form.text_field :name, :class => "text" %>
+</div>
+
+<div>
+	<%= form.label :coupon %>:<br />
+  <%= form.text_field :coupon, :class => "text" %>
+</div>
+
+<div>
+  <%= form.label :reward_type %>:<br />
+  <select id="reward_type" name="discount[reward_type]">
+    <option value="<%= :free_products %>"<%= ' selected="selected"' if @discount.reward_type==:free_products %>>Free products</option>
+  </select>
+</div>
+
+<div>
+  <%= form.label :free_products_group_id %>:<br />
+  <%= form.collection_select :free_products_group_id, @w.product_groups, :id, :name, {:include_blank => '-- Not applicable --'} %>
+</div>

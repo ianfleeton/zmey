@@ -39,6 +39,18 @@
       <% end -%>
     </tr>
     <% end -%>
+    <% @discount_lines.each do |dl| -%>
+    <tr>
+      <td>DISCOUNT</td>
+      <td><%= h dl.name %></td>
+      <td class="empty">&nbsp;</td>
+      <td class="empty">&nbsp;</td>
+      <td><%= formatted_price(dl.price_with_tax(inc_tax)) %></td>
+      <% if can_update %>
+      <td class="empty">&nbsp;</td>
+      <% end %>
+    </tr>
+    <% end -%>
     <% unless shipping_amount.nil? -%>
     <tr class="shipping_amount">
       <th colspan="4">Shipping amount:</th>
@@ -50,7 +62,7 @@
     <% end -%>
     <tr class="basket_total">
       <th colspan="4">Basket total<% unless @w.vat_number.empty? %><% if inc_tax %> inc VAT<% else %> ex VAT<% end %><% end %>:</th>
-      <td><% basket_total = @basket.total(inc_tax) + (shipping_amount.nil? ? 0 : shipping_amount) %><%= formatted_price basket_total %></td>
+      <td><% basket_total = @basket.total(inc_tax) + (shipping_amount.nil? ? 0 : shipping_amount) + discount_lines_price_total %><%= formatted_price basket_total %></td>
       <% if can_update %>
       <td class="empty">&nbsp;</td>
       <% end %>
@@ -58,7 +70,7 @@
     <% if !@w.vat_number.empty? && !@inc_tax %>
     <tr class="vat_amount">
       <th colspan="4">VAT:</th>
-      <td><% vat_total = @basket.vat_total %><%= formatted_price vat_total %></td>
+      <td><% vat_total = @basket.vat_total + discount_lines_tax_total %><%= formatted_price vat_total %></td>
       <% if can_update %>
       <td class="empty">&nbsp;</td>
       <% end %>
@@ -80,3 +92,23 @@
 </p>
 <% end -%>
 <% end %>
+
+
+<% if can_update -%>
+<h2>Coupons</h2>
+<% unless session[:coupons].nil? or session[:coupons].empty? -%>
+<div id="applied_coupons">
+  <p>You have applied the following coupons:</p>
+  <ul>
+    <% session[:coupons].each do |coupon| -%>
+    <li><%= h(coupon) %> (<%= h(Discount.find_by_coupon_and_website_id(coupon, @w.id).name) %>) <%= link_to('Remove', :controller => :basket, :action => :remove_coupon, :coupon_code => coupon) %></li>
+    <% end %>
+  </ul>
+</div>
+<% end -%>
+<p>If you have a coupon code, enter it here.</p>
+<% form_tag :controller => 'basket', :action => 'enter_coupon' do %>
+<input type="text" name="coupon_code" id="coupon_code" />
+<input type="submit" value="Apply Coupon" />
+<% end %>
+<% end -%>
