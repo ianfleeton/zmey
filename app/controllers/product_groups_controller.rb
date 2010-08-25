@@ -1,6 +1,6 @@
 class ProductGroupsController < ApplicationController
   before_filter :admin_required
-  before_filter :find_product_group, :only => [:show, :edit]
+  before_filter :find_product_group, :only => [:show, :edit, :update]
 
   def index
     @title = 'Product Groups'
@@ -28,6 +28,15 @@ class ProductGroupsController < ApplicationController
 
   def edit
     @product_group_placement = ProductGroupPlacement.new
+  end
+
+  def update
+    if @product_group.update_attributes(params[:product_group])
+      flash[:notice] = "Product group successfully updated."
+      redirect_to product_groups_path
+    else
+      render :action => "edit"
+    end
   end
 
   protected
