@@ -3,7 +3,7 @@
 <p><%= link_to 'New product group', new_product_group_path %></p>
 <ul>
   <% @product_groups.each do |p| -%>
-  <li><%= link_to h(p.name), edit_product_group_path(p) %></li>
+  <li><%= link_to p.name, edit_product_group_path(p) %></li>
   <% end -%>
   <%= content_tag(:li, 'No product groups') if @product_groups.empty? -%>
 </ul>

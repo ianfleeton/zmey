@@ -1,4 +1,4 @@
-<h1><%= h @forum.name %></h1>
+<h1><%= @forum.name %></h1>
 <%= flash_notice %>
 <p id="get_a_gravatar">If you want a picture by your post, go get yourself a free <a href="http://www.gravatar.com/">Gravatar</a>.</p>
 <% if !@forum.locked || admin? -%>
@@ -9,8 +9,8 @@
   <span class="posts"><em><%= t.posts_count %></em><br />posts</span>
   <span class="views"><em><%= t.views %></em><br />views</span>
   <div>
-    <h2><%= link_to h(t.topic), topic_url(t) %></h2>
-    <p>Last post <%= format_date(t.last_post_at) %> by <%= h t.last_post_author %></p>
+    <h2><%= link_to t.topic, topic_url(t) %></h2>
+    <p>Last post <%= format_date(t.last_post_at) %> by <%= t.last_post_author %></p>
   </div>
 </div>
 <% end %>

@@ -20,7 +20,7 @@
     </div>
     <% end %>
     <% if @w.preferred_delivery_date_settings %>
-      <h2><%= h @w.preferred_delivery_date_settings.prompt %></h2>
+      <h2><%= @w.preferred_delivery_date_settings.prompt %></h2>
       <p>
         <%= select_tag(:preferred_delivery_date, @w.preferred_delivery_date_settings.options) %>
       </p>

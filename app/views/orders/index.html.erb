@@ -13,7 +13,7 @@
       <td><%= link_to o.order_number, order_path(o) %></td>
       <td><%= formatted_price(o.total) %></td>
       <td><%= o.created_at %></td>
-      <td><%= h o.full_name %></td>
+      <td><%= o.full_name %></td>
       <td><%= o.status_description %></td>
 <% if @can_delete -%>
       <td><%= button_to "Delete", order_path(o), :method => :delete %></td>

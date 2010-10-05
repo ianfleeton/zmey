@@ -1,6 +1,6 @@
 <div class="product<%= ' full_product' if full %>">
   <% unless full -%>
-  <h2><%= link_to h(product.name), product_path(product) %></h2>
+  <h2><%= link_to product.name, product_path(product) %></h2>
   <% end -%>
   <% unless product.image.nil? -%>
   <p class="product_image">
@@ -35,7 +35,7 @@
         <% when Feature::DROP_DOWN %>
           <select name="feature[<%= feature.id %>]">
             <% feature.choices.each do |choice| %>
-            <option value="<%= choice.id %>"><%= h choice.name %></option>
+            <option value="<%= choice.id %>"><%= choice.name %></option>
             <% end %>
           </select>
         <% end %>
@@ -58,8 +58,8 @@
   <% if admin_or_manager? -%>
   <div class="product_admin_controls">
   <p>
-    <%= link_to 'Edit ' + h(product.name), edit_product_path(product) %><br />
-    <%= link_to 'Add feature to ' + h(product.name), new_feature_path(:product_id => product.id) %>
+    <%= link_to 'Edit ' + product.name, edit_product_path(product) %><br />
+    <%= link_to 'Add feature to ' + product.name, new_feature_path(:product_id => product.id) %>
   </p>
   <% if defined? placement -%>
   <%= button_to "Remove from page", product_placement_path(placement), :method => :delete %>

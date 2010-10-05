@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta charset="utf-8" />
-  <title><% if @title %><%= h(@title) %><% else %><%= h @w.name %><% end %></title>
+  <title><% if @title %><%= @title %><% else %><%= @w.name %><% end %></title>
   <%= stylesheet_link_tag "screen", :media => "screen" if @w.use_default_css? %>
   <%= stylesheet_link_tag "admin", :media => "screen" %>
   <%= stylesheet_link_tag @w.css_url, :media => "screen" unless @w.css_url.blank? %>
@@ -30,11 +30,11 @@
 <div id="top"></div>
 <div id="wrapper">
   <div id="header">
-    <a href="/"><span><%= h @w.name %></span></a>
+    <a href="/"><span><%= @w.name %></span></a>
   </div>
   <% Page.navs(@w).each do |nav| %>
   <ul id="<%= nav.id_attribute %>">
-<% nav.pages.each do |p| %><%= nav_link_to h(p.name), page_url(p) %><% end %>
+<% nav.pages.each do |p| %><%= nav_link_to p.name, page_url(p) %><% end %>
   <% if nav.id_attribute == 'primary_nav' -%>
     <%= nav_link_to I18n.t('controllers.enquiries'), new_enquiry_path %>
     <% if logged_in? -%>
@@ -63,7 +63,7 @@
     <% end %>
   </div>
 <div id="footer">
-  ©<%= Date.today.year %> <%= h(@w.name) %>. All rights reserved.
+  ©<%= Date.today.year %> <%= @w.name %>. All rights reserved.
   <a href="http://www.yesl.co.uk/">Ruby on Rails development</a> by Your e Solutions Ltd.
   <% if admin_or_manager? -%>
   <br />

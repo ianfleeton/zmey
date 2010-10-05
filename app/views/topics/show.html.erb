@@ -20,7 +20,7 @@
   <% end -%>
 <% end %>
 <%= clear %>
-<h2>Reply to &#8220;<%= h @topic.topic %>&#8221;</h2>
+<h2>Reply to &#8220;<%= @topic.topic %>&#8221;</h2>
 <%= error_messages_for :post -%>
 <%= render :partial => 'spam/spam' %>
 

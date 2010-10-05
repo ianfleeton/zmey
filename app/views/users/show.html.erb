@@ -4,11 +4,11 @@
 <%= flash_notice %>
 
 <div class="details">
-	<h2><%= h @user.name %> <%= image_for_admin_status(@user) %></h2>
+	<h2><%= @user.name %> <%= image_for_admin_status(@user) %></h2>
 
-	<p class="email"><strong><%= h @user.name %>&#8217;s <%= I18n.translate('users.show.registered_email_address') %>:</strong> <%= mail_to h(@user.email) %></p>
+	<p class="email"><strong><%= @user.name %>&#8217;s <%= I18n.translate('users.show.registered_email_address') %>:</strong> <%= mail_to h(@user.email) %></p>
 <% if @w.shop? -%>
-  <p><%= link_to(h(@user.name) + '&#8217;s orders', user_orders_path(@user)) %></p>
+  <p><%= link_to(h(@user.name) + '&#8217;s orders'.html_safe!, user_orders_path(@user)) %></p>
 <% end -%>
 <% unless @user.managed_website.nil? -%>
   <p>Website manager for <%= h @user.managed_website.name %></p>

@@ -15,13 +15,13 @@
   <tbody>
     <% @basket.basket_items.each do |item| -%>
     <tr>
-      <td><%= h item.product.sku %></td>
+      <td><%= item.product.sku %></td>
       <td>
-        <%= h item.product.name %>
+        <%= item.product.name %>
         <% unless item.feature_descriptions.empty? -%>
           <br />
           <small>
-            <%= h(item.feature_descriptions) %>
+            <%= item.feature_descriptions %>
           </small>
         <% end -%>
       </td>
@@ -42,7 +42,7 @@
     <% @discount_lines.each do |dl| -%>
     <tr>
       <td>DISCOUNT</td>
-      <td><%= h dl.name %></td>
+      <td><%= dl.name %></td>
       <td class="empty">&nbsp;</td>
       <td class="empty">&nbsp;</td>
       <td><%= formatted_price(dl.price_with_tax(inc_tax)) %></td>
@@ -101,7 +101,7 @@
   <p>You have applied the following coupons:</p>
   <ul>
     <% session[:coupons].each do |coupon| -%>
-    <li><%= h(coupon) %> (<%= h(Discount.find_by_coupon_and_website_id(coupon, @w.id).name) %>) <%= link_to('Remove', :controller => :basket, :action => :remove_coupon, :coupon_code => coupon) %></li>
+    <li><%= coupon %> (<%= Discount.find_by_coupon_and_website_id(coupon, @w.id).name %>) <%= link_to('Remove', :controller => :basket, :action => :remove_coupon, :coupon_code => coupon) %></li>
     <% end %>
   </ul>
 </div>

@@ -28,10 +28,10 @@
         <%= tick_cross p.accepted %>
       </td>
       <td>
-        <%= h p.name %>
+        <%= p.name %>
       </td>
       <td>
-        <%= mail_to p.email, h(p.email) %>
+        <%= mail_to p.email, p.email %>
       </td>
       <td>
         <%= link_to 'Full detail', :controller => 'payments', :action => 'show', :id => p.id %>

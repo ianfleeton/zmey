@@ -20,7 +20,7 @@
 <p><%= link_to 'Add Feature', new_feature_path(:product_id => @product.id) %></p>
 <% @product.features.each do |feature| -%>
 <div class="feature">
-  <p><%= h feature.name %> <%= link_to "Edit", edit_feature_path(feature) %></p>
+  <p><%= feature.name %> <%= link_to "Edit", edit_feature_path(feature) %></p>
   <% form_tag feature_path(feature), :method => :delete do -%>
     <input type="submit" value="Delete Feature" />
   <% end -%>

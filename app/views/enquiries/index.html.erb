@@ -16,12 +16,12 @@
 
 <% @enquiries.each do |enquiry| %>
   <tr>
-    <td><%=h enquiry.name %></td>
-    <td><%=h enquiry.organisation %></td>
-    <td><%=h enquiry.postcode %></td>
-    <td><%=h enquiry.telephone %></td>
-    <td><%=h enquiry.email %></td>
-    <td><%=h enquiry.call_back %></td>
+    <td><%= enquiry.name %></td>
+    <td><%= enquiry.organisation %></td>
+    <td><%= enquiry.postcode %></td>
+    <td><%= enquiry.telephone %></td>
+    <td><%= enquiry.email %></td>
+    <td><%= enquiry.call_back %></td>
     <td><%= link_to 'Show', enquiry %></td>
     <td><%= link_to 'Edit', edit_enquiry_path(enquiry) %></td>
     <td><%= link_to 'Destroy', enquiry, :confirm => 'Are you sure?', :method => :delete %></td>

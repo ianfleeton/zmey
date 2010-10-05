@@ -4,9 +4,9 @@
 <h1>Details of your order</h1>
 <% end -%>
 
-<p>Order number: <%= h @order.order_number %></p>
+<p>Order number: <%= @order.order_number %></p>
 
-<p>Order placed: <%= h @order.created_at %></p>
+<p>Order placed: <%= @order.created_at %></p>
 
 <p>Order status: <%= @order.status_description %></p>
 
@@ -25,11 +25,11 @@
   <% @order.order_lines.each do |line| -%>
   <tr>
     <td>
-      <%= h line.product_name %>
+      <%= line.product_name %>
       <% unless line.feature_descriptions.empty? -%>
         <br />
         <small>
-          <%= h(line.feature_descriptions) %>
+          <%= line.feature_descriptions %>
         </small>
       <% end -%>
     </td>
@@ -38,7 +38,7 @@
   </tr>
   <% end -%>
   <tr>
-    <th colspan="2"><%= h @order.shipping_method %>:</th>
+    <th colspan="2"><%= @order.shipping_method %>:</th>
     <td class="price shipping_amount"><%= formatted_price(@order.shipping_amount) %></td>
   </tr>
   <% unless @w.vat_number.empty? -%>
@@ -56,6 +56,6 @@
 
 <% unless @w.vat_number.empty? -%>
 <p>
-  VAT number: <%= h(@w.vat_number) %>
+  VAT number: <%= @w.vat_number %>
 </p>
 <% end -%>
