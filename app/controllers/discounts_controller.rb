@@ -1,5 +1,5 @@
 class DiscountsController < ApplicationController
-  before_filter :admin_required
+  before_filter :admin_or_manager_required
   before_filter :find_discount, :only => [:edit, :update, :destroy]
 
   def index
