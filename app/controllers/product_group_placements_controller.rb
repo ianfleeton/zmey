@@ -1,5 +1,5 @@
 class ProductGroupPlacementsController < ApplicationController
-  before_filter :admin_required
+  before_filter :admin_or_manager_required
   before_filter :find_product_group_placement, :except => [:create]
 
   def create
