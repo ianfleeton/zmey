@@ -20,6 +20,7 @@ class OrdersController < ApplicationController
 
   def receipt
     redirect_to :controller => 'basket', :action => 'index' and return unless (@order.payment_received? or @order.status==Order::PAYMENT_ON_ACCOUNT)
+    @google_ecommerce_tracking = true
   end
   
   def show

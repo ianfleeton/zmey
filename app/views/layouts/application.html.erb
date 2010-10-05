@@ -11,12 +11,12 @@
 <% end -%>
 	<%= javascript_include_tag :defaults %>
 <% unless @w.google_analytics_code.empty? -%>
-  <script type="text/javascript">
+  <script>
 
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', '<%= @w.google_analytics_code %>']);
     _gaq.push(['_trackPageview']);
-
+<%= render(:partial => 'orders/google_ecommerce_tracking') unless @google_ecommerce_tracking.nil? %>
     (function() {
       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
