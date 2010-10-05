@@ -2,9 +2,9 @@ module AddressesHelper
   # formats an address in HTML
   def format_address a, html = true
     if html
-      lt = '&lt;'
-      gt = '&gt;'
-      lb = '<br />'
+      lt = '&lt;'.html_safe
+      gt = '&gt;'.html_safe
+      lb = '<br />'.html_safe
     else
       lt = '<'
       gt = '>'
