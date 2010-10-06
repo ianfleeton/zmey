@@ -19,9 +19,9 @@
     <% end -%>
     <div class="product_description">
       <% if full and !product.full_detail.empty? -%>
-      <%= textilize(product.full_detail) %>
+      <%= raw textilize(product.full_detail) %>
       <% else -%>
-      <%= textilize(product.description) %>
+      <%= raw textilize(product.description) %>
       <% end -%>
     </div>
     <% unless product.features.empty? %>

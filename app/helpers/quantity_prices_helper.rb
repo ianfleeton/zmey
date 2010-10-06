@@ -25,6 +25,6 @@ HTML
       end
     end
     html << "</table>"
-    concat(html)
+    concat(html.html_safe)
   end
 end

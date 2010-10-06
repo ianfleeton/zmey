@@ -1,5 +1,5 @@
 <%= flash_notice %>
-<%= textilize(@page.content) %>
+<%= raw textilize(@page.content) %>
 <% unless @page.children.empty? -%>
 <div id="child_pages">
   <% @page.children.each do |child| -%>

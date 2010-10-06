@@ -11,9 +11,9 @@ module ProductsHelper
     else
       if product.tax_type == Product::EX_VAT || product.tax_type == Product::INC_VAT
         if @inc_tax
-          ' <span class="tax_explanation">inc VAT</span>'
+          ' <span class="tax_explanation">inc VAT</span>'.html_safe
         else
-          ' <span class="tax_explanation">ex VAT</span>'
+          ' <span class="tax_explanation">ex VAT</span>'.html_safe
         end
       end
     end
