@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<rss version="2.0" 
+xmlns:g="http://base.google.com/ns/1.0" 
+xmlns:c="http://base.google.com/cns/1.0">
+<channel>
+  <title><%= @w.name %></title>
+  <link>http://<%= @w.domain %></link>
+  <description><%= @w.name %> product data feed</description>
+<% @products.each do |p| -%>
+  <item>
+    <title><%= p.name %></title>
+    <link>http://<%= @w.domain %><%= url_for p %></link>
+    <description><%= p.description %></description>
+    <g:price><%= p.price_with_tax(1, !@w.vat_number.empty?) %></g:price>
+<% unless p.image.nil? -%>
+    <g:image_link>http://<%= @w.domain %><%= p.image.url(@w.product_image_size) %></g:image_link>
+<% end -%>
+    <g:condition>new</g:condition>
+    <g:id><%= p.id %></g:id>
+  </item>
+<% end -%>
+</channel>
+</rss>

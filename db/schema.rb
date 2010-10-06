@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100729172707) do
+ActiveRecord::Schema.define(:version => 20101006163920) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -354,6 +354,8 @@ ActiveRecord::Schema.define(:version => 20100729172707) do
     t.integer  "product_image_size",                                             :default => 400
     t.integer  "product_thumbnail_size",                                         :default => 200
     t.boolean  "render_blog_before_content",                                     :default => true,  :null => false
+    t.string   "google_ftp_username",                                            :default => "",    :null => false
+    t.string   "google_ftp_password",                                            :default => "",    :null => false
   end
 
 end

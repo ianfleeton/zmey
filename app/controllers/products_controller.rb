@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_filter :find_product, :only => [:show, :edit, :update]
-  before_filter :admin_or_manager_required, :except => [:show]
+  before_filter :admin_or_manager_required, :except => [:show, :google_data_feed]
 
   def index
     @products = Product.all(:conditions => {:website_id => @w.id}, :order => :name)
@@ -35,6 +35,26 @@ class ProductsController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+
+  def google_data_feed
+    @products = @w.products_in_stock
+  end
+
+  def upload_google_data_feed
+    google_data_feed
+    @xml = render_to_string(:action => 'products/google_data_feed.xml.erb', :layout => false)
+    open('google_data_feed.xml', 'wb') { |file| file.write(@xml) }
+
+    require 'net/ftp'
+    Net::FTP::open('uploads.google.com') do |ftp|
+      ftp.login @w.google_ftp_username, @w.google_ftp_password
+      ftp.passive = true
+      ftp.put 'google_data_feed.xml'
+    end
+    system('rm google_data_feed.xml')
+
+    flash[:notice] = 'Uploaded'
   end
 
   protected

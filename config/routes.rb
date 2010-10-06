@@ -38,7 +38,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :enquiries, :collection => { :thank_you => :get }
   map.resources :websites
   map.resources :orders, :collection => { :my => :get, :receipt => :get, :select_payment_method => :get, :purge_old_unpaid => :get }
-  map.resources :products
+  map.resources :products, :collection => { :google_data_feed => :get, :upload_google_data_feed => :get }
   map.resources :product_groups
   map.resources :product_group_placements
   map.resources :product_placements, :collection => { :move_up => :post, :move_down => :post }
