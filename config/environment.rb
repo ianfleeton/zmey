@@ -18,6 +18,7 @@ Rails::Initializer.run do |config|
   config.gem "RedCloth"
   config.gem "image_science"
   config.gem "newrelic_rpm"
+  config.gem "haml"
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"

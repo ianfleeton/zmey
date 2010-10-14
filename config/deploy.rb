@@ -25,19 +25,19 @@ set :copy_exclude, [".git", "log"]
 
 ### Other options you can set ##
 # Comma separated list of additional domains for Apache
-set :domain_aliases, "companyregistrationsuk.co.uk,middxhose.sitesinprogress.co.uk,pars.sitesinprogress.co.uk,sage-training.org.uk,shop.bluebellwood.org,shop.first-business-systems.co.uk,supplies.greensleeves-uk.com,www.ammis.co.uk,www.middlesexhoseandfittings.co.uk,www.trademarkpatent.co.uk,www.wysediscounts.co.uk"
+set :domain_aliases, "companyregistrationsuk.co.uk,middxhose.sitesinprogress.co.uk,outdoorclothinguk.com,pars.sitesinprogress.co.uk,sage-training.org.uk,shop.bluebellwood.org,shop.first-business-systems.co.uk,supplies.greensleeves-uk.com,www.ammis.co.uk,www.middlesexhoseandfittings.co.uk,www.trademarkpatent.co.uk,www.wysediscounts.co.uk"
 
 ## Dependencies
 # Set the commands and gems that your application requires. e.g.
 # depend :remote, :gem, "will_paginate", ">=2.2.2"
-depend :remote, :gem, 'haml', '>=2.0.9'
+depend :remote, :gem, 'haml', '>=2.2.15'
 # depend :remote, :command, "brightbox"
 # 
 # Gem with a source (such as github)
 # depend :remote, :gem, "tmm1-amqp", ">=0.6.0", :source => "http://gems.github.com"
 # 
 # Specify your specific Rails version if it is not vendored
-depend :remote, :gem, "rails", "=2.3.5"
+depend :remote, :gem, "rails", "=2.3.8"
 
 ## Local Shared Area
 # These are the list of files and directories that you want
