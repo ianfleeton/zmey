@@ -1,6 +1,6 @@
 module PagesHelper
   def indent_tag indent
-    '' + content_tag(:span, '&nbsp; &nbsp;', :class => 'indent') * indent
+    ''.html_safe + content_tag(:span, '&nbsp; &nbsp;'.html_safe, :class => 'indent') * indent
   end
   def page_tree p, indent = 0
     subs = ''
@@ -12,13 +12,13 @@ module PagesHelper
     edit = content_tag(:td, link_to('Edit', :controller => 'pages', :action => 'edit', :id => p.id))
 
     if p.first?
-      move_up = content_tag(:td, '&nbsp;')
+      move_up = content_tag(:td, '&nbsp;'.html_safe)
     else
       move_up = content_tag(:td, link_to('Move Up', :controller => 'pages', :action => 'move_up', :id => p.id))
     end
 
     if p.last?
-      move_down = content_tag(:td, '&nbsp;')
+      move_down = content_tag(:td, '&nbsp;'.html_safe)
     else
       move_down = content_tag(:td, link_to('Move Down', :controller => 'pages', :action => 'move_down', :id => p.id))
     end
@@ -26,11 +26,11 @@ module PagesHelper
     content_tag(:tr,
       content_tag(:td, 
         indent_tag(indent) +
-          link_to(h(p.name), page_url(p)) + ' ' +
+          link_to(p.name, page_url(p)) + ' '.html_safe +
           edit +
           move_up +
           move_down
       )
-    ) + subs
+    ) + subs.html_safe
   end
 end

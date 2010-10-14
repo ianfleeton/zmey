@@ -16,13 +16,13 @@
   <% form_tag :action => 'place_order' do %>
     <% unless @w.terms_and_conditions.empty? %>
     <div class="terms_and_conditions" id="checkout_terms_and_conditions">
-    <%= textilize(@w.terms_and_conditions) %>
+    <%= raw textilize(@w.terms_and_conditions) %>
     </div>
     <% end %>
     <% if @w.preferred_delivery_date_settings %>
       <h2><%= @w.preferred_delivery_date_settings.prompt %></h2>
       <p>
-        <%= select_tag(:preferred_delivery_date, @w.preferred_delivery_date_settings.options) %>
+        <%= select_tag(:preferred_delivery_date, @w.preferred_delivery_date_settings.options.html_safe) %>
       </p>
     <% end %>
     <div id="place_order">
