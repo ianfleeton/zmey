@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper') 
+require 'spec_helper'
 
 describe Website do 
   before(:each) do
@@ -54,5 +54,10 @@ describe Website do
     @website.accept_payment_on_account = false
     @website.rbswp_active = false
     @website.only_accept_payment_on_account?.should be_false
+  end
+
+  it "should populate itself with a number of countries" do
+    @website.save
+    @website.countries.should have(244).countries
   end
 end

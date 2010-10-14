@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101006163920) do
+ActiveRecord::Schema.define(:version => 20101013102605) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -54,7 +54,10 @@ ActiveRecord::Schema.define(:version => 20101006163920) do
     t.string   "iso_3166_1_alpha_2", :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "website_id",         :default => 0,  :null => false
   end
+
+  add_index "countries", ["website_id"], :name => "index_countries_on_website_id"
 
   create_table "discounts", :force => true do |t|
     t.integer  "website_id",             :default => 0,  :null => false
