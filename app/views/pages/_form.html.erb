@@ -15,7 +15,7 @@
 
 <div>
   <%= form.label :parent_id, 'Parent page or navigation' %>:<br />
-  <%= form.collection_select :parent_id, @w.pages, :id, :name, {:include_blank => '-- No parent --'} %>
+  <%= form.collection_select :parent_id, @w.pages, :id, :name_with_ancestors, {:include_blank => '-- No parent --'} %>
 </div>
 
 <div>

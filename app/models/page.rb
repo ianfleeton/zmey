@@ -13,6 +13,10 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :website_id, :case_sensitive => false
   validates_uniqueness_of :name, :scope => :parent_id, :case_sensitive => false
 
+  def name_with_ancestors
+    parent ? parent.name_with_ancestors + ' > ' + name : name
+  end
+
   def self.bootstrap website
     primary_nav_page = create_navigation website, 'primary'
     create_home_page website, primary_nav_page
