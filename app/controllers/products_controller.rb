@@ -7,6 +7,7 @@ class ProductsController < ApplicationController
   end
   
   def show
+    @title = @product.name + ' at ' + @w.name
   end
   
   def new
