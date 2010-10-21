@@ -2,7 +2,8 @@ class Product < ActiveRecord::Base
   validates_presence_of :name, :sku
   validates_uniqueness_of :sku, :scope => :website_id
 
-  has_many :pages, :through => :product_placement
+  has_many :product_placements
+  has_many :pages, :through => :product_placements
   has_many :features, :dependent => :destroy
   has_many :quantity_prices, :order => :quantity, :dependent => :delete_all
   belongs_to :image
