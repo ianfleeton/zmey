@@ -8,9 +8,16 @@ class ChoicesController < ApplicationController
   end
   
   def edit
+    @feature = @choice.feature
   end
   
   def update
+    if @choice.update_attributes(params[:choice])
+      flash[:notice] = "Choice successfully updated."
+      redirect_to edit_feature_path(@choice.feature)
+    else
+      render :action => "edit"
+    end
   end
   
   def create
