@@ -1,0 +1,8 @@
+<div>
+	<%= form.label :name %>:<br>
+	<%= form.text_field :name, :class => "text" %>
+</div>
+<div>
+  <%= form.label :shipping_zone_id %>:<br />
+  <%= form.collection_select :shipping_zone_id, @w.shipping_zones, :id, :name %>
+</div>

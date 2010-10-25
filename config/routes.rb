@@ -44,6 +44,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :product_group_placements
   map.resources :product_placements, :collection => { :move_up => :post, :move_down => :post }
   map.resources :forums
+  map.resources :shipping_classes
   map.resources :shipping_zones
   map.resources :users, :collection => {:forgot_password => :get, :forgot_password_new => :get, :forgot_password_send => :post} do |user|
     user.resources :orders

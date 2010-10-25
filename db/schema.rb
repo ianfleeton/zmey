@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101025165642) do
+ActiveRecord::Schema.define(:version => 20101025184430) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -297,6 +297,15 @@ ActiveRecord::Schema.define(:version => 20101025165642) do
   end
 
   add_index "quantity_prices", ["product_id"], :name => "index_quantity_prices_on_product_id"
+
+  create_table "shipping_classes", :force => true do |t|
+    t.integer  "shipping_zone_id", :default => 0,  :null => false
+    t.string   "name",             :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shipping_classes", ["shipping_zone_id"], :name => "index_shipping_classes_on_shipping_zone_id"
 
   create_table "shipping_zones", :force => true do |t|
     t.integer  "website_id", :default => 0,  :null => false
