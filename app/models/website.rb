@@ -24,6 +24,7 @@ class Website < ActiveRecord::Base
   has_many :images, :dependent => :destroy
   has_many :forums, :dependent => :destroy
   has_many :enquiries, :dependent => :destroy
+  has_many :shipping_zones, :order => 'name', :dependent => :destroy
   has_many :users, :order => 'name', :dependent => :destroy
   belongs_to :blog, :class_name => 'Forum'
 

@@ -89,6 +89,10 @@
   <%= link_to 'Forums', :controller => 'forums' %>
   &middot;
   <%= link_to I18n.t('controllers.users'), :controller => 'users' %>
+  &middot;
+  <%= link_to 'Countries', countries_path %>
+  &middot;
+  <%= link_to 'Shipping Zones', shipping_zones_path %>
   <% end %>
 </div>
 <% if @w.rbswp_active? -%>

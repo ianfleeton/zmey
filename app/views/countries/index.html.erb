@@ -1,0 +1,27 @@
+<h1>Countries</h1>
+<%= flash_notice %>
+<p>
+  <%= link_to 'New', new_country_path %>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Country</th>
+      <th>ISO 3166-1-alpha-2</th>
+      <th>Shipping Zone</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @countries.each do |country| %>
+    <tr>
+      <td><%= link_to country.name, edit_country_path(country) %></td>
+      <td><%= country.iso_3166_1_alpha_2 %></td>
+      <td><%= country.shipping_zone ? country.shipping_zone.name : '-' %></td>
+      <td><%= link_to "Delete", { :action => "destroy", :id => country.id },
+  		 						 :confirm => 'Are you sure?',
+  								 :method => :delete %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

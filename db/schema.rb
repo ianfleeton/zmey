@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101013102605) do
+ActiveRecord::Schema.define(:version => 20101025165642) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20101013102605) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "website_id",         :default => 0,  :null => false
+    t.integer  "shipping_zone_id"
   end
 
   add_index "countries", ["website_id"], :name => "index_countries_on_website_id"
@@ -296,6 +297,13 @@ ActiveRecord::Schema.define(:version => 20101013102605) do
   end
 
   add_index "quantity_prices", ["product_id"], :name => "index_quantity_prices_on_product_id"
+
+  create_table "shipping_zones", :force => true do |t|
+    t.integer  "website_id", :default => 0,  :null => false
+    t.string   "name",       :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "topics", :force => true do |t|
     t.string   "topic",            :default => "", :null => false
