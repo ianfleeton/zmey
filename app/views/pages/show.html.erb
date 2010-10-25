@@ -25,7 +25,7 @@
   <% unless @w.products.empty? -%>
   <% form_for @product_placement do |form| %>
   <input type="hidden" name="product_placement[page_id]" value="<%= @page.id %>" />
-  <%= form.collection_select :product_id, @w.products, :id, :name %>
+  <%= form.collection_select :product_id, @w.products, :id, :name_with_sku %>
   <%= submit_tag 'Add Product' %>
   <% end %>
   <% end -%>

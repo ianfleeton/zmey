@@ -3,7 +3,7 @@
 <p><%= link_to 'New product', new_product_path %></p>
 <ul>
   <% @products.each do |p| -%>
-  <li><%= link_to p.name, edit_product_path(p) %></li>
+  <li><%= link_to p.name_with_sku, edit_product_path(p) %></li>
   <% end -%>
   <%= content_tag(:li, 'No products') if @products.empty? -%>
 </ul>

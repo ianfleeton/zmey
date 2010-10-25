@@ -16,6 +16,10 @@ class Product < ActiveRecord::Base
   EX_VAT = 3
 
   VAT_RATE = 0.175
+
+  def name_with_sku
+    name + ' [' + sku + ']'
+  end
   
   # the price of a single product when quantity q is purchased as entered
   # by the merchant -- tax is not considered
