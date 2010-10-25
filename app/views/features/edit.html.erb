@@ -24,7 +24,7 @@
       <%= link_to h(choice.name), edit_choice_path(choice) %>
     </td>
     <td>
-      <td><%= button_to "Delete", choice_path(choice), :method => :delete %></td>
+      <%= button_to "Delete", choice_path(choice), :method => :delete %>
     </td>
   </tr>
 <% end -%>
