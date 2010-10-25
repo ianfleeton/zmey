@@ -54,15 +54,25 @@ module ApplicationHelper
   def tick yes
     tick_cross yes, false
   end
-  
-  def nav_link_to name, options = {}, html_options = nil, class_name = ''
+
+  def nav_link_to page, options = {}, html_options = nil, class_name = ''
+    name = page.is_a?(String) ? page : page.name
     class_name = 'n_' + name.downcase.gsub(' ', '_').gsub('&amp;', 'and') if class_name.empty?
     if current_page? options
       class_name += ' n_current'
-      content_tag(:li, name, :class => class_name)
+      content_tag(:li, h(name) + sub_nav(page), :class => class_name)
     else
-      content_tag(:li, link_to(name, options, html_options), :class => class_name)
+      content_tag(:li, link_to(name, options, html_options) + sub_nav(page), :class => class_name)
     end
+  end
+
+  def sub_nav page
+    sn = ''.html_safe
+    if(page.is_a?(Page) && page.children)
+      page.children.each {|c| sn += content_tag(:li, link_to(c.name, c))}
+      sn = content_tag(:ul, sn)
+    end
+    sn
   end
 
   def format_date d
