@@ -14,7 +14,7 @@
   <tbody>
 <% @shipping_classes.each do |shipping_class| %>
     <tr>
-      <td><%= link_to shipping_class.name, edit_shipping_class_path(shipping_class) %></td>
+      <td><%= link_to shipping_class.name + ', ' + shipping_class.shipping_zone.name, edit_shipping_class_path(shipping_class) %></td>
       <td><%= link_to "Delete", { :action => "destroy", :id => shipping_class.id },
   		 						 :confirm => 'Are you sure?',
   								 :method => :delete %></td>

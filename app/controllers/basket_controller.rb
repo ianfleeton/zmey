@@ -62,6 +62,7 @@ class BasketController < ApplicationController
     @address = Address.find_by_id(session[:address_id]) if session[:address_id]
     if @address.nil?
       @address = Address.new
+      @address.country = Country.find_by_name_and_website_id('United Kingdom', @w.id)
       if logged_in?
         @address.user_id = @current_user.id
         @address.email_address = @current_user.email
@@ -229,8 +230,13 @@ class BasketController < ApplicationController
 
   # get valid delivery address or send user back to checkout
   def require_delivery_address
-    @address = session[:address_id] ? Address.find_by_id(session[:address_id]) : nil
+    find_delivery_address
     redirect_to :action => 'checkout' if @address.nil?
+  end
+
+  def find_delivery_address
+    return if @address
+    @address = session[:address_id] ? Address.find_by_id(session[:address_id]) : nil
   end
 
   def remove_item
@@ -274,7 +280,40 @@ class BasketController < ApplicationController
   # returns nil by default if there is no shipping_amount
   # set return_if_nil to 0, for example, if using in a calculation
   def shipping_amount(return_if_nil=nil)
-    @basket.apply_shipping? ? @w.shipping_amount : return_if_nil
+    unless @basket.apply_shipping?
+      return return_if_nil
+    end
+    find_delivery_address
+    amount = @w.shipping_amount
+    amount_by_address = calculate_shipping_from_address(@address)
+    amount_by_address.nil? ? amount : amount_by_address
+  end
+
+  def calculate_shipping_from_address(address)
+    if !address
+      nil
+    elsif !address.country
+      nil
+    elsif !address.country.shipping_zone
+      nil
+    elsif address.country.shipping_zone.shipping_classes.empty?
+      nil
+    else
+      calculate_shipping_from_class(address.country.shipping_zone.shipping_classes.first)
+    end
+  end
+
+  def calculate_shipping_from_class(shipping_class)
+    basket_total = @basket.total(true)
+    shipping = nil
+    unless shipping_class.shipping_table_rows.empty?
+      shipping_class.shipping_table_rows.each do |row|
+        if basket_total >= row.trigger_value
+          shipping = row.amount
+        end
+      end
+    end
+    shipping
   end
 
   def calculate_discounts

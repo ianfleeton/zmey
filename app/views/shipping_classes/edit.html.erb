@@ -10,3 +10,32 @@
 
   <% end %>
 </div>
+
+<h2>Shipping Table</h2>
+<p><%= link_to 'New', :controller => 'shipping_table_rows', :action => 'new',
+  :shipping_class_id => @shipping_class.id %></p>
+<% if @shipping_class.shipping_table_rows.empty? -%>
+<p>You have no shipping rules yet for this shipping class.</p>
+<% else -%>
+<table>
+  <thead>
+    <tr>
+      <th>Trigger</th>
+      <th>Amount</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @shipping_class.shipping_table_rows.each do |row| -%>
+    <tr>
+      <td><%= row.trigger_value %></td>
+      <td><%= row.amount %></td>
+      <td><%= link_to "Delete", { :controller => 'shipping_table_rows',
+                   :action => "destroy", :id => row.id },
+  		 						 :confirm => 'Are you sure?',
+  								 :method => :delete %></td>
+    </tr>
+<% end -%>
+  </tbody>
+</table>
+<% end -%>

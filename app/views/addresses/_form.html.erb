@@ -28,7 +28,7 @@
 </div>
 <div>
   <%= form.label :country_id %>:<br />
-  <%= collection_select :address, :country_id, Country.all, :id, :name %>
+  <%= collection_select :address, :country_id, @w.countries, :id, :name %>
 </div>
 <div>
   <%= form.label :phone_number %>:<br />

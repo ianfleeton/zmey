@@ -1,4 +1,5 @@
 class ShippingZonesController < ApplicationController
+  before_filter :admin_or_manager_required
   before_filter :find_shipping_zone, :only => [:edit, :update, :destroy]
 
   def index

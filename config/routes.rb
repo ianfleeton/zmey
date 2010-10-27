@@ -46,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :forums
   map.resources :shipping_classes
   map.resources :shipping_zones
+  map.resources :shipping_table_rows
   map.resources :users, :collection => {:forgot_password => :get, :forgot_password_new => :get, :forgot_password_send => :post} do |user|
     user.resources :orders
   end
