@@ -15,7 +15,7 @@
   category_or_variation = line.feature_descriptions.empty? ? '' : line.feature_descriptions
 -%>
 
-    _gaq.push(['_addItem'],
+    _gaq.push(['_addItem',
       '<%= h @order.order_number %>',
       '<%= h line.product_sku %>',
       '<%= h line.product_name %>',
