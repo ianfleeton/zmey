@@ -6,7 +6,7 @@
   <div class="child_page">
     <p class="child_page_image">
       <% unless child.image.nil? -%>
-      <%= link_to image_tag(child.image.url(@w.page_thumbnail_size)), page_path(child) %>
+      <%= link_to image_tag(child.image.url(@w.page_thumbnail_size), :alt => child.image.name), page_path(child) %>
       <% end -%>
     </p>
     <%= link_to child.name, page_path(child) %>
