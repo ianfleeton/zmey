@@ -69,4 +69,8 @@ class Product < ActiveRecord::Base
       price_ex_tax(q)
     end
   end
+
+  def to_param
+    "#{id}-#{PermalinkFu.escape(name)}"
+  end
 end
