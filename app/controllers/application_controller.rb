@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_filter :set_timezone, :require_website, :initialize_user, :set_locale, :protect_private_website, :initialize_tax_display
+  before_filter :set_timezone, :require_website, :initialize_meta_tags, :initialize_user, :set_locale, :protect_private_website, :initialize_tax_display
   
   protected
 
@@ -77,7 +77,11 @@ class ApplicationController < ActionController::Base
       render :template => "public/404.html", :layout => false, :status => 404
     end
   end
-  
+
+  def initialize_meta_tags
+    @description = @keywords = @w.name
+  end
+
   def protect_private_website
     if @w.private? && !logged_in?
       flash[:notice] = 'You must be logged in to view this website.'

@@ -11,6 +11,8 @@ class PagesController < ApplicationController
     @page = Page.find_by_slug_and_website_id(params[:slug], @w)
     if @page
       @title = @page.title
+      @description = @page.description
+      @keywords = @page.keywords
       if request.path == '/'
         @blog = @w.blog
       end
