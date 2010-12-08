@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
   has_many :features, :dependent => :destroy
   has_many :quantity_prices, :order => :quantity, :dependent => :delete_all
   belongs_to :image
+  belongs_to :website
   has_many :product_group_placements
   has_many :product_groups, :through => :product_group_placements
 
@@ -68,6 +69,10 @@ class Product < ActiveRecord::Base
     else
       price_ex_tax(q)
     end
+  end
+
+  def url
+    'http://' + website.domain + '/products/' + to_param
   end
 
   def to_param

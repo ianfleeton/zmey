@@ -79,6 +79,18 @@ class PagesController < ApplicationController
     @terms = @w.terms_and_conditions
   end
 
+  def sitemap
+    @pages = Array.new
+    @pages.concat @w.pages.reject {|p| p.parent.nil?}
+    @pages.concat @w.products
+    @other_urls = ['/enquiries/new', '/users/forgot_password', '/users/new',
+      '/sessions/new', '/basket', '/pages/terms'].collect{|x| 'http://' + @w.domain + x}
+
+    respond_to do |format|
+      format.xml { render :layout => false }
+    end
+  end
+
   protected
   
   def find_page

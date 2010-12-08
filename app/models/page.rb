@@ -5,6 +5,7 @@ class Page < ActiveRecord::Base
   has_many :product_placements, :order => :position, :include => :product, :dependent => :delete_all
   has_many :products, :through => :product_placement
   belongs_to :image
+  belongs_to :website
 
   attr_protected :website_id
   validates_presence_of :title, :name, :keywords, :description, :website_id
@@ -53,6 +54,10 @@ class Page < ActiveRecord::Base
       navs << nav 
     end
     navs
+  end
+
+  def url
+    'http://' + website.domain + '/' + slug
   end
 
   def to_param
