@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :admin_or_manager_required, :except => [:show]
+  before_filter :admin_or_manager_required, :except => [:show, :sitemap, :terms]
   before_filter :find_page, :only => [:edit, :update, :destroy, :move_up, :move_down]
 
   def index
@@ -73,6 +73,10 @@ class PagesController < ApplicationController
     @page.destroy
     flash[:notice] = "Page deleted."
     redirect_to :action => "index"
+  end
+
+  def terms
+    @terms = @w.terms_and_conditions
   end
 
   protected

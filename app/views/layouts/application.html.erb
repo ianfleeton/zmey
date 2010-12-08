@@ -67,6 +67,7 @@
 <div id="footer">
   &copy;<%= Date.today.year %> <%= @w.name %>. All rights reserved.
   <a href="http://www.yesl.co.uk/">Ruby on Rails development</a> by Your e Solutions Ltd.
+  <%= link_to('Terms', '/pages/terms') unless @w.terms_and_conditions.empty? %>
   <% if admin_or_manager? -%>
   <br />
   <strong>Admin quick links:</strong>
