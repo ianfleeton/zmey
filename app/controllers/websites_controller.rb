@@ -1,7 +1,8 @@
 class WebsitesController < ApplicationController
-  before_filter :admin_required
+  before_filter :admin_required, :except => [:edit, :update]
   before_filter :find_website, :only => [:edit, :update, :destroy]
-  
+  before_filter :permission_check, :only => [:edit, :update]
+
   def index
     @websites = Website.find(:all, :order => :name)
   end
@@ -31,7 +32,7 @@ class WebsitesController < ApplicationController
   def update
     if @website.update_attributes(params[:website])
       flash[:notice] = 'Website saved.'
-      redirect_to websites_path
+      redirect_to edit_website_path(@website)
     else
       render :action => 'edit'
     end
@@ -44,7 +45,16 @@ class WebsitesController < ApplicationController
   end
   
   protected
-  
+
+  def permission_check
+    admin_or_manager_required
+    return if admin?
+    if manager? && @w.id != @website.id
+      flash[:notice] = 'You do not manage this website.'
+      redirect_to :controller => 'sessions', :action => 'new'
+    end
+  end
+
   def find_website
     @website = Website.find(params[:id])
   end
