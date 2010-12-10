@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101027115929) do
+ActiveRecord::Schema.define(:version => 20101210080539) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -386,6 +386,7 @@ ActiveRecord::Schema.define(:version => 20101027115929) do
     t.boolean  "render_blog_before_content",                                     :default => true,  :null => false
     t.string   "google_ftp_username",                                            :default => "",    :null => false
     t.string   "google_ftp_password",                                            :default => "",    :null => false
+    t.text     "footer_html",                                                                       :null => false
   end
 
 end

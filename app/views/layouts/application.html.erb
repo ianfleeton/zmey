@@ -98,7 +98,10 @@
   <%= link_to 'Shipping Zones', shipping_zones_path %>
   &middot;
   <%= link_to 'Shipping Classes', shipping_classes_path %>
+  &middot;
+  <%= link_to 'Website Settings', edit_website_path(@w) %>
   <% end %>
+  <%= raw @w.footer_html %>
 </div>
 <% if @w.rbswp_active? -%>
 <div id="rbswp_logos">
