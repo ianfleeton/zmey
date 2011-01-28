@@ -27,13 +27,14 @@
     <% unless product.features.empty? %>
     <div class="product_features">
       <% product.features.each do |feature| -%>
-      <p>
+      <p class="<%= feature.class_name %>">
         <%= h feature.name %>:
         <% case feature.ui_type
         when Feature::TEXT_FIELD %>
           <input type="text" name="feature[<%= feature.id %>]" />
         <% when Feature::DROP_DOWN %>
           <select name="feature[<%= feature.id %>]">
+            <option value="">-- Choose --</option>
             <% feature.choices.each do |choice| %>
             <option value="<%= choice.id %>"><%= choice.name %></option>
             <% end %>
