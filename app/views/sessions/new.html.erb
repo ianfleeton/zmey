@@ -9,7 +9,7 @@
 <div class="form">
 	<fieldset>
 	<legend>Enter email/password</legend>
-	<% form_tag :action => "create" do %>
+	<%= form_tag :action => "create" do %>
 		<div>
 			<label for="email">Email: </label><br />
 			<%= text_field_tag :email, params[:email], :class => "short" %>

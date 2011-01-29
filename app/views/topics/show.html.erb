@@ -1,7 +1,7 @@
 <h1><%= link_to h(@topic.forum.name), @topic.forum %> &rarr; <%= h @topic.topic %></h1>
 <%= flash_notice %>
 <% if admin? -%>
-<% form_tag :action => 'destroy', :id => @topic do %>
+<%= form_tag :action => 'destroy', :id => @topic do %>
   <%= submit_tag 'Delete Topic' %>
 <% end %>
 <% end %>
@@ -13,7 +13,7 @@
   <% if admin? -%>
     <p><%= link_to('Edit Post', :action => 'edit_post', :post_id => p.id) %></p>
     <% unless @topic.posts.first == p -%>
-      <% form_tag :action => 'destroy_post', :post_id => p.id do %>
+      <%= form_tag :action => 'destroy_post', :post_id => p.id do %>
         <%= submit_tag 'Delete Post' %>
       <% end %>
     <% end -%>

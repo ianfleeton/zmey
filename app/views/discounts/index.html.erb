@@ -7,7 +7,7 @@
 <table>
 <% @discounts.each do |discount| -%>
   <tr><td><%= link_to h(discount.name), edit_discount_path(discount) %></td>
-    <td><% form_tag discount_path(discount), :method => :delete do -%>
+    <td><%= form_tag discount_path(discount), :method => :delete do -%>
       <input type="submit" value="Remove discount" /></td>
     <% end -%>
   </tr>

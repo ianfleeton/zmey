@@ -30,7 +30,7 @@
   <% end %>
   <% end -%>
   <p><%= link_to 'Edit this page', :action => 'edit', :id => @page.id %></p>
-  <% form_tag :controller => 'pages', :action => 'destroy', :id => @page.id do -%>
+  <%= form_tag :controller => 'pages', :action => 'destroy', :id => @page.id do -%>
     <input type="submit" value="Delete Page" />
   <% end -%>
 </div>

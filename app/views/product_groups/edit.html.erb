@@ -31,8 +31,8 @@
 <% else -%>
 <table>
 <% @product_group.product_group_placements.each do |placement| -%>
-  <tr><td><%= h placement.product.name %></td>
-    <td><% form_tag product_group_placement_path(placement), :method => :delete do -%>
+  <tr><td><%= placement.product.name %></td>
+    <td><%= form_tag product_group_placement_path(placement), :method => :delete do -%>
       <input type="submit" value="Remove from group" /></td>
     <% end -%>
   </tr>

@@ -1,4 +1,4 @@
-<% form_tag :controller => 'basket', :action => 'update' do %>
+<%= form_tag :controller => 'basket', :action => 'update' do %>
 <table id="basket">
   <thead>
     <tr>
@@ -107,7 +107,7 @@
 </div>
 <% end -%>
 <p>If you have a coupon code, enter it here.</p>
-<% form_tag :controller => 'basket', :action => 'enter_coupon' do %>
+<%= form_tag :controller => 'basket', :action => 'enter_coupon' do %>
 <input type="text" name="coupon_code" id="coupon_code" />
 <input type="submit" value="Apply Coupon" />
 <% end %>
