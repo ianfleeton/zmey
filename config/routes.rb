@@ -1,70 +1,89 @@
-ActionController::Routing::Routes.draw do |map|
-  # The priority is based upon order of creation: first created -> highest priority.
+YeslWebsite::Application.routes.draw do
 
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
+  resources :addresses
 
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
+  match 'basket/add' => 'basket#add', :as => :add_to_basket
+  match 'basket(/:action(.:format))', :controller => 'basket'
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
+  resources :choices
 
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+  resources :countries
 
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
+  resources :discounts
 
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  map.resources :addresses
-  map.resources :countries
-  map.resources :features
-  map.resources :choices
-  map.resources :discounts
-  map.resources :quantity_prices
-  map.resources :enquiries, :collection => { :thank_you => :get }
-  map.resources :websites
-  map.resources :orders, :collection => { :my => :get, :receipt => :get, :select_payment_method => :get, :purge_old_unpaid => :get }
-  map.resources :products, :collection => { :google_data_feed => :get, :upload_google_data_feed => :get }
-  map.resources :product_groups
-  map.resources :product_group_placements
-  map.resources :product_placements, :collection => { :move_up => :post, :move_down => :post }
-  map.resources :forums
-  map.resources :shipping_classes
-  map.resources :shipping_zones
-  map.resources :shipping_table_rows
-  map.resources :users, :collection => {:forgot_password => :get, :forgot_password_new => :get, :forgot_password_send => :post} do |user|
-    user.resources :orders
+  resources :enquiries do
+    collection do
+      get 'current_time'
+      get 'thank_you'
+    end
   end
-  
-  map.new_topic 'topics/new/:forum_id', :controller => 'topics', :action => 'new'
-  map.topic 'topics/show/:id', :controller => 'topics', :action => 'show'
 
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => 'pages', :action => 'show', :slug => ''
+  resources :features
 
-  map.sitemap 'sitemap.xml', :controller => 'pages', :action => 'sitemap'
-  # See how all your routes lay out with "rake routes"
+  resources :forums
 
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing the them or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  resources :images
 
-  map.page ':slug', :controller => 'pages', :action => 'show'
+  resources :orders do
+    collection do
+      get 'my'
+      get 'purge_old_unpaid'
+      get 'receipt'
+      get 'select_payment_method'
+    end
+  end
+
+  resources :product_groups
+
+  resources :product_group_placements
+
+  resources :product_placements do
+    collection do
+      post 'move_down'
+      post 'move_up'
+    end
+  end
+
+  resources :products do
+    collection do
+      get 'google_data_feed'
+      get 'upload_google_data_feed'
+    end
+  end
+
+  resources :quantity_prices
+
+  resources :sessions do
+    get 'destroy', :on => :collection
+  end
+
+  resources :shipping_classes
+
+  resources :shipping_table_rows
+
+  resources :shipping_zones
+
+  match 'sitemap.xml' => 'pages#sitemap', :as => 'sitemap'
+
+  match 'terms' => 'pages#terms', :as => :terms
+
+  match 'topics/new/:forum_id' => 'topics#new', :as => 'new_topic'
+  match 'topics/show/:id' => 'topics#show', :as => 'topic'
+
+  resources :users do
+    collection do
+      get 'forgot_password'
+      get 'forgot_password_new'
+      post 'forgot_password_sned'
+    end
+
+    resources :orders
+  end
+
+  resources :websites
+
+  resources :pages
+  match ':slug' => 'pages#show', :as => :slug, :constraints => { :slug => /[a-z]*/ }
+
+  root :controller => 'pages', :action => 'show', :slug => ''
 end
