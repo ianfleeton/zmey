@@ -64,6 +64,10 @@ class Page < ActiveRecord::Base
     slug
   end
 
+  def to_s
+    '/' + slug + ' (' + title + ')'
+  end
+
   # http://blog.airbladesoftware.com/2008/3/19/moving-between-lists-with-acts_as_list
   def parent_id=(parent_id)
     p = position
