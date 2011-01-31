@@ -43,6 +43,6 @@ class ProductGroupsController < ApplicationController
 
   def find_product_group
     @product_group = ProductGroup.find_by_id_and_website_id(params[:id], @w.id)
-    render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found" if @product_group.nil?
+    render :file => "#{::Rails.root.to_s}/public/404.html", :status => "404 Not Found" if @product_group.nil?
   end
 end

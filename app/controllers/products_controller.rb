@@ -62,7 +62,7 @@ class ProductsController < ApplicationController
   
   def find_product
     @product = Product.find_by_id_and_website_id(params[:id], @w.id)
-    render :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found" if @product.nil?
+    render :file => "#{::Rails.root.to_s}/public/404.html", :status => "404 Not Found" if @product.nil?
   end
 
 end
