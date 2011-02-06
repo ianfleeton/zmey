@@ -21,7 +21,7 @@ class PagesController < ApplicationController
         @product_placement = ProductPlacement.new
       end
     else
-      render :file => "#{::Rails.root.to_s}/public/404.html", :status => "404 Not Found"
+      not_found
     end
   end
   
@@ -96,7 +96,7 @@ class PagesController < ApplicationController
   def find_page
     @page = Page.find_by_id_and_website_id(params[:id], @w.id)
     unless @page
-      render :file => "#{::Rails.root.to_s}/public/404.html", :status => "404 Not Found"
+      not_found
     end
   end
   

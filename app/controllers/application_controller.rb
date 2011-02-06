@@ -74,8 +74,12 @@ class ApplicationController < ActionController::Base
         set_cookie_domain(@w.domain)
       end
     else
-      render :template => "public/404.html", :layout => false, :status => 404
+      not_found
     end
+  end
+
+  def not_found
+    render :file => "#{Rails.root.to_s}/public/404.html", :layout => false, :status => 404
   end
 
   def initialize_meta_tags
