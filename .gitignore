@@ -12,3 +12,4 @@
 *.doc
 database.yml
 rerun.txt
+/tmp/*
