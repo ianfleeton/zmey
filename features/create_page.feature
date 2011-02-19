@@ -18,7 +18,7 @@ Feature: Creating new pages
     When I am on the new page page
     And I press "Create New Page"
     Then I should see "5 errors"
-    
+
   Scenario: Creating a new page with a bad slug
   
     Given I am logged in as an administrator
@@ -26,7 +26,8 @@ Feature: Creating new pages
     And I fill in "Slug" with "*"
     And I press "Create New Page"
     Then I should see "Slug can only contain letters, numbers and hyphens"
-    
+    And I should be on the pages page
+
   Scenario: Creating a new page
   
     Given I am logged in as an administrator

@@ -1,9 +1,13 @@
 Given /^a website without tracking code$/ do
-  @host = websites(:website_without_analytics).domain
+  @website = websites(:guitar_gear)
+  @website.google_analytics_code = ''
+  @website.save
 end
 
 Given /^a website with tracking code$/ do
-  @host = websites(:guitar_gear).domain
+  @website = websites(:guitar_gear)
+  @website.google_analytics_code = 'UA-000000-1'
+  @website.save
 end
 
 Then /^I should find the correct tracking code$/ do

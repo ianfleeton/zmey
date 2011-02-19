@@ -1,7 +1,11 @@
 Given /^a website where users cannot create accounts$/ do
-  @host = websites(:website_without_analytics).domain
+  @website = websites(:guitar_gear)
+  @website.can_users_create_accounts = false
+  @website.save
 end
 
 Given /^a website where users can create accounts$/ do
-  @host = websites(:guitar_gear).domain
+  @website = websites(:guitar_gear)
+  @website.can_users_create_accounts = true
+  @website.save
 end

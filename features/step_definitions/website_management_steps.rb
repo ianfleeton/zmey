@@ -2,14 +2,16 @@ Given /^I am logged in as an administrator$/ do
   @current_user = User.create!(
     :email => 'admin@example.org',
     :name => 'Admin',
-    :password => 'admin'
-  ) { |u| u.admin = true }
+    :password => 'admin',
+    :forgot_password_token => ''
+  ) { |u| u.admin = true
+          u.manages_website_id = 1
+          u.website_id = 1}
 
   Given "I am on the login page"
   fill_in("Email", :with => @current_user.email)
   fill_in("Password", :with => @current_user.password)
   click_button(I18n.t('login'))
-  visit url_for response.redirected_to()
 end
 
 Then /^I should see a list of websites$/ do

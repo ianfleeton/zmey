@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 
-gem 'mysql2'
 gem 'rails', '3.0.4'
+gem 'mysql2', '0.2.6'
 gem 'RedCloth'
-gem 'image_science'
-gem 'RubyInline'
+gem 'image_science', '1.2.1'
+gem 'RubyInline', '3.8.6'
 gem 'haml'
 
 # Bundle edge Rails instead:
@@ -34,3 +34,11 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+group :development, :test do
+  gem "rspec-rails", "2.4.1"
+  gem 'cucumber-rails', "0.3.2"
+  gem 'test-unit', '1.2.3'
+  gem 'webrat', '0.7.3'
+  gem "launchy", "0.3.7"
+end
