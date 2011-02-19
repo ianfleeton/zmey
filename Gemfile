@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
 gem 'mysql2'
+gem 'rails', '3.0.4'
 gem 'RedCloth'
 gem 'image_science'
 gem 'RubyInline'
