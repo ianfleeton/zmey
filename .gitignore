@@ -1,3 +1,5 @@
+.bundle/config
+.rspec
 *.log
 *.tmproj
 .DS_Store
