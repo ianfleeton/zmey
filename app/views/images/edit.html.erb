@@ -6,7 +6,7 @@
 
 	<fieldset>
 		<legend>Replace image / edit image details</legend>
-    <% form_for :image, @image, :html => { :multipart => true }, :url => { :action => "update", :id => @image.id } do |form| %>
+    <%= form_for :image, @image, :html => { :multipart => true }, :url => { :action => "update", :id => @image.id } do |form| %>
     <%= render :partial => 'form', :object => form %>
 
     <%= submit_tag "Edit Image" %>

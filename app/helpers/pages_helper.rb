@@ -23,10 +23,11 @@ module PagesHelper
       move_down = content_tag(:td, link_to('Move Down', :controller => 'pages', :action => 'move_down', :id => p.id))
     end
 
+    path = p.to_param.blank? ? root_path : page_path(p.to_param)
     content_tag(:tr,
       content_tag(:td, 
         indent_tag(indent) +
-          link_to(p.name, page_url(p)) + ' '.html_safe +
+          link_to(p.name, path) + ' '.html_safe +
           edit +
           move_up +
           move_down

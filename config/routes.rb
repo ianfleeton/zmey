@@ -74,7 +74,7 @@ YeslWebsite::Application.routes.draw do
     collection do
       get 'forgot_password'
       get 'forgot_password_new'
-      post 'forgot_password_sned'
+      post 'forgot_password_send'
     end
 
     resources :orders
@@ -82,7 +82,12 @@ YeslWebsite::Application.routes.draw do
 
   resources :websites
 
-  resources :pages
+  resources :pages do
+    member do
+      get 'move_up'
+      get 'move_down'
+    end
+  end
   match ':slug' => 'pages#show', :as => :slug, :constraints => { :slug => /[a-z]*/ }
 
   root :controller => 'pages', :action => 'show', :slug => ''

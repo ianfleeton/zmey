@@ -63,7 +63,7 @@ class PagesController < ApplicationController
 
     if @page.save
       flash[:notice] = "Successfully added new page."
-      redirect_to :action => "new"
+      redirect_to new_page_path
     else
       render :action => "new"
     end

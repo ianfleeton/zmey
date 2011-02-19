@@ -45,6 +45,10 @@ class User < ActiveRecord::Base
     (0...8).map{ charset.to_a[rand(charset.size)] }.join
   end
 
+  def to_s
+    "#{name} <#{email}>" + (admin? ? ' (admin)' : '')
+  end
+
   protected
   
   # before save - create salt, encrypt password

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <title><% if @title %><%= @title %><% else %><%= @w.name %><% end %></title>
@@ -36,7 +36,8 @@
   </div>
   <% Page.navs(@w).each do |nav| %>
   <ul id="<%= nav.id_attribute %>">
-<% nav.pages.each do |p| %><%= nav_link_to p, page_url(p) %><% end %>
+<% nav.pages.each do |p| %><%= nav_link_to(p,
+  slug_url(p)) %><% end %>
   <% if nav.id_attribute == 'primary_nav' -%>
     <%= nav_link_to I18n.t('controllers.enquiries'), new_enquiry_path %>
     <% if logged_in? -%>
@@ -67,7 +68,7 @@
 <div id="footer">
   &copy;<%= Date.today.year %> <%= @w.name %>. All rights reserved.
   <a href="http://www.yesl.co.uk/">Ruby on Rails development</a> by Your e Solutions Ltd.
-  <%= link_to('Terms', '/pages/terms') unless @w.terms_and_conditions.empty? %>
+  <%= link_to('Terms', terms_path) unless @w.terms_and_conditions.empty? %>
   <% if admin_or_manager? -%>
   <br />
   <strong>Admin quick links:</strong>

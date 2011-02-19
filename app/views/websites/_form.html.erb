@@ -1,3 +1,19 @@
+<div class="form">
+	<% if @website.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@website.errors.count, "error") %> prohibited this website from being saved:</h2>
+
+      <ul>
+      <% @website.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+<%= form_for @website do |form| %>
+
 <div>
 	<%= form.label :subdomain %>:<br />
 	<%= form.text_field :subdomain, :class => "text" %>
@@ -185,4 +201,10 @@
 <div>
   <%= form.label :footer_html, 'Footer HTML' %>:<br />
   <%= form.text_area :footer_html %>
+</div>
+
+<%= submit_tag submit_label %>
+
+<% end %>
+
 </div>

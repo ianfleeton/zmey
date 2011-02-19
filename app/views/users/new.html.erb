@@ -18,7 +18,7 @@
     <% else %>
 		<legend>Your details</legend>
 		<% end %>
-		<% form_for :user, :url => { :action => "create" } do |form| %>
+		<%= form_for @user do |form| %>
 			<div>
 				<%= form.label :name %>:<br />
 				<%= form.text_field :name, :class => "short" %>

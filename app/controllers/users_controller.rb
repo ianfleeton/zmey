@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def new
     unless @w.can_users_create_accounts? or admin_or_manager?
       flash[:notice] = 'New user accounts cannot be created.'
-      redirect_to page_url ''
+      redirect_to root_path
     end
     @user = User.new
   end

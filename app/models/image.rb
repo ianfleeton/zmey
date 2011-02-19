@@ -32,7 +32,7 @@ class Image < ActiveRecord::Base
       delete_files
       path = "#{IMAGE_STORAGE_PATH}/#{id}"
       FileUtils.makedirs(path)
-      File.open(path + '/' + filename, "w") { |file| file.write(@file_data.read) }
+      File.open(path + '/' + filename, "wb") { |file| file.write(@file_data.read) }
     end
   end
 
