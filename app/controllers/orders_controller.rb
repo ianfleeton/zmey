@@ -31,31 +31,28 @@ class OrdersController < ApplicationController
     if admin_or_manager? or @current_user.id==@order.user_id
       render :action => 'receipt'
     else
-      flash[:notice] = 'You do not have permission to view that order.'
-      redirect_to :root
+      redirect_to :root, :notice => 'You do not have permission to view that order.'
     end
   end
 
   def purge_old_unpaid
     Order.purge_old_unpaid
-    flash[:notice] = 'Old and unpaid orders purged.'
-    redirect_to :action => 'index'
+    redirect_to :action => 'index', :notice => 'Old and unpaid orders purged.'
   end
 
   def destroy
     @order.destroy
-    flash[:notice] = "Order deleted."
-    redirect_to :action => "index"
+    redirect_to :action => "index", :notice => "Order deleted."
   end
 
   protected
 
-  # get valid order from current session or send user back to checkout
+  # get valid order from current session or send user back to their basket
   def require_order
     @order = Order.from_session session
     if @order.nil?
-      flash[:notice] = "We couldn't find an order for you."
-      redirect_to :controller => 'basket', :action => 'checkout'
+      redirect_to({:controller => 'basket', :action => 'index'},
+        :notice => "We couldn't find an order for you.")
     end
   end
 
@@ -63,8 +60,7 @@ class OrdersController < ApplicationController
   def find_order
     @order = Order.find_by_id_and_website_id(params[:id], @w.id)
     if @order.nil?
-      flash[:notice] = 'Cannot find order.'
-      redirect_to :action => 'index'
+      redirect_to :action => 'index', :notice => 'Cannot find order.'
     end
   end
 end
