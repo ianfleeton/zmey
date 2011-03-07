@@ -3,15 +3,19 @@ class OrdersController < ApplicationController
 
   before_filter :find_order, :only => [:show, :destroy]
   before_filter :require_order, :only => [:select_payment_method, :receipt]
-  before_filter :user_required, :only => [:show]
+  before_filter :user_required, :only => [:index, :show]
 
   def index
-    if params[:user_id]
-      @orders = User.find(params[:user_id]).orders
-      @can_delete = false
-    else
-      @orders = @w.orders
+    if admin_or_manager?
       @can_delete = true
+      if params[:user_id]
+        @orders = User.find(params[:user_id]).orders
+      else
+        @orders = @w.orders
+      end
+    else
+      @can_delete = false
+      @orders = @current_user.orders
     end
   end
   
