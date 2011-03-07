@@ -33,6 +33,10 @@ YeslWebsite::Application.routes.draw do
     end
   end
 
+  resources :payments do
+    post 'rbs_worldpay_callback', :on => :collection
+  end
+
   resources :product_groups
 
   resources :product_group_placements
