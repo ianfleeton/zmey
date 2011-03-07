@@ -7,7 +7,7 @@ class ProductPlacementsController < ApplicationController
     @product_placement = ProductPlacement.new(params[:product_placement])
     if @product_placement.save
       flash[:notice] = "Product successfully placed in page."
-      redirect_to page_path @product_placement.page
+      redirect_to @product_placement.page.path
     else
       render :action => "new"
     end
@@ -19,7 +19,7 @@ class ProductPlacementsController < ApplicationController
     flash[:notice] = 'Product removed from page.'
 
     respond_to do |format|
-      format.html { redirect_to page_path(page) }
+      format.html { redirect_to page.path }
       format.xml  { head :ok }
     end
   end

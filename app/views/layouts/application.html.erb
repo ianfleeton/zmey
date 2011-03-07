@@ -28,7 +28,7 @@
   </script>
 <% end -%>
 </head>
-<body id="<%= body_id %>">
+<body id="<%= body_id %>" class="<%= body_class %>">
 <div id="top"></div>
 <div id="wrapper">
   <div id="header">
@@ -36,8 +36,7 @@
   </div>
   <% Page.navs(@w).each do |nav| %>
   <ul id="<%= nav.id_attribute %>">
-<% nav.pages.each do |p| %><%= nav_link_to(p,
-  slug_url(p)) %><% end %>
+<% nav.pages.each do |p| %><%= nav_link_to(p, p.path) %><% end %>
   <% if nav.id_attribute == 'primary_nav' -%>
     <%= nav_link_to I18n.t('controllers.enquiries'), new_enquiry_path %>
     <% if logged_in? -%>

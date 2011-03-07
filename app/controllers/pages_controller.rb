@@ -46,7 +46,7 @@ class PagesController < ApplicationController
     if @page.update_attributes(params[:page])
       @page.move_to_position new_position if old_parent_id != @page.parent_id
       flash[:notice] = 'Page saved.'
-      redirect_to page_path(@page)
+      redirect_to @page.path
     else
       @page.position = new_position
       render :action => 'edit'

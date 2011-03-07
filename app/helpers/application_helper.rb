@@ -19,6 +19,10 @@ module ApplicationHelper
     request.host.gsub!('.','-')
   end
 
+  def body_class
+    controller_name == 'pages' && action_name == 'show' ? @page.slug : ''
+  end
+
   def primary_pages
     Page.find(:all, :conditions => {:website_id => @w})
   end
@@ -69,7 +73,7 @@ module ApplicationHelper
   def sub_nav page
     sn = ''.html_safe
     if(page.is_a?(Page) && page.children)
-      page.children.each {|c| sn += content_tag(:li, link_to(c.name, c))}
+      page.children.each {|c| sn += content_tag(:li, link_to(c.name, c.path))}
       sn = content_tag(:ul, sn)
     end
     sn

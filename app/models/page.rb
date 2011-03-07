@@ -60,12 +60,12 @@ class Page < ActiveRecord::Base
     'http://' + website.domain + '/' + slug
   end
 
-  def to_param
-    slug
-  end
-
   def to_s
     '/' + slug + ' (' + title + ')'
+  end
+
+  def path
+    return '/' + slug
   end
 
   # http://blog.airbladesoftware.com/2008/3/19/moving-between-lists-with-acts_as_list
