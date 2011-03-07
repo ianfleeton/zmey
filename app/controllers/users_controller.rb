@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_filter :admin_or_manager_or_same_user_required, :only => [:show, :edit]
   before_filter :admin_required, :only => [:destroy]
   before_filter :admin_or_manager_required, :only => [:index]
+  before_filter :can_users_create_accounts, :only => [:new, :create]
 
   def index
     @users = @w.users
@@ -13,10 +14,6 @@ class UsersController < ApplicationController
   end
 
   def new
-    unless @w.can_users_create_accounts? or admin_or_manager?
-      flash[:notice] = 'New user accounts cannot be created.'
-      redirect_to root_path
-    end
     @user = User.new
   end
   
@@ -116,6 +113,13 @@ class UsersController < ApplicationController
     if !admin_or_manager? and (!logged_in? or @current_user != @user)
       redirect_to :controller => 'sessions', :action => 'new'
       return
+    end
+  end
+
+  def can_users_create_accounts
+    unless @w.can_users_create_accounts? or admin_or_manager?
+      flash[:notice] = 'New user accounts cannot be created.'
+      redirect_to root_path
     end
   end
 end
