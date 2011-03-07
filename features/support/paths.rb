@@ -17,6 +17,9 @@ module NavigationHelpers
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
 
+    when /the about page/
+      pages(:guitar_gear_about).path
+
     when /the checkout page/
       url_for :controller => 'basket', :action => 'checkout', :only_path => true
 

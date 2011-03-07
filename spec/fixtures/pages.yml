@@ -18,6 +18,18 @@ guitar_gear_home:
   description: The online guitar superstore
   content: Welcome to Guitar Gear
 
+guitar_gear_about:
+  id: 5
+  website_id: 1
+  parent_id: 3
+  position: 2
+  name: About
+  title: About Guitar Gear
+  keywords: about guitar gear
+  description: Everything anyone ever wanted to know about us
+  slug: about
+  content: About Us
+
 website_without_analytics_primary_nav:
   id: 4
   website_id: 2
