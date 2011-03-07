@@ -36,11 +36,11 @@ module ApplicationHelper
   end
   
   def a_tick
-    '<span class="tick">✔</span>'
+    '<span class="tick">✔</span>'.html_safe
   end
   
   def a_cross
-    '<span class="cross">✘</span>'
+    '<span class="cross">✘</span>'.html_safe
   end
   
   def tick_cross yes, show_cross=true
