@@ -1,7 +1,7 @@
 <h1><%= I18n.t('cart') %></h1>
 <%= flash_notice %>
 <% if @page -%>
-<p><%= link_to (I18n.t('continue_shopping') + '&hellip;').html_safe, page_url(@page) %></p>
+<p><%= link_to (I18n.t('continue_shopping') + '&hellip;').html_safe, @page.path %></p>
 <% end -%>
 <% if @basket.basket_items.empty? -%>
 <p>Your basket is empty.</p>

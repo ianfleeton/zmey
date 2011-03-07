@@ -42,7 +42,7 @@ class ProductPlacementsController < ApplicationController
 
   def moved
     flash[:notice] = "Moved."
-    redirect_to page_path @product_placement.page
+    redirect_to @product_placement.page.path
   end
 
 end

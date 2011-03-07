@@ -37,7 +37,7 @@ depend :remote, :gem, 'haml', '>=2.2.15'
 # depend :remote, :gem, "tmm1-amqp", ">=0.6.0", :source => "http://gems.github.com"
 # 
 # Specify your specific Rails version if it is not vendored
-depend :remote, :gem, "rails", "=2.3.8"
+depend :remote, :gem, "rails", "=3.0.5"
 
 ## Local Shared Area
 # These are the list of files and directories that you want
