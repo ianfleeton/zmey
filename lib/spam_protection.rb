@@ -15,7 +15,7 @@ module SpamProtection
   private
 
   def hash plain
-    Digest::SHA1.hexdigest("--#{plain}--#{ActionController::Base.session_options[:secret]}--")
+    Digest::SHA1.hexdigest("--#{plain}--#{YeslWebsite::Application.config.secret_token}--")
   end
   
   def good_token?
