@@ -88,7 +88,7 @@ YeslWebsite::Application.routes.draw do
       get 'move_down'
     end
   end
-  match ':slug' => 'pages#show', :as => :slug, :constraints => { :slug => /[a-z]*/ }
+  match ':slug' => 'pages#show', :as => :slug, :constraints => { :slug => /[-a-z0-9]*/ }
 
   root :controller => 'pages', :action => 'show', :slug => ''
 end
