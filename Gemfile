@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.5'
+gem 'rails', '3.0.7'
 gem 'mysql2', '0.2.6'
 gem 'RedCloth'
 gem 'image_science', '1.2.1'
@@ -37,6 +37,6 @@ group :development, :test do
   gem "rspec-rails", "2.4.1"
   gem 'cucumber-rails', "0.3.2"
   gem 'test-unit', '1.2.3'
-  gem 'webrat', '0.7.3'
+  gem 'capybara'
   gem "launchy", "0.3.7"
 end
