@@ -41,3 +41,10 @@ Feature: Creating new pages
     Then I should be on the new page page
     And I should see "added new page"
     And a new page should exist with the slug "guitar-buying-faq"
+
+  Scenario: Deleting a page
+
+    Given I am logged in as an administrator
+    And I follow "About"
+    When I press "Delete Page"
+    Then I should see "Page deleted."

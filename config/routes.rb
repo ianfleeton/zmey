@@ -91,6 +91,7 @@ YeslWebsite::Application.routes.draw do
       get 'move_up'
       get 'move_down'
     end
+    post 'destroy', :on => :member
   end
   match ':slug' => 'pages#show', :as => :slug, :constraints => { :slug => /[-a-z0-9]*/ }
 
