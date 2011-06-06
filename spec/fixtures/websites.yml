@@ -1,7 +1,7 @@
 guitar_gear:
   id: 1
   subdomain: guitar-gear
-  domain: example.org
+  domain: www.example.com
   google_analytics_code: UA-0000000-1
   name: Guitar Gear
   email: guitargear@example.org
