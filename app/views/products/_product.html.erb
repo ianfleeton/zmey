@@ -12,7 +12,7 @@
   </p>
   <% end -%>
   <div class="product_detail">
-    <%= form_tag :controller => 'basket', :action => 'add' do |form| %>
+    <%= form_tag :controller => 'basket', :action => 'add' do %>
     <input type="hidden" name="product_id" value="<%= product.id %>" />
     <% if defined? page -%>
     <input type="hidden" name="page_id" value="<%= page.id %>" />
