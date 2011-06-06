@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(:version => 20101210080539) do
     t.datetime "updated_at"
   end
 
-  add_index "choices", ["feature_id"], :name => "index_choices_on_attribute_id"
+  add_index "choices", ["feature_id"], :name => "index_choices_on_feature_id"
 
   create_table "countries", :force => true do |t|
     t.string   "name",               :default => "", :null => false
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(:version => 20101210080539) do
     t.datetime "updated_at"
   end
 
-  add_index "feature_selections", ["basket_item_id"], :name => "index_attribute_selections_on_basket_item_id"
+  add_index "feature_selections", ["basket_item_id"], :name => "index_feature_selections_on_basket_item_id"
 
   create_table "features", :force => true do |t|
     t.integer  "product_id"
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(:version => 20101210080539) do
     t.boolean  "required",   :default => true, :null => false
   end
 
-  add_index "features", ["product_id"], :name => "index_attributes_on_product_id"
+  add_index "features", ["product_id"], :name => "index_features_on_product_id"
 
   create_table "forums", :force => true do |t|
     t.string  "name",       :default => "",    :null => false
@@ -276,8 +276,8 @@ ActiveRecord::Schema.define(:version => 20101210080539) do
 
   create_table "products", :force => true do |t|
     t.integer  "website_id"
-    t.string   "sku",                                                             :null => false
-    t.string   "name",                                                            :null => false
+    t.string   "sku",                                           :default => "",   :null => false
+    t.string   "name",                                          :default => "",   :null => false
     t.decimal  "price",          :precision => 10, :scale => 3, :default => 0.0,  :null => false
     t.integer  "image_id"
     t.text     "description",                                                     :null => false
@@ -356,8 +356,8 @@ ActiveRecord::Schema.define(:version => 20101210080539) do
   add_index "users", ["website_id"], :name => "index_users_on_website_id"
 
   create_table "websites", :force => true do |t|
-    t.string   "subdomain",                                                                         :null => false
-    t.string   "domain",                                                                            :null => false
+    t.string   "subdomain",                                                      :default => "",    :null => false
+    t.string   "domain",                                                         :default => "",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "google_analytics_code",                                          :default => "",    :null => false
@@ -372,7 +372,7 @@ ActiveRecord::Schema.define(:version => 20101210080539) do
     t.boolean  "rbswp_test_mode",                                                :default => false, :null => false
     t.boolean  "can_users_create_accounts",                                      :default => true,  :null => false
     t.boolean  "skip_payment",                                                   :default => false, :null => false
-    t.boolean  "blog_id"
+    t.integer  "blog_id"
     t.decimal  "shipping_amount",                 :precision => 10, :scale => 3, :default => 0.0,   :null => false
     t.boolean  "private",                                                        :default => false, :null => false
     t.boolean  "accept_payment_on_account",                                      :default => false, :null => false
