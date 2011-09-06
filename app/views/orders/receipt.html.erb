@@ -1,3 +1,5 @@
+<%= flash_notice %>
+
 <% if @order.payment_received? -%>
 <h1>Receipt</h1>
 <% else -%>
@@ -20,7 +22,14 @@
  
 <table id="receipt">
 
-  <tr><th>Product</th><th class="qty">Qty</th><th class="price">Price</th></tr>
+  <tr>
+    <th>Product</th>
+    <th class="qty">Qty</th>
+<% if admin? -%>
+    <th class="shipped">Shipped</th>
+<% end -%>
+    <th class="price">Price</th>
+  </tr>
 
   <% @order.order_lines.each do |line| -%>
   <tr>
@@ -34,21 +43,36 @@
       <% end -%>
     </td>
     <td class="qty"><%= line.quantity %></td>
+<% if admin? -%>
+    <td class="shipped"><%= form_for line do |f| %>
+      <%= f.text_field :shipped %>
+      <%= f.submit 'Update' %>
+    <% end %></td>
+<% end -%>
     <td class="price line_total"><%= formatted_price(line.line_total)  %></td>
   </tr>
   <% end -%>
   <tr>
     <th colspan="2"><%= @order.shipping_method %>:</th>
+<% if admin? -%>
+    <td>&nbsp;</td>
+<% end -%>
     <td class="price shipping_amount"><%= formatted_price(@order.shipping_amount) %></td>
   </tr>
   <% unless @w.vat_number.empty? -%>
   <tr>
     <th colspan="2">VAT:</th>
+<% if admin? -%>
+    <td>&nbsp;</td>
+<% end -%>
     <td class="price vat"><%= formatted_price(@order.tax_total) %></td>
   </tr>
   <% end -%>
   <tr>
     <th colspan="2">Order total:</th>
+<% if admin? -%>
+    <td>&nbsp;</td>
+<% end -%>
     <td class="price total"><%= formatted_price(@order.total) %></td>
   </tr>
   
