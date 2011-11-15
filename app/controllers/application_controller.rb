@@ -1,9 +1,6 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  protect_from_forgery
 
   helper_method :logged_in?, :admin?, :admin_or_manager?, :manager?
 
@@ -123,7 +120,4 @@ class ApplicationController < ActionController::Base
     I18n.load_path -= [locale_path]
     I18n.locale = session[:locale] = I18n.default_locale
   end
-
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
 end

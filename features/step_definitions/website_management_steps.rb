@@ -8,15 +8,15 @@ Given /^I am logged in as an administrator$/ do
           u.manages_website_id = 1
           u.website_id = 1}
 
-  Given "I am on the login page"
+  step "I am on the login page"
   fill_in("Email", :with => @current_user.email)
   fill_in("Password", :with => @current_user.password)
   click_button(I18n.t('login'))
 end
 
 Then /^I should see a list of websites$/ do
-  Then "I should see \"#{websites(:guitar_gear).name}\""
-  Then "I should see \"#{websites(:website_without_analytics).name}\""
+  step "I should see \"#{websites(:guitar_gear).name}\""
+  step "I should see \"#{websites(:website_without_analytics).name}\""
 end
 
 Then /^I should see links to edit websites$/ do
