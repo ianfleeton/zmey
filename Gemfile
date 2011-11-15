@@ -54,6 +54,6 @@ group :development, :test do
   gem 'cucumber-rails', "1.2.0"
   gem 'test-unit', '1.2.3'
   gem 'capybara', '1.1.1'
-  gem "launchy", "0.3.7"
+  gem "launchy", "2.0.5"
   gem 'database_cleaner'
 end
