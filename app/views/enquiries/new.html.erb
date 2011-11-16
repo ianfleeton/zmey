@@ -6,11 +6,7 @@
 
 <p>Please complete all fields marked with an asterisk (<span class="required">*</span>)</p>
 
-<% form_for(@enquiry, :url => '/enquiries/create') do |f|
-  # url is hard-coded to prevent REST request going to /enquiries/ POST
-  # while this did work, if the users refreshed (GET) after submitting
-  # then they would be kicked from a page reserved for admins
-%>
+<%= form_for(@enquiry, :url => '/enquiries/create') do |f| %>
   <%= f.error_messages %>
   <span id="current_time">
     <!-- current time placed here by AJAX request -->
