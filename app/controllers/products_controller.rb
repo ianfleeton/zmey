@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_filter :find_product, :only => [:show, :edit, :update]
+  before_filter :find_product, :only => [:show, :edit, :update, :destroy]
   before_filter :admin_or_manager_required, :except => [:show, :google_data_feed]
 
   def index
@@ -36,6 +36,12 @@ class ProductsController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+
+  def destroy
+    @product.destroy
+    flash[:notice] = "Product deleted."
+    redirect_to products_path
   end
 
   def google_data_feed

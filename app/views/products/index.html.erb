@@ -1,9 +1,26 @@
 <h1>Products</h1>
 <%= flash_notice %>
 <p><%= link_to 'New product', new_product_path %></p>
-<ul>
-  <% @products.each do |p| -%>
-  <li><%= link_to p.name_with_sku, edit_product_path(p) %></li>
-  <% end -%>
-  <%= content_tag(:li, 'No products') if @products.empty? -%>
-</ul>
+<% if @products.empty? -%>
+<p>No products</p>
+<% else -%>
+<table>
+  <thead>
+    <tr>
+      <th>Name (SKU)</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @products.each do |p| -%>
+    <tr>
+      <td><%= link_to p.name_with_sku, edit_product_path(p) %></td>
+      <td><%= link_to "Delete", { :controller => 'products',
+                   :action => "destroy", :id => p.id },
+  		 						 :confirm => 'Are you sure?',
+  								 :method => :delete %></td>
+    </tr>
+<% end -%>
+  </tbody>
+</table>
+<% end -%>
