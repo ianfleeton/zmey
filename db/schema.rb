@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110906160816) do
+ActiveRecord::Schema.define(:version => 20111116110753) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -128,6 +128,17 @@ ActiveRecord::Schema.define(:version => 20110906160816) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "liquid_templates", :force => true do |t|
+    t.integer  "website_id", :null => false
+    t.string   "name",       :null => false
+    t.text     "markup"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "liquid_templates", ["name"], :name => "index_liquid_templates_on_name"
+  add_index "liquid_templates", ["website_id"], :name => "index_liquid_templates_on_website_id"
 
   create_table "order_lines", :force => true do |t|
     t.integer  "order_id",                                            :default => 0,   :null => false

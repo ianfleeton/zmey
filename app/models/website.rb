@@ -16,6 +16,7 @@ class Website < ActiveRecord::Base
   has_one :preferred_delivery_date_settings, :dependent => :delete
   has_many :countries, :order => :name, :dependent => :destroy
   has_many :discounts, :order => :name
+  has_many :liquid_templates, :order => :name, :dependent => :destroy
   has_many :products, :order => :name, :dependent => :destroy
   has_many :products_in_stock, :class_name => 'Product', :conditions => { :in_stock => true }
   has_many :product_groups

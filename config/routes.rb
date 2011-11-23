@@ -24,6 +24,8 @@ YeslWebsite::Application.routes.draw do
 
   resources :images
 
+  resources :liquid_templates
+
   resources :orders do
     collection do
       get 'my'

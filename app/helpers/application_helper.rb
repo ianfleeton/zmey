@@ -96,4 +96,13 @@ module ApplicationHelper
       d.strftime("%e %b %Y at ") + d.strftime("%l:%M%p").downcase
     end
   end
+
+  def template(name, args)
+    lt = LiquidTemplate.find_by_name_and_website_id(name, @w.id)
+    if lt
+      raw Liquid::Template.parse(lt.markup).render(args.stringify_keys!)
+    else
+      render :partial => "default_templates/#{name}", :locals => args
+    end
+  end
 end

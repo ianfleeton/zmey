@@ -1,0 +1,13 @@
+<%= form_for @liquid_template do |form| -%>
+<div class="field">
+  <%= form.label :name %>:<br>
+  <%= form.text_field :name %>
+</div>
+<div class="field">
+  <%= form.label :markup %>:<br>
+  <%= form.text_area :markup %>
+</div>
+<div class="field">
+  <%= form.submit %>
+</div>
+<% end -%>

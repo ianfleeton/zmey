@@ -1,0 +1,16 @@
+<h1>Liquid Templates</h1>
+<%= flash_notice %>
+<p><%= link_to 'New Liquid template', new_liquid_template_path %></p>
+<% if @liquid_templates.empty? -%>
+<p>There are no Liquid templates created yet.</p>
+<% else -%>
+<table>
+<% @liquid_templates.each do |liquid_template| -%>
+  <tr><td><%= link_to liquid_template.name, edit_liquid_template_path(liquid_template) %></td>
+    <td><%= form_tag liquid_template_path(liquid_template), :method => :delete do -%>
+      <input type="submit" value="Delete Liquid template" /></td>
+    <% end -%>
+  </tr>
+<% end -%>
+</table>
+<% end -%>

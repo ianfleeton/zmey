@@ -20,6 +20,7 @@ en:
   controllers:
     enquiries: Enquiries
     images: Images
+    liquid_templates: Liquid Templates
     pages: Pages
     products: Products
     users: Users

@@ -19,6 +19,7 @@ pl:
   controllers:
     enquiries: Zapytania
     images: Zdjęć
+    liquid_templates: Liquid Templates
     pages: Strony Internetowe
     products: Produktów
     users: Użytkowników
