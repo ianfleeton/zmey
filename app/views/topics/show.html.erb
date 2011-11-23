@@ -24,7 +24,7 @@
 <%= error_messages_for :post -%>
 <%= render :partial => 'spam/spam' %>
 
-<% form_for :post, :url => {:action => 'create_reply'} do |f| %>
+<%= form_for :post, :url => {:action => 'create_reply'} do |f| %>
 <span id="current_time">
   <!-- current time placed here by AJAX request -->
 </span>

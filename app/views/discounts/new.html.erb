@@ -6,7 +6,7 @@
 
 	<fieldset>
 		<legend>Add a new discount</legend>
-    <% form_for @discount do |form| %>
+    <%= form_for @discount do |form| %>
     <%= render :partial => 'form', :object => form %>
 
     <%= submit_tag "Create New Discount" %>

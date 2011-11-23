@@ -2,7 +2,7 @@
 <%= flash_notice %>
 <h2>Delivery Address</h2>
 <% if @address.new_record? -%>
-<% form_for @address do |f| %>
+<%= form_for @address do |f| %>
   <%= render :partial => 'addresses/form', :object => f %>
   <%= submit_tag 'Next' %>
 <% end -%>

@@ -6,7 +6,7 @@
 
 	<fieldset>
 		<legend>Add a new product group</legend>
-    <% form_for @product_group do |form| %>
+    <%= form_for @product_group do |form| %>
     <%= render :partial => 'form', :object => form %>
 
     <%= submit_tag "Create New Product Group" %>

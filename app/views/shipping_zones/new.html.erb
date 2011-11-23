@@ -3,7 +3,7 @@
 <div class="form">
 	<%= error_messages_for :shipping_zone -%>
 
-  <% form_for @shipping_zone do |form| %>
+  <%= form_for @shipping_zone do |form| %>
   <%= render :partial => 'form', :object => form %>
 
   <%= submit_tag "Save" %>

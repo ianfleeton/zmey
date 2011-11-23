@@ -6,7 +6,7 @@
 
 	<fieldset>
 		<legend>Edit product group</legend>
-    <% form_for @product_group do |form| %>
+    <%= form_for @product_group do |form| %>
     <%= render :partial => 'form', :object => form %>
 
     <%= submit_tag "Save" %>
@@ -18,7 +18,7 @@
 <h2>Products in this group</h2>
 
 <% unless @w.products.empty? -%>
-<% form_for @product_group_placement do |form| -%>
+<%= form_for @product_group_placement do |form| -%>
 <input type="hidden" name="product_group_placement[product_group_id]" value="<%= @product_group.id %>" />
 <%= form.collection_select :product_id, @w.products, :id, :name %>
 <%= submit_tag 'Add Product' %>

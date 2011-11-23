@@ -6,7 +6,7 @@
 
 	<fieldset>
 		<legend>Upload a new image</legend>
-    <% form_for :image, @image, :html => { :multipart => true }, :url => { :action => "create" } do |form| %>
+    <%= form_for @image, :html => { :multipart => true } do |form| %>
     <%= render :partial => 'form', :object => form %>
 
     <%= submit_tag "Upload New Image" %>

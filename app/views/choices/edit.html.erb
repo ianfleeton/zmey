@@ -3,7 +3,7 @@
 <div class="form">
 	<%= error_messages_for :choice -%>
 
-  <% form_for @choice do |form| %>
+  <%= form_for @choice do |form| %>
   <%= render :partial => 'form', :object => form %>
 
   <%= submit_tag "Save" %>

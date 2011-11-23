@@ -3,7 +3,7 @@
 
 <p>Export your data using <code>File | Export</code> and select the ANSI (Windows) and CSV options.</p>
 
-<% form_for :import, :url=>{:controller=>"actinic_import", :action=>"import_csv"}, :html => { :multipart => true } do |f| %>
+<%= form_for :import, :url=>{:controller=>"actinic_import", :action=>"import_csv"}, :html => { :multipart => true } do |f| %>
 <div>
 <%= f.label :file, "CSV file to upload" %>:<br />
 <%= f.file_field :file -%>

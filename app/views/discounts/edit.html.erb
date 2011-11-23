@@ -4,7 +4,7 @@
 <div class="form">
 	<%= error_messages_for :discount -%>
 
-    <% form_for @discount do |form| %>
+    <%= form_for @discount do |form| %>
     <%= render :partial => 'form', :object => form %>
 
     <%= submit_tag "Save" %>

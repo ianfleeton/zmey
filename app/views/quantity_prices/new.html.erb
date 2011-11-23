@@ -5,7 +5,7 @@
 
 	<fieldset>
 		<legend>Add a new quantity/price rule</legend>
-    <% form_for @quantity_price do |form| %>
+    <%= form_for @quantity_price do |form| %>
     <%= render :partial => 'form', :object => form %>
 
     <%= submit_tag "Add New Quantity/Price Rule" %>
