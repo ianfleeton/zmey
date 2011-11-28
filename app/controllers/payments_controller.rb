@@ -59,7 +59,7 @@ class PaymentsController < ApplicationController
     order.status = Order::PAYMENT_RECEIVED
     order.save
     @payment.order_id = order.id
-    OrderNotifier.deliver_notification @w, order
+    OrderNotifier.notification(@w, order).deliver
   end
 
   def clean_up
