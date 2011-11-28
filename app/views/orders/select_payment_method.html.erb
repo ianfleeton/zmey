@@ -82,7 +82,7 @@
     </div>
   </form>
   <% else -%>
-<form action="https://select<%= (@w.rbswp_test_mode? ? '-test' : '') %>.worldpay.com/wcc/purchase" method="post">
+<form action="https://secure<%= (@w.rbswp_test_mode? ? '-test' : '') %>.worldpay.com/wcc/purchase" method="post">
 <input type="hidden" name="cartId" value="<%= @order.order_number %>" />
 <input type="hidden" value="<%= @w.rbswp_installation_id %>" name="instId" />
 <input type="hidden" value="<%= @order.total %>" name="amount" />
