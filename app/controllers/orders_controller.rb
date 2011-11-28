@@ -1,15 +1,18 @@
 class OrdersController < ApplicationController
+  include ActionView::Helpers::NumberHelper
+  include ProductsHelper
+
   before_filter :admin_or_manager_required, :only => [:destroy]
 
-  before_filter :find_order, :only => [:show, :destroy]
+  before_filter :find_order, :only => [:show, :destroy, :invoice]
   before_filter :require_order, :only => [:select_payment_method, :receipt]
-  before_filter :user_required, :only => [:index, :show]
+  before_filter :user_required, :only => [:index, :show, :invoice]
 
   def index
     if admin_or_manager?
       @can_delete = true
       if params[:user_id]
-        @orders = User.find(params[:user_id]).orders
+        @orders = User.find(params[:user_id]).orders.where(:website_id => @w.id)
       else
         @orders = @w.orders
       end
@@ -43,6 +46,50 @@ class OrdersController < ApplicationController
   def destroy
     @order.destroy
     redirect_to :action => "index", :notice => "Order deleted."
+  end
+
+  def invoice
+    url_dir = "/invoices/#{@order.hash.to_s}"
+    dir = "#{Rails.root.to_s}/public#{url_dir}"
+    FileUtils.makedirs(dir)
+    filename = "#{dir}/Invoice-#{@order.order_number}.pdf"
+    url_filename = "#{url_dir}/Invoice-#{@order.order_number}.pdf"
+
+    Prawn::Document.generate(filename, :page_size => "A4") do |pdf|
+      spacing = 3
+      pdf.font 'fonts/Aller_Lt.ttf'
+      pdf.font_size 18
+      pdf.text "Invoice number #{@order.order_number}"
+      pdf.move_down 24
+      pdf.font_size 11
+      pdf.text "Invoice created at: #{@order.created_at}"
+      pdf.move_down 24
+
+      address_top = 700
+
+      pdf.bounding_box([0, address_top], :width => 200, :height => 200) do
+        pdf.text @w.invoice_details, :leading => 4
+      end
+
+      pdf.bounding_box([300, address_top], :width => 200, :height => 200) do
+        pdf.text("Customer:\n" + @current_user.name + "\n" +
+          @order.address_line_1 + "\n" + @order.address_line_2 + "\n" +
+          @order.town_city + "\n" + @order.county + "\n" + @order.postcode +
+          "\n" + @order.country.to_s, :leading => 4)
+      end
+
+      cells = []
+      cells << ["Product", "Price"]
+      @order.order_lines.each do |line|
+        cells << [line.product_name, formatted_gbp_price(line.line_total)]
+      end
+      cells << ["Order total:", formatted_gbp_price(@order.total)]
+
+      t = Prawn::Table.new(cells, pdf)
+      t.draw
+    end
+
+    send_file(filename)
   end
 
   protected

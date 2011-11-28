@@ -7,6 +7,7 @@ gem 'image_science', '1.2.1'
 gem 'RubyInline', '3.8.6'
 gem 'haml'
 gem 'liquid', '2.3.0'
+gem 'prawn', '0.11.1'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'

@@ -33,6 +33,9 @@ YeslWebsite::Application.routes.draw do
       get 'receipt'
       get 'select_payment_method'
     end
+    member do
+      get 'invoice'
+    end
   end
 
   resources :order_lines

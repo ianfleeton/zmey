@@ -8,4 +8,8 @@ class Country < ActiveRecord::Base
   has_many :orders, :dependent => :nullify # Rails3 :restrict
 
   attr_protected :website_id
+
+  def to_s
+    name
+  end
 end
