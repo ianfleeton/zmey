@@ -1,3 +1,4 @@
 <h1><% if @product.pages.first %><%= link_to @product.pages.first.name, @product.pages.first.path %> &rarr; <% end %><%= @product.name %></h1>
 <%= flash_notice %>
 <%= render :partial => 'product', :object => @product, :locals => {:full => true} %>
+<%= render :partial => 'products/admin_controls', :locals => {:product => @product} %>

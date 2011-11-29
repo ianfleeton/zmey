@@ -11,6 +11,8 @@ class Product < ActiveRecord::Base
   has_many :product_group_placements, :dependent => :delete_all
   has_many :product_groups, :through => :product_group_placements
 
+  liquid_methods :name, :path, :sku, :url
+
   # Tax types
   NO_TAX = 1
   INC_VAT = 2
@@ -71,8 +73,12 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def path
+    '/products/' + to_param
+  end
+
   def url
-    'http://' + website.domain + '/products/' + to_param
+    'http://' + website.domain + path
   end
 
   def to_param
