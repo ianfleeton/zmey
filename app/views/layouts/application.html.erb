@@ -1,41 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title><% if @title %><%= @title %><% else %><%= @w.name %><% end %></title>
-  <meta name="description" content="<%= @description %>">
-  <meta name="keywords" content="<%= @keywords %>">
-  <%= stylesheet_link_tag "screen", :media => "screen" if @w.use_default_css? %>
-  <%= stylesheet_link_tag "admin", :media => "screen" %>
-  <%= stylesheet_link_tag @w.css_url, :media => "screen" unless @w.css_url.blank? %>
-  <!--[if lt IE 9]>
-  <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-<% if @w.blog_id -%>
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/forums/feed/<%= @w.blog_id_before_type_cast %>" />
-<% end -%>
-<% unless @w.google_analytics_code.empty? -%>
-  <script>
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', '<%= @w.google_analytics_code %>']);
-    _gaq.push(['_trackPageview']);
-<%= render(:partial => 'orders/google_ecommerce_tracking') unless @google_ecommerce_tracking.nil? %>
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-<% end -%>
-</head>
-<body id="<%= body_id %>" class="<%= body_class %>">
-<div id="top"></div>
-<div id="wrapper">
-  <%= template('header', :website_name => @w.name) %>
+<%=
+template('header',
+  :csrf_meta_tags => csrf_meta_tags,
+  :css_admin => stylesheet_link_tag("admin", :media => "screen"),
+  :css_external => @w.css_url.blank? ? '' : stylesheet_link_tag(@w.css_url, :media => "screen"),
+  :css_screen => @w.use_default_css? ? stylesheet_link_tag("screen", :media => "screen") : '',
+  :description => @description,
+  :google_analytics_code => render("shared/google_analytics_code"),
+  :keywords => @keywords,
+  :page_title => @title ? @title : @w.name,
+  :website_name => @w.name
+)
+%>
   <% Page.navs(@w).each do |nav| %>
   <ul id="<%= nav.id_attribute %>">
 <% nav.pages.each do |p| %><%= nav_link_to(p, p.path) %><% end %>
