@@ -2,12 +2,12 @@
 
 <% if @w.rbswp_active? -%>
   <% if @w.skip_payment? -%>
-  <h2>Skipping payment for RBS WorldPay</h2>
+  <h2>Skipping payment for WorldPay</h2>
   <p>The correct values are entered below and can be changed for testing.
     <code>callbackPW</code> is neither displayed nor verified in this test mode.</p>
   <form action="/payments/rbs_worldpay_callback" method="post">
     <div>
-      <input type="submit" value="Skip RBS WorldPay payment" />
+      <input type="submit" value="Skip WorldPay payment" />
     </div>
     <div>
       <label>instId</label>:<br />
@@ -78,7 +78,7 @@
       <input type="text" name="rawAuthMessage" value="SKIPPED" />
     </div>
     <div>
-      <input type="submit" value="Skip RBS WorldPay payment" />
+      <input type="submit" value="Skip WorldPay payment" />
     </div>
   </form>
   <% else -%>
