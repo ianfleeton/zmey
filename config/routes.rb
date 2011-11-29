@@ -74,7 +74,7 @@ YeslWebsite::Application.routes.draw do
 
   resources :shipping_zones
 
-  match 'sitemap.xml' => 'pages#sitemap', :as => 'sitemap'
+  match 'sitemap.xml' => 'pages#sitemap', :as => 'sitemap', :format => 'xml'
 
   match 'terms' => 'pages#terms', :as => :terms
 
