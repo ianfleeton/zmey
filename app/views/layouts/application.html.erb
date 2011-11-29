@@ -41,51 +41,12 @@ template('header',
     <%= render :partial => 'forums/blog_sidebar', :object => @blog %>
     <% end %>
   </div>
-<div id="footer">
-  &copy;<%= Date.today.year %> <%= @w.name %>. All rights reserved.
-  <a href="http://www.yesl.co.uk/">Ruby on Rails development</a> by Your e Solutions Ltd.
-  <%= link_to('Terms', terms_path) unless @w.terms_and_conditions.empty? %>
-  <% if admin_or_manager? -%>
-  <br />
-  <strong>Admin quick links:</strong>
-  <% if admin? %>
-  <%= link_to 'Websites', websites_url %>
-  &middot;
-  <% end %>
-  <%= link_to I18n.t('controllers.enquiries'), enquiries_url %>
-  &middot;
-  <%= link_to I18n.t('controllers.pages'), :controller => 'pages' %>
-  &middot;
-  <%= link_to I18n.t('controllers.liquid_templates'), liquid_templates_path %>
-  &middot;
-  <%= link_to I18n.t('controllers.products'), products_url %>
-  &middot;
-  <%= link_to 'Product Groups', product_groups_url %>
-  &middot;
-  <%= link_to 'Discounts', discounts_url %>
-  &middot;
-  <%= link_to 'Orders', orders_url %>
-  &middot;
-  <%= link_to I18n.t('controllers.images'), :controller => 'images' %>
-  &middot;
-  <%= link_to 'Forums', :controller => 'forums' %>
-  &middot;
-  <%= link_to I18n.t('controllers.users'), :controller => 'users' %>
-  &middot;
-  <%= link_to 'Countries', countries_path %>
-  &middot;
-  <%= link_to 'Shipping Zones', shipping_zones_path %>
-  &middot;
-  <%= link_to 'Shipping Classes', shipping_classes_path %>
-  &middot;
-  <%= link_to 'Website Settings', edit_website_path(@w) %>
-  <% end %>
-  <%= raw @w.footer_html %>
-</div>
-<%= template("worldpay_logos", :installation_id => @w.rbswp_installation_id) if @w.rbswp_active? %>
-</div><!--#wrapper-->
-<div id="bottom"></div>
-<div id="extra_div_1"><span></span></div><div id="extra_div_2"><span></span></div><div id="extra_div_3"><span></span></div>
-<div id="extra_div_4"><span></span></div><div id="extra_div_5"><span></span></div><div id="extra_div_6"><span></span></div>
-</body>
-</html>
+<%=
+template("footer",
+  :admin_links => render("shared/admin_links"),
+  :footer_html => raw(@w.footer_html),
+  :website_name => @w.name,
+  :worldpay_logos => @w.rbswp_active? ? template("worldpay_logos", :installation_id => @w.rbswp_installation_id) : '',
+  :year => Date.today.year
+)
+%>

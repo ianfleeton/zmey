@@ -1,0 +1,25 @@
+<% if admin_or_manager? -%>
+<div id="wpadminbar">
+  <div class="quicklinks">
+    <ul>
+<% if admin? -%>
+      <li><%= link_to 'Websites', websites_url %></li>
+<% end -%>
+      <li><%= link_to t('controllers.enquiries'), enquiries_url %></li>
+      <li><%= link_to t('controllers.pages'), :controller => 'pages' %></li>
+      <li><%= link_to t('controllers.liquid_templates'), liquid_templates_path %></li>
+      <li><%= link_to t('controllers.products'), products_url %></li>
+      <li><%= link_to 'Product Groups', product_groups_url %></li>
+      <li><%= link_to 'Discounts', discounts_url %></li>
+      <li><%= link_to 'Orders', orders_url %></li>
+      <li><%= link_to t('controllers.images'), :controller => 'images' %></li>
+      <li><%= link_to 'Forums', :controller => 'forums' %></li>
+      <li><%= link_to t('controllers.users'), :controller => 'users' %></li>
+      <li><%= link_to 'Countries', countries_path %></li>
+      <li><%= link_to 'Shipping Zones', shipping_zones_path %></li>
+      <li><%= link_to 'Shipping Classes', shipping_classes_path %></li>
+      <li><%= link_to 'Website Settings', edit_website_path(@w) %></li>
+    </ul>
+  </div><!--.quicklinks-->
+</div><!--#wpadminbar-->
+<% end %>
