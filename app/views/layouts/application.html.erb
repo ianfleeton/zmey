@@ -107,11 +107,7 @@
   <% end %>
   <%= raw @w.footer_html %>
 </div>
-<% if @w.rbswp_active? -%>
-<div id="rbswp_logos">
-<script src="https://secure.worldpay.com/wcc/logo?instId=<%= @w.rbswp_installation_id %>"></script>
-</div>
-<% end -%>
+<%= template("worldpay_logos", :installation_id => @w.rbswp_installation_id) if @w.rbswp_active? %>
 </div><!--#wrapper-->
 <div id="bottom"></div>
 <div id="extra_div_1"><span></span></div><div id="extra_div_2"><span></span></div><div id="extra_div_3"><span></span></div>
