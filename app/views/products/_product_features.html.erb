@@ -1,0 +1,23 @@
+<% unless product.features.empty? -%>
+<div class="product_features">
+  <% product.features.each do |feature| -%>
+  <p class="<%= feature.class_name %>">
+    <%= feature.name %>:
+    <% case feature.ui_type
+    when Feature::TEXT_FIELD %>
+      <input type="text" name="feature[<%= feature.id %>]" />
+    <% when Feature::DROP_DOWN %>
+      <select name="feature[<%= feature.id %>]">
+        <option value="">-- Choose --</option>
+        <% feature.choices.each do |choice| %>
+        <option value="<%= choice.id %>"><%= choice.name %></option>
+        <% end %>
+      </select>
+    <% end %>
+    <% if admin? -%>
+    <%= link_to 'Edit feature', edit_feature_path(feature.id) %>
+    <% end -%>
+  </p>
+  <% end -%>
+</div>
+<% end -%>

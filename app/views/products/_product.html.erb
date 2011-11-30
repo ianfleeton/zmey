@@ -5,7 +5,7 @@
   <% unless product.image.nil? -%>
   <p class="product_image">
     <% if full %>
-    <%= image_tag(product.image.url(@w.product_image_size), :alt => product.image.name) %>
+    <%= image_tag(product_image_url, :alt => product.image.name) %>
     <% else %>
     <%= link_to image_tag(product.image.url(@w.product_thumbnail_size), :alt => product.image.name), product_path(product) %>
     <% end %>
@@ -24,29 +24,7 @@
       <%= raw textilize(product.description) %>
       <% end -%>
     </div>
-    <% unless product.features.empty? %>
-    <div class="product_features">
-      <% product.features.each do |feature| -%>
-      <p class="<%= feature.class_name %>">
-        <%= h feature.name %>:
-        <% case feature.ui_type
-        when Feature::TEXT_FIELD %>
-          <input type="text" name="feature[<%= feature.id %>]" />
-        <% when Feature::DROP_DOWN %>
-          <select name="feature[<%= feature.id %>]">
-            <option value="">-- Choose --</option>
-            <% feature.choices.each do |choice| %>
-            <option value="<%= choice.id %>"><%= choice.name %></option>
-            <% end %>
-          </select>
-        <% end %>
-        <% if admin? -%>
-        <%= link_to 'Edit feature', edit_feature_path(feature.id) %>
-        <% end -%>
-      </p>
-      <% end -%>
-    </div>
-    <% end -%>
+    <%= product_features %>
     <p class="product_price">
       <%= I18n.t('price') %>:
       <%= formatted_price(product.price_with_tax(1, @inc_tax)) %><%= tax_explanation(product) %>

@@ -11,7 +11,7 @@ class Product < ActiveRecord::Base
   has_many :product_group_placements, :dependent => :delete_all
   has_many :product_groups, :through => :product_group_placements
 
-  liquid_methods :name, :path, :sku, :url
+  liquid_methods :id, :description, :full_detail, :name, :path, :sku, :url
 
   # Tax types
   NO_TAX = 1

@@ -1,4 +1,15 @@
 <h1><% if @product.pages.first %><%= link_to @product.pages.first.name, @product.pages.first.path %> &rarr; <% end %><%= @product.name %></h1>
 <%= flash_notice %>
-<%= render :partial => 'product', :object => @product, :locals => {:full => true} %>
+<% basket_form_start, basket_form_end = (form_tag(:controller => 'basket', :action => 'add') {'@@'}).split('@@') %>
+<%=
+template('product_detail',
+  :basket_form_start => basket_form_start,
+  :basket_form_end => basket_form_end,
+  :full => true,
+  :price => formatted_price(@product.price_with_tax(1, @inc_tax)),
+  :product => @product,
+  :product_features => render(:partial => "product_features", :locals => {:product => @product}),
+  :product_image_url => @product.image ? @product.image.url(@w.product_image_size) : ''
+  )
+%>
 <%= render :partial => 'products/admin_controls', :locals => {:product => @product} %>
