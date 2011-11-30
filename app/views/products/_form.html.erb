@@ -15,6 +15,11 @@
 </div>
 
 <div>
+	<%= form.label :shipping_supplement %>:<br />
+	<%= form.text_field :shipping_supplement, :class => "text" %> GBP
+</div>
+
+<div>
   <%= form.label :tax_type %>:<br />
   <select id="product_tax_type" name="product[tax_type]">
     <option value="<%= Product::NO_TAX %>"<%= ' selected="selected"' if @product.tax_type==Product::NO_TAX %>>No tax</option>

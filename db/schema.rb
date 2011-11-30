@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111125150333) do
+ActiveRecord::Schema.define(:version => 20111130111142) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -288,17 +288,18 @@ ActiveRecord::Schema.define(:version => 20111125150333) do
 
   create_table "products", :force => true do |t|
     t.integer  "website_id"
-    t.string   "sku",                                           :default => "",   :null => false
-    t.string   "name",                                          :default => "",   :null => false
-    t.decimal  "price",          :precision => 10, :scale => 3, :default => 0.0,  :null => false
+    t.string   "sku",                                                :default => "",   :null => false
+    t.string   "name",                                               :default => "",   :null => false
+    t.decimal  "price",               :precision => 10, :scale => 3, :default => 0.0,  :null => false
     t.integer  "image_id"
-    t.text     "description",                                                     :null => false
-    t.boolean  "in_stock",                                      :default => true, :null => false
+    t.text     "description",                                                          :null => false
+    t.boolean  "in_stock",                                           :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "apply_shipping",                                :default => true, :null => false
-    t.text     "full_detail",                                                     :null => false
-    t.integer  "tax_type",                                      :default => 1,    :null => false
+    t.boolean  "apply_shipping",                                     :default => true, :null => false
+    t.text     "full_detail",                                                          :null => false
+    t.integer  "tax_type",                                           :default => 1,    :null => false
+    t.decimal  "shipping_supplement", :precision => 10, :scale => 3, :default => 0.0,  :null => false
   end
 
   create_table "quantity_prices", :force => true do |t|

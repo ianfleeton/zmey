@@ -284,13 +284,18 @@ class BasketController < ApplicationController
   # returns nil by default if there is no shipping_amount
   # set return_if_nil to 0, for example, if using in a calculation
   def shipping_amount(return_if_nil=nil)
-    unless @basket.apply_shipping?
-      return return_if_nil
+    amount = 0.0
+
+    if @basket.apply_shipping?
+      find_delivery_address
+      amount = @w.shipping_amount
+      amount_by_address = calculate_shipping_from_address(@address)
+      amount = amount_by_address.nil? ? amount : amount_by_address
     end
-    find_delivery_address
-    amount = @w.shipping_amount
-    amount_by_address = calculate_shipping_from_address(@address)
-    amount_by_address.nil? ? amount : amount_by_address
+
+    amount += @basket.shipping_supplement
+
+    (amount == 0.0) ? return_if_nil : amount
   end
 
   def calculate_shipping_from_address(address)
