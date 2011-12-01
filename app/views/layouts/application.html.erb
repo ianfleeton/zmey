@@ -6,6 +6,7 @@ template('header',
   :css_screen => @w.use_default_css? ? stylesheet_link_tag("screen", :media => "screen") : '',
   :description => @description,
   :google_analytics_code => render("shared/google_analytics_code"),
+  :js_application => javascript_include_tag("application"),
   :keywords => @keywords,
   :page_title => @title ? @title : @w.name,
   :website_name => @w.name

@@ -11,7 +11,7 @@
   <!--[if lt IE 9]>
   <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <%= javascript_include_tag "application" %>
+  <%= js_application %>
   <%= csrf_meta_tags %>
 <% if @w.blog_id -%>
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/forums/feed/<%= @w.blog_id_before_type_cast %>" />
