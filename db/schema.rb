@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130111142) do
+ActiveRecord::Schema.define(:version => 20111201135546) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -402,6 +402,7 @@ ActiveRecord::Schema.define(:version => 20111130111142) do
     t.string   "google_ftp_password",                                            :default => "",    :null => false
     t.text     "footer_html",                                                                       :null => false
     t.text     "invoice_details"
+    t.string   "google_domain_name",                                             :default => "",    :null => false
   end
 
 end

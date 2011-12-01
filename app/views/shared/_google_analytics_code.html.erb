@@ -3,6 +3,9 @@
 
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', '<%= @w.google_analytics_code %>']);
+<% unless @w.google_domain_name.empty? -%>
+    _gaq.push(['_setDomainName', '<%= @w.google_domain_name %>']);
+<% end -%>
     _gaq.push(['_trackPageview']);
 <%= render(:partial => 'orders/google_ecommerce_tracking') unless @google_ecommerce_tracking.nil? %>
     (function() {
