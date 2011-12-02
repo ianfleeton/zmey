@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111201135546) do
+ActiveRecord::Schema.define(:version => 20111201171051) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -403,6 +403,9 @@ ActiveRecord::Schema.define(:version => 20111201135546) do
     t.text     "footer_html",                                                                       :null => false
     t.text     "invoice_details"
     t.string   "google_domain_name",                                             :default => "",    :null => false
+    t.boolean  "paypal_active",                                                  :default => false, :null => false
+    t.string   "paypal_email_address",                                           :default => "",    :null => false
+    t.string   "paypal_identity_token",                                          :default => "",    :null => false
   end
 
 end

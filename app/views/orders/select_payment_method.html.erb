@@ -1,5 +1,28 @@
 <h1>Choose How You Would Like to Pay</h1>
 
+<% if @w.paypal_active? -%>
+<h2>Pay by PayPal</h2>
+<p>
+  You do not need to have a PayPal account to pay by PayPal.
+</p>
+<form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+  <input type="hidden" name="return" value="<%= paypal_auto_return_payments_url %>">
+  <input type="hidden" name="cmd" value="_xclick">
+  <input type="hidden" name="business" value="<%= @w.paypal_email_address %>">
+  <input type="hidden" name="currency_code" value="GBP">
+  <input type="hidden" name="item_name" value="<%= @order.order_number %>">
+<% if @w.skip_payment? -%>
+  <input type="hidden" name="amount" value="0.01">
+<% else -%>
+  <input type="hidden" name="amount" value="<%= @order.total %>">
+<% end -%>
+  <input type="hidden" name="shipping" value="0.00">
+  <input type="hidden" name="tax" value="0.00">
+  <input type="image" src="http://www.paypal.com/en_US/i/btn/btn_buynow_LG.gif" align="top"
+  border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+</form>
+<% end -%>
+
 <% if @w.rbswp_active? -%>
   <% if @w.skip_payment? -%>
   <h2>Skipping payment for WorldPay</h2>

@@ -203,6 +203,43 @@
 
 </fieldset>
 
+<fieldset>
+  <legend>PayPal</legend>
+
+  <p>
+    The PayPal integration is for Website Payments Standard. <em>Auto
+    Return</em> must be enabled on the PayPal account and so must <em>Payment
+    Data Transfer</em> (My Account | Profile | My Selling
+    Preferences | Website Preferences | Auto Return: On, Payment Data
+    Transfer: On).
+  </p>
+  <p>
+    You will also need to specify an Auto Return URL but the shop will
+    override this with its own. The dummy URL should exist and contain the
+    text "Thank you for your payment. Your transaction has been completed and
+    a receipt for your purchase has been emailed to you. You may log into
+    your account at www.paypal.com/uk to view details of this transaction."
+  </p>
+
+  <div>
+    <label for="website_paypal_active_true">Active?:</label>
+    <%= form.radio_button :paypal_active, true, :class => "radio" %>
+    <label for="website_paypal_active_true">Yes</label>
+    <%= form.radio_button :paypal_active, false, :class => "radio" %>
+    <label for="website_paypal_active">No</label>
+  </div>
+
+  <div>
+  	<%= form.label :paypal_email_address, 'PayPal email address' %>:<br>
+  	<%= form.text_field :paypal_email_address, :class => "text" %>
+  </div>
+
+  <div>
+  	<%= form.label :paypal_identity_token, 'PayPal identity token' %>:<br>
+  	<%= form.text_field :paypal_identity_token, :class => "text" %>
+  </div>
+</fieldset>
+
 <div>
   <%= form.label :terms_and_conditions %>:<br />
   <%= form.text_area :terms_and_conditions %>
