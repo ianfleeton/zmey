@@ -41,8 +41,11 @@ YeslWebsite::Application.routes.draw do
   resources :order_lines
 
   resources :payments do
-    get 'paypal_auto_return', :on => :collection
-    post 'rbs_worldpay_callback', :on => :collection
+    collection do
+      get 'paypal_auto_return'
+      get 'paypal_confirmation'
+      post 'rbs_worldpay_callback'
+    end
   end
 
   resources :product_groups
