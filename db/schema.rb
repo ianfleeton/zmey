@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111201171051) do
+ActiveRecord::Schema.define(:version => 20111213161017) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -300,6 +300,8 @@ ActiveRecord::Schema.define(:version => 20111201171051) do
     t.text     "full_detail",                                                          :null => false
     t.integer  "tax_type",                                           :default => 1,    :null => false
     t.decimal  "shipping_supplement", :precision => 10, :scale => 3, :default => 0.0,  :null => false
+    t.string   "page_title",                                         :default => "",   :null => false
+    t.string   "meta_description",                                   :default => "",   :null => false
   end
 
   create_table "quantity_prices", :force => true do |t|

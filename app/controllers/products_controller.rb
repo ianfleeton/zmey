@@ -7,7 +7,8 @@ class ProductsController < ApplicationController
   end
   
   def show
-    @title = @product.name + ' at ' + @w.name
+    @title = @product.page_title.blank? ? @product.name + ' at ' + @w.name : @product.page_title
+    @description = @product.meta_description
   end
   
   def new
