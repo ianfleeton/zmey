@@ -173,6 +173,33 @@
 </fieldset>
 
 <fieldset>
+  <legend>Cardsave</legend>
+
+  <div>
+  	<label for="website_cardsave_active_true">Active?:</label>
+  	<%= form.radio_button :cardsave_active, true, :class => "radio" %>
+  	<label for="website_cardsave_active_true">Yes</label>
+  	<%= form.radio_button :cardsave_active, false, :class => "radio" %>
+  	<label for="website_cardsave_active_false">No</label>
+  </div>
+
+  <div>
+  	<%= form.label :cardsave_merchant_id, 'Merchant ID' %>:<br>
+  	<%= form.text_field :cardsave_merchant_id, :class => "text" %>
+  </div>
+
+  <div>
+  	<%= form.label :cardsave_password, 'Password' %>:<br>
+  	<%= form.text_field :cardsave_password, :class => "text" %>
+  </div>
+
+  <div>
+  	<%= form.label :cardsave_pre_shared_key, 'Pre-shared key' %>:<br>
+  	<%= form.text_field :cardsave_pre_shared_key, :class => "text" %>
+  </div>
+</fieldset>
+
+<fieldset>
 <legend>WorldPay</legend>
 
 <div>

@@ -1,5 +1,5 @@
 class PaymentsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:rbs_worldpay_callback]
+  skip_before_filter :verify_authenticity_token, :only => [:cardsave_callback, :paypal_auto_return, :rbs_worldpay_callback]
 
   before_filter :admin_required, :only => [:index, :show]
 
@@ -47,6 +47,46 @@ class PaymentsController < ApplicationController
 
     redirect_to paypal_confirmation_payments_path, :notice =>
       "#{@message} You may log into your account at www.paypal.com/uk to view details of this transaction."
+  end
+
+  def cardsave_callback
+    @payment = Payment.new
+    @payment.service_provider = 'Cardsave'
+    @payment.installation_id = params[:MerchantID]
+    @payment.cart_id = params[:OrderID]
+    @payment.description = params[:OrderDescription]
+    @payment.amount = '%.2f' % (params[:Amount].to_f/100)
+    @payment.currency = params[:CurrencyCode]
+    @payment.test_mode = false
+    @payment.name = params[:CustomerName]
+    @payment.address = cardsave_address
+    @payment.postcode = params[:PostCode]
+    @payment.country = params[:CountryCode]
+    @payment.telephone = params[:PhoneNumber]
+    @payment.email = params[:EmailAddress]
+    @payment.transaction_id = params[:OrderID]
+    @payment.transaction_status = (params[:StatusCode] and params[:StatusCode]=='0')
+    @payment.transaction_time = params[:TransactionDateTime]
+    @payment.accepted = false # for now
+    @payment.save # this first save is for safety
+
+    if cardsave_hash_matches?
+      if params[:StatusCode]=='0'
+        @message = "Payment received"
+        @payment.accepted = true
+        clean_up
+      elsif params[:StatusCode]=='5'
+        @message = "Payment declined"
+      elsif params[:StatusCode]=='30'
+        @message = "There was an error processing your card transaction"
+      else
+        @message = "We cannot confirm that your payment was successful"
+      end
+    else
+      @message = "There was a failure validating your payment"
+    end
+    @payment.save
+    render :layout => false
   end
 
   def rbs_worldpay_callback
@@ -143,5 +183,42 @@ class PaymentsController < ApplicationController
     end
 
     response
+  end
+
+  def cardsave_hash_post
+    plain="PreSharedKey=" + @w.cardsave_pre_shared_key
+    plain=plain + '&MerchantID=' + @w.cardsave_merchant_id
+    plain=plain + '&Password=' + @w.cardsave_password
+    plain=plain + '&StatusCode=' + params[:StatusCode]
+    plain=plain + '&Message=' + params[:Message]
+    plain=plain + '&PreviousStatusCode=' + params[:PreviousStatusCode]
+    plain=plain + '&PreviousMessage=' + params[:PreviousMessage]
+    plain=plain + '&CrossReference=' + params[:CrossReference]
+    plain=plain + '&Amount=' + params[:Amount]
+    plain=plain + '&CurrencyCode=' + params[:CurrencyCode]
+    plain=plain + '&OrderID=' + params[:OrderID]
+    plain=plain + '&TransactionType=' + params[:TransactionType]
+    plain=plain + '&TransactionDateTime=' + params[:TransactionDateTime]
+    plain=plain + '&OrderDescription=' + params[:OrderDescription]
+    plain=plain + '&CustomerName=' + params[:CustomerName]
+    plain=plain + '&Address1=' + params[:Address1]
+    plain=plain + '&Address2=' + params[:Address2]
+    plain=plain + '&Address3=' + params[:Address3]
+    plain=plain + '&Address4=' + params[:Address4]
+    plain=plain + '&City=' + params[:City]
+    plain=plain + '&State=' + params[:State]
+    plain=plain + '&PostCode=' + params[:PostCode]
+    plain=plain + '&CountryCode=' + params[:CountryCode]
+
+    require 'digest/sha1'
+    Digest::SHA1.hexdigest(plain)
+  end
+
+  def cardsave_hash_matches?
+    params[:HashDigest] == cardsave_hash_post
+  end
+
+  def cardsave_address
+    [:Address1, :Address2, :Address3, :Address4, :City, :State].map{|k|params[k]}.join("\n").gsub(/\n+/, "\n")
   end
 end

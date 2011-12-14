@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213161017) do
+ActiveRecord::Schema.define(:version => 20111213184007) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"
@@ -408,6 +408,10 @@ ActiveRecord::Schema.define(:version => 20111213161017) do
     t.boolean  "paypal_active",                                                  :default => false, :null => false
     t.string   "paypal_email_address",                                           :default => "",    :null => false
     t.string   "paypal_identity_token",                                          :default => "",    :null => false
+    t.boolean  "cardsave_active",                                                :default => false, :null => false
+    t.string   "cardsave_merchant_id",                                           :default => "",    :null => false
+    t.string   "cardsave_password",                                              :default => "",    :null => false
+    t.string   "cardsave_pre_shared_key",                                        :default => "",    :null => false
   end
 
 end

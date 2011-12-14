@@ -23,6 +23,7 @@ class OrdersController < ApplicationController
   end
   
   def select_payment_method
+    prepare_cardsave if @w.cardsave_active?
   end
 
   def receipt
@@ -109,5 +110,49 @@ class OrdersController < ApplicationController
     if @order.nil?
       redirect_to :action => 'index', :notice => 'Cannot find order.'
     end
+  end
+
+  def prepare_cardsave
+    @cardsave_transaction_date_time = cardsave_transaction_date_time
+    @cardsave_hash = cardsave_hash_pre
+  end
+
+  def cardsave_transaction_date_time
+    offset = Time.now.strftime '%z'
+    Time.now.strftime '%Y-%m-%d %H:%M:%S ' + offset[0..2] + ':' + offset[3..4]
+  end
+
+  def cardsave_hash_pre
+    plain="PreSharedKey=" + @w.cardsave_pre_shared_key
+    plain=plain + '&MerchantID=' + @w.cardsave_merchant_id
+    plain=plain + '&Password=' + @w.cardsave_password
+    plain=plain + '&Amount=' + (@order.total * 100).to_int.to_s
+    plain=plain + '&CurrencyCode=826'
+    plain=plain + '&OrderID=' + @order.order_number
+    plain=plain + '&TransactionType=SALE'
+    plain=plain + '&TransactionDateTime=' + @cardsave_transaction_date_time
+    plain=plain + '&CallbackURL=' + cardsave_callback_payments_url
+    plain=plain + '&OrderDescription=Web purchase';
+    plain=plain + '&CustomerName=' + @order.full_name
+    plain=plain + '&Address1=' + @order.address_line_1
+    plain=plain + '&Address2=' + @order.address_line_2
+    plain=plain + '&Address3='
+    plain=plain + '&Address4='
+    plain=plain + '&City=' + @order.town_city
+    plain=plain + '&State=' + @order.county
+    plain=plain + '&PostCode=' + @order.postcode
+    plain=plain + '&CountryCode=826'
+    plain=plain + "&CV2Mandatory=true"
+    plain=plain + "&Address1Mandatory=true"
+    plain=plain + "&CityMandatory=true"
+    plain=plain + "&PostCodeMandatory=true"
+    plain=plain + "&StateMandatory=true"
+    plain=plain + "&CountryMandatory=true"
+    plain=plain + "&ResultDeliveryMethod=" + 'POST';
+    plain=plain + "&ServerResultURL="
+    plain=plain + "&PaymentFormDisplaysResult=" + 'false';
+
+    require 'digest/sha1'
+    Digest::SHA1.hexdigest(plain)
   end
 end
