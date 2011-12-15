@@ -10,7 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213184007) do
+ActiveRecord::Schema.define(:version => 20111214170933) do
+
+  create_table "additional_products", :force => true do |t|
+    t.integer  "product_id",                               :null => false
+    t.integer  "additional_product_id",                    :null => false
+    t.boolean  "selected_by_default",   :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "additional_products", ["product_id"], :name => "index_additional_products_on_product_id"
 
   create_table "addresses", :force => true do |t|
     t.integer  "user_id"

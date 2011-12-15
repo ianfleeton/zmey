@@ -1,0 +1,12 @@
+<% unless product.additional_products.empty? -%>
+<div class="additional_products">
+<% product.additional_products.each do |additional_product| -%>
+  <p>
+    <label>
+      <input type="checkbox" name="additional_product[<%= additional_product.id %>]"<%= " checked" if additional_product.selected_by_default? %>>
+      Add <%= additional_product.additional_product.name %> to basket
+    </label>
+  </p>
+<% end -%>
+</div>
+<% end -%>

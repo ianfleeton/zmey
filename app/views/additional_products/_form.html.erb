@@ -1,0 +1,13 @@
+<%= form.hidden_field :product_id %>
+<div>
+  <%= form.label :additional_product_id %>:<br>
+  <%= form.collection_select :additional_product_id, @w.products, :id, :name_with_sku %>
+</div>
+
+<div>
+  <%= form.label :selected_by_default %>
+  <%= form.radio_button :selected_by_default, true, :class => "radio" %> 
+  <label for="selected_by_default_true">Yes</label> 
+  <%= form.radio_button :selected_by_default, false, :class => "radio" %> 
+  <label for="selected_by_default_false">No</label> 
+</div>

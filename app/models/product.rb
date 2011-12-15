@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
   validates_uniqueness_of :sku, :scope => :website_id
 
   has_many :product_placements, :dependent => :delete_all
+  has_many :additional_products, :dependent => :delete_all
   has_many :pages, :through => :product_placements
   has_many :features, :dependent => :destroy
   has_many :quantity_prices, :order => :quantity, :dependent => :delete_all

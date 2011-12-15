@@ -22,23 +22,10 @@ class BasketController < ApplicationController
     unless flash[:notice].nil?
       redirect_to request.referrer and return
     end
-    feature_descriptions = BasketItem.describe_feature_selections(feature_selections)
 
-    # Look for an item that is in our basket, has the same product ID
-    # and also has the same feature selections by the user.
-    # For example, a T-shirt product with a single SKU may come in green or red,
-    # each of which should appear as a separate entry in our basket.
-    item = BasketItem.find_by_basket_id_and_product_id_and_feature_descriptions(@basket.id, product.id, feature_descriptions)
-    if item
-      item.quantity += quantity
-    else
-      item = BasketItem.new(
-        :basket_id => @basket.id,
-        :product_id => product.id,
-        :quantity => quantity,
-        :feature_selections => feature_selections)
-    end
-    item.save
+    @basket.add(product, feature_selections, quantity)
+    add_additional_products
+
     flash[:notice] = 'Added to basket.'
     if params[:page_id].nil?
       redirect_to :action => 'index'
@@ -180,6 +167,17 @@ class BasketController < ApplicationController
   def run_trigger_for_coupon_discount(discount)
     if discount.reward_type.to_sym == :free_products
       add_free_products(discount.free_products_group.products)
+    end
+  end
+
+  def add_additional_products
+    unless params[:additional_product].nil?
+      params[:additional_product].each_pair do |additional_product_id, value|
+        puts "value=#{value}"
+        if value=="on"
+          @basket.add(AdditionalProduct.find(additional_product_id).additional_product, [], 1)
+        end
+      end
     end
   end
 

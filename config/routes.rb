@@ -20,6 +20,8 @@ YeslWebsite::Application.routes.draw do
 
   resources :features
 
+  resources :additional_products
+
   resources :forums
 
   resources :images

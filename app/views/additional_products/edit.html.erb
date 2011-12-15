@@ -1,0 +1,15 @@
+<h1><%= link_to(@additional_product.product.name, @additional_product.product) %> &rarr; Edit Additional Product</h1>
+<%= flash_notice %>
+<div class="form">
+	<%= error_messages_for :additional_product -%>
+
+	<fieldset>
+		<legend>Edit additional product</legend>
+    <%= form_for @additional_product do |form| %>
+    <%= render :partial => 'form', :object => form %>
+
+    <%= submit_tag "Update Additional Product" %>
+
+  <% end %>
+  </fieldset>
+</div>

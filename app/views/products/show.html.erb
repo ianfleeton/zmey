@@ -3,6 +3,7 @@
 <% basket_form_start, basket_form_end = (form_tag(:controller => 'basket', :action => 'add') {'@@'}).split('@@') %>
 <%=
 template('product_detail',
+  :additional_products => render(:partial => "additional_products", :locals => {:product => @product}),
   :basket_form_start => basket_form_start,
   :basket_form_end => basket_form_end,
   :full => true,

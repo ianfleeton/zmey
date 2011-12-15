@@ -25,6 +25,7 @@
       <% end -%>
     </div>
     <%= product_features %>
+    <%= additional_products %>
     <p class="product_price">
       <%= I18n.t('price') %>:
       <%= formatted_price(product.price_with_tax(1, @inc_tax)) %><%= tax_explanation(product) %>
