@@ -6,8 +6,8 @@ module AddressesHelper
       gt = '&gt;'.html_safe
       lb = '<br />'.html_safe
     else
-      lt = '<'
-      gt = '>'
+      lt = '<'.html_safe
+      gt = '>'.html_safe
       lb = "\n"
     end
     address = h(a.full_name) +

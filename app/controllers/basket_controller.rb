@@ -112,7 +112,7 @@ class BasketController < ApplicationController
     if @w.only_accept_payment_on_account?
       @order.status = Order::PAYMENT_ON_ACCOUNT
       @order.save
-      OrderNotifier.deliver_notification @w, @order
+      OrderNotifier.notification(@w, @order).deliver
       @order.empty_basket(session)
       redirect_to :controller => 'orders', :action => 'receipt'
     else
