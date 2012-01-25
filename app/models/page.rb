@@ -14,6 +14,8 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :website_id, :case_sensitive => false
   validates_uniqueness_of :name, :scope => :parent_id, :case_sensitive => false, :unless => Proc.new { |page| page.parent_id.nil? }
 
+  liquid_methods :image, :name, :path, :url
+
   def name_with_ancestors
     parent ? parent.name_with_ancestors + ' > ' + name : name
   end
