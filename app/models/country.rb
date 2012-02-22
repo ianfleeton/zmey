@@ -4,8 +4,8 @@ class Country < ActiveRecord::Base
 
   belongs_to :website
   belongs_to :shipping_zone
-  has_many :addresses, :dependent => :nullify # Rails3 :restrict
-  has_many :orders, :dependent => :nullify # Rails3 :restrict
+  has_many :addresses, :dependent => :restrict
+  has_many :orders, :dependent => :restrict
 
   attr_protected :website_id
 
