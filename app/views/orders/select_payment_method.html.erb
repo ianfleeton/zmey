@@ -1,6 +1,7 @@
 <h1>Choose How You Would Like to Pay</h1>
 
 <% if @w.paypal_active? -%>
+<div class="pay_by" id="pay_by_paypal">
 <h2>Pay by PayPal</h2>
 <p>
   You do not need to have a PayPal account to pay by PayPal.
@@ -21,9 +22,11 @@
   <input type="image" src="http://www.paypal.com/en_US/i/btn/btn_buynow_LG.gif" align="top"
   border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
 </form>
+</div><!--#pay_by_paypal-->
 <% end -%>
 
 <% if @w.cardsave_active? -%>
+<div class="pay_by" id="pay_by_cardsave">
 <h2>Pay by Credit/Debit Card</h2>
 <form method="post" action="https://mms.cardsaveonlinepayments.com/Pages/PublicPages/PaymentForm.aspx">
   <input type="hidden" name="HashDigest" value="<%= @cardsave_hash %>">
@@ -55,9 +58,11 @@
   <input type="hidden" name="PaymentFormDisplaysResult" value="false">
   <input type="submit" value="Proceed to Cardsave">
 </form>
+</div><!--#pay_by_cardsave-->
 <% end -%>
 
 <% if @w.rbswp_active? -%>
+<div class="pay_by" id="pay_by_worldpay">
   <% if @w.skip_payment? -%>
   <h2>Skipping payment for WorldPay</h2>
   <p>The correct values are entered below and can be changed for testing.
@@ -160,4 +165,5 @@
 <input name="submit" type="submit" class="button" value="Proceed to WorldPay" />
 </form>
   <% end -%>
+</div><!--#pay_by_worldpay-->
 <% end -%>
