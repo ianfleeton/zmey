@@ -6,7 +6,7 @@
   child_pages += template('child_page',
     :child => child,
     :thumbnail_exists => !child.image.nil?,
-    :thumbnail_url => child.image.url(@w.page_thumbnail_size)
+    :thumbnail_url => child.image ? child.image.url(@w.page_thumbnail_size) : ''
   )
   %>
   <% end -%>
