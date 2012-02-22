@@ -25,7 +25,7 @@ Feature: Creating new pages
     When I am on the new page page
     And I fill in "Slug" with "*"
     And I press "Create New Page"
-    Then I should see "Slug can only contain letters, numbers and hyphens"
+    Then I should see "Slug can only contain lowercase letters, numbers and hyphens"
     And I should be on the pages page
 
   Scenario: Creating a new page
