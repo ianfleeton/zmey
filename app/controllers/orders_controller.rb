@@ -73,7 +73,7 @@ class OrdersController < ApplicationController
       end
 
       pdf.bounding_box([300, address_top], :width => 200, :height => 200) do
-        pdf.text("Customer:\n" + @current_user.name + "\n" +
+        pdf.text("Customer:\n" + @order.full_name + "\n" +
           @order.address_line_1 + "\n" + @order.address_line_2 + "\n" +
           @order.town_city + "\n" + @order.county + "\n" + @order.postcode +
           "\n" + @order.country.to_s, :leading => 4)
