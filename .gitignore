@@ -1,6 +1,6 @@
-.bundle
+# Ignore bundler config
+/.bundle
 .rspec
-log/*.log
 .DS_Store
 *.doc
 *.jpg
@@ -10,9 +10,11 @@ log/*.log
 *.pdf
 *.png
 *.psd
-*.sqlite3
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/log/*.log
 *.ttf
 database.yml
 rerun.txt
-tmp/
+/tmp
 .sass-cache/
