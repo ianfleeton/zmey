@@ -58,6 +58,6 @@ describe Website do
 
   it "should populate itself with a number of countries" do
     @website.save
-    @website.countries.should have(244).countries
+    @website.countries.should have(248).countries
   end
 end

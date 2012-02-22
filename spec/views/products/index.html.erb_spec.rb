@@ -4,7 +4,7 @@ describe "/products/index.html.erb" do
   include ProductsHelper
 
   before(:each) do
-    assigns[:products] = [
+    assigns[:products] = @products = [
       stub_model(Product),
       stub_model(Product)
     ]

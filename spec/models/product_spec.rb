@@ -8,16 +8,16 @@ describe Product do
   describe "tax" do
     it "should be added and tax amount calculated when price is ex-VAT" do
       @product.tax_type = Product::EX_VAT
-      @product.price_inc_tax.should == 1.175
+      @product.price_inc_tax.should == 1.2
       @product.price_ex_tax.should == 1.0
-      @product.tax_amount.should == 0.175
+      @product.tax_amount.should == 0.2
     end
 
     it "should not be added but tax amount is calculated when price is inc-VAT" do
       @product.tax_type = Product::INC_VAT
       @product.price_inc_tax.should == 1.0
-      @product.price_ex_tax.should be_close(0.8511, 0.001)
-      @product.tax_amount.should be_close(0.1489, 0.001)
+      @product.price_ex_tax.should be_within(0.001).of(0.8333)
+      @product.tax_amount.should be_within(0.001).of(0.1667)
     end
 
     it "should not be added nor calculated when product has no tax" do

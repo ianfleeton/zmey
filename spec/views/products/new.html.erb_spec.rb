@@ -4,15 +4,14 @@ describe "/products/new.html.erb" do
   include ProductsHelper
 
   before(:each) do
-    assigns[:product] = stub_model(Product,
-      :new_record? => true
-    )
+    assign(:product, stub_model(Product, :new_record? => true))
+    assign(:w, stub_model(Website))
   end
 
   it "renders new product form" do
     render
 
-    response.should have_tag("form[action=?][method=post]", products_path) do
+    rendered.should have_selector("form", :action => products_path, :method => "post") do
     end
   end
 end
