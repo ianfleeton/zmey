@@ -10,6 +10,7 @@ describe ProductsController do
   before do
     Website.stub(:for).and_return(website)
     website.stub(:private?).and_return(false)
+    website.stub(:vat_number).and_return('')
   end
 
   describe "GET index" do
@@ -27,6 +28,7 @@ describe ProductsController do
 
   describe "GET show" do
     it "assigns the requested product as @product" do
+      website.stub(:name).and_return('Website')
       find_requested_product(:page_title => '', :name => '', :meta_description => '')
       get :show, :id => "37"
       assigns[:product].should equal(mock_product)

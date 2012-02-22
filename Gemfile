@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.1'
-gem 'mysql2', '0.3.6'
+gem 'mysql2', '0.3.8'
 gem 'RedCloth'
-gem 'image_science', '1.2.1'
-gem 'RubyInline', '3.8.6'
+gem 'image_science'
+gem 'RubyInline'
 gem 'haml'
 gem 'liquid', '2.3.0'
 gem 'prawn', '0.11.1'
@@ -52,7 +52,7 @@ gem 'jquery-rails'
 # end
 
 group :development, :test do
-  gem "rspec-rails", "2.7.0"
+  gem "rspec-rails"
   gem 'cucumber-rails', "1.2.0"
   gem 'test-unit', '1.2.3'
   gem 'capybara', '1.1.1'
