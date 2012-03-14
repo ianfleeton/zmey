@@ -51,5 +51,10 @@ group :development, :test do
   gem 'test-unit', '1.2.3'
   gem 'capybara', '1.1.1'
   gem "launchy", "2.0.5"
+  gem 'shoulda-matchers'
   gem 'database_cleaner'
+
+  # Go faster!
+  gem 'spork'
+  gem 'watchr'
 end
