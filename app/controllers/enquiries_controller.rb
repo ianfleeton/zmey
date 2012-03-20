@@ -62,7 +62,7 @@ class EnquiriesController < ApplicationController
 
     respond_to do |format|
       if @enquiry.save
-        EnquiryNotifier.deliver_enquiry @w, @enquiry
+        EnquiryNotifier.enquiry(@w, @enquiry).deliver
         format.html { redirect_to(:action => 'thank_you') }
         format.xml  { render :xml => @enquiry, :status => :created, :location => @enquiry }
       else
