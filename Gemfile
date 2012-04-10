@@ -8,7 +8,6 @@ gem 'RubyInline'
 gem 'haml'
 gem 'liquid', '2.3.0'
 gem 'prawn', '0.11.1'
-gem 'permalink_fu'
 gem 'acts_as_list'
 gem 'acts_as_tree'
 

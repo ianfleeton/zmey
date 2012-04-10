@@ -83,6 +83,6 @@ class Product < ActiveRecord::Base
   end
 
   def to_param
-    "#{id}-#{PermalinkFu.escape(name)}"
+    "#{id}-#{name.parameterize}"
   end
 end
