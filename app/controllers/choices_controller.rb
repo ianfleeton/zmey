@@ -1,4 +1,5 @@
 class ChoicesController < ApplicationController
+  before_filter :admin_or_manager_required
   before_filter :find_choice, :except => [:new, :create]
   
   def new
