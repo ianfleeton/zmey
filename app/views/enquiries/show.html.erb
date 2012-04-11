@@ -1,3 +1,17 @@
+<div class="page-header">
+  <h1>View Enquiry</h1>
+</div>
+
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Enquries', enquiries_path %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    View Enquiry
+  </li>
+</ul>
+
 <p>
   <b>Name:</b>
   <%= @enquiry.name %>
@@ -54,4 +68,4 @@
 </p>
 
 
-<%= link_to 'Back', enquiries_path %>
+<%= link_to 'Back', enquiries_path, class: 'btn' %>

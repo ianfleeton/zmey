@@ -1,6 +1,7 @@
 class EnquiriesController < ApplicationController
   include SpamProtection
-  
+
+  layout 'admin', except: [:new, :create, :thank_you, :current_time]
   before_filter :admin_or_manager_required, :except => [:new, :create, :thank_you, :current_time]
   
   # GET /enquiries
