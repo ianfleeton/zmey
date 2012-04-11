@@ -1,13 +1,24 @@
-<%= form_for @liquid_template do |form| -%>
-<div class="field">
-  <%= form.label :name %>:<br>
-  <%= form.text_field :name %>
-</div>
-<div class="field">
-  <%= form.label :markup %>:<br>
-  <%= form.text_area :markup %>
-</div>
-<div class="field">
-  <%= form.submit %>
+<% if @liquid_template.errors.any? -%>
+<div class="alert alert-error fade in">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <h2><%= pluralize(@liquid_template.errors.count, "error") %> prohibited this Liquid template from being saved:</h2>
+
+  <ul>
+<% @liquid_template.errors.full_messages.each do |msg| -%>
+    <li><%= msg %></li>
+<% end -%>
+  </ul>
 </div>
 <% end -%>
+
+<%= form_for @liquid_template do |form| %>
+
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+
+  <%= form.label :markup %>
+  <%= form.text_area :markup, class: 'span12' %>
+
+  <br><%= form.submit class: 'btn btn-primary' %>
+
+<% end %>

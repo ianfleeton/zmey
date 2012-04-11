@@ -1,15 +1,29 @@
-<h1>Liquid Templates</h1>
-<%= flash_notice %>
-<p><%= link_to 'New Liquid template', new_liquid_template_path %></p>
+<div class="page-header">
+  <h1>Liquid Templates</h1>
+</div>
+
+<p>
+  <%= link_to 'New Liquid template', new_liquid_template_path, class: 'btn btn-primary' %>
+</p>
 <% if @liquid_templates.empty? -%>
 <p>There are no Liquid templates created yet.</p>
 <% else -%>
-<table>
+<table class="table table-bordered table-striped">
+  <tr>
+    <th>Template Name</th>
+    <th>Actions</th>
+  </tr>
 <% @liquid_templates.each do |liquid_template| -%>
-  <tr><td><%= link_to liquid_template.name, edit_liquid_template_path(liquid_template) %></td>
-    <td><%= form_tag liquid_template_path(liquid_template), :method => :delete do -%>
-      <input type="submit" value="Delete Liquid template" /></td>
-    <% end -%>
+  <tr>
+    <td><%= liquid_template.name %></td>
+    <td style="width: 130px;">
+      <%= link_to '<i class="icon-edit"></i> Edit'.html_safe, edit_liquid_template_path(liquid_template), class: 'btn btn-mini' %>
+      <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe,
+      liquid_template_path(liquid_template),
+      confirm: 'Are you sure?',
+      method: :delete,
+      class: 'btn btn-danger btn-mini' %>
+    </td>
   </tr>
 <% end -%>
 </table>

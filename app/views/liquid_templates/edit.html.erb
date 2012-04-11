@@ -1,11 +1,15 @@
-<h1><%= link_to 'Liquid Templates', liquid_templates_path %> &rarr; Edit Liquid Template</h1>
-<%= flash_notice %>
-
-<div class="form">
-  <%= error_messages_for :liquid_template -%>
-
-  <fieldset>
-    <legend>Edit Liquid template</legend>
-    <%= render 'form' %>
-  </fieldset>
+<div class="page-header">
+  <h1>Edit Liquid Template</h1>
 </div>
+
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Liquid Templates', liquid_templates_path %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    Edit Liquid Template
+  </li>
+</ul>
+
+<%= render 'form' %>
