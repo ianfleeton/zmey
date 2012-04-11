@@ -1,6 +1,8 @@
 class QuantityPricesController < ApplicationController
+  layout 'admin'
   before_filter :admin_or_manager_required
   before_filter :find_quantity_price, :only => [:edit, :destroy, :update]
+
   def new
     @quantity_price = QuantityPrice.new
     @quantity_price.product_id = params[:product_id]

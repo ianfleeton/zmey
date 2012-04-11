@@ -1,15 +1,19 @@
-<h1>New Quantity/Price Rule</h1>
-<%= flash_notice %>
-<div class="form">
-	<%= error_messages_for :quantity_price -%>
-
-	<fieldset>
-		<legend>Add a new quantity/price rule</legend>
-    <%= form_for @quantity_price do |form| %>
-    <%= render :partial => 'form', :object => form %>
-
-    <%= submit_tag "Add New Quantity/Price Rule" %>
-
-  <% end %>
-  </fieldset>
+<div class="page-header">
+  <h1>New Quantity/Price Rule</h1>
 </div>
+
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Products', products_path %>
+    <span class="divider">/</span>
+  </li>
+  <li>
+    <%= link_to @quantity_price.product.name, edit_product_path(@quantity_price.product) %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    New Quantity/Price Rule
+  </li>
+</ul>
+
+<%= render 'form' %>
