@@ -1,11 +1,18 @@
-<h1>Images</h1>
-<%= flash_notice %>
-<p><%= link_to 'Upload a new image', :action => 'new' %></p>
-<ul id="images_list">
+<div class="page-header">
+  <h1>Images</h1>
+</div>
+
+<p>
+  <%= link_to 'Upload New Image', new_image_path, class: 'btn btn-primary' %>
+</p>
+
+<ul class="thumbnails">
   <% @images.each do |i| %>
-  <li>
-    <div class="image_thumbnail"><%= link_to image_tag(i.url(64)), :action => 'edit', :id => i %></div>
-    <div class="image_name"><%= truncate(i.name, 11) %></div>
+  <li class="span2">
+    <div class="thumbnail" style="height: 100px;">
+      <%= link_to image_tag(i.url(64)), :action => 'edit', :id => i %>
+      <h5><%= truncate(i.name, 14) %></h5>
+    </div>
   </li>
   <% end %>
   <%= content_tag(:li, 'No images') if @images.empty? %>

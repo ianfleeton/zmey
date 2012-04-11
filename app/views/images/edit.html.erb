@@ -1,21 +1,39 @@
-<h1>Edit Image</h1>
-<%= flash_notice %>
+<div class="page-header">
+  <h1>Edit Image</h1>
+</div>
 
-<div class="form">
-	<%= error_messages_for :image -%>
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Images', images_path %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    Edit Image
+  </li>
+</ul>
 
-	<fieldset>
+<% if @image.errors.any? -%>
+<div class="alert alert-error fade in">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
+
+  <ul>
+<% @image.errors.full_messages.each do |msg| -%>
+    <li><%= msg %></li>
+<% end -%>
+  </ul>
+</div>
+<% end -%>
+
 		<legend>Replace image / edit image details</legend>
     <%= form_for @image, :html => { :multipart => true } do |form| %>
     <%= render :partial => 'form', :object => form %>
 
-    <%= submit_tag "Edit Image" %>
+    <br><%= submit_tag "Edit Image", class: 'btn btn-primary' %>
     
-    <%= link_to '[Delete]', {:action => 'destroy', :id => @image},
-      :confirm => 'Are you sure?', :method => :delete %>
+    <%= link_to 'Delete', {:action => 'destroy', :id => @image},
+      confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger' %>
 
   <% end %>
-  </fieldset>
-</div>
 
 <%= image_tag @image.url(256) %>

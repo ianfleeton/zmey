@@ -1,4 +1,5 @@
 class ImagesController < ApplicationController
+  layout 'admin'
   before_filter :admin_or_manager_required
 
   def index
