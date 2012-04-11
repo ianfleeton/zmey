@@ -1,5 +1,21 @@
-<%= form.hidden_field :feature_id %>
-<div>
-	<%= form.label :name %>:<br />
-	<%= form.text_field :name, :class => "text" %>
+<% if @choice.errors.any? -%>
+<div class="alert alert-error fade in">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <h2><%= pluralize(@choice.errors.count, "error") %> prohibited this choice from being saved:</h2>
+
+  <ul>
+<% @choice.errors.full_messages.each do |msg| -%>
+    <li><%= msg %></li>
+<% end -%>
+  </ul>
 </div>
+<% end -%>
+
+<%= form_for @choice do |form| %>
+  <%= form.hidden_field :feature_id %>
+
+	<%= form.label :name %>
+	<%= form.text_field :name %>
+
+  <br><%= form.submit class: 'btn btn-primary' %>
+<% end %>

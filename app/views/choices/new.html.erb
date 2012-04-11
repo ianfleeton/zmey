@@ -1,12 +1,23 @@
-<h1>New Choice for &#8220;<%= @feature.name %>&#8221;</h1>
-<%= flash_notice %>
-<div class="form">
-	<%= error_messages_for :choice -%>
-
-  <%= form_for @choice do |form| %>
-  <%= render :partial => 'form', :object => form %>
-
-  <%= submit_tag "Add New Choice" %>
-
-  <% end %>
+<div class="page-header">
+  <h1>New Choice for &#8220;<%= @feature.name %>&#8221;</h1>
 </div>
+
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Products', products_path %>
+    <span class="divider">/</span>
+  </li>
+  <li>
+    <%= link_to @feature.product.name, edit_product_path(@feature.product) %>
+    <span class="divider">/</span>
+  </li>
+  <li>
+    <%= link_to @feature.name, edit_feature_path(@feature) %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    New Choice
+  </li>
+</ul>
+
+<%= render 'form' %>
