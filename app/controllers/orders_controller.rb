@@ -68,8 +68,10 @@ class OrdersController < ApplicationController
 
       address_top = 700
 
-      pdf.bounding_box([0, address_top], :width => 200, :height => 200) do
-        pdf.text @w.invoice_details, :leading => 4
+      if @w.invoice_details
+        pdf.bounding_box([0, address_top], :width => 200, :height => 200) do
+          pdf.text @w.invoice_details, :leading => 4
+        end
       end
 
       pdf.bounding_box([300, address_top], :width => 200, :height => 200) do
