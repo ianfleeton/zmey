@@ -1,6 +1,19 @@
 <h1>Change Address</h1>
 <div class="form">
-<%= error_messages_for :address -%>
+
+<% if @address.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@address.errors.count, "error") %> prohibited this address from being saved:</h2>
+
+    <ul>
+      <% @address.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
 <%= form_for @address do |f| %>
   <%= render :partial => 'form', :object => f %>
   <%= submit_tag 'Save' %>

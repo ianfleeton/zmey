@@ -1,7 +1,18 @@
 <h1>Edit User</h1>
 
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <div class="form"> 
-	<%= error_messages_for :user -%> 
 	 
 	<fieldset> 
 	<legend>Edit User Details</legend> 

@@ -1,8 +1,20 @@
 <h1>New Forum</h1>
 <%= flash_notice %>
 
-<div class="form">
-	<%= error_messages_for :forum -%>
+
+<% if @forum.errors.any? -%>
+<div class="alert alert-error fade in">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <h2><%= pluralize(@forum.errors.count, "error") %> prohibited this forum from being saved:</h2>
+
+  <ul>
+<% @forum.errors.full_messages.each do |msg| -%>
+    <li><%= msg %></li>
+<% end -%>
+  </ul>
+</div>
+<% end -%>
+
 
 	<fieldset>
 		<legend>Add a new forum</legend>
@@ -13,4 +25,3 @@
 
   <% end %>
   </fieldset>
-</div>

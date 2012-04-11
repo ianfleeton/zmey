@@ -1,4 +1,4 @@
-<h1><%= link_to h(@topic.forum.name), @topic.forum %> &rarr; <%= h @topic.topic %></h1>
+<h1><%= link_to @topic.forum.name, @topic.forum %> &rarr; <%= @topic.topic %></h1>
 <%= flash_notice %>
 <% if admin? -%>
 <%= form_tag :action => 'destroy', :id => @topic do %>
@@ -21,7 +21,20 @@
 <% end %>
 <%= clear %>
 <h2>Reply to &#8220;<%= @topic.topic %>&#8221;</h2>
-<%= error_messages_for :post -%>
+
+<% if @post.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+    <ul>
+    <% @post.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
 <%= render :partial => 'spam/spam' %>
 
 <%= form_for :post, :url => {:action => 'create_reply'} do |f| %>
