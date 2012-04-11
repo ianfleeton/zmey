@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  layout 'admin', except: [:show, :sitemap, :terms]
   before_filter :admin_or_manager_required, :except => [:show, :sitemap, :terms]
   before_filter :find_page, :only => [:edit, :update, :destroy, :move_up, :move_down]
 

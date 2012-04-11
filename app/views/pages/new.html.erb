@@ -1,10 +1,15 @@
-<h1>New Page</h1>
-<%= flash_notice %>
-
-<div class="form">
-
-	<fieldset>
-		<legend>Add a new page</legend>
-    <%= render 'form', :submit_label => "Create New Page" %>
-  </fieldset>
+<div class="page-header">
+  <h1>New Page</h1>
 </div>
+
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Pages', pages_path %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    New Page
+  </li>
+</ul>
+
+<%= render 'form', submit_label: 'Create New Page' %>

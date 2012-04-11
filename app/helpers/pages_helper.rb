@@ -1,7 +1,8 @@
 module PagesHelper
   def indent_tag indent
-    ''.html_safe + content_tag(:span, '&nbsp; &nbsp;'.html_safe, :class => 'indent') * indent
+    ('<span class="indent">&nbsp; &nbsp;</span>' * indent).html_safe
   end
+
   def page_tree p, indent = 0
     subs = ''
     unless p.children.empty?
@@ -9,18 +10,18 @@ module PagesHelper
         subs += page_tree c, indent+1
       end
     end
-    edit = content_tag(:td, link_to('Edit', :controller => 'pages', :action => 'edit', :id => p.id))
+    edit = content_tag(:td, link_to('<i class="icon-edit"></i> Edit'.html_safe, edit_page_path(p), class: 'btn btn-mini'))
 
     if p.first?
       move_up = content_tag(:td, '&nbsp;'.html_safe)
     else
-      move_up = content_tag(:td, link_to('Move Up', :controller => 'pages', :action => 'move_up', :id => p.id))
+      move_up = content_tag(:td, link_to('Move Up', {controller: 'pages', action: 'move_up', id: p.id}, class: 'btn btn-mini'))
     end
 
     if p.last?
       move_down = content_tag(:td, '&nbsp;'.html_safe)
     else
-      move_down = content_tag(:td, link_to('Move Down', :controller => 'pages', :action => 'move_down', :id => p.id))
+      move_down = content_tag(:td, link_to('Move Down', {controller: 'pages', action: 'move_down', id: p.id}, class: 'btn btn-mini'))
     end
 
     content_tag(:tr,

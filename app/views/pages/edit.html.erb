@@ -1,11 +1,15 @@
-<h1>Edit Page</h1>
-<%= flash_notice %>
-
-<div class="form">
-
-	<fieldset>
-		<legend>Edit page</legend>
-    <%= render 'form', :submit_label => "Save" %>
-
-  </fieldset>
+<div class="page-header">
+  <h1>Edit Page</h1>
 </div>
+
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Pages', pages_path %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    Edit Page
+  </li>
+</ul>
+
+<%= render 'form', submit_label: 'Save' %>

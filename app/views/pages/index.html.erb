@@ -1,8 +1,12 @@
-<h1>Pages</h1>
-<%= flash_notice %>
-<p><%= link_to 'New page', :action => 'new' %></p>
+<div class="page-header">
+  <h1>Pages</h1>
+</div>
 
-<table>
+<p>
+  <%= link_to 'New Page', new_page_path, class: 'btn btn-primary' %>
+</p>
+
+<table class="table table-striped table-bordered">
 <% @pages.each do |p| %>
   <%= page_tree p %>
 <% end %>
