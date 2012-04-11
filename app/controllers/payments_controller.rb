@@ -45,6 +45,7 @@ class PaymentsController < ApplicationController
       @message = 'We could not confirm your payment was successful.'
     end
 
+    @payment.save
     redirect_to paypal_confirmation_payments_path, :notice =>
       "#{@message} You may log into your account at www.paypal.com/uk to view details of this transaction."
   end
@@ -170,13 +171,14 @@ class PaymentsController < ApplicationController
     data = "cmd=_notify-synch&tx=#{transaction_token}&at=#{identity_token}"
     con = Net::HTTP.new(uri.host, uri.port)
     con.use_ssl = true
-    r, data = con.post(uri.path, data)
+    r = con.post(uri.path, data)
+    data = r.body
     Rails.logger.info data
 
     response[:raw_auth_message] = data
-    response[:status] = data.to_a[0].strip
+    response[:status] = data.split[0].strip
 
-    data.to_a[1..-1].each do |line|
+    data.split[1..-1].each do |line|
       key, value = line.strip.split('=')
       key = key.to_sym
       response[key] = CGI::unescape(value) if response.has_key? key
