@@ -1,19 +1,27 @@
-<h1>Edit Shipping Zone</h1>
-<%= flash_notice %>
-<div class="form">
-	<%= error_messages_for :shipping_zone -%>
-
-  <%= form_for @shipping_zone do |form| %>
-  <%= render :partial => 'form', :object => form %>
-
-  <%= submit_tag "Save" %>
-
-  <% end %>
+<div class="page-header">
+  <h1>Edit Shipping Zone</h1>
 </div>
+
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Shipping Zones', shipping_zones_path %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    Edit Shipping Zone
+  </li>
+</ul>
+
+<%= render 'form' %>
+
 <h2>Countries</h2>
 <% if @shipping_zone.countries.empty? %>
 <p>There are no countries in this shipping zone.</p>
 <% else %>
+<p>
+  The following countries are in this shipping zone:
+</p>
+
 <ul>
 <% @shipping_zone.countries.each do |country| %>
   <li><%= country.name %></li>
