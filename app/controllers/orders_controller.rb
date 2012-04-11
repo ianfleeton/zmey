@@ -84,7 +84,9 @@ class OrdersController < ApplicationController
       cells = []
       cells << ["Product", "Price"]
       @order.order_lines.each do |line|
-        cells << [line.product_name, formatted_gbp_price(line.line_total)]
+        product = line.product_name
+        product += " - " + line.feature_descriptions unless line.feature_descriptions.empty?
+        cells << [product, formatted_gbp_price(line.line_total)]
       end
       cells << ["Order total:", formatted_gbp_price(@order.total)]
 
