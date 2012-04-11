@@ -1,6 +1,11 @@
-<h1>Product Groups</h1>
-<%= flash_notice %>
-<p><%= link_to 'New product group', new_product_group_path %></p>
+<div class="page-header">
+  <h1>Product Groups</h1>
+</div>
+
+<p>
+  <%= link_to 'New Product Group', new_product_group_path, class: 'btn btn-primary' %>
+</p>
+
 <ul>
   <% @product_groups.each do |p| -%>
   <li><%= link_to p.name, edit_product_group_path(p) %></li>

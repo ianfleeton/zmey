@@ -1,4 +1,5 @@
 class ProductGroupsController < ApplicationController
+  layout 'admin'
   before_filter :admin_or_manager_required
   before_filter :find_product_group, :only => [:show, :edit, :update]
 
