@@ -1,23 +1,28 @@
-<h1>Edit Shipping Class</h1>
-<%= flash_notice %>
-<div class="form">
-	<%= error_messages_for :shipping_class -%>
-
-  <%= form_for @shipping_class do |form| %>
-  <%= render :partial => 'form', :object => form %>
-
-  <%= submit_tag "Save" %>
-
-  <% end %>
+<div class="page-header">
+  <h1>Edit Shipping Class</h1>
 </div>
 
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Shipping Classes', shipping_classes_path %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    Edit Shipping Class
+  </li>
+</ul>
+
+<%= render 'form' %>
+
 <h2>Shipping Table</h2>
-<p><%= link_to 'New', :controller => 'shipping_table_rows', :action => 'new',
-  :shipping_class_id => @shipping_class.id %></p>
+<p>
+  <%= link_to 'New', {:controller => 'shipping_table_rows', :action => 'new',
+  :shipping_class_id => @shipping_class.id}, class: 'btn' %>
+</p>
 <% if @shipping_class.shipping_table_rows.empty? -%>
 <p>You have no shipping rules yet for this shipping class.</p>
 <% else -%>
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Trigger</th>
@@ -30,10 +35,10 @@
     <tr>
       <td><%= row.trigger_value %></td>
       <td><%= row.amount %></td>
-      <td><%= link_to "Delete", { :controller => 'shipping_table_rows',
-                   :action => "destroy", :id => row.id },
-  		 						 :confirm => 'Are you sure?',
-  								 :method => :delete %></td>
+      <td>
+        <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe, row,
+        confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini' %>
+      </td>
     </tr>
 <% end -%>
   </tbody>

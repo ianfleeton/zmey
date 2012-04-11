@@ -1,10 +1,12 @@
-<h1>Shipping Classes</h1>
-<%= flash_notice %>
+<div class="page-header">
+  <h1>Shipping Classes</h1>
+</div>
+
 <p>
-  <%= link_to 'New', new_shipping_class_path %>
+  <%= link_to 'New', new_shipping_class_path, class: 'btn btn-primary' %>
 </p>
 <% unless @shipping_classes.empty? -%>
-<table>
+<table class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>Shipping Class</th>
@@ -15,9 +17,12 @@
 <% @shipping_classes.each do |shipping_class| %>
     <tr>
       <td><%= link_to shipping_class.name + ', ' + shipping_class.shipping_zone.name, edit_shipping_class_path(shipping_class) %></td>
-      <td><%= link_to "Delete", { :action => "destroy", :id => shipping_class.id },
-  		 						 :confirm => 'Are you sure?',
-  								 :method => :delete %></td>
+      <td>
+        <%= link_to '<i class="icon-edit"></i> Edit'.html_safe,
+        edit_shipping_class_path(shipping_class), class: 'btn btn-mini' %>
+        <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe, shipping_class,
+        confirm: 'Are you sure?', method: :delete, class: 'btn btn-mini btn-danger' %>
+      </td>
     </tr>
 <% end -%>
   </tbody>

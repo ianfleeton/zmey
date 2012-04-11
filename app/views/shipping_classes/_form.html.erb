@@ -1,8 +1,38 @@
-<div>
-	<%= form.label :name %>:<br>
-	<%= form.text_field :name, :class => "text" %>
+<% if @shipping_class.errors.any? -%>
+<div class="alert alert-error fade in">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <h2><%= pluralize(@shipping_class.errors.count, "error") %> prohibited this shipping class from being saved:</h2>
+
+  <ul>
+<% @shipping_class.errors.full_messages.each do |msg| -%>
+    <li><%= msg %></li>
+<% end -%>
+  </ul>
 </div>
-<div>
-  <%= form.label :shipping_zone_id %>:<br />
+<% end -%>
+
+<% if @w.shipping_zones.empty? -%>
+<div class="hero-unit">
+  <h1>Let's create a shipping zone</h1>
+  <p>
+    You haven't created any shipping zones yet. You will
+    need at least one shipping zone before you can create a shipping
+    class.
+  </p>
+  <p>
+    <%= link_to 'New Shipping Zone', new_shipping_zone_path, class: 'btn btn-primary btn-large' %>
+  </p>
+</div>
+<% else -%>
+<%= form_for @shipping_class do |form| %>
+
+	<%= form.label :name %>
+	<%= form.text_field :name %>
+
+  <%= form.label :shipping_zone_id %>
   <%= form.collection_select :shipping_zone_id, @w.shipping_zones, :id, :name %>
-</div>
+
+  <br><%= form.submit class: 'btn btn-primary' %>
+
+<% end %>
+<% end -%>
