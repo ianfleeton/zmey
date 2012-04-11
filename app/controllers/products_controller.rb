@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  layout 'admin', :only => [:edit, :new, :index]
   before_filter :find_product, :only => [:show, :edit, :update, :destroy]
   before_filter :admin_or_manager_required, :except => [:show, :google_data_feed]
 

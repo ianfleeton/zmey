@@ -1,69 +1,64 @@
+<% if @product.errors.any? -%>
+<div class="alert alert-error fade in">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+  <ul>
+<% @product.errors.full_messages.each do |msg| -%>
+    <li><%= msg %></li>
+<% end -%>
+  </ul>
+</div>
+<% end -%>
+
 <%= form_for @product do |form| -%>
-<div>
-	<%= form.label :sku, 'SKU' %>:<br />
-	<%= form.text_field :sku, :class => "text" %>
-</div>
 
-<div>
-	<%= form.label :name %>:<br />
-	<%= form.text_field :name, :class => "text" %>
-</div>
+<%= form.label :sku, '<abbr title="Stock-keeping unit / reference number">SKU</abbr>'.html_safe %>
+	<%= form.text_field :sku %>
 
-<div>
-	<%= form.label :price %>:<br />
-	<%= form.text_field :price, :class => "text" %> GBP
-</div>
+	<%= form.label :name %>
+	<%= form.text_field :name %>
 
-<div>
-	<%= form.label :shipping_supplement %>:<br />
-	<%= form.text_field :shipping_supplement, :class => "text" %> GBP
-</div>
+	<%= form.label :price %>
+	<%= form.text_field :price %> GBP
 
-<div>
-  <%= form.label :tax_type %>:<br />
+	<%= form.label :shipping_supplement %>
+	<%= form.text_field :shipping_supplement %> GBP
+
+  <%= form.label :tax_type %>
   <select id="product_tax_type" name="product[tax_type]">
     <option value="<%= Product::NO_TAX %>"<%= ' selected="selected"' if @product.tax_type==Product::NO_TAX %>>No tax</option>
     <option value="<%= Product::INC_VAT %>"<%= ' selected="selected"' if @product.tax_type==Product::INC_VAT %>>Price includes VAT</option>
     <option value="<%= Product::EX_VAT %>"<%= ' selected="selected"' if @product.tax_type==Product::EX_VAT %>>Price excludes VAT</option>
   </select>
-</div>
 
-<div>
-	<%= form.label :image_id %>:<br />
+	<%= form.label :image_id %>
   <%= select :product, :image_id, image_options %>
-</div>
 
-<div>
-	<%= form.label :description %>:<br />
-	<%= form.text_area :description, :class => "text" %>
-</div>
+	<%= form.label :description %>
+	<%= form.text_area :description, rows: 8, class: 'input-xlarge' %>
 
-<div>
-	<%= form.label :full_detail %>:<br />
-	<%= form.text_area :full_detail, :class => "text" %>
-</div>
+	<%= form.label :full_detail %>
+	<%= form.text_area :full_detail, rows: 12, class: 'input-xlarge' %>
 
-<div>
-	<label for="product_apply_shipping_true">Apply shipping?:</label><br />
-	<%= form.radio_button :apply_shipping, true, :class => "radio" %> 
-	<label for="product_apply_shipping_true">Yes</label> 
-	<%= form.radio_button :apply_shipping, false, :class => "radio" %> 
-	<label for="product_apply_shipping">No</label> 
-</div>
+	<label for="product_apply_shipping_true">Apply shipping?</label>
+	<label class="radio">
+    <%= form.radio_button :apply_shipping, true, :class => "radio" %>
+	  Yes
+  </label>
+	<label class="radio">
+    <%= form.radio_button :apply_shipping, false, :class => "radio" %>
+	  No
+  </label>
 
-<h2>Page Information</h2>
+  <h2>Page Information</h2>
 
-<div>
-	<%= form.label :page_title %>:<br />
-	<%= form.text_field :page_title, :class => "text" %>
-</div>
+  <%= form.label :page_title %>
+  <%= form.text_field :page_title %>
 
-<div>
-	<%= form.label :meta_description %>:<br />
-	<%= form.text_field :meta_description, :class => "text" %>
-</div>
+	<%= form.label :meta_description %>
+	<%= form.text_field :meta_description, class: 'input-xlarge' %>
 
-<div>
-  <%= form.submit %>
-</div>
+  <br><%= form.submit class: 'btn btn-primary' %>
+
 <% end -%>
