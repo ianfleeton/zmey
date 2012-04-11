@@ -1,9 +1,12 @@
-<h1>Countries</h1>
-<%= flash_notice %>
+<div class="page-header">
+  <h1>Countries</h1>
+</div>
+
 <p>
-  <%= link_to 'New', new_country_path %>
+  <%= link_to 'New', new_country_path, class: 'btn btn-primary' %>
 </p>
-<table>
+
+<table class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>Country</th>
@@ -15,12 +18,15 @@
   <tbody>
 <% @countries.each do |country| %>
     <tr>
-      <td><%= link_to country.name, edit_country_path(country) %></td>
+      <td><%= country.name %></td>
       <td><%= country.iso_3166_1_alpha_2 %></td>
       <td><%= country.shipping_zone ? country.shipping_zone.name : '-' %></td>
-      <td><%= link_to "Delete", { :action => "destroy", :id => country.id },
-  		 						 :confirm => 'Are you sure?',
-  								 :method => :delete %></td>
+      <td>
+        <%= link_to '<i class="icon-edit"></i> Edit'.html_safe,
+        edit_country_path(country), class: 'btn btn-mini' %>
+        <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe,
+        country, confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini' %>
+      </td>
     </tr>
 <% end %>
   </tbody>

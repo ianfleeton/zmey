@@ -1,12 +1,15 @@
-<h1>New Country</h1>
-<%= flash_notice %>
-<div class="form">
-	<%= error_messages_for :country -%>
-
-  <%= form_for @country do |form| %>
-  <%= render :partial => 'form', :object => form %>
-
-  <%= submit_tag "Save" %>
-
-  <% end %>
+<div class="page-header">
+  <h1>New Country</h1>
 </div>
+
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Countries', countries_path %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    New Country
+  </li>
+</ul>
+
+<%= render 'form' %>
