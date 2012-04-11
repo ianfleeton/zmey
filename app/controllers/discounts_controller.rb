@@ -1,4 +1,5 @@
 class DiscountsController < ApplicationController
+  layout 'admin'
   before_filter :admin_or_manager_required
   before_filter :find_discount, :only => [:edit, :update, :destroy]
 

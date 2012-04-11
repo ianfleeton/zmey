@@ -1,15 +1,23 @@
-<h1>Discounts</h1>
-<%= flash_notice %>
-<p><%= link_to 'New discount', new_discount_path %></p>
+<div class="page-header">
+  <h1>Discounts</h1>
+</div>
+
+<p>
+  <%= link_to 'New Discount', new_discount_path, class: 'btn btn-primary' %>
+</p>
+
 <% if @discounts.empty? -%>
 <p>There are no discounts set up yet.</p>
 <% else -%>
-<table>
+<table class="table table-bordered table-striped">
 <% @discounts.each do |discount| -%>
   <tr><td><%= link_to discount.name, edit_discount_path(discount) %></td>
-    <td><%= form_tag discount_path(discount), :method => :delete do -%>
-      <input type="submit" value="Remove discount" /></td>
-    <% end -%>
+    <td>
+      <%= link_to '<i class="icon-edit"></i> Edit'.html_safe,
+      edit_discount_path(discount), class: 'btn btn-mini' %>
+      <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe,
+      discount, confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini' %>
+    </td>
   </tr>
 <% end -%>
 </table>
