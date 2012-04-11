@@ -2,15 +2,19 @@ module QuantityPricesHelper
   def quantity_prices_table(product)
     rules = product.quantity_prices
     return if rules.empty?
+    first = '1'
+    first += "&#8211;#{rules.first.quantity - 1}" unless rules.first.quantity == 2
     html = <<HTML
-      <table class="quantity_prices">
+      <table class="table table-striped table-bordered">
         <tr>
           <th>Quantity</th>
           <th>Price</th>
+          <th>Actions</th>
         </tr>
         <tr>
-          <td>1&#8211;#{rules.first.quantity - 1}</td>
+          <td>#{first}</td>
           <td>#{formatted_price(product.price_with_tax(1, @inc_tax))}</td>
+          <td>&nbsp;</td>
         </tr>
 HTML
     rules.each_index do |i|
