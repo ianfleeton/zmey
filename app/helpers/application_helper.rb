@@ -36,7 +36,7 @@ module ApplicationHelper
   end
 
   def clear
-    content_tag('p', '&nbsp;', {:class => 'clear'})
+    content_tag('p', '&nbsp;'.html_safe, {:class => 'clear'})
   end
   
   def a_tick
