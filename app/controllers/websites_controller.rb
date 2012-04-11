@@ -1,4 +1,5 @@
 class WebsitesController < ApplicationController
+  layout 'admin'
   before_filter :admin_required, :except => [:edit, :update]
   before_filter :find_website, :only => [:edit, :update, :destroy]
   before_filter :permission_check, :only => [:edit, :update]

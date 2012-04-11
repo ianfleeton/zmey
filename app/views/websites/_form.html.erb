@@ -1,284 +1,239 @@
-<div class="form">
-	<% if @website.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@website.errors.count, "error") %> prohibited this website from being saved:</h2>
+<% if @website.errors.any? -%>
+<div class="alert alert-error fade in">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <h2><%= pluralize(@website.errors.count, "error") %> prohibited this website from being saved:</h2>
 
-      <ul>
-      <% @website.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <ul>
+<% @website.errors.full_messages.each do |msg| -%>
+    <li><%= msg %></li>
+<% end -%>
+  </ul>
+</div>
+<% end -%>
 
 
 <%= form_for @website do |form| %>
 
-<div>
-	<%= form.label :subdomain %>:<br />
-	<%= form.text_field :subdomain, :class => "text" %>
-</div>
+	<%= form.label :subdomain %>
+	<%= form.text_field :subdomain %>
 
-<div>
-	<%= form.label :domain %>:<br />
-	<%= form.text_field :domain, :class => "text" %>
-</div>
+	<%= form.label :domain %>
+	<%= form.text_field :domain %>
 
-<div>
-	<%= form.label :google_analytics_code, 'Google Analytics code' %>:<br />
-	<%= form.text_field :google_analytics_code, :class => "text" %>
-</div>
+	<%= form.label :google_analytics_code, 'Google Analytics code' %>
+	<%= form.text_field :google_analytics_code %>
 
-<div>
-	<%= form.label :google_domain_name %> (leave blank for default):<br>
-	<%= form.text_field :google_domain_name, :class => "text" %>
-</div>
+	<%= form.label :google_domain_name %> (leave blank for default)<br>
+	<%= form.text_field :google_domain_name %>
 
-<div>
-	<%= form.label :google_ftp_username, 'Google FTP username' %>:<br />
-	<%= form.text_field :google_ftp_username, :class => "text" %>
-</div>
+	<%= form.label :google_ftp_username, 'Google FTP username' %>
+	<%= form.text_field :google_ftp_username %>
 
-<div>
-	<%= form.label :google_ftp_password, 'Google FTP password' %>:<br />
-	<%= form.text_field :google_ftp_password, :class => "text" %>
-</div>
+	<%= form.label :google_ftp_password, 'Google FTP password' %>
+	<%= form.text_field :google_ftp_password %>
 
-<div>
-	<%= form.label :name %>:<br />
-	<%= form.text_field :name, :class => "text" %>
-</div>
+	<%= form.label :name %>
+	<%= form.text_field :name %>
 
-<div>
-	<%= form.label :email %>:<br />
-	<%= form.text_field :email, :class => "text" %>
-</div>
+	<%= form.label :email %>
+	<%= form.email_field :email %>
 
-<div>
-	<%= form.label :default_locale %>:<br />
-	<%= form.text_field :default_locale, :class => "text" %>
-</div>
+	<%= form.label :default_locale %>
+	<%= form.text_field :default_locale %>
 
-<div>
-  <%= form.label :blog_id %>:<br />
+  <%= form.label :blog_id %>
   <%= form.collection_select :blog_id, Forum.all(:conditions => {:website_id => @website.id}, :order => :name), :id, :name, {:include_blank => '-- No blog --'} %>
-</div>
 
-<div>
-	<label for="website_can_users_create_accounts_true">Can users create accounts?:</label>
-	<%= form.radio_button :can_users_create_accounts, true, :class => "radio" %> 
-	<label for="website_can_users_create_accounts_true">Yes</label> 
-	<%= form.radio_button :can_users_create_accounts, false, :class => "radio" %> 
-	<label for="website_can_users_create_accounts">No</label> 
-</div>
+	<label for="website_can_users_create_accounts_true">Can users create accounts?</label>
+	<label class="radio">
+    <%= form.radio_button :can_users_create_accounts, true, :class => "radio" %>
+    Yes
+  </label>
+	<label class="radio">
+    <%= form.radio_button :can_users_create_accounts, false, :class => "radio" %>
+    No
+  </label>
 
-<div>
-	<label for="website_private_true">Private (users must be logged in to view)?:</label>
-	<%= form.radio_button :private, true, :class => "radio" %>
-	<label for="website_private_true">Yes</label>
-	<%= form.radio_button :private, false, :class => "radio" %>
-	<label for="website_private">No</label>
-</div>
+	<label for="website_private_true">Private (users must be logged in to view)?</label>
+	<label class="radio">
+    <%= form.radio_button :private, true, :class => "radio" %>
+    Yes
+  </label>
+	<label class="radio">
+    <%= form.radio_button :private, false, :class => "radio" %>
+	  No
+  </label>
 
-<fieldset>
-<legend>CSS Settings</legend>
+  <h2>CSS Settings</h2>
 
-<div>
-	<%= form.label :css_url, 'CSS URL' %>:<br />
-	<%= form.text_field :css_url, :class => "text" %>
-</div>
+	<%= form.label :css_url, 'CSS URL' %>
+	<%= form.text_field :css_url %>
 
-<div>
-	<label for="website_use_default_css_true">Use default CSS?:</label>
-	<%= form.radio_button :use_default_css, true, :class => "radio" %> 
-	<label for="website_use_default_css_true">Yes</label> 
-	<%= form.radio_button :use_default_css, false, :class => "radio" %> 
-	<label for="website_use_default_css">No</label> 
-</div>
+	<label for="website_use_default_css_true">Use default CSS?</label>
+	<label class="radio">
+    <%= form.radio_button :use_default_css, true, :class => "radio" %>
+    Yes
+  </label>
+	<label class="radio">
+    <%= form.radio_button :use_default_css, false, :class => "radio" %>
+    No
+  </label>
 
-</fieldset>
+  <h2>Image Sizes</h2>
 
-<fieldset>
-<legend>Image Sizes</legend>
+	<%= form.label :page_image_size %>
+	<%= form.text_field :page_image_size %>
 
-<div>
-	<%= form.label :page_image_size %>:<br />
-	<%= form.text_field :page_image_size, :class => "text" %>
-</div>
+	<%= form.label :page_thumbnail_size %>
+	<%= form.text_field :page_thumbnail_size %>
 
-<div>
-	<%= form.label :page_thumbnail_size %>:<br />
-	<%= form.text_field :page_thumbnail_size, :class => "text" %>
-</div>
+	<%= form.label :product_image_size %>
+	<%= form.text_field :product_image_size %>
 
-<div>
-	<%= form.label :product_image_size %>:<br />
-	<%= form.text_field :product_image_size, :class => "text" %>
-</div>
+	<%= form.label :product_thumbnail_size %>
+	<%= form.text_field :product_thumbnail_size %>
 
-<div>
-	<%= form.label :product_thumbnail_size %>:<br />
-	<%= form.text_field :product_thumbnail_size, :class => "text" %>
-</div>
+  <h2>Tax Settings</h2>
 
-</fieldset>
+	<%= form.label :vat_number, 'VAT number' %>
+	<%= form.text_field :vat_number %>
 
-<fieldset>
-<legend>Tax Settings</legend>
+	<label for="show_vat_inclusive_prices_true">Show VAT-inclusive prices?</label>
+	<label class="radio">
+    <%= form.radio_button :show_vat_inclusive_prices, true, :class => "radio" %>
+    Yes
+  </label>
+	<label class="radio">
+    <%= form.radio_button :show_vat_inclusive_prices, false, :class => "radio" %>
+	  No
+  </label>
 
-<div>
-	<%= form.label :vat_number, 'VAT number' %>:<br />
-	<%= form.text_field :vat_number, :class => "text" %>
-</div>
+  <h2>Shop Settings</h2>
 
-<div>
-	<label for="show_vat_inclusive_prices_true">Show VAT-inclusive prices?:</label>
-	<%= form.radio_button :show_vat_inclusive_prices, true, :class => "radio" %>
-	<label for="show_vat_inclusive_prices_true">Yes</label>
-	<%= form.radio_button :show_vat_inclusive_prices, false, :class => "radio" %>
-	<label for="show_vat_inclusive_prices">No</label>
-</div>
+	<label for="website_shop_true">Shop?</label>
+	<label class="radio">
+    <%= form.radio_button :shop, true, :class => "radio" %>
+    Yes
+  </label>
+	<label class="radio">
+    <%= form.radio_button :shop, false, :class => "radio" %>
+    No
+  </label>
 
-</fieldset>
+	<label for="website_skip_payment_true">Skip payment?</label>
+	<label class="radio">
+    <%= form.radio_button :skip_payment, true, :class => "radio" %>
+	   Yes
+  </label>
+  <label class="radio">
+    <%= form.radio_button :skip_payment, false, :class => "radio" %>
+	  No
+  </label>
 
-<fieldset>
-<legend>Shop Settings</legend>
+	<%= form.label :shipping_amount, 'Shipping amount' %>
+	&pound;<%= form.text_field :shipping_amount %>
 
-<div>
-	<label for="website_shop_true">Shop?:</label>
-	<%= form.radio_button :shop, true, :class => "radio" %> 
-	<label for="website_shop_true">Yes</label> 
-	<%= form.radio_button :shop, false, :class => "radio" %> 
-	<label for="website_shop">No</label> 
-</div>
-
-<div>
-	<label for="website_skip_payment_true">Skip payment?:</label>
-	<%= form.radio_button :skip_payment, true, :class => "radio" %> 
-	<label for="website_skip_payment_true">Yes</label> 
-	<%= form.radio_button :skip_payment, false, :class => "radio" %> 
-	<label for="website_skip_payment">No</label> 
-</div>
-
-<div>
-	<%= form.label :shipping_amount, 'Shipping amount' %>:<br />
-	&pound;<%= form.text_field :shipping_amount, :class => "text" %>
-</div>
-
-<div>
-  <%= form.label :invoice_details %>:<br />
-  <%= form.text_area :invoice_details %>
-</div>
+  <%= form.label :invoice_details %>
+  <%= form.text_area :invoice_details, rows: 6 %>
 
 </fieldset>
 
-<fieldset>
-  <legend>Cardsave</legend>
 
-  <div>
-  	<label for="website_cardsave_active_true">Active?:</label>
-  	<%= form.radio_button :cardsave_active, true, :class => "radio" %>
-  	<label for="website_cardsave_active_true">Yes</label>
-  	<%= form.radio_button :cardsave_active, false, :class => "radio" %>
-  	<label for="website_cardsave_active_false">No</label>
+  <div class="row">
+    <div class="span6">
+      <h2>Cardsave</h2>
+
+    	<label for="website_cardsave_active_true">Active?</label>
+    	<label class="radio">
+        <%= form.radio_button :cardsave_active, true, :class => "radio" %>
+    	  Yes
+      </label>
+      <label class="radio">
+    	  <%= form.radio_button :cardsave_active, false, :class => "radio" %>
+        No
+      </label>
+
+    	<%= form.label :cardsave_merchant_id, 'Merchant ID' %>
+    	<%= form.text_field :cardsave_merchant_id %>
+
+    	<%= form.label :cardsave_password, 'Password' %>
+    	<%= form.text_field :cardsave_password %>
+
+  	  <%= form.label :cardsave_pre_shared_key, 'Pre-shared key' %>
+  	  <%= form.text_field :cardsave_pre_shared_key %>
+
+      <h2>WorldPay</h2>
+
+      <label for="website_rbswp_active_true">Active?</label>
+      <label class="radio">
+        <%= form.radio_button :rbswp_active, true, :class => "radio" %>
+        Yes
+      </label>
+      <label class="radio">
+  	    <%= form.radio_button :rbswp_active, false, :class => "radio" %>
+  	    No
+      </label>
+
+      <label for="website_rbswp_test_mode">Mode?</label>
+  	  <label class="radio">
+        <%= form.radio_button :rbswp_test_mode, false, class: "radio" %>
+  	    Production
+      </label>
+  	  <label class="radio">
+        <%= form.radio_button :rbswp_test_mode, true, class: "radio" %>
+        Test
+      </label>
+
+  	<%= form.label :rbswp_installation_id, 'Installation ID' %>
+  	<%= form.text_field :rbswp_installation_id %>
+
+  	<%= form.label :rbswp_payment_response_password, 'Payment response password' %>
+  	<%= form.text_field :rbswp_payment_response_password %>
+
+    </div>
+    <div class="span6">
+      <h2>PayPal</h2>
+
+      <div class="alert alert-block">
+        <p>
+          The PayPal integration is for Website Payments Standard. <em>Auto
+          Return</em> must be enabled on the PayPal account and so must <em>Payment
+          Data Transfer</em> (My Account | Profile | My Selling
+          Preferences | Website Preferences | Auto Return: On, Payment Data
+          Transfer: On).
+        </p>
+        <p>
+          You will also need to specify an Auto Return URL but the shop will
+          override this with its own. The dummy URL should exist and contain the
+          text "Thank you for your payment. Your transaction has been completed and
+          a receipt for your purchase has been emailed to you. You may log into
+          your account at www.paypal.com/uk to view details of this transaction."
+        </p>
+      </div>
+
+      <label for="website_paypal_active_true">Active?</label>
+      <label class="radio">
+        <%= form.radio_button :paypal_active, true, :class => "radio" %>
+        Yes
+      </label>
+      <label class="radio">
+        <%= form.radio_button :paypal_active, false, :class => "radio" %>
+        No
+      </label>
+
+      <%= form.label :paypal_email_address, 'PayPal email address' %>
+      <%= form.email_field :paypal_email_address %>
+
+      <%= form.label :paypal_identity_token, 'PayPal identity token' %>
+  	  <%= form.text_field :paypal_identity_token %>
+    </div>
   </div>
+  <%= form.label :terms_and_conditions %>
+  <%= form.text_area :terms_and_conditions, rows: 12, class: 'input-xlarge' %>
 
-  <div>
-  	<%= form.label :cardsave_merchant_id, 'Merchant ID' %>:<br>
-  	<%= form.text_field :cardsave_merchant_id, :class => "text" %>
-  </div>
+  <%= form.label :footer_html, 'Footer HTML' %>
+  <%= form.text_area :footer_html, rows: 4 %>
 
-  <div>
-  	<%= form.label :cardsave_password, 'Password' %>:<br>
-  	<%= form.text_field :cardsave_password, :class => "text" %>
-  </div>
-
-  <div>
-  	<%= form.label :cardsave_pre_shared_key, 'Pre-shared key' %>:<br>
-  	<%= form.text_field :cardsave_pre_shared_key, :class => "text" %>
-  </div>
-</fieldset>
-
-<fieldset>
-<legend>WorldPay</legend>
-
-<div>
-	<label for="website_rbswp_active_true">Active?:</label>
-	<%= form.radio_button :rbswp_active, true, :class => "radio" %> 
-	<label for="website_rbswp_active_true">Yes</label> 
-	<%= form.radio_button :rbswp_active, false, :class => "radio" %> 
-	<label for="website_rbswp_active">No</label> 
-</div>
-
-<div>
-	<label for="website_rbswp_test_mode">Mode?:</label>
-	<%= form.radio_button :rbswp_test_mode, false, :class => "radio" %> 
-	<label for="website_rbswp_test_mode">Production</label> 
-	<%= form.radio_button :rbswp_test_mode, true, :class => "radio" %> 
-	<label for="website_rbswp_test_mode_true">Test</label> 
-</div>
-
-<div>
-	<%= form.label :rbswp_installation_id, 'Installation ID' %>:<br />
-	<%= form.text_field :rbswp_installation_id, :class => "text" %>
-</div>
-
-<div>
-	<%= form.label :rbswp_payment_response_password, 'Payment response password' %>:<br />
-	<%= form.text_field :rbswp_payment_response_password, :class => "text" %>
-</div>
-
-</fieldset>
-
-<fieldset>
-  <legend>PayPal</legend>
-
-  <p>
-    The PayPal integration is for Website Payments Standard. <em>Auto
-    Return</em> must be enabled on the PayPal account and so must <em>Payment
-    Data Transfer</em> (My Account | Profile | My Selling
-    Preferences | Website Preferences | Auto Return: On, Payment Data
-    Transfer: On).
-  </p>
-  <p>
-    You will also need to specify an Auto Return URL but the shop will
-    override this with its own. The dummy URL should exist and contain the
-    text "Thank you for your payment. Your transaction has been completed and
-    a receipt for your purchase has been emailed to you. You may log into
-    your account at www.paypal.com/uk to view details of this transaction."
-  </p>
-
-  <div>
-    <label for="website_paypal_active_true">Active?:</label>
-    <%= form.radio_button :paypal_active, true, :class => "radio" %>
-    <label for="website_paypal_active_true">Yes</label>
-    <%= form.radio_button :paypal_active, false, :class => "radio" %>
-    <label for="website_paypal_active">No</label>
-  </div>
-
-  <div>
-  	<%= form.label :paypal_email_address, 'PayPal email address' %>:<br>
-  	<%= form.text_field :paypal_email_address, :class => "text" %>
-  </div>
-
-  <div>
-  	<%= form.label :paypal_identity_token, 'PayPal identity token' %>:<br>
-  	<%= form.text_field :paypal_identity_token, :class => "text" %>
-  </div>
-</fieldset>
-
-<div>
-  <%= form.label :terms_and_conditions %>:<br />
-  <%= form.text_area :terms_and_conditions %>
-</div>
-
-<div>
-  <%= form.label :footer_html, 'Footer HTML' %>:<br />
-  <%= form.text_area :footer_html %>
-</div>
-
-<%= submit_tag submit_label %>
+  <br><%= submit_tag submit_label, class: 'btn btn-primary' %>
 
 <% end %>
-
-</div>

@@ -1,7 +1,11 @@
-<h1>Websites</h1>
-<%= flash_notice %>
+<div class="page-header">
+  <h1>Websites</h1>
+</div>
 
-<p><%= link_to 'Add a new website', new_website_path %></p>
+<p>
+  <%= link_to 'Add a New Website', new_website_path, class: 'btn btn-primary' %>
+</p>
+
 <ul>
   <% @websites.each do |w| -%>
   <li><%= link_to h(w.name), edit_website_path(w) %></li>
