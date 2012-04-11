@@ -1,6 +1,8 @@
 class Feature < ActiveRecord::Base
   # validations
   validates_presence_of :name
+  validates_uniqueness_of :name, scope: :product_id
+
   # associations
   has_many :choices, :dependent => :delete_all
   belongs_to :product
