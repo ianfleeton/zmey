@@ -1,33 +1,46 @@
-<h1><%= link_to(@feature.product.name, @feature.product) %> &rarr; Edit Feature</h1>
-<%= flash_notice %>
-<div class="form">
-	<%= error_messages_for :feature -%>
-
-	<fieldset>
-		<legend>Edit feature</legend>
-    <%= form_for @feature do |form| %>
-    <%= render :partial => 'form', :object => form %>
-
-    <%= submit_tag "Update Feature" %>
-
-  <% end %>
-  </fieldset>
+<div class="page-header">
+  <h1>Edit Feature</h1>
 </div>
-<h2>Choices</h2>
+
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Products', products_path %>
+    <span class="divider">/</span>
+  </li>
+  <li>
+    <%= link_to @feature.product.name, edit_product_path(@feature.product) %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    Edit Feature
+  </li>
+</ul>
+
+<div class="row">
+
+  <div class="span6">
+    <%= render 'form' %>
+  </div>
+
+  <div class="span6">
+    <h2>Choices</h2>
+    <p><%= link_to 'Add choice', new_choice_path(feature_id: @feature.id), class: 'btn' %></p>
 <% if @feature.choices.empty? -%>
-<p>This feature has no choices.</p>
+    <p>This feature has no choices.</p>
 <% else -%>
-<table>
+    <table class="table">
 <% @feature.choices.each do |choice| -%>
-  <tr>
-    <td>
-      <%= link_to h(choice.name), edit_choice_path(choice) %>
-    </td>
-    <td>
-      <%= button_to "Delete", choice_path(choice), :method => :delete %>
-    </td>
-  </tr>
+      <tr>
+        <td>
+          <%= link_to choice.name, edit_choice_path(choice) %>
+        </td>
+        <td>
+          <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe,
+          choice_path(choice), confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini' %>
+        </td>
+      </tr>
 <% end -%>
-</table>
+    </table>
 <% end -%>
-<p><%= link_to 'Add choice', new_choice_path(:feature_id => @feature.id) %></p>
+  </div>
+</div>

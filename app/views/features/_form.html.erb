@@ -1,11 +1,26 @@
-<%= form.hidden_field :product_id %>
-<div>
-	<%= form.label :name %>:<br />
-	<%= form.text_field :name, :class => "text" %>
-</div>
+<% if @feature.errors.any? -%>
+<div class="alert alert-error fade in">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <h2><%= pluralize(@feature.errors.count, "error") %> prohibited this feature from being saved:</h2>
 
-<div>
-  <%= form.label :ui_type, 'Display as a' %>:<br />
+  <ul>
+<% @feature.errors.full_messages.each do |msg| -%>
+    <li><%= msg %></li>
+<% end -%>
+  </ul>
+</div>
+<% end -%>
+
+<%= form_for @feature do |form| %>
+
+  <%= form.hidden_field :product_id %>
+
+
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+
+
+  <%= form.label :ui_type, 'Display as a' %>
   <select id="feature_ui_type" name="feature[ui_type]">
     <option value="<%= Feature::TEXT_FIELD %>"<%= ' selected="selected"' if @feature.ui_type==Feature::TEXT_FIELD %>>Text field</option>
     <option value="<%= Feature::TEXT_AREA %>"<%= ' selected="selected"' if @feature.ui_type==Feature::TEXT_AREA %>>Text area</option>
@@ -13,12 +28,16 @@
     <option value="<%= Feature::RADIO_BUTTONS %>"<%= ' selected="selected"' if @feature.ui_type==Feature::RADIO_BUTTONS %>>Radio button set</option>
     <option value="<%= Feature::DROP_DOWN %>"<%= ' selected="selected"' if @feature.ui_type==Feature::DROP_DOWN %>>Drop down menu</option>
   </select>
-</div>
 
-<div>
-	Required?: 
-	<%= form.radio_button :required, true, :class => "radio" %> 
-	<label for="feature_required_true">Yes</label> 
-	<%= form.radio_button :required, false, :class => "radio" %> 
-	<label for="feature_required">No</label> 
-</div>
+	<%= form.label :required_true, 'Required?' %>
+  <label class="radio">
+    <%= form.radio_button :required, true, :class => "radio" %>
+    Yes
+  </label>
+	<label class="radio">
+    No
+    <%= form.radio_button :required, false, :class => "radio" %>
+  </label>
+
+  <br><%= form.submit class: 'btn btn-primary' %>
+<% end %>
