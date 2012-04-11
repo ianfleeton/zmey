@@ -10,14 +10,14 @@ class OrdersController < ApplicationController
 
   def index
     if admin_or_manager?
-      @can_delete = true
       if params[:user_id]
-        @orders = User.find(params[:user_id]).orders.where(:website_id => @w.id)
+        @orders = User.find(params[:user_id]).orders.where(website_id: @w.id)
       else
         @orders = @w.orders
       end
+      render layout: 'admin'
     else
-      @can_delete = false
+      render 'my'
       @orders = @current_user.orders
     end
   end

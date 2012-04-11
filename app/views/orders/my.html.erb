@@ -1,20 +1,16 @@
-<div class="page-header">
-  <h1>Orders</h1>
-</div>
-
+<h1>Orders</h1>
+<%= flash_notice %>
 <% if @orders.empty? -%>
-<p>There are no orders.</p>
+<p>There are no orders for you.</p>
 <% else -%>
-<table id="orders" class="table table-bordered table-striped">
+<table id="orders">
   <thead>
     <tr>
       <th>Order Number</th>
       <th>Invoice (PDF)</th>
       <th>Order Total</th>
       <th>When Placed</th>
-      <th>Full Name</th>
       <th>Status</th>
-      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -24,12 +20,7 @@
       <td><%= link_to 'Invoice (PDF)', invoice_order_path(o) %></td>
       <td><%= formatted_price(o.total) %></td>
       <td><%= o.created_at %></td>
-      <td><%= o.full_name %></td>
       <td><%= o.status_description %></td>
-      <td style="width: 70px;">
-        <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe, o,
-        confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini' %>
-      </td>
     </tr>
   <% end -%>
   </tbody>
