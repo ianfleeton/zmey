@@ -1,15 +1,19 @@
-<h1>New Additional Product</h1>
-<%= flash_notice %>
-<div class="form">
-	<%= error_messages_for :additional_product -%>
-
-	<fieldset>
-		<legend>Add a new additional product</legend>
-    <%= form_for @additional_product do |form| %>
-    <%= render :partial => 'form', :object => form %>
-
-    <%= submit_tag "Add New Additional Product" %>
-
-  <% end %>
-  </fieldset>
+<div class="page-header">
+  <h1>New Additional Product</h1>
 </div>
+
+<ul class="breadcrumb">
+  <li>
+    <%= link_to 'Products', products_path %>
+    <span class="divider">/</span>
+  </li>
+  <li>
+    <%= link_to @additional_product.product.name, edit_product_path(@additional_product.product) %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">
+    New Additional Product
+  </li>
+</ul>
+
+<%= render 'form' %>

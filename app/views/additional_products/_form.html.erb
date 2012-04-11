@@ -1,13 +1,34 @@
-<%= form.hidden_field :product_id %>
-<div>
-  <%= form.label :additional_product_id %>:<br>
-  <%= form.collection_select :additional_product_id, @w.products, :id, :name_with_sku %>
-</div>
+<% if @additional_product.errors.any? -%>
+<div class="alert alert-error fade in">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
+  <h2><%= pluralize(@additional_product.errors.count, "error") %> prohibited this additional product from being saved:</h2>
 
-<div>
-  <%= form.label :selected_by_default %>
-  <%= form.radio_button :selected_by_default, true, :class => "radio" %> 
-  <label for="selected_by_default_true">Yes</label> 
-  <%= form.radio_button :selected_by_default, false, :class => "radio" %> 
-  <label for="selected_by_default_false">No</label> 
+  <ul>
+<% @additional_product.errors.full_messages.each do |msg| -%>
+    <li><%= msg %></li>
+<% end -%>
+  </ul>
 </div>
+<% end -%>
+
+<%= form_for @additional_product do |form| %>
+
+<%= form.hidden_field :product_id %>
+
+  <%= form.label :additional_product_id %>
+  <%= form.collection_select :additional_product_id, @w.products, :id, :name_with_sku %>
+
+  <%= form.label :selected_by_default_true, 'Selected by default?' %>
+
+  <label class="radio">
+    Yes
+    <%= form.radio_button :selected_by_default, true, class: "radio" %>
+  </label>
+
+  <label class="radio">
+    No
+    <%= form.radio_button :selected_by_default, false, class: 'radio' %>
+  </label>
+
+  <br><%= form.submit class: 'btn btn-primary' %>
+<% end %>
