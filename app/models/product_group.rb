@@ -4,6 +4,6 @@ class ProductGroup < ActiveRecord::Base
 
   attr_protected :website_id
 
-  has_many :product_group_placements
+  has_many :product_group_placements, dependent: :delete_all
   has_many :products, :through => :product_group_placements
 end

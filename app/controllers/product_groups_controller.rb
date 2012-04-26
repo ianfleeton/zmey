@@ -1,7 +1,7 @@
 class ProductGroupsController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_product_group, :only => [:show, :edit, :update]
+  before_filter :find_product_group, only: [:show, :edit, :update, :destroy]
 
   def index
     @title = 'Product Groups'
@@ -38,6 +38,11 @@ class ProductGroupsController < ApplicationController
     else
       render :action => "edit"
     end
+  end
+
+  def destroy
+    @product_group.destroy
+    redirect_to product_groups_path, notice: 'Product group deleted.'
   end
 
   protected
