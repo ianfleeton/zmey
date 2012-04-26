@@ -36,8 +36,7 @@
       <td><%= row.trigger_value %></td>
       <td><%= row.amount %></td>
       <td>
-        <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe, row,
-        confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini' %>
+        <%= delete_button(row) %>
       </td>
     </tr>
 <% end -%>

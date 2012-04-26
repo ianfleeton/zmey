@@ -13,10 +13,8 @@
 <% @discounts.each do |discount| -%>
   <tr><td><%= link_to discount.name, edit_discount_path(discount) %></td>
     <td>
-      <%= link_to '<i class="icon-edit"></i> Edit'.html_safe,
-      edit_discount_path(discount), class: 'btn btn-mini' %>
-      <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe,
-      discount, confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini' %>
+      <%= edit_button(discount) %>
+      <%= delete_button(discount) %>
     </td>
   </tr>
 <% end -%>

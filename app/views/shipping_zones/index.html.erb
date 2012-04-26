@@ -19,10 +19,8 @@
     <tr>
       <td><%= zone.name %></td>
       <td>
-        <%= link_to '<i class="icon-edit"></i> Edit'.html_safe,
-        edit_shipping_zone_path(zone), class: 'btn btn-mini' %>
-        <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe, zone,
-        confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini' %>
+        <%= edit_button(zone) %>
+        <%= delete_button(zone) %>
       </td>
     </tr>
 <% end -%>

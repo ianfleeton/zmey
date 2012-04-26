@@ -27,8 +27,8 @@
     <td><%= enquiry.call_back %></td>
     <td style="width: 150px;">
       <%= link_to 'View', enquiry, class: 'btn btn-mini' %>
-      <%= link_to 'Edit', edit_enquiry_path(enquiry), class: 'btn btn-mini' %>
-      <%= link_to 'Destroy', enquiry, :confirm => 'Are you sure?', :method => :delete, class: 'btn btn-mini btn-danger' %>
+      <%= edit_button(enquiry) %>
+      <%= delete_button(enquiry) %>
     </td>
   </tr>
 <% end %>
