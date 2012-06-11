@@ -12,7 +12,7 @@
   <tbody>
   <% @users.each do |u| -%>
     <tr>
-      <td><%= link_to h(u.name), :controller => 'users', :action => 'show', :id => u %></td>
+      <td><%= link_to u.name, u %></td>
       <td><%= mail_to u.email, u.email %>&nbsp;</td>
       <td><%= tick u.admin %></td>
     </tr>
