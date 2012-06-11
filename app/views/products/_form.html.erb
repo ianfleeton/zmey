@@ -32,6 +32,9 @@
     <option value="<%= Product::EX_VAT %>"<%= ' selected="selected"' if @product.tax_type==Product::EX_VAT %>>Price excludes VAT</option>
   </select>
 
+	<%= form.label :weight %>
+	<%= form.text_field :weight, class: 'span1' %> kg
+
 	<%= form.label :image_id %>
   <%= select :product, :image_id, image_options %>
 
