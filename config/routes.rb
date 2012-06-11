@@ -7,6 +7,8 @@ YeslWebsite::Application.routes.draw do
 
   resources :choices
 
+  resources :components
+
   resources :countries
 
   resources :discounts
@@ -50,6 +52,8 @@ YeslWebsite::Application.routes.draw do
       post 'rbs_worldpay_callback'
     end
   end
+
+  resources :permutations
 
   resources :product_groups
 

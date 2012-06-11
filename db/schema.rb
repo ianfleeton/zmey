@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214170933) do
+ActiveRecord::Schema.define(:version => 20120426102827) do
 
   create_table "additional_products", :force => true do |t|
     t.integer  "product_id",                               :null => false
@@ -59,6 +60,15 @@ ActiveRecord::Schema.define(:version => 20111214170933) do
   end
 
   add_index "choices", ["feature_id"], :name => "index_choices_on_feature_id"
+
+  create_table "components", :force => true do |t|
+    t.string   "name",       :null => false
+    t.integer  "product_id", :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "components", ["product_id"], :name => "index_components_on_product_id"
 
   create_table "countries", :force => true do |t|
     t.string   "name",               :default => "", :null => false
@@ -114,13 +124,15 @@ ActiveRecord::Schema.define(:version => 20111214170933) do
 
   create_table "features", :force => true do |t|
     t.integer  "product_id"
-    t.string   "name",       :default => "",   :null => false
+    t.string   "name",         :default => "",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "ui_type",    :default => 0,    :null => false
-    t.boolean  "required",   :default => true, :null => false
+    t.integer  "ui_type",      :default => 0,    :null => false
+    t.boolean  "required",     :default => true, :null => false
+    t.integer  "component_id"
   end
 
+  add_index "features", ["component_id"], :name => "index_features_on_component_id"
   add_index "features", ["product_id"], :name => "index_features_on_product_id"
 
   create_table "forums", :force => true do |t|
@@ -243,6 +255,19 @@ ActiveRecord::Schema.define(:version => 20111214170933) do
     t.datetime "updated_at"
   end
 
+  create_table "permutations", :force => true do |t|
+    t.integer  "component_id",                                                    :null => false
+    t.string   "permutation",                                                     :null => false
+    t.boolean  "valid_selection",                                                 :null => false
+    t.decimal  "price",           :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.decimal  "weight",          :precision => 10, :scale => 3, :default => 0.0, :null => false
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+  end
+
+  add_index "permutations", ["component_id"], :name => "index_permutations_on_component_id"
+  add_index "permutations", ["permutation"], :name => "index_permutations_on_permutation"
+
   create_table "posts", :force => true do |t|
     t.integer  "topic_id",   :default => 0,  :null => false
     t.text     "content",                    :null => false
@@ -312,6 +337,7 @@ ActiveRecord::Schema.define(:version => 20111214170933) do
     t.decimal  "shipping_supplement", :precision => 10, :scale => 3, :default => 0.0,  :null => false
     t.string   "page_title",                                         :default => "",   :null => false
     t.string   "meta_description",                                   :default => "",   :null => false
+    t.decimal  "weight",              :precision => 10, :scale => 3, :default => 0.0,  :null => false
   end
 
   create_table "quantity_prices", :force => true do |t|

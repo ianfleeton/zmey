@@ -4,9 +4,10 @@ class Feature < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :product_id
 
   # associations
-  has_many :choices, :dependent => :delete_all
+  has_many :choices, dependent: :destroy
   belongs_to :product
-  
+  belongs_to :component
+
   # UI types
   TEXT_FIELD = 1
   TEXT_AREA = 2

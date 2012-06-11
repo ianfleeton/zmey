@@ -6,6 +6,7 @@ class FeaturesController < ApplicationController
   def new
     @feature = Feature.new
     @feature.product_id = params[:product_id]
+    @feature.component_id = params[:component_id]
     redirect_to products_path and return unless product_valid?
     @feature.required = true
   end
@@ -16,7 +17,11 @@ class FeaturesController < ApplicationController
 
     if @feature.save
       flash[:notice] = "Successfully added new feature."
-      redirect_to edit_product_path(@feature.product)
+      if @feature.component
+        redirect_to edit_component_path(@feature.component)
+      else
+        redirect_to edit_product_path(@feature.product)
+      end
     else
       render :action => "new"
     end
@@ -25,7 +30,11 @@ class FeaturesController < ApplicationController
   def update
     if @feature.update_attributes(params[:feature])
       flash[:notice] = "Feature successfully updated."
-      redirect_to edit_product_path(@feature.product)
+      if @feature.component
+        redirect_to edit_component_path(@feature.component)
+      else
+        redirect_to edit_product_path(@feature.product)
+      end
     else
       render :action => "edit"
     end

@@ -11,6 +11,12 @@
     <%= link_to @feature.product.name, edit_product_path(@feature.product) %>
     <span class="divider">/</span>
   </li>
+<% if @feature.component %>
+  <li>
+    <%= link_to @feature.component.name, edit_component_path(@feature.component) %>
+    <span class="divider">/</span>
+  </li>
+<% end %>
   <li class="active">
     Edit Feature
   </li>

@@ -14,11 +14,10 @@
 <%= form_for @feature do |form| %>
 
   <%= form.hidden_field :product_id %>
-
+  <%= form.hidden_field :component_id %>
 
   <%= form.label :name %>
   <%= form.text_field :name %>
-
 
   <%= form.label :ui_type, 'Display as a' %>
   <select id="feature_ui_type" name="feature[ui_type]">

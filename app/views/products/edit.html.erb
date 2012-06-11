@@ -41,6 +41,29 @@
     </table>
 <% end -%>
 
+    <h2>Components</h2>
+
+    <p><%= link_to 'Add Component', new_component_path(product_id: @product.id), class: 'btn' %></p>
+<% unless @product.components.empty? -%>
+    <table class="table table-striped table-bordered">
+      <tr>
+        <th>Component</th>
+        <th>Actions</th>
+      </tr>
+<% @product.components.each do |component| -%>
+      <tr>
+        <td>
+          <%= component.name %>
+        </td>
+        <td style="width: 130px;">
+          <%= edit_button(component) %>
+          <%= delete_button(component) %>
+        </td>
+      </tr>
+<% end -%>
+    </table>
+<% end -%>
+
     <h2>Additional Products</h2>
 
     <p><%= link_to 'Add Additional Product', new_additional_product_path(:product_id => @product.id), class: 'btn' %></p>
