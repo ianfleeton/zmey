@@ -64,6 +64,16 @@
 
   <h2>Google Product Data</h2>
 
+  <label for="product_submit_to_google_true">Submit to Google?</label>
+  <label class="radio">
+    <%= form.radio_button :submit_to_google, true, class: "radio" %>
+    Yes
+  </label>
+  <label class="radio">
+    <%= form.radio_button :submit_to_google, false, class: "radio" %>
+    No
+  </label>
+
   <%= form.label :google_title %>
   <%= form.text_field :google_title %>
 

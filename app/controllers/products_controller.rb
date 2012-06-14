@@ -47,7 +47,7 @@ class ProductsController < ApplicationController
   end
 
   def google_data_feed
-    @products = @w.products_in_stock
+    @products = @w.google_products
   end
 
   def upload_google_data_feed
