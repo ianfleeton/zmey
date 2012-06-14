@@ -27,10 +27,10 @@ xmlns:c="http://base.google.com/cns/1.0">
     <g:brand><%= p.brand %></g:brand>
 <% end -%>
 <% unless p.gtin.blank? -%>
-    <g:gtin></g:gtin>
+    <g:gtin><%= p.gtin %></g:gtin>
 <% end -%>
 <% unless p.mpn.blank? -%>
-    <g:mpn></g:mpn>
+    <g:mpn><%= p.mpn %></g:mpn>
 <% end -%>
     <g:availability><%= p.availability %></g:availability>
   </item>
