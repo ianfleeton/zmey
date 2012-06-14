@@ -1,10 +1,16 @@
 class Product < ActiveRecord::Base
-  attr_accessible :apply_shipping, :description, :full_detail, :image_id,
-    :meta_description, :name, :page_title, :price, :shipping_supplement,
+  attr_accessible :apply_shipping, :availability, :brand, :condition, :description,
+    :full_detail, :gtin, :google_product_category, :google_title, :image_id,
+    :meta_description, :mpn, :name, :page_title, :price, :product_type, :shipping_supplement,
     :sku, :tax_type, :weight
 
   validates_presence_of :name, :sku
   validates_uniqueness_of :sku, :scope => :website_id
+
+  CONDITIONS = %w[new used refurbished]
+  validates_inclusion_of :condition, in: CONDITIONS
+  AVAILABILITIES = ['in stock', 'available for order', 'out of stock', 'preorder']
+  validates_inclusion_of :availability, in: AVAILABILITIES
 
   has_many :product_placements, :dependent => :delete_all
   has_many :additional_products, :dependent => :delete_all

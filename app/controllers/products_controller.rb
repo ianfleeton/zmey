@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  layout 'admin', :only => [:edit, :new, :index]
+  layout 'admin', :only => [:edit, :new, :index, :upload_google_data_feed]
   before_filter :find_product, :only => [:show, :edit, :update, :destroy]
   before_filter :admin_or_manager_required, :except => [:show, :google_data_feed]
 
@@ -52,18 +52,23 @@ class ProductsController < ApplicationController
 
   def upload_google_data_feed
     google_data_feed
-    @xml = render_to_string(:action => 'products/google_data_feed.xml.erb', :layout => false)
+    @xml = render_to_string(:action => 'google_data_feed.xml.erb', :layout => false)
     open('google_data_feed.xml', 'wb') { |file| file.write(@xml) }
 
-    require 'net/ftp'
-    Net::FTP::open('uploads.google.com') do |ftp|
-      ftp.login @w.google_ftp_username, @w.google_ftp_password
-      ftp.passive = true
-      ftp.put 'google_data_feed.xml'
+    begin
+      require 'net/ftp'
+      Net::FTP::open('uploads.google.com') do |ftp|
+        ftp.login @w.google_ftp_username, @w.google_ftp_password
+        ftp.passive = true
+        ftp.put 'google_data_feed.xml'
+      end
+      flash[:notice] = 'Uploaded'
+    rescue
+      flash[:notice] = 'Could not upload'
     end
     system('rm google_data_feed.xml')
 
-    flash[:notice] = 'Uploaded'
+    render :formats => [:html]
   end
 
   protected

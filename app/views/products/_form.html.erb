@@ -62,6 +62,32 @@
 	<%= form.label :meta_description %>
 	<%= form.text_field :meta_description, class: 'input-xlarge' %>
 
+  <h2>Google Product Data</h2>
+
+  <%= form.label :google_title %>
+  <%= form.text_field :google_title %>
+
+  <%= form.label :availability %>
+  <%= select("product", "availability", Product::AVAILABILITIES) %>
+
+  <%= form.label :condition %>
+  <%= select("product", "condition", Product::CONDITIONS) %>
+
+  <%= form.label :google_product_category %>
+  <%= form.text_field :google_product_category %>
+
+  <%= form.label :product_type %>
+  <%= form.text_field :product_type %>
+
+  <%= form.label :brand %>
+  <%= form.text_field :brand %>
+
+  <%= form.label :gtin, '<abbr title="Global Trade Item Number">GTIN</abbr>'.html_safe %>
+  <%= form.text_field :gtin %>
+
+  <%= form.label :mpn, '<abbr title="Manufacturer Part Number">MPN</abbr>'.html_safe %>
+  <%= form.text_field :mpn %>
+
   <br><%= form.submit class: 'btn btn-primary' %>
 
 <% end -%>
