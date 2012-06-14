@@ -1,4 +1,8 @@
 class Product < ActiveRecord::Base
+  attr_accessible :apply_shipping, :description, :full_detail, :image_id,
+    :meta_description, :name, :page_title, :price, :shipping_supplement,
+    :sku, :tax_type, :weight
+
   validates_presence_of :name, :sku
   validates_uniqueness_of :sku, :scope => :website_id
 

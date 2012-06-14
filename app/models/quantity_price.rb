@@ -1,4 +1,6 @@
 class QuantityPrice < ActiveRecord::Base
+  attr_accessible :price, :product_id, :quantity
+
   belongs_to :product
   validates_presence_of :product_id
   validates_inclusion_of :quantity, :in => 2..10_000, :message => 'should be between 2 and 10,000'
