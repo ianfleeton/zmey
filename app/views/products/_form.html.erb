@@ -14,16 +14,16 @@
 <%= form_for @product do |form| -%>
 
 <%= form.label :sku, '<abbr title="Stock-keeping unit / reference number">SKU</abbr>'.html_safe %>
-	<%= form.text_field :sku %>
+	<%= form.text_field :sku, class: 'span2' %>
 
 	<%= form.label :name %>
 	<%= form.text_field :name %>
 
 	<%= form.label :price %>
-	<%= form.text_field :price %> GBP
+	<%= form.text_field :price, class: 'span1' %> GBP
 
 	<%= form.label :shipping_supplement %>
-	<%= form.text_field :shipping_supplement %> GBP
+	<%= form.text_field :shipping_supplement, class: 'span1' %> GBP
 
   <%= form.label :tax_type %>
   <select id="product_tax_type" name="product[tax_type]">
