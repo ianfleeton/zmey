@@ -17,6 +17,4 @@
 /log/*.log
 *.ttf
 database.yml
-rerun.txt
 /tmp
-.sass-cache/
