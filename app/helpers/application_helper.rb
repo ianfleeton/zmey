@@ -72,7 +72,7 @@ module ApplicationHelper
 
   def sub_nav page
     sn = ''.html_safe
-    if(page.is_a?(Page) && page.children)
+    if(page.is_a?(Page) && page.children.count > 0)
       page.children.each {|c| sn += content_tag(:li, link_to(c.name, c.path))}
       sn = content_tag(:ul, sn)
     end
