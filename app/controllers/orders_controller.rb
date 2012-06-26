@@ -17,8 +17,8 @@ class OrdersController < ApplicationController
       end
       render layout: 'admin'
     else
-      render 'my'
       @orders = @current_user.orders
+      render 'my'
     end
   end
   
