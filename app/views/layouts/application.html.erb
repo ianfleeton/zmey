@@ -1,5 +1,6 @@
 <%=
 template('header',
+  :body_class => body_class,
   :csrf_meta_tags => csrf_meta_tags,
   :css_admin => stylesheet_link_tag("admin", :media => "screen"),
   :css_external => @w.css_url.blank? ? '' : stylesheet_link_tag(@w.css_url, :media => "screen"),
