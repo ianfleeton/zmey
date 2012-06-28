@@ -2,6 +2,7 @@ class Choice < ActiveRecord::Base
   attr_accessible :feature_id, :name
 
   belongs_to :feature
+  validates_presence_of :name
   validates_uniqueness_of :name, scope: :feature_id
 
   after_save :create_permutations
