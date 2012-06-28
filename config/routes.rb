@@ -92,6 +92,8 @@ YeslWebsite::Application.routes.draw do
   match 'topics/new/:forum_id' => 'topics#new', :as => 'new_topic'
   match 'topics/show/:id' => 'topics#show', :as => 'topic'
 
+  resources :topics
+
   resources :users do
     collection do
       get 'forgot_password'

@@ -43,24 +43,24 @@ class TopicsController < ApplicationController
   def create
     @topic = Topic.new
     @topic.topic = params[:topic]
+    @topic.forum_id = params[:forum_id]
+    @post = Post.new(params[:post])
+
+    # check forum
+    @forum = Forum.find(params[:forum_id])
+    if @forum.website_id != @w.id
+      flash[:notice] = 'Invalid forum.'
+      redirect_to forums_path and return
+    end
 
     unless good_token?
       render :action => 'new'
       return
     end
-    
-    # check forum
-    @forum = Forum.find(params[:forum_id])
-    if @forum.website_id != @w.id
-      flash[:notice] = 'Invalid forum.'
-      render :action => 'new' and return
-    end
-    
-    @topic.forum_id = @forum.id
+        
     @topic.last_post_at = Time.now
     @topic.save
     
-    @post = Post.new(params[:post])
     @post.topic_id = @topic.id
 
     if @post.save
