@@ -61,10 +61,7 @@ class BasketController < ApplicationController
   end
 
   def place_order
-    # Delete previous unpaid order, if any
-    if session[:order_id] && @order = Order.find_by_id(session[:order_id])
-      @order.destroy if @order.status == Order::WAITING_FOR_PAYMENT
-    end
+    delete_previous_unpaid_order_if_any
 
     @order = Order.new
     @order.website_id = @w.id
@@ -151,6 +148,12 @@ class BasketController < ApplicationController
   end
 
   protected
+
+  def delete_previous_unpaid_order_if_any
+    if session[:order_id] && @order = Order.find_by_id(session[:order_id])
+      @order.destroy if @order.status == Order::WAITING_FOR_PAYMENT
+    end
+  end
 
   def session_contains_coupon?(coupon)
     return false if session[:coupons].nil?
