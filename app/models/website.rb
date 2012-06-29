@@ -178,7 +178,7 @@ class Website < ActiveRecord::Base
       { :name => 'Iraq',                  :iso_3166_1_alpha_2 => 'IQ' },
       { :name => 'Ireland',               :iso_3166_1_alpha_2 => 'IE' },
       { :name => 'Isle of Man',           :iso_3166_1_alpha_2 => 'IM' },
-      { :name => 'Israel',                :iso_3166_1_alpha_2 => 'IS' },
+      { :name => 'Israel',                :iso_3166_1_alpha_2 => 'IL' },
       { :name => 'Italy',                 :iso_3166_1_alpha_2 => 'IT' },
       { :name => 'Jamaica',               :iso_3166_1_alpha_2 => 'JM' },
       { :name => 'Japan',                 :iso_3166_1_alpha_2 => 'JP' },
