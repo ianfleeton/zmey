@@ -59,6 +59,11 @@ class Website < ActiveRecord::Base
     website
   end
   
+  def shipping_countries
+    c = countries.where('shipping_zone_id IS NOT NULL')
+    c.empty? ? countries : c
+  end
+
   def only_accept_payment_on_account?
     accept_payment_on_account and !(rbswp_active)
   end

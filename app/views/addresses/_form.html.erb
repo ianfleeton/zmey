@@ -26,9 +26,13 @@
   <%= form.label :postcode %>:<br />
   <%= form.text_field :postcode %>
 </div>
+<p>
+  Please contact us for a delivery quote if your
+  country is not provided in the list below.
+</p>
 <div>
   <%= form.label :country_id %>:<br />
-  <%= collection_select :address, :country_id, @w.countries, :id, :name %>
+  <%= collection_select :address, :country_id, @w.shipping_countries, :id, :name %>
 </div>
 <div>
   <%= form.label :phone_number %>:<br />
