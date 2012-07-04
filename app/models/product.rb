@@ -22,6 +22,7 @@ class Product < ActiveRecord::Base
   belongs_to :website
   has_many :product_group_placements, :dependent => :delete_all
   has_many :product_groups, :through => :product_group_placements
+  has_many :basket_items, dependent: :destroy
 
   liquid_methods :id, :description, :full_detail, :name, :path, :shipping_supplement, :sku, :url
 
