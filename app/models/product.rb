@@ -97,4 +97,12 @@ class Product < ActiveRecord::Base
   def to_param
     "#{id}-#{name.parameterize}"
   end
+
+  def self.delete_all
+    destroy_all
+  end
+
+  def delete
+    destroy
+  end
 end
