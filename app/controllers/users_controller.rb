@@ -46,6 +46,10 @@ class UsersController < ApplicationController
       @user.admin = params[:user][:admin]
       @user.manages_website_id = params[:user][:manages_website_id]
     end
+
+    params[:user].delete(:admin)
+    params[:user].delete(:manages_website_id)
+
     if @user.update_attributes(params[:user])
       flash[:notice] = "User successfully updated."
       redirect_to :action => "show", :id => @user.id
