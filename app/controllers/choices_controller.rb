@@ -14,6 +14,7 @@ class ChoicesController < ApplicationController
   end
   
   def update
+    redirect_to products_path and return unless feature_valid?
     if @choice.update_attributes(params[:choice])
       flash[:notice] = "Choice successfully updated."
       redirect_to edit_feature_path(@choice.feature)
