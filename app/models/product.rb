@@ -5,23 +5,23 @@ class Product < ActiveRecord::Base
     :sku, :submit_to_google, :tax_type, :weight
 
   validates_presence_of :name, :sku
-  validates_uniqueness_of :sku, :scope => :website_id
+  validates_uniqueness_of :sku, scope: :website_id
 
   CONDITIONS = %w[new used refurbished]
   validates_inclusion_of :condition, in: CONDITIONS
   AVAILABILITIES = ['in stock', 'available for order', 'out of stock', 'preorder']
   validates_inclusion_of :availability, in: AVAILABILITIES
 
-  has_many :product_placements, :dependent => :delete_all
-  has_many :additional_products, :dependent => :delete_all
-  has_many :pages, :through => :product_placements
+  has_many :product_placements, dependent: :delete_all
+  has_many :additional_products, dependent: :delete_all
+  has_many :pages, through: :product_placements
   has_many :components, dependent: :destroy
-  has_many :features, :dependent => :destroy
-  has_many :quantity_prices, :order => :quantity, :dependent => :delete_all
+  has_many :features, dependent: :destroy
+  has_many :quantity_prices, order: :quantity, dependent: :delete_all
   belongs_to :image
   belongs_to :website
-  has_many :product_group_placements, :dependent => :delete_all
-  has_many :product_groups, :through => :product_group_placements
+  has_many :product_group_placements, dependent: :delete_all
+  has_many :product_groups, through: :product_group_placements
   has_many :basket_items, dependent: :destroy
 
   liquid_methods :id, :description, :full_detail, :name, :path, :shipping_supplement, :sku, :url

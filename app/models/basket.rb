@@ -15,10 +15,10 @@ class Basket < ActiveRecord::Base
       item.quantity += quantity
     else
       item = BasketItem.new(
-        :basket_id => id,
-        :product_id => product.id,
-        :quantity => quantity,
-        :feature_selections => feature_selections)
+        basket_id: id,
+        product_id: product.id,
+        quantity: quantity,
+        feature_selections: feature_selections)
     end
     item.save
   end
