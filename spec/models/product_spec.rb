@@ -5,6 +5,14 @@ describe Product do
     @product = Product.new(:price => 1.0)
   end
 
+  describe "#name_with_sku" do
+    it "returns the name followed by the SKU in square brackets" do
+      @product.name = 'Banana'
+      @product.sku = 'BAN'
+      @product.name_with_sku.should == 'Banana [BAN]'
+    end
+  end
+
   describe "tax" do
     it "should be added and tax amount calculated when price is ex-VAT" do
       @product.tax_type = Product::EX_VAT
