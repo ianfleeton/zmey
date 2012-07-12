@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614164408) do
+ActiveRecord::Schema.define(:version => 20120712182522) do
 
   create_table "additional_products", :force => true do |t|
     t.integer  "product_id",                               :null => false
@@ -347,6 +347,7 @@ ActiveRecord::Schema.define(:version => 20120614164408) do
     t.string   "gtin",                                                   :default => "",         :null => false
     t.string   "mpn",                                                    :default => "",         :null => false
     t.boolean  "submit_to_google",                                       :default => true,       :null => false
+    t.decimal  "rrp",                     :precision => 10, :scale => 3
   end
 
   create_table "quantity_prices", :force => true do |t|

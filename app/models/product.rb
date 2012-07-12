@@ -1,8 +1,8 @@
 class Product < ActiveRecord::Base
   attr_accessible :apply_shipping, :availability, :brand, :condition, :description,
     :full_detail, :gtin, :google_product_category, :google_title, :image_id,
-    :meta_description, :mpn, :name, :page_title, :price, :product_type, :shipping_supplement,
-    :sku, :submit_to_google, :tax_type, :weight
+    :meta_description, :mpn, :name, :page_title, :price, :product_type, :rrp,
+    :shipping_supplement, :sku, :submit_to_google, :tax_type, :weight
 
   validates_presence_of :name, :sku
   validates_uniqueness_of :sku, scope: :website_id
@@ -24,7 +24,7 @@ class Product < ActiveRecord::Base
   has_many :product_groups, through: :product_group_placements
   has_many :basket_items, dependent: :destroy
 
-  liquid_methods :id, :description, :full_detail, :name, :path, :shipping_supplement, :sku, :url
+  liquid_methods :id, :description, :full_detail, :name, :path, :rrp?, :rrp, :shipping_supplement, :sku, :url
 
   # Tax types
   NO_TAX = 1
@@ -84,6 +84,10 @@ class Product < ActiveRecord::Base
     else
       price_ex_tax(q)
     end
+  end
+
+  def rrp?
+    !rrp.blank?
   end
 
   def path
