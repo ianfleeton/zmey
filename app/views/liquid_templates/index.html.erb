@@ -20,7 +20,7 @@
       <%= link_to '<i class="icon-edit"></i> Edit'.html_safe, edit_liquid_template_path(liquid_template), class: 'btn btn-mini' %>
       <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe,
       liquid_template_path(liquid_template),
-      confirm: 'Are you sure?',
+      data: { confirm: 'Are you sure?' },
       method: :delete,
       class: 'btn btn-danger btn-mini' %>
     </td>

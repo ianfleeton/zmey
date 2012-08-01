@@ -8,7 +8,7 @@ module AdminHelper
   def delete_button(object)
     link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe,
     object,
-    confirm: 'Are you sure?',
+    data: { confirm: 'Are you sure?' },
     method: :delete,
     class: 'btn btn-danger btn-mini'
   end
