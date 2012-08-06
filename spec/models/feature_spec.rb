@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Component do
+describe Feature do
 end
