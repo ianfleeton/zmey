@@ -51,11 +51,11 @@ end
 # gem 'debugger'
 
 group :test do
-  gem "rspec-rails"
-  gem 'cucumber-rails'
+  gem 'rspec-rails'
+  gem 'cucumber-rails', require: false
   gem 'test-unit', '1.2.3'
   gem 'capybara', '1.1.1'
-  gem "launchy", "2.0.5"
+  gem 'launchy'
   gem 'shoulda-matchers'
   gem 'database_cleaner'
 
