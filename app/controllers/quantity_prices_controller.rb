@@ -1,7 +1,7 @@
 class QuantityPricesController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_quantity_price, :only => [:edit, :destroy, :update]
+  before_filter :find_quantity_price, only: [:edit, :destroy, :update]
 
   def new
     @quantity_price = QuantityPrice.new
@@ -17,7 +17,7 @@ class QuantityPricesController < ApplicationController
       flash[:notice] = "Successfully added new quantity/price rule."
       redirect_to edit_product_path(@quantity_price.product)
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
   
@@ -26,7 +26,7 @@ class QuantityPricesController < ApplicationController
       flash[:notice] = "Quantity/price rule successfully updated."
       redirect_to edit_product_path(@quantity_price.product.id)
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
   

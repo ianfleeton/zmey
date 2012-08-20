@@ -6,7 +6,7 @@ class AddressesController < ApplicationController
   def edit
     # get a valid address from the session; if not send the user to new
     @address = session[:address_id] ? Address.find_by_id(session[:address_id]) : nil
-    redirect_to :action => 'new' and return if @address.nil?
+    redirect_to action: 'new' and return if @address.nil?
   end
 
   def create
@@ -18,9 +18,9 @@ class AddressesController < ApplicationController
     if @address.save
       flash[:notice] = "Saved address."
       session[:address_id] = @address.id
-      redirect_to :controller => 'basket', :action => 'checkout'
+      redirect_to controller: 'basket', action: 'checkout'
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
   
@@ -29,14 +29,14 @@ class AddressesController < ApplicationController
     if session[:address_id] && session[:address_id] == @address.id
       if @address.update_attributes(params[:address])
         flash[:notice] = 'Address updated.'
-        redirect_to :controller => 'basket', :action => 'checkout'
+        redirect_to controller: 'basket', action: 'checkout'
       else
-        render :action => 'edit'
+        render action: 'edit'
       end
     else
       # shouldn't happen usually to regular users
       flash[:notice] = "Something's wrong with that address. Please create a new one."
-      redirect_to :action => 'new'
+      redirect_to action: 'new'
     end
   end
 end

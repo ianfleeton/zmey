@@ -5,7 +5,7 @@ class WebsitesController < ApplicationController
   before_filter :permission_check, :only => [:edit, :update]
 
   def index
-    @websites = Website.find(:all, :order => :name)
+    @websites = Website.order('name')
   end
   
   def new
@@ -24,9 +24,9 @@ class WebsitesController < ApplicationController
       create_latest_news
       
       flash[:notice] = "Successfully added new website."
-      redirect_to :action => "index"
+      redirect_to action: 'index'
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
 
@@ -35,14 +35,14 @@ class WebsitesController < ApplicationController
       flash[:notice] = 'Website saved.'
       redirect_to edit_website_path(@website)
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
   
   def destroy
     @website.destroy
     flash[:notice] = "Website deleted."
-    redirect_to :action => "index"
+    redirect_to action: 'index'
   end
   
   protected
@@ -52,7 +52,7 @@ class WebsitesController < ApplicationController
     return if admin?
     if manager? && @w.id != @website.id
       flash[:notice] = 'You do not manage this website.'
-      redirect_to :controller => 'sessions', :action => 'new'
+      redirect_to controller: 'sessions', action: 'new'
     end
   end
 

@@ -1,12 +1,12 @@
 class PaymentsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :only => [:cardsave_callback, :paypal_auto_return, :rbs_worldpay_callback]
+  skip_before_filter :verify_authenticity_token, only: [:cardsave_callback, :paypal_auto_return, :rbs_worldpay_callback]
 
-  before_filter :admin_required, :only => [:index, :show]
+  before_filter :admin_required, only: [:index, :show]
 
   FAILURE_MESSAGE = 'Some information was incorrect and your payment may not have gone through properly. Please contact us.'
 
   def index
-    @payments = Payment.all(:order => 'created_at desc')
+    @payments = Payment.all(order: 'created_at DESC')
   end
   
   def show
@@ -46,7 +46,7 @@ class PaymentsController < ApplicationController
     end
 
     @payment.save
-    redirect_to paypal_confirmation_payments_path, :notice =>
+    redirect_to paypal_confirmation_payments_path, notice:
       "#{@message} You may log into your account at www.paypal.com/uk to view details of this transaction."
   end
 
@@ -127,7 +127,7 @@ class PaymentsController < ApplicationController
       clean_up
     end
     @payment.save
-    render :layout => false
+    render layout: false
   end
   
   private

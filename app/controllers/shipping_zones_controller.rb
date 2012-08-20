@@ -1,7 +1,7 @@
 class ShippingZonesController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_shipping_zone, :only => [:edit, :update, :destroy]
+  before_filter :find_shipping_zone, only: [:edit, :update, :destroy]
 
   def index
     @shipping_zones = @w.shipping_zones
@@ -16,26 +16,23 @@ class ShippingZonesController < ApplicationController
     @shipping_zone.website_id = @w.id
 
     if @shipping_zone.save
-      flash[:notice] = "Saved."
-      redirect_to shipping_zones_path
+      redirect_to shipping_zones_path, notice: 'Saved.'
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
 
   def update
     if @shipping_zone.update_attributes(params[:shipping_zone])
-      flash[:notice] = "Saved."
-      redirect_to shipping_zones_path
+      redirect_to shipping_zones_path, notice: 'Saved.'
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
   def destroy
     @shipping_zone.destroy
-    flash[:notice] = "Shipping zone deleted."
-    redirect_to shipping_zones_path
+    redirect_to shipping_zones_path, notice: 'Shipping zone deleted.'
   end
 
   protected

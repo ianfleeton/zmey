@@ -1,9 +1,9 @@
 class ShippingZone < ActiveRecord::Base
   belongs_to :website
-  has_many :countries, :order => 'name', :dependent => :nullify
-  has_many :shipping_classes, :order => 'name', :dependent => :destroy
+  has_many :countries, order: 'name', dependent: :nullify
+  has_many :shipping_classes, order: 'name', dependent: :destroy
 
-  validates_uniqueness_of :name, :scope => :website_id
+  validates_uniqueness_of :name, scope: :website_id
 
   attr_protected :website_id
 end

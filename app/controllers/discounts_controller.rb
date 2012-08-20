@@ -1,7 +1,7 @@
 class DiscountsController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_discount, :only => [:edit, :update, :destroy]
+  before_filter :find_discount, only: [:edit, :update, :destroy]
 
   def index
     @discounts = @w.discounts
@@ -19,10 +19,9 @@ class DiscountsController < ApplicationController
     @discount.website_id = @w.id
 
     if @discount.save
-      flash[:notice] = "Successfully added new discount."
-      redirect_to discounts_path
+      redirect_to discounts_path, notice: 'Successfully added new discount.'
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
 
@@ -31,22 +30,19 @@ class DiscountsController < ApplicationController
       flash[:notice] = "Discount successfully updated."
       redirect_to discounts_path
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
   def destroy
     @discount.destroy
-    flash[:notice] = "Discount deleted."
-    redirect_to discounts_path
+    redirect_to discounts_path, notice: 'Discount deleted.'
   end
 
   protected
 
   def find_discount
     @discount = Discount.find_by_id_and_website_id(params[:id], @w.id)
-    unless @discount
-      render :file => "#{::Rails.root.to_s}/public/404.html", :status => "404 Not Found"
-    end
+    not_found unless @discount
   end
 end

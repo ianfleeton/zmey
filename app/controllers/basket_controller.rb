@@ -2,8 +2,8 @@ class BasketController < ApplicationController
   before_filter :find_basket
   
   before_filter :require_delivery_address, only: [:place_order]
-  before_filter :invalidate_coupons, :only => [:index]
-  before_filter :calculate_discounts, :only => [:index, :checkout, :place_order]
+  before_filter :invalidate_coupons, only: [:index]
+  before_filter :calculate_discounts, only: [:index, :checkout, :place_order]
 
   def index
     @page = params[:page_id] ? Page.find_by_id(params[:page_id]) : nil
@@ -28,22 +28,22 @@ class BasketController < ApplicationController
 
     flash[:notice] = 'Added to basket.'
     if params[:page_id].nil?
-      redirect_to :action => 'index'
+      redirect_to action: 'index'
     else
-      redirect_to :action => 'index', :page_id => params[:page_id]
+      redirect_to action: 'index', page_id: params[:page_id]
     end
   end
   
   def update
     update_quantities if params[:update_quantities]
     remove_item if params[:remove_item]
-    redirect_to :action => 'checkout' and return if params[:checkout]
+    redirect_to action: 'checkout' and return if params[:checkout]
     flash[:notice] = 'Basket updated.'
-    redirect_to :action => 'index'
+    redirect_to action: 'index'
   end
   
   def checkout
-    redirect_to :action => 'index' and return if @basket.basket_items.empty?
+    redirect_to action: 'index' and return if @basket.basket_items.empty?
 
     @address = nil
     @address = Address.find_by_id(session[:address_id]) if session[:address_id]
@@ -77,25 +77,25 @@ class BasketController < ApplicationController
 
     @basket.basket_items.each do |i|
       @order.order_lines << OrderLine.new(
-        :product_id => i.product.id,
-        :product_sku => i.product.sku,
-        :product_name => i.product.name,
-        :product_price => i.product.price_ex_tax(i.quantity),
-        :tax_amount => i.product.tax_amount(i.quantity) * i.quantity,
-        :quantity => i.quantity,
-        :line_total => i.product.price_ex_tax(i.quantity) * i.quantity,
-        :feature_descriptions => i.feature_descriptions
+        product_id: i.product.id,
+        product_sku: i.product.sku,
+        product_name: i.product.name,
+        product_price: i.product.price_ex_tax(i.quantity),
+        tax_amount: i.product.tax_amount(i.quantity) * i.quantity,
+        quantity: i.quantity,
+        line_total: i.product.price_ex_tax(i.quantity) * i.quantity,
+        feature_descriptions: i.feature_descriptions
       )
     end
     @discount_lines.each do |dl|
       @order.order_lines << OrderLine.new(
-        :product_id => 0,
-        :product_sku => 'DISCOUNT',
-        :product_name => dl.name,
-        :product_price => dl.price_adjustment,
-        :tax_amount => dl.tax_adjustment,
-        :quantity => 1,
-        :line_total => dl.price_adjustment
+        product_id: 0,
+        product_sku: 'DISCOUNT',
+        product_name: dl.name,
+        product_price: dl.price_adjustment,
+        tax_amount: dl.tax_adjustment,
+        quantity: 1,
+        line_total: dl.price_adjustment
       )
     end
     @order.status = Order::WAITING_FOR_PAYMENT
@@ -111,16 +111,16 @@ class BasketController < ApplicationController
       @order.save
       OrderNotifier.notification(@w, @order).deliver
       @order.empty_basket(session)
-      redirect_to :controller => 'orders', :action => 'receipt'
+      redirect_to controller: 'orders', action: 'receipt'
     else
-      redirect_to :controller => 'orders', :action => 'select_payment_method'
+      redirect_to controller: 'orders', action: 'select_payment_method'
     end
   end
   
   def purge_old
     Basket.purge_old
     flash[:notice] = 'Old baskets purged.'
-    redirect_to :action => 'index'
+    redirect_to action: 'index'
   end
 
   def enter_coupon
@@ -144,7 +144,7 @@ class BasketController < ApplicationController
       session[:coupons].subtract [params[:coupon_code].upcase]
     end
     flash[:notice] = 'Your coupon has been removed.'
-    redirect_to :action => 'index'
+    redirect_to action: 'index'
   end
 
   protected
@@ -189,9 +189,9 @@ class BasketController < ApplicationController
       item = BasketItem.find_by_basket_id_and_product_id(@basket.id, product.id)
       unless item
         item = BasketItem.new(
-          :basket_id => @basket.id,
-          :product_id => product.id,
-          :quantity => 1)
+          basket_id: @basket.id,
+          product_id: product.id,
+          quantity: 1)
       end
       item.save
     end
@@ -236,7 +236,7 @@ class BasketController < ApplicationController
   # get valid delivery address or send user back to checkout
   def require_delivery_address
     @address = find_delivery_address
-    redirect_to :action => 'checkout' if @address.nil?
+    redirect_to action: 'checkout' if @address.nil?
   end
 
   def find_delivery_address
@@ -245,7 +245,7 @@ class BasketController < ApplicationController
 
   def remove_item
     params[:remove_item].each_key do |id|
-      BasketItem.destroy_all(:id => id, :basket_id => @basket.id)
+      BasketItem.destroy_all(id: id, basket_id: @basket.id)
     end
   end
 

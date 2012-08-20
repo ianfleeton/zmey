@@ -27,21 +27,21 @@ class ApplicationController < ActionController::Base
   def admin_required
     unless admin?
       flash[:notice] = 'You need to be logged in as an administrator to do that.'
-      redirect_to :controller => 'sessions', :action => 'new'
+      redirect_to controller: 'sessions', action: 'new'
     end
   end
   
   def user_required
     unless logged_in?
       flash[:notice] = 'You need to be logged in to do that.'
-      redirect_to :controller => 'sessions', :action => 'new'
+      redirect_to controller: 'sessions', action: 'new'
     end
   end
 
   def admin_or_manager_required
     unless admin_or_manager?
       flash[:notice] = 'You need to be logged in as an administrator or manager to do that.'
-      redirect_to :controller => 'sessions', :action => 'new'
+      redirect_to controller: 'sessions', action: 'new'
     end
   end
 
@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found
-    render :file => "#{Rails.root.to_s}/public/404.html", :layout => false, :status => 404
+    render "#{Rails.root.to_s}/public/404", formats: [:html], layout: false, status: 404
   end
 
   def initialize_meta_tags
@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
   def protect_private_website
     if @w.private? && !logged_in?
       flash[:notice] = 'You must be logged in to view this website.'
-      redirect_to :controller => 'sessions', :action => 'new'
+      redirect_to controller: 'sessions', action: 'new'
     end
   end
 

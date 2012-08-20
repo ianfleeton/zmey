@@ -3,7 +3,7 @@ class ImagesController < ApplicationController
   before_filter :admin_or_manager_required
 
   def index
-    @images = Image.find(:all, :conditions => { :website_id => @w })
+    @images = @w.images
   end
 
   def new
@@ -17,9 +17,9 @@ class ImagesController < ApplicationController
     
     if @image.save
       flash[:notice] = 'Image uploaded.'
-      redirect_to :action => 'index'
+      redirect_to action: 'index'
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
@@ -32,9 +32,9 @@ class ImagesController < ApplicationController
 
     if @image.update_attributes(params[:image])
       flash[:notice] = 'Image saved.'
-      redirect_to :action => 'index'
+      redirect_to action: 'index'
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 

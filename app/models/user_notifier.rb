@@ -4,7 +4,7 @@ class UserNotifier < ActionMailer::Base
     recipients user.email
     from website.email
     sent_on Time.now
-    body :domain => website.domain, :id => user.id, :name => user.name,
-      :token => user.forgot_password_token
+    body domain: website.domain, id: user.id, name: user.name,
+      token: user.forgot_password_token
   end
 end

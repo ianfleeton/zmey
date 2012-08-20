@@ -1,7 +1,7 @@
 class ChoicesController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_choice, :except => [:new, :create]
+  before_filter :find_choice, except: [:new, :create]
   
   def new
     @choice = Choice.new
@@ -19,7 +19,7 @@ class ChoicesController < ApplicationController
       flash[:notice] = "Choice successfully updated."
       redirect_to edit_feature_path(@choice.feature)
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
   
@@ -31,7 +31,7 @@ class ChoicesController < ApplicationController
       flash[:notice] = "Successfully added new choice."
       redirect_to edit_feature_path(@choice.feature)
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
   

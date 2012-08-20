@@ -1,7 +1,7 @@
 class AdditionalProductsController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_additional_product, :only => [:edit, :destroy, :update]
+  before_filter :find_additional_product, only: [:edit, :destroy, :update]
 
   def new
     @additional_product = AdditionalProduct.new
@@ -17,7 +17,7 @@ class AdditionalProductsController < ApplicationController
       flash[:notice] = "Successfully added new additional product."
       redirect_to edit_product_path(@additional_product.product)
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
   
@@ -26,7 +26,7 @@ class AdditionalProductsController < ApplicationController
       flash[:notice] = "Additional product successfully updated."
       redirect_to edit_product_path(@additional_product.product)
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
   

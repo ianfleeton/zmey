@@ -32,7 +32,7 @@ class Website < ActiveRecord::Base
   has_many :liquid_templates, :order => :name, :dependent => :destroy
   has_many :products, :order => :name, :dependent => :destroy
   has_many :google_products, class_name: 'Product', conditions: { submit_to_google: true }
-  has_many :product_groups
+  has_many :product_groups, order: 'name'
   has_many :orders, :order => 'created_at DESC', :dependent => :destroy
   has_many :pages, :order => 'name', :dependent => :destroy
   has_many :images, :dependent => :destroy

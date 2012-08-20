@@ -6,7 +6,7 @@ class OrderNotifier < ActionMailer::Base
     recipients = [order.email_address, website.email]
     @website = website
     @order = order
-    mail(:to => recipients, :subject => website.name + ': order notification ' + order.order_number,
-      :from => website.email)
+    mail(to: recipients, subject: website.name + ': order notification ' + order.order_number,
+      from: website.email)
   end
 end

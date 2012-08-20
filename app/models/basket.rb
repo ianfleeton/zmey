@@ -1,7 +1,7 @@
 class Basket < ActiveRecord::Base
   # basket items are destroyed so that their feature selections can be cleaned up
-  has_many :basket_items, :dependent => :destroy
-  has_one :order, :dependent => :nullify
+  has_many :basket_items, dependent: :destroy
+  has_one :order, dependent: :nullify
 
   def add(product, feature_selections, quantity)
     feature_descriptions = BasketItem.describe_feature_selections(feature_selections)

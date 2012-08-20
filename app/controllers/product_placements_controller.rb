@@ -1,6 +1,6 @@
 class ProductPlacementsController < ApplicationController
   before_filter :admin_or_manager_required
-  before_filter :find_product_placement, :except => [:create]
+  before_filter :find_product_placement, except: [:create]
   # TODO: restrict by website
   
   def create
@@ -16,12 +16,7 @@ class ProductPlacementsController < ApplicationController
   def destroy
     page = @product_placement.page
     @product_placement.destroy
-    flash[:notice] = 'Product removed from page.'
-
-    respond_to do |format|
-      format.html { redirect_to page.path }
-      format.xml  { head :ok }
-    end
+    redirect_to page.path, notice: 'Product removed from page.'
   end
 
   def move_up
@@ -44,5 +39,4 @@ class ProductPlacementsController < ApplicationController
     flash[:notice] = "Moved."
     redirect_to @product_placement.page.path
   end
-
 end

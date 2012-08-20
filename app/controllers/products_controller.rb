@@ -1,10 +1,10 @@
 class ProductsController < ApplicationController
-  layout 'admin', :only => [:edit, :new, :index, :upload_google_data_feed]
-  before_filter :find_product, :only => [:show, :edit, :update, :destroy]
-  before_filter :admin_or_manager_required, :except => [:show, :google_data_feed]
+  layout 'admin', only: [:edit, :new, :index, :upload_google_data_feed]
+  before_filter :find_product, only: [:show, :edit, :update, :destroy]
+  before_filter :admin_or_manager_required, except: [:show, :google_data_feed]
 
   def index
-    @products = Product.all(:conditions => {:website_id => @w.id}, :order => :name)
+    @products = Product.all(conditions: {website_id: @w.id}, order: 'name')
   end
   
   def show
@@ -25,9 +25,9 @@ class ProductsController < ApplicationController
 
     if @product.save
       flash[:notice] = "Successfully added new product."
-      redirect_to :action => "new"
+      redirect_to action: 'new'
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
   
@@ -36,14 +36,13 @@ class ProductsController < ApplicationController
       flash[:notice] = 'Product saved.'
       redirect_to product_path(@product)
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 
   def destroy
     @product.destroy
-    flash[:notice] = "Product deleted."
-    redirect_to products_path
+    redirect_to products_path, notice: 'Product deleted.'
   end
 
   def google_data_feed
@@ -52,7 +51,7 @@ class ProductsController < ApplicationController
 
   def upload_google_data_feed
     google_data_feed
-    @xml = render_to_string(:action => 'google_data_feed.xml.erb', :layout => false)
+    @xml = render_to_string(action: 'google_data_feed.xml.erb', layout: false)
     open('google_data_feed.xml', 'wb') { |file| file.write(@xml) }
 
     begin
@@ -68,14 +67,13 @@ class ProductsController < ApplicationController
     end
     system('rm google_data_feed.xml')
 
-    render :formats => [:html]
+    render formats: [:html]
   end
 
   protected
   
   def find_product
     @product = Product.find_by_id_and_website_id(params[:id], @w.id)
-    render :file => "#{::Rails.root.to_s}/public/404.html", :status => "404 Not Found" if @product.nil?
+    not_found unless @product
   end
-
 end

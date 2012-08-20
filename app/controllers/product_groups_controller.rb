@@ -5,7 +5,7 @@ class ProductGroupsController < ApplicationController
 
   def index
     @title = 'Product Groups'
-    @product_groups = ProductGroup.all(:conditions => {:website_id => @w.id}, :order => :name)
+    @product_groups = @w.product_groups
   end
 
   def show
@@ -23,7 +23,7 @@ class ProductGroupsController < ApplicationController
       flash[:notice] = "Successfully added new product group."
       redirect_to product_groups_path
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
 
@@ -36,7 +36,7 @@ class ProductGroupsController < ApplicationController
       flash[:notice] = "Product group successfully updated."
       redirect_to product_groups_path
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
@@ -49,6 +49,6 @@ class ProductGroupsController < ApplicationController
 
   def find_product_group
     @product_group = ProductGroup.find_by_id_and_website_id(params[:id], @w.id)
-    render :file => "#{::Rails.root.to_s}/public/404.html", :status => "404 Not Found" if @product_group.nil?
+    not_found unless @product_group
   end
 end

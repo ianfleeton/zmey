@@ -1,8 +1,8 @@
 class CountriesController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_country, :only => [:edit, :update, :destroy]
-  
+  before_filter :find_country, only: [:edit, :update, :destroy]
+
   def index
     @countries = @w.countries
   end
@@ -16,10 +16,9 @@ class CountriesController < ApplicationController
     @country.website_id = @w.id
 
     if @country.save
-      flash[:notice] = "Saved."
-      redirect_to countries_path
+      redirect_to countries_path, notice: 'Saved.'
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
 
@@ -28,7 +27,7 @@ class CountriesController < ApplicationController
       flash[:notice] = "Saved."
       redirect_to countries_path
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 

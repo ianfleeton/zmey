@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   include SpamProtection
-  before_filter :admin_required, :only => [:destroy, :destroy_post]
+  before_filter :admin_required, only: [:destroy, :destroy_post]
 
   def new
     @title = 'New Topic - Forum'
@@ -21,21 +21,21 @@ class TopicsController < ApplicationController
     @post = Post.new(params[:post])
 
     unless good_token?
-      render :action => 'show', :id => @topic
+      render action: 'show', id: @topic
       return
     end
 
     if @post.save
       update_topic_with_post @post
       flash[:notice] = "Your reply has been posted"
-      redirect_to :action => 'show', :id => @topic
+      redirect_to action: 'show', id: @topic
     else
       if params[:post][:topic_id].nil?
         @topic.destroy!
-        render :action => "new"
+        render action: 'new'
       else
-        @posts = Post.find_all_by_topic_id(@topic.id, :order => 'updated_at asc')
-        render :action => "show", :id => @topic
+        @posts = Post.find_all_by_topic_id(@topic.id, order: 'updated_at ASC')
+        render action: 'show', id: @topic
       end
     end
   end
@@ -53,10 +53,7 @@ class TopicsController < ApplicationController
       redirect_to forums_path and return
     end
 
-    unless good_token?
-      render :action => 'new'
-      return
-    end
+    render action: 'new' and return unless good_token?
         
     @topic.last_post_at = Time.now
     @topic.save
@@ -66,7 +63,7 @@ class TopicsController < ApplicationController
     if @post.save
       update_topic_with_post @post
       flash[:notice] = "Your new topic has been posted"
-      redirect_to :action => 'show', :id => @topic
+      redirect_to action: 'show', id: @topic
     else
       @topic.destroy
       
@@ -75,7 +72,7 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @topic = Topic.find(params[:id], :include => :posts)
+    @topic = Topic.find(params[:id], include: :posts)
     @title = @topic.topic + ' - Forum'
     @topic.views += 1
     @topic.save
@@ -89,7 +86,7 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
     @topic.destroy
     flash[:notice] = "The topic and all its posts have been deleted."
-    redirect_to :action => "index"
+    redirect_to action: 'index'
   end
   
   # destroys a post
@@ -106,7 +103,7 @@ class TopicsController < ApplicationController
     else
       update_topic_with_post @topic.posts.last, -1
       flash[:notice] = 'Post deleted.'
-      redirect_to :action => 'show', :id => @topic.id
+      redirect_to action: 'show', id: @topic.id
     end
   end
   

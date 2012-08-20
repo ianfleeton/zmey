@@ -20,7 +20,7 @@ template('header',
     <%= nav_link_to I18n.t('controllers.enquiries'), new_enquiry_path %>
     <% if logged_in? -%>
     <%= nav_link_to I18n.t('my_account'), {:controller => 'users', :action => 'show', :id => @current_user}, nil, 'n_account' %>
-    <%= nav_link_to I18n.t('logout'), :controller => 'sessions', :action => 'destroy' %>
+    <%= nav_link_to I18n.t('logout'), '/sessions' %>
     <% else -%>
     <% if @w.can_users_create_accounts? -%>
     <%= nav_link_to I18n.t('register'), :controller => 'users', :action => 'new' %>

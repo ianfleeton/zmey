@@ -2,11 +2,11 @@ class OrdersController < ApplicationController
   include ActionView::Helpers::NumberHelper
   include ProductsHelper
 
-  before_filter :admin_or_manager_required, :only => [:destroy]
+  before_filter :admin_or_manager_required, only: [:destroy]
 
-  before_filter :find_order, :only => [:show, :destroy, :invoice]
-  before_filter :require_order, :only => [:select_payment_method, :receipt]
-  before_filter :user_required, :only => [:index, :show, :invoice]
+  before_filter :find_order, only: [:show, :destroy, :invoice]
+  before_filter :require_order, only: [:select_payment_method, :receipt]
+  before_filter :user_required, only: [:index, :show, :invoice]
 
   def index
     if admin_or_manager?
@@ -27,26 +27,26 @@ class OrdersController < ApplicationController
   end
 
   def receipt
-    redirect_to :controller => 'basket', :action => 'index' and return unless (@order.payment_received? or @order.status==Order::PAYMENT_ON_ACCOUNT)
+    redirect_to controller: 'basket', action: 'index' and return unless (@order.payment_received? or @order.status==Order::PAYMENT_ON_ACCOUNT)
     @google_ecommerce_tracking = true
   end
   
   def show
     if admin_or_manager? or @current_user.id==@order.user_id
-      render :action => 'receipt'
+      render action: 'receipt'
     else
-      redirect_to :root, :notice => 'You do not have permission to view that order.'
+      redirect_to :root, notice: 'You do not have permission to view that order.'
     end
   end
 
   def purge_old_unpaid
     Order.purge_old_unpaid
-    redirect_to :action => 'index', :notice => 'Old and unpaid orders purged.'
+    redirect_to orders_path, notice: 'Old and unpaid orders purged.'
   end
 
   def destroy
     @order.destroy
-    redirect_to :action => "index", :notice => "Order deleted."
+    redirect_to orders_path, notice: 'Order deleted.'
   end
 
   def invoice
@@ -103,8 +103,8 @@ class OrdersController < ApplicationController
   def require_order
     @order = Order.from_session session
     if @order.nil?
-      redirect_to({:controller => 'basket', :action => 'index'},
-        :notice => "We couldn't find an order for you.")
+      redirect_to({controller: 'basket', action: 'index'},
+        notice: "We couldn't find an order for you.")
     end
   end
 
@@ -112,7 +112,7 @@ class OrdersController < ApplicationController
   def find_order
     @order = Order.find_by_id_and_website_id(params[:id], @w.id)
     if @order.nil?
-      redirect_to :action => 'index', :notice => 'Cannot find order.'
+      redirect_to orders_path, notice: 'Cannot find order.'
     end
   end
 

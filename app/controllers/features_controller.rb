@@ -1,7 +1,7 @@
 class FeaturesController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_feature, :only => [:edit, :destroy, :update]
+  before_filter :find_feature, only: [:edit, :destroy, :update]
 
   def new
     @feature = Feature.new
@@ -17,13 +17,9 @@ class FeaturesController < ApplicationController
 
     if @feature.save
       flash[:notice] = "Successfully added new feature."
-      if @feature.component
-        redirect_to edit_component_path(@feature.component)
-      else
-        redirect_to edit_product_path(@feature.product)
-      end
+      redirect_to edit_feature_path(@feature)
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
   
@@ -36,7 +32,7 @@ class FeaturesController < ApplicationController
         redirect_to edit_product_path(@feature.product)
       end
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
@@ -45,8 +41,7 @@ class FeaturesController < ApplicationController
   
   def destroy
     @feature.destroy
-    flash[:notice] = "Feature deleted."
-    redirect_to edit_product_path(@feature.product)
+    redirect_to edit_product_path(@feature.product), notice: 'Feature deleted.'
   end
   
   protected

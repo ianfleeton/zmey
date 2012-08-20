@@ -1,7 +1,7 @@
 class ComponentsController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_component, :only => [:edit, :destroy, :update]
+  before_filter :find_component, only: [:edit, :destroy, :update]
 
   def new
     @component = Component.new
@@ -17,7 +17,7 @@ class ComponentsController < ApplicationController
       flash[:notice] = "Successfully added new component."
       redirect_to edit_product_path(@component.product)
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
 
@@ -26,7 +26,7 @@ class ComponentsController < ApplicationController
       flash[:notice] = "Component successfully updated."
       redirect_to edit_product_path(@component.product)
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 

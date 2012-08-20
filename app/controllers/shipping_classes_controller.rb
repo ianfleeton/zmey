@@ -1,7 +1,7 @@
 class ShippingClassesController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_shipping_class, :only => [:edit, :update, :destroy]
+  before_filter :find_shipping_class, only: [:edit, :update, :destroy]
 
   def index
     @shipping_classes = @w.shipping_classes
@@ -15,25 +15,23 @@ class ShippingClassesController < ApplicationController
     @shipping_class = ShippingClass.new(params[:shipping_class])
 
     if @shipping_class.save
-      flash[:notice] = "Saved."
-      redirect_to shipping_classes_path
+      redirect_to shipping_classes_path, notice: 'Saved.'
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
 
   def update
     if @shipping_class.update_attributes(params[:shipping_class])
-      flash[:notice] = "Saved."
-      redirect_to shipping_classes_path
+      redirect_to shipping_classes_path, notice: 'Saved.'
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
   def destroy
     @shipping_class.destroy
-    flash[:notice] = "Shipping class deleted."
+    flash[:notice] = 'Shipping class deleted.'
     redirect_to shipping_classes_path
   end
 

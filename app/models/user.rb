@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :website
-  has_many :orders, :order => 'created_at DESC', :dependent => :nullify
-  has_many :addresses, :dependent => :delete_all
+  has_many :orders, order: 'created_at DESC', dependent: :nullify
+  has_many :addresses, dependent: :delete_all
 
   # unencrypted password
   attr_accessor :password
@@ -9,17 +9,17 @@ class User < ActiveRecord::Base
   attr_protected :admin, :manages_website_id, :website_id
 
   # associations
-  belongs_to :managed_website, :foreign_key => :manages_website_id, :class_name => 'Website'
+  belongs_to :managed_website, foreign_key: :manages_website_id, class_name: 'Website'
 
   # validation
-  validates_length_of     :email, :within => 3..100
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  validates_uniqueness_of :email, :case_sensitive => false, :message => 'has already been taken. If you have forgotten your password you can request a new one.'
+  validates_length_of     :email, within: 3..100
+  validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  validates_uniqueness_of :email, case_sensitive: false, message: 'has already been taken. If you have forgotten your password you can request a new one.'
   
   validates_presence_of   :name
-  validates_length_of     :password, :within => 4..40,
-                                     :if => :password_required?
-  validates_confirmation_of :password, :if => :password_required?
+  validates_length_of     :password, within: 4..40,
+                                     if: :password_required?
+  validates_confirmation_of :password, if: :password_required?
   
   # callbacks
   before_save :encrypt_password

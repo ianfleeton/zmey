@@ -1,11 +1,11 @@
 class PagesController < ApplicationController
   layout 'admin', except: [:show, :sitemap, :terms]
-  before_filter :admin_or_manager_required, :except => [:show, :sitemap, :terms]
-  before_filter :find_page, :only => [:edit, :update, :destroy, :move_up, :move_down]
+  before_filter :admin_or_manager_required, except: [:show, :sitemap, :terms]
+  before_filter :find_page, only: [:edit, :update, :destroy, :move_up, :move_down]
 
   def index
     @title = 'Pages'
-    @pages = Page.find(:all, :conditions => { :website_id => @w, :parent_id => nil }, :order => :position)
+    @pages = Page.find(:all, conditions: { website_id: @w, parent_id: nil }, order: :position)
   end
 
   def show
@@ -47,10 +47,10 @@ class PagesController < ApplicationController
     if @page.update_attributes(params[:page])
       @page.move_to_position new_position if old_parent_id != @page.parent_id
       flash[:notice] = 'Page saved.'
-      redirect_to @page.path
+      redirect_to edit_page_path(@page)
     else
       @page.position = new_position
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 
@@ -66,7 +66,7 @@ class PagesController < ApplicationController
       flash[:notice] = "Successfully added new page."
       redirect_to new_page_path
     else
-      render :action => "new"
+      render action: "new"
     end
   end
 
@@ -88,7 +88,7 @@ class PagesController < ApplicationController
       '/sessions/new', '/basket', '/pages/terms'].collect{|x| 'http://' + @w.domain + x}
 
     respond_to do |format|
-      format.xml { render :layout => false }
+      format.xml { render layout: false }
     end
   end
 

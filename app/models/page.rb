@@ -1,18 +1,18 @@
 class Page < ActiveRecord::Base
-  acts_as_tree :order => :position
-  acts_as_list :scope => :parent_id
+  acts_as_tree order: :position
+  acts_as_list scope: :parent_id
 
-  has_many :product_placements, :order => :position, :include => :product, :dependent => :delete_all
-  has_many :products, :through => :product_placement
+  has_many :product_placements, order: :position, include: :product, dependent: :delete_all
+  has_many :products, through: :product_placement
   belongs_to :image
   belongs_to :website
 
   attr_protected :website_id
   validates_presence_of :title, :name, :keywords, :description, :website_id
-  validates_format_of :slug, :with => /\A[-a-z0-9]+\Z/, :message => 'can only contain lowercase letters, numbers and hyphens', :allow_blank => true
-  validates_uniqueness_of :slug, :scope => :website_id, :case_sensitive => false
-  validates_uniqueness_of :title, :scope => :website_id, :case_sensitive => false
-  validates_uniqueness_of :name, :scope => :parent_id, :case_sensitive => false, :unless => Proc.new { |page| page.parent_id.nil? }
+  validates_format_of :slug, with: /\A[-a-z0-9]+\Z/, message: 'can only contain lowercase letters, numbers and hyphens', allow_blank: true
+  validates_uniqueness_of :slug, scope: :website_id, case_sensitive: false
+  validates_uniqueness_of :title, scope: :website_id, case_sensitive: false
+  validates_uniqueness_of :name, scope: :parent_id, case_sensitive: false, unless: Proc.new { |page| page.parent_id.nil? }
 
   liquid_methods :image, :name, :path, :url
 
@@ -27,32 +27,32 @@ class Page < ActiveRecord::Base
 
   def self.create_home_page website, nav_page
     create(
-      :title => website.name,
-      :name => 'Home',
-      :keywords => 'change me',
-      :description => 'change me',
-      :content => 'Welcome to ' + website.name,
-      :parent_id => nav_page.id
+      title: website.name,
+      name: 'Home',
+      keywords: 'change me',
+      description: 'change me',
+      content: 'Welcome to ' + website.name,
+      parent_id: nav_page.id
     ) {|hp| hp.website_id = website.id}
   end
   
   def self.create_navigation website, slug
     create(
-      :title => slug.titleize + ' Navigation',
-      :name => slug.titleize + ' Navigation',
-      :slug => slug,
-      :keywords => slug,
-      :description => slug
+      title: slug.titleize + ' Navigation',
+      name: slug.titleize + ' Navigation',
+      slug: slug,
+      keywords: slug,
+      description: slug
     ) {|hp| hp.website_id = website.id}
   end
 
   def self.navs website_id
     navs = Array.new
-    nav_roots = Page.all(:conditions => ['website_id = ? AND parent_id IS NULL', website_id], :order => :position)
+    nav_roots = Page.all(conditions: ['website_id = ? AND parent_id IS NULL', website_id], order: 'position')
     nav_roots.each do |nr|
       nav = Navigation.new
       nav.id_attribute = nr.slug.gsub('-', '_') + '_nav'
-      nav.pages = Page.all(:conditions => ['parent_id = ?', nr.id], :order => :position)
+      nav.pages = Page.all(conditions: ['parent_id = ?', nr.id], order: 'position')
       navs << nav 
     end
     navs

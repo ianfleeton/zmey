@@ -1,14 +1,14 @@
 class PreferredDeliveryDateSettings < ActiveRecord::Base
   belongs_to :website
 
-  validates_inclusion_of :skip_bank_holidays, :in => [true, false]
-  validates_inclusion_of :skip_saturdays,     :in => [true, false]
-  validates_inclusion_of :skip_sundays,       :in => [true, false]
+  validates_inclusion_of :skip_bank_holidays, in: [true, false]
+  validates_inclusion_of :skip_saturdays,     in: [true, false]
+  validates_inclusion_of :skip_sundays,       in: [true, false]
 
   validates_inclusion_of :rfc2822_week_commencing_day,
-    :in => Time::RFC2822_DAY_NAME, :allow_nil => true
+    in: Time::RFC2822_DAY_NAME, allow_nil: true
 
-  validates_inclusion_of :number_of_dates_to_show, :in => 2..52
+  validates_inclusion_of :number_of_dates_to_show, in: 2..52
 
   validates_presence_of :website_id, :prompt, :date_format
 

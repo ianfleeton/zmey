@@ -7,8 +7,8 @@ class Order < ActiveRecord::Base
   # Associations
   belongs_to :country
   belongs_to :basket
-  has_many :order_lines, :dependent => :delete_all
-  has_many :payments, :dependent => :delete_all
+  has_many :order_lines, dependent: :delete_all
+  has_many :payments, dependent: :delete_all
   # Order statuses
   WAITING_FOR_PAYMENT = 1
   PAYMENT_RECEIVED    = 2
@@ -21,7 +21,7 @@ class Order < ActiveRecord::Base
   def self.purge_old_unpaid(age = 1.month)
     self.destroy_all(["created_at < ? and status = ?", Time.now - age, Order::WAITING_FOR_PAYMENT])
   end
-  
+
   def status_description
     {
       WAITING_FOR_PAYMENT => 'Waiting for payment',
@@ -58,15 +58,15 @@ class Order < ActiveRecord::Base
   
   def delivery_address
     Address.new(
-      :email_address => email_address,
-      :full_name => full_name,
-      :address_line_1 => address_line_1,
-      :address_line_2 => address_line_2,
-      :town_city => town_city,
-      :county => county,
-      :postcode => postcode,
-      :country_id => country_id,
-      :phone_number => phone_number
+      email_address: email_address,
+      full_name: full_name,
+      address_line_1: address_line_1,
+      address_line_2: address_line_2,
+      town_city: town_city,
+      county: county,
+      postcode: postcode,
+      country_id: country_id,
+      phone_number: phone_number
     )
   end
   

@@ -1,7 +1,7 @@
 class LiquidTemplatesController < ApplicationController
   layout 'admin'
   before_filter :admin_or_manager_required
-  before_filter :find_liquid_template, :only => [:edit, :update, :destroy]
+  before_filter :find_liquid_template, only: [:edit, :update, :destroy]
 
   def index
     @liquid_templates = @w.liquid_templates
@@ -22,7 +22,7 @@ class LiquidTemplatesController < ApplicationController
       flash[:notice] = "Successfully added new Liquid template."
       redirect_to edit_liquid_template_path(@liquid_template)
     else
-      render :action => "new"
+      render action: 'new'
     end
   end
 
@@ -31,7 +31,7 @@ class LiquidTemplatesController < ApplicationController
       flash[:notice] = "Liquid template successfully updated."
       redirect_to edit_liquid_template_path(@liquid_template)
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
@@ -45,8 +45,6 @@ class LiquidTemplatesController < ApplicationController
 
   def find_liquid_template
     @liquid_template = LiquidTemplate.find_by_id_and_website_id(params[:id], @w.id)
-    unless @liquid_template
-      render :file => "#{::Rails.root.to_s}/public/404.html", :status => "404 Not Found"
-    end
+    not_found unless @liquid_template
   end
 end
