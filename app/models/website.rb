@@ -70,7 +70,7 @@ class Website < ActiveRecord::Base
   end
 
   def populate_countries
-    countries << Country.create([
+    Country.create([
       { :name => 'Afghanistan',           :iso_3166_1_alpha_2 => 'AF' },
       { :name => 'Åland Islands',         :iso_3166_1_alpha_2 => 'AX' },
       { :name => 'Albania',               :iso_3166_1_alpha_2 => 'AL' },
@@ -319,6 +319,6 @@ class Website < ActiveRecord::Base
       { :name => 'Yemen',                 :iso_3166_1_alpha_2 => 'YE' },
       { :name => 'Zambia',                :iso_3166_1_alpha_2 => 'ZM' },
       { :name => 'Zimbabwe',              :iso_3166_1_alpha_2 => 'ZW' }
-      ])
+      ]) { |c| c.website_id = id }
   end
 end
