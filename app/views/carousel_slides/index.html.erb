@@ -1,0 +1,27 @@
+<div class="page-header">
+  <h1>Carousel Slides</h1>
+</div>
+
+<p>
+  Before you create your slide, go to <a href="/images">Images</a> and upload
+  the image you want to use.
+</p>
+
+<p>
+  <%= link_to 'New Carousel Slide', new_carousel_slide_path, class: 'btn btn-primary' %>
+</p>
+
+<% if @carousel_slides.empty? -%>
+<p>There are no carousel slides set up yet.</p>
+<% else -%>
+<table class="table table-bordered table-striped">
+<% @carousel_slides.each do |carousel_slide| -%>
+  <tr><td><%= link_to carousel_slide.caption, edit_carousel_slide_path(carousel_slide) %></td>
+    <td>
+      <%= edit_button(carousel_slide) %>
+      <%= delete_button(carousel_slide) %>
+    </td>
+  </tr>
+<% end -%>
+</table>
+<% end -%>

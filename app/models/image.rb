@@ -1,10 +1,11 @@
 class Image < ActiveRecord::Base
   validates_presence_of :name, :website_id
-  validates_uniqueness_of :name, :scope => :website_id
+  validates_uniqueness_of :name, scope: :website_id
   attr_protected :website_id
 
-  has_many :pages, :dependent => :nullify
-  has_many :products, :dependent => :nullify
+  has_many :carousel_slides, dependent: :restrict
+  has_many :pages, dependent: :nullify
+  has_many :products, dependent: :nullify
 
   before_save   :determine_filename
   after_save    :write_file

@@ -40,8 +40,13 @@ class ImagesController < ApplicationController
 
   def destroy
     @image = Image.find(params[:id])
-    @image.destroy
-    flash[:notice] = 'Image deleted.'
-    redirect_to :action => 'index'
+    begin
+      @image.destroy
+      flash[:notice] = 'Image deleted.'
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @image.errors.add(:base, e)
+      redirect_to(edit_image_path(@image), alert: "#{e}") and return
+    end
+    redirect_to images_path
   end
 end

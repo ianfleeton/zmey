@@ -26,6 +26,7 @@ class Website < ActiveRecord::Base
   validates_presence_of :rbswp_payment_response_password, :if => Proc.new { |website| website.rbswp_active? }
 
   has_one :preferred_delivery_date_settings, :dependent => :delete
+  has_many :carousel_slides, order: :position
   has_many :countries, :order => :name, :dependent => :destroy
   has_many :discounts, :order => :name
   has_many :liquid_templates, :order => :name, :dependent => :destroy

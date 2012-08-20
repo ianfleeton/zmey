@@ -157,10 +157,6 @@ describe ProductsController do
     end
   end
 
-  def logged_in_as_admin
-    controller.stub(:admin?).and_return(true)
-  end
-
   def find_requested_product(stubs={})
     Product.should_receive(:find_by_id_and_website_id).with("37", website.id).and_return(mock_product(stubs))
   end

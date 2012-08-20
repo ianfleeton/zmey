@@ -5,6 +5,8 @@ YeslWebsite::Application.routes.draw do
   match 'basket/add' => 'basket#add', :as => :add_to_basket
   match 'basket(/:action(.:format))', :controller => 'basket'
 
+  resources :carousel_slides
+
   resources :choices
 
   resources :components
