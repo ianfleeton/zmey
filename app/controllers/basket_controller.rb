@@ -1,7 +1,7 @@
 class BasketController < ApplicationController
   before_filter :find_basket
   
-  before_filter :require_delivery_address, :only => 'place_order'
+  before_filter :require_delivery_address, only: [:place_order]
   before_filter :invalidate_coupons, :only => [:index]
   before_filter :calculate_discounts, :only => [:index, :checkout, :place_order]
 
@@ -235,13 +235,12 @@ class BasketController < ApplicationController
 
   # get valid delivery address or send user back to checkout
   def require_delivery_address
-    find_delivery_address
+    @address = find_delivery_address
     redirect_to :action => 'checkout' if @address.nil?
   end
 
   def find_delivery_address
-    return if @address
-    @address = session[:address_id] ? Address.find_by_id(session[:address_id]) : nil
+    @address ||= session[:address_id] ? Address.find_by_id(session[:address_id]) : nil
   end
 
   def remove_item
@@ -288,7 +287,7 @@ class BasketController < ApplicationController
     amount = 0.0
 
     if @basket.apply_shipping?
-      find_delivery_address
+      @address = find_delivery_address
       amount = @w.shipping_amount
       amount_by_address = calculate_shipping_from_address(@address)
       amount = amount_by_address.nil? ? amount : amount_by_address
