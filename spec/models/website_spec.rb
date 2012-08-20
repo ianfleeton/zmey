@@ -10,20 +10,19 @@ describe Website do
       :google_analytics_code => 'UA-9999999-9')
   end
 
+  describe 'validations that need an existing record' do
+    before do
+      @website.save
+    end
+
+    it { should validate_uniqueness_of :google_analytics_code }
+  end
+
+  it { should validate_presence_of :name }
+
   describe "validations" do
     it "should be valid with valid attributes" do
       @website.should be_valid
-    end
-
-    it "should require a name" do
-      @website.name = nil
-      @website.should_not be_valid
-    end
-
-    it "should keep Google Analytics codes unique" do
-      @website.save
-      @copy = @website.clone
-      @copy.save.should be_false
     end
 
     it "should require a rbswp_installation_id and rbswp_payment_response_password when active" do
