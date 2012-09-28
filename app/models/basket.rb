@@ -23,6 +23,10 @@ class Basket < ActiveRecord::Base
     item.save
   end
 
+  def weight
+    basket_items.inject(0) { |w, i| w + i.weight }
+  end
+
   def total(inc_tax)
     total = 0.0
     basket_items.each {|i| total += i.line_total(inc_tax)}

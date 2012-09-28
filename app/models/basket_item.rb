@@ -13,10 +13,14 @@ class BasketItem < ActiveRecord::Base
   def self.describe_feature_selections fs
     fs.map {|fs| fs.description}.join('|')
   end
-  
+
   # generates a text description of the features the customer has selected and
   # described for this item in the basket
   def update_features
     self.feature_descriptions = BasketItem.describe_feature_selections(feature_selections)
+  end
+
+  def weight
+    product.weight * quantity
   end
 end
