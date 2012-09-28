@@ -6,6 +6,8 @@ class Feature < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :product_id
 
   # associations
+  has_many :feature_selections
+  has_many :basket_items, through: :feature_selections, dependent: :destroy
   has_many :choices, dependent: :destroy
   belongs_to :product
   belongs_to :component

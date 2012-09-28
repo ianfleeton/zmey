@@ -2,6 +2,9 @@ class Choice < ActiveRecord::Base
   attr_accessible :feature_id, :name
 
   belongs_to :feature
+  has_many :feature_selections
+  has_many :basket_items, through: :feature_selections, dependent: :destroy
+
   validates_presence_of :name
   validates_uniqueness_of :name, scope: :feature_id
 
