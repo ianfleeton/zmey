@@ -11,9 +11,9 @@ Given /^a website with tracking code$/ do
 end
 
 Then /^I should find the correct tracking code$/ do
-  page.should have_content(websites(:guitar_gear).google_analytics_code)
+  page.html.should match(websites(:guitar_gear).google_analytics_code)
 end
 
 Then /^I should not find tracking code$/ do
-  page.should_not have_content('google-analytics.com')
+  page.html.should_not match('google-analytics.com')
 end
