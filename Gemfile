@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.9'
 gem 'mysql2'
 gem 'RedCloth'
 gem 'image_science'
@@ -24,6 +24,7 @@ group :assets do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
+  gem 'libv8', '~> 3.11.8'
 
   gem 'uglifier', '>= 1.0.3'
 end
@@ -53,7 +54,7 @@ group :test do
   gem 'rspec-rails'
   gem 'cucumber-rails', require: false
   gem 'test-unit', '1.2.3'
-  gem 'capybara', '1.1.1'
+  gem 'capybara'
   gem 'launchy'
   gem 'shoulda-matchers'
   gem 'database_cleaner'
