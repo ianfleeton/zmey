@@ -8,7 +8,11 @@ class SessionsController < ApplicationController
     @current_user = User.authenticate(params[:email], params[:password])
     if @current_user
       session[:user] = @current_user.id
-      redirect_to @current_user
+      if admin_or_manager?
+        redirect_to orders_path
+      else
+        redirect_to @current_user
+      end
     else
       flash[:notice] = "No user was found with this email/password"
       redirect_to action: 'new'

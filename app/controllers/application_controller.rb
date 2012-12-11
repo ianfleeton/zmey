@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    logged_in? and @current_user.admin
+    logged_in? and @current_user.admin?
   end
   
   def manager?
