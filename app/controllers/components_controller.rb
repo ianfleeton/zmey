@@ -6,7 +6,7 @@ class ComponentsController < ApplicationController
   def new
     @component = Component.new
     @component.product_id = params[:product_id]
-    redirect_to components_path and return unless product_valid?
+    redirect_to products_path and return unless product_valid?
   end
 
   def create
