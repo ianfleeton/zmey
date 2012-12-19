@@ -1,4 +1,13 @@
 require 'spec_helper'
 
 describe Basket do
+  describe '#weight' do
+    it 'returns the sum of the weight of all basket items' do
+      item1 = mock_model(BasketItem, weight: 5)
+      item2 = mock_model(BasketItem, weight: 10)
+      basket = Basket.new
+      basket.basket_items = [item1, item2]
+      basket.weight.should == 15
+    end
+  end
 end
