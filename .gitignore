@@ -1,7 +1,6 @@
 # Ignore bundler config
 /.bundle
 
-.rspec
 *.doc
 *.jpg
 *.gif
