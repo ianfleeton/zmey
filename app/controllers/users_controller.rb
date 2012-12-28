@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   def index
     @users = @w.users
+    render layout: 'admin'
   end
   
   def show

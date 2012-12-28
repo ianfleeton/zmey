@@ -1,4 +1,8 @@
 module AdminHelper
+  def page_header(title)
+    content_tag(:h1, title, class: 'page-header')
+  end
+
   def edit_button(object)
     link_to '<i class="icon-edit"></i> Edit'.html_safe,
     edit_polymorphic_path(object),

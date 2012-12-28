@@ -27,6 +27,7 @@
           <li class="<%= 'active' if current_page? pages_path %>"><%= link_to t('controllers.pages'), controller: 'pages' %></li>
           <li class="<%= 'active' if current_page? liquid_templates_path %>"><%= link_to t('controllers.liquid_templates'), liquid_templates_path %></li>
           <li class="<%= 'active' if current_page? products_path %>"><a href="/products/">Products</a></li>
+          <li class="<%= 'active' if current_page? users_path %>"><%= link_to 'Users', users_path %></li>
           <li class="<%= 'active' if current_page? orders_path %>"><%= link_to 'Orders', orders_url %></li>
           <li class="<%= 'active' if current_page? images_path %>"><%= link_to t('controllers.images'), images_path %></li>
           <li class="<%= 'active' if current_page? carousel_slides_path %>"><%= link_to 'Carousel Slides', carousel_slides_path %></li>
