@@ -17,7 +17,7 @@
   <%= form.hidden_field :component_id %>
 
   <%= form.label :name %>
-  <%= form.text_field :name %>
+  <%= form.text_field :name, required: true %>
 
   <%= form.label :ui_type, 'Display as a' %>
   <select id="feature_ui_type" name="feature[ui_type]">

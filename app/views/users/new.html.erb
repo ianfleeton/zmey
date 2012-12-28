@@ -12,33 +12,32 @@
     </div>
   <% end %>
 
-	<fieldset>
-    <% if admin? %>
+  <%= form_for @user do |form| %>
+  <fieldset>
+<% if admin? -%>
     <legend>New user details</legend>
-    <% else %>
-		<legend>Your details</legend>
-		<% end %>
-		<%= form_for @user do |form| %>
-			<div>
-				<%= form.label :name %>:<br />
-				<%= form.text_field :name, :class => "short" %>
-			</div>
-			<div>
-				<%= form.label :email %>:<br />
-				<%= form.text_field :email, :class => "short" %><br />
-				<small>Kept under lock and key. We hate spam too!</small>
-			</div>
-			<div>
-				<%= form.label :password %>:<br />
-				<%= form.password_field :password, :class => "short" %>
-			</div>
-			<div>
-				<%= form.label :password_confirmation %>:<br />
-				<%= form.password_field :password_confirmation,
-				 						:class => "short" %>
-			</div>
-			
-			<%= submit_tag "Join!" %>
-		<% end %>
-	</fieldset>
+<% else -%>
+    <legend>Your details</legend>
+<% end -%>
+    <div>
+      <%= form.label :name %>:<br>
+      <%= form.text_field :name, required: true %>
+    </div>
+    <div>
+      <%= form.label :email %>:<br>
+      <%= form.email_field :email, required: true %><br>
+      <small>Kept under lock and key. We hate spam too!</small>
+    </div>
+    <div>
+      <%= form.label :password %>:<br>
+      <%= form.password_field :password, required: true %>
+    </div>
+    <div>
+      <%= form.label :password_confirmation %>:<br>
+      <%= form.password_field :password_confirmation, required: true %>
+    </div>
+
+    <%= submit_tag "Join!" %>
+  </fieldset>
+  <% end %>
 </div>

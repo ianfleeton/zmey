@@ -14,33 +14,33 @@
 
 <div class="form"> 
 	 
-	<fieldset> 
-	<legend>Edit User Details</legend> 
 	<%= form_for @user do |form| %>
-	<div> 
-		<%= form.label :name %>:<br /> 
-		<%= form.text_field :name, :size => 35, :class => "text" %> 
-	</div> 
-	<div> 
-		<%= form.label :email %>:<br /> 
-		<%= form.text_field :email, :size => 35, :class => "text" %> 
-	</div>
-<% if admin? %>
-	<div>
-		Administrator: 
-		<%= form.radio_button :admin, true, :class => "radio" %> 
-		<label for="user_admin_true">Yes</label> 
-		<%= form.radio_button :admin, false, :class => "radio" %> 
-		<label for="user_admin">No</label> 
-	</div>
-  <div>
-    <%= form.label :manages_website_id, 'Manager for website' %>:<br />
-    <%= form.collection_select :manages_website_id, Website.all(:order => :name), :id, :name, {:include_blank => '-- Does not manage a website --'} %>
-  </div>
+  <fieldset>
+    <legend>Edit User Details</legend> 
+    <div> 
+      <%= form.label :name %>:<br>
+      <%= form.text_field :name, size: 35, required: true %>
+    </div>
+    <div>
+      <%= form.label :email %>:<br>
+      <%= form.email_field :email, size: 35, required: true %>
+    </div>
+<% if admin? -%>
+    <div>
+      Administrator:
+      <%= form.radio_button :admin, true %>
+      <label for="user_admin_true">Yes</label>
+      <%= form.radio_button :admin, false %>
+      <label for="user_admin">No</label>
+    </div>
+    <div>
+      <%= form.label :manages_website_id, 'Manager for website' %>:<br>
+      <%= form.collection_select :manages_website_id, Website.order('name'), :id, :name, {:include_blank => '-- Does not manage a website --'} %>
+    </div>
 <% end %>
-	
-	<%= submit_tag "Save", :class => "submit" %> &nbsp; 
-	<%= link_to "cancel", :action => "index" %> 
-	<% end %> 
-	</fieldset> 
-</div> 
+
+	<%= form.submit('Save') %> &nbsp;
+  <%= link_to "cancel", users_path %>
+  </fieldset>
+  <% end %>
+</div>

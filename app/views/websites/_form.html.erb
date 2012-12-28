@@ -14,32 +14,32 @@
 
 <%= form_for @website do |form| %>
 
-	<%= form.label :subdomain %>
-	<%= form.text_field :subdomain %>
+  <%= form.label :subdomain %>
+  <%= form.text_field :subdomain %>
 
-	<%= form.label :domain %>
-	<%= form.text_field :domain %>
+  <%= form.label :domain %>
+  <%= form.text_field :domain %>
 
-	<%= form.label :google_analytics_code, 'Google Analytics code' %>
-	<%= form.text_field :google_analytics_code %>
+  <%= form.label :google_analytics_code, 'Google Analytics code' %>
+  <%= form.text_field :google_analytics_code %>
 
-	<%= form.label :google_domain_name %> (leave blank for default)<br>
-	<%= form.text_field :google_domain_name %>
+  <%= form.label :google_domain_name %> (leave blank for default)<br>
+  <%= form.text_field :google_domain_name %>
 
-	<%= form.label :google_ftp_username, 'Google FTP username' %>
-	<%= form.text_field :google_ftp_username %>
+  <%= form.label :google_ftp_username, 'Google FTP username' %>
+  <%= form.text_field :google_ftp_username %>
 
-	<%= form.label :google_ftp_password, 'Google FTP password' %>
-	<%= form.text_field :google_ftp_password %>
+  <%= form.label :google_ftp_password, 'Google FTP password' %>
+  <%= form.text_field :google_ftp_password %>
 
-	<%= form.label :name %>
-	<%= form.text_field :name %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
 
-	<%= form.label :email %>
-	<%= form.email_field :email %>
+  <%= form.label :email %>
+  <%= form.email_field :email %>
 
-	<%= form.label :default_locale %>
-	<%= form.text_field :default_locale %>
+  <%= form.label :default_locale %>
+  <%= form.text_field :default_locale %>
 
   <%= form.label :blog_id %>
   <%= form.collection_select :blog_id, Forum.all(:conditions => {:website_id => @website.id}, :order => :name), :id, :name, {:include_blank => '-- No blog --'} %>
@@ -54,27 +54,27 @@
     No
   </label>
 
-	<label for="website_private_true">Private (users must be logged in to view)?</label>
-	<label class="radio">
+  <label for="website_private_true">Private (users must be logged in to view)?</label>
+  <label class="radio">
     <%= form.radio_button :private, true, :class => "radio" %>
     Yes
   </label>
-	<label class="radio">
+  <label class="radio">
     <%= form.radio_button :private, false, :class => "radio" %>
-	  No
+    No
   </label>
 
   <h2>CSS Settings</h2>
 
-	<%= form.label :css_url, 'CSS URL' %>
-	<%= form.text_field :css_url %>
+  <%= form.label :css_url, 'CSS URL' %>
+  <%= form.text_field :css_url %>
 
-	<label for="website_use_default_css_true">Use default CSS?</label>
-	<label class="radio">
+  <label for="website_use_default_css_true">Use default CSS?</label>
+  <label class="radio">
     <%= form.radio_button :use_default_css, true, :class => "radio" %>
     Yes
   </label>
-	<label class="radio">
+  <label class="radio">
     <%= form.radio_button :use_default_css, false, :class => "radio" %>
     No
   </label>
@@ -145,11 +145,11 @@
 
     	<label for="website_cardsave_active_true">Active?</label>
     	<label class="radio">
-        <%= form.radio_button :cardsave_active, true, :class => "radio" %>
+        <%= form.radio_button :cardsave_active, true %>
     	  Yes
       </label>
       <label class="radio">
-    	  <%= form.radio_button :cardsave_active, false, :class => "radio" %>
+        <%= form.radio_button :cardsave_active, false %>
         No
       </label>
 
@@ -166,29 +166,29 @@
 
       <label for="website_rbswp_active_true">Active?</label>
       <label class="radio">
-        <%= form.radio_button :rbswp_active, true, :class => "radio" %>
+        <%= form.radio_button :rbswp_active, true %>
         Yes
       </label>
       <label class="radio">
-  	    <%= form.radio_button :rbswp_active, false, :class => "radio" %>
+  	    <%= form.radio_button :rbswp_active, false %>
   	    No
       </label>
 
       <label for="website_rbswp_test_mode">Mode?</label>
   	  <label class="radio">
-        <%= form.radio_button :rbswp_test_mode, false, class: "radio" %>
+        <%= form.radio_button :rbswp_test_mode, false %>
   	    Production
       </label>
   	  <label class="radio">
-        <%= form.radio_button :rbswp_test_mode, true, class: "radio" %>
+        <%= form.radio_button :rbswp_test_mode, true %>
         Test
       </label>
 
-  	<%= form.label :rbswp_installation_id, 'Installation ID' %>
-  	<%= form.text_field :rbswp_installation_id %>
+      <%= form.label :rbswp_installation_id, 'Installation ID' %>
+      <%= form.text_field :rbswp_installation_id %>
 
-  	<%= form.label :rbswp_payment_response_password, 'Payment response password' %>
-  	<%= form.text_field :rbswp_payment_response_password %>
+      <%= form.label :rbswp_payment_response_password, 'Payment response password' %>
+      <%= form.text_field :rbswp_payment_response_password %>
 
     </div>
     <div class="span6">
@@ -213,11 +213,11 @@
 
       <label for="website_paypal_active_true">Active?</label>
       <label class="radio">
-        <%= form.radio_button :paypal_active, true, :class => "radio" %>
+        <%= form.radio_button :paypal_active, true %>
         Yes
       </label>
       <label class="radio">
-        <%= form.radio_button :paypal_active, false, :class => "radio" %>
+        <%= form.radio_button :paypal_active, false %>
         No
       </label>
 

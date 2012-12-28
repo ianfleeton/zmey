@@ -15,7 +15,7 @@
   <%= form.hidden_field :feature_id %>
 
 	<%= form.label :name %>
-	<%= form.text_field :name %>
+	<%= form.text_field :name, required: true %>
 
   <br><%= form.submit class: 'btn btn-primary' %>
 <% end %>

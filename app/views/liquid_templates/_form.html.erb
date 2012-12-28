@@ -14,7 +14,7 @@
 <%= form_for @liquid_template do |form| %>
 
   <%= form.label :name %>
-  <%= form.text_field :name %>
+  <%= form.text_field :name, required: true %>
 
   <%= form.label :markup %>
   <%= form.text_area :markup, class: 'span12' %>

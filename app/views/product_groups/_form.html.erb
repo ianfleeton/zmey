@@ -13,8 +13,8 @@
 
 <%= form_for @product_group do |form| %>
 
-	<%= form.label :name %>
-	<%= form.text_field :name %>
+  <%= form.label :name, required: true %>
+  <%= form.text_field :name %>
 
   <br><%= form.submit class: 'btn btn-primary' %>
 
