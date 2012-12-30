@@ -66,6 +66,7 @@ class BasketController < ApplicationController
     @order = Order.new
     @order.website_id = @w.id
     @order.user_id = @current_user.id if logged_in?
+    @order.ip_address = request.remote_ip
     @order.copy_address @address
 
     unless params[:preferred_delivery_date].nil?

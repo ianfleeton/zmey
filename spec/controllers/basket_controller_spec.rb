@@ -19,6 +19,11 @@ describe BasketController do
         controller.should_receive(:delete_previous_unpaid_order_if_any)
         post 'place_order'
       end
+
+      it "records the customer's IP address" do
+        post 'place_order'
+        assigns(:order).ip_address.should == '0.0.0.0'
+      end
     end
   end
 end
