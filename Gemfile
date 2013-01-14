@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.11'
 gem 'mysql2'
 gem 'RedCloth'
 gem 'image_science'
@@ -24,7 +24,7 @@ group :assets do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
-  gem 'libv8', '~> 3.11.8'
+  gem 'libv8', '3.11.8.4'
 
   gem 'uglifier', '>= 1.0.3'
 end
