@@ -32,6 +32,7 @@ end
 gem 'jquery-rails'
 
 group :development do
+  gem 'brakeman'
   gem 'thin'
 end
 
