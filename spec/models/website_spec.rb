@@ -55,8 +55,33 @@ describe Website do
     @website.only_accept_payment_on_account?.should be_false
   end
 
-  it "should populate itself with a number of countries" do
+  it 'orders enquiries in reverse chronological order' do
     @website.save
-    @website.countries.should have(248).countries
+
+    params = {name: 'Alice', telephone: '123', email: 'alice@example.org', enquiry: 'Hello'}
+
+    enquiries = []
+    enquiries << Enquiry.create!(params)
+    enquiries << Enquiry.create!(params)
+    enquiries << Enquiry.create!(params)
+
+    [ 1.hour.ago, 5.minutes.ago, 1.minute.ago ].each_with_index do |time, index|
+      enquiry = enquiries[index]
+      enquiry.created_at = time
+      enquiry.website_id = @website.id
+      enquiry.save!
+    end
+
+    @website.enquiries.first.should == enquiries.last
+    @website.enquiries.second.should == enquiries.second
+    @website.enquiries.third.should == enquiries.first
+  end
+
+  describe '#populate_countries!' do
+    it 'should populate itself with a number of countries' do
+      @website.save
+      @website.populate_countries!
+      @website.countries.should have(248).countries
+    end
   end
 end

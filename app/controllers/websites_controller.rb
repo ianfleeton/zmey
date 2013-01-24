@@ -19,6 +19,7 @@ class WebsitesController < ApplicationController
     @website = Website.new(params[:website])
 
     if @website.save
+      @website.populate_countries!
       Page.bootstrap @website
 
       create_latest_news

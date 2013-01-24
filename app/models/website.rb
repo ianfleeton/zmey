@@ -37,7 +37,7 @@ class Website < ActiveRecord::Base
   has_many :pages, :order => 'name', :dependent => :destroy
   has_many :images, :dependent => :destroy
   has_many :forums, :dependent => :destroy
-  has_many :enquiries, :dependent => :destroy
+  has_many :enquiries, order: 'created_at DESC', dependent: :destroy
   has_many :shipping_zones, :order => 'name', :dependent => :destroy
   has_many :shipping_classes, :through => :shipping_zones
   has_many :shipping_table_rows, :finder_sql =>
@@ -49,8 +49,6 @@ class Website < ActiveRecord::Base
     'ORDER BY `shipping_table_rows`.trigger'
   has_many :users, :order => 'name', :dependent => :destroy
   belongs_to :blog, :class_name => 'Forum'
-
-  after_create :populate_countries
 
   def self.for(domain, subdomains)
     website = find_by_domain(domain)
@@ -69,7 +67,7 @@ class Website < ActiveRecord::Base
     accept_payment_on_account and !(rbswp_active)
   end
 
-  def populate_countries
+  def populate_countries!
     Country.create([
       { :name => 'Afghanistan',           :iso_3166_1_alpha_2 => 'AF' },
       { :name => 'Åland Islands',         :iso_3166_1_alpha_2 => 'AX' },
