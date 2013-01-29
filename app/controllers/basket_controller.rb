@@ -114,6 +114,7 @@ class BasketController < ApplicationController
       @order.empty_basket(session)
       redirect_to controller: 'orders', action: 'receipt'
     else
+      OrderNotifier.admin_waiting_for_payment(@w, @order).deliver
       redirect_to controller: 'orders', action: 'select_payment_method'
     end
   end

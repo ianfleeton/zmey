@@ -9,4 +9,13 @@ class OrderNotifier < ActionMailer::Base
     mail(to: recipients, subject: website.name + ': order notification ' + order.order_number,
       from: website.email)
   end
+
+  def admin_waiting_for_payment(website, order)
+    recipients = [website.email]
+    @website = website
+    @order = order
+    mail(to: recipients, subject: website.name + ': waiting for payment ' + order.order_number,
+      from: website.email)
+    render 'notification'
+  end
 end
