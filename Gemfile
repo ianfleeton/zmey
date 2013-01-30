@@ -9,6 +9,7 @@ gem 'liquid'
 gem 'prawn'
 gem 'acts_as_list'
 gem 'acts_as_tree'
+gem 'exception_notification'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

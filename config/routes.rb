@@ -118,4 +118,7 @@ YeslWebsite::Application.routes.draw do
   match ':slug' => 'pages#show', :as => :slug, :constraints => { :slug => /[-a-z0-9]*/ }
 
   root :controller => 'pages', :action => 'show', :slug => ''
+
+  # Catch unroutable paths and send to the routing error handler
+  match '*a', to: 'application#routing_error'
 end

@@ -6,6 +6,18 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_timezone, :require_website, :initialize_meta_tags, :initialize_user, :set_locale, :protect_private_website, :initialize_tax_display
   
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from Exception, with: :render_error
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found
+    rescue_from ActionController::RoutingError, with: :not_found
+    rescue_from ActionController::UnknownController, with: :not_found
+    rescue_from ActionController::UnknownAction, with: :not_found
+  end
+
+  def routing_error
+    not_found
+  end
+
   protected
 
   def logged_in?
@@ -77,6 +89,13 @@ class ApplicationController < ActionController::Base
 
   def not_found
     render "#{Rails.root.to_s}/public/404", formats: [:html], layout: false, status: 404
+  end
+
+  def render_error(exception)
+    ExceptionNotifier::Notifier
+      .exception_notification(request.env, exception)
+      .deliver
+    render "#{Rails.root.to_s}/public/500", layout: false, status: 500
   end
 
   def initialize_meta_tags
