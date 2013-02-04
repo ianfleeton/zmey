@@ -1,6 +1,4 @@
 class OrdersController < ApplicationController
-  include ActionView::Helpers::NumberHelper
-  include ProductsHelper
 
   before_filter :admin_or_manager_required, only: [:destroy]
 
@@ -50,54 +48,20 @@ class OrdersController < ApplicationController
   end
 
   def invoice
-    url_dir = "/invoices/#{@order.hash.to_s}"
-    dir = "#{Rails.root.to_s}/public#{url_dir}"
-    FileUtils.makedirs(dir)
-    filename = "#{dir}/Invoice-#{@order.order_number}.pdf"
-    url_filename = "#{url_dir}/Invoice-#{@order.order_number}.pdf"
-
-    Prawn::Document.generate(filename, :page_size => "A4") do |pdf|
-      spacing = 3
-      pdf.font 'fonts/Aller_Lt.ttf'
-      pdf.font_size 18
-      pdf.text "Invoice number #{@order.order_number}"
-      pdf.move_down 24
-      pdf.font_size 11
-      pdf.text "Invoice created at: #{@order.created_at}"
-      pdf.move_down 24
-
-      address_top = 700
-
-      if @w.invoice_details
-        pdf.bounding_box([0, address_top], :width => 200, :height => 200) do
-          pdf.text @w.invoice_details, :leading => 4
-        end
-      end
-
-      pdf.bounding_box([300, address_top], :width => 200, :height => 200) do
-        pdf.text("Customer:\n" + @order.full_name + "\n" +
-          @order.address_line_1 + "\n" + @order.address_line_2 + "\n" +
-          @order.town_city + "\n" + @order.county + "\n" + @order.postcode +
-          "\n" + @order.country.to_s, :leading => 4)
-      end
-
-      cells = []
-      cells << ["Product", "Price"]
-      @order.order_lines.each do |line|
-        product = line.product_name
-        product += " - " + line.feature_descriptions unless line.feature_descriptions.empty?
-        cells << [product, formatted_gbp_price(line.line_total)]
-      end
-      cells << ["Order total:", formatted_gbp_price(@order.total)]
-
-      t = Prawn::Table.new(cells, pdf)
-      t.draw
+    if can_access_order?
+      i = Invoice.new(order: @order, invoice_details: @w.invoice_details)
+      i.generate
+      send_file(i.filename)
+    else
+      redirect_to new_session_path
     end
-
-    send_file(filename)
   end
 
   protected
+
+  def can_access_order?
+    admin_or_manager? || @current_user.id == @order.user_id
+  end
 
   # get valid order from current session or send user back to their basket
   def require_order
