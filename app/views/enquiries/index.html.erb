@@ -1,6 +1,4 @@
-<div class="page-header">
-  <h1>Enquiries</h1>
-</div>
+<%= page_header 'Enquiries' %>
 
 <% if @enquiries.empty? -%>
 <p>No enquiries have been sent yet.</p>
@@ -8,6 +6,7 @@
 
 <table class="table table-bordered table-striped">
   <tr>
+    <th>Sent</th>
     <th>Name</th>
     <th>Organisation</th>
     <th>Postcode</th>
@@ -19,6 +18,7 @@
 
 <% @enquiries.each do |enquiry| %>
   <tr>
+    <td><%= enquiry.created_at %></td>
     <td><%= enquiry.name %></td>
     <td><%= enquiry.organisation %></td>
     <td><%= enquiry.postcode %></td>

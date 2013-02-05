@@ -1,6 +1,6 @@
 module AdminHelper
   def page_header(title)
-    content_tag(:h1, title, class: 'page-header')
+    content_tag(:div, content_tag(:h1, title), class: 'page-header')
   end
 
   def edit_button(object)

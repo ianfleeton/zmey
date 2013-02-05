@@ -1,6 +1,4 @@
-<div class="page-header">
-  <h1>View Enquiry</h1>
-</div>
+<%= page_header 'View Enquiry' %>
 
 <ul class="breadcrumb">
   <li>
@@ -11,6 +9,11 @@
     View Enquiry
   </li>
 </ul>
+
+<p>
+  <b>Sent:</b>
+  <%= @enquiry.created_at %>
+</p>
 
 <p>
   <b>Name:</b>
