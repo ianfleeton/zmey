@@ -10,17 +10,19 @@ class BasketController < ApplicationController
   end
 
   def add
+    go_back_to = request.referrer ? request.referrer : {action: 'index'}
+
     product = Product.find_by_id_and_website_id(params[:product_id], @w.id)
     if product.nil?
       flash[:notice] = "Oops, we can't add that product to the basket."
-      redirect_to request.referrer and return
+      redirect_to go_back_to and return
     end
     quantity = params[:quantity].to_i
     quantity = 1 if quantity < 1
 
     feature_selections = get_feature_selections
     unless flash[:notice].nil?
-      redirect_to request.referrer and return
+      redirect_to go_back_to and return
     end
 
     @basket.add(product, feature_selections, quantity)
