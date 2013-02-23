@@ -1,6 +1,6 @@
-<h1>Payments</h1>
+<%= page_header 'Payments' %>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Order</th>
@@ -16,7 +16,7 @@
     <tr>
       <td>
         <% if p.order -%>
-        <%= link_to p.order.order_number, :controller => 'orders', :action => 'show', :id => p.order.id %>
+        <%= link_to p.order.order_number, p.order %>
         <% else -%>
         -
         <% end -%>
@@ -34,7 +34,7 @@
         <%= mail_to p.email, p.email %>
       </td>
       <td>
-        <%= link_to 'Full detail', :controller => 'payments', :action => 'show', :id => p.id %>
+        <%= link_to 'Full detail', p %>
       </td>
     </tr>
   <% end %>

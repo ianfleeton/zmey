@@ -3,6 +3,8 @@ class PaymentsController < ApplicationController
 
   before_filter :admin_required, only: [:index, :show]
 
+  layout 'admin', only: 'index'
+
   FAILURE_MESSAGE = 'Some information was incorrect and your payment may not have gone through properly. Please contact us.'
 
   def index
