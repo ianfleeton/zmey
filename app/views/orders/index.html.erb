@@ -1,6 +1,4 @@
-<div class="page-header">
-  <h1>Orders</h1>
-</div>
+<%= page_header 'Orders' %>
 
 <% if @orders.empty? -%>
 <p>There are no orders.</p>
@@ -19,16 +17,15 @@
   </thead>
   <tbody>
   <% @orders.each do |o| -%>
-    <tr class="<%= cycle('odd', 'even') %>">
+    <tr>
       <td><%= link_to o.order_number, order_path(o) %></td>
       <td><%= link_to 'Invoice (PDF)', invoice_order_path(o) %></td>
-      <td><%= formatted_price(o.total) %></td>
+      <td class="numeric"><%= formatted_price(o.total) %></td>
       <td><%= o.created_at %></td>
       <td><%= o.full_name %></td>
       <td><%= o.status_description %></td>
       <td style="width: 70px;">
-        <%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe, o,
-        confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini' %>
+        <%= delete_button(o) %>
       </td>
     </tr>
   <% end -%>
