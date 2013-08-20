@@ -5,3 +5,27 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Website.destroy_all
+
+website = Website.create!(
+  domain: 'www.localhost',
+  name: 'Shop',
+  subdomain: 'local'
+)
+
+website.populate_countries!
+Page.bootstrap(website)
+
+home_page = Page.find_by_name('Home')
+
+idevice = Product.create!(
+  name: 'iDevice',
+  sku: 'IDV13',
+  website: website
+)
+
+ProductPlacement.create!(
+  page: home_page,
+  product: idevice
+)
