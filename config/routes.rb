@@ -2,10 +2,11 @@ YeslWebsite::Application.routes.draw do
 
   resources :addresses
 
-  post 'basket/add' => 'basket#add', :as => :add_to_basket
+  post 'basket/add' => 'basket#add', as: :add_to_basket
   post 'basket/enter_coupon' => 'basket#enter_coupon'
+  post 'basket/place_order' => 'basket#place_order'
   post 'basket/update' => 'basket#update'
-  get 'basket(/:action(.:format))', :controller => 'basket'
+  get 'basket(/:action(.:format))', controller: 'basket'
 
   resources :carousel_slides
 
