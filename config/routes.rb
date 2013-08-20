@@ -3,6 +3,8 @@ YeslWebsite::Application.routes.draw do
   resources :addresses
 
   post 'basket/add' => 'basket#add', :as => :add_to_basket
+  post 'basket/enter_coupon' => 'basket#enter_coupon'
+  post 'basket/update' => 'basket#update'
   get 'basket(/:action(.:format))', :controller => 'basket'
 
   resources :carousel_slides
