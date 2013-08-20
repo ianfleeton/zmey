@@ -69,6 +69,6 @@ group :test do
   gem 'database_cleaner'
 
   # Go faster!
-  gem 'spork'
+  gem 'spork-rails', github: 'A-gen/spork-rails'
   gem 'watchr'
 end
