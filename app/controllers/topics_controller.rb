@@ -18,7 +18,7 @@ class TopicsController < ApplicationController
   def create_reply
     @topic = Topic.find(params[:post][:topic_id])
 
-    @post = Post.new(params[:post])
+    @post = Post.new(post_params)
 
     unless good_token?
       render action: 'show', id: @topic
@@ -115,5 +115,9 @@ class TopicsController < ApplicationController
     @topic.last_post_at = p.updated_at
     @topic.posts_count += adjust_post_count
     @topic.save
+  end
+
+  def post_params
+    params.require(:post).permit(:author, :content, :email)
   end
 end

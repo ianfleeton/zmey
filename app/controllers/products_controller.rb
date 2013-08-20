@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
   end
   
   def create
-    @product = Product.new(params[:product])
+    @product = Product.new(product_params)
     @product.website_id = @w.id
 
     if @product.save
@@ -32,7 +32,7 @@ class ProductsController < ApplicationController
   end
   
   def update
-    if @product.update_attributes(params[:product])
+    if @product.update_attributes(product_params)
       flash[:notice] = 'Product saved.'
       redirect_to product_path(@product)
     else
@@ -75,5 +75,12 @@ class ProductsController < ApplicationController
   def find_product
     @product = Product.find_by_id_and_website_id(params[:id], @w.id)
     not_found unless @product
+  end
+
+  def product_params
+    params.require(:product).permit(:apply_shipping, :availability, :brand, :condition, :description,
+      :full_detail, :gtin, :google_product_category, :google_title, :image_id,
+      :meta_description, :mpn, :name, :page_title, :price, :product_type, :rrp,
+      :shipping_supplement, :sku, :submit_to_google, :tax_type, :weight)
   end
 end

@@ -10,7 +10,7 @@ class AddressesController < ApplicationController
   end
 
   def create
-    @address = Address.new(params[:address])
+    @address = Address.new(address_params)
     if logged_in?
       @address.user_id = @current_user.id
     end
@@ -27,7 +27,7 @@ class AddressesController < ApplicationController
   def update
     @address = Address.find(params[:id])
     if session[:address_id] && session[:address_id] == @address.id
-      if @address.update_attributes(params[:address])
+      if @address.update_attributes(address_params)
         flash[:notice] = 'Address updated.'
         redirect_to controller: 'basket', action: 'checkout'
       else
@@ -39,4 +39,10 @@ class AddressesController < ApplicationController
       redirect_to action: 'new'
     end
   end
+
+  private
+
+    def address_params
+      params.require(:address).permit(:address_line_1, :address_line_2, :country_id, :county, :email_address, :full_name, :phone_number, :postcode, :town_city)
+    end
 end

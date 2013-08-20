@@ -15,7 +15,7 @@ class DiscountsController < ApplicationController
   end
 
   def create
-    @discount = Discount.new(params[:discount])
+    @discount = Discount.new(discount_params)
     @discount.website_id = @w.id
 
     if @discount.save
@@ -26,7 +26,7 @@ class DiscountsController < ApplicationController
   end
 
   def update
-    if @discount.update_attributes(params[:discount])
+    if @discount.update_attributes(discount_params)
       flash[:notice] = "Discount successfully updated."
       redirect_to discounts_path
     else
@@ -44,5 +44,9 @@ class DiscountsController < ApplicationController
   def find_discount
     @discount = Discount.find_by_id_and_website_id(params[:id], @w.id)
     not_found unless @discount
+  end
+
+  def discount_params
+    params.require(:discount).permit(:coupon, :free_products_group_id, :name, :reward_type)
   end
 end

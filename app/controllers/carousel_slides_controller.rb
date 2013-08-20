@@ -15,7 +15,7 @@ class CarouselSlidesController < ApplicationController
   end
 
   def create
-    @carousel_slide = CarouselSlide.new(params[:carousel_slide])
+    @carousel_slide = CarouselSlide.new(carousel_slide_params)
     @carousel_slide.website_id = @w.id
 
     if @carousel_slide.save
@@ -26,7 +26,7 @@ class CarouselSlidesController < ApplicationController
   end
 
   def update
-    if @carousel_slide.update_attributes(params[:carousel_slide])
+    if @carousel_slide.update_attributes(carousel_slide_params)
       redirect_to carousel_slides_path, notice: 'Carousel slide successfully updated.'
     else
       render action: 'edit'
@@ -43,5 +43,9 @@ class CarouselSlidesController < ApplicationController
   def find_carousel_slide
     @carousel_slide = CarouselSlide.find_by_id_and_website_id(params[:id], @w.id)
     not_found unless @carousel_slide
+  end
+
+  def carousel_slide_params
+    params.require(:carousel_slide).permit(:caption, :image_id, :link, :position)
   end
 end

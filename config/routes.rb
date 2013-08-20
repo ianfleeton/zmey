@@ -2,8 +2,8 @@ YeslWebsite::Application.routes.draw do
 
   resources :addresses
 
-  match 'basket/add' => 'basket#add', :as => :add_to_basket
-  match 'basket(/:action(.:format))', :controller => 'basket'
+  post 'basket/add' => 'basket#add', :as => :add_to_basket
+  get 'basket(/:action(.:format))', :controller => 'basket'
 
   resources :carousel_slides
 
@@ -87,12 +87,12 @@ YeslWebsite::Application.routes.draw do
 
   resources :shipping_zones
 
-  match 'sitemap.xml' => 'pages#sitemap', :as => 'sitemap', :format => 'xml'
+  get 'sitemap.xml' => 'pages#sitemap', :as => 'sitemap', :format => 'xml'
 
-  match 'terms' => 'pages#terms', :as => :terms
+  get 'terms' => 'pages#terms', :as => :terms
 
-  match 'topics/new/:forum_id' => 'topics#new', :as => 'new_topic'
-  match 'topics/show/:id' => 'topics#show', :as => 'topic'
+  get 'topics/new/:forum_id' => 'topics#new', :as => 'new_topic'
+  get 'topics/show/:id' => 'topics#show', :as => 'topic'
 
   resources :topics
 
@@ -115,10 +115,10 @@ YeslWebsite::Application.routes.draw do
     end
     post 'destroy', :on => :member
   end
-  match ':slug' => 'pages#show', :as => :slug, :constraints => { :slug => /[-a-z0-9]*/ }
+  get ':slug' => 'pages#show', as: :slug, :constraints => { :slug => /[-a-z0-9]*/ }
 
   root :controller => 'pages', :action => 'show', :slug => ''
 
   # Catch unroutable paths and send to the routing error handler
-  match '*a', to: 'application#routing_error'
+  get '*a', to: 'application#routing_error'
 end

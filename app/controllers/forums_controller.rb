@@ -16,7 +16,7 @@ class ForumsController < ApplicationController
   end
   
   def create
-    @forum = Forum.new(params[:forum])
+    @forum = Forum.new(forum_params)
     @forum.website_id = @w.id
 
     if @forum.save
@@ -38,5 +38,9 @@ class ForumsController < ApplicationController
   def find_forum
     @forum = Forum.find(params[:id])
     not_found if @forum.website_id != @w.id
+  end
+
+  def forum_params
+    params.require(:forum).permit(:name)
   end
 end

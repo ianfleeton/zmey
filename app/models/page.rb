@@ -7,7 +7,6 @@ class Page < ActiveRecord::Base
   belongs_to :image
   belongs_to :website
 
-  attr_protected :website_id
   validates_presence_of :title, :name, :keywords, :description, :website_id
   validates_format_of :slug, with: /\A[-a-z0-9]+\Z/, message: 'can only contain lowercase letters, numbers and hyphens', allow_blank: true
   validates_uniqueness_of :slug, scope: :website_id, case_sensitive: false

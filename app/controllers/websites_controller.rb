@@ -16,7 +16,7 @@ class WebsitesController < ApplicationController
   end
   
   def create
-    @website = Website.new(params[:website])
+    @website = Website.new(website_params)
 
     if @website.save
       @website.populate_countries!
@@ -32,7 +32,7 @@ class WebsitesController < ApplicationController
   end
 
   def update
-    if @website.update_attributes(params[:website])
+    if @website.update_attributes(website_params)
       flash[:notice] = 'Website saved.'
       redirect_to edit_website_path(@website)
     else
@@ -92,5 +92,19 @@ class WebsitesController < ApplicationController
     topic.last_post_author = post.author
     topic.last_post_at = post.created_at
     topic.save
+  end
+
+  def website_params
+    params.require(:website).permit(:blog_id, :can_users_create_accounts, :cardsave_active,
+      :cardsave_merchant_id, :cardsave_password, :cardsave_pre_shared_key,
+      :css_url, :default_locale, :domain, :email, :footer_html,
+      :google_analytics_code, :google_domain_name, :google_ftp_password,
+      :google_ftp_username, :invoice_details, :name, :page_image_size,
+      :page_thumbnail_size, :paypal_active, :paypal_email_address,
+      :paypal_identity_token, :private, :product_image_size,
+      :product_thumbnail_size, :rbswp_active, :rbswp_installation_id,
+      :rbswp_payment_response_password, :rbswp_test_mode, :shipping_amount,
+      :shop, :show_vat_inclusive_prices, :skip_payment, :subdomain,
+      :terms_and_conditions, :use_default_css, :vat_number)
   end
 end

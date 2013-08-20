@@ -10,7 +10,7 @@ class QuantityPricesController < ApplicationController
   end
   
   def create
-    @quantity_price = QuantityPrice.new(params[:quantity_price])
+    @quantity_price = QuantityPrice.new(quantity_price_params)
     redirect_to products_path and return unless product_valid?
 
     if @quantity_price.save
@@ -22,7 +22,7 @@ class QuantityPricesController < ApplicationController
   end
   
   def update
-    if @quantity_price.update_attributes(params[:quantity_price])
+    if @quantity_price.update_attributes(quantity_price_params)
       flash[:notice] = "Quantity/price rule successfully updated."
       redirect_to edit_product_path(@quantity_price.product.id)
     else
@@ -53,5 +53,9 @@ class QuantityPricesController < ApplicationController
       flash[:notice] = 'Invalid product.'
       false
     end
+  end
+
+  def quantity_price_params
+    params.require(:quantity_price).permit(:price, :product_id, :quantity)
   end
 end

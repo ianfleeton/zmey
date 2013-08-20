@@ -3,7 +3,7 @@ class ProductGroupPlacementsController < ApplicationController
   before_filter :find_product_group_placement, except: [:create]
 
   def create
-    @product_group_placement = ProductGroupPlacement.new(params[:product_group_placement])
+    @product_group_placement = ProductGroupPlacement.new(product_group_placement_params)
     if @product_group_placement.save
       flash[:notice] = "Product successfully added to group."
     else
@@ -27,5 +27,9 @@ class ProductGroupPlacementsController < ApplicationController
 
   def find_product_group_placement
     @product_group_placement = ProductGroupPlacement.find(params[:id])
+  end
+
+  def product_group_placement_params
+    params.require(:product_group_placement).permit(:product_group_id, :product_id)
   end
 end

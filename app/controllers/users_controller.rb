@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     @user.admin = false
     @user.website_id = @w.id
     
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     params[:user].delete(:admin)
     params[:user].delete(:manages_website_id)
 
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params)
       flash[:notice] = "User successfully updated."
       redirect_to @user
     else
@@ -125,5 +125,9 @@ class UsersController < ApplicationController
       flash[:notice] = 'New user accounts cannot be created.'
       redirect_to root_path
     end
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :name, :password, :password_confirmation)
   end
 end

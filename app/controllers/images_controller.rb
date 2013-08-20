@@ -11,7 +11,7 @@ class ImagesController < ApplicationController
   end
 
   def create
-    @image = Image.new(params[:image])
+    @image = Image.new(image_params)
 
     @image.website_id = @w.id
     
@@ -30,7 +30,7 @@ class ImagesController < ApplicationController
   def update
     @image = Image.find(params[:id])
 
-    if @image.update_attributes(params[:image])
+    if @image.update_attributes(image_params)
       flash[:notice] = 'Image saved.'
       redirect_to action: 'index'
     else
@@ -49,4 +49,10 @@ class ImagesController < ApplicationController
     end
     redirect_to images_path
   end
+
+  private
+
+    def image_params
+      params.require(:image).permit(:image, :name)
+    end
 end

@@ -1,6 +1,6 @@
 class AddContentToPages < ActiveRecord::Migration
   def self.up
-    add_column :pages, :content, :text, :default => '', :null => false
+    add_column :pages, :content, :text
   end
 
   def self.down

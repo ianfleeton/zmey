@@ -44,7 +44,7 @@ class PagesController < ApplicationController
   def update
     new_position = params[:page].delete(:position).to_i
     old_parent_id = @page.parent_id
-    if @page.update_attributes(params[:page])
+    if @page.update_attributes(page_params)
       @page.move_to_position new_position if old_parent_id != @page.parent_id
       flash[:notice] = 'Page saved.'
       redirect_to edit_page_path(@page)
@@ -59,7 +59,7 @@ class PagesController < ApplicationController
   end
 
   def create
-    @page = Page.new(params[:page])
+    @page = Page.new(page_params)
     @page.website_id = @w.id
 
     if @page.save
@@ -104,5 +104,9 @@ class PagesController < ApplicationController
   def moved
     flash[:notice] = 'Moved'
     redirect_to :action => 'index'
+  end
+
+  def page_params
+    params.require(:page).permit(:content, :description, :image_id, :keywords, :name, :parent_id, :slug, :title)
   end
 end

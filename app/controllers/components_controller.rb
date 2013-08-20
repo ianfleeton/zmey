@@ -10,7 +10,7 @@ class ComponentsController < ApplicationController
   end
 
   def create
-    @component = Component.new(params[:component])
+    @component = Component.new(component_params)
     redirect_to products_path and return unless product_valid?
 
     if @component.save
@@ -22,7 +22,7 @@ class ComponentsController < ApplicationController
   end
 
   def update
-    if @component.update_attributes(params[:component])
+    if @component.update_attributes(component_params)
       flash[:notice] = "Component successfully updated."
       redirect_to edit_product_path(@component.product)
     else
@@ -100,5 +100,9 @@ class ComponentsController < ApplicationController
       flash[:notice] = 'Invalid product.'
       false
     end
+  end
+
+  def component_params
+    params.require(:component).permit(:name, :product_id)
   end
 end

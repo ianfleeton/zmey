@@ -4,7 +4,7 @@ class ProductPlacementsController < ApplicationController
   # TODO: restrict by website
   
   def create
-    @product_placement = ProductPlacement.new(params[:product_placement])
+    @product_placement = ProductPlacement.new(product_placement_params)
     if @product_placement.save
       flash[:notice] = "Product successfully placed in page."
       redirect_to edit_page_path(@product_placement.page)
@@ -38,5 +38,9 @@ class ProductPlacementsController < ApplicationController
   def moved
     flash[:notice] = "Moved."
     redirect_to edit_page_path(@product_placement.page)
+  end
+
+  def product_placement_params
+    params.require(:product_placement).permit(:page_id, :position, :product_id)
   end
 end

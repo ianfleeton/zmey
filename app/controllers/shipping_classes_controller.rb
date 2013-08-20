@@ -12,7 +12,7 @@ class ShippingClassesController < ApplicationController
   end
 
   def create
-    @shipping_class = ShippingClass.new(params[:shipping_class])
+    @shipping_class = ShippingClass.new(shipping_class_params)
 
     if @shipping_class.save
       redirect_to shipping_classes_path, notice: 'Saved.'
@@ -22,7 +22,7 @@ class ShippingClassesController < ApplicationController
   end
 
   def update
-    if @shipping_class.update_attributes(params[:shipping_class])
+    if @shipping_class.update_attributes(shipping_class_params)
       redirect_to shipping_classes_path, notice: 'Saved.'
     else
       render action: 'edit'
@@ -39,5 +39,9 @@ class ShippingClassesController < ApplicationController
 
   def find_shipping_class
     @shipping_class = ShippingClass.find(params[:id])
+  end
+
+  def shipping_class_params
+    params.require(:shipping_class).permit(:name, :shipping_zone_id)
   end
 end

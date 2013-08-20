@@ -1,6 +1,4 @@
 class ShippingClass < ActiveRecord::Base
-  attr_accessible :name, :shipping_zone_id
-
   belongs_to :shipping_zone
   has_many :shipping_table_rows, order: 'trigger_value', dependent: :delete_all
 

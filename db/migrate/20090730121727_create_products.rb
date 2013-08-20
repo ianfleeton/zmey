@@ -6,7 +6,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name, :default => '', :null => false
       t.decimal :price, :precision => 10, :scale => 3, :default => 0, :null => false
       t.integer :image_id
-      t.text :description, :default => '', :null => false
+      t.text :description
       t.boolean :in_stock, :default => true, :null => false
 
       t.timestamps

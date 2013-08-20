@@ -8,8 +8,6 @@ class Country < ActiveRecord::Base
   has_many :addresses, dependent: :restrict
   has_many :orders, dependent: :restrict
 
-  attr_protected :website_id
-
   def to_s
     name
   end

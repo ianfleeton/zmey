@@ -1,6 +1,6 @@
 class AddFullDetailToProducts < ActiveRecord::Migration
   def self.up
-    add_column :products, :full_detail, :text, :default => '', :null => false
+    add_column :products, :full_detail, :text
   end
 
   def self.down

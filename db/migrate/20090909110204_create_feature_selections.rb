@@ -4,7 +4,7 @@ class CreateFeatureSelections < ActiveRecord::Migration
       t.integer :basket_item_id, :default => 0, :null => false
       t.integer :feature_id, :default => 0, :null => false
       t.integer :choice_id
-      t.text :customer_text, :default => '', :null => false
+      t.text :customer_text
       t.boolean :checked, :default => false, :null => false
 
       t.timestamps

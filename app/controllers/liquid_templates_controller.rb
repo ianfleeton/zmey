@@ -47,4 +47,8 @@ class LiquidTemplatesController < ApplicationController
     @liquid_template = LiquidTemplate.find_by_id_and_website_id(params[:id], @w.id)
     not_found unless @liquid_template
   end
+
+  def liquid_template_params
+    params.require(:liquid_template).permit(:markup, :name)
+  end
 end

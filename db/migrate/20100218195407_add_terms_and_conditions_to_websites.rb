@@ -1,6 +1,6 @@
 class AddTermsAndConditionsToWebsites < ActiveRecord::Migration
   def self.up
-    add_column :websites, :terms_and_conditions, :text, :default => '', :null => false
+    add_column :websites, :terms_and_conditions, :text
   end
 
   def self.down

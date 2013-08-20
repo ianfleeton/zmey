@@ -1,6 +1,4 @@
 class Feature < ActiveRecord::Base
-  attr_accessible :component_id, :name, :product_id, :required, :ui_type
-
   # validations
   validates_presence_of :name
   validates_uniqueness_of :name, scope: :product_id

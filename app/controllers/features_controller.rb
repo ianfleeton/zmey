@@ -12,7 +12,7 @@ class FeaturesController < ApplicationController
   end
   
   def create
-    @feature = Feature.new(params[:feature])
+    @feature = Feature.new(feature_params)
     redirect_to products_path and return unless product_valid?
 
     if @feature.save
@@ -24,7 +24,7 @@ class FeaturesController < ApplicationController
   end
   
   def update
-    if @feature.update_attributes(params[:feature])
+    if @feature.update_attributes(feature_params)
       flash[:notice] = "Feature successfully updated."
       if @feature.component
         redirect_to edit_component_path(@feature.component)
@@ -58,5 +58,9 @@ class FeaturesController < ApplicationController
       flash[:notice] = 'Invalid product.'
       false
     end
+  end
+
+  def feature_params
+    params.require(:feature).permit(:component_id, :name, :product_id, :required, :ui_type)
   end
 end

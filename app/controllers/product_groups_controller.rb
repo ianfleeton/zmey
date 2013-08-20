@@ -16,7 +16,7 @@ class ProductGroupsController < ApplicationController
   end
 
   def create
-    @product_group = ProductGroup.new(params[:product_group])
+    @product_group = ProductGroup.new(product_group_params)
     @product_group.website_id = @w.id
 
     if @product_group.save
@@ -32,7 +32,7 @@ class ProductGroupsController < ApplicationController
   end
 
   def update
-    if @product_group.update_attributes(params[:product_group])
+    if @product_group.update_attributes(product_group_params)
       flash[:notice] = "Product group successfully updated."
       redirect_to product_groups_path
     else
@@ -50,5 +50,9 @@ class ProductGroupsController < ApplicationController
   def find_product_group
     @product_group = ProductGroup.find_by_id_and_website_id(params[:id], @w.id)
     not_found unless @product_group
+  end
+
+  def product_group_params
+    params.require(:product_group).permit(:name)
   end
 end

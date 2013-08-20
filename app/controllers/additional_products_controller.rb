@@ -10,7 +10,7 @@ class AdditionalProductsController < ApplicationController
   end
   
   def create
-    @additional_product = AdditionalProduct.new(params[:additional_product])
+    @additional_product = AdditionalProduct.new(additional_product_params)
     redirect_to products_path and return unless product_valid?
 
     if @additional_product.save
@@ -22,7 +22,7 @@ class AdditionalProductsController < ApplicationController
   end
   
   def update
-    if @additional_product.update_attributes(params[:additional_product])
+    if @additional_product.update_attributes(additional_product_params)
       flash[:notice] = "Additional product successfully updated."
       redirect_to edit_product_path(@additional_product.product)
     else
@@ -53,5 +53,9 @@ class AdditionalProductsController < ApplicationController
       flash[:notice] = 'Invalid product.'
       false
     end
+  end
+
+  def additional_product_params
+    params.require(:additional_product).permit(:additional_product_id, :product_id, :selected_by_default)
   end
 end

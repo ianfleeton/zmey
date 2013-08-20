@@ -15,7 +15,7 @@ class ChoicesController < ApplicationController
   
   def update
     redirect_to products_path and return unless feature_valid?
-    if @choice.update_attributes(params[:choice])
+    if @choice.update_attributes(choice_params)
       flash[:notice] = "Choice successfully updated."
       redirect_to edit_feature_path(@choice.feature)
     else
@@ -24,7 +24,7 @@ class ChoicesController < ApplicationController
   end
   
   def create
-    @choice = Choice.new(params[:choice])
+    @choice = Choice.new(choice_params)
     redirect_to products_path and return unless feature_valid?
 
     if @choice.save
@@ -59,5 +59,9 @@ class ChoicesController < ApplicationController
       flash[:notice] = 'Invalid feature.'
       false
     end
+  end
+
+  def choice_params
+    params.require(:choice).permit(:feature_id, :name)
   end
 end

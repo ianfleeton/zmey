@@ -28,7 +28,7 @@ class EnquiriesController < ApplicationController
 
   def create
     @title = 'Enquiry'
-    @enquiry = Enquiry.new(params[:enquiry])
+    @enquiry = Enquiry.new(enquiry_params)
     
     unless good_token?
       render action: 'new', layout: 'application'
@@ -53,7 +53,7 @@ class EnquiriesController < ApplicationController
   def update
     @enquiry = Enquiry.find(params[:id])
 
-    if @enquiry.update_attributes(params[:enquiry])
+    if @enquiry.update_attributes(enquiry_params)
       redirect_to(@enquiry, notice: 'Enquiry was successfully updated.')
     else
       render action: 'edit'
@@ -65,4 +65,10 @@ class EnquiriesController < ApplicationController
     @enquiry.destroy
     redirect_to(enquiries_url)
   end
+
+  private
+
+    def enquiry_params
+      params.require(:enquiry).permit(:address, :call_back, :country, :email, :enquiry, :fax, :hear_about, :name, :organisation, :postcode, :telephone)
+    end
 end

@@ -1,6 +1,4 @@
 class BasketItem < ActiveRecord::Base
-  attr_accessible :basket_id, :feature_selections, :product_id, :quantity
-
   validates_numericality_of :quantity, greater_than_or_equal_to: 1
   belongs_to :product
   has_many :feature_selections, order: 'id', dependent: :delete_all

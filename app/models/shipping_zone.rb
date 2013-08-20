@@ -4,6 +4,4 @@ class ShippingZone < ActiveRecord::Base
   has_many :shipping_classes, order: 'name', dependent: :destroy
 
   validates_uniqueness_of :name, scope: :website_id
-
-  attr_protected :website_id
 end

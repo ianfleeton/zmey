@@ -9,7 +9,7 @@ class ShippingTableRowsController < ApplicationController
   end
 
   def create
-    @shipping_table_row = ShippingTableRow.new(params[:shipping_table_row])
+    @shipping_table_row = ShippingTableRow.new(shipping_table_row_params)
 
     if @shipping_table_row.save
       flash[:notice] = "Saved."
@@ -29,5 +29,9 @@ class ShippingTableRowsController < ApplicationController
 
   def find_shipping_table_row
     @shipping_table_row = ShippingTableRow.find_by_id(params[:id])
+  end
+
+  def shipping_table_row_params
+    params.require(:shipping_table_row).permit(:amount, :shipping_class_id, :trigger_value)
   end
 end

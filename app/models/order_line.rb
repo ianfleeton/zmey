@@ -1,6 +1,4 @@
 class OrderLine < ActiveRecord::Base
-  attr_accessible :feature_descriptions, :line_total, :product_id, :product_name, :product_price, :product_sku, :quantity, :tax_amount
-
   belongs_to :order
 
   before_save :keep_shipped_in_bounds

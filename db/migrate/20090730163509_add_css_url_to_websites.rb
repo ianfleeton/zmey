@@ -1,6 +1,6 @@
 class AddCssUrlToWebsites < ActiveRecord::Migration
   def self.up
-    add_column :websites, :css_url, :text, :default => '', :null => false
+    add_column :websites, :css_url, :text
   end
 
   def self.down

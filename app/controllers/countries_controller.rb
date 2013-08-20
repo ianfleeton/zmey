@@ -12,7 +12,7 @@ class CountriesController < ApplicationController
   end
 
   def create
-    @country = Country.new(params[:country])
+    @country = Country.new(country_params)
     @country.website_id = @w.id
 
     if @country.save
@@ -23,7 +23,7 @@ class CountriesController < ApplicationController
   end
 
   def update
-    if @country.update_attributes(params[:country])
+    if @country.update_attributes(country_params)
       flash[:notice] = "Saved."
       redirect_to countries_path
     else
@@ -47,5 +47,9 @@ class CountriesController < ApplicationController
 
   def find_country
     @country = Country.find_by_id_and_website_id(params[:id], @w.id)
+  end
+
+  def country_params
+    params.require(:country).permit(:iso_3661_alpha_2, :name, :shipping_zone_id)
   end
 end

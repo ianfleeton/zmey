@@ -1,6 +1,4 @@
 class Component < ActiveRecord::Base
-  attr_accessible :name, :product_id
-
   has_many :features, dependent: :destroy
   has_many :permutations, dependent: :delete_all
   belongs_to :product
