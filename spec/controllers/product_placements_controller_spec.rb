@@ -16,8 +16,8 @@ describe ProductPlacementsController do
         page = mock_model(Page)
         pp = mock_model(ProductPlacement, page: page, save: true)
         ProductPlacement.stub(:new).and_return(pp)
-        post 'create'
-        response.should redirect_to(edit_page_path(page))
+        post 'create', { 'product_placement' => {'some' => 'params'} }
+        expect(response).to redirect_to(edit_page_path(page))
       end
     end
   end

@@ -21,7 +21,7 @@ describe ProductsController do
         controller.should_receive(:admin?)
         Product.stub(:all).and_return([mock_product])
         get :index
-        assigns(:products).should eq([mock_product])
+        expect(assigns(:products)).to eq([mock_product])
       end
     end
   end
@@ -29,9 +29,9 @@ describe ProductsController do
   describe "GET show" do
     it "assigns the requested product as @product" do
       website.stub(:name).and_return('Website')
-      find_requested_product(:page_title => '', :name => '', :meta_description => '')
-      get :show, :id => "37"
-      assigns[:product].should equal(mock_product)
+      find_requested_product(page_title: '', name: '', meta_description: '')
+      get :show, id: '37'
+      expect(assigns[:product]).to equal(mock_product)
     end
   end
 
@@ -60,33 +60,36 @@ describe ProductsController do
   end
 
   describe "POST create" do
+    let(:valid_params) { { 'product' => { 'name' => 'Product Name' } } }
+
     context "when logged in as admin" do
       before { logged_in_as_admin }
 
+      it "assigns a newly created product as @product" do
+        Product.stub(:new).with(valid_params['product']).and_return(mock_product(:website_id= => website.id, save: true))
+        post :create, valid_params
+        assigns[:product].should equal(mock_product)
+      end
+
       describe "with valid params" do
-        it "assigns a newly created product as @product" do
-          Product.stub(:new).with({'these' => 'params'}).and_return(mock_product(:website_id= => website.id, :save => true))
-          post :create, :product => {:these => 'params'}
-          assigns[:product].should equal(mock_product)
+        before do
+          Product.stub(:new).with(valid_params['product']).and_return(mock_product(:website_id= => website.id, save: true))
         end
 
         it "redirects to the new product page" do
-          Product.stub(:new).and_return(mock_product(:website_id= => website.id, :save => true))
-          post :create, :product => {}
-          response.should redirect_to(new_product_path)
+          post :create, valid_params
+          expect(response).to redirect_to(new_product_path)
         end
       end
 
       describe "with invalid params" do
-        it "assigns a newly created but unsaved product as @product" do
-          Product.stub(:new).with({'these' => 'params'}).and_return(mock_product(:website_id= => website.id, :save => false))
-          post :create, :product => {:these => 'params'}
-          assigns[:product].should equal(mock_product)
+        before do
+          Product.stub(:new).with({'these' => 'params'}).and_return(mock_product(:website_id= => website.id, save: false))
         end
 
         it "re-renders the 'new' template" do
           Product.stub(:new).and_return(mock_product(:website_id= => website.id, :save => false))
-          post :create, :product => {}
+          post :create, valid_params
           response.should render_template('new')
         end
       end
@@ -94,45 +97,47 @@ describe ProductsController do
   end
 
   describe "PUT update" do
+    let(:valid_params) { { 'id' => '37', 'product' => { 'name' => 'Product Name' } } }
+
     context "when logged in as admin" do
       before { logged_in_as_admin }
 
       describe "with valid params" do
         it "updates the requested product" do
           find_requested_product
-          mock_product.should_receive(:update_attributes).with({'these' => 'params'})
-          put :update, :id => "37", :product => {:these => 'params'}
+          mock_product.should_receive(:update_attributes).with(valid_params['product'])
+          put :update, valid_params
         end
 
         it "assigns the requested product as @product" do
           Product.stub(:find_by_id_and_website_id).and_return(mock_product(:update_attributes => true))
-          put :update, :id => "1"
-          assigns[:product].should equal(mock_product)
+          put :update, valid_params
+          expect(assigns[:product]).to equal(mock_product)
         end
 
         it "redirects to the product" do
           Product.stub(:find_by_id_and_website_id).and_return(mock_product(:update_attributes => true))
-          put :update, :id => "1"
-          response.should redirect_to(product_url(mock_product))
+          put :update, valid_params
+          expect(response).to redirect_to(product_url(mock_product))
         end
       end
 
       describe "with invalid params" do
         it "updates the requested product" do
           find_requested_product
-          mock_product.should_receive(:update_attributes).with({'these' => 'params'})
-          put :update, :id => "37", :product => {:these => 'params'}
+          mock_product.should_receive(:update_attributes).with(valid_params['product'])
+          put :update, valid_params
         end
 
         it "assigns the product as @product" do
-          Product.stub(:find_by_id_and_website_id).and_return(mock_product(:update_attributes => false))
-          put :update, :id => "1"
+          Product.stub(:find_by_id_and_website_id).and_return(mock_product(update_attributes: false))
+          put :update, valid_params
           assigns[:product].should equal(mock_product)
         end
 
         it "re-renders the 'edit' template" do
-          Product.stub(:find_by_id_and_website_id).and_return(mock_product(:update_attributes => false))
-          put :update, :id => "1"
+          Product.stub(:find_by_id_and_website_id).and_return(mock_product(update_attributes: false))
+          put :update, valid_params
           response.should render_template('edit')
         end
       end

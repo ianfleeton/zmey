@@ -14,19 +14,19 @@ class Website < ActiveRecord::Base
   validates_presence_of :rbswp_payment_response_password, :if => Proc.new { |website| website.rbswp_active? }
 
   has_one :preferred_delivery_date_settings, :dependent => :delete
-  has_many :carousel_slides, order: :position
-  has_many :countries, :order => :name, :dependent => :destroy
-  has_many :discounts, :order => :name
-  has_many :liquid_templates, :order => :name, :dependent => :destroy
-  has_many :products, :order => :name, :dependent => :destroy
-  has_many :google_products, class_name: 'Product', conditions: { submit_to_google: true }
-  has_many :product_groups, order: 'name'
-  has_many :orders, :order => 'created_at DESC', :dependent => :destroy
-  has_many :pages, :order => 'name', :dependent => :destroy
+  has_many :carousel_slides, -> { order 'position' }
+  has_many :countries, -> { order 'name' }, dependent: :destroy
+  has_many :discounts, -> { order 'name' }
+  has_many :liquid_templates, -> { order 'name' }, dependent: :destroy
+  has_many :products, -> { order 'name' }, dependent: :destroy
+  has_many :google_products, -> { where(submit_to_google: true) }, class_name: 'Product'
+  has_many :product_groups, -> { order 'name' }
+  has_many :orders, -> { order 'created_at DESC' }, dependent: :destroy
+  has_many :pages, -> { order 'name' }, dependent: :destroy
   has_many :images, :dependent => :destroy
   has_many :forums, :dependent => :destroy
-  has_many :enquiries, order: 'created_at DESC', dependent: :destroy
-  has_many :shipping_zones, :order => 'name', :dependent => :destroy
+  has_many :enquiries, -> { order 'created_at DESC' }, dependent: :destroy
+  has_many :shipping_zones, -> { order 'name' }, dependent: :destroy
   has_many :shipping_classes, :through => :shipping_zones
   has_many :shipping_table_rows, :finder_sql =>
     'SELECT `shipping_table_rows`.* ' +
@@ -35,7 +35,7 @@ class Website < ActiveRecord::Base
     'INNER JOIN `shipping_zones` ON `shipping_classes`.shipping_zone_id = `shipping_zones`.id ' +
     'WHERE ((`shipping_zones`.website_id = #{id})) ' +
     'ORDER BY `shipping_table_rows`.trigger'
-  has_many :users, :order => 'name', :dependent => :destroy
+  has_many :users, -> { order 'name' }, dependent: :destroy
   belongs_to :blog, :class_name => 'Forum'
 
   def self.for(domain, subdomains)

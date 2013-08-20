@@ -46,7 +46,7 @@ describe OrdersController do
           end
 
           it 'sends the invoice file' do
-            Invoice.stub(:new).and_return(mock(Invoice, filename: 'invoice.pdf').as_null_object)
+            Invoice.stub(:new).and_return(double(Invoice, filename: 'invoice.pdf').as_null_object)
             controller.should_receive(:send_file).with('invoice.pdf')
             controller.stub(:render)
 
@@ -56,7 +56,7 @@ describe OrdersController do
 
         it 'redirects to sign in when the user cannot access the order' do
           controller.stub(:can_access_order?).and_return(false)
-          Invoice.stub(:new).and_return(mock(Invoice).as_null_object)
+          Invoice.stub(:new).and_return(double(Invoice).as_null_object)
 
           get 'invoice', id: '1'
           response.should redirect_to(new_session_path)

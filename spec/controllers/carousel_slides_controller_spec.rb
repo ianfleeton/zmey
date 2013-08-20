@@ -40,75 +40,73 @@ describe CarouselSlidesController do
     end
 
     describe 'POST create' do
-      describe 'with valid params' do
-        it 'assigns a newly created carousel slide as @carousel_slide' do
-          CarouselSlide.stub(:new).with({'these' => 'params'})
-            .and_return(mock_carousel_slide(:website_id= => website.id, save: true))
-          post 'create', carousel_slide: {these: 'params'}
-          assigns(:carousel_slide).should == mock_carousel_slide
+      let(:valid_params) {{ 'carousel_slide' => { 'caption' => 'A Caption' } }}
+
+      it 'assigns a newly created but unsaved carousel slide as @carousel_slide' do
+        CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website_id= => website.id, save: false))
+        post 'create', carousel_slide: {these: 'params'}
+        expect(assigns(:carousel_slide)).to equal(mock_carousel_slide)
+      end
+
+      describe 'when save succeeds' do
+        before do
+          CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website_id= => website.id, save: true))
         end
 
         it 'redirects to the carousel slides list' do
-          CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website_id= => website.id, save: true))
-          post 'create', carousel_slide: {}
+          post 'create', valid_params
           response.should redirect_to(carousel_slides_path)
         end
       end
 
-      describe 'with invalid params' do
-        it 'assigns a newly created but unsaved carousel slide as @carousel_slide' do
-          CarouselSlide.stub(:new).with({'these' => 'params'})
-            .and_return(mock_carousel_slide(:website_id= => website.id, :save => false))
-          post 'create', carousel_slide: {these: 'params'}
-          assigns(:carousel_slide).should equal(mock_carousel_slide)
+      describe 'when save fails' do
+        before do
+          CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website_id= => website.id, save: false))
         end
 
         it "re-renders the 'new' template" do
-          CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website_id= => website.id, save: false))
-          post 'create', carousel_slide: {}
+          post 'create', valid_params
           response.should render_template('new')
         end
       end
     end
 
     describe 'PUT update' do
-      describe 'with valid params' do
-        it 'updates the requested carousel slide' do
-          find_requested_carousel_slide
-          mock_carousel_slide.should_receive(:update_attributes).with({'these' => 'params'})
-          put 'update', id: '37', carousel_slide: {these: 'params'}
+      let(:valid_params) {{ 'id' => '37', 'carousel_slide' => { 'caption' => 'A Caption' } }}
+
+      it 'updates the requested carousel slide' do
+        find_requested_carousel_slide
+        mock_carousel_slide.should_receive(:update_attributes).with(valid_params['carousel_slide'])
+        put 'update', valid_params
+      end
+
+      describe 'when update succeeds' do
+        before do
+          CarouselSlide.stub(:find_by_id_and_website_id).and_return(mock_carousel_slide(update_attributes: true))
         end
 
         it 'assigns the requested carousel_slide as @carousel_slide' do
-          CarouselSlide.stub(:find_by_id_and_website_id).and_return(mock_carousel_slide(update_attributes: true))
-          put 'update', id: '1'
-          assigns(:carousel_slide).should == mock_carousel_slide
+          put 'update', valid_params
+          expect(assigns(:carousel_slide)).to eq mock_carousel_slide
         end
 
         it 'redirects to the carousel slides list' do
-          CarouselSlide.stub(:find_by_id_and_website_id).and_return(mock_carousel_slide(update_attributes: true))
-          put 'update', id: '1'
+          put 'update', valid_params
           response.should redirect_to(carousel_slides_path)
         end
       end
 
-      describe 'with invalid params' do
-        it 'updates the requested carousel slide' do
-          find_requested_carousel_slide
-          mock_carousel_slide.should_receive(:update_attributes).with({'these' => 'params'})
-          put 'update', id: '37', carousel_slide: {these: 'params'}
-        end
-
+      describe 'when update fails' do
         it 'assigns the carousel slide as @carousel_slide' do
           CarouselSlide.stub(:find_by_id_and_website_id).and_return(mock_carousel_slide(update_attributes: false))
-          put 'update', id: '1'
-          assigns(:carousel_slide).should == mock_carousel_slide
+          put 'update', valid_params
+          expect(assigns(:carousel_slide)).to eq mock_carousel_slide
         end
 
         it "re-renders the 'edit' template" do
           CarouselSlide.stub(:find_by_id_and_website_id).and_return(mock_carousel_slide(update_attributes: false))
-          put 'update', id: '1'
-          response.should render_template('edit')
+          put 'update', valid_params
+          expect(response).to render_template('edit')
         end
       end
     end
