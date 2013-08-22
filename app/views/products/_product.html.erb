@@ -18,7 +18,7 @@
     <input type="hidden" name="page_id" value="<%= page.id %>" />
     <% end -%>
     <div class="product_description">
-      <% if full and !product.full_detail.empty? -%>
+      <% if full and !product.full_detail.blank? -%>
       <%= raw textilize(product.full_detail) %>
       <% else -%>
       <%= raw textilize(product.description) %>
