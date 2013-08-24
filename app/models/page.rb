@@ -7,7 +7,7 @@ class Page < ActiveRecord::Base
   belongs_to :image
   belongs_to :website
 
-  validates_presence_of :title, :name, :keywords, :description, :website_id
+  validates_presence_of :title, :name, :description, :website_id
   validates_format_of :slug, with: /\A[-a-z0-9]+\Z/, message: 'can only contain lowercase letters, numbers and hyphens', allow_blank: true
   validates_uniqueness_of :slug, scope: :website_id, case_sensitive: false
   validates_uniqueness_of :title, scope: :website_id, case_sensitive: false
@@ -28,7 +28,6 @@ class Page < ActiveRecord::Base
     create(
       title: website.name,
       name: 'Home',
-      keywords: 'change me',
       description: 'change me',
       content: 'Welcome to ' + website.name,
       parent_id: nav_page.id
@@ -40,7 +39,6 @@ class Page < ActiveRecord::Base
       title: slug.titleize + ' Navigation',
       name: slug.titleize + ' Navigation',
       slug: slug,
-      keywords: slug,
       description: slug
     ) {|hp| hp.website_id = website.id}
   end

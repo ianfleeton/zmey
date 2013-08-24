@@ -31,7 +31,6 @@ Feature: Creating new pages
     And I fill in "Title" with "Buying a Guitar - A Rich Idiot's Guide"
     And I fill in "Name" with "Buying a Guitar"
     And I fill in "Slug" with "guitar-buying-faq"
-    And I fill in "Keywords" with "lorem ipsum"
     And I fill in "Description" with "dolor sit"
     And I press "Create New Page"
     Then I should be on the new page page

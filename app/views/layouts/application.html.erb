@@ -8,7 +8,6 @@ template('header',
   :description => @description,
   :google_analytics_code => render("shared/google_analytics_code"),
   :js_application => javascript_include_tag('application', 'data-turbolinks-track' => true),
-  :keywords => @keywords,
   :page_title => @title ? @title : @w.name,
   :website_name => @w.name
 )

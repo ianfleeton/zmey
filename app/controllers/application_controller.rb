@@ -100,7 +100,7 @@ class ApplicationController < ActionController::Base
   end
 
   def initialize_meta_tags
-    @description = @keywords = @w.name
+    @description = @w.name
   end
 
   def protect_private_website

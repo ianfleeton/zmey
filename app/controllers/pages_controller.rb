@@ -13,7 +13,6 @@ class PagesController < ApplicationController
     if @page
       @title = @page.title
       @description = @page.description
-      @keywords = @page.keywords
       if request.path == '/'
         @blog = @w.blog
       end
@@ -107,6 +106,6 @@ class PagesController < ApplicationController
   end
 
   def page_params
-    params.require(:page).permit(:content, :description, :image_id, :keywords, :name, :parent_id, :slug, :title)
+    params.require(:page).permit(:content, :description, :image_id, :name, :parent_id, :slug, :title)
   end
 end
