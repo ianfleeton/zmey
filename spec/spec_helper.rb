@@ -43,6 +43,7 @@ end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
+  load "#{Rails.root}/config/routes.rb"
 
   def logged_in_as_admin
     controller.stub(:admin?).and_return(true)
