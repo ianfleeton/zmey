@@ -8,7 +8,7 @@ class PaymentsController < ApplicationController
   FAILURE_MESSAGE = 'Some information was incorrect and your payment may not have gone through properly. Please contact us.'
 
   def index
-    @payments = Payment.all(order: 'created_at DESC')
+    @payments = Payment.order('created_at DESC')
   end
   
   def show
