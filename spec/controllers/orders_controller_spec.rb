@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe OrdersController do
   let(:website) { mock_model(Website).as_null_object }
+  let(:current_user) { mock_model(User).as_null_object }
 
   def mock_order(stubs={})
     @mock_order ||= mock_model(Order, stubs)
@@ -10,6 +11,25 @@ describe OrdersController do
   before do
     Website.stub(:for).and_return(website)
     website.stub(:private?).and_return(false)
+  end
+
+  describe 'GET index' do
+    context 'with user' do
+      before do
+        controller.stub(:current_user).and_return(current_user)
+      end
+
+      it 'assigns orders belonging to the current user to @orders' do
+        current_user.should_receive(:orders).and_return(:some_orders)
+        get 'index'
+        expect(assigns(:orders)).to eq :some_orders
+      end
+
+      it 'renders index' do
+        get 'index'
+        expect(response).to render_template('index')
+      end
+    end
   end
 
   describe 'GET invoice' do
@@ -34,7 +54,7 @@ describe OrdersController do
 
       it 'requires a user' do
         get 'invoice', id: '1'
-        expect(response).to redirect_to(new_session_path)
+        expect(response).to redirect_to(sign_in_path)
       end
 
       context 'with a user' do

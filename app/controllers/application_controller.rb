@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_action :set_timezone, :require_website, :initialize_meta_tags, :initialize_user, :set_locale, :protect_private_website, :initialize_tax_display
+  before_action :set_timezone, :require_website, :initialize_meta_tags, :current_user, :set_locale, :protect_private_website, :initialize_tax_display
   
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_error
@@ -20,18 +20,22 @@ class ApplicationController < ActionController::Base
     not_found
   end
 
+  def current_user
+    @current_user ||= User.find_by_id(session[:user])
+  end
+
   protected
 
   def logged_in?
-    @current_user.is_a?(User)
+    current_user.is_a?(User)
   end
 
   def admin?
-    logged_in? and @current_user.admin?
+    logged_in? and current_user.admin?
   end
   
   def manager?
-    logged_in? and @current_user.managed_website == @w
+    logged_in? and current_user.managed_website == @w
   end
   
   def admin_or_manager?
@@ -41,31 +45,26 @@ class ApplicationController < ActionController::Base
   def admin_required
     unless admin?
       flash[:notice] = 'You need to be logged in as an administrator to do that.'
-      redirect_to controller: 'sessions', action: 'new'
+      redirect_to sign_in_path
     end
   end
   
   def user_required
     unless logged_in?
       flash[:notice] = 'You need to be logged in to do that.'
-      redirect_to controller: 'sessions', action: 'new'
+      redirect_to sign_in_path
     end
   end
 
   def admin_or_manager_required
     unless admin_or_manager?
       flash[:notice] = 'You need to be logged in as an administrator or manager to do that.'
-      redirect_to controller: 'sessions', action: 'new'
+      redirect_to sign_in_path
     end
   end
 
   def set_timezone
     Time.zone = 'London'
-  end
-
-  # setup user info on each page
-  def initialize_user
-    @current_user = User.find_by_id(session[:user])
   end
 
   def set_cookie_domain(domain)
@@ -107,7 +106,7 @@ class ApplicationController < ActionController::Base
   def protect_private_website
     if @w.private? && !logged_in?
       flash[:notice] = 'You must be logged in to view this website.'
-      redirect_to controller: 'sessions', action: 'new'
+      redirect_to sign_in_path
     end
   end
 

@@ -1,0 +1,79 @@
+<%= page_header 'Order Details' %>
+
+<p>Order number: <%= @order.order_number %></p>
+
+<p>Order placed: <%= @order.created_at %></p>
+
+<p>Order status: <%= @order.status_description %></p>
+
+<% if @order.preferred_delivery_date -%>
+<p><%= @order.preferred_delivery_date_prompt %>: <%= @order.preferred_delivery_date.strftime(@order.preferred_delivery_date_format) %></p>
+<% end -%>
+
+<h2>Deliver to</h2>
+
+<%= format_address @order %>
+ 
+<table id="receipt">
+
+  <tr>
+    <th>Product</th>
+    <th class="qty">Qty</th>
+<% if admin? -%>
+    <th class="shipped">Shipped</th>
+<% end -%>
+    <th class="price">Price</th>
+  </tr>
+
+  <% @order.order_lines.each do |line| -%>
+  <tr>
+    <td>
+      <%= line.product_name %>
+      <% unless line.feature_descriptions.empty? -%>
+        <br />
+        <small>
+          <%= line.feature_descriptions %>
+        </small>
+      <% end -%>
+    </td>
+    <td class="qty"><%= line.quantity %></td>
+<% if admin? -%>
+    <td class="shipped"><%= form_for line do |f| %>
+      <%= f.text_field :shipped %>
+      <%= f.submit 'Update' %>
+    <% end %></td>
+<% end -%>
+    <td class="price line_total"><%= formatted_price(line.line_total)  %></td>
+  </tr>
+  <% end -%>
+  <tr>
+    <th colspan="2"><%= @order.shipping_method %>:</th>
+<% if admin? -%>
+    <td>&nbsp;</td>
+<% end -%>
+    <td class="price shipping_amount"><%= formatted_price(@order.shipping_amount) %></td>
+  </tr>
+  <% unless @w.vat_number.empty? -%>
+  <tr>
+    <th colspan="2">VAT:</th>
+<% if admin? -%>
+    <td>&nbsp;</td>
+<% end -%>
+    <td class="price vat"><%= formatted_price(@order.tax_total) %></td>
+  </tr>
+  <% end -%>
+  <tr>
+    <th colspan="2">Order total:</th>
+<% if admin? -%>
+    <td>&nbsp;</td>
+<% end -%>
+    <td class="price total"><%= formatted_price(@order.total) %></td>
+  </tr>
+  
+</table>
+
+<% unless @w.vat_number.empty? -%>
+<p>
+  VAT number: <%= @w.vat_number %>
+</p>
+<% end -%>

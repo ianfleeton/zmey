@@ -1,25 +1,12 @@
 class OrdersController < ApplicationController
-
-  before_action :admin_or_manager_required, only: [:destroy]
-
-  before_action :find_order, only: [:show, :destroy, :invoice]
+  before_action :find_order, only: [:show, :invoice]
   before_action :require_order, only: [:select_payment_method, :receipt]
   before_action :user_required, only: [:index, :show, :invoice]
 
   def index
-    if admin_or_manager?
-      if params[:user_id]
-        @orders = User.find(params[:user_id]).orders.where(website_id: @w.id)
-      else
-        @orders = @w.orders
-      end
-      render layout: 'admin'
-    else
-      @orders = @current_user.orders
-      render 'my'
-    end
+    @orders = current_user.orders
   end
-  
+
   def select_payment_method
     prepare_cardsave if @w.cardsave_active?
   end
@@ -30,21 +17,11 @@ class OrdersController < ApplicationController
   end
   
   def show
-    if admin_or_manager? or @current_user.id==@order.user_id
+    if can_access_order?
       render action: 'receipt'
     else
       redirect_to :root, notice: 'You do not have permission to view that order.'
     end
-  end
-
-  def purge_old_unpaid
-    Order.purge_old_unpaid
-    redirect_to orders_path, notice: 'Old and unpaid orders purged.'
-  end
-
-  def destroy
-    @order.destroy
-    redirect_to orders_path, notice: 'Order deleted.'
   end
 
   def invoice

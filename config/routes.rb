@@ -1,5 +1,13 @@
 YeslWebsite::Application.routes.draw do
 
+  namespace :admin do
+    resources :orders do
+      collection do
+        get 'purge_old_unpaid'
+      end
+    end
+  end
+
   resources :addresses
 
   post 'basket/add' => 'basket#add', as: :add_to_basket
@@ -37,8 +45,6 @@ YeslWebsite::Application.routes.draw do
 
   resources :orders do
     collection do
-      get 'my'
-      get 'purge_old_unpaid'
       get 'receipt'
       get 'select_payment_method'
     end
@@ -81,8 +87,9 @@ YeslWebsite::Application.routes.draw do
   resources :quantity_prices
 
   resources :sessions do
-    get 'destroy', :on => :collection
+    get 'destroy', on: :collection
   end
+  get 'sign-in' => 'sessions#new', as: :sign_in
 
   resources :shipping_classes
 
