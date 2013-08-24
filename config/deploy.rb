@@ -33,7 +33,14 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
+
+  desc "Symlinks files with secret information"
+  task :symlink_secrets, roles: :app do
+    run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+  end
 end
+
+before 'deploy:assets:precompile', 'deploy:symlink_secrets'
 
 after 'deploy:update_code', 'deploy:migrate'
 
