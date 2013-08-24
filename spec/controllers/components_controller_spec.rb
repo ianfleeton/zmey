@@ -23,21 +23,21 @@ describe ComponentsController do
         component = mock_model(Component).as_null_object
         Component.stub(:new).and_return(component)
         get 'new'
-        assigns(:component).should == component
+        expect(assigns(:component)).to eq component
       end
 
       it 'sets @component.product_id to the product_id supplied as a parameter' do
         component = Component.new
         Component.stub(:new).and_return(component)
         get 'new', product_id: 123
-        component.product_id.should == 123
+        expect(component.product_id).to eq 123
       end
 
       context 'when the product is valid' do
         it "renders 'new'" do
           controller.stub(:product_valid?).and_return(true)
           get 'new'
-          response.should render_template('new')
+          expect(response).to render_template('new')
         end
       end
 
@@ -45,7 +45,7 @@ describe ComponentsController do
         it 'redirects to the products page' do
           controller.stub(:product_valid?).and_return(false)
           get 'new'
-          response.should redirect_to(products_path)
+          expect(response).to redirect_to(products_path)
         end
       end
     end
@@ -53,7 +53,7 @@ describe ComponentsController do
     context 'when not logged in as an administrator' do
       it 'redirects to the sign in page' do
         get 'new'
-        response.should redirect_to(new_session_path)
+        expect(response).to redirect_to(new_session_path)
       end
     end
   end

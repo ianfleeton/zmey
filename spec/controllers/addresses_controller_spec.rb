@@ -16,7 +16,7 @@ describe AddressesController do
     it 'assigns a new Address to @address' do
       Address.stub(:new).and_return(mock_address)
       get 'new'
-      assigns(:address).should == mock_address
+      expect(assigns(:address)).to eq mock_address
     end
   end
 
@@ -34,7 +34,7 @@ describe AddressesController do
 
         it 'renders edit' do
           get 'edit', id: '1'
-          response.should render_template('edit')
+          expect(response).to render_template('edit')
         end
       end
 
@@ -43,7 +43,7 @@ describe AddressesController do
 
         it 'redirects to new' do
           get 'edit', id: '1'
-          response.should redirect_to(new_address_path)
+          expect(response).to redirect_to(new_address_path)
         end
       end
     end
@@ -51,7 +51,7 @@ describe AddressesController do
     context 'without an address ID stored in session' do
       it 'redirects to new' do
         get 'edit', id: '1'
-        response.should redirect_to(new_address_path)
+        expect(response).to redirect_to(new_address_path)
       end
     end
   end

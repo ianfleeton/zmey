@@ -17,12 +17,12 @@ describe AdditionalProductsController do
     it 'assigns a new AdditionalProduct to @additional_product' do
       AdditionalProduct.stub(:new).and_return(mock_additional_product.as_null_object)
       get 'new'
-      assigns(:additional_product).should == mock_additional_product
+      expect(assigns(:additional_product)).to eq mock_additional_product
     end
 
     it 'sets the additional product\'s product_id to the paramater' do
       get 'new', product_id: '123'
-      assigns(:additional_product).product_id.should == 123
+      expect(assigns(:additional_product).product_id).to eq 123
     end
 
     context 'when the product is valid' do
@@ -30,7 +30,7 @@ describe AdditionalProductsController do
 
       it 'renders new' do
         get 'new'
-        response.should render_template('new')
+        expect(response).to render_template('new')
       end
     end
 
@@ -39,7 +39,7 @@ describe AdditionalProductsController do
 
       it 'redirects to the products page' do
         get 'new'
-        response.should redirect_to(products_path)
+        expect(response).to redirect_to(products_path)
       end
     end
   end

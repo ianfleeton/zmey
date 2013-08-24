@@ -19,7 +19,7 @@ describe CarouselSlidesController do
       it 'assigns this website\'s carousel slides to @carousel slides' do
         website.stub(:carousel_slides).and_return([mock_carousel_slide])
         get 'index'
-        assigns(:carousel_slides).should == [mock_carousel_slide]
+        expect(assigns(:carousel_slides)).to eq [mock_carousel_slide]
       end
     end
 
@@ -27,7 +27,7 @@ describe CarouselSlidesController do
       it 'assigns a new carousel slide to @carousel_slide' do
         CarouselSlide.stub(:new).and_return(mock_carousel_slide)
         get 'new'
-        assigns(:carousel_slide).should == mock_carousel_slide
+        expect(assigns(:carousel_slide)).to eq mock_carousel_slide
       end
     end
 
@@ -35,7 +35,7 @@ describe CarouselSlidesController do
       it 'assigns the requested carousel slide to @carousel_slide' do
         find_requested_carousel_slide
         get 'edit', id: '37'
-        assigns(:carousel_slide).should == mock_carousel_slide
+        expect(assigns(:carousel_slide)).to eq mock_carousel_slide
       end
     end
 
@@ -55,7 +55,7 @@ describe CarouselSlidesController do
 
         it 'redirects to the carousel slides list' do
           post 'create', valid_params
-          response.should redirect_to(carousel_slides_path)
+          expect(response).to redirect_to(carousel_slides_path)
         end
       end
 
@@ -66,7 +66,7 @@ describe CarouselSlidesController do
 
         it "re-renders the 'new' template" do
           post 'create', valid_params
-          response.should render_template('new')
+          expect(response).to render_template('new')
         end
       end
     end
@@ -92,7 +92,7 @@ describe CarouselSlidesController do
 
         it 'redirects to the carousel slides list' do
           put 'update', valid_params
-          response.should redirect_to(carousel_slides_path)
+          expect(response).to redirect_to(carousel_slides_path)
         end
       end
 
@@ -121,7 +121,7 @@ describe CarouselSlidesController do
       it 'redirects to the carousel slides list' do
         CarouselSlide.stub(:find_by_id_and_website_id).and_return(mock_carousel_slide(destroy: true))
         delete 'destroy', id: '1'
-        response.should redirect_to(carousel_slides_path)
+        expect(response).to redirect_to(carousel_slides_path)
       end
     end
   end

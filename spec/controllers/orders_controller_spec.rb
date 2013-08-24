@@ -21,7 +21,7 @@ describe OrdersController do
     context 'when the order is not found' do
       it 'redirects to the orders page' do
         get 'invoice', id: '1'
-        response.should redirect_to(orders_path)
+        expect(response).to redirect_to(orders_path)
       end
     end
 
@@ -34,7 +34,7 @@ describe OrdersController do
 
       it 'requires a user' do
         get 'invoice', id: '1'
-        response.should redirect_to(new_session_path)
+        expect(response).to redirect_to(new_session_path)
       end
 
       context 'with a user' do
@@ -59,7 +59,7 @@ describe OrdersController do
           Invoice.stub(:new).and_return(double(Invoice).as_null_object)
 
           get 'invoice', id: '1'
-          response.should redirect_to(new_session_path)
+          expect(response).to redirect_to(new_session_path)
         end
       end
     end

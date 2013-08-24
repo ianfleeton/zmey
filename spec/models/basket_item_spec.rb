@@ -8,7 +8,7 @@ describe BasketItem do
         product.stub(:price_inc_tax).with(2).and_return(12)
         item = BasketItem.new(quantity: 2)
         item.product = product
-        item.line_total(true).should == 24
+        expect(item.line_total(true)).to eq 24
       end
     end
 
@@ -18,7 +18,7 @@ describe BasketItem do
         product.stub(:price_ex_tax).with(2).and_return(10)
         item = BasketItem.new(quantity: 2)
         item.product = product
-        item.line_total(false).should == 20
+        expect(item.line_total(false)).to eq 20
       end
     end
   end
@@ -28,7 +28,7 @@ describe BasketItem do
       product = mock_model(Product, {weight: 2.5})
       item = BasketItem.new(quantity: 3)
       item.product = product
-      item.weight.should == 7.5
+      expect(item.weight).to eq 7.5
     end
   end
 end

@@ -42,7 +42,7 @@ describe ProductsController do
       it "assigns a new product as @product" do
         Product.stub(:new).and_return(mock_product)
         get :new
-        assigns[:product].should equal(mock_product)
+        expect(assigns[:product]).to equal(mock_product)
       end
     end
   end
@@ -53,8 +53,8 @@ describe ProductsController do
 
       it "assigns the requested product as @product" do
         find_requested_product
-        get :edit, :id => "37"
-        assigns[:product].should equal(mock_product)
+        get :edit, id: '37'
+        expect(assigns[:product]).to equal(mock_product)
       end
     end
   end
@@ -68,7 +68,7 @@ describe ProductsController do
       it "assigns a newly created product as @product" do
         Product.stub(:new).with(valid_params['product']).and_return(mock_product(:website_id= => website.id, save: true))
         post :create, valid_params
-        assigns[:product].should equal(mock_product)
+        expect(assigns[:product]).to equal(mock_product)
       end
 
       describe "with valid params" do
@@ -90,7 +90,7 @@ describe ProductsController do
         it "re-renders the 'new' template" do
           Product.stub(:new).and_return(mock_product(:website_id= => website.id, :save => false))
           post :create, valid_params
-          response.should render_template('new')
+          expect(response).to render_template('new')
         end
       end
     end
@@ -112,7 +112,7 @@ describe ProductsController do
         it "assigns the requested product as @product" do
           Product.stub(:find_by_id_and_website_id).and_return(mock_product(:update_attributes => true))
           put :update, valid_params
-          expect(assigns[:product]).to equal(mock_product)
+          expect(assigns(:product)).to equal(mock_product)
         end
 
         it "redirects to the product" do
@@ -132,13 +132,13 @@ describe ProductsController do
         it "assigns the product as @product" do
           Product.stub(:find_by_id_and_website_id).and_return(mock_product(update_attributes: false))
           put :update, valid_params
-          assigns[:product].should equal(mock_product)
+          expect(assigns(:product)).to equal(mock_product)
         end
 
         it "re-renders the 'edit' template" do
           Product.stub(:find_by_id_and_website_id).and_return(mock_product(update_attributes: false))
           put :update, valid_params
-          response.should render_template('edit')
+          expect(response).to render_template('edit')
         end
       end
     end
@@ -151,13 +151,13 @@ describe ProductsController do
       it "destroys the requested product" do
         find_requested_product
         mock_product.should_receive(:destroy)
-        delete :destroy, :id => "37"
+        delete :destroy, id: '37'
       end
 
       it "redirects to the products list" do
-        Product.stub(:find_by_id_and_website_id).and_return(mock_product(:destroy => true))
-        delete :destroy, :id => "1"
-        response.should redirect_to(products_url)
+        Product.stub(:find_by_id_and_website_id).and_return(mock_product(destroy: true))
+        delete :destroy, id: '1'
+        expect(response).to redirect_to(products_url)
       end
     end
   end

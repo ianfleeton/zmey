@@ -22,7 +22,7 @@ describe SessionsController do
 
       it "redirects to the customer's account page" do
         post 'create'
-        response.should redirect_to(customer)
+        expect(response).to redirect_to(customer)
       end
     end
 
@@ -34,7 +34,7 @@ describe SessionsController do
 
       it 'redirects to the orders page' do
         post 'create'
-        response.should redirect_to(orders_path)
+        expect(response).to redirect_to(orders_path)
       end
     end
   end

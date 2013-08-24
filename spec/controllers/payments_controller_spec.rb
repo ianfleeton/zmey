@@ -14,7 +14,7 @@ describe PaymentsController do
 
       it 'uses the admin layout' do
         get 'index'
-        response.should render_template('layouts/admin')
+        expect(response).to render_template('layouts/admin')
       end
     end
   end

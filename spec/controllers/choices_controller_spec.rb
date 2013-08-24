@@ -23,21 +23,21 @@ describe ChoicesController do
         choice = mock_model(Choice).as_null_object
         Choice.stub(:new).and_return(choice)
         get 'new'
-        assigns(:choice).should == choice
+        expect(assigns(:choice)).to eq choice
       end
 
       it 'sets @choice.feature_id to the feature_id supplied as a parameter' do
         choice = Choice.new
         Choice.stub(:new).and_return(choice)
         get 'new', feature_id: 123
-        choice.feature_id.should == 123
+        expect(choice.feature_id).to eq 123
       end
 
       context 'when the feature is valid' do
         it "renders 'new'" do
           controller.stub(:feature_valid?).and_return(true)
           get 'new'
-          response.should render_template('new')
+          expect(response).to render_template('new')
         end
       end
 
@@ -45,7 +45,7 @@ describe ChoicesController do
         it 'redirects to the products page' do
           controller.stub(:feature_valid?).and_return(false)
           get 'new'
-          response.should redirect_to(products_path)
+          expect(response).to redirect_to(products_path)
         end
       end
     end
@@ -53,7 +53,7 @@ describe ChoicesController do
     context 'when not logged in as an administrator' do
       it 'redirects to the sign in page' do
         get 'new'
-        response.should redirect_to(new_session_path)
+        expect(response).to redirect_to(new_session_path)
       end
     end
   end

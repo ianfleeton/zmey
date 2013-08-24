@@ -22,37 +22,37 @@ describe Website do
 
   describe "validations" do
     it "should be valid with valid attributes" do
-      @website.should be_valid
+      expect(@website).to be_valid
     end
 
     it "should require a rbswp_installation_id and rbswp_payment_response_password when active" do
       @website.rbswp_active = true
-      @website.should_not be_valid
+      expect(@website).to_not be_valid
 
       @website.rbswp_installation_id = '1234'
-      @website.should_not be_valid
+      expect(@website).to_not be_valid
 
       @website.rbswp_installation_id = ''
       @website.rbswp_payment_response_password = 'abcde'
-      @website.should_not be_valid
+      expect(@website).to_not be_valid
 
       @website.rbswp_installation_id = '1234'
       @website.rbswp_payment_response_password = 'abcde'
-      @website.should be_valid
+      expect(@website).to be_valid
     end
   end
 
   it "should only accept payment on account when payment on account is accepted and no other payment methods are" do
     @website.accept_payment_on_account = true
     @website.rbswp_active = false
-    @website.only_accept_payment_on_account?.should be_true
+    expect(@website.only_accept_payment_on_account?).to be_true
 
     @website.rbswp_active = true
-    @website.only_accept_payment_on_account?.should be_false
+    expect(@website.only_accept_payment_on_account?).to be_false
 
     @website.accept_payment_on_account = false
     @website.rbswp_active = false
-    @website.only_accept_payment_on_account?.should be_false
+    expect(@website.only_accept_payment_on_account?).to be_false
   end
 
   it 'orders enquiries in reverse chronological order' do
@@ -72,16 +72,16 @@ describe Website do
       enquiry.save!
     end
 
-    @website.enquiries.first.should == enquiries.last
-    @website.enquiries.second.should == enquiries.second
-    @website.enquiries.third.should == enquiries.first
+    expect(@website.enquiries.first).to eq enquiries.last
+    expect(@website.enquiries.second).to eq enquiries.second
+    expect(@website.enquiries.third).to eq enquiries.first
   end
 
   describe '#populate_countries!' do
     it 'should populate itself with a number of countries' do
       @website.save
       @website.populate_countries!
-      @website.countries.should have(248).countries
+      expect(@website.countries).to have(248).countries
     end
   end
 end

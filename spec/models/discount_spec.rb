@@ -5,7 +5,7 @@ describe Discount do
     it 'transforms the coupon attribute to uppercase' do
       discount = Discount.new(coupon: 'Coupon')
       discount.uppercase_coupon_code
-      discount.coupon.should == 'COUPON'
+      expect(discount.coupon).to eq 'COUPON'
     end
   end
 end

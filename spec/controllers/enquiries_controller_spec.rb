@@ -25,7 +25,7 @@ describe EnquiriesController do
       it 'assigns @enquiries' do
         website.stub(:enquiries).and_return [mock_enquiry]
         get 'index'
-        assigns(:enquiries).should == [mock_enquiry]
+        expect(assigns(:enquiries)).to eq [mock_enquiry]
       end
     end
   end

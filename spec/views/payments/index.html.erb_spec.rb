@@ -7,14 +7,14 @@ describe 'payments/index.html.erb' do
   it 'displays each payment' do
     assign(:payments, [alice, bob])
     render
-    rendered.should have_content('Alice')
-    rendered.should have_content('Bob')
+    expect(rendered).to have_content('Alice')
+    expect(rendered).to have_content('Bob')
   end
 
   it 'links to the full detail of the payment' do
     assign(:payments, [alice])
     render
-    rendered.should have_selector("a[href='/payments/#{alice.id}']")
+    expect(rendered).to have_selector("a[href='/payments/#{alice.id}']")
   end
 
   context 'with associated orders' do
@@ -23,8 +23,8 @@ describe 'payments/index.html.erb' do
       alice.stub(:order).and_return(order)
       assign(:payments, [alice])
       render
-      rendered.should have_content('ORDER123')
-      rendered.should have_selector("a[href='/orders/#{order.id}']")
+      expect(rendered).to have_content('ORDER123')
+      expect(rendered).to have_selector("a[href='/orders/#{order.id}']")
     end
   end
 end

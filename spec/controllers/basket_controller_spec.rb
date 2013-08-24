@@ -22,7 +22,7 @@ describe BasketController do
 
       it "records the customer's IP address" do
         post 'place_order'
-        assigns(:order).ip_address.should == '0.0.0.0'
+        expect(assigns(:order).ip_address).to eq '0.0.0.0'
       end
     end
   end

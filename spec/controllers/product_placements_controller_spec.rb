@@ -31,7 +31,7 @@ describe ProductPlacementsController do
         pp = mock_model(ProductPlacement, page: page)
         ProductPlacement.stub(:find).and_return(pp)
         delete 'destroy', id: '1'
-        response.should redirect_to(edit_page_path(page))
+        expect(response).to redirect_to(edit_page_path(page))
       end
     end
   end
@@ -45,7 +45,7 @@ describe ProductPlacementsController do
         pp = mock_model(ProductPlacement, page: page, move_higher: true)
         ProductPlacement.stub(:find).and_return(pp)
         post 'move_up'
-        response.should redirect_to(edit_page_path(page))
+        expect(response).to redirect_to(edit_page_path(page))
       end
     end
   end

@@ -7,7 +7,7 @@ describe Basket do
       item2 = mock_model(BasketItem, weight: 10)
       basket = Basket.new
       basket.basket_items = [item1, item2]
-      basket.weight.should == 15
+      expect(basket.weight).to eq 15
     end
   end
 end
