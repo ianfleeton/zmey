@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   layout 'admin', only: [:edit, :new, :create, :update, :index, :upload_google_data_feed]
-  before_filter :find_product, only: [:show, :edit, :update, :destroy]
-  before_filter :admin_or_manager_required, except: [:show, :google_data_feed]
+  before_action :find_product, only: [:show, :edit, :update, :destroy]
+  before_action :admin_or_manager_required, except: [:show, :google_data_feed]
 
   def index
     @products = Product.all(conditions: {website_id: @w.id}, order: 'name')

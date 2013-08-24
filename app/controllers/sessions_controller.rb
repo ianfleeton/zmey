@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_filter :protect_private_website
+  skip_before_action :protect_private_website
 
   def new
   end

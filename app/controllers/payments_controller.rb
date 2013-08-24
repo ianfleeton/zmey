@@ -1,7 +1,7 @@
 class PaymentsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, only: [:cardsave_callback, :paypal_auto_return, :rbs_worldpay_callback]
+  skip_before_action :verify_authenticity_token, only: [:cardsave_callback, :paypal_auto_return, :rbs_worldpay_callback]
 
-  before_filter :admin_required, only: [:index, :show]
+  before_action :admin_required, only: [:index, :show]
 
   layout 'admin', only: 'index'
 

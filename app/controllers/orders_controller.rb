@@ -1,10 +1,10 @@
 class OrdersController < ApplicationController
 
-  before_filter :admin_or_manager_required, only: [:destroy]
+  before_action :admin_or_manager_required, only: [:destroy]
 
-  before_filter :find_order, only: [:show, :destroy, :invoice]
-  before_filter :require_order, only: [:select_payment_method, :receipt]
-  before_filter :user_required, only: [:index, :show, :invoice]
+  before_action :find_order, only: [:show, :destroy, :invoice]
+  before_action :require_order, only: [:select_payment_method, :receipt]
+  before_action :user_required, only: [:index, :show, :invoice]
 
   def index
     if admin_or_manager?

@@ -1,6 +1,6 @@
 class ForumsController < ApplicationController
-  before_filter :find_forum, only: [:show, :feed]
-  before_filter :admin_required, only: [:new, :edit, :create, :update, :destroy]
+  before_action :find_forum, only: [:show, :feed]
+  before_action :admin_required, only: [:new, :edit, :create, :update, :destroy]
 
   def index
     @forums = @w.forums

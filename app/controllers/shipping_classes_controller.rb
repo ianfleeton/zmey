@@ -1,7 +1,7 @@
 class ShippingClassesController < ApplicationController
   layout 'admin'
-  before_filter :admin_or_manager_required
-  before_filter :find_shipping_class, only: [:edit, :update, :destroy]
+  before_action :admin_or_manager_required
+  before_action :find_shipping_class, only: [:edit, :update, :destroy]
 
   def index
     @shipping_classes = @w.shipping_classes

@@ -1,8 +1,8 @@
 class WebsitesController < ApplicationController
   layout 'admin'
-  before_filter :admin_required, :except => [:edit, :update]
-  before_filter :find_website, :only => [:edit, :update, :destroy]
-  before_filter :permission_check, :only => [:edit, :update]
+  before_action :admin_required, :except => [:edit, :update]
+  before_action :find_website, :only => [:edit, :update, :destroy]
+  before_action :permission_check, :only => [:edit, :update]
 
   def index
     @websites = Website.order('name')

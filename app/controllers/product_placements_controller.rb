@@ -1,6 +1,6 @@
 class ProductPlacementsController < ApplicationController
-  before_filter :admin_or_manager_required
-  before_filter :find_product_placement, except: [:create]
+  before_action :admin_or_manager_required
+  before_action :find_product_placement, except: [:create]
   # TODO: restrict by website
   
   def create

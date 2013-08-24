@@ -1,7 +1,7 @@
 class ComponentsController < ApplicationController
   layout 'admin'
-  before_filter :admin_or_manager_required
-  before_filter :find_component, only: [:edit, :destroy, :update]
+  before_action :admin_or_manager_required
+  before_action :find_component, only: [:edit, :destroy, :update]
 
   def new
     @component = Component.new

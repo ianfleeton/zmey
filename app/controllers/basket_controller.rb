@@ -1,9 +1,9 @@
 class BasketController < ApplicationController
-  before_filter :find_basket
+  before_action :find_basket
   
-  before_filter :require_delivery_address, only: [:place_order]
-  before_filter :invalidate_coupons, only: [:index]
-  before_filter :calculate_discounts, only: [:index, :checkout, :place_order]
+  before_action :require_delivery_address, only: [:place_order]
+  before_action :invalidate_coupons, only: [:index]
+  before_action :calculate_discounts, only: [:index, :checkout, :place_order]
 
   def index
     @page = params[:page_id] ? Page.find_by_id(params[:page_id]) : nil

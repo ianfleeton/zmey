@@ -1,7 +1,7 @@
 class ShippingTableRowsController < ApplicationController
   layout 'admin'
-  before_filter :admin_or_manager_required
-  before_filter :find_shipping_table_row, only: [:edit, :update, :destroy]
+  before_action :admin_or_manager_required
+  before_action :find_shipping_table_row, only: [:edit, :update, :destroy]
 
   def new
     @shipping_table_row = ShippingTableRow.new

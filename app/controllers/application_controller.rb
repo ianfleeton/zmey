@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_filter :set_timezone, :require_website, :initialize_meta_tags, :initialize_user, :set_locale, :protect_private_website, :initialize_tax_display
+  before_action :set_timezone, :require_website, :initialize_meta_tags, :initialize_user, :set_locale, :protect_private_website, :initialize_tax_display
   
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_error

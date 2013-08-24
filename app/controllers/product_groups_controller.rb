@@ -1,7 +1,7 @@
 class ProductGroupsController < ApplicationController
   layout 'admin'
-  before_filter :admin_or_manager_required
-  before_filter :find_product_group, only: [:show, :edit, :update, :destroy]
+  before_action :admin_or_manager_required
+  before_action :find_product_group, only: [:show, :edit, :update, :destroy]
 
   def index
     @title = 'Product Groups'

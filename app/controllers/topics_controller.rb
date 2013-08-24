@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   include SpamProtection
-  before_filter :admin_required, only: [:destroy, :destroy_post]
+  before_action :admin_required, only: [:destroy, :destroy_post]
 
   def new
     @title = 'New Topic - Forum'

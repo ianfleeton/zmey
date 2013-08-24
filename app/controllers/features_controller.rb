@@ -1,7 +1,7 @@
 class FeaturesController < ApplicationController
   layout 'admin'
-  before_filter :admin_or_manager_required
-  before_filter :find_feature, only: [:edit, :destroy, :update]
+  before_action :admin_or_manager_required
+  before_action :find_feature, only: [:edit, :destroy, :update]
 
   def new
     @feature = Feature.new

@@ -1,7 +1,7 @@
 class ChoicesController < ApplicationController
   layout 'admin'
-  before_filter :admin_or_manager_required
-  before_filter :find_choice, except: [:new, :create]
+  before_action :admin_or_manager_required
+  before_action :find_choice, except: [:new, :create]
   
   def new
     @choice = Choice.new
