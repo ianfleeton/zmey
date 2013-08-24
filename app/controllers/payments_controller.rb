@@ -94,7 +94,7 @@ class PaymentsController < ApplicationController
 
   def rbs_worldpay_callback
     @payment = Payment.new
-    @payment.service_provider = 'RBS WorldPay'
+    @payment.service_provider = 'WorldPay'
     @payment.installation_id = params[:instId]
     @payment.cart_id = params[:cartId]
     @payment.description = params[:desc]
@@ -117,11 +117,11 @@ class PaymentsController < ApplicationController
 
     if params[:transStatus].nil? or params[:transStatus] != 'Y'
       @message = 'No payment was made'
-    elsif !@w.skip_payment? and (params[:callbackPW].nil? or params[:callbackPW] != @w.rbswp_payment_response_password)
+    elsif !@w.skip_payment? and (params[:callbackPW].nil? or params[:callbackPW] != @w.worldpay_payment_response_password)
       @message = FAILURE_MESSAGE
     elsif params[:cartId].nil?
       @message = FAILURE_MESSAGE
-    elsif params[:testMode] and !@w.rbswp_test_mode? and params[:testMode] != '0'
+    elsif params[:testMode] and !@w.worldpay_test_mode? and params[:testMode] != '0'
       @message = FAILURE_MESSAGE      
     else
       @message = 'Payment received'

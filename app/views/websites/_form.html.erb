@@ -164,31 +164,31 @@
 
       <h2>WorldPay</h2>
 
-      <label for="website_rbswp_active_true">Active?</label>
+      <label for="website_worldpay_active_true">Active?</label>
       <label class="radio">
-        <%= form.radio_button :rbswp_active, true %>
+        <%= form.radio_button :worldpay_active, true %>
         Yes
       </label>
       <label class="radio">
-  	    <%= form.radio_button :rbswp_active, false %>
+  	    <%= form.radio_button :worldpay_active, false %>
   	    No
       </label>
 
-      <label for="website_rbswp_test_mode">Mode?</label>
+      <label for="website_worldpay_test_mode">Mode?</label>
   	  <label class="radio">
-        <%= form.radio_button :rbswp_test_mode, false %>
+        <%= form.radio_button :worldpay_test_mode, false %>
   	    Production
       </label>
   	  <label class="radio">
-        <%= form.radio_button :rbswp_test_mode, true %>
+        <%= form.radio_button :worldpay_test_mode, true %>
         Test
       </label>
 
-      <%= form.label :rbswp_installation_id, 'Installation ID' %>
-      <%= form.text_field :rbswp_installation_id %>
+      <%= form.label :worldpay_installation_id, 'Installation ID' %>
+      <%= form.text_field :worldpay_installation_id %>
 
-      <%= form.label :rbswp_payment_response_password, 'Payment response password' %>
-      <%= form.text_field :rbswp_payment_response_password %>
+      <%= form.label :worldpay_payment_response_password, 'Payment response password' %>
+      <%= form.text_field :worldpay_payment_response_password %>
 
     </div>
     <div class="span6">

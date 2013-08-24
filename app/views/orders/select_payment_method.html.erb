@@ -62,7 +62,7 @@
 </div><!--#pay_by_cardsave-->
 <% end -%>
 
-<% if @w.rbswp_active? -%>
+<% if @w.worldpay_active? -%>
 <div class="pay_by" id="pay_by_worldpay">
   <% if @w.skip_payment? -%>
   <h2>Skipping payment for WorldPay</h2>
@@ -74,7 +74,7 @@
     </div>
     <div>
       <label>instId</label>:<br />
-      <input type="text" name="instId" value="<%= @w.rbswp_installation_id %>" />
+      <input type="text" name="instId" value="<%= @w.worldpay_installation_id %>" />
     </div>
     <div>
       <label>cartId</label>:<br />
@@ -102,7 +102,7 @@
     </div>
     <div>
       <label>address</label>:<br />
-      <textarea name="address"><%= address_for_rbswp(@order) %></textarea>
+      <textarea name="address"><%= address_for_worldpay(@order) %></textarea>
     </div>
     <div>
       <label>postcode</label>:<br />
@@ -145,19 +145,19 @@
     </div>
   </form>
   <% else -%>
-<form action="https://secure<%= (@w.rbswp_test_mode? ? '-test' : '') %>.worldpay.com/wcc/purchase" method="post">
+<form action="https://secure<%= (@w.worldpay_test_mode? ? '-test' : '') %>.worldpay.com/wcc/purchase" method="post">
 <input type="hidden" name="cartId" value="<%= @order.order_number %>" />
-<input type="hidden" value="<%= @w.rbswp_installation_id %>" name="instId" />
+<input type="hidden" value="<%= @w.worldpay_installation_id %>" name="instId" />
 <input type="hidden" value="<%= @order.total %>" name="amount" />
 <input type="hidden" value="Web purchase" name="desc" />
 <input type="hidden" value="GBP" name="currency" />
-<% if @w.rbswp_test_mode? -%>
+<% if @w.worldpay_test_mode? -%>
 <input type="hidden" value="100" name="testMode" />
 <% end -%>
 <input type="hidden" value="<%= @order.full_name %>" name="name" />
 
 
-<input type="hidden" value="<%= address_for_rbswp(@order) %>" name="address" />
+<input type="hidden" value="<%= address_for_worldpay(@order) %>" name="address" />
 <input type="hidden" value="<%= @order.postcode %>" name="postcode" />
 <input type="hidden" value="<%= @order.country.iso_3166_1_alpha_2 %>" name="country" />
 <input type="hidden" name="tel" value="<%= @order.phone_number %>" />

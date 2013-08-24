@@ -47,7 +47,7 @@ template("footer",
   :admin_links => render("shared/admin_links"),
   :footer_html => raw(@w.footer_html),
   :website_name => @w.name,
-  :worldpay_logos => @w.rbswp_active? ? template("worldpay_logos", :installation_id => @w.rbswp_installation_id) : '',
+  :worldpay_logos => @w.worldpay_active? ? template("worldpay_logos", installation_id: @w.worldpay_installation_id) : '',
   :year => Date.today.year
 )
 %>

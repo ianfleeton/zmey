@@ -102,8 +102,8 @@ class WebsitesController < ApplicationController
       :google_ftp_username, :invoice_details, :name, :page_image_size,
       :page_thumbnail_size, :paypal_active, :paypal_email_address,
       :paypal_identity_token, :private, :product_image_size,
-      :product_thumbnail_size, :rbswp_active, :rbswp_installation_id,
-      :rbswp_payment_response_password, :rbswp_test_mode, :shipping_amount,
+      :product_thumbnail_size, :worldpay_active, :worldpay_installation_id,
+      :worldpay_payment_response_password, :worldpay_test_mode, :shipping_amount,
       :shop, :show_vat_inclusive_prices, :skip_payment, :subdomain,
       :terms_and_conditions, :use_default_css, :vat_number)
   end

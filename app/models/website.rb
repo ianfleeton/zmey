@@ -6,12 +6,12 @@ class Website < ActiveRecord::Base
   validates_inclusion_of :private, :in => [true, false]
   validates_inclusion_of :render_blog_before_content, :in => [true, false]
   
-  # RBS WorldPay validations
-  validates_inclusion_of :rbswp_active, :in => [true, false]
-  validates_inclusion_of :rbswp_test_mode, :in => [true, false]
-  # these details are required only if RBS WorldPay is active
-  validates_presence_of :rbswp_installation_id, :if => Proc.new { |website| website.rbswp_active? }
-  validates_presence_of :rbswp_payment_response_password, :if => Proc.new { |website| website.rbswp_active? }
+  # WorldPay validations
+  validates_inclusion_of :worldpay_active, in: [true, false]
+  validates_inclusion_of :worldpay_test_mode, in: [true, false]
+  # these details are required only if WorldPay is active
+  validates_presence_of :worldpay_installation_id, if: Proc.new { |website| website.worldpay_active? }
+  validates_presence_of :worldpay_payment_response_password, if: Proc.new { |website| website.worldpay_active? }
 
   has_one :preferred_delivery_date_settings, :dependent => :delete
   has_many :carousel_slides, -> { order 'position' }
@@ -52,7 +52,7 @@ class Website < ActiveRecord::Base
   end
 
   def only_accept_payment_on_account?
-    accept_payment_on_account and !(rbswp_active)
+    accept_payment_on_account and !(worldpay_active)
   end
 
   def populate_countries!
