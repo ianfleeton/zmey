@@ -45,3 +45,5 @@ before 'deploy:assets:precompile', 'deploy:symlink_secrets'
 after 'deploy:update_code', 'deploy:migrate'
 
 ssh_options[:forward_agent] = true
+
+set :shared_children, shared_children + %w{public/invoices public/up}
