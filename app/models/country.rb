@@ -5,8 +5,8 @@ class Country < ActiveRecord::Base
 
   belongs_to :website
   belongs_to :shipping_zone
-  has_many :addresses, dependent: :restrict
-  has_many :orders, dependent: :restrict
+  has_many :addresses, dependent: :restrict_with_exception
+  has_many :orders, dependent: :restrict_with_exception
 
   def to_s
     name
