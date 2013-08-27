@@ -1,0 +1,17 @@
+= page_header t('.heading')
+
+p= link_to t('.new_user'), new_admin_user_path, class: 'btn btn-primary'
+
+table.table.table-bordered
+  thead
+    tr
+      th= t('.name')
+      th= t('.email')
+      th= t('.admin')
+  tbody
+    - @users.each do |u|
+      tr
+        td= link_to u.name, [:admin, u]
+        td= mail_to u.email, u.email
+        td= tick u.admin
+        td= edit_button([:admin, u])

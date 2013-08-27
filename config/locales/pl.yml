@@ -2,6 +2,21 @@
 
 pl:
   add_to_cart: Dodaj do Koszyka
+  admin:
+    users:
+      edit:
+        heading: 'Edit User Account Details'
+      form:
+        cancel: 'Cancel'
+        does_not_manage_a_website: 'Does not manage a website'
+        save: 'Save'
+      index:
+        heading: 'Users'
+        new_user: 'New User'
+      new:
+        heading: 'New User Account'
+      show:
+        users: 'Users'
   cart: Koszyka
   checkout: Zamówienie
   continue_shopping: Kontynuuj zakupy

@@ -1,0 +1,34 @@
+- if @user.errors.any?
+  #error_explanation
+    h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+    ul
+      - @user.errors.full_messages.each do |msg|
+        li= msg
+
+.form
+  = form_for [:admin, @user] do |form|
+    div
+      = form.label :name
+      = form.text_field :name, size: 35, required: true
+    div
+      = form.label :email
+      = form.email_field :email, size: 35, required: true
+    div
+      = form.label :password
+      = form.password_field :password, size: 35, required: @user.new_record?
+    div
+      = form.label :password_confirmation
+      = form.password_field :password_confirmation, size: 35, required: @user.new_record?
+    - if admin?
+      div
+        | Administrator:
+        = form.radio_button :admin, true
+        label for="user_admin_true" Yes
+        = form.radio_button :admin, false
+        label for="user_admin" No
+      div
+        = form.label :manages_website_id, t('.manager_for_website')
+        = form.collection_select :manages_website_id, Website.order('name'), :id, :name, {include_blank: t('.does_not_manage_a_website')}
+
+    = form.submit(t('.save'), clasS: 'btn btn-primary')
+    = link_to t('.cancel'), admin_users_path

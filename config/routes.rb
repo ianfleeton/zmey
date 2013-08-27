@@ -6,6 +6,9 @@ YeslWebsite::Application.routes.draw do
         get 'purge_old_unpaid'
       end
     end
+
+    resources :users do
+    end
   end
 
   resources :addresses
@@ -106,7 +109,7 @@ YeslWebsite::Application.routes.draw do
 
   resources :topics
 
-  resources :users do
+  resources :users, except: [:index, :destroy] do
     collection do
       get 'forgot_password'
       get 'forgot_password_new'

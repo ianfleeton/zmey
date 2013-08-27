@@ -1,15 +1,8 @@
 class UsersController < ApplicationController
-  before_action :find_user, except: [:index, :new, :create, :forgot_password, :forgot_password_send]
+  before_action :find_user, except: [:new, :create, :forgot_password, :forgot_password_send]
   before_action :admin_or_manager_or_same_user_required, only: [:show, :edit]
-  before_action :admin_required, only: [:destroy]
-  before_action :admin_or_manager_required, only: [:index]
   before_action :can_users_create_accounts, only: [:new, :create]
 
-  def index
-    @users = @w.users
-    render layout: 'admin'
-  end
-  
   def show
     @title = 'Your Account'
   end
@@ -57,11 +50,6 @@ class UsersController < ApplicationController
     else
       render action: 'edit'
     end
-  end
-
-  def destroy
-    @user.destroy
-    redirect_to users_path, 'User account successfully destroyed.'
   end
 
   def forgot_password

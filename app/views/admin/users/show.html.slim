@@ -1,0 +1,23 @@
+h1
+  = link_to t('.users'), action: 'index'
+  = '&rarr;'.html_safe
+  = @user.name
+  = '&#8217;s Account'.html_safe
+
+
+h2
+  = @user.name
+  = image_for_admin_status(@user)
+
+h3= t('.registered_email_address')
+p= mail_to @user.email
+
+- if @w.shop?
+  p= link_to(@user.name + '’s orders', user_orders_path(@user))
+- unless @user.managed_website.nil?
+  p Website manager for
+    = h @user.managed_website.name
+- if admin_or_manager?
+  p
+    = edit_button([:admin, @user])
+    = delete_button([:admin, @user])
