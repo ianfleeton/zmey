@@ -270,6 +270,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   sdoc
   shoulda-matchers
+  slim
   spork-rails!
   sqlite3
   test-unit (= 1.2.3)

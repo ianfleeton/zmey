@@ -11,6 +11,7 @@ gem 'prawn'
 gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'exception_notification'
+gem 'slim'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
