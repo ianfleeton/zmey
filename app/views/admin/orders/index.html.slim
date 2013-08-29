@@ -1,0 +1,25 @@
+= page_header t('.heading')
+
+- if @orders.empty?
+  p= t('.no_orders')
+- else
+  table#orders.table.table-bordered.table-striped
+    thead
+      tr
+        th= t('.order_number')
+        th= t('.invoice_pdf')
+        th= t('.order_total')
+        th= t('.when_placed')
+        th= t('.full_name')
+        th= t('.status')
+        th &nbsp;
+    tbody
+      - @orders.each do |o|
+        tr
+          td= link_to o.order_number, admin_order_path(o)
+          td= link_to t('.invoice_pdf'), invoice_order_path(o)
+          td.numeric= formatted_price(o.total)
+          td= o.created_at
+          td= o.full_name
+          td= o.status_description
+          td style="width: 70px;"= delete_button(o)

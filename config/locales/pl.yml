@@ -3,6 +3,16 @@
 pl:
   add_to_cart: Dodaj do Koszyka
   admin:
+    orders:
+      index:
+        full_name: 'Full Name'
+        heading: 'Orders'
+        invoice_pdf: 'Invoice (PDF)'
+        no_orders: 'There are no orders.'
+        order_number: 'Order Number'
+        order_total: 'Order Total'
+        status: 'Status'
+        when_placed: 'When Placed'
     users:
       edit:
         heading: 'Edit User Account Details'
