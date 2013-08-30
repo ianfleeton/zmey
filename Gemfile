@@ -13,6 +13,9 @@ gem 'acts_as_tree'
 gem 'exception_notification'
 gem 'slim'
 
+# Monitor with New Relic
+gem 'newrelic_rpm'
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
