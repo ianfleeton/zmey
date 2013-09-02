@@ -66,11 +66,11 @@
   label for="website_use_default_css_true" Use default CSS?
   label.radio
     = form.radio_button :use_default_css, true, class: 'radio'
-    Yes
+    | Yes
 
   label.radio
     = form.radio_button :use_default_css, false, class: 'radio'
-    No
+    | No
 
   h2 Image Sizes
 
@@ -98,7 +98,7 @@
 
   label.radio
     = form.radio_button :show_vat_inclusive_prices, false, class: 'radio'
-	  | No
+    | No
 
   h2 Shop Settings
 
@@ -134,20 +134,20 @@
       label for="website_cardsave_active_true" Active?
       label.radio
         = form.radio_button :cardsave_active, true
-    	  | Yes
+        | Yes
 
       label.radio
         = form.radio_button :cardsave_active, false
         | No
 
-    	= form.label :cardsave_merchant_id, 'Merchant ID'
-    	= form.text_field :cardsave_merchant_id
+      = form.label :cardsave_merchant_id, 'Merchant ID'
+      = form.text_field :cardsave_merchant_id
 
-    	= form.label :cardsave_password, 'Password'
+      = form.label :cardsave_password, 'Password'
       = form.text_field :cardsave_password
 
-  	  = form.label :cardsave_pre_shared_key, 'Pre-shared key'
-  	  = form.text_field :cardsave_pre_shared_key
+      = form.label :cardsave_pre_shared_key, 'Pre-shared key'
+      = form.text_field :cardsave_pre_shared_key
 
       h2 WorldPay
 
