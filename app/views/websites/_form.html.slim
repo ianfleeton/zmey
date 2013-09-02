@@ -1,0 +1,207 @@
+- if @website.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@website.errors.count, "error")} prohibited this website from being saved:"
+    ul
+      - @website.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for @website do |form|
+
+  = form.label :subdomain
+  = form.text_field :subdomain
+
+  = form.label :domain
+  = form.text_field :domain
+
+  = form.label :google_analytics_code, 'Google Analytics code'
+  = form.text_field :google_analytics_code
+
+  = form.label :google_domain_name
+  | (leave blank for default)
+  br
+  = form.text_field :google_domain_name
+
+  = form.label :google_ftp_username, 'Google FTP username'
+  = form.text_field :google_ftp_username
+
+  = form.label :google_ftp_password, 'Google FTP password'
+  = form.text_field :google_ftp_password
+
+  = form.label :name
+  = form.text_field :name
+
+  = form.label :email
+  = form.email_field :email
+
+  = form.label :default_locale
+  = form.text_field :default_locale
+
+  = form.label :blog_id
+  = form.collection_select :blog_id, Forum.all(conditions: {website_id: @website.id}, order: 'name'), :id, :name, {include_blank: '-- No blog --'}
+
+	label for="website_can_users_create_accounts_true" Can users create accounts?
+	label.radio
+    = form.radio_button :can_users_create_accounts, true, class: 'radio'
+    | Yes
+
+	label.radio
+    = form.radio_button :can_users_create_accounts, false, class: 'radio'
+    | No
+
+  label for="website_private_true" Private (users must be logged in to view)?
+  label.radio
+    = form.radio_button :private, true, class: 'radio'
+    Yes
+
+  label.radio
+    = form.radio_button :private, false, class: 'radio'
+    No
+
+  h2 CSS Settings
+
+  = form.label :css_url, 'CSS URL'
+  = form.text_field :css_url
+
+  label for="website_use_default_css_true" Use default CSS?
+  label.radio
+    = form.radio_button :use_default_css, true, class: 'radio'
+    Yes
+
+  label.radio
+    = form.radio_button :use_default_css, false, class: 'radio'
+    No
+
+  h2 Image Sizes
+
+  = form.label :page_image_size
+  = form.text_field :page_image_size
+
+	= form.label :page_thumbnail_size
+	= form.text_field :page_thumbnail_size
+
+	= form.label :product_image_size
+	= form.text_field :product_image_size
+
+	= form.label :product_thumbnail_size
+	= form.text_field :product_thumbnail_size
+
+  h2 Tax Settings
+
+  = form.label :vat_number, 'VAT number'
+  = form.text_field :vat_number
+
+	label for="show_vat_inclusive_prices_true" Show VAT-inclusive prices?
+  label.radio
+    = form.radio_button :show_vat_inclusive_prices, true, class: 'radio'
+    | Yes
+
+  label.radio
+    = form.radio_button :show_vat_inclusive_prices, false, class: 'radio'
+	  | No
+
+  h2 Shop Settings
+
+  label for="website_shop_true" Shop?
+  label.radio
+    = form.radio_button :shop, true, class: 'radio'
+    | Yes
+
+  label.radio
+    = form.radio_button :shop, false, class: 'radio'
+    | No
+
+	label for="website_skip_payment_true" Skip payment?
+	label.radio
+    = form.radio_button :skip_payment, true, class: 'radio'
+	  | Yes
+
+  label.radio
+    = form.radio_button :skip_payment, false, class: 'radio'
+	  | No
+
+	= form.label :shipping_amount, 'Shipping amount'
+	| &pound;
+  = form.text_field :shipping_amount
+
+  = form.label :invoice_details
+  = form.text_area :invoice_details, rows: 6
+
+  .row
+    .span6
+      h2 Cardsave
+
+      label for="website_cardsave_active_true" Active?
+      label.radio
+        = form.radio_button :cardsave_active, true
+    	  | Yes
+
+      label.radio
+        = form.radio_button :cardsave_active, false
+        | No
+
+    	= form.label :cardsave_merchant_id, 'Merchant ID'
+    	= form.text_field :cardsave_merchant_id
+
+    	= form.label :cardsave_password, 'Password'
+      = form.text_field :cardsave_password
+
+  	  = form.label :cardsave_pre_shared_key, 'Pre-shared key'
+  	  = form.text_field :cardsave_pre_shared_key
+
+      h2 WorldPay
+
+      label for="website_worldpay_active_true" Active?
+      label.radio
+        = form.radio_button :worldpay_active, true
+        | Yes
+
+      label.radio
+        = form.radio_button :worldpay_active, false
+  	    | No
+
+      label for="website_worldpay_test_mode" Mode?
+      label.radio
+        = form.radio_button :worldpay_test_mode, false
+  	    | Production
+
+      label.radio
+        = form.radio_button :worldpay_test_mode, true
+        | Test
+
+      = form.label :worldpay_installation_id, 'Installation ID'
+      = form.text_field :worldpay_installation_id
+
+      = form.label :worldpay_payment_response_password, 'Payment response password'
+      = form.text_field :worldpay_payment_response_password
+
+    .span6
+      h2 PayPal
+
+      .alert.alert-block
+        p The PayPal integration is for Website Payments Standard. <em>Auto Return</em> must be enabled on the PayPal account and so must <em>Payment | Data Transfer</em> (My Account | Profile | My Selling Preferences | Website Preferences | Auto Return: On, Payment Data Transfer: On).
+        p You will also need to specify an Auto Return URL but the shop will override this with its own. The dummy URL should exist and contain the text "Thank you for your payment. Your transaction has been completed and a receipt for your purchase has been emailed to you. You may log into your account at www.paypal.com/uk to view details of this transaction."
+
+      label for="website_paypal_active_true" Active?
+      label.radio
+        = form.radio_button :paypal_active, true
+        | Yes
+
+      label.radio
+        = form.radio_button :paypal_active, false
+        | No
+
+      = form.label :paypal_email_address, 'PayPal email address'
+      = form.email_field :paypal_email_address
+
+      = form.label :paypal_identity_token, 'PayPal identity token'
+  	  = form.text_field :paypal_identity_token
+
+  = form.label :terms_and_conditions
+  = form.text_area :terms_and_conditions, rows: 12, class: 'input-xlarge'
+
+  = form.label :footer_html, 'Footer HTML'
+  = form.text_area :footer_html, rows: 4
+
+  br
+  = submit_tag submit_label, class: 'btn btn-primary'

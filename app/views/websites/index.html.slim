@@ -1,0 +1,7 @@
+= page_header 'Websites'
+
+p= link_to 'Add a New Website', new_website_path, class: 'btn btn-primary'
+
+ul
+  - @websites.each do |w|
+    li= link_to w.name, edit_website_path(w)
