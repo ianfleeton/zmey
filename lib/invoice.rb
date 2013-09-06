@@ -12,7 +12,7 @@ class Invoice
 
     Prawn::Document.generate(filename, page_size: 'A4') do |pdf|
       spacing = 3
-      pdf.font 'fonts/Aller_Lt.ttf'
+      pdf.font 'fonts/MuseoSans_500.otf'
       pdf.font_size 18
       pdf.text "Invoice number #{@order.order_number}"
       pdf.move_down 24

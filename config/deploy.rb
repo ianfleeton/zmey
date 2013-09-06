@@ -34,13 +34,16 @@ namespace :deploy do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
-  desc "Symlinks files with secret information"
-  task :symlink_secrets, roles: :app do
+  desc "Symlinks files with secret information and extras"
+  task :symlink_secrets_and_extras, roles: :app do
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+    # Copy in Museo Sans font for invoices.
+    # It is free to use but cannot be redistributed.
+    run "ln -nfs #{deploy_to}/shared/fonts/MuseoSans_500.otf #{release_path}/fonts/MuseoSans_500.otf"
   end
 end
 
-before 'deploy:assets:precompile', 'deploy:symlink_secrets'
+before 'deploy:assets:precompile', 'deploy:symlink_secrets_and_extras'
 
 after 'deploy:update_code', 'deploy:migrate'
 
