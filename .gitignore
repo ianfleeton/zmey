@@ -13,7 +13,7 @@
 /db/*.sqlite3-journal
 
 # We cannot distribute Museo Sans.
-/fonts/MuseoSans_500.otf
+/fonts/MuseoSans_500.ttf
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
