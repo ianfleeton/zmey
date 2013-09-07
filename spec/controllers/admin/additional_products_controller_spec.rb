@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-describe AdditionalProductsController do
+describe Admin::AdditionalProductsController do
   let(:website) { mock_model(Website).as_null_object }
 
   def mock_additional_product(stubs={})
     @mock_additional_product ||= mock_model(AdditionalProduct, stubs)
+  end
+
+  def mock_product(stubs={})
+    @mock_product ||= mock_model(Product, stubs)
   end
 
   before do
@@ -50,6 +54,32 @@ describe AdditionalProductsController do
       AdditionalProduct.should_receive(:new).with(params)
         .and_return(mock_additional_product.as_null_object)
       post 'create', additional_product: params
+    end
+  end
+
+  describe 'DELETE destroy' do
+    context 'when product valid' do
+      let(:product) { mock_model(Product) }
+
+      before do
+        controller.stub(:product_valid?).and_return(true)
+      end
+
+      context 'when additional product is found' do
+        before do
+          AdditionalProduct.stub(:find).and_return(mock_additional_product(product: product))
+        end
+
+        it 'destroys the additional product' do
+          mock_additional_product.should_receive(:destroy)
+          delete 'destroy', id: '1'
+        end
+
+        it 'redirects to the edit product page' do
+          delete 'destroy', id: '1'
+          expect(response).to redirect_to(edit_product_path(product))
+        end
+      end
     end
   end
 

@@ -1,6 +1,8 @@
 YeslWebsite::Application.routes.draw do
 
   namespace :admin do
+    resources :additional_products, except: [:show]
+
     resources :orders do
       collection do
         get 'purge_old_unpaid'
@@ -37,8 +39,6 @@ YeslWebsite::Application.routes.draw do
   end
 
   resources :features
-
-  resources :additional_products
 
   resources :forums
 

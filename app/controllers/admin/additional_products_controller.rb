@@ -1,4 +1,4 @@
-class AdditionalProductsController < ApplicationController
+class Admin::AdditionalProductsController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
   before_action :find_additional_product, only: [:edit, :destroy, :update]
@@ -8,7 +8,7 @@ class AdditionalProductsController < ApplicationController
     @additional_product.product_id = params[:product_id]
     redirect_to products_path and return unless product_valid?
   end
-  
+
   def create
     @additional_product = AdditionalProduct.new(additional_product_params)
     redirect_to products_path and return unless product_valid?
@@ -20,7 +20,7 @@ class AdditionalProductsController < ApplicationController
       render action: 'new'
     end
   end
-  
+
   def update
     if @additional_product.update_attributes(additional_product_params)
       flash[:notice] = "Additional product successfully updated."
@@ -29,30 +29,34 @@ class AdditionalProductsController < ApplicationController
       render action: 'edit'
     end
   end
-  
+
   def edit
   end
-  
+
   def destroy
     @additional_product.destroy
     flash[:notice] = "Additional product deleted."
     redirect_to edit_product_path(@additional_product.product)
   end
-  
+
   protected
   
   def find_additional_product
     @additional_product = AdditionalProduct.find(params[:id])
     redirect_to products_path and return unless product_valid?
   end
-  
+
   def product_valid?
-    if Product.find_by_id_and_website_id(@additional_product.product_id, @w.id)
+    if find_product
       true
     else
       flash[:notice] = 'Invalid product.'
       false
     end
+  end
+
+  def find_product
+    Product.find_by(id: @additional_product.product_id, website_id: @w.id)
   end
 
   def additional_product_params
