@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "/products/edit.html.erb" do
+describe 'products/edit.html.erb' do
   include ProductsHelper
 
   before(:each) do

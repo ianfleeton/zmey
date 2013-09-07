@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "/products/show.html.erb" do
+describe 'products/show.html.erb' do
   include ProductsHelper
   before(:each) do
     assigns[:product] = @product = stub_model(Product)
