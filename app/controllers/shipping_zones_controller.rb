@@ -38,7 +38,7 @@ class ShippingZonesController < ApplicationController
   protected
 
   def find_shipping_zone
-    @shipping_zone = ShippingZone.find_by_id_and_website_id(params[:id], @w.id)
+    @shipping_zone = ShippingZone.find_by(id: params[:id], website_id: @w.id)
   end
 
   def shipping_zone_params

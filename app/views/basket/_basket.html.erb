@@ -101,7 +101,7 @@
   <p>You have applied the following coupons:</p>
   <ul>
     <% session[:coupons].each do |coupon| -%>
-    <li><%= coupon %> (<%= Discount.find_by_coupon_and_website_id(coupon, @w.id).name %>) <%= link_to('Remove', :controller => :basket, :action => :remove_coupon, :coupon_code => coupon) %></li>
+    <li><%= coupon %> (<%= Discount.find_by(coupon: coupon, website_id: @w.id).name %>) <%= link_to('Remove', controller: :basket, action: :remove_coupon, coupon_code: coupon) %></li>
     <% end %>
   </ul>
 </div>

@@ -50,12 +50,12 @@ describe Admin::OrdersController do
 
     describe 'POST destroy' do
       it 'finds the order' do
-        Order.should_receive(:find_by_id_and_website_id).with('1', website.id)
+        Order.should_receive(:find_by).with(id: '1', website_id: website.id)
         post_destroy
       end
 
       context 'when order is found' do
-        before { Order.stub(:find_by_id_and_website_id).and_return(mock_order) }
+        before { Order.stub(:find_by).and_return(mock_order) }
 
         it 'destroys the order' do
           mock_order.should_receive(:destroy)

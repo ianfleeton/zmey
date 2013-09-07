@@ -42,7 +42,7 @@ class DiscountsController < ApplicationController
   protected
 
   def find_discount
-    @discount = Discount.find_by_id_and_website_id(params[:id], @w.id)
+    @discount = Discount.find_by(id: params[:id], website_id: @w.id)
     not_found unless @discount
   end
 

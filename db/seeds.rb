@@ -17,7 +17,7 @@ website = Website.create!(
 website.populate_countries!
 Page.bootstrap(website)
 
-home_page = Page.find_by_name('Home')
+home_page = Page.find_by(name: 'Home')
 
 idevice = Product.create!(
   name: 'iDevice',

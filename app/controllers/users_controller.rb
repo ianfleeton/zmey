@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   end
   
   def forgot_password_send
-    @user = User.find_by_email(params[:email])
+    @user = User.find_by(email: params[:email])
     if @user.nil?
       flash[:notice] = "There is no user registered with that email address"
       redirect_to action: 'forgot_password'

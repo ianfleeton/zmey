@@ -52,7 +52,7 @@ class FeaturesController < ApplicationController
   end
   
   def product_valid?
-    if Product.find_by_id_and_website_id(@feature.product_id, @w.id)
+    if Product.find_by(id: @feature.product_id, website_id: @w.id)
       true
     else
       flash[:notice] = 'Invalid product.'

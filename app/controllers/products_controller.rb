@@ -73,7 +73,7 @@ class ProductsController < ApplicationController
   protected
   
   def find_product
-    @product = Product.find_by_id_and_website_id(params[:id], @w.id)
+    @product = Product.find_by(id: params[:id], website_id: @w.id)
     not_found unless @product
   end
 

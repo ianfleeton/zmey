@@ -110,13 +110,13 @@ describe ProductsController do
         end
 
         it "assigns the requested product as @product" do
-          Product.stub(:find_by_id_and_website_id).and_return(mock_product(:update_attributes => true))
+          Product.stub(:find_by).and_return(mock_product(update_attributes: true))
           put :update, valid_params
           expect(assigns(:product)).to equal(mock_product)
         end
 
         it "redirects to the product" do
-          Product.stub(:find_by_id_and_website_id).and_return(mock_product(:update_attributes => true))
+          Product.stub(:find_by).and_return(mock_product(update_attributes: true))
           put :update, valid_params
           expect(response).to redirect_to(product_url(mock_product))
         end
@@ -130,13 +130,13 @@ describe ProductsController do
         end
 
         it "assigns the product as @product" do
-          Product.stub(:find_by_id_and_website_id).and_return(mock_product(update_attributes: false))
+          Product.stub(:find_by).and_return(mock_product(update_attributes: false))
           put :update, valid_params
           expect(assigns(:product)).to equal(mock_product)
         end
 
         it "re-renders the 'edit' template" do
-          Product.stub(:find_by_id_and_website_id).and_return(mock_product(update_attributes: false))
+          Product.stub(:find_by).and_return(mock_product(update_attributes: false))
           put :update, valid_params
           expect(response).to render_template('edit')
         end
@@ -155,7 +155,7 @@ describe ProductsController do
       end
 
       it "redirects to the products list" do
-        Product.stub(:find_by_id_and_website_id).and_return(mock_product(destroy: true))
+        Product.stub(:find_by).and_return(mock_product(destroy: true))
         delete :destroy, id: '1'
         expect(response).to redirect_to(products_url)
       end
@@ -163,6 +163,6 @@ describe ProductsController do
   end
 
   def find_requested_product(stubs={})
-    Product.should_receive(:find_by_id_and_website_id).with("37", website.id).and_return(mock_product(stubs))
+    Product.should_receive(:find_by).with(id: '37', website_id: website.id).and_return(mock_product(stubs))
   end
 end

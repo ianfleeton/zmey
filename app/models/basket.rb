@@ -10,7 +10,7 @@ class Basket < ActiveRecord::Base
     # and also has the same feature selections by the user.
     # For example, a T-shirt product with a single SKU may come in green or red,
     # each of which should appear as a separate entry in our basket.
-    item = BasketItem.find_by_basket_id_and_product_id_and_feature_descriptions(id, product.id, feature_descriptions)
+    item = BasketItem.find_by(basket_id: id, product_id: product.id, feature_descriptions: feature_descriptions)
     if item
       item.quantity += quantity
     else

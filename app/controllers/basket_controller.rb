@@ -6,13 +6,13 @@ class BasketController < ApplicationController
   before_action :calculate_discounts, only: [:index, :checkout, :place_order]
 
   def index
-    @page = params[:page_id] ? Page.find_by_id(params[:page_id]) : nil
+    @page = params[:page_id] ? Page.find_by(id: params[:page_id]) : nil
   end
 
   def add
     go_back_to = request.referrer ? request.referrer : {action: 'index'}
 
-    product = Product.find_by_id_and_website_id(params[:product_id], @w.id)
+    product = Product.find_by(id: params[:product_id], website_id: @w.id)
     if product.nil?
       flash[:notice] = "Oops, we can't add that product to the basket."
       redirect_to go_back_to and return
@@ -48,10 +48,10 @@ class BasketController < ApplicationController
     redirect_to action: 'index' and return if @basket.basket_items.empty?
 
     @address = nil
-    @address = Address.find_by_id(session[:address_id]) if session[:address_id]
+    @address = Address.find_by(id: session[:address_id]) if session[:address_id]
     if @address.nil?
       @address = Address.new
-      @address.country = Country.find_by_name_and_website_id('United Kingdom', @w.id)
+      @address.country = Country.find_by(name: 'United Kingdom', website_id: @w.id)
       if logged_in?
         @address.user_id = @current_user.id
         @address.email_address = @current_user.email
@@ -128,7 +128,7 @@ class BasketController < ApplicationController
   end
 
   def enter_coupon
-    discount = Discount.find_by_coupon_and_website_id(params[:coupon_code].upcase, @w.id)
+    discount = Discount.find_by(coupon: params[:coupon_code].upcase, website_id: @w.id)
     if(discount.nil?)
       flash[:notice] = 'Sorry, your coupon code was not recognised.'
     else
@@ -154,7 +154,7 @@ class BasketController < ApplicationController
   protected
 
   def delete_previous_unpaid_order_if_any
-    if session[:order_id] && @order = Order.find_by_id(session[:order_id])
+    if session[:order_id] && @order = Order.find_by(id: session[:order_id])
       @order.destroy if @order.status == Order::WAITING_FOR_PAYMENT
     end
   end
@@ -190,7 +190,7 @@ class BasketController < ApplicationController
 
   def add_free_products(products)
     products.each do |product|
-      item = BasketItem.find_by_basket_id_and_product_id(@basket.id, product.id)
+      item = BasketItem.find_by(basket_id: @basket.id, product_id: product.id)
       unless item
         item = BasketItem.new(
           basket_id: @basket.id,
@@ -245,7 +245,7 @@ class BasketController < ApplicationController
   end
 
   def find_delivery_address
-    @address ||= session[:address_id] ? Address.find_by_id(session[:address_id]) : nil
+    @address ||= session[:address_id] ? Address.find_by(id: session[:address_id]) : nil
   end
 
   def remove_item
@@ -257,7 +257,7 @@ class BasketController < ApplicationController
   def update_quantities
     params[:qty].each_pair do |id,new_qty|
       new_qty = new_qty.to_i
-      item = BasketItem.find_by_id_and_basket_id(id, @basket.id)
+      item = BasketItem.find_by(id: id, basket_id: @basket.id)
       if item
         if new_qty == 0
           item.destroy
@@ -271,7 +271,7 @@ class BasketController < ApplicationController
 
   def find_basket
     if session[:basket_id]
-      @basket = Basket.find_by_id(session[:basket_id])
+      @basket = Basket.find_by(id: session[:basket_id])
       create_basket if @basket.nil?
     else
       create_basket

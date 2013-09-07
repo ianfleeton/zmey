@@ -9,7 +9,7 @@ class PagesController < ApplicationController
   end
 
   def show
-    @page = Page.find_by_slug_and_website_id(params[:slug], @w)
+    @page = Page.find_by(slug: params[:slug], website_id: @w)
     if @page
       @title = @page.title
       @description = @page.description
@@ -94,7 +94,7 @@ class PagesController < ApplicationController
   protected
   
   def find_page
-    @page = Page.find_by_id_and_website_id(params[:id], @w.id)
+    @page = Page.find_by(id: params[:id], website_id: @w.id)
     unless @page
       not_found
     end

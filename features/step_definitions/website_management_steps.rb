@@ -29,6 +29,6 @@ Then /^I should see a link to add a new website$/ do
 end
 
 Then /^a new website should exist with the domain "([^\"]*)"$/ do |domain|
-  Website.find_by_domain(domain).should_not be_nil
+  Website.find_by(domain: domain).should_not be_nil
 end
 

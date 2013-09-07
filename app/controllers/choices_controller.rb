@@ -52,7 +52,7 @@ class ChoicesController < ApplicationController
   end
 
   def feature_valid?
-    @feature = Feature.find_by_id(@choice.feature_id)
+    @feature = Feature.find_by(id: @choice.feature_id)
     if @feature && @feature.product.website_id == @w.id
       true
     else

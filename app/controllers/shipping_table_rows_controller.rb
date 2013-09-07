@@ -28,7 +28,7 @@ class ShippingTableRowsController < ApplicationController
   protected
 
   def find_shipping_table_row
-    @shipping_table_row = ShippingTableRow.find_by_id(params[:id])
+    @shipping_table_row = ShippingTableRow.find_by(id: params[:id])
   end
 
   def shipping_table_row_params

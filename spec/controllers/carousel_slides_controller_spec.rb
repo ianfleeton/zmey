@@ -82,7 +82,7 @@ describe CarouselSlidesController do
 
       describe 'when update succeeds' do
         before do
-          CarouselSlide.stub(:find_by_id_and_website_id).and_return(mock_carousel_slide(update_attributes: true))
+          CarouselSlide.stub(:find_by).and_return(mock_carousel_slide(update_attributes: true))
         end
 
         it 'assigns the requested carousel_slide as @carousel_slide' do
@@ -98,13 +98,13 @@ describe CarouselSlidesController do
 
       describe 'when update fails' do
         it 'assigns the carousel slide as @carousel_slide' do
-          CarouselSlide.stub(:find_by_id_and_website_id).and_return(mock_carousel_slide(update_attributes: false))
+          CarouselSlide.stub(:find_by).and_return(mock_carousel_slide(update_attributes: false))
           put 'update', valid_params
           expect(assigns(:carousel_slide)).to eq mock_carousel_slide
         end
 
         it "re-renders the 'edit' template" do
-          CarouselSlide.stub(:find_by_id_and_website_id).and_return(mock_carousel_slide(update_attributes: false))
+          CarouselSlide.stub(:find_by).and_return(mock_carousel_slide(update_attributes: false))
           put 'update', valid_params
           expect(response).to render_template('edit')
         end
@@ -119,7 +119,7 @@ describe CarouselSlidesController do
       end
 
       it 'redirects to the carousel slides list' do
-        CarouselSlide.stub(:find_by_id_and_website_id).and_return(mock_carousel_slide(destroy: true))
+        CarouselSlide.stub(:find_by).and_return(mock_carousel_slide(destroy: true))
         delete 'destroy', id: '1'
         expect(response).to redirect_to(carousel_slides_path)
       end
@@ -127,8 +127,8 @@ describe CarouselSlidesController do
   end
 
   def find_requested_carousel_slide(stubs={})
-    CarouselSlide.should_receive(:find_by_id_and_website_id)
-      .with('37', website.id)
+    CarouselSlide.should_receive(:find_by)
+      .with(id: '37', website_id: website.id)
       .and_return(mock_carousel_slide(stubs))
   end
 end

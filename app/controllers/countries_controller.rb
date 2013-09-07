@@ -46,7 +46,7 @@ class CountriesController < ApplicationController
   protected
 
   def find_country
-    @country = Country.find_by_id_and_website_id(params[:id], @w.id)
+    @country = Country.find_by(id: params[:id], website_id: @w.id)
   end
 
   def country_params

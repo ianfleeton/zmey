@@ -72,9 +72,9 @@ class ComponentsController < ApplicationController
       end
 
       permutation_array.sort!
-  		string = ''
-  		(0...permutation_array.count).each {|i| string += "_#{permutation_array[i]}_"}
-      @rows[c_index][:permutation] = Permutation.find_by_permutation(string)
+      string = ''
+      (0...permutation_array.count).each {|i| string += "_#{permutation_array[i]}_"}
+      @rows[c_index][:permutation] = Permutation.find_by(permutation: string)
     end
 
     pp @rows
@@ -94,7 +94,7 @@ class ComponentsController < ApplicationController
   end
   
   def product_valid?
-    if Product.find_by_id_and_website_id(@component.product_id, @w.id)
+    if Product.find_by(id: @component.product_id, website_id: @w.id)
       true
     else
       flash[:notice] = 'Invalid product.'

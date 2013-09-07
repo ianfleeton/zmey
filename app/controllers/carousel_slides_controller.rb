@@ -41,7 +41,7 @@ class CarouselSlidesController < ApplicationController
   protected
 
   def find_carousel_slide
-    @carousel_slide = CarouselSlide.find_by_id_and_website_id(params[:id], @w.id)
+    @carousel_slide = CarouselSlide.find_by(id: params[:id], website_id: @w.id)
     not_found unless @carousel_slide
   end
 

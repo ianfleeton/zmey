@@ -34,7 +34,7 @@ describe OrdersController do
 
   describe 'GET invoice' do
     it 'finds the order' do
-      Order.should_receive(:find_by_id_and_website_id)
+      Order.should_receive(:find_by)
       get 'invoice', id: '1'
     end
 
@@ -49,7 +49,7 @@ describe OrdersController do
       let(:order) { mock_order(user_id: 'the-owner').as_null_object }
 
       before do
-        Order.stub(:find_by_id_and_website_id).and_return(order)
+        Order.stub(:find_by).and_return(order)
       end
 
       it 'requires a user' do

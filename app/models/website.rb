@@ -39,9 +39,9 @@ class Website < ActiveRecord::Base
   belongs_to :blog, :class_name => 'Forum'
 
   def self.for(domain, subdomains)
-    website = find_by_domain(domain)
+    website = find_by(domain: domain)
     unless subdomains.blank?
-      website ||= find_by_subdomain(subdomains.first)
+      website ||= find_by(subdomain: subdomains.first)
     end
     website
   end

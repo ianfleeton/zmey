@@ -5,7 +5,7 @@ class AddressesController < ApplicationController
 
   def edit
     # get a valid address from the session; if not send the user to new
-    @address = session[:address_id] ? Address.find_by_id(session[:address_id]) : nil
+    @address = session[:address_id] ? Address.find_by(id: session[:address_id]) : nil
     redirect_to action: 'new' and return if @address.nil?
   end
 

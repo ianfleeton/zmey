@@ -25,12 +25,12 @@ describe AddressesController do
       before { session[:address_id] = 2 }
 
       it 'finds the address from the stored ID' do
-        Address.should_receive(:find_by_id).with(2)
+        Address.should_receive(:find_by).with(id: 2)
         get 'edit', id: '1'
       end
 
       context 'when found' do
-        before { Address.stub(:find_by_id).and_return(mock_address) }
+        before { Address.stub(:find_by).and_return(mock_address) }
 
         it 'renders edit' do
           get 'edit', id: '1'
@@ -39,7 +39,7 @@ describe AddressesController do
       end
 
       context 'when not found' do
-        before { Address.stub(:find_by_id).and_return(nil) }
+        before { Address.stub(:find_by).and_return(nil) }
 
         it 'redirects to new' do
           get 'edit', id: '1'
