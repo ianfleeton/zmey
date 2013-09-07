@@ -1,0 +1,50 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    title= @w.name
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"
+    link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css"
+    script src="/bootstrap/js/bootstrap.min.js"
+    css:
+      body { padding-top: 60px; }
+    / Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    /[if lt IE 9]
+      script src="http://html5shim.googlecode.com/svn/trunk/html5.js"
+  body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          a.brand href="/" Home
+          .nav-collapse
+            ul.nav
+              = admin_menu_links({\
+                t('controllers.enquiries') => enquiries_path,\
+                t('controllers.pages') => pages_path,\
+                t('controllers.liquid_templates') => liquid_templates_path,\
+                'Products' => products_path,\
+                'Users' => users_path,\
+                'Orders' => admin_orders_path,\
+                t('controllers.images') => images_path,\
+                'Carousel Slides' => carousel_slides_path\
+                })
+              li.dropdown
+                a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                  | Settings
+                  b.caret
+                  ul class="dropdown-menu"
+                    li= link_to 'Countries', countries_path
+                    li= link_to 'Shipping Zones', shipping_zones_path
+                    li= link_to 'Shipping Classes', shipping_classes_path
+                    li= link_to 'Product Groups', product_groups_url
+                    li= link_to 'Discounts', discounts_url
+                    li= link_to 'Website Settings', edit_website_path(@w)
+    .container
+      - if flash[:notice]
+        .alert.alert-info.fade.in
+          a.close data-dismiss="alert" href="#" &times;
+          = flash[:notice]
+
+      = yield
