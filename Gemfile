@@ -12,6 +12,7 @@ gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'exception_notification'
 gem 'slim'
+gem 'factory_girl_rails'
 
 # Monitor with New Relic
 gem 'newrelic_rpm'
