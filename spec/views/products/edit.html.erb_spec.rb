@@ -13,7 +13,6 @@ describe 'products/edit.html.erb' do
   it "renders the edit product form" do
     render
 
-    rendered.should have_selector("form", :method => "post", :action => product_path(@product)) do
-    end
+    rendered.should have_selector("form[action='#{product_path(@product)}'][method='post']")
   end
 end
