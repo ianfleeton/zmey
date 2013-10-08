@@ -183,7 +183,7 @@ class PaymentsController < ApplicationController
     data.split[1..-1].each do |line|
       key, value = line.strip.split('=')
       key = key.to_sym
-      response[key] = CGI::unescape(value) if response.has_key? key
+      response[key] = CGI::unescape(value || '') if response.has_key? key
     end
 
     response
