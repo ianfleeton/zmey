@@ -71,7 +71,7 @@ class Choice < ActiveRecord::Base
 
     if feature.choices.count == 1
       Permutation.where(['component_id = ? AND permutation LIKE ?', feature.component.id, match]).each do |permutation|
-        permutation.permutation.gsub!("_#{id}_", '')
+        permutation.permutation = permutation.permutation.gsub("_#{id}_", '')
         permutation.save unless permutation.permutation.blank?
       end
     else
