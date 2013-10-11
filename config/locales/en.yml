@@ -30,6 +30,9 @@ en:
         users: 'Users'
   cart: Basket
   checkout: Checkout
+  components:
+    destroy:
+      deleted: 'Component deleted.'
   continue_shopping: Continue shopping
   cost: Cost
   forgot_your_password: Forgotten your password?

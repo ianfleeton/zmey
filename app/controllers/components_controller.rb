@@ -81,9 +81,9 @@ class ComponentsController < ApplicationController
   end
   
   def destroy
-    @feature.destroy
-    flash[:notice] = "Feature deleted."
-    redirect_to edit_product_path(@feature.product)
+    @component.destroy
+    flash[:notice] = I18n.t('components.destroy.deleted')
+    redirect_to edit_product_path(@component.product)
   end
 
   protected

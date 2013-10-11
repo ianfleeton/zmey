@@ -29,6 +29,9 @@ pl:
         users: 'Users'
   cart: Koszyka
   checkout: Zamówienie
+  components:
+    destroy:
+      deleted: 'Component deleted.'
   continue_shopping: Kontynuuj zakupy
   cost: Koszt
   forgot_your_password: Zapomniałeś hasła?

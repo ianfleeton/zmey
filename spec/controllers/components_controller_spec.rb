@@ -57,4 +57,51 @@ describe ComponentsController do
       end
     end
   end
+
+  shared_examples 'a component finder' do |method, action|
+    let(:component) { FactoryGirl.create(:component) }
+
+    context 'when product valid' do
+      before do
+        controller.stub(:admin?).and_return(true)
+        component.product.website = website
+        component.product.save
+      end
+
+      it 'finds and assigns the component to @component' do
+        send(method, action, id: component.id, component: component.attributes)
+        expect(assigns(:component)).to eq component
+      end
+    end
+  end
+
+  describe 'DELETE destroy' do
+    it_behaves_like 'a component finder', :delete, :destroy
+
+    let(:component) { FactoryGirl.create(:component) }
+
+    before do
+      controller.stub(:admin?).and_return(true)
+      controller.stub(:product_valid?).and_return(true)
+    end
+
+    def delete_destroy
+      delete :destroy, id: component.id
+    end
+
+    it 'destroys the component' do
+      delete_destroy
+      expect(Component.find_by(id: component.id)).to be_nil
+    end
+
+    it "redirects to the component's product editing page" do
+      delete_destroy
+      expect(response).to redirect_to edit_product_path(component.product)
+    end
+
+    it 'sets a flash notice' do
+      delete_destroy
+      expect(flash[:notice]).to eq I18n.t('components.destroy.deleted')
+    end
+  end
 end
