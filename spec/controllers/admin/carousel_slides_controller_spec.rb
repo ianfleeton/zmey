@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples_for_controllers'
 
 describe Admin::CarouselSlidesController do
   let(:website) { mock_model(Website).as_null_object }
@@ -16,11 +17,7 @@ describe Admin::CarouselSlidesController do
     before { logged_in_as_admin }
 
     describe 'GET index' do
-      it 'assigns this website\'s carousel slides to @carousel slides' do
-        website.stub(:carousel_slides).and_return([mock_carousel_slide])
-        get :index
-        expect(assigns(:carousel_slides)).to eq [mock_carousel_slide]
-      end
+      it_behaves_like 'a website owned objects finder', :carousel_slide
     end
 
     describe 'GET new' do

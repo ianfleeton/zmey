@@ -3,7 +3,7 @@ class ImagesController < ApplicationController
   before_action :admin_or_manager_required
 
   def index
-    @images = @w.images
+    @images = website.images
   end
 
   def new

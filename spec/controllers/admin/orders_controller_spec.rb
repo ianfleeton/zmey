@@ -1,7 +1,8 @@
 require 'spec_helper'
+require 'shared_examples_for_controllers'
 
 describe Admin::OrdersController do
-  let(:website) { mock_model(Website).as_null_object }
+  let(:website) { FactoryGirl.create(:website) }
 
   def mock_order(stubs={})
     @mock_order ||= mock_model(Order, stubs)
@@ -9,7 +10,6 @@ describe Admin::OrdersController do
 
   before do
     Website.stub(:for).and_return(website)
-    website.stub(:private?).and_return(false)
   end
 
   context 'when admin or manager' do
@@ -17,11 +17,7 @@ describe Admin::OrdersController do
 
     describe 'GET index' do
       context 'with no user supplied' do
-        it 'assigns all orders for the current website to @orders' do
-          website.should_receive(:orders).and_return :some_orders
-          get 'index'
-          assigns(:orders).should eq :some_orders
-        end
+        it_behaves_like 'a website owned objects finder', :order
       end
 
       context 'with user supplied' do

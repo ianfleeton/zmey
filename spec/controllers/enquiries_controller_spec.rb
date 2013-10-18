@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples_for_controllers'
 
 describe EnquiriesController do
   let(:website) { mock_model(Website).as_null_object }
@@ -17,16 +18,7 @@ describe EnquiriesController do
     context 'when logged in as an administrator' do
       before { logged_in_as_admin }
 
-      it 'fetches website enquiries' do
-        website.should_receive(:enquiries)
-        get 'index'
-      end
-
-      it 'assigns @enquiries' do
-        website.stub(:enquiries).and_return [mock_enquiry]
-        get 'index'
-        expect(assigns(:enquiries)).to eq [mock_enquiry]
-      end
+      it_behaves_like 'a website owned objects finder', :enquiry
     end
   end
 end

@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   before_action :admin_or_manager_required, except: [:show, :google_data_feed]
 
   def index
-    @products = Product.all(conditions: {website_id: @w.id}, order: 'name')
+    @products = website.products.order(:name)
   end
   
   def show

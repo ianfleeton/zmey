@@ -5,9 +5,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :logged_in?, :admin?, :admin_or_manager?, :manager?
+  helper_method :website, :logged_in?, :admin?, :admin_or_manager?, :manager?
 
   before_action :set_timezone, :require_website, :initialize_meta_tags, :current_user, :set_locale, :protect_private_website, :initialize_tax_display
+
+  attr_reader :website
   
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_error
@@ -78,7 +80,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_website
-    @w = Website.for(request.host, request.subdomains)
+    @website = @w = Website.for(request.host, request.subdomains) || Website.first
     if @w
       if request.host == @w.domain
         set_cookie_domain(@w.domain)

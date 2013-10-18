@@ -17,8 +17,25 @@ FactoryGirl.define do
     association :product
   end
 
+  factory :enquiry do
+    name 'Ernie'
+    telephone '01234 567890'
+    email 'ernie@example.org'
+    enquiry 'Do you sell widgets?'
+  end
+
   factory :image do
-    name 'Image'
+    sequence(:name) { |n| "Image #{n}" }
+  end
+
+  factory :order do
+    email_address 'buyer@example.org'
+    address_line_1 '123 Street'
+    town_city 'Harrogate'
+    postcode 'HG1 9ZZ'
+  end
+
+  factory :payment do
   end
 
   factory :product do
@@ -27,7 +44,12 @@ FactoryGirl.define do
   end
 
   factory :user do
+    sequence(:email) { |n| "shopper#{n}@example.org" }
     name 'User'
     password 'secret'
+  end
+
+  factory :website do
+    name 'Website'
   end
 end

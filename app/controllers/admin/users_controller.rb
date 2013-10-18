@@ -1,12 +1,12 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, except: [:index, :new, :create]
   before_action :admin_required, only: [:destroy]
-  before_action :admin_or_manager_required, except: [:destroly]
+  before_action :admin_or_manager_required, except: [:destroy]
 
   layout 'admin'
 
   def index
-    @users = @w.users
+    @users = website.users
   end
   
   def show
@@ -19,13 +19,13 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.admin = false
-    @user.website_id = @w.id
+    @user.website = website
     
     if @user.save
       flash[:notice] = "New user account has been created."
       redirect_to users_path
     else
-      render action: 'new'
+      render :new
     end
   end
   
@@ -46,7 +46,7 @@ class Admin::UsersController < ApplicationController
       flash[:notice] = "User successfully updated."
       redirect_to [:admin, @user]
     else
-      render action: 'edit'
+      render :edit
     end
   end
 

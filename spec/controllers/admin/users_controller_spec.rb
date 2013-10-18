@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples_for_controllers'
 
 describe Admin::UsersController do
   let(:website) { mock_model(Website).as_null_object }
@@ -13,11 +14,11 @@ describe Admin::UsersController do
     before { controller.stub(:admin_or_manager?).and_return(true) }
 
     describe 'GET index' do
-      it 'assigns all users for the current website to @users' do
-        website.should_receive(:users).and_return :some_users
-        get 'index'
-        assigns(:users).should eq :some_users
-      end
+      it_behaves_like 'a website owned objects finder', :user
+    end
+
+    describe 'POST create' do
+      it_behaves_like 'a website association creator', :user
     end
 
     describe 'PATCH update' do

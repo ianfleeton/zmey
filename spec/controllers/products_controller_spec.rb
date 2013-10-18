@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples_for_controllers'
 
 describe ProductsController do
   let(:website) { mock_model(Website).as_null_object }
@@ -17,12 +18,7 @@ describe ProductsController do
     context "when logged in as admin" do
       before { logged_in_as_admin }
 
-      it "assigns all products as @products" do
-        controller.should_receive(:admin?)
-        Product.stub(:all).and_return([mock_product])
-        get :index
-        expect(assigns(:products)).to eq([mock_product])
-      end
+      it_behaves_like 'a website owned objects finder', :product
     end
   end
 

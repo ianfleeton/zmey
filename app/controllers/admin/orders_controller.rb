@@ -6,9 +6,9 @@ class Admin::OrdersController < ApplicationController
 
   def index
     if params[:user_id]
-      @orders = User.find(params[:user_id]).orders.where(website_id: @w.id)
+      @orders = User.find(params[:user_id]).orders.where(website_id: website.id)
     else
-      @orders = @w.orders
+      @orders = website.orders
     end
   end
   
