@@ -1,6 +1,9 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore Simplecov output.
+/coverage
+
 *.doc
 *.jpg
 *.gif

@@ -71,6 +71,7 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'shoulda-matchers'
+  gem 'simplecov', require: false
   gem 'database_cleaner'
 
   # Go faster!
