@@ -68,7 +68,6 @@ gem 'rvm-capistrano', group: :development
 group :test do
   gem 'rspec-rails'
   gem 'cucumber-rails', require: false
-  gem 'test-unit', '1.2.3'
   gem 'capybara'
   gem 'launchy'
   gem 'shoulda-matchers'
