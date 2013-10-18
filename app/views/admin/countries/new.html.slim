@@ -1,0 +1,9 @@
+= page_header 'New Country'
+
+ul.breadcrumb
+  li
+    = link_to 'Countries', admin_countries_path
+    span.divider= '/'
+  li.active New Country
+
+= render 'form'

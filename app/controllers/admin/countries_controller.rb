@@ -1,10 +1,10 @@
-class CountriesController < ApplicationController
+class Admin::CountriesController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
   before_action :find_country, only: [:edit, :update, :destroy]
 
   def index
-    @countries = @w.countries
+    @countries = website.countries
   end
 
   def new
@@ -16,7 +16,7 @@ class CountriesController < ApplicationController
     @country.website_id = @w.id
 
     if @country.save
-      redirect_to countries_path, notice: 'Saved.'
+      redirect_to admin_countries_path, notice: 'Saved.'
     else
       render action: 'new'
     end
@@ -25,9 +25,9 @@ class CountriesController < ApplicationController
   def update
     if @country.update_attributes(country_params)
       flash[:notice] = "Saved."
-      redirect_to countries_path
+      redirect_to admin_countries_path
     else
-      render action: 'edit'
+      render :edit
     end
   end
 
@@ -46,10 +46,10 @@ class CountriesController < ApplicationController
   protected
 
   def find_country
-    @country = Country.find_by(id: params[:id], website_id: @w.id)
+    @country = Country.find_by(id: params[:id], website_id: website.id)
   end
 
   def country_params
-    params.require(:country).permit(:iso_3661_alpha_2, :name, :shipping_zone_id)
+    params.require(:country).permit(:iso_3166_1_alpha_2, :name, :shipping_zone_id)
   end
 end

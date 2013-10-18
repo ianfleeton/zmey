@@ -3,6 +3,7 @@ YeslWebsite::Application.routes.draw do
   namespace :admin do
     resources :additional_products, except: [:show]
     resources :carousel_slides, except: [:show]
+    resources :countries, except: [:show]
 
     resources :orders do
       collection do
@@ -25,8 +26,6 @@ YeslWebsite::Application.routes.draw do
   resources :choices
 
   resources :components
-
-  resources :countries
 
   resources :discounts
 

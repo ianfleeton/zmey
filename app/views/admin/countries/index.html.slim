@@ -1,0 +1,19 @@
+= page_header 'Countries'
+
+p= new_button [:admin, Country]
+
+table.table.table-bordered.table-striped
+  thead
+    tr
+      th Country
+      th ISO 3166-1-alpha-2
+      th Shipping Zone
+  tbody
+    - @countries.each do |country|
+      tr
+        td= country.name
+        td= country.iso_3166_1_alpha_2
+        td= country.shipping_zone ? country.shipping_zone.name : '-'
+        td
+          = edit_button [:admin, country]
+          = delete_button [:admin, country]

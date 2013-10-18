@@ -17,6 +17,11 @@ FactoryGirl.define do
     association :product
   end
 
+  factory :country do
+    name 'Country'
+    sequence(:iso_3166_1_alpha_2) { |n| "X#{n}" }
+  end
+
   factory :enquiry do
     name 'Ernie'
     telephone '01234 567890'
