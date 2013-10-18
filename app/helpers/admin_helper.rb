@@ -15,10 +15,18 @@ module AdminHelper
     content_tag(:div, content_tag(:h1, title), class: 'page-header')
   end
 
+  def new_button(type)
+    link_to '<i class="icon-plus"></i> New'.html_safe,
+    new_polymorphic_path(type),
+    class: 'btn btn-default',
+    title: "New #{object_title(type)}"
+  end
+
   def edit_button(object)
     link_to '<i class="icon-edit"></i> Edit'.html_safe,
     edit_polymorphic_path(object),
-    class: 'btn btn-mini'
+    class: 'btn btn-mini',
+    title: "Edit #{object_title(object)}"
   end
 
   def delete_button(object)
@@ -26,6 +34,13 @@ module AdminHelper
     object,
     data: { confirm: 'Are you sure?' },
     method: :delete,
-    class: 'btn btn-danger btn-mini'
+    class: 'btn btn-danger btn-mini',
+    title: "Delete #{object_title(object)}"
   end
+
+  protected
+
+    def object_title(object)
+      object.instance_of?(Array) ? object.last : object
+    end
 end

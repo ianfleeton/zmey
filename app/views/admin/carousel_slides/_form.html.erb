@@ -11,7 +11,7 @@
 </div>
 <% end -%>
 
-<%= form_for @carousel_slide do |form| %>
+<%= form_for [:admin, @carousel_slide] do |form| %>
 
   <%= form.label :caption %>
   <%= form.text_field :caption, class: 'span9' %>

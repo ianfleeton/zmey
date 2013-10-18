@@ -2,7 +2,9 @@ class Image < ActiveRecord::Base
   validates_presence_of :name, :website_id
   validates_uniqueness_of :name, scope: :website_id
 
-  has_many :carousel_slides, dependent: :restrict
+  belongs_to :website
+
+  has_many :carousel_slides, dependent: :restrict_with_exception
   has_many :pages, dependent: :nullify
   has_many :products, dependent: :nullify
 

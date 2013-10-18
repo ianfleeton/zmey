@@ -1,4 +1,4 @@
-class CarouselSlidesController < ApplicationController
+class Admin::CarouselSlidesController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
   before_action :find_carousel_slide, only: [:edit, :update, :destroy]
@@ -19,23 +19,23 @@ class CarouselSlidesController < ApplicationController
     @carousel_slide.website_id = @w.id
 
     if @carousel_slide.save
-      redirect_to carousel_slides_path, notice: 'Successfully added new carousel slide.'
+      redirect_to admin_carousel_slides_path, notice: 'Successfully added new carousel slide.'
     else
-      render action: 'new'
+      render :new
     end
   end
 
   def update
     if @carousel_slide.update_attributes(carousel_slide_params)
-      redirect_to carousel_slides_path, notice: 'Carousel slide successfully updated.'
+      redirect_to admin_carousel_slides_path, notice: 'Carousel slide successfully updated.'
     else
-      render action: 'edit'
+      render :edit
     end
   end
 
   def destroy
     @carousel_slide.destroy
-    redirect_to carousel_slides_path, notice: 'Carousel slide deleted.'
+    redirect_to admin_carousel_slides_path, notice: 'Carousel slide deleted.'
   end
 
   protected
