@@ -1,0 +1,73 @@
+= page_header 'Edit Product'
+
+= breadcrumbs({ 'Products' => products_path }, 'Edit Product')
+
+.row
+  .col-md-6
+    = render 'form'
+  .col-md-6
+    .panel.panel-default
+      .panel-heading
+        h2.panel-title Features
+      .panel-body
+        p= link_to 'Add Feature', new_feature_path(:product_id => @product.id), class: 'btn btn-default'
+      - unless @product.features.empty?
+        table.table
+          tr
+            th Feature
+            th Actions
+          - @product.features.each do |feature|
+            tr
+              td
+                = feature.name
+              td style="width: 130px;"
+                = edit_button(feature)
+                = delete_button(feature)
+
+    .panel.panel-default
+      .panel-heading
+        h2.panel-title Components
+      .panel-body
+        p= link_to 'Add Component', new_component_path(product_id: @product.id), class: 'btn btn-default'
+      - unless @product.components.empty?
+        table.table
+          tr
+            th Component
+            th Actions<
+          - @product.components.each do |component|
+            tr
+              td= component.name
+              td style="width: 130px;"
+                = edit_button(component)
+                = delete_button(component)
+
+    .panel.panel-default
+      .panel-heading
+        h2.panel-title Additional Products
+      .panel-body
+        p= link_to 'Add Additional Product', new_admin_additional_product_path(product_id: @product.id), class: 'btn btn-default'
+      - unless @product.additional_products.empty?
+        table.table
+          tr
+            th Product
+            th Actions
+          - @product.additional_products.each do |additional_product|
+            tr
+              td= additional_product.additional_product.name
+              td style="width: 130px;"
+                = edit_button [:admin, additional_product]
+                = delete_button [:admin, additional_product]
+
+    .panel.panel-default
+      .panel-heading
+        h2.panel-title Quantity&#8208;based Pricing
+      .panel-body
+        - if @product.quantity_prices.empty?
+          p This product is not using quantity&#8208;based pricing.
+
+        p= link_to 'Add Quantity/Price Rule', new_quantity_price_path(product_id: @product.id), class: 'btn btn-default'
+
+      - quantity_prices_table(@product) do |qp|
+        td style="width: 130px;"
+          = edit_button(qp)
+          = delete_button(qp)

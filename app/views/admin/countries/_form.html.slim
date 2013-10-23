@@ -7,14 +7,17 @@
         li= msg
 
 = form_for [:admin, @country] do |form|
-  = form.label :name
-  = form.text_field :name
+  .form-group
+    = form.label :name
+    = form.text_field :name, class: 'form-control'
 
-  = form.label :iso_3166_1_alpha_2, 'ISO 3166-1 alpha-2'
-  = form.text_field :iso_3166_1_alpha_2
+  .form-group
+    = form.label :iso_3166_1_alpha_2, 'ISO 3166-1 alpha-2'
+    = form.text_field :iso_3166_1_alpha_2, class: 'form-control'
 
-  = form.label :shipping_zone_id
-  = form.collection_select :shipping_zone_id, @w.shipping_zones, :id, :name, {include_blank: '-- No shipping zone --'}
+  .form-group
+    = form.label :shipping_zone_id
+    = form.collection_select :shipping_zone_id, @w.shipping_zones, :id, :name, {include_blank: '-- No shipping zone --'}
 
   br
   = form.submit class: 'btn btn-primary'

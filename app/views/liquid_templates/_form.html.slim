@@ -1,0 +1,20 @@
+- if @liquid_template.errors.any?
+  .alert.alert-error.fade-in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@liquid_template.errors.count, "error")} prohibited this Liquid template from being saved:"
+    ul
+      - @liquid_template.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for @liquid_template do |form|
+
+  .form-group
+    = form.label :name
+    = form.text_field :name, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :markup
+    = form.text_area :markup, class: 'form-control', rows: 10
+
+  br
+  = form.submit class: 'btn btn-primary'

@@ -6,7 +6,6 @@ html
     = javascript_include_tag "application"
     = csrf_meta_tags
     link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"
-    link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css"
     script src="/bootstrap/js/bootstrap.min.js"
     css:
       body { padding-top: 60px; }
@@ -14,33 +13,38 @@ html
     /[if lt IE 9]
       script src="http://html5shim.googlecode.com/svn/trunk/html5.js"
   body
-    .navbar.navbar-fixed-top
-      .navbar-inner
-        .container
-          a.brand href="/" Home
-          .nav-collapse
-            ul.nav
-              = admin_menu_links({\
-                t('controllers.enquiries') => enquiries_path,\
-                t('controllers.pages') => pages_path,\
-                t('controllers.liquid_templates') => liquid_templates_path,\
-                'Products' => products_path,\
-                'Users' => admin_users_path,\
-                'Orders' => admin_orders_path,\
-                t('controllers.images') => images_path,\
-                'Carousel Slides' => admin_carousel_slides_path\
-                })
-              li.dropdown
-                a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                  | Settings
-                  b.caret
-                  ul class="dropdown-menu"
-                    li= link_to 'Countries', admin_countries_path
-                    li= link_to 'Shipping Zones', shipping_zones_path
-                    li= link_to 'Shipping Classes', shipping_classes_path
-                    li= link_to 'Product Groups', product_groups_url
-                    li= link_to 'Discounts', discounts_url
-                    li= link_to 'Website Settings', edit_website_path(@w)
+    nav.navbar.navbar-default.navbar-fixed-top role="navigation"
+      .container
+        .navbar-header
+          button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse"
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand href="/" Home
+        .collapse.navbar-collapse.navbar-ex1-collapse
+          ul.nav.navbar-nav
+            = admin_menu_links({\
+              t('controllers.enquiries') => enquiries_path,\
+              t('controllers.pages') => pages_path,\
+              t('controllers.liquid_templates') => liquid_templates_path,\
+              'Products' => products_path,\
+              'Users' => admin_users_path,\
+              'Orders' => admin_orders_path,\
+              t('controllers.images') => images_path,\
+              'Carousel Slides' => admin_carousel_slides_path\
+              })
+            li.dropdown
+              a.dropdown-toggle href="#" data-toggle="dropdown"
+                | Settings
+                b.caret
+              ul.dropdown-menu
+                li= link_to 'Countries', admin_countries_path
+                li= link_to 'Shipping Zones', shipping_zones_path
+                li= link_to 'Shipping Classes', shipping_classes_path
+                li= link_to 'Product Groups', product_groups_url
+                li= link_to 'Discounts', discounts_url
+                li= link_to 'Website Settings', edit_website_path(@w)
     .container
       - if flash[:notice]
         .alert.alert-info.fade.in

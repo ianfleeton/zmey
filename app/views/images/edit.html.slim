@@ -1,0 +1,21 @@
+= page_header 'Edit Image'
+
+= breadcrumbs({ 'Images' => images_path }, 'Edit Image')
+
+- if @image.errors.any?
+  .alert-alert-error-fade-in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@image.errors.count, "error")} prohibited this image from being saved:"
+    ul
+      - @image.errors.full_messages.each do |msg|
+        li= msg
+
+legend Replace image / edit image details
+= form_for @image, html: { multipart: true } do |form|
+  = render partial: 'form', object: form
+
+  br
+  = submit_tag "Edit Image", class: 'btn btn-primary'
+  = delete_button @image
+
+= image_tag @image.url(256)

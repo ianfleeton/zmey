@@ -1,0 +1,9 @@
+= page_header 'Pages'
+
+p= new_button Page
+
+table.table.table-striped.table-bordered
+  - @pages.each do |p|
+    = page_tree p
+
+  = content_tag(:tr, content_tag(:td, 'No pages')) if @pages.empty?

@@ -1,0 +1,17 @@
+= page_header 'New Image'
+
+= breadcrumbs({ 'Images' => images_path }, 'New Image')
+
+- if @image.errors.any?
+  .alert-alert-error-fade-in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@image.errors.count, "error")} prohibited this image from being saved:"
+    ul
+      - @image.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for @image, html: { multipart: true } do |form|
+  = render partial: 'form', object: form
+
+  br
+  = submit_tag "Upload New Image", class: 'btn btn-primary'

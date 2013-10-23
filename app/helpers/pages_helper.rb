@@ -10,8 +10,8 @@ module PagesHelper
         subs += page_tree c, indent+1
       end
     end
-    edit = content_tag(:td, link_to('<i class="icon-edit"></i> Edit'.html_safe, edit_page_path(p), class: 'btn btn-mini'))
-    delete = content_tag(:td, link_to('<i class="icon-trash icon-white"></i> Delete'.html_safe, p, data: { confirm: 'Are you sure?' }, method: :delete, class: 'btn btn-danger btn-mini'))
+    edit = content_tag(:td, edit_button(p))
+    delete = content_tag(:td, delete_button(p))
 
     if p.first?
       move_up = content_tag(:td, '&nbsp;'.html_safe)

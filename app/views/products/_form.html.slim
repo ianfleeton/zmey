@@ -1,0 +1,117 @@
+- if @product.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@product.errors.count, "error")} prohibited this product from being saved:"
+    ul
+      - @product.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for @product do |form|
+  .form-group
+    = form.label :sku, '<abbr title="Stock-keeping unit / reference number">SKU</abbr>'.html_safe
+    = form.text_field :sku, class: 'form-control'
+
+  .form-group
+    = form.label :name
+    = form.text_field :name, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :price
+    = form.text_field :price, class: 'form-control'
+
+  .form-group
+    = form.label :rrp, 'RRP (leave blank if same as price)'
+    = form.text_field :rrp, class: 'form-control'
+
+  .form-group
+    = form.label :shipping_supplement
+    = form.text_field :shipping_supplement, class: 'form-control'
+
+  .form-group
+    = form.label :tax_type
+    = select('product', 'tax_type', Product::TAX_TYPES, {}, class: 'form-control')
+
+  .form-group
+    = form.label :weight, 'Weight (kg)'
+    = form.text_field :weight, class: 'form-control'
+
+  .form-group
+    = form.label :image_id
+    = select :product, :image_id, image_options, {}, class: 'form-control'
+
+  .form-group
+    = form.label :description
+    = form.text_area :description, rows: 8, class: 'form-control'
+
+  .form-group
+    = form.label :full_detail
+    = form.text_area :full_detail, rows: 12, class: 'form-control'
+
+  label for="product_apply_shipping_true" Apply shipping?
+  .radio
+    label
+      => form.radio_button :apply_shipping, true
+      | Yes
+  .radio
+    label
+      => form.radio_button :apply_shipping, false
+      | No
+
+  .panel.panel-default
+    .panel-heading
+      h2.panel-title Page Information
+    div.panel-body
+      .form-group
+        = form.label :page_title
+        = form.text_field :page_title, class: 'form-control'
+      .form-group
+      	= form.label :meta_description
+      	= form.text_field :meta_description, class: 'form-control'
+
+  .panel.panel-default
+    .panel-heading
+      h2.panel-title Google Product Data
+    .panel-body
+      .form-group
+        label for="product_submit_to_google_true" Submit to Google?
+        label.radio
+          => form.radio_button :submit_to_google, true, class: "radio"
+          | Yes
+        label.radio
+          => form.radio_button :submit_to_google, false, class: "radio"
+          | No
+
+      .form-group
+        = form.label :google_title
+        = form.text_field :google_title, class: 'form-control'
+
+      .form-group
+        = form.label :availability
+        = select('product', 'availability', Product::AVAILABILITIES, {}, class: 'form-control')
+
+      .form-group
+        = form.label :condition
+        = select('product', 'condition', Product::CONDITIONS, {}, class: 'form-control')
+
+      .form-group
+        = form.label :google_product_category
+        = form.text_field :google_product_category, class: 'form-control'
+
+      .form-group
+        = form.label :product_type
+        = form.text_field :product_type, class: 'form-control'
+
+      .form-group
+        = form.label :brand
+        = form.text_field :brand, class: 'form-control'
+
+      .form-group
+        = form.label :gtin, '<abbr title="Global Trade Item Number">GTIN</abbr>'.html_safe
+        = form.text_field :gtin, class: 'form-control'
+
+
+      .form-group
+        = form.label :mpn, '<abbr title="Manufacturer Part Number">MPN</abbr>'.html_safe
+        = form.text_field :mpn, class: 'form-control'
+
+  p= form.submit class: 'btn btn-primary'

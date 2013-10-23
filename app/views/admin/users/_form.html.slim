@@ -7,28 +7,32 @@
 
 .form
   = form_for [:admin, @user] do |form|
-    div
+    .form-group
       = form.label :name
-      = form.text_field :name, size: 35, required: true
-    div
+      = form.text_field :name, size: 35, required: true, class: 'form-control'
+    .form-group
       = form.label :email
-      = form.email_field :email, size: 35, required: true
-    div
+      = form.email_field :email, size: 35, required: true, class: 'form-control'
+    .form-group
       = form.label :password
-      = form.password_field :password, size: 35, required: @user.new_record?
-    div
+      = form.password_field :password, size: 35, required: @user.new_record?, class: 'form-control'
+    .form-group
       = form.label :password_confirmation
-      = form.password_field :password_confirmation, size: 35, required: @user.new_record?
+      = form.password_field :password_confirmation, size: 35, required: @user.new_record?, class: 'form-control'
     - if admin?
-      div
+      .form-group
         | Administrator:
-        = form.radio_button :admin, true
-        label for="user_admin_true" Yes
-        = form.radio_button :admin, false
-        label for="user_admin" No
-      div
+        .radio
+          label for="user_admin_true"
+            => form.radio_button :admin, true
+            | Yes
+        .radio
+          label for="user_admin"
+          => form.radio_button :admin, false
+          | No
+      .form-group
         = form.label :manages_website_id, t('.manager_for_website')
-        = form.collection_select :manages_website_id, Website.order('name'), :id, :name, {include_blank: t('.does_not_manage_a_website')}
+        = form.collection_select :manages_website_id, Website.order('name'), :id, :name, {include_blank: t('.does_not_manage_a_website')}, class: 'form-control'
 
     = form.submit(t('.save'), clasS: 'btn btn-primary')
     = link_to t('.cancel'), admin_users_path

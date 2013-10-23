@@ -1,0 +1,5 @@
+= page_header 'New Additional Product'
+
+= breadcrumbs({ 'Products' => products_path, @additional_product.product.name => edit_product_path(@additional_product.product) }, 'New Additional Product')
+
+= render 'form'
