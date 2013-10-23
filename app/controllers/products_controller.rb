@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
   def update
     if @product.update_attributes(product_params)
       flash[:notice] = 'Product saved.'
-      redirect_to product_path(@product)
+      redirect_to edit_product_path(@product)
     else
       render action: 'edit'
     end

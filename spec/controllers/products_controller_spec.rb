@@ -111,10 +111,10 @@ describe ProductsController do
           expect(assigns(:product)).to equal(mock_product)
         end
 
-        it "redirects to the product" do
+        it "redirects to the edit product page again" do
           Product.stub(:find_by).and_return(mock_product(update_attributes: true))
           put :update, valid_params
-          expect(response).to redirect_to(product_url(mock_product))
+          expect(response).to redirect_to(edit_product_url(mock_product))
         end
       end
 
