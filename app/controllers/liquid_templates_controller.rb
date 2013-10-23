@@ -15,7 +15,7 @@ class LiquidTemplatesController < ApplicationController
   end
 
   def create
-    @liquid_template = LiquidTemplate.new(params[:liquid_template])
+    @liquid_template = LiquidTemplate.new(liquid_template_params)
     @liquid_template.website_id = @w.id
 
     if @liquid_template.save
@@ -27,7 +27,7 @@ class LiquidTemplatesController < ApplicationController
   end
 
   def update
-    if @liquid_template.update_attributes(params[:liquid_template])
+    if @liquid_template.update_attributes(liquid_template_params)
       flash[:notice] = "Liquid template successfully updated."
       redirect_to edit_liquid_template_path(@liquid_template)
     else
