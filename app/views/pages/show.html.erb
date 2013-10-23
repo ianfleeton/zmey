@@ -14,7 +14,7 @@
 <% end -%>
 
 <% product_summaries = template("product_summaries_before") %>
-<% @page.product_placements.each do |placement| %>
+<% @page.active_product_placements.each do |placement| %>
   <% product = placement.product %>
   <%
   product_summaries += template('product_summary',

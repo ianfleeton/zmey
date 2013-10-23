@@ -41,6 +41,9 @@ en:
   my_account: My Account
   password: Password
   price: Price
+  products:
+    form:
+      active: 'Show product on website'
   quantity: Qty
   register: Sign Up
   view_cart: View Basket

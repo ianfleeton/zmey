@@ -7,6 +7,11 @@
         li= msg
 
 = form_for @product do |form|
+  .checkbox
+    label
+      => form.check_box :active
+      = t('.active')
+
   .form-group
     = form.label :sku, '<abbr title="Stock-keeping unit / reference number">SKU</abbr>'.html_safe
     = form.text_field :sku, class: 'form-control'

@@ -2,8 +2,8 @@ class Page < ActiveRecord::Base
   acts_as_tree order: :position
   acts_as_list scope: :parent_id
 
-  has_many :product_placements, order: :position, include: :product, dependent: :delete_all
-  has_many :products, through: :product_placement
+  has_many :product_placements, -> { order('position') }, dependent: :delete_all
+  has_many :products, through: :product_placements
   belongs_to :image
   belongs_to :website
 
@@ -14,6 +14,10 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :parent_id, case_sensitive: false, unless: Proc.new { |page| page.parent_id.nil? }
 
   liquid_methods :image, :name, :path, :url
+
+  def active_product_placements
+    product_placements.joins(:product).where(products: { active: true }).includes(:product)
+  end
 
   def name_with_ancestors
     parent ? parent.name_with_ancestors + ' > ' + name : name

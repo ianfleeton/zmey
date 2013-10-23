@@ -18,7 +18,7 @@ class ProductsController < ApplicationController
   
   def edit
   end
-  
+
   def create
     @product = Product.new(product_params)
     @product.website_id = @w.id
@@ -78,7 +78,9 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:apply_shipping, :availability, :brand, :condition, :description,
+    params.require(:product).permit(
+      :active,
+      :apply_shipping, :availability, :brand, :condition, :description,
       :full_detail, :gtin, :google_product_category, :google_title, :image_id,
       :meta_description, :mpn, :name, :page_title, :price, :product_type, :rrp,
       :shipping_supplement, :sku, :submit_to_google, :tax_type, :weight)
