@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131023185642) do
+ActiveRecord::Schema.define(version: 20131025132125) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20131023185642) do
     t.string   "town_city",      default: "", null: false
     t.string   "county",         default: "", null: false
     t.string   "postcode",       default: "", null: false
-    t.integer  "country_id",     default: 0,  null: false
+    t.integer  "country_id",                  null: false
     t.string   "phone_number",   default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -200,7 +200,7 @@ ActiveRecord::Schema.define(version: 20131023185642) do
     t.string   "town_city",                                               default: "",  null: false
     t.string   "county",                                                  default: "",  null: false
     t.string   "postcode",                                                default: "",  null: false
-    t.integer  "country_id",                                              default: 0,   null: false
+    t.integer  "country_id",                                                            null: false
     t.string   "phone_number",                                            default: "",  null: false
     t.decimal  "shipping_amount",                precision: 10, scale: 3, default: 0.0, null: false
     t.string   "shipping_method",                                         default: "",  null: false
