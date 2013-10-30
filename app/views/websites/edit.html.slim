@@ -1,10 +1,6 @@
 = page_header 'Edit Website'
 
 - if admin?
-  ul.breadcrumb
-    li
-      = link_to 'Websites', websites_path
-      span.divider= '/'
-    li.active Edit Website
+  = breadcrumbs({'Websites' => websites_path}, 'Edit Website')
 
 = render 'form', submit_label: 'Save'
