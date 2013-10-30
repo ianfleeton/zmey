@@ -86,7 +86,6 @@ class BasketController < ApplicationController
         product_price: i.product.price_ex_tax(i.quantity),
         tax_amount: i.product.tax_amount(i.quantity) * i.quantity,
         quantity: i.quantity,
-        line_total: i.product.price_ex_tax(i.quantity) * i.quantity,
         feature_descriptions: i.feature_descriptions
       )
     end
@@ -97,8 +96,7 @@ class BasketController < ApplicationController
         product_name: dl.name,
         product_price: dl.price_adjustment,
         tax_amount: dl.tax_adjustment,
-        quantity: 1,
-        line_total: dl.price_adjustment
+        quantity: 1
       )
     end
     @order.status = Order::WAITING_FOR_PAYMENT

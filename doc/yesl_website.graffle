@@ -3972,7 +3972,7 @@ accepted}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{1180.3920811361993, 198.47105315464984}, {16, 21}}</string>
+			<string>{{1162.3639026830351, 198.8994780575039}, {16, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -4039,7 +4039,7 @@ accepted}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{1181.3921305878935, 270.58135292528925}, {14, 21}}</string>
+			<string>{{1163.3638850437083, 276.75093354597317}, {14, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -4117,7 +4117,7 @@ accepted}</string>
 			<key>Points</key>
 			<array>
 				<string>{1179.3779907226562, 203.58999633789062}</string>
-				<string>{1179.378048329354, 287.59189563964844}</string>
+				<string>{1179.3779701744536, 294.27982288574219}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -4151,8 +4151,8 @@ accepted}</string>
 			<integer>70</integer>
 			<key>Points</key>
 			<array>
-				<string>{1283.249205136719, 337.79618292910305}</string>
-				<string>{1229.6015930175781, 337.43237933976985}</string>
+				<string>{1283.249205136719, 338.28682247998125}</string>
+				<string>{1229.6014709472656, 338.29209322944212}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -4181,7 +4181,7 @@ accepted}</string>
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1129.1545715332031, 287.59189563964844}, {100.447021484375, 11}}</string>
+					<string>{{1129.1544494628906, 294.27982288574219}, {100.447021484375, 11}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -4217,7 +4217,7 @@ accepted}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1129.1545715332031, 298.59189563964844}, {100.447021484375, 88}}</string>
+					<string>{{1129.1544494628906, 305.27982288574219}, {100.447021484375, 77}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -4251,7 +4251,6 @@ product_name\
 product_price\
 tax_amount\
 quantity\
-line_total\
 feature_descriptions\
 shipped}</string>
 						<key>VerticalPad</key>
@@ -5437,7 +5436,7 @@ cardsave_pre_shared_key}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-10-30 11:52:04 +0000</string>
+	<string>2013-10-30 15:32:32 +0000</string>
 	<key>Modifier</key>
 	<string>Ian Fleeton</string>
 	<key>NotesVisible</key>
@@ -5518,7 +5517,7 @@ cardsave_pre_shared_key}</string>
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{190, 50}, {1280, 728}}</string>
+		<string>{{-65, 50}, {1280, 728}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
@@ -5532,7 +5531,7 @@ cardsave_pre_shared_key}</string>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{329.5, 15}, {1145, 589}}</string>
+		<string>{{532, 21}, {1145, 589}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>

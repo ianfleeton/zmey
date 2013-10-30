@@ -12,7 +12,7 @@ The status of your order is: <%= @order.status_description %>
 
 You have ordered:
 <% @order.order_lines.each do |l| %>
-[<%= l.product_sku %>] <%= l.product_name %><%= ' (' + l.feature_descriptions + ')' unless l.feature_descriptions.empty? %> x <%= l.quantity %> (<%= formatted_gbp_price(l.line_total) %>)
+[<%= l.product_sku %>] <%= l.product_name %><%= ' (' + l.feature_descriptions + ')' unless l.feature_descriptions.empty? %> x <%= l.quantity %> (<%= formatted_gbp_price(l.line_total_net) %>)
 <% end %>
 <%= @order.shipping_method %>: <%= formatted_gbp_price(@order.shipping_amount) %>
 

@@ -14,6 +14,6 @@ class OrderLinesController < ApplicationController
   private
 
     def order_line_params
-      params.require(:order_line).permit(:feature_descriptions, :line_total, :product_id, :product_name, :product_price, :product_sku, :quantity, :tax_amount)
+      params.require(:order_line).permit(:feature_descriptions, :product_id, :product_name, :product_price, :product_sku, :quantity, :tax_amount)
     end
 end

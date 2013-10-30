@@ -10,4 +10,8 @@ class OrderLine < ActiveRecord::Base
       self.shipped = 0
     end
   end
+
+  def line_total_net
+    product_price * quantity
+  end
 end
