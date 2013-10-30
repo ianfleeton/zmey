@@ -23,6 +23,10 @@ class Order < ActiveRecord::Base
     self.destroy_all(["created_at < ? and status = ?", Time.now - age, Order::WAITING_FOR_PAYMENT])
   end
 
+  def to_s
+    order_number
+  end
+
   def status_description
     {
       WAITING_FOR_PAYMENT => 'Waiting for payment',
