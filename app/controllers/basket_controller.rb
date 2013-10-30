@@ -334,6 +334,8 @@ class BasketController < ApplicationController
       if discount.coupon && session_contains_coupon?(discount.coupon)
         if discount.reward_type.to_sym == :free_products
           discount_free_products(discount.product_group.products)
+        elsif discount.reward_type.to_sym == :percentage_off
+          calculate_percentage_off(discount)
         end
       end
     end
@@ -350,6 +352,18 @@ class BasketController < ApplicationController
           @discount_lines << discount_line
           break
         end
+      end
+    end
+  end
+
+  def calculate_percentage_off(discount)
+    @basket.basket_items.each do |basket_item|
+      if discount.product_group.nil? || discount.product_group.products.include?(basket_item.product)
+        discount_line = DiscountLine.new
+        discount_line.name = "#{discount.name} - #{basket_item.product.name}"
+        discount_line.price_adjustment = -(discount.reward_amount / 100.0) * basket_item.product.price_ex_tax
+        discount_line.tax_adjustment = -(discount.reward_amount / 100.0) * basket_item.product.tax_amount
+        @discount_lines << discount_line
       end
     end
   end
