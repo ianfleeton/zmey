@@ -1521,27 +1521,16 @@ selected_by_default}</string>
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
 
 \f0\fs18 \cf0 name\
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
-
-\i \cf0 valid_from\
+valid_from\
 valid_to\
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
-
-\i0 \cf0 coupon\
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
-
-\i \cf0 based_on\
-threshold
-\i0 \
+coupon\
+based_on\
+threshold\
 reward_type\
-
-\i ireward_amount\
-apply_shipping
-\i0 \
-
-\i customer_group_id
-\i0 \
-free_products_group_id}</string>
+reward_amount\
+apply_shipping\
+customer_group_id\
+product_group_id}</string>
 						<key>VerticalPad</key>
 						<integer>0</integer>
 					</dict>
@@ -5436,7 +5425,7 @@ cardsave_pre_shared_key}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-10-30 15:32:32 +0000</string>
+	<string>2013-10-30 18:44:46 +0000</string>
 	<key>Modifier</key>
 	<string>Ian Fleeton</string>
 	<key>NotesVisible</key>
@@ -5517,7 +5506,7 @@ cardsave_pre_shared_key}</string>
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{-65, 50}, {1280, 728}}</string>
+		<string>{{-23, 50}, {1280, 728}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
@@ -5531,7 +5520,7 @@ cardsave_pre_shared_key}</string>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{532, 21}, {1145, 589}}</string>
+		<string>{{429, 194}, {1145, 589}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131030153107) do
+ActiveRecord::Schema.define(version: 20131030184554) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -92,11 +92,11 @@ ActiveRecord::Schema.define(version: 20131030153107) do
   add_index "countries", ["website_id"], name: "index_countries_on_website_id", using: :btree
 
   create_table "discounts", force: true do |t|
-    t.integer  "website_id",             default: 0,  null: false
-    t.string   "name",                   default: "", null: false
-    t.string   "coupon",                 default: "", null: false
-    t.string   "reward_type",            default: "", null: false
-    t.integer  "free_products_group_id"
+    t.integer  "website_id",       default: 0,  null: false
+    t.string   "name",             default: "", null: false
+    t.string   "coupon",           default: "", null: false
+    t.string   "reward_type",      default: "", null: false
+    t.integer  "product_group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

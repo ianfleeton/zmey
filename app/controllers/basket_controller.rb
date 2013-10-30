@@ -171,7 +171,7 @@ class BasketController < ApplicationController
 
   def run_trigger_for_coupon_discount(discount)
     if discount.reward_type.to_sym == :free_products
-      add_free_products(discount.free_products_group.products)
+      add_free_products(discount.product_group.products)
     end
   end
 
@@ -330,10 +330,10 @@ class BasketController < ApplicationController
 
   def calculate_discounts
     @discount_lines = Array.new
-    @w.discounts.each do |discount|
+    website.discounts.each do |discount|
       if discount.coupon && session_contains_coupon?(discount.coupon)
         if discount.reward_type.to_sym == :free_products
-          discount_free_products(discount.free_products_group.products)
+          discount_free_products(discount.product_group.products)
         end
       end
     end
