@@ -35,4 +35,25 @@ describe Product do
       expect(@product.tax_amount).to eq 0
     end
   end
+
+  describe '#reduced?' do
+    it 'returns false if rrp is blank' do
+      expect(@product.reduced?).to be_false
+    end
+
+    it 'returns true if price < rrp' do
+      @product.price = 1.0
+      @product.rrp = 1.5
+      expect(@product.reduced?).to be_true
+    end
+
+    it 'returns false if price >= rrp' do
+      @product.price = 1.5
+      @product.rrp = 1.0
+      expect(@product.reduced?).to be_false
+
+      @product.price = 1.0
+      expect(@product.reduced?).to be_false
+    end
+  end
 end

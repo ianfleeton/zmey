@@ -84,7 +84,11 @@ class Product < ActiveRecord::Base
   end
 
   def rrp?
-    !rrp.blank?
+    rrp.present?
+  end
+
+  def reduced?
+    rrp? && price < rrp
   end
 
   def path
