@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131030121225) do
+ActiveRecord::Schema.define(version: 20131030153107) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -180,7 +180,6 @@ ActiveRecord::Schema.define(version: 20131030121225) do
     t.decimal  "product_price",        precision: 10, scale: 3, default: 0.0, null: false
     t.decimal  "tax_amount",           precision: 10, scale: 3, default: 0.0, null: false
     t.integer  "quantity",                                      default: 0,   null: false
-    t.decimal  "line_total",           precision: 10, scale: 3, default: 0.0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "feature_descriptions"
