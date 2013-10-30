@@ -57,5 +57,6 @@ FactoryGirl.define do
 
   factory :website do
     name 'Website'
+    association :country
   end
 end

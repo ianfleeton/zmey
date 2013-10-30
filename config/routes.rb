@@ -13,6 +13,8 @@ YeslWebsite::Application.routes.draw do
 
     resources :users do
     end
+
+    resources :websites
   end
 
   resources :addresses
@@ -117,8 +119,6 @@ YeslWebsite::Application.routes.draw do
 
     resources :orders
   end
-
-  resources :websites
 
   resources :pages do
     member do

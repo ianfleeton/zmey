@@ -13,6 +13,8 @@ class Website < ActiveRecord::Base
   validates_presence_of :worldpay_installation_id, if: Proc.new { |website| website.worldpay_active? }
   validates_presence_of :worldpay_payment_response_password, if: Proc.new { |website| website.worldpay_active? }
 
+  validates :country_id, presence: true
+
   has_one :preferred_delivery_date_settings, :dependent => :delete
   has_many :carousel_slides, -> { order 'position' }
   has_many :countries, -> { order 'name' }, dependent: :destroy
@@ -37,6 +39,7 @@ class Website < ActiveRecord::Base
     'ORDER BY `shipping_table_rows`.trigger'
   has_many :users, -> { order 'name' }, dependent: :destroy
   belongs_to :blog, :class_name => 'Forum'
+  belongs_to :country
 
   def self.for(domain, subdomains)
     website = find_by(domain: domain)

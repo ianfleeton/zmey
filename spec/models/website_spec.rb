@@ -7,7 +7,8 @@ describe Website do
       :domain => 'www.artofbonsai.com',
       :name => 'Art of Bonsai',
       :email => 'artofbonsai@example.org',
-      :google_analytics_code => 'UA-9999999-9')
+      :google_analytics_code => 'UA-9999999-9',
+      country: FactoryGirl.create(:country))
   end
 
   describe 'validations that need an existing record' do

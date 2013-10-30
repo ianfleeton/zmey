@@ -1,4 +1,4 @@
-class WebsitesController < ApplicationController
+class Admin::WebsitesController < ApplicationController
   layout 'admin'
   before_action :admin_required, :except => [:edit, :update]
   before_action :find_website, :only => [:edit, :update, :destroy]
@@ -27,14 +27,14 @@ class WebsitesController < ApplicationController
       flash[:notice] = "Successfully added new website."
       redirect_to action: 'index'
     else
-      render action: 'new'
+      render :new
     end
   end
 
   def update
     if @website.update_attributes(website_params)
       flash[:notice] = 'Website saved.'
-      redirect_to edit_website_path(@website)
+      redirect_to edit_admin_website_path(@website)
     else
       render action: 'edit'
     end
@@ -95,16 +95,21 @@ class WebsitesController < ApplicationController
   end
 
   def website_params
-    params.require(:website).permit(:blog_id, :can_users_create_accounts, :cardsave_active,
+    params.require(:website).permit(:address_line_1, :address_line_2,
+      :blog_id, :can_users_create_accounts, :cardsave_active,
       :cardsave_merchant_id, :cardsave_password, :cardsave_pre_shared_key,
-      :css_url, :default_locale, :domain, :email, :footer_html,
+      :country_id, :county,
+      :css_url, :default_locale, :domain, :email, :fax_number, :footer_html,
       :google_analytics_code, :google_domain_name, :google_ftp_password,
       :google_ftp_username, :invoice_details, :name, :page_image_size,
       :page_thumbnail_size, :paypal_active, :paypal_email_address,
-      :paypal_identity_token, :private, :product_image_size,
+      :paypal_identity_token, :phone_number, :postcode, :private,
+      :product_image_size,
       :product_thumbnail_size, :worldpay_active, :worldpay_installation_id,
       :worldpay_payment_response_password, :worldpay_test_mode, :shipping_amount,
-      :shop, :show_vat_inclusive_prices, :skip_payment, :subdomain,
-      :terms_and_conditions, :use_default_css, :vat_number)
+      :shop, :show_vat_inclusive_prices, :skip_payment, :skype_name,
+      :subdomain,
+      :terms_and_conditions, :town_city, :twitter_username, :use_default_css,
+      :vat_number)
   end
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WebsitesController do
+describe Admin::WebsitesController do
   let(:website) { mock_model(Website).as_null_object }
 
   before do

@@ -6,7 +6,7 @@
       - @website.errors.full_messages.each do |msg|
         li= msg
 
-= form_for @website do |form|
+= form_for [:admin, @website] do |form|
 
   .row
     .col-md-4
@@ -29,6 +29,30 @@
           .form-group
             = form.label :email
             = form.email_field :email, class: 'form-control'
+
+          .form-group
+            = form.label :address_line_1
+            = form.text_field :address_line_1, class: 'form-control'
+
+          .form-group
+            = form.label :address_line_2
+            = form.text_field :address_line_2, class: 'form-control'
+
+          .form-group
+            = form.label :town_city
+            = form.text_field :town_city, class: 'form-control'
+
+          .form-group
+            = form.label :county
+            = form.text_field :county, class: 'form-control'
+
+          .form-group
+            = form.label :country
+            = form.select :country, website.countries.map {|c| [c.name, c.id]}, {prompt: 'Choose Country'}, class: 'form-control'
+
+          .form-group
+            = form.label :postcode
+            = form.text_field :postcode, class: 'form-control'
 
     .col-md-4
       .panel.panel-default

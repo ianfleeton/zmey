@@ -44,7 +44,7 @@ html
                 li= link_to 'Shipping Classes', shipping_classes_path
                 li= link_to 'Product Groups', product_groups_url
                 li= link_to 'Discounts', discounts_url
-                li= link_to 'Website Settings', edit_website_path(@w)
+                li= link_to 'Website Settings', edit_admin_website_path(@w)
     .container
       - if flash[:notice]
         .alert.alert-info.fade.in
