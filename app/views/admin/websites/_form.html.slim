@@ -47,8 +47,8 @@
             = form.text_field :county, class: 'form-control'
 
           .form-group
-            = form.label :country
-            = form.select :country, website.countries.map {|c| [c.name, c.id]}, {prompt: 'Choose Country'}, class: 'form-control'
+            = form.label :country_id
+            = form.select :country_id, website.countries.map {|c| [c.name, c.id]}, {prompt: 'Choose Country'}, class: 'form-control'
 
           .form-group
             = form.label :postcode
