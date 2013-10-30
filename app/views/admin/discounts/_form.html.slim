@@ -18,7 +18,11 @@
 
   .form-group
     = form.label :reward_type
-    = form.select :reward_type, [['Free products', :free_products]], {}, class: 'form-control'
+    = form.select :reward_type, reward_type_options, {}, class: 'form-control'
+
+  .form-group
+    = form.label :reward_amount
+    = form.text_field :reward_amount, class: 'form-control'
 
   .form-group
     = form.label :product_group_id

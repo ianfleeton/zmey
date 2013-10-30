@@ -25,6 +25,8 @@ feature 'Discounts admin' do
     click_link "Edit #{discount}"
     new_name = SecureRandom.hex
     fill_in 'Name', with: new_name
+    select 'Percentage off', from: 'Reward type'
+    fill_in 'Reward amount', with: 10
     click_button 'Update Discount'
     expect(Discount.find_by(name: new_name)).to be
   end
