@@ -1,26 +1,27 @@
 require 'spec_helper'
 
 feature 'Countries admin' do
-  fixtures :websites
+  let(:website) { FactoryGirl.create(:website) }
 
   background do
+    Website.delete_all
+    website
     sign_in_as_admin
   end
 
-  let(:country) { FactoryGirl.build(:country, website: websites(:guitar_gear)) }
+  let(:country) { FactoryGirl.build(:country, website: website) }
 
   scenario 'Create country' do
     visit admin_countries_path
     click_link 'New'
     fill_in 'Name', with: country.name
     fill_in 'ISO 3166-1 alpha-2', with: country.iso_3166_1_alpha_2
-    puts country.iso_3166_1_alpha_2
     click_button 'Create Country'
     expect(Country.find_by(name: country.name)).to be
   end
 
   scenario 'Edit country' do
-    country.save
+    country.save!
     visit admin_countries_path
     click_link "Edit #{country}"
     new_name = SecureRandom.hex
@@ -33,6 +34,6 @@ feature 'Countries admin' do
     country.save
     visit admin_countries_path
     click_link "Delete #{country}"
-    expect(Country.find_by(name: country.name)).to be_nil
+    expect(Country.find_by(id: country.id)).to be_nil
   end
 end

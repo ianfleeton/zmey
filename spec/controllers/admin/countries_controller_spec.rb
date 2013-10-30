@@ -5,6 +5,7 @@ describe Admin::CountriesController do
   let(:website) { FactoryGirl.create(:website) }
 
   before do
+    Website.delete_all
     logged_in_as_admin
     Website.stub(:for).and_return(website)
   end

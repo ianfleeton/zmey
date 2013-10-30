@@ -1,6 +1,4 @@
 shared_examples 'a website owned objects finder' do |object_type|
-  fixtures :websites
-
   it 'gets objects for the current site' do
     our_site = FactoryGirl.create(:website)
     Website.stub(:for).and_return(our_site)

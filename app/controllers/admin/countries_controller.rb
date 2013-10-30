@@ -40,7 +40,7 @@ class Admin::CountriesController < ApplicationController
       @country.destroy
       flash[:notice] = "Country deleted."
     end
-    redirect_to countries_path
+    redirect_to admin_countries_path
   end
 
   protected
