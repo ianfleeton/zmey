@@ -44,7 +44,7 @@ YeslWebsite::Application.routes.draw do
 
   resources :liquid_templates
 
-  resources :orders do
+  resources :orders, only: [:index, :show] do
     collection do
       get 'receipt'
       get 'select_payment_method'

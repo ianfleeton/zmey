@@ -38,6 +38,7 @@ FactoryGirl.define do
     address_line_1 '123 Street'
     town_city 'Harrogate'
     postcode 'HG1 9ZZ'
+    association :country
   end
 
   factory :payment do
