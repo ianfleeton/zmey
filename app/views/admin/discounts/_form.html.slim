@@ -1,0 +1,28 @@
+- if @discount.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@discount.errors.count, "error")} prohibited this discount from being saved:"
+    ul
+      - @discount.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for [:admin, @discount] do |form|
+
+  .form-group
+    = form.label :name
+    = form.text_field :name, class: 'form-control'
+
+  .form-group
+    = form.label :coupon
+    = form.text_field :coupon, class: 'form-control'
+
+  .form-group
+    = form.label :reward_type
+    = form.select :reward_type, [['Free products', :free_products]], {}, class: 'form-control'
+
+  .form-group
+    = form.label :free_products_group_id
+    = form.collection_select :free_products_group_id, website.product_groups, :id, :name, {include_blank: '-- Not applicable --'}, class: 'form-control'
+
+  .form-group
+    = form.submit class: 'btn btn-primary'

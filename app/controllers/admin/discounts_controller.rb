@@ -1,10 +1,10 @@
-class DiscountsController < ApplicationController
+class Admin::DiscountsController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
   before_action :find_discount, only: [:edit, :update, :destroy]
 
   def index
-    @discounts = @w.discounts
+    @discounts = website.discounts
   end
 
   def new
@@ -16,33 +16,33 @@ class DiscountsController < ApplicationController
 
   def create
     @discount = Discount.new(discount_params)
-    @discount.website_id = @w.id
+    @discount.website = website
 
     if @discount.save
-      redirect_to discounts_path, notice: 'Successfully added new discount.'
+      redirect_to admin_discounts_path, notice: 'Successfully added new discount.'
     else
-      render action: 'new'
+      render :new
     end
   end
 
   def update
     if @discount.update_attributes(discount_params)
       flash[:notice] = "Discount successfully updated."
-      redirect_to discounts_path
+      redirect_to admin_discounts_path
     else
-      render action: 'edit'
+      render :edit
     end
   end
 
   def destroy
     @discount.destroy
-    redirect_to discounts_path, notice: 'Discount deleted.'
+    redirect_to admin_discounts_path, notice: 'Discount deleted.'
   end
 
   protected
 
   def find_discount
-    @discount = Discount.find_by(id: params[:id], website_id: @w.id)
+    @discount = Discount.find_by(id: params[:id], website_id: website.id)
     not_found unless @discount
   end
 

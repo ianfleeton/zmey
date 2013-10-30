@@ -1,0 +1,14 @@
+= page_header 'Discounts'
+
+p= new_button [:admin, Discount]
+
+- if @discounts.any?
+  table.table.table-bordered.table-striped
+    - @discounts.each do |discount|
+      tr
+        td= discount.name
+        td
+          => edit_button [:admin, discount]
+          = delete_button [:admin, discount]
+- else
+  p There are no discounts set up yet.

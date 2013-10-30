@@ -4,6 +4,7 @@ YeslWebsite::Application.routes.draw do
     resources :additional_products, except: [:show]
     resources :carousel_slides, except: [:show]
     resources :countries, except: [:show]
+    resources :discounts, except: [:show]
 
     resources :orders do
       collection do
@@ -28,8 +29,6 @@ YeslWebsite::Application.routes.draw do
   resources :choices
 
   resources :components
-
-  resources :discounts
 
   resources :enquiries do
     collection do
