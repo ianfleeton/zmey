@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   before_action :user_required, only: [:index, :show, :invoice]
 
   def index
-    @orders = current_user.orders
+    @orders = current_user.orders.where(website_id: website.id)
   end
 
   def select_payment_method
