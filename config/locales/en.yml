@@ -8,7 +8,7 @@ en:
       index:
         full_name: 'Full Name'
         heading: 'Orders'
-        invoice_pdf: 'Invoice (PDF)'
+        invoice: 'Invoice'
         no_orders: 'There are no orders.'
         order_number: 'Order Number'
         order_total: 'Order Total'

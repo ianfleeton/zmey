@@ -7,7 +7,7 @@
     thead
       tr
         th= t('.order_number')
-        th= t('.invoice_pdf')
+        th= t('.invoice')
         th= t('.order_total')
         th= t('.when_placed')
         th= t('.full_name')
@@ -17,7 +17,13 @@
       - @orders.each do |o|
         tr
           td= link_to o.order_number, admin_order_path(o)
-          td= link_to t('.invoice_pdf'), invoice_order_path(o)
+          td
+            => t('.invoice')
+            | (
+            = link_to 'HTML', invoice_order_path(o), data: { 'no-turbolink' => '' }
+            = ', '
+            = link_to 'PDF', invoice_order_path(o, format: 'pdf')
+            | )
           td.numeric= formatted_price(o.total)
           td= o.created_at
           td= o.full_name

@@ -65,19 +65,14 @@ describe OrdersController do
             controller.stub(:can_access_order?).and_return(true)
           end
 
-          it 'sends the invoice file' do
-            Invoice.stub(:new).and_return(double(Invoice, filename: 'invoice.pdf').as_null_object)
-            controller.should_receive(:send_file).with('invoice.pdf')
-            controller.stub(:render)
-
-            get 'invoice', id: '1'
+          it 'renders the layouts/invoice template' do
+            get :invoice, id: '1'
+            expect(response).to render_template 'layouts/invoice'
           end
         end
 
         it 'redirects to sign in when the user cannot access the order' do
           controller.stub(:can_access_order?).and_return(false)
-          Invoice.stub(:new).and_return(double(Invoice).as_null_object)
-
           get 'invoice', id: '1'
           expect(response).to redirect_to(new_session_path)
         end

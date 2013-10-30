@@ -1,0 +1,138 @@
+.order
+  h1.order-number
+    = "Order no.: #{order.order_number}"
+
+  table width="100%"
+    tr
+      td width="50%"
+        h1= order.website.name
+        p
+          = order.website.address_line_1
+          br
+          = order.website.address_line_2
+          br
+          = order.website.town_city
+          br
+          = order.website.county
+          br
+          = order.website.postcode
+          br
+          = order.website.country
+          br
+          b Phone
+          =< order.website.phone_number
+          br
+          b Email
+          =< website.email
+          br
+          b Website
+          =< website.domain
+        td
+          p
+            = order.full_name.upcase
+            br
+            = order.address_line_1.upcase
+            br
+            = order.address_line_2.upcase
+            br
+            = order.town_city.upcase
+            br
+            = order.county.upcase
+            br
+            = order.postcode.upcase
+            br
+            = order.country.name.upcase
+    h1.invoice-title Invoice
+    table width="100%" cellspacing="10"
+      tr
+        td.box width="50%"
+          b Invoice Address:
+          br
+          = order.full_name.upcase
+          br
+          = order.address_line_1.upcase
+          br
+          = order.address_line_2.upcase
+          br
+          = order.town_city.upcase
+          br
+          = order.county.upcase
+          br
+          = order.postcode.upcase
+          br
+          = order.country.name.upcase
+          br
+          b Phone:
+          = order.phone_number
+          b Email:
+          = order.email_address
+        td.box
+          b Deliver to:
+          br
+          = order.full_name.upcase
+          br
+          = order.address_line_1.upcase
+          br
+          = order.address_line_2.upcase
+          br
+          = order.town_city.upcase
+          br
+          = order.county.upcase
+          br
+          = order.postcode.upcase
+          br
+          = order.country.name.upcase
+          br
+          b Phone:
+          = order.phone_number
+          br
+          b Email:
+          = order.email_address
+      tr
+        td.box colspan="2"
+          table width="100%"
+            tr
+              td: b Date ordered:
+              td= order.created_at
+              td
+              td
+            tr
+              td: b Payment method:
+              td
+                - if order.payments.empty?
+                  | No payment received
+                - else
+                  = order.payments.first.service_provider
+              td: b Payment status:
+              td= order.status_description
+            tr
+              td: b Shipping Method:
+              td= order.shipping_method
+      tr
+        td.box colspan="2"
+          table style="width: 100%;"
+            tr
+              th Product code</th>
+              th Description
+              th Qty ord
+              th Unit price
+              th Total cost
+            - order.order_lines.each do |line|
+              tr
+                td= line.product_sku
+                td= line.product_name
+                td style="text-align: right;"= line.quantity
+                td style="text-align: right;"= formatted_price(line.product_price)
+                td style="text-align: right;"= formatted_price(line.line_total_net)
+            tr
+              td colspan="3"
+              td style="text-align: right;" Shipping
+              td style="text-align: right;"= formatted_price(order.shipping_amount)
+            tr
+              td colspan="3"
+              td style="text-align: right;" VAT
+              td style="text-align: right;"= formatted_price(order.tax_total)
+            tr
+              td colspan="3"
+              th style="text-align: right;" Total
+              td style="text-align: right;"= formatted_price(order.total)

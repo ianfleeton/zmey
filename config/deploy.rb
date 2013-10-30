@@ -37,9 +37,6 @@ namespace :deploy do
   desc "Symlinks files with secret information and extras"
   task :symlink_secrets_and_extras, roles: :app do
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
-    # Copy in Museo Sans font for invoices.
-    # It is free to use but cannot be redistributed.
-    run "ln -nfs #{deploy_to}/shared/fonts/MuseoSans_500.ttf #{release_path}/fonts/MuseoSans_500.ttf"
   end
 end
 

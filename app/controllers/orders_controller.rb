@@ -25,12 +25,17 @@ class OrdersController < ApplicationController
   end
 
   def invoice
-    if can_access_order?
-      i = Invoice.new(order: @order, invoice_details: @w.invoice_details)
-      i.generate
-      send_file(i.filename)
-    else
-      redirect_to new_session_path
+    redirect_to new_session_path and return unless can_access_order?
+    respond_to do |format|
+      format.pdf do
+        html = render_to_string('invoice', formats: [:html], layout: 'invoice')
+        File.open('tmp/invoice.html', 'w') {|f| f.write(html) }
+        `#{WebKitHTMLToPDF.binary} tmp/invoice.html tmp/invoice.pdf`
+        send_file('tmp/invoice.pdf')
+      end
+      format.html do
+        render layout: 'invoice'
+      end
     end
   end
 
