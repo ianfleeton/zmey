@@ -27,6 +27,7 @@ feature 'Discounts admin' do
     fill_in 'Name', with: new_name
     select 'Percentage off', from: 'Reward type'
     fill_in 'Reward amount', with: 10
+    check 'Exclude reduced products'
     click_button 'Update Discount'
     expect(Discount.find_by(name: new_name)).to be
   end

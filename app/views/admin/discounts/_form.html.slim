@@ -24,6 +24,11 @@
     = form.label :reward_amount
     = form.text_field :reward_amount, class: 'form-control'
 
+  .checkbox
+    label
+      => form.check_box :exclude_reduced_products
+      | Exclude reduced products
+
   .form-group
     = form.label :product_group_id
     = form.collection_select :product_group_id, website.product_groups, :id, :name, {include_blank: '-- Not applicable --'}, class: 'form-control'

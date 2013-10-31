@@ -47,6 +47,6 @@ class Admin::DiscountsController < ApplicationController
   end
 
   def discount_params
-    params.require(:discount).permit(:coupon, :product_group_id, :name, :reward_amount, :reward_type)
+    params.require(:discount).permit(:coupon, :exclude_reduced_products, :product_group_id, :name, :reward_amount, :reward_type)
   end
 end
