@@ -334,6 +334,8 @@ class BasketController < ApplicationController
       if discount.coupon && session_contains_coupon?(discount.coupon)
         if discount.reward_type.to_sym == :free_products
           discount_free_products(discount.product_group.products)
+        elsif discount.reward_type.to_sym == :amount_off_order
+          calculate_amount_off_order(discount)
         elsif discount.reward_type.to_sym == :percentage_off_order
           calculate_percentage_off_order(discount)
         elsif discount.reward_type.to_sym == :percentage_off
@@ -358,21 +360,56 @@ class BasketController < ApplicationController
     end
   end
 
-  def calculate_percentage_off_order(discount)
-    if discount.exclude_reduced_products?
-      basket_total_ex_tax = @basket.items_at_full_price.inject(0) { |sum, i| sum + i.line_total(false) }
-      basket_total_inc_tax = @basket.items_at_full_price.inject(0) { |sum, i| sum + i.line_total(true) }
-    else
-      basket_total_ex_tax = @basket.total(false)
-      basket_total_inc_tax = @basket.total(true)
+  class EffectiveTotal
+    def initialize(discount, basket)
+      @discount, @basket = discount, basket
     end
 
-    if basket_total_ex_tax >= discount.threshold
+    def ex_tax
+      @ex_tax ||= if @discount.exclude_reduced_products?
+        @basket.items_at_full_price.inject(0) { |sum, i| sum + i.line_total(false) }
+      else
+        @basket.total(false)
+      end
+    end
+
+    def inc_tax
+      @inx_tax ||= if @discount.exclude_reduced_products?
+        @basket.items_at_full_price.inject(0) { |sum, i| sum + i.line_total(true) }
+      else
+        @basket.total(true)
+      end
+    end
+
+    def tax_amount
+      inc_tax - ex_tax
+    end
+
+    def tax_rate
+      ex_tax > 0 ? inc_tax / ex_tax : 0
+    end
+  end
+
+  def calculate_amount_off_order(discount)
+    effective_total = EffectiveTotal.new(discount, @basket)
+
+    if effective_total.ex_tax >= discount.threshold && effective_total.ex_tax > 0
       discount_line = DiscountLine.new
       discount_line.name = discount.name
-      tax_amount = basket_total_inc_tax - basket_total_ex_tax
-      discount_line.price_adjustment = -(discount.reward_amount / 100.0) * basket_total_ex_tax
-      discount_line.tax_adjustment = -(discount.reward_amount / 100.0) * tax_amount
+      discount_line.price_adjustment = -discount.reward_amount / effective_total.tax_rate
+      discount_line.tax_adjustment = - discount.reward_amount - discount_line.price_adjustment
+      @discount_lines << discount_line
+    end
+  end
+
+  def calculate_percentage_off_order(discount)
+    effective_total = EffectiveTotal.new(discount, @basket)
+
+    if effective_total.ex_tax >= discount.threshold && effective_total.ex_tax > 0
+      discount_line = DiscountLine.new
+      discount_line.name = discount.name
+      discount_line.price_adjustment = -(discount.reward_amount / 100.0) * effective_total.ex_tax
+      discount_line.tax_adjustment = -(discount.reward_amount / 100.0) * effective_total.tax_amount
       @discount_lines << discount_line
     end
   end
