@@ -27,9 +27,10 @@ feature 'Discounts admin' do
     fill_in 'Name', with: new_name
     select 'Percentage off', from: 'Reward type'
     fill_in 'Reward amount', with: 10
-    check 'Exclude reduced products'
+    fill_in 'Threshold', with: 5
+    uncheck 'Exclude reduced products'
     click_button 'Update Discount'
-    expect(Discount.find_by(name: new_name)).to be
+    expect(Discount.find_by(name: new_name, reward_type: 'percentage_off', reward_amount: 10, threshold: 5, exclude_reduced_products: false)).to be
   end
 
   scenario 'Delete discount' do

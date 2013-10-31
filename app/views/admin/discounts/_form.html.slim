@@ -21,6 +21,10 @@
     = form.select :reward_type, reward_type_options, {}, class: 'form-control'
 
   .form-group
+    = form.label :threshold
+    = form.text_field :threshold, class: 'form-control'
+
+  .form-group
     = form.label :reward_amount
     = form.text_field :reward_amount, class: 'form-control'
 
