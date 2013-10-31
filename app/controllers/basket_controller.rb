@@ -208,6 +208,7 @@ class BasketController < ApplicationController
     session[:coupons].each do |coupon|
       discount = Discount.find_by(coupon: coupon, website_id: website.id)
       if !discount || !discount.currently_valid?
+        session[:coupons].subtract [coupon]
         flash[:now] = 'Invalid coupon(s) have been removed from your basket.'
       end
     end
