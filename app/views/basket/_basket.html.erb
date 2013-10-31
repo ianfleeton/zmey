@@ -62,12 +62,15 @@
     <% end -%>
     <tr class="basket_total">
       <th colspan="4">Basket total<% unless @w.vat_number.empty? %><% if inc_tax %> inc VAT<% else %> ex VAT<% end %><% end %>:</th>
-      <td><% basket_total = @basket.total(inc_tax) + (shipping_amount.nil? ? 0 : shipping_amount) + discount_lines_price_total %><%= formatted_price basket_total %></td>
+      <td>
+        <% basket_total = @basket.total(inc_tax) + (shipping_amount.nil? ? 0 : shipping_amount) + discount_lines_price_total %>
+        <% basket_total += discount_lines_tax_total if inc_tax %>
+        <%= formatted_price basket_total %></td>
       <% if can_update %>
       <td class="empty">&nbsp;</td>
       <% end %>
     </tr>
-    <% if !@w.vat_number.empty? && !@inc_tax %>
+    <% if !website.vat_number.empty? && !inc_tax %>
     <tr class="vat_amount">
       <th colspan="4">VAT:</th>
       <td><% vat_total = @basket.vat_total + discount_lines_tax_total %><%= formatted_price vat_total %></td>
