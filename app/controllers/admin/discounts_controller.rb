@@ -8,7 +8,7 @@ class Admin::DiscountsController < ApplicationController
   end
 
   def new
-    @discount = Discount.new
+    @discount = Discount.new(valid_to: Time.zone.now + 5.years)
   end
 
   def edit
@@ -47,6 +47,6 @@ class Admin::DiscountsController < ApplicationController
   end
 
   def discount_params
-    params.require(:discount).permit(:coupon, :exclude_reduced_products, :product_group_id, :name, :reward_amount, :reward_type, :threshold)
+    params.require(:discount).permit(:coupon, :exclude_reduced_products, :product_group_id, :name, :reward_amount, :reward_type, :threshold, :valid_from, :valid_to)
   end
 end

@@ -14,4 +14,12 @@ class Discount < ActiveRecord::Base
   def uppercase_coupon_code
     coupon.upcase!
   end
+
+  def currently_valid?
+    if valid_from.nil? || valid_to.nil?
+      true
+    else
+      Time.zone.now >= valid_from && Time.zone.now <= valid_to
+    end
+  end
 end

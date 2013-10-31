@@ -28,6 +28,16 @@
     = form.label :reward_amount
     = form.text_field :reward_amount, class: 'form-control'
 
+  .form-group
+    = form.label :valid_from
+    br
+    = form.datetime_select :valid_from
+
+  .form-group
+    = form.label :valid_to
+    br
+    = form.datetime_select :valid_to
+
   .checkbox
     label
       => form.check_box :exclude_reduced_products

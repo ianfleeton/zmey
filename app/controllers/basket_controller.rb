@@ -2,7 +2,7 @@ class BasketController < ApplicationController
   before_action :find_basket
   
   before_action :require_delivery_address, only: [:place_order]
-  before_action :invalidate_coupons, only: [:index]
+  before_action :remove_invalid_discounts, only: [:index, :checkout, :place_order]
   before_action :calculate_discounts, only: [:index, :checkout, :place_order]
 
   def index
@@ -126,12 +126,14 @@ class BasketController < ApplicationController
   end
 
   def enter_coupon
-    discount = Discount.find_by(coupon: params[:coupon_code].upcase, website_id: @w.id)
+    discount = Discount.find_by(coupon: params[:coupon_code].upcase, website_id: website.id)
     if(discount.nil?)
       flash[:notice] = 'Sorry, your coupon code was not recognised.'
     else
       if session_contains_coupon? discount.coupon
         flash[:notice] = 'This coupon has already been applied.'
+      elsif !discount.currently_valid?
+        flash[:notice] = 'This coupon is not currently valid.'
       else
         flash[:notice] = 'Your coupon has been applied to your basket.'
         add_coupon_to_session(discount.coupon)
@@ -200,8 +202,15 @@ class BasketController < ApplicationController
     flash[:notice] += ' Free stuff has been added to your basket.'
   end
 
-  def invalidate_coupons
-    #flash[:now] = "Invalid coupon(s) have been removed from your basket. "
+  def remove_invalid_discounts
+    return unless session[:coupons]
+
+    session[:coupons].each do |coupon|
+      discount = Discount.find_by(coupon: coupon, website_id: website.id)
+      if !discount || !discount.currently_valid?
+        flash[:now] = 'Invalid coupon(s) have been removed from your basket.'
+      end
+    end
   end
 
   # Creates an array of FeatureSeletions based on the form input from

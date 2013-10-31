@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131031120544) do
+ActiveRecord::Schema.define(version: 20131031145550) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -102,6 +102,8 @@ ActiveRecord::Schema.define(version: 20131031120544) do
     t.decimal  "reward_amount",            precision: 10, scale: 3, default: 0.0,  null: false
     t.boolean  "exclude_reduced_products",                          default: true, null: false
     t.decimal  "threshold",                precision: 10, scale: 3, default: 0.0,  null: false
+    t.datetime "valid_from"
+    t.datetime "valid_to"
   end
 
   create_table "enquiries", force: true do |t|
