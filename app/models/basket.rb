@@ -23,6 +23,10 @@ class Basket < ActiveRecord::Base
     item.save
   end
 
+  def items_at_full_price
+    basket_items.select { |i| i.product.full_price? }
+  end
+
   def weight
     basket_items.inject(0) { |w, i| w + i.weight }
   end

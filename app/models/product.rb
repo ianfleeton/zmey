@@ -91,6 +91,10 @@ class Product < ActiveRecord::Base
     rrp? && price < rrp
   end
 
+  def full_price?
+    !reduced?
+  end
+
   def path
     '/products/' + to_param
   end
