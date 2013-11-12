@@ -5,10 +5,17 @@ YeslWebsite::Application.routes.draw do
     resources :carousel_slides, except: [:show]
     resources :countries, except: [:show]
     resources :discounts, except: [:show]
+    resources :features, except: [:show]
 
     resources :orders do
       collection do
         get 'purge_old_unpaid'
+      end
+    end
+
+    resources :products, except: [:show] do
+      collection do
+        get 'upload_google_data_feed'
       end
     end
 
@@ -36,8 +43,6 @@ YeslWebsite::Application.routes.draw do
       get 'thank_you'
     end
   end
-
-  resources :features
 
   resources :forums
 
@@ -79,10 +84,9 @@ YeslWebsite::Application.routes.draw do
     end
   end
 
-  resources :products do
+  resources :products, only: [:show] do
     collection do
       get 'google_data_feed'
-      get 'upload_google_data_feed'
     end
   end
 

@@ -1,0 +1,21 @@
+= page_header 'Products'
+
+p= new_button [:admin, Product]
+
+- if @products.empty?
+  p No products
+- else
+  table.table.table-striped.table-bordered
+    thead
+      tr
+        th Active
+        th Name [SKU]
+        th &nbsp;
+    tbody
+      - @products.each do |p|
+        tr
+          td= tick_cross p.active?
+          td= link_to p.name_with_sku, edit_admin_product_path(p)
+          td
+            => edit_button(p)
+            = delete_button(p)

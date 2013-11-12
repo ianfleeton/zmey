@@ -17,6 +17,10 @@ class Feature < ActiveRecord::Base
   DROP_DOWN = 4
   CHECK_BOX = 5
 
+  def to_s
+    name
+  end
+
   def class_name
     {
       TEXT_FIELD => 'feature_text_field',

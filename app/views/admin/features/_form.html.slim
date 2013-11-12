@@ -1,0 +1,34 @@
+- if @feature.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@feature.errors.count, "error")} prohibited this feature from being saved:"
+    ul
+      - @feature.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for [:admin, @feature] do |form|
+
+  = form.hidden_field :product_id
+  = form.hidden_field :component_id
+
+  .form-group
+    = form.label :name
+    = form.text_field :name, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :ui_type, 'Display as a'
+    select.form-control#feature_ui_type name="feature[ui_type]"
+      - {Feature::TEXT_FIELD => 'Text field', Feature::TEXT_AREA => 'Text area', Feature::CHECK_BOX => 'Check box', Feature::RADIO_BUTTONS => 'Radio buttons', Feature::DROP_DOWN => 'Drop down'}.each do |ui_opt, label|
+        = feature_ui_option(@feature, ui_opt, label)
+
+  .radio
+    label
+      => form.radio_button :required, true
+      | Required
+  .radio
+    label
+      => form.radio_button :required, false
+      | Not required
+
+  .form-group
+    = form.submit class: 'btn btn-primary'

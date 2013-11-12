@@ -1,6 +1,6 @@
 = page_header 'Edit Product'
 
-= breadcrumbs({ 'Products' => products_path }, 'Edit Product')
+= breadcrumbs({ 'Products' => admin_products_path }, 'Edit Product')
 
 .row
   .col-md-6
@@ -10,7 +10,7 @@
       .panel-heading
         h2.panel-title Features
       .panel-body
-        p= link_to 'Add Feature', new_feature_path(:product_id => @product.id), class: 'btn btn-default'
+        p= link_to 'Add Feature', new_admin_feature_path(product_id: @product.id), class: 'btn btn-default'
       - unless @product.features.empty?
         table.table
           tr
@@ -21,8 +21,8 @@
               td
                 = feature.name
               td style="width: 130px;"
-                = edit_button(feature)
-                = delete_button(feature)
+                = edit_button [:admin, feature]
+                = delete_button [:admin, feature]
 
     .panel.panel-default
       .panel-heading

@@ -15,7 +15,7 @@
       </select>
     <% end %>
     <% if admin? -%>
-    <%= link_to 'Edit feature', edit_feature_path(feature.id) %>
+    <%= link_to 'Edit feature', edit_admin_feature_path(feature.id) %>
     <% end -%>
   </p>
   <% end -%>

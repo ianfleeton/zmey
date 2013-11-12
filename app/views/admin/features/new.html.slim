@@ -1,0 +1,7 @@
+= page_header 'New Feature'
+
+- crumbs = {'Products' => admin_products_path, @feature.product.name => edit_admin_product_path(@feature.product)}
+- crumbs[@feature.component.name] = edit_component_path(@feature.component) if @feature.component
+= breadcrumbs(crumbs, 'New Feature')
+
+= render 'form'

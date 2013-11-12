@@ -1,7 +1,7 @@
-class FeaturesController < ApplicationController
+class Admin::FeaturesController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
-  before_action :find_feature, only: [:edit, :destroy, :update]
+  before_action :set_feature, only: [:edit, :destroy, :update]
 
   def new
     @feature = Feature.new
@@ -13,11 +13,11 @@ class FeaturesController < ApplicationController
   
   def create
     @feature = Feature.new(feature_params)
-    redirect_to products_path and return unless product_valid?
+    redirect_to admin_products_path and return unless product_valid?
 
     if @feature.save
       flash[:notice] = "Successfully added new feature."
-      redirect_to edit_feature_path(@feature)
+      redirect_to edit_admin_feature_path(@feature)
     else
       render action: 'new'
     end
@@ -29,7 +29,7 @@ class FeaturesController < ApplicationController
       if @feature.component
         redirect_to edit_component_path(@feature.component)
       else
-        redirect_to edit_product_path(@feature.product)
+        redirect_to edit_admin_product_path(@feature.product)
       end
     else
       render action: 'edit'
@@ -41,26 +41,26 @@ class FeaturesController < ApplicationController
   
   def destroy
     @feature.destroy
-    redirect_to edit_product_path(@feature.product), notice: 'Feature deleted.'
+    redirect_to edit_admin_product_path(@feature.product), notice: 'Feature deleted.'
   end
   
   protected
   
-  def find_feature
-    @feature = Feature.find(params[:id])
-    redirect_to products_path and return unless product_valid?
-  end
-  
-  def product_valid?
-    if Product.find_by(id: @feature.product_id, website_id: @w.id)
-      true
-    else
-      flash[:notice] = 'Invalid product.'
-      false
+    def set_feature
+      @feature = Feature.find(params[:id])
+      redirect_to admin_products_path and return unless product_valid?
     end
-  end
+  
+    def product_valid?
+      if Product.find_by(id: @feature.product_id, website_id: @w.id)
+        true
+      else
+        flash[:notice] = 'Invalid product.'
+        false
+      end
+    end
 
-  def feature_params
-    params.require(:feature).permit(:component_id, :name, :product_id, :required, :ui_type)
-  end
+    def feature_params
+      params.require(:feature).permit(:component_id, :name, :product_id, :required, :ui_type)
+    end
 end

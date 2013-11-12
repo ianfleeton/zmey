@@ -1,8 +1,8 @@
 <% if admin_or_manager? -%>
 <div class="product_admin_controls">
 <p>
-  <%= link_to 'Edit ' + product.name, edit_product_path(product) %><br>
-  <%= link_to 'Add feature to ' + product.name, new_feature_path(:product_id => product.id) %><br>
+  <%= link_to 'Edit ' + product.name, edit_admin_product_path(product) %><br>
+  <%= link_to 'Add feature to ' + product.name, new_admin_feature_path(product_id: product.id) %><br>
   <%= link_to 'Add additional product to ' + product.name, new_admin_additional_product_path(product_id: product.id) %>
 </p>
 <% if defined? placement -%>

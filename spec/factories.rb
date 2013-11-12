@@ -33,6 +33,11 @@ FactoryGirl.define do
     enquiry 'Do you sell widgets?'
   end
 
+  factory :feature do
+    name 'Colour'
+    association :product
+  end
+
   factory :image do
     sequence(:name) { |n| "Image #{n}" }
   end

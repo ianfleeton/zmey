@@ -1,0 +1,23 @@
+= page_header 'Edit Feature'
+
+- crumbs = {'Products' => admin_products_path, @feature.product.name => edit_admin_product_path(@feature.product)}
+- crumbs[@feature.component.name] = edit_component_path(@feature.component) if @feature.component
+= breadcrumbs(crumbs, 'Edit Feature')
+
+.row
+  .col-md-6
+    = render 'form'
+
+  .col-md-6
+    h2 Choices
+    p= link_to 'Add choice', new_choice_path(feature_id: @feature.id), class: 'btn btn-default'
+    - if @feature.choices.empty?
+      p This feature has no choices.
+    - else
+      table.table
+        - @feature.choices.each do |choice|
+          tr
+            td= choice.name
+            td
+              => edit_button(choice)
+              = delete_button(choice)
