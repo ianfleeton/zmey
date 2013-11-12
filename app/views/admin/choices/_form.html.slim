@@ -1,0 +1,17 @@
+- if @choice.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@choice.errors.count, "error")} prohibited this choice from being saved:"
+    ul
+      - @choice.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for [:admin, @choice] do |form|
+  = form.hidden_field :feature_id
+
+  .form-group
+    = form.label :name
+    = form.text_field :name, required: true, class: 'form-control'
+
+  .form-group
+    = form.submit class: 'btn btn-primary'

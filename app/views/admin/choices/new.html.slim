@@ -1,0 +1,5 @@
+= page_header "New Choice for &#8220;#{h(@feature.name)}&#8221;".html_safe
+
+= breadcrumbs({'Products' => admin_products_path, @feature.product.name => @feature.product, @feature.name => edit_admin_feature_path(@feature)}, 'New Choice')
+
+= render 'form'

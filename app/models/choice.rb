@@ -9,6 +9,10 @@ class Choice < ActiveRecord::Base
   after_save :create_permutations
   before_destroy :update_permutations
 
+  def to_s
+    name
+  end
+
   def create_permutations
     return unless feature.component
 

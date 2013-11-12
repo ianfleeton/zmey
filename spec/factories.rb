@@ -12,6 +12,11 @@ FactoryGirl.define do
     association :image
   end
 
+  factory :choice do
+    name 'Green'
+    association :feature
+  end
+
   factory :component do
     name 'Component'
     association :product

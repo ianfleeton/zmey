@@ -17,5 +17,5 @@ p= new_button [:admin, Product]
           td= tick_cross p.active?
           td= link_to p.name_with_sku, edit_admin_product_path(p)
           td
-            => edit_button(p)
-            = delete_button(p)
+            => edit_button [:admin, p]
+            = delete_button [:admin, p]

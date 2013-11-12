@@ -3,6 +3,7 @@ YeslWebsite::Application.routes.draw do
   namespace :admin do
     resources :additional_products, except: [:show]
     resources :carousel_slides, except: [:show]
+    resources :choices, except: [:show]
     resources :countries, except: [:show]
     resources :discounts, except: [:show]
     resources :features, except: [:show]
@@ -32,8 +33,6 @@ YeslWebsite::Application.routes.draw do
   post 'basket/place_order' => 'basket#place_order'
   post 'basket/update' => 'basket#update'
   get 'basket(/:action(.:format))', controller: 'basket'
-
-  resources :choices
 
   resources :components
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ChoicesController do
+describe Admin::ChoicesController do
   let(:website) { mock_model(Website).as_null_object }
 
   before do
@@ -45,7 +45,7 @@ describe ChoicesController do
         it 'redirects to the products page' do
           controller.stub(:feature_valid?).and_return(false)
           get 'new'
-          expect(response).to redirect_to(products_path)
+          expect(response).to redirect_to(admin_products_path)
         end
       end
     end

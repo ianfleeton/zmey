@@ -1,4 +1,4 @@
-class ChoicesController < ApplicationController
+class Admin::ChoicesController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
   before_action :find_choice, except: [:new, :create]
@@ -6,7 +6,7 @@ class ChoicesController < ApplicationController
   def new
     @choice = Choice.new
     @choice.feature_id = params[:feature_id]
-    redirect_to products_path and return unless feature_valid?
+    redirect_to admin_products_path and return unless feature_valid?
   end
   
   def edit
@@ -17,7 +17,7 @@ class ChoicesController < ApplicationController
     redirect_to products_path and return unless feature_valid?
     if @choice.update_attributes(choice_params)
       flash[:notice] = "Choice successfully updated."
-      redirect_to edit_feature_path(@choice.feature)
+      redirect_to edit_admin_feature_path(@choice.feature)
     else
       render action: 'edit'
     end
@@ -25,21 +25,21 @@ class ChoicesController < ApplicationController
   
   def create
     @choice = Choice.new(choice_params)
-    redirect_to products_path and return unless feature_valid?
+    redirect_to admin_products_path and return unless feature_valid?
 
     if @choice.save
       flash[:notice] = "Successfully added new choice."
-      redirect_to edit_feature_path(@choice.feature)
+      redirect_to edit_admin_feature_path(@choice.feature)
     else
       render action: 'new'
     end
   end
   
   def destroy
-    redirect_to products_path and return unless feature_valid?
+    redirect_to admin_products_path and return unless feature_valid?
     @choice.destroy
     flash[:notice] = "Choice deleted."
-    redirect_to edit_feature_path(@choice.feature)
+    redirect_to edit_admin_feature_path(@choice.feature)
   end
   
   protected
