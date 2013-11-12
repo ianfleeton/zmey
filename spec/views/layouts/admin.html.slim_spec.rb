@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'layouts/admin.html.slim' do
-  let(:website) { Website.new(name: 'My Website') }
+  let(:website) { FactoryGirl.create(:website) }
 
   before do
     assign(:w, website)

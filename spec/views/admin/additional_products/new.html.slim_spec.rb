@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'admin/additional_products/new.html.erb' do
+describe 'admin/additional_products/new.html.slim' do
   let(:abacus) { Product.new }
   let(:additional_product) { AdditionalProduct.new(product: abacus) }
   let(:website) { mock_model(Website, products: [abacus]) }

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe OrdersController do
   let(:website) { mock_model(Website).as_null_object }
-  let(:current_user) { mock_model(User).as_null_object }
+  let(:current_user) { FactoryGirl.create(:user) }
 
   def mock_order(stubs={})
     @mock_order ||= mock_model(Order, stubs)
@@ -19,10 +19,15 @@ describe OrdersController do
         controller.stub(:current_user).and_return(current_user)
       end
 
-      it 'assigns orders belonging to the current user to @orders' do
-        current_user.should_receive(:orders).and_return(:some_orders)
+      it 'assigns orders belonging to the current user and website to @orders' do
+        another_website = FactoryGirl.create(:website)
+        expected_order = FactoryGirl.create(:order, user: current_user, website: website)
+        unexpected_order_1 = FactoryGirl.create(:order, user: current_user, website: another_website)
+        unexpected_order_2 = FactoryGirl.create(:order, user: FactoryGirl.create(:user), website: website)
         get 'index'
-        expect(assigns(:orders)).to eq :some_orders
+        expect(assigns(:orders)).to include(expected_order)
+        expect(assigns(:orders)).not_to include(unexpected_order_1)
+        expect(assigns(:orders)).not_to include(unexpected_order_2)
       end
 
       it 'renders index' do

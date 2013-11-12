@@ -1,13 +1,15 @@
 require 'spec_helper'
 
 feature 'Orders admin' do
-  fixtures :websites
+  let(:website) { FactoryGirl.create(:website) }
 
   background do
+    Website.delete_all
+    website
     sign_in_as_admin
   end
 
-  let(:order) { FactoryGirl.build(:order, website: websites(:guitar_gear)) }
+  let(:order) { FactoryGirl.build(:order, website: website) }
 
   scenario 'Delete order' do
     order.save!

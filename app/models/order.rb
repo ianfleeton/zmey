@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
   # Associations
   belongs_to :country
   belongs_to :basket
+  belongs_to :user
   belongs_to :website
   has_many :order_lines, dependent: :delete_all
   has_many :payments, dependent: :delete_all

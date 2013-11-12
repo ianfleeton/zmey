@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe BasketController do
   let(:website) { mock_model(Website, {name: 'www', email: 'anon@example.org'}).as_null_object }
-  let(:valid_address) { Address.new(email_address: 'anon@example.org', address_line_1: '123 Street', town_city: 'Harrogate', postcode: 'HG1') }
+  let(:valid_address) { Address.new(email_address: 'anon@example.org', address_line_1: '123 Street', town_city: 'Harrogate', postcode: 'HG1', country: FactoryGirl.create(:country)) }
 
   before do
     Website.stub(:for).and_return(website)

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "/products/new.html.erb" do
+describe '/admin/products/new.html.slim' do
   include ProductsHelper
 
   before(:each) do
@@ -11,6 +11,6 @@ describe "/products/new.html.erb" do
   it "renders new product form" do
     render
 
-    rendered.should have_selector("form[action='#{products_path}'][method='post']")
+    rendered.should have_selector("form[action='#{admin_products_path}'][method='post']")
   end
 end

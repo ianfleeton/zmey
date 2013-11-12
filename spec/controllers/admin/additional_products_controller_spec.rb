@@ -43,7 +43,7 @@ describe Admin::AdditionalProductsController do
 
       it 'redirects to the products page' do
         get 'new'
-        expect(response).to redirect_to(products_path)
+        expect(response).to redirect_to(admin_products_path)
       end
     end
   end
@@ -77,7 +77,7 @@ describe Admin::AdditionalProductsController do
 
         it 'redirects to the edit product page' do
           delete 'destroy', id: '1'
-          expect(response).to redirect_to(edit_product_path(product))
+          expect(response).to redirect_to(edit_admin_product_path(product))
         end
       end
     end

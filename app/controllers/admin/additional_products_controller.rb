@@ -6,16 +6,16 @@ class Admin::AdditionalProductsController < ApplicationController
   def new
     @additional_product = AdditionalProduct.new
     @additional_product.product_id = params[:product_id]
-    redirect_to products_path and return unless product_valid?
+    redirect_to admin_products_path and return unless product_valid?
   end
 
   def create
     @additional_product = AdditionalProduct.new(additional_product_params)
-    redirect_to products_path and return unless product_valid?
+    redirect_to admin_products_path and return unless product_valid?
 
     if @additional_product.save
       flash[:notice] = "Successfully added new additional product."
-      redirect_to edit_product_path(@additional_product.product)
+      redirect_to edit_admin_product_path(@additional_product.product)
     else
       render action: 'new'
     end
@@ -24,7 +24,7 @@ class Admin::AdditionalProductsController < ApplicationController
   def update
     if @additional_product.update_attributes(additional_product_params)
       flash[:notice] = "Additional product successfully updated."
-      redirect_to edit_product_path(@additional_product.product)
+      redirect_to edit_admin_product_path(@additional_product.product)
     else
       render action: 'edit'
     end
@@ -36,14 +36,14 @@ class Admin::AdditionalProductsController < ApplicationController
   def destroy
     @additional_product.destroy
     flash[:notice] = "Additional product deleted."
-    redirect_to edit_product_path(@additional_product.product)
+    redirect_to edit_admin_product_path(@additional_product.product)
   end
 
   protected
   
   def find_additional_product
     @additional_product = AdditionalProduct.find(params[:id])
-    redirect_to products_path and return unless product_valid?
+    redirect_to admin_products_path and return unless product_valid?
   end
 
   def product_valid?

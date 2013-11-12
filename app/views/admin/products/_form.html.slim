@@ -6,7 +6,7 @@
       - @product.errors.full_messages.each do |msg|
         li= msg
 
-= form_for @product do |form|
+= form_for [:admin, @product] do |form|
   .checkbox
     label
       => form.check_box :active

@@ -1,14 +1,16 @@
 require 'spec_helper'
 
 feature 'Carousel slides admin' do
-  fixtures :websites
+  let(:website) { FactoryGirl.create(:website) }
 
   background do
+    Website.delete_all
+    website
     sign_in_as_admin
   end
 
-  let(:image) { FactoryGirl.create(:image, website: websites(:guitar_gear)) }
-  let(:carousel_slide) { FactoryGirl.build(:carousel_slide, image: image, website: websites(:guitar_gear)) }
+  let(:image) { FactoryGirl.create(:image, website: website) }
+  let(:carousel_slide) { FactoryGirl.build(:carousel_slide, image: image, website: website) }
 
   scenario 'Create carousel slide' do
     image

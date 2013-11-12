@@ -6,16 +6,16 @@ class ComponentsController < ApplicationController
   def new
     @component = Component.new
     @component.product_id = params[:product_id]
-    redirect_to products_path and return unless product_valid?
+    redirect_to admin_products_path and return unless product_valid?
   end
 
   def create
     @component = Component.new(component_params)
-    redirect_to products_path and return unless product_valid?
+    redirect_to admin_products_path and return unless product_valid?
 
     if @component.save
       flash[:notice] = "Successfully added new component."
-      redirect_to edit_product_path(@component.product)
+      redirect_to edit_admin_product_path(@component.product)
     else
       render action: 'new'
     end
@@ -24,7 +24,7 @@ class ComponentsController < ApplicationController
   def update
     if @component.update_attributes(component_params)
       flash[:notice] = "Component successfully updated."
-      redirect_to edit_product_path(@component.product)
+      redirect_to edit_admin_product_path(@component.product)
     else
       render action: 'edit'
     end
@@ -83,14 +83,14 @@ class ComponentsController < ApplicationController
   def destroy
     @component.destroy
     flash[:notice] = I18n.t('components.destroy.deleted')
-    redirect_to edit_product_path(@component.product)
+    redirect_to edit_admin_product_path(@component.product)
   end
 
   protected
   
   def find_component
     @component = Component.find(params[:id])
-    redirect_to products_path and return unless product_valid?
+    redirect_to admin_products_path and return unless product_valid?
   end
   
   def product_valid?

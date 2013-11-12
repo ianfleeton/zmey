@@ -45,7 +45,7 @@ describe ComponentsController do
         it 'redirects to the products page' do
           controller.stub(:product_valid?).and_return(false)
           get 'new'
-          expect(response).to redirect_to(products_path)
+          expect(response).to redirect_to(admin_products_path)
         end
       end
     end
@@ -96,7 +96,7 @@ describe ComponentsController do
 
     it "redirects to the component's product editing page" do
       delete_destroy
-      expect(response).to redirect_to edit_product_path(component.product)
+      expect(response).to redirect_to edit_admin_product_path(component.product)
     end
 
     it 'sets a flash notice' do
