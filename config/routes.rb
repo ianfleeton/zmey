@@ -20,6 +20,8 @@ YeslWebsite::Application.routes.draw do
       end
     end
 
+    resources :quantity_prices, except: [:show]
+
     resources :users do
     end
 
@@ -88,8 +90,6 @@ YeslWebsite::Application.routes.draw do
       get 'google_data_feed'
     end
   end
-
-  resources :quantity_prices
 
   resources :sessions do
     get 'destroy', on: :collection

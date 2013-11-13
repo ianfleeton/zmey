@@ -1,4 +1,4 @@
-class QuantityPricesController < ApplicationController
+class Admin::QuantityPricesController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
   before_action :find_quantity_price, only: [:edit, :destroy, :update]
@@ -6,16 +6,16 @@ class QuantityPricesController < ApplicationController
   def new
     @quantity_price = QuantityPrice.new
     @quantity_price.product_id = params[:product_id]
-    redirect_to products_path and return unless product_valid?
+    redirect_to admin_products_path and return unless product_valid?
   end
   
   def create
     @quantity_price = QuantityPrice.new(quantity_price_params)
-    redirect_to products_path and return unless product_valid?
+    redirect_to admin_products_path and return unless product_valid?
 
     if @quantity_price.save
       flash[:notice] = "Successfully added new quantity/price rule."
-      redirect_to edit_product_path(@quantity_price.product)
+      redirect_to edit_admin_product_path(@quantity_price.product)
     else
       render action: 'new'
     end
@@ -24,7 +24,7 @@ class QuantityPricesController < ApplicationController
   def update
     if @quantity_price.update_attributes(quantity_price_params)
       flash[:notice] = "Quantity/price rule successfully updated."
-      redirect_to edit_product_path(@quantity_price.product.id)
+      redirect_to edit_admin_product_path(@quantity_price.product.id)
     else
       render action: 'edit'
     end
@@ -36,14 +36,14 @@ class QuantityPricesController < ApplicationController
   def destroy
     @quantity_price.destroy
     flash[:notice] = "Quantity/price rule deleted."
-    redirect_to edit_product_path(@quantity_price.product)
+    redirect_to edit_admin_product_path(@quantity_price.product)
   end
   
   protected
   
   def find_quantity_price
     @quantity_price = QuantityPrice.find(params[:id])
-    redirect_to products_path and return unless product_valid?
+    redirect_to admin_products_path and return unless product_valid?
   end
   
   def product_valid?

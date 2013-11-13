@@ -65,9 +65,9 @@
         - if @product.quantity_prices.empty?
           p This product is not using quantity&#8208;based pricing.
 
-        p= link_to 'Add Quantity/Price Rule', new_quantity_price_path(product_id: @product.id), class: 'btn btn-default'
+        p= link_to 'Add Quantity/Price Rule', new_admin_quantity_price_path(product_id: @product.id), class: 'btn btn-default'
 
       - quantity_prices_table(@product) do |qp|
         td style="width: 130px;"
-          = edit_button(qp)
-          = delete_button(qp)
+          = edit_button [:admin, qp]
+          = delete_button [:admin, qp]

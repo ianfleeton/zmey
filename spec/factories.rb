@@ -63,6 +63,11 @@ FactoryGirl.define do
     sku 'SKU'
   end
 
+  factory :quantity_price do
+    quantity 2
+    association :product
+  end
+
   factory :user do
     sequence(:email) { |n| "shopper#{n}@example.org" }
     name 'User'
