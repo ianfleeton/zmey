@@ -26,6 +26,6 @@ module YeslWebsite
     # config.i18n.default_locale = :de
 
     config.autoload_paths += Dir["#{config.root}/lib"]
-    config.assets.precompile += %w( admin.css screen.css )
+    config.assets.precompile += %w( admin.css screen.css.scss )
   end
 end
