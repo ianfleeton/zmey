@@ -2,7 +2,7 @@ doctype html
 html
   head
     meta charset="utf-8"
-    title= @w.name
+    title= website.name
     = javascript_include_tag "application"
     = csrf_meta_tags
     link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"
@@ -44,7 +44,7 @@ html
                 li= link_to 'Shipping Classes', shipping_classes_path
                 li= link_to 'Product Groups', product_groups_url
                 li= link_to 'Discounts', admin_discounts_path
-                li= link_to 'Website Settings', edit_admin_website_path(@w)
+                li= link_to 'Website Settings', edit_admin_website_path(website)
     .container
       - if flash[:notice]
         .alert.alert-info.fade.in

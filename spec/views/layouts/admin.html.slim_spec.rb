@@ -4,7 +4,7 @@ describe 'layouts/admin.html.slim' do
   let(:website) { FactoryGirl.create(:website) }
 
   before do
-    assign(:w, website)
+    view.stub(:website).and_return(website)
   end
 
   it 'renders' do
