@@ -28,7 +28,7 @@
       .panel-heading
         h2.panel-title Components
       .panel-body
-        p= link_to 'Add Component', new_component_path(product_id: @product.id), class: 'btn btn-default'
+        p= link_to 'Add Component', new_admin_component_path(product_id: @product.id), class: 'btn btn-default'
       - unless @product.components.empty?
         table.table
           tr
@@ -38,8 +38,8 @@
             tr
               td= component.name
               td style="width: 130px;"
-                = edit_button(component)
-                = delete_button(component)
+                = edit_button [:admin, component]
+                = delete_button [:admin, component]
 
     .panel.panel-default
       .panel-heading

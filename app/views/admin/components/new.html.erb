@@ -2,11 +2,11 @@
 
 <ul class="breadcrumb">
   <li>
-    <%= link_to 'Products', products_path %>
+    <%= link_to 'Products', admin_products_path %>
     <span class="divider">/</span>
   </li>
   <li>
-    <%= link_to @component.product.name, edit_product_path(@component.product) %>
+    <%= link_to @component.product.name, edit_admin_product_path(@component.product) %>
     <span class="divider">/</span>
   </li>
   <li class="active">

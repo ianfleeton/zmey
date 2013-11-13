@@ -2,11 +2,11 @@
 
 <ul class="breadcrumb">
   <li>
-    <%= link_to 'Products', products_path %>
+    <%= link_to 'Products', admin_products_path %>
     <span class="divider">/</span>
   </li>
   <li>
-    <%= link_to @component.product.name, edit_product_path(@component.product) %>
+    <%= link_to @component.product.name, edit_admin_product_path(@component.product) %>
     <span class="divider">/</span>
   </li>
   <li class="active">
@@ -22,7 +22,7 @@
 
   <div class="span6">
     <h2>Features</h2>
-    <p><%= link_to 'Add Feature', new_feature_path(component_id: @component.id, product_id: @component.product_id), class: 'btn' %></p>
+    <p><%= link_to 'Add Feature', new_admin_feature_path(component_id: @component.id, product_id: @component.product_id), class: 'btn' %></p>
 <% if @component.features.empty? -%>
     <p>This component has no features.</p>
 <% else -%>
@@ -33,8 +33,8 @@
           <%= feature.name %>
         </td>
         <td>
-          <%= edit_button(feature) %>
-          <%= delete_button(feature) %>
+          <%= edit_button [:admin, feature] %>
+          <%= delete_buttoni [:admin, feature] %>
         </td>
       </tr>
 <% end -%>

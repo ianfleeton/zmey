@@ -11,7 +11,7 @@
 </div>
 <% end -%>
 
-<%= form_for @component do |form| %>
+<%= form_for [:admin, @component] do |form| %>
 
   <%= form.hidden_field :product_id %>
 

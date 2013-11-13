@@ -1,4 +1,4 @@
-class ComponentsController < ApplicationController
+class Admin::ComponentsController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
   before_action :find_component, only: [:edit, :destroy, :update]
