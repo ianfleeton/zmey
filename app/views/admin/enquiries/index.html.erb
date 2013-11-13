@@ -26,9 +26,9 @@
     <td><%= enquiry.email %></td>
     <td><%= enquiry.call_back %></td>
     <td style="width: 150px;">
-      <%= link_to 'View', enquiry, class: 'btn btn-mini' %>
-      <%= edit_button(enquiry) %>
-      <%= delete_button(enquiry) %>
+      <%= link_to 'View', [:admin, enquiry], class: 'btn btn-default' %>
+      <%= edit_button [:admin, enquiry] %>
+      <%= delete_button [:admin, enquiry] %>
     </td>
   </tr>
 <% end %>

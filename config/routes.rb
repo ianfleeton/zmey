@@ -7,6 +7,7 @@ YeslWebsite::Application.routes.draw do
     resources :components, except: [:show]
     resources :countries, except: [:show]
     resources :discounts, except: [:show]
+    resources :enquiries
     resources :features, except: [:show]
     resources :liquid_templates, except: [:show]
 
@@ -38,7 +39,7 @@ YeslWebsite::Application.routes.draw do
   post 'basket/update' => 'basket#update'
   get 'basket(/:action(.:format))', controller: 'basket'
 
-  resources :enquiries do
+  resources :enquiries, only: [:create, :new] do
     collection do
       get 'current_time'
       get 'thank_you'

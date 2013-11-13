@@ -1,17 +1,6 @@
 class EnquiriesController < ApplicationController
   include SpamProtection
 
-  layout 'admin', except: [:new, :create, :thank_you, :current_time]
-  before_action :admin_or_manager_required, except: [:new, :create, :thank_you, :current_time]
-  
-  def index
-    @enquiries = @w.enquiries
-  end
-
-  def show
-    @enquiry = Enquiry.find(params[:id])
-  end
-
   def new
     @title = 'Enquiry'
     @enquiry = Enquiry.new
@@ -20,10 +9,6 @@ class EnquiriesController < ApplicationController
       @enquiry.email = @current_user.email
     end
     @enquiry.enquiry = params[:enquiry] unless params[:enquiry].nil?
-  end
-
-  def edit
-    @enquiry = Enquiry.find(params[:id])
   end
 
   def create
@@ -35,7 +20,7 @@ class EnquiriesController < ApplicationController
       return
     end
     
-    @enquiry.website_id = @w.id
+    @enquiry.website = website
 
     if @enquiry.save
       EnquiryNotifier.enquiry(@w, @enquiry).deliver
@@ -48,22 +33,6 @@ class EnquiriesController < ApplicationController
   def thank_you
     @title = 'Thank you for your enquiry'
     render layout: 'application'
-  end
-
-  def update
-    @enquiry = Enquiry.find(params[:id])
-
-    if @enquiry.update_attributes(enquiry_params)
-      redirect_to(@enquiry, notice: 'Enquiry was successfully updated.')
-    else
-      render action: 'edit'
-    end
-  end
-
-  def destroy
-    @enquiry = Enquiry.find(params[:id])
-    @enquiry.destroy
-    redirect_to(enquiries_url)
   end
 
   private
