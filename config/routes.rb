@@ -8,6 +8,7 @@ YeslWebsite::Application.routes.draw do
     resources :countries, except: [:show]
     resources :discounts, except: [:show]
     resources :features, except: [:show]
+    resources :liquid_templates, except: [:show]
 
     resources :orders do
       collection do
@@ -47,8 +48,6 @@ YeslWebsite::Application.routes.draw do
   resources :forums
 
   resources :images
-
-  resources :liquid_templates
 
   resources :orders, only: [:index, :show] do
     collection do

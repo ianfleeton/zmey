@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe LiquidTemplate do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#to_s' do
+    it 'returns its name' do
+      expect(LiquidTemplate.new(name: 'Footer').to_s).to eq 'Footer'
+    end
+  end
 end

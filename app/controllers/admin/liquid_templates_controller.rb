@@ -1,10 +1,10 @@
-class LiquidTemplatesController < ApplicationController
+class Admin::LiquidTemplatesController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
   before_action :find_liquid_template, only: [:edit, :update, :destroy]
 
   def index
-    @liquid_templates = @w.liquid_templates
+    @liquid_templates = website.liquid_templates
   end
 
   def new
@@ -16,35 +16,35 @@ class LiquidTemplatesController < ApplicationController
 
   def create
     @liquid_template = LiquidTemplate.new(liquid_template_params)
-    @liquid_template.website_id = @w.id
+    @liquid_template.website_id = website.id
 
     if @liquid_template.save
       flash[:notice] = "Successfully added new Liquid template."
-      redirect_to edit_liquid_template_path(@liquid_template)
+      redirect_to edit_admin_liquid_template_path(@liquid_template)
     else
-      render action: 'new'
+      render :new
     end
   end
 
   def update
     if @liquid_template.update_attributes(liquid_template_params)
       flash[:notice] = "Liquid template successfully updated."
-      redirect_to edit_liquid_template_path(@liquid_template)
+      redirect_to edit_admin_liquid_template_path(@liquid_template)
     else
-      render action: 'edit'
+      render :edit
     end
   end
 
   def destroy
     @liquid_template.destroy
     flash[:notice] = "Liquid template deleted."
-    redirect_to liquid_templates_path
+    redirect_to admin_liquid_templates_path
   end
 
   protected
 
   def find_liquid_template
-    @liquid_template = LiquidTemplate.find_by(id: params[:id], website_id: @w.id)
+    @liquid_template = LiquidTemplate.find_by(id: params[:id], website_id: website.id)
     not_found unless @liquid_template
   end
 

@@ -6,7 +6,7 @@
       - @liquid_template.errors.full_messages.each do |msg|
         li= msg
 
-= form_for @liquid_template do |form|
+= form_for [:admin, @liquid_template] do |form|
 
   .form-group
     = form.label :name

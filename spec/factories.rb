@@ -47,6 +47,10 @@ FactoryGirl.define do
     sequence(:name) { |n| "Image #{n}" }
   end
 
+  factory :liquid_template do
+    sequence(:name) { |n| "Template #{n}" }
+  end
+
   factory :order do
     email_address 'buyer@example.org'
     address_line_1 '123 Street'

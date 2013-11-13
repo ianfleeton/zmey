@@ -1,0 +1,17 @@
+= page_header 'Liquid Templates'
+
+p= new_button [:admin, LiquidTemplate]
+
+- if @liquid_templates.empty?
+  p There are no Liquid templates created yet.
+- else
+  table.table.table-bordered.table-striped
+    tr
+      th Template Name
+      th Actions
+    - @liquid_templates.each do |liquid_template|
+      tr
+        td= liquid_template.name
+        td style="width: 130px;"
+          = edit_button [:admin, liquid_template]
+          = delete_button [:admin, liquid_template]
