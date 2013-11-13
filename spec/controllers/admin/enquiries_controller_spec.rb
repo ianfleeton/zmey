@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'shared_examples_for_controllers'
 
-describe EnquiriesController do
+describe Admin::EnquiriesController do
   let(:website) { mock_model(Website).as_null_object }
 
   def mock_enquiry(stubs={})
