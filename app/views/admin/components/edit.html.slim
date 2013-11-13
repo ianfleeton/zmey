@@ -1,0 +1,41 @@
+= page_header 'Edit Component'
+
+= breadcrumbs({'Products' => admin_products_path, @component.product.name => edit_admin_product_path(@component.product)}, 'Edit Component')
+
+.row
+  .col-md-6
+    = render 'form'
+
+  .col-md-6
+    h2 Features
+    p= link_to 'Add Feature', new_admin_feature_path(component_id: @component.id, product_id: @component.product_id), class: 'btn btn-default'
+    - if @component.features.empty?
+      p This component has no features.
+    - else
+      table.table
+        - @component.features.each do |feature|
+          tr
+            td= feature.name
+            td
+              => edit_button [:admin, feature]
+              = delete_button [:admin, feature]
+
+- unless @headings.empty?
+  h2 Permutations
+
+  table.table.table-bordered.table-striped
+    tr
+      - @headings.each do |heading|
+        th= heading
+      th Price &amp; Weight
+    - @rows.each do |row|
+      tr
+        - row[:choices].each do |choice|
+          td= choice
+        td
+          = form_for row[:permutation], html: {class: 'form-inline', style: 'margin-bottom: 0'} do |form|
+            = form.text_field :price, class: 'span1'
+            | GBP
+            = form.text_field :weight, class: 'span1'
+            | kg
+            = form.submit class: 'btn btn-default'

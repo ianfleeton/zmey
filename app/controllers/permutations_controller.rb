@@ -6,12 +6,12 @@ class PermutationsController < ApplicationController
     permutation = Permutation.find(params[:id])
     if permutation
       if permutation.update_attributes(permutation_params)
-        redirect_to edit_component_path(permutation.component), notice: 'Updated'
+        redirect_to edit_admin_component_path(permutation.component), notice: 'Updated'
       else
-        redirect_to edit_component_path(permutation.component), notice: 'Could not update'
+        redirect_to edit_admin_component_path(permutation.component), notice: 'Could not update'
       end
     else
-      redirect_to products_path, notice: 'Permutation not found'
+      redirect_to admin_products_path, notice: 'Permutation not found'
     end
   end
 

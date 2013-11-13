@@ -1,0 +1,5 @@
+= page_header 'New Component'
+
+= breadcrumbs({'Products' => admin_products_path, @component.product.name => edit_admin_product_path(@component.product)}, 'New Component')
+
+= render 'form'
