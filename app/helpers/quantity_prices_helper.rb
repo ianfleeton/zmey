@@ -5,7 +5,7 @@ module QuantityPricesHelper
     first = '1'
     first += "&#8211;#{rules.first.quantity - 1}" unless rules.first.quantity == 2
     html = <<HTML
-      <table class="table table-striped table-bordered">
+      <table class="table table-striped">
         <tr>
           <th>Quantity</th>
           <th>Price</th>
