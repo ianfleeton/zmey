@@ -24,7 +24,7 @@ YeslWebsite::Application.routes.draw do
     end
 
     resources :quantity_prices, except: [:show]
-
+    resources :shipping_zones, except: [:show]
     resources :users do
     end
 
@@ -98,8 +98,6 @@ YeslWebsite::Application.routes.draw do
   resources :shipping_classes
 
   resources :shipping_table_rows
-
-  resources :shipping_zones
 
   get 'sitemap.xml' => 'pages#sitemap', :as => 'sitemap', :format => 'xml'
 

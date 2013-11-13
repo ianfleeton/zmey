@@ -1,10 +1,10 @@
-class ShippingZonesController < ApplicationController
+class Admin::ShippingZonesController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
   before_action :find_shipping_zone, only: [:edit, :update, :destroy]
 
   def index
-    @shipping_zones = @w.shipping_zones
+    @shipping_zones = website.shipping_zones
   end
 
   def new
@@ -13,32 +13,32 @@ class ShippingZonesController < ApplicationController
 
   def create
     @shipping_zone = ShippingZone.new(shipping_zone_params)
-    @shipping_zone.website_id = @w.id
+    @shipping_zone.website_id = website.id
 
     if @shipping_zone.save
-      redirect_to shipping_zones_path, notice: 'Saved.'
+      redirect_to admin_shipping_zones_path, notice: 'Saved.'
     else
-      render action: 'new'
+      render :new
     end
   end
 
   def update
     if @shipping_zone.update_attributes(shipping_zone_params)
-      redirect_to shipping_zones_path, notice: 'Saved.'
+      redirect_to admin_shipping_zones_path, notice: 'Saved.'
     else
-      render action: 'edit'
+      render :edit
     end
   end
 
   def destroy
     @shipping_zone.destroy
-    redirect_to shipping_zones_path, notice: 'Shipping zone deleted.'
+    redirect_to admin_shipping_zones_path, notice: 'Shipping zone deleted.'
   end
 
   protected
 
   def find_shipping_zone
-    @shipping_zone = ShippingZone.find_by(id: params[:id], website_id: @w.id)
+    @shipping_zone = ShippingZone.find_by(id: params[:id], website_id: website.id)
   end
 
   def shipping_zone_params

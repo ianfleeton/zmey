@@ -1,0 +1,17 @@
+= page_header 'Shipping Zones'
+
+p= link_to 'New', new_admin_shipping_zone_path, class: 'btn btn-primary'
+
+- unless @shipping_zones.empty?
+  table.table.table-bordered.table-striped
+    thead
+      tr
+        th Shipping Zone
+        th &nbsp;
+    tbody
+      - @shipping_zones.each do |zone|
+        tr
+          td= zone.name
+          td
+            => edit_button [:admin, zone]
+            = delete_button [:admin, zone]
