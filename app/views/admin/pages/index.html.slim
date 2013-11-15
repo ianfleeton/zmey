@@ -1,6 +1,6 @@
 = page_header 'Pages'
 
-p= new_button Page
+p= new_button [:admin, Page]
 
 table.table.table-striped.table-bordered
   - @pages.each do |p|

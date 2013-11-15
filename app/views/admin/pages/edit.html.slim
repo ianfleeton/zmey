@@ -1,6 +1,6 @@
 = page_header 'Edit Page'
 
-= breadcrumbs({ 'Pages' => pages_path }, 'Edit Page')
+= breadcrumbs({ 'Pages' => admin_pages_path }, 'Edit Page')
 
 .row
   .col-md-5
@@ -37,6 +37,6 @@
       - unless Product.count == 0
         = form_for ProductPlacement.new do |form|
           input type="hidden" name="product_placement[page_id]" value="#{@page.id}"
-          = form.collection_select :product_id, @w.products, :id, :name_with_sku, {}, class: 'form-control'
+          = form.collection_select :product_id, website.products, :id, :name_with_sku, {}, class: 'form-control'
           = submit_tag 'Add Product', class: 'btn btn-default'
     = delete_button(@page)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131031145550) do
+ActiveRecord::Schema.define(version: 20131115205819) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -236,7 +236,7 @@ ActiveRecord::Schema.define(version: 20131031145550) do
     t.string   "description", default: "", null: false
     t.text     "content"
     t.integer  "parent_id"
-    t.integer  "position",    default: 0,  null: false
+    t.integer  "position",    default: 0
     t.integer  "image_id"
   end
 

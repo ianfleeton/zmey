@@ -4,9 +4,9 @@
   <% @page.children.each do |child| -%>
   <%
   child_pages += template('child_page',
-    :child => child,
-    :thumbnail_exists => !child.image.nil?,
-    :thumbnail_url => child.image ? child.image.url(@w.page_thumbnail_size) : ''
+    child: child,
+    thumbnail_exists: !child.image.nil?,
+    thumbnail_url: child.image ? child.image.url(website.page_thumbnail_size) : ''
   )
   %>
   <% end -%>
@@ -18,26 +18,26 @@
   <% product = placement.product %>
   <%
   product_summaries += template('product_summary',
-    :additional_products => render(:partial => "products/additional_products", :locals => {:product => product}),
-    :full => false,
-    :page => @page,
-    :placement => placement,
-    :price => formatted_price(product.price_with_tax(1, @inc_tax)),
-    :product => product,
-    :product_features => render(:partial => "products/product_features", :locals => {:product => product}),
-    :product_image_url => product.image.nil? ? '' : product.image.url(@w.product_thumbnail_size)
+    additional_products: render(partial: "products/additional_products", locals: {product: product}),
+    full: false,
+    page: @page,
+    placement: placement,
+    price: formatted_price(product.price_with_tax(1, @inc_tax)),
+    product: product,
+    product_features: render(partial: "products/product_features", locals: {product: product}),
+    product_image_url: product.image.nil? ? '' : product.image.url(website.product_thumbnail_size)
     )
   %>
-  <% product_summaries += render :partial => 'products/admin_controls', :locals => {:product => product, :placement => placement } %>
+  <% product_summaries += render partial: 'products/admin_controls', locals: {product: product, placement: placement } %>
 <% end %>
 <% product_summaries += template("product_summaries_after") %>
 
 <%=
 template('page',
-  :child_pages => child_pages,
-  :content => raw(textilize(@page.content)),
-  :notice => flash_notice,
-  :product_summaries => product_summaries
+  child_pages: child_pages,
+  content: raw(textilize(@page.content)),
+  notice: flash_notice,
+  product_summaries: product_summaries
 )
 %>
 
@@ -45,16 +45,14 @@ template('page',
 <div id="page_admin_controls">
   <h2>Admin Controls</h2>
   <!-- I probably need moving to product_placement/_form.html -->
-  <% unless @w.products.empty? -%>
+  <% if website.products.any? -%>
   <%= form_for @product_placement do |form| %>
   <input type="hidden" name="product_placement[page_id]" value="<%= @page.id %>" />
-  <%= form.collection_select :product_id, @w.products, :id, :name_with_sku %>
+  <%= form.collection_select :product_id, website.products, :id, :name_with_sku %>
   <%= submit_tag 'Add Product' %>
   <% end %>
   <% end -%>
-  <p><%= link_to 'Edit this page', :action => 'edit', :id => @page.id %></p>
-  <%= form_tag :controller => 'pages', :action => 'destroy', :id => @page.id do -%>
-    <input type="submit" value="Delete Page" />
-  <% end -%>
+  <p><%= link_to 'Edit this page', edit_admin_page_path(@page) %></p>
+  <%= delete_button [:admin, @page] %>
 </div>
 <% end -%>

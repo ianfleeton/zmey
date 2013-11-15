@@ -59,6 +59,12 @@ FactoryGirl.define do
     association :country
   end
 
+  factory :page do
+    name 'Page Name'
+    title 'Page Title'
+    description 'Meta description...'
+  end
+
   factory :payment do
   end
 

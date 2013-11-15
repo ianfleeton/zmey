@@ -6,7 +6,7 @@
       - @page.errors.full_messages.each do |msg|
         li= msg
 
-= form_for @page do |form|
+= form_for [:admin, @page] do |form|
 
   .form-group
     = form.label :title

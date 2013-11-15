@@ -17,6 +17,13 @@ YeslWebsite::Application.routes.draw do
       end
     end
 
+    resources :pages, except: [:show] do
+      member do
+        get 'move_up'
+        get 'move_down'
+      end
+    end
+
     resources :products, except: [:show] do
       collection do
         get 'upload_google_data_feed'
@@ -119,13 +126,8 @@ YeslWebsite::Application.routes.draw do
     resources :orders
   end
 
-  resources :pages do
-    member do
-      get 'move_up'
-      get 'move_down'
-    end
-    post 'destroy', :on => :member
-  end
+  resources :pages, only: [:show]
+
   get ':slug' => 'pages#show', as: :slug, :constraints => { :slug => /[-a-z0-9]*/ }
 
   root :controller => 'pages', :action => 'show', :slug => ''
