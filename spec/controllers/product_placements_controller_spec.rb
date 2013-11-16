@@ -17,7 +17,7 @@ describe ProductPlacementsController do
         pp = mock_model(ProductPlacement, page: page, save: true)
         ProductPlacement.stub(:new).and_return(pp)
         post 'create', { 'product_placement' => {'some' => 'params'} }
-        expect(response).to redirect_to(edit_page_path(page))
+        expect(response).to redirect_to(edit_admin_page_path(page))
       end
     end
   end
@@ -31,7 +31,7 @@ describe ProductPlacementsController do
         pp = mock_model(ProductPlacement, page: page)
         ProductPlacement.stub(:find).and_return(pp)
         delete 'destroy', id: '1'
-        expect(response).to redirect_to(edit_page_path(page))
+        expect(response).to redirect_to(edit_admin_page_path(page))
       end
     end
   end
@@ -45,7 +45,7 @@ describe ProductPlacementsController do
         pp = mock_model(ProductPlacement, page: page, move_higher: true)
         ProductPlacement.stub(:find).and_return(pp)
         post 'move_up'
-        expect(response).to redirect_to(edit_page_path(page))
+        expect(response).to redirect_to(edit_admin_page_path(page))
       end
     end
   end

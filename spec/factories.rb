@@ -78,6 +78,16 @@ FactoryGirl.define do
     association :product
   end
 
+  factory :shipping_class do
+    sequence(:name) { |n| "Shipping Class #{1}" }
+    association :shipping_zone
+  end
+
+  factory :shipping_zone do
+    sequence(:name) { |n| "Shipping Zone #{n}" }
+    association :website
+  end
+
   factory :user do
     sequence(:email) { |n| "shopper#{n}@example.org" }
     name 'User'

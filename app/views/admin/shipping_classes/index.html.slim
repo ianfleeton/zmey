@@ -1,0 +1,17 @@
+= page_header 'Shipping Classes'
+
+p= link_to 'New', new_admin_shipping_class_path, class: 'btn btn-primary'
+
+- unless @shipping_classes.empty?
+  table.table.table-bordered.table-striped
+    thead
+      tr
+        th Shipping Class
+        th &nbsp;
+    tbody
+      - @shipping_classes.each do |shipping_class|
+        tr
+          td= link_to shipping_class.name + ', ' + shipping_class.shipping_zone.name, edit_admin_shipping_class_path(shipping_class)
+          td
+            => edit_button [:admin, shipping_class]
+            = delete_button [:admin, shipping_class]

@@ -1,0 +1,26 @@
+- if @shipping_class.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@shipping_class.errors.count, "error")} prohibited this shipping class from being saved:"
+    ul
+      - @shipping_class.errors.full_messages.each do |msg|
+        li= msg
+
+- if website.shipping_zones.empty?
+  .hero-unit
+    h1 Let's create a shipping zone
+    p You haven't created any shipping zones yet. You will need at least one shipping zone before you can create a shipping class.
+    p= link_to 'New Shipping Zone', new_admin_shipping_zone_path, class: 'btn btn-primary btn-large'
+- else
+  = form_for [:admin, @shipping_class] do |form|
+
+    .form-group
+      = form.label :name
+      = form.text_field :name, class: 'form-control'
+
+    .form-group
+      = form.label :shipping_zone_id
+      = form.collection_select :shipping_zone_id, website.shipping_zones, :id, :name, {}, class: 'form-control'
+
+    .form-group
+      = form.submit class: 'btn btn-primary'

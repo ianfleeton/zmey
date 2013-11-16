@@ -7,16 +7,16 @@ class ProductPlacementsController < ApplicationController
     @product_placement = ProductPlacement.new(product_placement_params)
     if @product_placement.save
       flash[:notice] = "Product successfully placed in page."
-      redirect_to edit_page_path(@product_placement.page)
+      redirect_to edit_admin_page_path(@product_placement.page)
     else
-      render :action => "new"
+      render :new
     end
   end
 
   def destroy
     page = @product_placement.page
     @product_placement.destroy
-    redirect_to edit_page_path(@product_placement.page), notice: 'Product removed from page.'
+    redirect_to edit_admin_page_path(@product_placement.page), notice: 'Product removed from page.'
   end
 
   def move_up
@@ -37,7 +37,7 @@ class ProductPlacementsController < ApplicationController
 
   def moved
     flash[:notice] = "Moved."
-    redirect_to edit_page_path(@product_placement.page)
+    redirect_to edit_admin_page_path(@product_placement.page)
   end
 
   def product_placement_params

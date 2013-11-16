@@ -31,6 +31,7 @@ YeslWebsite::Application.routes.draw do
     end
 
     resources :quantity_prices, except: [:show]
+    resources :shipping_classes, except: [:show]
     resources :shipping_zones, except: [:show]
     resources :users do
     end
@@ -101,8 +102,6 @@ YeslWebsite::Application.routes.draw do
     get 'destroy', on: :collection
   end
   get 'sign-in' => 'sessions#new', as: :sign_in
-
-  resources :shipping_classes
 
   resources :shipping_table_rows
 
