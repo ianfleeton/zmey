@@ -46,9 +46,7 @@ class Admin::ChoicesController < ApplicationController
   
   def find_choice
     @choice = Choice.find(params[:id])
-    if @choice.feature.product.website_id != @w.id
-      render :file => "#{::Rails.root.to_s}/public/404.html", :status => "404 Not Found"
-    end
+    not_found unless @choice.feature.product.website_id == @w.id
   end
 
   def feature_valid?
