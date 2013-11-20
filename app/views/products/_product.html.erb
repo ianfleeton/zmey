@@ -5,14 +5,14 @@
   <% unless product.image.nil? -%>
   <p class="product_image">
     <% if full %>
-    <%= image_tag(product_image_url, :alt => product.image.name) %>
+    <%= image_tag(product_image_url, alt: product.image.name) %>
     <% else %>
-    <%= link_to image_tag(product.image.url(@w.product_thumbnail_size), :alt => product.image.name), product_path(product) %>
+    <%= link_to image_tag(product.image.url(@w.product_thumbnail_size), alt: product.image.name), product_path(product) %>
     <% end %>
   </p>
   <% end -%>
   <div class="product_detail">
-    <%= form_tag :controller => 'basket', :action => 'add' do %>
+    <%= form_tag controller: 'basket', action: 'add' do %>
     <input type="hidden" name="product_id" value="<%= product.id %>" />
     <% if defined? page -%>
     <input type="hidden" name="page_id" value="<%= page.id %>" />

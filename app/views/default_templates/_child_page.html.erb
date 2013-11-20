@@ -1,7 +1,7 @@
   <div class="child_page">
     <p class="child_page_image">
       <% if thumbnail_exists -%>
-      <%= link_to image_tag(thumbnail_url, :alt => child.image.name), child.path %>
+      <%= link_to image_tag(thumbnail_url, alt: child.image.name), child.path %>
       <% end -%>
     </p>
     <%= link_to child.name, child.path %>

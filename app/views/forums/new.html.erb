@@ -19,7 +19,7 @@
 	<fieldset>
 		<legend>Add a new forum</legend>
     <%= form_for @forum do |form| %>
-    <%= render :partial => 'form', :object => form %>
+    <%= render partial: 'form', object: form %>
 
     <%= submit_tag "Create New Forum" %>
 

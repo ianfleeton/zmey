@@ -1,7 +1,7 @@
 <h1><%= link_to @topic.forum.name, @topic.forum %> &rarr; <%= @topic.topic %></h1>
 <%= flash_notice %>
 <% if admin? -%>
-<%= form_tag :action => 'destroy', :id => @topic do %>
+<%= form_tag action: 'destroy', id: @topic do %>
   <%= submit_tag 'Delete Topic' %>
 <% end %>
 <% end %>
@@ -11,9 +11,9 @@
   <p class="post_details">Posted <%= format_date(p.created_at) %> by <%= h p.author %></p>
 </div>
   <% if admin? -%>
-    <p><%= link_to('Edit Post', :action => 'edit_post', :post_id => p.id) %></p>
+    <p><%= link_to('Edit Post', action: 'edit_post', post_id: p.id) %></p>
     <% unless @topic.posts.first == p -%>
-      <%= form_tag :action => 'destroy_post', :post_id => p.id do %>
+      <%= form_tag action: 'destroy_post', post_id: p.id do %>
         <%= submit_tag 'Delete Post' %>
       <% end %>
     <% end -%>
@@ -35,9 +35,9 @@
 <% end %>
 
 
-<%= render :partial => 'spam/spam' %>
+<%= render partial: 'spam/spam' %>
 
-<%= form_for :post, :url => {:action => 'create_reply'} do |f| %>
+<%= form_for :post, url: {action: 'create_reply'} do |f| %>
 <span id="current_time">
   <!-- current time placed here by AJAX request -->
 </span>

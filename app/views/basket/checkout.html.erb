@@ -3,17 +3,17 @@
 <h2>Delivery Address</h2>
 <% if @address.new_record? -%>
 <%= form_for @address do |f| %>
-  <%= render :partial => 'addresses/form', :object => f %>
+  <%= render partial: 'addresses/form', object: f %>
   <%= submit_tag 'Next' %>
 <% end -%>
 <% else -%>
 <%= format_address @address %>
-<p>(<%= link_to 'Change address', :controller => 'addresses', :action => 'edit', :id => @address.id %>)</p>
+<p>(<%= link_to 'Change address', controller: 'addresses', action: 'edit', id: @address.id %>)</p>
 <% end -%>
 <h2>Your Basket</h2>
-<%= render :partial => 'basket', :object => @basket, :locals => {:can_update => false, :shipping_amount => @shipping_amount, :inc_tax => @inc_tax} %>
+<%= render partial: 'basket', object: @basket, locals: {can_update: false, shipping_amount: @shipping_amount, inc_tax: @inc_tax} %>
 <% unless @address.new_record? -%>
-  <%= form_tag :action => 'place_order' do %>
+  <%= form_tag action: 'place_order' do %>
     <% unless @w.terms_and_conditions.empty? %>
     <div class="terms_and_conditions" id="checkout_terms_and_conditions">
     <%= raw textilize(@w.terms_and_conditions) %>

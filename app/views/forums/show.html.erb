@@ -2,7 +2,7 @@
 <%= flash_notice %>
 <p id="get_a_gravatar">If you want a picture by your post, go get yourself a free <a href="http://www.gravatar.com/">Gravatar</a>.</p>
 <% if !@forum.locked || admin? -%>
-<p><%= link_to 'New topic', new_topic_url(:forum_id => @forum.id) %></p>
+<p><%= link_to 'New topic', new_topic_url(forum_id: @forum.id) %></p>
 <% end -%>
 <% @topics.each do |t| %>
 <div class="topic_list">

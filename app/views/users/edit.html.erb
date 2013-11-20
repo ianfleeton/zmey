@@ -35,7 +35,7 @@
     </div>
     <div>
       <%= form.label :manages_website_id, 'Manager for website' %>:<br>
-      <%= form.collection_select :manages_website_id, Website.order('name'), :id, :name, {:include_blank => '-- Does not manage a website --'} %>
+      <%= form.collection_select :manages_website_id, Website.order('name'), :id, :name, {include_blank: '-- Does not manage a website --'} %>
     </div>
 <% end %>
 

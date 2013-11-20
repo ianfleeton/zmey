@@ -1,16 +1,16 @@
 Given /^I am logged in as an administrator$/ do
   @current_user = User.create!(
-    :email => 'admin@example.org',
-    :name => 'Admin',
-    :password => 'admin',
-    :forgot_password_token => ''
+    email: 'admin@example.org',
+    name: 'Admin',
+    password: 'admin',
+    forgot_password_token: ''
   ) { |u| u.admin = true
           u.manages_website_id = 1
           u.website_id = 1}
 
   step "I am on the login page"
-  fill_in("Email", :with => @current_user.email)
-  fill_in("Password", :with => @current_user.password)
+  fill_in("Email", with: @current_user.email)
+  fill_in("Password", with: @current_user.password)
   click_button(I18n.t('login'))
 end
 

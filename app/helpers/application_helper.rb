@@ -10,7 +10,7 @@ module ApplicationHelper
       notice += ' ' + flash[:notice]
     end
     unless notice.empty?
-      content_tag('div', h(notice), {:id => "flash_notice"})
+      content_tag('div', h(notice), {id: "flash_notice"})
     end
   end
 
@@ -31,7 +31,7 @@ module ApplicationHelper
   end
 
   def clear
-    content_tag('p', '&nbsp;'.html_safe, {:class => 'clear'})
+    content_tag('p', '&nbsp;'.html_safe, {class: 'clear'})
   end
   
   def a_tick
@@ -59,9 +59,9 @@ module ApplicationHelper
     class_name = 'n_' + name.downcase.gsub(' ', '_').gsub('&amp;', 'and') if class_name.empty?
     if current_page? options
       class_name += ' n_current'
-      content_tag(:li, h(name) + sub_nav(page), :class => class_name)
+      content_tag(:li, h(name) + sub_nav(page), class: class_name)
     else
-      content_tag(:li, link_to(name, options, html_options) + sub_nav(page), :class => class_name)
+      content_tag(:li, link_to(name, options, html_options) + sub_nav(page), class: class_name)
     end
   end
 

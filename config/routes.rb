@@ -105,12 +105,12 @@ YeslWebsite::Application.routes.draw do
 
   resources :shipping_table_rows
 
-  get 'sitemap.xml' => 'pages#sitemap', :as => 'sitemap', :format => 'xml'
+  get 'sitemap.xml' => 'pages#sitemap', as: 'sitemap', format: 'xml'
 
-  get 'terms' => 'pages#terms', :as => :terms
+  get 'terms' => 'pages#terms', as: :terms
 
-  get 'topics/new/:forum_id' => 'topics#new', :as => 'new_topic'
-  get 'topics/show/:id' => 'topics#show', :as => 'topic'
+  get 'topics/new/:forum_id' => 'topics#new', as: 'new_topic'
+  get 'topics/show/:id' => 'topics#show', as: 'topic'
 
   resources :topics
 
@@ -127,9 +127,9 @@ YeslWebsite::Application.routes.draw do
 
   resources :pages, only: [:show]
 
-  get ':slug' => 'pages#show', as: :slug, :constraints => { :slug => /[-a-z0-9]*/ }
+  get ':slug' => 'pages#show', as: :slug, constraints: { slug: /[-a-z0-9]*/ }
 
-  root :controller => 'pages', :action => 'show', :slug => ''
+  root controller: 'pages', action: 'show', slug: ''
 
   # Catch unroutable paths and send to the routing error handler
   get '*a', to: 'application#routing_error'

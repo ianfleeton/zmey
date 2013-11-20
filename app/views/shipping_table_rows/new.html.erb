@@ -28,7 +28,7 @@
 <% end -%>
 
 <%= form_for @shipping_table_row do |form| %>
-  <%= render :partial => 'form', :object => form %>
+  <%= render partial: 'form', object: form %>
 
   <br><%= submit_tag "Save", class: 'btn btn-primary' %>
 

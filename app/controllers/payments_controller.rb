@@ -89,7 +89,7 @@ class PaymentsController < ApplicationController
       @message = "There was a failure validating your payment"
     end
     @payment.save
-    render :layout => false
+    render layout: false
   end
 
   def rbs_worldpay_callback
@@ -150,22 +150,22 @@ class PaymentsController < ApplicationController
 
   def pdt_notification_sync(transaction_token, identity_token)
     response = {
-      :status => 'FAIL',
-      :item_name => '',
-      :mc_gross => '0.00',
-      :mc_currency => '',
-      :address_name => '',
-      :address_street => '',
-      :address_city => '',
-      :address_state => '',
-      :address_zip => '',
-      :address_country_code => '',
-      :contact_phone => '',
-      :payer_email => '',
-      :txn_id => '',
-      :payment_date => '',
-      :raw_auth_message => '',
-      :payment_status => ''
+      status: 'FAIL',
+      item_name: '',
+      mc_gross: '0.00',
+      mc_currency: '',
+      address_name: '',
+      address_street: '',
+      address_city: '',
+      address_state: '',
+      address_zip: '',
+      address_country_code: '',
+      contact_phone: '',
+      payer_email: '',
+      txn_id: '',
+      payment_date: '',
+      raw_auth_message: '',
+      payment_status: ''
     }
 
     require 'net/https'

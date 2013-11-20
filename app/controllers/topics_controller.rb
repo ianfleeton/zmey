@@ -67,7 +67,7 @@ class TopicsController < ApplicationController
     else
       @topic.destroy
       
-      render :action => "new"
+      render :new
     end
   end
 

@@ -8,7 +8,7 @@
   <% @images.each do |i| %>
   <li class="span2">
     <div class="thumbnail" style="height: 100px;">
-      <%= link_to image_tag(i.url(64)), :action => 'edit', :id => i %>
+      <%= link_to image_tag(i.url(64)), action: 'edit', id: i %>
       <h5><%= truncate(i.name, 14) %></h5>
     </div>
   </li>
