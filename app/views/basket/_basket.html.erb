@@ -1,4 +1,13 @@
 <%= form_tag controller: 'basket', action: 'update' do %>
+<% if can_update -%>
+<!--
+Hack to make Update Quantities the default submit button by putting a
+duplicate of it first and then using CSS to hide it.
+-->
+<span style="position: absolute; left: -100%;">
+  <input type="submit" name="update_quantities" value="Update Quantities">
+</span>
+<% end -%>
 <table id="basket">
   <thead>
     <tr>
