@@ -112,7 +112,14 @@ YeslWebsite::Application.routes.draw do
   get 'topics/new/:forum_id' => 'topics#new', as: 'new_topic'
   get 'topics/show/:id' => 'topics#show', as: 'topic'
 
-  resources :topics
+  resources :topics do
+    collection do
+      post 'create_reply'
+      get 'current_time'
+      post 'destroy_post'
+      get 'edit_post'
+    end
+  end
 
   resources :users, except: [:index, :destroy] do
     collection do

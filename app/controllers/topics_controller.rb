@@ -19,6 +19,7 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:post][:topic_id])
 
     @post = Post.new(post_params)
+    @post.topic = @topic
 
     unless good_token?
       render action: 'show', id: @topic
@@ -44,7 +45,7 @@ class TopicsController < ApplicationController
     @topic = Topic.new
     @topic.topic = params[:topic]
     @topic.forum_id = params[:forum_id]
-    @post = Post.new(params[:post])
+    @post = Post.new(post_params)
 
     # check forum
     @forum = Forum.find(params[:forum_id])
@@ -86,7 +87,7 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
     @topic.destroy
     flash[:notice] = "The topic and all its posts have been deleted."
-    redirect_to action: 'index'
+    redirect_to @topic.forum
   end
   
   # destroys a post

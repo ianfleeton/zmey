@@ -1,9 +1,7 @@
 <h1><%= link_to @topic.forum.name, @topic.forum %> &rarr; <%= @topic.topic %></h1>
 <%= flash_notice %>
 <% if admin? -%>
-<%= form_tag action: 'destroy', id: @topic do %>
-  <%= submit_tag 'Delete Topic' %>
-<% end %>
+<%= button_to('Delete Topic', { action: 'destroy', id: @topic.id }, method: :delete) %>
 <% end %>
 <% @topic.posts.each do |p| %>
 <div class="post">
