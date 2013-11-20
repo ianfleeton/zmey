@@ -5,7 +5,19 @@ class BasketItem < ActiveRecord::Base
   before_save :update_features
 
   def line_total(inc_tax)
-    quantity * (inc_tax ? product.price_inc_tax(quantity) : product.price_ex_tax(quantity))
+    quantity * (inc_tax ? product_price_inc_tax : product_price_ex_tax)
+  end
+
+  # Returns the price of a single product with tax when purchased at
+  # the current quantity.
+  def product_price_inc_tax
+    product.price_inc_tax(quantity)
+  end
+
+  # Returns the price of a single product without tax when purchased at
+  # the current quantity.
+  def product_price_ex_tax
+    product.price_ex_tax(quantity)
   end
 
   def self.describe_feature_selections fs
