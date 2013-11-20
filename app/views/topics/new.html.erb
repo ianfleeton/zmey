@@ -20,19 +20,19 @@
 </span>
 <%= hidden_field_tag 'forum_id', @topic.forum_id %>
 <div>
-<%= f.label :topic, 'Title' %>:<br />
+<%= f.label :topic, 'Title' %>:<br>
 <input type="text" name="topic" value="<%= @topic.topic %>" />
 </div>
 <div>
-<%= f.label :content, 'Your message' %>:<br />
+<%= f.label :content, 'Your message' %>:<br>
 <%= f.text_area :content %>
 </div>
 <div>
-<%= f.label :author, 'Your name' %>:<br />
+<%= f.label :author, 'Your name' %>:<br>
 <%= f.text_field :author %>
 </div>
 <div>
-<%= f.label :email, 'Your email address (required but not shown)' %>:<br />
+<%= f.label :email, 'Your email address (required but not shown)' %>:<br>
 <%= f.text_field :email %>
 </div>
 <%= f.submit 'Post new topic' %>

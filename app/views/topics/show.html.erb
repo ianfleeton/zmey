@@ -7,7 +7,7 @@
 <% end %>
 <% @topic.posts.each do |p| %>
 <div class="post">
-  <p><%= gravatar(p.email) %> <%= h(p.content).gsub(/\n/, '<br />') %></p>
+  <p><%= gravatar(p.email) %> <%= h(p.content).gsub(/\n/, '<br>') %></p>
   <p class="post_details">Posted <%= format_date(p.created_at) %> by <%= h p.author %></p>
 </div>
   <% if admin? -%>
@@ -44,15 +44,15 @@
 
 <%= f.hidden_field :topic_id %>
 <div>
-<%= f.label :content, 'Your message' %>:<br />
+<%= f.label :content, 'Your message' %>:<br>
 <%= f.text_area :content %>
 </div>
 <div>
-<%= f.label :author, 'Your name' %>:<br />
+<%= f.label :author, 'Your name' %>:<br>
 <%= f.text_field :author %>
 </div>
 <div>
-<%= f.label :email, 'Your email address (required but not shown)' %>:<br />
+<%= f.label :email, 'Your email address (required but not shown)' %>:<br>
 <%= f.text_field :email %>
 </div>
 <%= f.submit 'Post reply' %>

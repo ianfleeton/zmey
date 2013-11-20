@@ -11,13 +11,13 @@
 	<legend>Enter email/password</legend>
 	<%= form_tag action: 'create' do %>
 		<div>
-			<label for="email">Email: </label><br />
+			<label for="email">Email: </label><br>
 			<%= text_field_tag :email, params[:email], class: 'short' %>
 		</div>
 		<div>
-			<label for="password"><%= I18n.t('password') %>: </label><br />
+			<label for="password"><%= I18n.t('password') %>: </label><br>
 			<%= password_field_tag :password, params[:password],
-			 					   class: 'short' %><br />
+			 					   class: 'short' %><br>
       <small><%= link_to I18n.t('forgot_your_password'), controller: 'users', action: 'forgot_password' %></small>
 		</div>
 		

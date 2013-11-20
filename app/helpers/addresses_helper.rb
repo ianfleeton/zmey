@@ -4,7 +4,7 @@ module AddressesHelper
     if html
       lt = '&lt;'.html_safe
       gt = '&gt;'.html_safe
-      lb = '<br />'.html_safe
+      lb = '<br>'.html_safe
     else
       lt = '<'.html_safe
       gt = '>'.html_safe

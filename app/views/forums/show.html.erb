@@ -6,8 +6,8 @@
 <% end -%>
 <% @topics.each do |t| %>
 <div class="topic_list">
-  <span class="posts"><em><%= t.posts_count %></em><br />posts</span>
-  <span class="views"><em><%= t.views %></em><br />views</span>
+  <span class="posts"><em><%= t.posts_count %></em><br>posts</span>
+  <span class="views"><em><%= t.views %></em><br>views</span>
   <div>
     <h2><%= link_to t.topic, topic_url(t) %></h2>
     <p>Last post <%= format_date(t.last_post_at) %> by <%= t.last_post_author %></p>

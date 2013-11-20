@@ -73,71 +73,71 @@
       <input type="submit" value="Skip WorldPay payment" />
     </div>
     <div>
-      <label>instId</label>:<br />
+      <label>instId</label>:<br>
       <input type="text" name="instId" value="<%= @w.worldpay_installation_id %>" />
     </div>
     <div>
-      <label>cartId</label>:<br />
+      <label>cartId</label>:<br>
       <input type="text" name="cartId" value="<%= @order.order_number %>" />
     </div>
     <div>
-      <label>desc</label>:<br />
+      <label>desc</label>:<br>
       <input type="text" name="desc" value="Web purchase" />
     </div>
     <div>
-      <label>amount</label>:<br />
+      <label>amount</label>:<br>
       <input type="text" name="amount" value="<%= @order.total %>" />
     </div>
     <div>
-      <label>currency</label>:<br />
+      <label>currency</label>:<br>
       <input type="text" name="currency" value="GBP" />
     </div>
     <div>
-      <label>testMode</label>:<br />
+      <label>testMode</label>:<br>
       <input type="text" name="testMode" value="100" />
     </div>
     <div>
-      <label>name</label>:<br />
+      <label>name</label>:<br>
       <input type="text" name="name" value="<%= @order.full_name %>" />
     </div>
     <div>
-      <label>address</label>:<br />
+      <label>address</label>:<br>
       <textarea name="address"><%= address_for_worldpay(@order) %></textarea>
     </div>
     <div>
-      <label>postcode</label>:<br />
+      <label>postcode</label>:<br>
       <input type="text" name="postcode" value="<%= @order.postcode %>" />
     </div>
     <div>
-      <label>country</label>:<br />
+      <label>country</label>:<br>
       <input type="text" name="country" value="<%= @order.country.iso_3166_1_alpha_2 %>" />
     </div>
     <div>
-      <label>tel</label>:<br />
+      <label>tel</label>:<br>
       <input type="text" name="tel" value="" />
     </div>
     <div>
-      <label>fax</label>:<br />
+      <label>fax</label>:<br>
       <input type="text" name="fax" value="" />
     </div>
     <div>
-      <label>email</label>:<br />
+      <label>email</label>:<br>
       <input type="text" name="email" value="<%= @order.email_address %>" />
     </div>
     <div>
-      <label>transId</label>:<br />
+      <label>transId</label>:<br>
       <input type="text" name="transId" value="SKIPPED" />
     </div>
     <div>
-      <label>transStatus</label>:<br />
+      <label>transStatus</label>:<br>
       <input type="text" name="transStatus" value="Y" />
     </div>
     <div>
-      <label>transTime</label>:<br />
+      <label>transTime</label>:<br>
       <input type="text" name="transTime" value="SKIPPED" />
     </div>
     <div>
-      <label>rawAuthMessage</label>:<br />
+      <label>rawAuthMessage</label>:<br>
       <input type="text" name="rawAuthMessage" value="SKIPPED" />
     </div>
     <div>
