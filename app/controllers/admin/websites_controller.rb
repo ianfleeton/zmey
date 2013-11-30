@@ -9,18 +9,18 @@ class Admin::WebsitesController < ApplicationController
   end
   
   def new
-    @website = Website.new
+    @website_subject = Website.new
   end
   
   def edit
   end
   
   def create
-    @website = Website.new(website_params)
+    @website_subject = Website.new(website_params)
 
-    if @website.save
-      @website.populate_countries!
-      Page.bootstrap @website
+    if @website_subject.save
+      @website_subject.populate_countries!
+      Page.bootstrap @website_subject
 
       create_latest_news
       
@@ -32,16 +32,16 @@ class Admin::WebsitesController < ApplicationController
   end
 
   def update
-    if @website.update_attributes(website_params)
+    if @website_subject.update_attributes(website_params)
       flash[:notice] = 'Website saved.'
-      redirect_to edit_admin_website_path(@website)
+      redirect_to edit_admin_website_path(@website_subject)
     else
       render action: 'edit'
     end
   end
   
   def destroy
-    @website.destroy
+    @website_subject.destroy
     flash[:notice] = "Website deleted."
     redirect_to action: 'index'
   end
@@ -51,25 +51,25 @@ class Admin::WebsitesController < ApplicationController
   def permission_check
     admin_or_manager_required
     return if admin?
-    if manager? && @w.id != @website.id
+    if manager? && website != @website_subject
       flash[:notice] = 'You do not manage this website.'
       redirect_to controller: 'sessions', action: 'new'
     end
   end
 
   def find_website
-    @website = Website.find(params[:id])
+    @website_subject = Website.find(params[:id])
   end
 
   def create_latest_news
     # create latest news forum and link it as the website's blog
     latest_news = Forum.new
     latest_news.name = 'Latest News'
-    latest_news.website_id = @website.id
+    latest_news.website_id = @website_subject.id
     latest_news.locked = true
     latest_news.save
-    @website.blog_id = latest_news.id
-    @website.save
+    @website_subject.blog_id = latest_news.id
+    @website_subject.save
     
     # create a vapid placeholder topic to introduce the new website
     topic = Topic.new
@@ -82,10 +82,10 @@ class Admin::WebsitesController < ApplicationController
 
     post = Post.new
     post.topic_id = topic.id
-    post.content = 'The new website for ' + @website.name +
+    post.content = 'The new website for ' + @website_subject.name +
       ' is now complete. We hope you find it useful and easy to use.'
-    post.email = @website.email
-    post.author = @website.name
+    post.email = @website_subject.email
+    post.author = @website_subject.name
     post.save
     
     topic.last_post_id = post.id

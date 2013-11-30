@@ -1,12 +1,12 @@
-- if @website.errors.any?
+- if @website_subject.errors.any?
   .alert.alert-error.fade.in
     a.close data-dismiss="alert" href="#" &times;
     h2= "#{pluralize(@website.errors.count, "error")} prohibited this website from being saved:"
     ul
-      - @website.errors.full_messages.each do |msg|
+      - @website_subject.errors.full_messages.each do |msg|
         li= msg
 
-= form_for [:admin, @website] do |form|
+= form_for [:admin, @website_subject] do |form|
 
   .row
     .col-md-4

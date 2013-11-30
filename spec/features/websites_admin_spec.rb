@@ -6,8 +6,6 @@ feature 'Websites admin' do
     sign_in_as_admin
   end
 
-  let(:website) { FactoryGirl.build(:website) }
-
   scenario 'Create website' do
     visit admin_websites_path
     click_link 'New Website'
