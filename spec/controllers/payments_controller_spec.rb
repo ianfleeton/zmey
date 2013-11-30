@@ -13,7 +13,20 @@ describe PaymentsController do
       before { logged_in_as_admin }
 
       it 'uses the admin layout' do
-        get 'index'
+        get :index
+        expect(response).to render_template('layouts/admin')
+      end
+    end
+  end
+
+  describe 'GET show' do
+    let(:payment) { FactoryGirl.create(:payment) }
+
+    context 'when logged in as admin' do
+      before { logged_in_as_admin }
+
+      it 'uses the admin layout' do
+        get :show, id: payment.id
         expect(response).to render_template('layouts/admin')
       end
     end
