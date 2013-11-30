@@ -40,6 +40,11 @@ en:
   logout: Sign Out
   my_account: My Account
   password: Password
+  payments:
+    show:
+      amount: 'Amount'
+      heading: 'Payment Details'
+      order: 'Order'
   price: Price
   products:
     form:

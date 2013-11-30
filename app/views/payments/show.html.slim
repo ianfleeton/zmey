@@ -1,0 +1,11 @@
+= page_header(t '.heading')
+
+table.table.table-bordered.table-striped
+  - if @payment.order
+    tr
+      th= t '.order'
+      td= link_to @payment.order.order_number, admin_order_path(@payment.order)
+  tr
+    th= t '.amount'
+    td= @payment.amount
+
