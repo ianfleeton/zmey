@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131115205819) do
+ActiveRecord::Schema.define(version: 20131203195633) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -483,6 +483,10 @@ ActiveRecord::Schema.define(version: 20131115205819) do
     t.string   "fax_number",                                                  default: "",    null: false
     t.string   "twitter_username",                                            default: "",    null: false
     t.string   "skype_name",                                                  default: "",    null: false
+    t.boolean  "sage_pay_active",                                             default: false, null: false
+    t.string   "sage_pay_vendor",                                             default: "",    null: false
+    t.string   "sage_pay_pre_shared_key",                                     default: "",    null: false
+    t.boolean  "sage_pay_test_mode",                                          default: false, null: false
   end
 
 end

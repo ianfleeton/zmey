@@ -204,7 +204,7 @@
     = form.text_area :invoice_details, rows: 6, class: 'form-control'
 
   .row
-    .col-md-3
+    .col-md-4
       .panel.panel-default
         .panel-heading
           h2.panel-title Cardsave
@@ -227,7 +227,7 @@
           = form.label :cardsave_pre_shared_key, 'Pre-shared key'
           = form.text_field :cardsave_pre_shared_key, class: 'form-control'
 
-    .col-md-3
+    .col-md-4
       .panel.panel-default
         .panel-heading
           h2.panel-title WorldPay
@@ -235,20 +235,21 @@
           label for="website_worldpay_active_true" Active?
           label.radio
             = form.radio_button :worldpay_active, true
-            | Yes
+            | Active
 
           label.radio
             = form.radio_button :worldpay_active, false
-      	    | No
+      	    | Inactive
 
-          label for="website_worldpay_test_mode" Mode?
+
+          label Mode
           label.radio
             = form.radio_button :worldpay_test_mode, false
-      	    | Production
+      	    | Production mode
 
           label.radio
             = form.radio_button :worldpay_test_mode, true
-            | Test
+            | Test mode
 
           = form.label :worldpay_installation_id, 'Installation ID'
           = form.text_field :worldpay_installation_id, class: 'form-control'
@@ -256,6 +257,36 @@
           = form.label :worldpay_payment_response_password, 'Payment response password'
           = form.text_field :worldpay_payment_response_password, class: 'form-control'
 
+    .col-md-4
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title Sage Pay
+        .panel-body
+          label Active?
+          label.radio
+            = form.radio_button :sage_pay_active, true
+            | Active
+    
+          label.radio
+            = form.radio_button :sage_pay_active, false
+            | Inactive
+
+          label Mode
+          label.radio
+            = form.radio_button :sage_pay_test_mode, false
+            | Production mode
+    
+          label.radio
+            = form.radio_button :sage_pay_test_mode, true
+            | Test mode
+
+          = form.label :sage_pay_vendor, 'Vendor'
+          = form.text_field :sage_pay_vendor, class: 'form-control'
+
+          = form.label :sage_pay_pre_shared_key, 'Pre-shared key'
+          = form.text_field :sage_pay_pre_shared_key, class: 'form-control'
+
+  .row
     .col-md-6
       .panel.panel-default
         .panel-heading
