@@ -42,6 +42,7 @@ YeslWebsite::Application.routes.draw do
   resources :addresses
 
   post 'basket/add' => 'basket#add', as: :add_to_basket
+  get 'basket/checkout', as: :checkout
   post 'basket/enter_coupon' => 'basket#enter_coupon'
   post 'basket/place_order' => 'basket#place_order'
   post 'basket/update' => 'basket#update'
@@ -75,6 +76,8 @@ YeslWebsite::Application.routes.draw do
       post 'cardsave_callback'
       get 'paypal_auto_return'
       get 'paypal_confirmation'
+      get 'sage_pay_failure'
+      get 'sage_pay_success'
       post 'rbs_worldpay_callback'
     end
   end

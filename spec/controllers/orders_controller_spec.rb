@@ -37,6 +37,51 @@ describe OrdersController do
     end
   end
 
+  describe 'GET select_payment_method' do
+    context 'with an order' do
+      before { Order.stub(:from_session).and_return mock_order.as_null_object }
+
+      context 'when Sage Pay is active' do
+        before do
+          website.stub(:sage_pay_active?).and_return(true)
+          website.stub(:cardsave_active?).and_return(false)
+        end
+
+        it 'instatiates a SagePay' do
+          website.stub(:sage_pay_pre_shared_key).and_return 'secret'
+          mock_order.stub(:order_number).and_return '123'
+          mock_order.stub(:total).and_return 15.95
+          mock_order.stub(:full_name).and_return 'Ian Fleeton'
+          mock_order.stub(:address_line_1).and_return '123 Street'
+          mock_order.stub(:town_city).and_return 'Doncaster'
+          mock_order.stub(:postcode).and_return 'DN1 2ZZ'
+          mock_order.stub(:country).and_return FactoryGirl.build(:country)
+
+          SagePay.should_receive(:new).with(hash_including(
+            pre_shared_key: website.sage_pay_pre_shared_key,
+            vendor_tx_code: mock_order.order_number,
+            amount: mock_order.total,
+            delivery_surname: mock_order.full_name,
+            delivery_firstnames: mock_order.full_name,
+            delivery_address: mock_order.address_line_1,
+            delivery_city: mock_order.town_city,
+            delivery_post_code: mock_order.postcode,
+            delivery_country: mock_order.country.iso_3166_1_alpha_2,
+            success_url: sage_pay_success_payments_url,
+            failure_url: sage_pay_failure_payments_url
+          )).and_return(double(SagePay).as_null_object)
+          get :select_payment_method
+        end
+
+        it 'assigns @crypt from the SagePay' do
+          SagePay.stub(:new).and_return(double(SagePay, encrypt: 'crypt'))
+          get :select_payment_method
+          expect(assigns(:crypt)).to eq 'crypt'
+        end
+      end
+    end
+  end
+
   describe 'GET invoice' do
     it 'finds the order' do
       Order.should_receive(:find_by)

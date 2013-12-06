@@ -8,7 +8,8 @@ class OrdersController < ApplicationController
   end
 
   def select_payment_method
-    prepare_cardsave if @w.cardsave_active?
+    prepare_cardsave if website.cardsave_active?
+    prepare_sage_pay if website.sage_pay_active?
   end
 
   def receipt
@@ -104,5 +105,22 @@ class OrdersController < ApplicationController
 
     require 'digest/sha1'
     Digest::SHA1.hexdigest(plain)
+  end
+
+  def prepare_sage_pay
+    sage_pay = SagePay.new(
+      pre_shared_key: website.sage_pay_pre_shared_key,
+      vendor_tx_code: @order.order_number,
+      amount: @order.total,
+      delivery_surname: @order.full_name,
+      delivery_firstnames: @order.full_name,
+      delivery_address: @order.address_line_1,
+      delivery_city: @order.town_city,
+      delivery_post_code: @order.postcode,
+      delivery_country: @order.country ? @order.country.iso_3166_1_alpha_2 : 'GB',
+      success_url: sage_pay_success_payments_url,
+      failure_url: sage_pay_failure_payments_url
+    )
+    @crypt = sage_pay.encrypt
   end
 end

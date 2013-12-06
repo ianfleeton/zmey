@@ -1,5 +1,9 @@
 <h1>Choose How You Would Like to Pay</h1>
 
+<% if website.sage_pay_active? -%>
+<%= render 'sage_pay' %>
+<% end -%>
+
 <% if @w.paypal_active? -%>
 <div class="pay_by" id="pay_by_paypal">
 <h2>Pay by PayPal</h2>

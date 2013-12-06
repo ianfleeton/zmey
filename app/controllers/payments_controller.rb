@@ -131,7 +131,49 @@ class PaymentsController < ApplicationController
     @payment.save
     render layout: false
   end
-  
+
+  def sage_pay_failure
+  end
+
+  def sage_pay_success
+    raise unless params[:crypt]
+
+    sage_pay = SagePay.new(
+      encrypted: params[:crypt],
+      pre_shared_key: website.sage_pay_pre_shared_key
+    )
+    results = sage_pay.decrypt
+
+    @payment = Payment.find_by(transaction_id: results['VPSTxId'])
+    if @payment
+      redirect_to receipt_orders_path
+    else
+      @payment = Payment.create!(
+        service_provider: 'Sage Pay',
+        installation_id: website.sage_pay_vendor,
+        cart_id: results['VendorTxCode'],
+        description: 'Web purchase',
+        amount: results['Amount'],
+        currency: results['GBP'],
+        test_mode: website.sage_pay_test_mode,
+        transaction_id: results['VPSTxId'],
+        transaction_status: results['Status'] == 'OK',
+        transaction_time: Time.zone.now,
+        raw_auth_message: sage_pay.plaintext,
+        accepted: false
+      )
+      if @payment.transaction_status
+        @message = 'Payment received'
+        @payment.accepted = true
+        clean_up
+        @payment.save
+        redirect_to receipt_orders_path
+      else
+        redirect_to checkout_path, notice: 'Payment not received'
+      end
+    end
+  end
+
   private
 
   def update_order order

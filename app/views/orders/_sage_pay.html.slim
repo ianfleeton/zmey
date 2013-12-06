@@ -1,0 +1,7 @@
+.pay-by
+  form action="#{sage_pay_form_url(website.sage_pay_test_mode)}"
+    input type="hidden" name="VPSProtocol" value="2.22"
+    input type="hidden" name="TxType" value="PAYMENT"
+    input type="hidden" name="Vendor" value="#{website.sage_pay_vendor}"
+    input type="hidden" name="Crypt" value="#{@crypt}"
+    input type="submit" value="Pay Securely with Sage Pay"
