@@ -1,11 +1,20 @@
 <h1>Choose How You Would Like to Pay</h1>
 
+<script>
+$(function() {
+  var $form = $('.pay-by form');
+  if($form.length == 1) {
+    $form.hide().after('<p>You are now being redirected...</p>').submit();
+  }
+});
+</script>
+
 <% if website.sage_pay_active? -%>
 <%= render 'sage_pay' %>
 <% end -%>
 
 <% if @w.paypal_active? -%>
-<div class="pay_by" id="pay_by_paypal">
+<div class="pay-by" id="pay_by_paypal">
 <h2>Pay by PayPal</h2>
 <p>
   You do not need to have a PayPal account to pay by PayPal.<br>
@@ -31,7 +40,7 @@
 <% end -%>
 
 <% if @w.cardsave_active? -%>
-<div class="pay_by" id="pay_by_cardsave">
+<div class="pay-by" id="pay_by_cardsave">
 <h2>Pay by Credit/Debit Card</h2>
 <form method="post" action="https://mms.cardsaveonlinepayments.com/Pages/PublicPages/PaymentForm.aspx">
   <input type="hidden" name="HashDigest" value="<%= @cardsave_hash %>">
@@ -67,7 +76,7 @@
 <% end -%>
 
 <% if @w.worldpay_active? -%>
-<div class="pay_by" id="pay_by_worldpay">
+<div class="pay-by" id="pay_by_worldpay">
   <% if @w.skip_payment? -%>
   <h2>Skipping payment for WorldPay</h2>
   <p>The correct values are entered below and can be changed for testing.
