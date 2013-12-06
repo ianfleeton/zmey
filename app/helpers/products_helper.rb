@@ -1,10 +1,12 @@
 module ProductsHelper
   def formatted_price price
-    number_to_currency(price, unit: '&pound;')
+    number_to_currency(price, unit: '£')
   end
+
   def formatted_gbp_price price
     number_to_currency(price, unit: 'GBP', format: '%n %u')
   end
+
   def tax_explanation(product)
     if @w.vat_number.empty?
       ''
