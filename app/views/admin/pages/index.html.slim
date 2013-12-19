@@ -4,6 +4,6 @@ p= new_button [:admin, Page]
 
 table.table.table-striped.table-bordered
   - @pages.each do |p|
-    = page_tree p
+    = page_tree(p) { |page, indent| page_edit_table_row(page, indent) }
 
   = content_tag(:tr, content_tag(:td, 'No pages')) if @pages.empty?
