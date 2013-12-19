@@ -26,7 +26,7 @@
               - else
                 span.muted= pp.product.name
             td
-              => edit_button(pp.product)
+              => edit_button([:admin, pp.product])
               => link_to 'Remove', product_placement_path(pp), class: 'btn btn-default', title: 'Remove from page', method: :delete
               - unless pp.first?
                 = link_to '<i class="icon-arrow-up"></i>'.html_safe, { controller: 'product_placements', action: 'move_up', id: pp.id }, class: 'btn btn-mini', method: :post
