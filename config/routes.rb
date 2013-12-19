@@ -89,7 +89,7 @@ YeslWebsite::Application.routes.draw do
   resources :product_group_placements
 
   resources :product_placements do
-    collection do
+    member do
       post 'move_down'
       post 'move_up'
     end
