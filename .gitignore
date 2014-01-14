@@ -9,7 +9,6 @@
 *.gif
 *.odt
 *.pdf
-*.png
 *.psd
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -22,3 +21,6 @@
 /log/*.log
 database.yml
 /tmp
+
+# Ignore uploaded images.
+/public/up/images
