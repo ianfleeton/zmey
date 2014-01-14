@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   # unencrypted password
   attr_accessor :password
   
-  # associations
+  # associations
   belongs_to :managed_website, foreign_key: :manages_website_id, class_name: 'Website'
 
   # validation
