@@ -1,3 +1,5 @@
+include ActionView::Helpers::TextHelper
+
 class ImagesController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
@@ -11,15 +13,15 @@ class ImagesController < ApplicationController
   end
 
   def create
-    @image = Image.new(image_params)
+    uploader = website.image_uploader(image_params)
 
-    @image.website_id = @w.id
+    flash[:notice] = "#{pluralize(uploader.images.length, 'image')} uploaded."
     
-    if @image.save
-      flash[:notice] = 'Image uploaded.'
-      redirect_to action: 'index'
+    if uploader.images.length > 0
+      redirect_to images_path
     else
-      render action: 'new'
+      @image = uploader.failed.first || Image.new
+      render :new
     end
   end
 

@@ -85,4 +85,29 @@ describe Website do
       expect(@website.countries).to have(248).countries
     end
   end
+
+  describe '#image_uploader' do
+    let(:params)   { { image: fixture_file_upload('images/red.png'), name: 'Red' } }
+    let(:website)  { Website.new }
+    let(:uploader) { website.image_uploader(params) }
+
+    it 'returns an ImageUploader' do
+      expect(uploader).to be_instance_of ImageUploader
+    end
+
+    it 'associates the image with the itself' do
+      image = FactoryGirl.create(:image)
+      Image.stub(:new).and_return(image)
+      uploader
+      expect(image.website).to eq website
+    end
+
+    it 'yields the image' do
+      image = nil
+      website.image_uploader(params) do |yielded|
+        image = yielded
+      end
+      expect(image).to be_instance_of Image
+    end
+  end
 end

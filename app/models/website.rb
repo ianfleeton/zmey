@@ -1,4 +1,7 @@
 # coding: utf-8
+
+include ActionDispatch::TestProcess
+
 class Website < ActiveRecord::Base
   validates_uniqueness_of :google_analytics_code, allow_blank: true
   validates_format_of :google_analytics_code, with: /\AUA-\d\d\d\d\d\d(\d)?(\d)?-\d\Z/, allow_blank: true
@@ -309,5 +312,12 @@ class Website < ActiveRecord::Base
       { name: 'Zambia',                iso_3166_1_alpha_2: 'ZM' },
       { name: 'Zimbabwe',              iso_3166_1_alpha_2: 'ZW' }
       ]) { |c| c.website_id = id }
+  end
+
+  def image_uploader(image_params)
+    ImageUploader.new(image_params) do |image|
+      image.website = self
+      yield image if block_given?
+    end
   end
 end
