@@ -31,15 +31,9 @@ class Website < ActiveRecord::Base
   has_many :images, dependent: :destroy
   has_many :forums, dependent: :destroy
   has_many :enquiries, -> { order 'created_at DESC' }, dependent: :destroy
-  has_many :shipping_zones, -> { order 'name' }, dependent: :destroy
+  has_many :shipping_zones, -> { order 'shipping_zones.name' }, dependent: :destroy
   has_many :shipping_classes, through: :shipping_zones
-  has_many :shipping_table_rows, finder_sql:
-    'SELECT `shipping_table_rows`.* ' +
-    'FROM `shipping_table_rows` ' +
-    'INNER JOIN `shipping_classes` ON `shipping_table_rows`.shipping_class_id = `shipping_classes`.id ' +
-    'INNER JOIN `shipping_zones` ON `shipping_classes`.shipping_zone_id = `shipping_zones`.id ' +
-    'WHERE ((`shipping_zones`.website_id = #{id})) ' +
-    'ORDER BY `shipping_table_rows`.trigger'
+  has_many :shipping_table_rows, -> { order 'trigger_value' }, through: :shipping_classes
   has_many :users, -> { order 'name' }, dependent: :destroy
   belongs_to :blog, class_name: 'Forum'
   belongs_to :country
