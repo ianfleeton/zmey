@@ -33,6 +33,6 @@ class ImageUnzipper
   private
 
     def image?(filename)
-      ['.jpg', '.png'].include?(filename[-4, 4].downcase)
+      ['.jpg', '.png'].include?(filename[-4, 4].downcase) && filename[0]!='.'
     end
 end
