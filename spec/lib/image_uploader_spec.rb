@@ -22,7 +22,7 @@ describe ImageUploader do
     end
 
     it 'saves the image' do
-      image = mock_model(Image)
+      image = mock_model(Image).as_null_object
       Image.stub(:new).and_return(image)
       image.should_receive(:save)
       ImageUploader.new(image: upload, name: 'image')
@@ -37,11 +37,19 @@ describe ImageUploader do
     end
 
     it 'makes accessible via #failed images that failed to save' do
-      image = mock_model(Image, save: false)
+      image = mock_model(Image, save: false).as_null_object
       Image.stub(:new).and_return(image)
       uploader = ImageUploader.new(image: upload, name: 'image')
       expect(uploader.images).to eq []
       expect(uploader.failed).to eq [image]
+    end
+
+    context 'with two images in a ZIP archive' do
+      let(:upload) { fixture_file_upload('images/two-images.zip') }
+
+      it 'creates both images' do
+        expect{ImageUploader.new(image: upload, name: 'image')}.to change{Image.count}.by(2)
+      end
     end
   end
 end
