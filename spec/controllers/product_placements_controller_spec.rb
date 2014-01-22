@@ -44,7 +44,7 @@ describe ProductPlacementsController do
         page = mock_model(Page)
         pp = mock_model(ProductPlacement, page: page, move_higher: true)
         ProductPlacement.stub(:find).and_return(pp)
-        post 'move_up'
+        post 'move_up', id: pp.id
         expect(response).to redirect_to(edit_admin_page_path(page))
       end
     end
