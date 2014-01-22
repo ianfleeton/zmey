@@ -22,6 +22,8 @@ class ImageUnzipper
       IO.read(@path)
     end
 
+    def rewind; end
+
     def original_filename
       File.basename(@path)
     end
