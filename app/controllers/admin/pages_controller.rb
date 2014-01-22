@@ -21,10 +21,8 @@ class Admin::PagesController < ApplicationController
     moved
   end
 
-  # intra-list moving code from
-  # http://blog.airbladesoftware.com/2008/3/19/moving-between-lists-with-acts_as_list
   def update
-    params[:page].delete(:position).to_i
+    params[:page].delete(:position)
     if @page.update_attributes(page_params)
       flash[:notice] = 'Page saved.'
       redirect_to edit_admin_page_path(@page)
