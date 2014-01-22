@@ -83,7 +83,7 @@
 
       .form-group
         = form.label :blog_id
-        = form.collection_select :blog_id, Forum.all(conditions: {website_id: @website.id}, order: 'name'), :id, :name, {include_blank: '-- No blog --'}, class: 'form-control'
+        = form.collection_select :blog_id, Forum.where(website_id: @website.id).order('name'), :id, :name, {include_blank: '-- No blog --'}, class: 'form-control'
 
       .form-group
         p.form-control-static Can users create accounts?
