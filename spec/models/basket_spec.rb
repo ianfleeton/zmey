@@ -6,7 +6,7 @@ describe Basket do
       item1 = mock_model(BasketItem, weight: 5)
       item2 = mock_model(BasketItem, weight: 10)
       basket = Basket.new
-      basket.basket_items = [item1, item2]
+      basket.stub(:basket_items).and_return [item1, item2]
       expect(basket.weight).to eq 15
     end
   end
