@@ -19,7 +19,7 @@ class Admin::ChoicesController < ApplicationController
       flash[:notice] = "Choice successfully updated."
       redirect_to edit_admin_feature_path(@choice.feature)
     else
-      render action: 'edit'
+      render :edit
     end
   end
   
@@ -31,7 +31,7 @@ class Admin::ChoicesController < ApplicationController
       flash[:notice] = "Successfully added new choice."
       redirect_to edit_admin_feature_path(@choice.feature)
     else
-      render action: 'new'
+      render :new
     end
   end
   

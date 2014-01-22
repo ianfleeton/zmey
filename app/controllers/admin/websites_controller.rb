@@ -36,7 +36,7 @@ class Admin::WebsitesController < ApplicationController
       flash[:notice] = 'Website saved.'
       redirect_to edit_admin_website_path(@website_subject)
     else
-      render action: 'edit'
+      render :edit
     end
   end
   

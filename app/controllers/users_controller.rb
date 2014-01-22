@@ -27,7 +27,7 @@ class UsersController < ApplicationController
         redirect_to @user
       end
     else
-      render action: 'new'
+      render :new
     end
   end
   
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
       flash[:notice] = "User successfully updated."
       redirect_to @user
     else
-      render action: 'edit'
+      render :edit
     end
   end
 

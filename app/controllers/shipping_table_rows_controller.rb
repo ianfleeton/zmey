@@ -15,7 +15,7 @@ class ShippingTableRowsController < ApplicationController
       flash[:notice] = "Saved."
       redirect_to edit_shipping_class_path(@shipping_table_row.shipping_class)
     else
-      render action: 'new'
+      render :new
     end
   end
 

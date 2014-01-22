@@ -30,7 +30,7 @@ class Admin::PagesController < ApplicationController
       redirect_to edit_admin_page_path(@page)
     else
       @page.position = new_position
-      render action: 'edit'
+      render :edit
     end
   end
 

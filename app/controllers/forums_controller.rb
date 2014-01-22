@@ -23,7 +23,7 @@ class ForumsController < ApplicationController
       flash[:notice] = "Successfully added new forum."
       redirect_to action: 'index'
     else
-      render action: 'new'
+      render :new
     end
   end
 

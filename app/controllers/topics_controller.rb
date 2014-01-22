@@ -33,7 +33,7 @@ class TopicsController < ApplicationController
     else
       if params[:post][:topic_id].nil?
         @topic.destroy!
-        render action: 'new'
+        render :new
       else
         @posts = Post.find_all_by_topic_id(@topic.id, order: 'updated_at ASC')
         render action: 'show', id: @topic
@@ -54,7 +54,7 @@ class TopicsController < ApplicationController
       redirect_to forums_path and return
     end
 
-    render action: 'new' and return unless good_token?
+    render :new and return unless good_token?
         
     @topic.last_post_at = Time.now
     @topic.save

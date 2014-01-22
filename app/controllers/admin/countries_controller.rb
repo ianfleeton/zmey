@@ -18,7 +18,7 @@ class Admin::CountriesController < ApplicationController
     if @country.save
       redirect_to admin_countries_path, notice: 'Saved.'
     else
-      render action: 'new'
+      render :new
     end
   end
 

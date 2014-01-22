@@ -19,7 +19,7 @@ class Admin::FeaturesController < ApplicationController
       flash[:notice] = "Successfully added new feature."
       redirect_to edit_admin_feature_path(@feature)
     else
-      render action: 'new'
+      render :new
     end
   end
   
@@ -32,7 +32,7 @@ class Admin::FeaturesController < ApplicationController
         redirect_to edit_admin_product_path(@feature.product)
       end
     else
-      render action: 'edit'
+      render :edit
     end
   end
 

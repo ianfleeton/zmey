@@ -36,7 +36,7 @@ class ImagesController < ApplicationController
       flash[:notice] = 'Image saved.'
       redirect_to action: 'index'
     else
-      render action: 'edit'
+      render :edit
     end
   end
 

@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
   
   def show
     if can_access_order?
-      render action: 'receipt'
+      render :receipt
     else
       redirect_to :root, notice: 'You do not have permission to view that order.'
     end

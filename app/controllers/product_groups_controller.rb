@@ -23,7 +23,7 @@ class ProductGroupsController < ApplicationController
       flash[:notice] = "Successfully added new product group."
       redirect_to product_groups_path
     else
-      render action: 'new'
+      render :new
     end
   end
 
@@ -36,7 +36,7 @@ class ProductGroupsController < ApplicationController
       flash[:notice] = "Product group successfully updated."
       redirect_to product_groups_path
     else
-      render action: 'edit'
+      render :edit
     end
   end
 

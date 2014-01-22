@@ -17,7 +17,7 @@ class Admin::ComponentsController < ApplicationController
       flash[:notice] = "Successfully added new component."
       redirect_to edit_admin_product_path(@component.product)
     else
-      render action: 'new'
+      render :new
     end
   end
 
@@ -26,7 +26,7 @@ class Admin::ComponentsController < ApplicationController
       flash[:notice] = "Component successfully updated."
       redirect_to edit_admin_product_path(@component.product)
     else
-      render action: 'edit'
+      render :edit
     end
   end
 

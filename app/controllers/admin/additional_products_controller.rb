@@ -17,7 +17,7 @@ class Admin::AdditionalProductsController < ApplicationController
       flash[:notice] = "Successfully added new additional product."
       redirect_to edit_admin_product_path(@additional_product.product)
     else
-      render action: 'new'
+      render :new
     end
   end
 
@@ -26,7 +26,7 @@ class Admin::AdditionalProductsController < ApplicationController
       flash[:notice] = "Additional product successfully updated."
       redirect_to edit_admin_product_path(@additional_product.product)
     else
-      render action: 'edit'
+      render :edit
     end
   end
 

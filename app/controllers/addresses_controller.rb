@@ -20,7 +20,7 @@ class AddressesController < ApplicationController
       session[:address_id] = @address.id
       redirect_to controller: 'basket', action: 'checkout'
     else
-      render action: 'new'
+      render :new
     end
   end
   
@@ -31,7 +31,7 @@ class AddressesController < ApplicationController
         flash[:notice] = 'Address updated.'
         redirect_to controller: 'basket', action: 'checkout'
       else
-        render action: 'edit'
+        render :edit
       end
     else
       # shouldn't happen usually to regular users
