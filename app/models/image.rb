@@ -32,6 +32,7 @@ class Image < ActiveRecord::Base
   # together with the file original extension
   def write_file
     if @file_data
+      @file_data.rewind
       # remove any existing images (which may have different extensions)
       delete_files
       path = "#{IMAGE_STORAGE_PATH}/#{id}"
