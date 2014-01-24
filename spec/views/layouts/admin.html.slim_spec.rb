@@ -7,7 +7,8 @@ describe 'layouts/admin.html.slim' do
     view.stub(:website).and_return(website)
   end
 
-  it 'renders' do
+  it 'has a link to sign out' do
     render
+    expect(rendered).to have_selector "a[href='#{sessions_path}']"
   end
 end

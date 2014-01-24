@@ -35,8 +35,10 @@ pl:
   continue_shopping: Kontynuuj zakupy
   cost: Koszt
   forgot_your_password: Zapomniałeś hasła?
+  layouts:
+    admin:
+      sign_out: 'Wyloguj Się'
   login: Zaloguj Się
-  logout: Wyloguj Się
   my_account: Moje Konto
   password: Hasło
   price: Cena

@@ -36,8 +36,10 @@ en:
   continue_shopping: Continue shopping
   cost: Cost
   forgot_your_password: Forgotten your password?
+  layouts:
+    admin:
+      sign_out: 'Sign Out'
   login: Sign In
-  logout: Sign Out
   my_account: My Account
   password: Password
   payments:
