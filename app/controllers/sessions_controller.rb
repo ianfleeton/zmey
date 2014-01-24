@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     if @current_user
       session[:user] = @current_user.id
       if admin_or_manager?
-        redirect_to orders_path
+        redirect_to admin_orders_path
       else
         redirect_to @current_user
       end

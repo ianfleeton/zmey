@@ -32,9 +32,9 @@ describe SessionsController do
         controller.stub(:admin_or_manager?).and_return(true)
       end
 
-      it 'redirects to the orders page' do
+      it 'redirects to the admin orders page' do
         post 'create'
-        expect(response).to redirect_to(orders_path)
+        expect(response).to redirect_to(admin_orders_path)
       end
     end
   end
