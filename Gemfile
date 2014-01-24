@@ -51,6 +51,8 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/jonleighton/spring
   gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'guard-rspec', require: false
 
   gem 'thin'
 end
@@ -76,8 +78,4 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'database_cleaner'
-
-  # Go faster!
-  gem 'spork-rails', github: 'A-gen/spork-rails'
-  gem 'watchr'
 end
