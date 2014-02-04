@@ -4,6 +4,8 @@ class ProductsController < ApplicationController
   def show
     @title = @product.page_title.blank? ? @product.name + ' at ' + website.name : @product.page_title
     @description = @product.meta_description
+
+    not_found unless @product.active? || admin?
   end
   
   def google_data_feed
