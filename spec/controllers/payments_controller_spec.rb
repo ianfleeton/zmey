@@ -31,4 +31,34 @@ describe PaymentsController do
       end
     end
   end
+
+  describe 'POST cardsave_callback' do
+    let(:params) {
+      {
+        Address1:            '',
+        Address2:            '',
+        Address3:            '',
+        Address4:            '',
+        Amount:              '1000',
+        City:                '',
+        CountryCode:         '',
+        CrossReference:      '',
+        CurrencyCode:        '',
+        CustomerName:        '',
+        Message:             '',
+        OrderDescription:    '',
+        OrderID:             '',
+        PostCode:            '',
+        PreviousMessage:     '',
+        PreviousStatusCode:  '',
+        State:               '',
+        StatusCode:          '0',
+        TransactionDateTime: '',
+        TransactionType:     '',
+      }
+    }
+    it 'creates a new payment' do
+      expect{post :cardsave_callback, params}.to change{Payment.count}.by(1)
+    end
+  end
 end

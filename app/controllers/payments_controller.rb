@@ -75,18 +75,18 @@ class PaymentsController < ApplicationController
 
     if cardsave_hash_matches?
       if params[:StatusCode]=='0'
-        @message = "Payment received"
+        @message = I18n.t('controllers.payments.cardsave_callback.flash.accepted')
         @payment.accepted = true
         clean_up
       elsif params[:StatusCode]=='5'
-        @message = "Payment declined"
+        @message = I18n.t('controllers.payments.cardsave_callback.flash.declined')
       elsif params[:StatusCode]=='30'
-        @message = "There was an error processing your card transaction"
+        @message = I18n.t('controllers.payments.cardsave_callback.flash.processing_error')
       else
-        @message = "We cannot confirm that your payment was successful"
+        @message = I18n.t('controllers.payments.cardsave_callback.flash.unknown')
       end
     else
-      @message = "There was a failure validating your payment"
+      @message = I18n.t('controllers.payments.cardsave_callback.flash.hash_mismatch')
     end
     @payment.save
     render layout: false

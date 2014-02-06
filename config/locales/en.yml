@@ -60,6 +60,14 @@ en:
     images: Images
     liquid_templates: Liquid Templates
     pages: Pages
+    payments:
+      cardsave_callback:
+        flash:
+          accepted: 'Payment received'
+          declined: 'Payment declined'
+          hash_mismatch: 'There was a failure validating your payment'
+          processing_error: 'There was an error processing your card transaction'
+          unknown: 'We cannot confirm that your payment was successful'
     products: Products
     users: Users
 
