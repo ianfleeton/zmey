@@ -78,10 +78,10 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  YeslWebsite::Application.config.middleware.use ExceptionNotification::Rack,
+  Zmey::Application.config.middleware.use ExceptionNotification::Rack,
     email: {
-      email_prefix: "[YESL Website Error Report] ",
-      sender_address: %{"YESL Website" <noreply@yesl.co.uk>},
+      email_prefix: "[Zmey Error Report] ",
+      sender_address: %{"Zmey" <noreply@yesl.co.uk>},
       exception_recipients: %w{ianfleeton@gmail.com}
     }
 end

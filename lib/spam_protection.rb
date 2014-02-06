@@ -13,7 +13,7 @@ module SpamProtection
   private
 
   def hash plain
-    Digest::SHA1.hexdigest("--#{plain}--#{YeslWebsite::Application.config.secret_token}--")
+    Digest::SHA1.hexdigest("--#{plain}--#{Zmey::Application.config.secret_token}--")
   end
   
   def good_token?

@@ -4,8 +4,8 @@ require "rvm/capistrano"
 set :rvm_type, :system
 set :rvm_path, "/usr/local/rvm"
 
-set :application, "yesl_website"
-set :repository,  ENV['YESL_WEBSITE_REPOSITORY']
+set :application, "zmey"
+set :repository,  ENV['ZMEY_REPOSITORY']
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
