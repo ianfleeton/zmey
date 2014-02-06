@@ -10,8 +10,8 @@ class TopicsController < ApplicationController
     @topic.topic = ""
     @post = Post.new
     if admin?
-      @post.author = @w.name
-      @post.email = @w.email
+      @post.author = website.name
+      @post.email = website.email
     end
   end
   

@@ -43,6 +43,10 @@ FactoryGirl.define do
     association :product
   end
 
+  factory :forum do
+    sequence(:name) { |n| "Forum #{n}" }
+  end
+
   factory :image do
     sequence(:name) { |n| "Image #{n}" }
   end
