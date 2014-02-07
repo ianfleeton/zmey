@@ -21,8 +21,8 @@ module PagesHelper
           link_to(page.name, page.path) + ' '.html_safe
         ) +
         edit_page(page) +
-        move_page_up(page) +
-        move_page_down(page) +
+        move_up_cell(:move_up_admin_page_path, page) +
+        move_down_cell(:move_down_admin_page_path, page) +
         delete_page(page)
     )
   end
@@ -33,21 +33,5 @@ module PagesHelper
 
   def delete_page(page)
     content_tag(:td, delete_button([:admin, page]))
-  end
-
-  def move_page_up(page)
-    if page.first?
-      content_tag(:td, '&nbsp;'.html_safe)
-    else
-      content_tag(:td, link_to('Move Up', move_up_admin_page_path(page), class: 'btn btn-default'))
-    end
-  end
-
-  def move_page_down(page)
-    if page.last?
-      content_tag(:td, '&nbsp;'.html_safe)
-    else
-      content_tag(:td, link_to('Move Down', move_down_admin_page_path(page), class: 'btn btn-default'))
-    end
   end
 end
