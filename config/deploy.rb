@@ -37,6 +37,8 @@ namespace :deploy do
   desc "Symlinks files with secret information and extras"
   task :symlink_secrets_and_extras, roles: :app do
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{deploy_to}/shared/config/newrelic.yml #{release_path}/config/newrelic.yml"
+    run "ln -nfs #{deploy_to}/shared/config/secrets.yml #{release_path}/config/secrets.yml"
   end
 end
 
