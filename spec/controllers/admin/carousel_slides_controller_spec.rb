@@ -121,6 +121,49 @@ describe Admin::CarouselSlidesController do
         expect(response).to redirect_to(admin_carousel_slides_path)
       end
     end
+
+    context 'moving' do
+      let!(:first) { FactoryGirl.create(:carousel_slide, website: website) } 
+      let!(:last)  { FactoryGirl.create(:carousel_slide, website: website) } 
+
+      describe 'GET move_up' do
+        it 'moves the carousel slide up the list' do
+          get :move_up, id: last.id
+          expect(last.reload.position).to eq 1
+        end
+
+        it 'sets flash notice' do
+          get :move_up, id: last.id
+          expect_moved_notice
+        end
+
+        it 'redirects to index' do
+          get :move_up, id: last.id
+          expect(response).to redirect_to(admin_carousel_slides_path)
+        end
+      end
+
+      describe 'GET move_down' do
+        it 'moves the carousel slide down the list' do
+          get :move_down, id: first.id
+          expect(first.reload.position).to eq 2
+        end
+
+        it 'sets flash notice' do
+          get :move_down, id: first.id
+          expect_moved_notice
+        end
+
+        it 'redirects to index' do
+          get :move_down, id: first.id
+          expect(response).to redirect_to(admin_carousel_slides_path)
+        end
+      end
+
+      def expect_moved_notice
+        expect(flash.notice).to eq 'Moved'
+      end
+    end
   end
 
   def find_requested_carousel_slide(stubs={})

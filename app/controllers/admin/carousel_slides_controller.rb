@@ -1,7 +1,7 @@
 class Admin::CarouselSlidesController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
-  before_action :find_carousel_slide, only: [:edit, :update, :destroy]
+  before_action :find_carousel_slide, only: [:edit, :update, :destroy, :move_up, :move_down]
 
   def index
     @carousel_slides = @w.carousel_slides
@@ -38,14 +38,29 @@ class Admin::CarouselSlidesController < ApplicationController
     redirect_to admin_carousel_slides_path, notice: 'Carousel slide deleted.'
   end
 
-  protected
-
-  def find_carousel_slide
-    @carousel_slide = CarouselSlide.find_by(id: params[:id], website_id: @w.id)
-    not_found unless @carousel_slide
+  def move_up
+    @carousel_slide.move_higher
+    moved
+  end
+  
+  def move_down
+    @carousel_slide.move_lower
+    moved
   end
 
-  def carousel_slide_params
-    params.require(:carousel_slide).permit(:caption, :image_id, :link, :position)
+  private
+
+    def find_carousel_slide
+      @carousel_slide = CarouselSlide.find_by(id: params[:id], website_id: @w.id)
+      not_found unless @carousel_slide
+    end
+
+    def carousel_slide_params
+      params.require(:carousel_slide).permit(:caption, :image_id, :link, :position)
+    end
+
+    def moved
+      flash[:notice] = 'Moved'
+      redirect_to action: 'index'
+    end
   end
-end
