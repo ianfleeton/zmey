@@ -314,4 +314,8 @@ class Website < ActiveRecord::Base
       yield image if block_given?
     end
   end
+
+  def active_carousel_slides
+    carousel_slides.where('active_from <= ? AND active_until >= ?', DateTime.now, DateTime.now)
+  end
 end
