@@ -26,6 +26,11 @@ describe Admin::CarouselSlidesController do
         get :new
         expect(assigns(:carousel_slide)).to eq mock_carousel_slide
       end
+
+      it "sets the slide's active until date into the far future" do
+        get :new
+        expect(assigns(:carousel_slide).active_until).to be > DateTime.now + 4.years
+      end
     end
 
     describe 'GET edit' do

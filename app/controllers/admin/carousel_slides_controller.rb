@@ -8,7 +8,7 @@ class Admin::CarouselSlidesController < ApplicationController
   end
 
   def new
-    @carousel_slide = CarouselSlide.new
+    @carousel_slide = CarouselSlide.new(active_until: DateTime.now + 5.years)
   end
 
   def edit
