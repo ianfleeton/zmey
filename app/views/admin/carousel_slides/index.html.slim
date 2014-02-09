@@ -12,5 +12,7 @@ p= new_button [:admin, CarouselSlide]
       tr
         td= carousel_slide.caption
         td
-          = edit_button [:admin, carousel_slide]
+          => edit_button [:admin, carousel_slide]
           = delete_button [:admin, carousel_slide]
+        = move_up_cell   :move_up_admin_carousel_slide_path,   carousel_slide
+        = move_down_cell :move_down_admin_carousel_slide_path, carousel_slide

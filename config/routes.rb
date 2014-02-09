@@ -2,7 +2,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :additional_products, except: [:show]
-    resources :carousel_slides, except: [:show]
+    resources :carousel_slides, except: [:show] do
+      member do
+        get 'move_up'
+        get 'move_down'
+      end
+    end
     resources :choices, except: [:show]
     resources :components, except: [:show]
     resources :countries, except: [:show]
