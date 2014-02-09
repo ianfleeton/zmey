@@ -19,8 +19,25 @@ feature 'Carousel slides admin' do
     fill_in 'Caption', with: carousel_slide.caption
     fill_in 'Link', with: '#'
     select image.name, from: 'Image'
+
+    select Date.today.year, from: :carousel_slide_active_from_1i
+    select 'January',       from: :carousel_slide_active_from_2i
+    select '1',             from: :carousel_slide_active_from_3i
+    select '00',            from: :carousel_slide_active_from_4i
+    select '00',            from: :carousel_slide_active_from_5i
+
+    select Date.today.year, from: :carousel_slide_active_until_1i
+    select 'December',      from: :carousel_slide_active_until_2i
+    select '31',            from: :carousel_slide_active_until_3i
+    select '23',            from: :carousel_slide_active_until_4i
+    select '59',            from: :carousel_slide_active_until_5i
+
     click_button 'Create Carousel slide'
-    expect(CarouselSlide.find_by(caption: carousel_slide.caption)).to be
+    expect(CarouselSlide.find_by(
+      caption: carousel_slide.caption,
+      active_from:  DateTime.new(Date.today.year, 1, 1, 0, 0),
+      active_until: DateTime.new(Date.today.year, 12, 31, 23, 59)
+    )).to be
   end
 
   scenario 'Edit carousel slide' do

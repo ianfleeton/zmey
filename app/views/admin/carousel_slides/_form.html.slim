@@ -20,5 +20,13 @@
     = form.label :image_id
     = select :carousel_slide, :image_id, image_options, {}, class: 'form-control'
 
+  .form-group
+    = form.label :active_from
+    = form.datetime_select :active_from
+
+  .form-group
+    = form.label :active_until
+    = form.datetime_select :active_until
+
   br
   = form.submit class: 'btn btn-primary'
