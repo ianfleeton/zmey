@@ -63,4 +63,4 @@ class Admin::CarouselSlidesController < ApplicationController
       flash[:notice] = 'Moved'
       redirect_to action: 'index'
     end
-  end
+end
