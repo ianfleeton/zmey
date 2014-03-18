@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207203159) do
+ActiveRecord::Schema.define(version: 20140317122527) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -92,6 +92,20 @@ ActiveRecord::Schema.define(version: 20140207203159) do
   end
 
   add_index "countries", ["website_id"], name: "index_countries_on_website_id", using: :btree
+
+  create_table "custom_views", force: true do |t|
+    t.integer  "website_id", null: false
+    t.string   "path"
+    t.string   "locale"
+    t.string   "format"
+    t.string   "handler"
+    t.boolean  "partial"
+    t.text     "template"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "custom_views", ["website_id", "path"], name: "index_custom_views_on_website_id_and_path", using: :btree
 
   create_table "discounts", force: true do |t|
     t.integer  "website_id",                                        default: 0,    null: false
@@ -489,6 +503,8 @@ ActiveRecord::Schema.define(version: 20140207203159) do
     t.string   "sage_pay_vendor",                                             default: "",    null: false
     t.string   "sage_pay_pre_shared_key",                                     default: "",    null: false
     t.boolean  "sage_pay_test_mode",                                          default: false, null: false
+    t.integer  "custom_view_cache_count",                                     default: 0,     null: false
+    t.string   "custom_view_resolver"
   end
 
 end

@@ -20,6 +20,7 @@ describe Website do
   end
 
   it { should validate_presence_of :name }
+  it { should ensure_inclusion_of(:custom_view_resolver).in_array(%w{CustomView::DatabaseResolver CustomView::ThemeResolver}) }
 
   describe "validations" do
     it "should be valid with valid attributes" do
@@ -122,6 +123,18 @@ describe Website do
       @website.carousel_slides << expired_slide
       expect(@website.active_carousel_slides.count).to eq 1
       expect(@website.active_carousel_slides.first).to eq active_slide
+    end
+  end
+
+  describe '#build_custom_view_resolver' do
+    it 'returns nil when no custom view resolver set' do
+      expect(Website.new.build_custom_view_resolver).to be_nil
+    end
+
+    it 'builds a new custom view resolver initialized with itself' do
+      website = Website.new(custom_view_resolver: 'CustomView::DatabaseResolver')
+      CustomView::DatabaseResolver.should_receive(:new).with(website).and_call_original
+      expect(website.build_custom_view_resolver).to be_instance_of CustomView::DatabaseResolver
     end
   end
 end

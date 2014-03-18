@@ -1,7 +1,7 @@
 - if @carousel_slide.errors.any?
   .alert.alert-error.fade.in
     a.close data-dismiss="alert" href="#" &times;
-    h2= "#{pluralize(@carousel_slide.errors.count, "error")} prohibited this carousel_slide from being saved:"
+    h2= "#{pluralize(@carousel_slide.errors.count, "error")} prohibited this carousel slide from being saved:"
     ul
       - @carousel_slide.errors.full_messages.each do |msg|
         li= msg

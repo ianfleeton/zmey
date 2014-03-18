@@ -3,12 +3,13 @@
 include ActionDispatch::TestProcess
 
 class Website < ActiveRecord::Base
+  validates_inclusion_of :custom_view_resolver, in: %w{CustomView::DatabaseResolver CustomView::ThemeResolver}, allow_blank: true
   validates_uniqueness_of :google_analytics_code, allow_blank: true
   validates_format_of :google_analytics_code, with: /\AUA-\d\d\d\d\d\d(\d)?(\d)?-\d\Z/, allow_blank: true
   validates_presence_of :name
   validates_inclusion_of :private, in: [true, false]
   validates_inclusion_of :render_blog_before_content, in: [true, false]
-  
+
   # WorldPay validations
   validates_inclusion_of :worldpay_active, in: [true, false]
   validates_inclusion_of :worldpay_test_mode, in: [true, false]
@@ -21,6 +22,7 @@ class Website < ActiveRecord::Base
   has_one :preferred_delivery_date_settings, dependent: :delete
   has_many :carousel_slides, -> { order 'position' }
   has_many :countries, -> { order 'name' }, dependent: :destroy
+  has_many :custom_views, dependent: :delete_all
   has_many :discounts, -> { order 'name' }
   has_many :liquid_templates, -> { order 'name' }, dependent: :destroy
   has_many :products, -> { order 'name' }, dependent: :destroy
@@ -317,5 +319,14 @@ class Website < ActiveRecord::Base
 
   def active_carousel_slides
     carousel_slides.where('active_from <= ? AND active_until >= ?', DateTime.now, DateTime.now)
+  end
+
+  # Returns an initialized custom view resolver, or nil if there isn't one.
+  def build_custom_view_resolver
+    if custom_view_resolver.present?
+      Kernel.const_get(custom_view_resolver).new(self)
+    else
+      nil
+    end
   end
 end
