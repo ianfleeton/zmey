@@ -153,6 +153,8 @@ class ApplicationController < ActionController::Base
     #
     # 1. Only trusted developers can create templates, or
     # 2. There are no other tenants.
+    #
+    # Adapted from http://www.justinball.com/2011/09/27/customizing-views-for-a-multi-tenant-application-using-ruby-on-rails-custom-resolvers/
     def set_resolver
       return unless website
       if resolver = website_resolver_for(website)
