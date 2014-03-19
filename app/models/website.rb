@@ -4,6 +4,7 @@ include ActionDispatch::TestProcess
 
 class Website < ActiveRecord::Base
   validates_inclusion_of :custom_view_resolver, in: %w{CustomView::DatabaseResolver CustomView::ThemeResolver}, allow_blank: true
+  validates :email, presence: true
   validates_uniqueness_of :google_analytics_code, allow_blank: true
   validates_format_of :google_analytics_code, with: /\AUA-\d\d\d\d\d\d(\d)?(\d)?-\d\Z/, allow_blank: true
   validates_presence_of :name

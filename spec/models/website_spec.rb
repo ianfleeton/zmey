@@ -19,6 +19,7 @@ describe Website do
     it { should validate_uniqueness_of :google_analytics_code }
   end
 
+  it { should validate_presence_of :email }
   it { should validate_presence_of :name }
   it { should ensure_inclusion_of(:custom_view_resolver).in_array(%w{CustomView::DatabaseResolver CustomView::ThemeResolver}) }
 
