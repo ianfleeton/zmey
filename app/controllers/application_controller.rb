@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :website, :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_action :set_timezone, :require_website, :initialize_meta_tags, :current_user, :set_locale, :protect_private_website, :initialize_tax_display, :set_resolver
+  before_action :set_time_zone, :require_website, :initialize_meta_tags, :current_user, :set_locale, :protect_private_website, :initialize_tax_display, :set_resolver
 
   attr_reader :website
   
@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_timezone
+  def set_time_zone
     Time.zone = 'London'
   end
 
