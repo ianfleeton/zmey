@@ -1,5 +1,3 @@
-# coding: utf-8
-
 include ActionDispatch::TestProcess
 
 class Website < ActiveRecord::Base
