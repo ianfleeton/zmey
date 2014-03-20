@@ -46,7 +46,7 @@ class CustomView < ActiveRecord::Base
   class ThemeResolver < ActionView::FileSystemResolver
     def initialize(website)
       @website = website
-      super(File.join(['..', 'zmey-themes', website.subdomain]))
+      super(File.join([ENV['ZMEY_THEMES'], website.subdomain]))
     end
 
     include ResolverCacheManager

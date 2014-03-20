@@ -16,7 +16,7 @@
         .panel-body
           .form-group
             = form.label :subdomain
-            = form.text_field :subdomain, class: 'form-control'
+            = form.text_field :subdomain, class: 'form-control', required: true
 
           .form-group
             = form.label :domain
@@ -24,11 +24,11 @@
 
           .form-group
             = form.label :name
-            = form.text_field :name, class: 'form-control'
+            = form.text_field :name, class: 'form-control', required: true
 
           .form-group
             = form.label :email
-            = form.email_field :email, class: 'form-control'
+            = form.email_field :email, class: 'form-control', required: true
 
           .form-group
             = form.label :address_line_1
@@ -48,7 +48,7 @@
 
           .form-group
             = form.label :country_id
-            = form.select :country_id, website.countries.map {|c| [c.name, c.id]}, {prompt: 'Choose Country'}, class: 'form-control'
+            = form.select :country_id, website.countries.map {|c| [c.name, c.id]}, {prompt: 'Choose Country'}, class: 'form-control', required: true
 
           .form-group
             = form.label :postcode

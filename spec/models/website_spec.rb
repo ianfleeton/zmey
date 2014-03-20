@@ -17,9 +17,12 @@ describe Website do
     end
 
     it { should validate_uniqueness_of :google_analytics_code }
+    it { should validate_uniqueness_of :subdomain }
   end
 
+  it { should validate_presence_of :email }
   it { should validate_presence_of :name }
+  it { should validate_presence_of :subdomain }
   it { should ensure_inclusion_of(:custom_view_resolver).in_array(%w{CustomView::DatabaseResolver CustomView::ThemeResolver}) }
 
   describe "validations" do
@@ -41,6 +44,18 @@ describe Website do
       @website.worldpay_installation_id = '1234'
       @website.worldpay_payment_response_password = 'abcde'
       expect(@website).to be_valid
+    end
+
+    it 'validates format of subdomain' do
+      ['123host', '123-host', 'HOST123'].each do |valid|
+        @website.subdomain = valid
+        expect(@website).to be_valid
+      end
+
+      ['-123host', 'two.parts'].each do |invalid|
+        @website.subdomain = invalid
+        expect(@website).not_to be_valid
+      end
     end
   end
 

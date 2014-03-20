@@ -101,7 +101,9 @@ FactoryGirl.define do
   end
 
   factory :website do
-    name 'Website'
+    email 'merchant@example.org'
+    name  'Website'
+    sequence(:subdomain) { |n| "host#{n}" }
     association :country
   end
 end

@@ -119,4 +119,8 @@
         = form.label :mpn, '<abbr title="Manufacturer Part Number">MPN</abbr>'.html_safe
         = form.text_field :mpn, class: 'form-control'
 
+      .form-group
+        = form.label :gender
+        = select('product', 'gender', Product::GENDERS, {include_blank: true}, class: 'form-control')
+
   p= form.submit class: 'btn btn-primary'

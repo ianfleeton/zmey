@@ -8,9 +8,15 @@ describe '/admin/products/new.html.slim' do
     assign(:w, stub_model(Website))
   end
 
-  it "renders new product form" do
+  it 'renders new product form' do
     render
 
     rendered.should have_selector("form[action='#{admin_products_path}'][method='post']")
+  end
+
+  it 'has a field for gender' do
+    render
+
+    expect(rendered).to have_selector('select[id="product_gender"]')
   end
 end

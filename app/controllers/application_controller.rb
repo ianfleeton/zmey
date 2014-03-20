@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :website, :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_action :set_timezone, :require_website, :initialize_meta_tags, :current_user, :set_locale, :protect_private_website, :initialize_tax_display, :set_resolver
+  before_action :set_time_zone, :require_website, :initialize_meta_tags, :current_user, :set_locale, :protect_private_website, :initialize_tax_display, :set_resolver
 
   attr_reader :website
   
@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_timezone
+  def set_time_zone
     Time.zone = 'London'
   end
 
@@ -145,14 +145,16 @@ class ApplicationController < ActionController::Base
 
     # Allows the use of a website custom view template resolver to let
     # websites override the base templates with custom ones, either in the
-    # database or in the filesystem under the parallel directory
-    # +../zmey-themes+.
+    # database or in the filesystem under the directory specified in
+    # +ENV['ZMEY_THEMES']+.
     #
     # Since templates can execute arbitrary Ruby code this should be used in
     # a deployment where:
     #
     # 1. Only trusted developers can create templates, or
     # 2. There are no other tenants.
+    #
+    # Adapted from http://www.justinball.com/2011/09/27/customizing-views-for-a-multi-tenant-application-using-ruby-on-rails-custom-resolvers/
     def set_resolver
       return unless website
       if resolver = website_resolver_for(website)

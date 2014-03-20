@@ -1,14 +1,14 @@
-# coding: utf-8
-
 include ActionDispatch::TestProcess
 
 class Website < ActiveRecord::Base
   validates_inclusion_of :custom_view_resolver, in: %w{CustomView::DatabaseResolver CustomView::ThemeResolver}, allow_blank: true
+  validates :email, presence: true
   validates_uniqueness_of :google_analytics_code, allow_blank: true
   validates_format_of :google_analytics_code, with: /\AUA-\d\d\d\d\d\d(\d)?(\d)?-\d\Z/, allow_blank: true
   validates_presence_of :name
   validates_inclusion_of :private, in: [true, false]
   validates_inclusion_of :render_blog_before_content, in: [true, false]
+  validates :subdomain, presence: true, uniqueness: true, format: /\A[a-z0-9]+[-a-z0-9]*\Z/i
 
   # WorldPay validations
   validates_inclusion_of :worldpay_active, in: [true, false]
