@@ -18,7 +18,7 @@ feature 'Products admin' do
     visit admin_products_path
     click_link 'New'
 
-    fill_in 'Gender', with: product.gender
+    select product.gender, from: 'Gender'
     fill_in 'Name',   with: product.name
     fill_in 'SKU',    with: product.sku
 
