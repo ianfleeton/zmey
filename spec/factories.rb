@@ -101,7 +101,8 @@ FactoryGirl.define do
   end
 
   factory :website do
-    name 'Website'
+    email 'merchant@example.org'
+    name  'Website'
     association :country
   end
 end
