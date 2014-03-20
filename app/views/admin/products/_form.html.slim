@@ -121,6 +121,6 @@
 
       .form-group
         = form.label :gender
-        = form.text_field :gender, class: 'form-control'
+        = select('product', 'gender', Product::GENDERS, {include_blank: true}, class: 'form-control')
 
   p= form.submit class: 'btn btn-primary'

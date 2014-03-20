@@ -17,6 +17,6 @@ describe '/admin/products/new.html.slim' do
   it 'has a field for gender' do
     render
 
-    expect(rendered).to have_selector('input[id="product_gender"]')
+    expect(rendered).to have_selector('select[id="product_gender"]')
   end
 end

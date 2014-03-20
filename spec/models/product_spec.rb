@@ -5,7 +5,7 @@ describe Product do
     @product = Product.new(:price => 1.0)
   end
 
-  it { should ensure_inclusion_of(:gender).in_array(%w{female male unisex}) }
+  it { should ensure_inclusion_of(:gender).in_array(Product::GENDERS) }
 
   describe "#name_with_sku" do
     it "returns the name followed by the SKU in square brackets" do

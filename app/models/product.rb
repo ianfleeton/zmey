@@ -1,12 +1,14 @@
 class Product < ActiveRecord::Base
-  validates_inclusion_of :gender, in: %w{female male unisex}, allow_blank: true
   validates_presence_of :name, :sku
   validates_uniqueness_of :sku, scope: :website_id
 
-  CONDITIONS = %w[new used refurbished]
-  validates_inclusion_of :condition, in: CONDITIONS
+  # Google feed attributes
   AVAILABILITIES = ['in stock', 'available for order', 'out of stock', 'preorder']
   validates_inclusion_of :availability, in: AVAILABILITIES
+  CONDITIONS = %w(new used refurbished)
+  validates_inclusion_of :condition, in: CONDITIONS
+  GENDERS = %w(female male unisex)
+  validates_inclusion_of :gender, in: GENDERS, allow_blank: true
 
   has_many :product_placements, dependent: :delete_all
   has_many :additional_products, dependent: :delete_all
