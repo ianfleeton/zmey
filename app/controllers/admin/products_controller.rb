@@ -73,7 +73,7 @@ class Admin::ProductsController < ApplicationController
       params.require(:product).permit(
         :active,
         :apply_shipping, :availability, :brand, :condition, :description,
-        :full_detail, :gtin, :google_product_category, :google_title, :image_id,
+        :full_detail, :gender, :gtin, :google_product_category, :google_title, :image_id,
         :meta_description, :mpn, :name, :page_title, :price, :product_type, :rrp,
         :shipping_supplement, :sku, :submit_to_google, :tax_type, :weight)
     end

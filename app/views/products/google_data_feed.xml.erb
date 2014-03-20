@@ -3,17 +3,17 @@
 xmlns:g="http://base.google.com/ns/1.0" 
 xmlns:c="http://base.google.com/cns/1.0">
 <channel>
-  <title><%= @w.name %></title>
-  <link>http://<%= @w.domain %></link>
-  <description><%= @w.name %> product data feed</description>
+  <title><%= website.name %></title>
+  <link>http://<%= website.domain %></link>
+  <description><%= website.name %> product data feed</description>
 <% @products.each do |p| -%>
   <item>
     <title><%= p.google_title.blank? ? p.name : p.google_title %></title>
-    <link>http://<%= @w.domain %><%= url_for p %></link>
+    <link>http://<%= website.domain %><%= url_for p %></link>
     <description><%= p.description %></description>
-    <g:price><%= formatted_gbp_price p.price_with_tax(1, !@w.vat_number.empty?) %></g:price>
+    <g:price><%= formatted_gbp_price p.price_with_tax(1, !website.vat_number.empty?) %></g:price>
 <% unless p.image.nil? -%>
-    <g:image_link>http://<%= @w.domain %><%= p.image.url(@w.product_image_size) %></g:image_link>
+    <g:image_link>http://<%= website.domain %><%= p.image.url(website.product_image_size) %></g:image_link>
 <% end -%>
     <g:condition><%= p.condition %></g:condition>
     <g:id><%= p.id %></g:id>
@@ -31,6 +31,9 @@ xmlns:c="http://base.google.com/cns/1.0">
 <% end -%>
 <% unless p.mpn.blank? -%>
     <g:mpn><%= p.mpn %></g:mpn>
+<% end -%>
+<% unless p.gender.blank? -%>
+    <g:gender><%= p.gender %></g:gender>
 <% end -%>
     <g:availability><%= p.availability %></g:availability>
   </item>

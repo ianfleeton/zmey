@@ -1,4 +1,5 @@
 class Product < ActiveRecord::Base
+  validates_inclusion_of :gender, in: %w{female male unisex}, allow_blank: true
   validates_presence_of :name, :sku
   validates_uniqueness_of :sku, scope: :website_id
 
