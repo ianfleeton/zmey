@@ -8,6 +8,7 @@ class Website < ActiveRecord::Base
   validates_presence_of :name
   validates_inclusion_of :private, in: [true, false]
   validates_inclusion_of :render_blog_before_content, in: [true, false]
+  validates :subdomain, presence: true, uniqueness: true, format: /\A[a-z0-9]+[-a-z0-9]*\Z/i
 
   # WorldPay validations
   validates_inclusion_of :worldpay_active, in: [true, false]
