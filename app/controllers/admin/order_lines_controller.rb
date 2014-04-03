@@ -1,4 +1,4 @@
-class OrderLinesController < ApplicationController
+class Admin::OrderLinesController < ApplicationController
   before_action :admin_required
 
   def update
@@ -8,12 +8,12 @@ class OrderLinesController < ApplicationController
     else
       flash[:notice] = 'Could not update.'
     end
-    redirect_to @order_line.order
+    redirect_to admin_order_path(@order_line.order)
   end
 
   private
 
     def order_line_params
-      params.require(:order_line).permit(:feature_descriptions, :product_id, :product_name, :product_price, :product_sku, :quantity, :tax_amount)
+      params.require(:order_line).permit(:feature_descriptions, :product_id, :product_name, :product_price, :product_sku, :quantity, :shipped, :tax_amount)
     end
 end

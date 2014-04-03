@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :order_lines
+
     resources :pages, except: [:show] do
       member do
         get 'move_up'
@@ -79,8 +81,6 @@ Rails.application.routes.draw do
       get 'invoice'
     end
   end
-
-  resources :order_lines
 
   resources :payments do
     collection do
