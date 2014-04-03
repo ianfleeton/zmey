@@ -65,6 +65,10 @@ FactoryGirl.define do
     association :country
   end
 
+  factory :order_line do
+    association :order
+  end
+
   factory :page do
     name 'Page Name'
     title 'Page Title'

@@ -44,6 +44,12 @@ Rails.application.routes.draw do
     resources :websites
   end
 
+  namespace :api, defaults: {format: :json} do
+    namespace :admin do
+      resources :orders, only: [:index]
+    end
+  end
+
   resources :addresses
 
   post 'basket/add' => 'basket#add', as: :add_to_basket
