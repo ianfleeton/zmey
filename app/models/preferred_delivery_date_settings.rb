@@ -13,25 +13,21 @@ class PreferredDeliveryDateSettings < ActiveRecord::Base
   validates_presence_of :website_id, :prompt, :date_format
 
   BANK_HOLIDAYS = [
-    Date.new(2010, 4, 2),
-    Date.new(2010, 4, 5),
-    Date.new(2010, 5, 3),
-    Date.new(2010, 5, 31),
-    Date.new(2010, 8, 30),
-    Date.new(2010, 12, 25),
-    Date.new(2010, 12, 26),
-    Date.new(2010, 12, 27),
-    Date.new(2010, 12, 28),
-    Date.new(2011, 1, 1),
-    Date.new(2011, 1, 3),
-    Date.new(2011, 4, 22),
-    Date.new(2011, 4, 25),
-    Date.new(2011, 5, 2),
-    Date.new(2011, 5, 30),
-    Date.new(2011, 8, 29),
-    Date.new(2011, 12, 25),
-    Date.new(2011, 12, 26),
-    Date.new(2011, 12, 27)
+    Date.new(2014, 4, 18),
+    Date.new(2014, 4, 21),
+    Date.new(2014, 5, 5),
+    Date.new(2014, 5, 26),
+    Date.new(2014, 8, 25),
+    Date.new(2014, 12, 25),
+    Date.new(2014, 12, 26),
+    Date.new(2015, 1, 1),
+    Date.new(2015, 4, 3),
+    Date.new(2015, 4, 6),
+    Date.new(2015, 5, 4),
+    Date.new(2015, 5, 25),
+    Date.new(2015, 8, 31),
+    Date.new(2015, 12, 25),
+    Date.new(2015, 12, 28)
   ]
 
   def options
