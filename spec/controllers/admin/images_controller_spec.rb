@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'shared_examples_for_controllers'
 
-describe ImagesController do
+describe Admin::ImagesController do
   before { logged_in_as_admin }
 
   describe 'GET index' do
@@ -42,7 +42,7 @@ describe ImagesController do
 
       it 'redirects to images index' do
         post_create
-        expect(response).to redirect_to images_path
+        expect(response).to redirect_to admin_images_path
       end
     end
 

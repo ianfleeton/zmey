@@ -1,6 +1,6 @@
 = page_header 'Edit Image'
 
-= breadcrumbs({ 'Images' => images_path }, 'Edit Image')
+= breadcrumbs({ 'Images' => admin_images_path }, 'Edit Image')
 
 - if @image.errors.any?
   .alert-alert-error-fade-in
@@ -11,11 +11,11 @@
         li= msg
 
 legend Replace image / edit image details
-= form_for @image, html: { multipart: true } do |form|
+= form_for [:admin, @image], html: { multipart: true } do |form|
   = render partial: 'form', object: form
 
   br
   = submit_tag "Edit Image", class: 'btn btn-primary'
-  = delete_button @image
+  = delete_button [:admin, @image]
 
 = image_tag @image.url(256)

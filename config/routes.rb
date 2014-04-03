@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :discounts, except: [:show]
     resources :enquiries
     resources :features, except: [:show]
+    resources :images
     resources :liquid_templates, except: [:show]
 
     resources :orders do
@@ -69,8 +70,6 @@ Rails.application.routes.draw do
   end
 
   resources :forums
-
-  resources :images
 
   resources :orders, only: [:index, :show] do
     collection do

@@ -1,6 +1,6 @@
 include ActionView::Helpers::TextHelper
 
-class ImagesController < ApplicationController
+class Admin::ImagesController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
 
@@ -16,9 +16,9 @@ class ImagesController < ApplicationController
     uploader = website.image_uploader(image_params)
 
     flash[:notice] = "#{pluralize(uploader.images.length, 'image')} uploaded."
-    
+
     if uploader.images.length > 0
-      redirect_to images_path
+      redirect_to admin_images_path
     else
       @image = uploader.failed.first || Image.new
       render :new

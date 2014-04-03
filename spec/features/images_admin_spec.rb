@@ -6,7 +6,7 @@ feature 'Images admin' do
   end
 
   scenario 'Upload a ZIP file of images' do
-    visit new_image_path
+    visit new_admin_image_path
     attach_file 'Image', 'spec/fixtures/images/two-images.zip'
     fill_in 'Name', with: 'Widget'
     click_button 'Upload New Image'

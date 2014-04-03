@@ -1,6 +1,6 @@
 = page_header 'New Image'
 
-= breadcrumbs({ 'Images' => images_path }, 'New Image')
+= breadcrumbs({ 'Images' => admin_images_path }, 'New Image')
 
 - if @image.errors.any?
   .alert-alert-error-fade-in
@@ -10,7 +10,7 @@
       - @image.errors.full_messages.each do |msg|
         li= msg
 
-= form_for @image, html: { multipart: true } do |form|
+= form_for [:admin, @image], html: { multipart: true } do |form|
   = render partial: 'form', object: form
 
   br
