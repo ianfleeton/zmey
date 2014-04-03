@@ -28,12 +28,5 @@
     <% if !@blog.nil? && !@w.render_blog_before_content? %>
     <%= render partial: 'forums/blog_sidebar', object: @blog %>
     <% end %>
-  </div>
-<%=
-template("footer",
-  footer_html: raw(@w.footer_html),
-  website_name: @w.name,
-  worldpay_logos: @w.worldpay_active? ? template("worldpay_logos", installation_id: @w.worldpay_installation_id) : '',
-  year: Date.today.year
-)
-%>
+</div>
+<%= render 'footer' %>
