@@ -1,17 +1,4 @@
-<%=
-template('header',
-  body_class: body_class,
-  csrf_meta_tags: csrf_meta_tags,
-  css_admin: stylesheet_link_tag('admin', media: 'screen'),
-  css_external: @w.css_url.blank? ? '' : stylesheet_link_tag(@w.css_url, media: 'screen'),
-  css_screen: website.use_default_css? ? stylesheet_link_tag('screen', media: 'screen', 'data-turbolinks-track' => true) : '',
-  description: @description,
-  google_analytics_code: render("shared/google_analytics_code"),
-  js_application: javascript_include_tag('application', 'data-turbolinks-track' => true),
-  page_title: @title ? @title : @w.name,
-  website_name: @w.name
-)
-%>
+<%= render 'header' %>
   <% Page.navs(@w).each do |nav| %>
   <ul id="<%= nav.id_attribute %>">
 <% nav.pages.each do |p| %><%= nav_link_to(p, p.path) %><% end %>
@@ -41,12 +28,5 @@ template('header',
     <% if !@blog.nil? && !@w.render_blog_before_content? %>
     <%= render partial: 'forums/blog_sidebar', object: @blog %>
     <% end %>
-  </div>
-<%=
-template("footer",
-  footer_html: raw(@w.footer_html),
-  website_name: @w.name,
-  worldpay_logos: @w.worldpay_active? ? template("worldpay_logos", installation_id: @w.worldpay_installation_id) : '',
-  year: Date.today.year
-)
-%>
+</div>
+<%= render 'footer' %>
