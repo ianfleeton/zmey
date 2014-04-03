@@ -162,5 +162,12 @@ describe Website do
       user.addresses << address
       expect { website.destroy }.to_not raise_error
     end
+
+    it 'deletes addresses associated through country' do
+      website = FactoryGirl.create(:website)
+      country = FactoryGirl.create(:country, website_id: website.id)
+      address = FactoryGirl.create(:address, country_id: country.id)
+      expect { website.destroy }.to_not raise_error
+    end
   end
 end

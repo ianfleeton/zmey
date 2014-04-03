@@ -40,6 +40,8 @@ class Website < ActiveRecord::Base
   belongs_to :blog, class_name: 'Forum'
   belongs_to :country
 
+  before_destroy :delete_country_addresses, prepend: true
+
   def self.for(domain, subdomains)
     website = find_by(domain: domain)
     unless subdomains.blank?
@@ -329,4 +331,10 @@ class Website < ActiveRecord::Base
       nil
     end
   end
+
+  private
+
+    def delete_country_addresses
+      Address.where(country: countries).delete_all
+    end
 end
