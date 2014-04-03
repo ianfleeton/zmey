@@ -21,7 +21,6 @@ class Website < ActiveRecord::Base
 
   has_one :preferred_delivery_date_settings, dependent: :delete
   has_many :carousel_slides, -> { order 'position' }
-  has_many :countries, -> { order 'name' }, dependent: :destroy
   has_many :custom_views, dependent: :delete_all
   has_many :discounts, -> { order 'name' }
   has_many :liquid_templates, -> { order 'name' }, dependent: :destroy
@@ -37,6 +36,7 @@ class Website < ActiveRecord::Base
   has_many :shipping_classes, through: :shipping_zones
   has_many :shipping_table_rows, -> { order 'trigger_value' }, through: :shipping_classes
   has_many :users, -> { order 'name' }, dependent: :destroy
+  has_many :countries, -> { order 'name' }, dependent: :destroy
   belongs_to :blog, class_name: 'Forum'
   belongs_to :country
 
@@ -47,7 +47,7 @@ class Website < ActiveRecord::Base
     end
     website
   end
-  
+
   def shipping_countries
     c = countries.where('shipping_zone_id IS NOT NULL')
     c.empty? ? countries : c

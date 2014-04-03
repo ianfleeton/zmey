@@ -6,6 +6,15 @@ FactoryGirl.define do
     password  'secret'
   end
 
+  factory :address do
+    address_line_1 '123 My Street'
+    email_address  'shopper@example.org'
+    full_name      'A Shopper'
+    postcode       'L0N D0N'
+    town_city      'London'
+    association    :country
+  end
+
   factory :carousel_slide do
     caption      'A slide'
     link         '#'

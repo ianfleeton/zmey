@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Website do 
+describe Website do
   before(:each) do
     @website = Website.new(
       :subdomain => 'bonsai',
@@ -150,6 +150,17 @@ describe Website do
       website = Website.new(custom_view_resolver: 'CustomView::DatabaseResolver')
       CustomView::DatabaseResolver.should_receive(:new).with(website).and_call_original
       expect(website.build_custom_view_resolver).to be_instance_of CustomView::DatabaseResolver
+    end
+  end
+
+  describe '#destroy' do
+    it 'destroys associations in an order to prevent restriction dependencies' do
+      website = FactoryGirl.create(:website)
+      country = FactoryGirl.create(:country, website_id: website.id)
+      address = FactoryGirl.create(:address, country_id: country.id)
+      user = FactoryGirl.create(:user, website_id: website.id)
+      user.addresses << address
+      expect { website.destroy }.to_not raise_error
     end
   end
 end
