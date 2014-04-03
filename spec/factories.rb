@@ -75,6 +75,7 @@ FactoryGirl.define do
   end
 
   factory :order_line do
+    quantity    1
     association :order
   end
 
