@@ -1,5 +1,5 @@
 class Admin::OrderLinesController < Admin::AdminController
-  before_action :admin_required
+  before_action :admin_or_manager_required
 
   def update
     @order_line = OrderLine.find(params[:id])
