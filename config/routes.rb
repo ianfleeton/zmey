@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   namespace :admin do
+    get '' => 'admin#index'
+
     resources :additional_products, except: [:show]
     resources :carousel_slides, except: [:show] do
       member do
