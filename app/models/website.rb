@@ -22,11 +22,11 @@ class Website < ActiveRecord::Base
   has_one :preferred_delivery_date_settings, dependent: :delete
   has_many :carousel_slides, -> { order 'position' }
   has_many :custom_views, dependent: :delete_all
-  has_many :discounts, -> { order 'name' }
+  has_many :discounts, -> { order 'name' }, dependent: :destroy
   has_many :liquid_templates, -> { order 'name' }, dependent: :destroy
   has_many :products, -> { order 'name' }, dependent: :destroy
   has_many :google_products, -> { where(submit_to_google: true) }, class_name: 'Product'
-  has_many :product_groups, -> { order 'name' }
+  has_many :product_groups, -> { order 'name' }, dependent: :destroy
   has_many :orders, -> { order 'created_at DESC' }, dependent: :destroy
   has_many :pages, -> { order 'name' }, dependent: :destroy
   has_many :images, dependent: :destroy
