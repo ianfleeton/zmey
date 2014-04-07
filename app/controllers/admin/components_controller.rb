@@ -1,5 +1,4 @@
-class Admin::ComponentsController < ApplicationController
-  layout 'admin'
+class Admin::ComponentsController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :find_component, only: [:edit, :destroy, :update]
 
@@ -79,7 +78,7 @@ class Admin::ComponentsController < ApplicationController
 
     pp @rows
   end
-  
+
   def destroy
     @component.destroy
     flash[:notice] = I18n.t('components.destroy.deleted')
@@ -87,12 +86,12 @@ class Admin::ComponentsController < ApplicationController
   end
 
   protected
-  
+
   def find_component
     @component = Component.find(params[:id])
     redirect_to admin_products_path and return unless product_valid?
   end
-  
+
   def product_valid?
     if Product.find_by(id: @component.product_id, website_id: @w.id)
       true

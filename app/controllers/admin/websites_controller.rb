@@ -1,5 +1,4 @@
-class Admin::WebsitesController < ApplicationController
-  layout 'admin'
+class Admin::WebsitesController < Admin::AdminController
   before_action :admin_required, except: [:edit, :update]
   before_action :find_website, only: [:edit, :update, :destroy]
   before_action :permission_check, only: [:edit, :update]
@@ -7,14 +6,14 @@ class Admin::WebsitesController < ApplicationController
   def index
     @websites = Website.order('name')
   end
-  
+
   def new
     @website_subject = Website.new
   end
-  
+
   def edit
   end
-  
+
   def create
     @website_subject = Website.new(website_params)
 
@@ -23,7 +22,7 @@ class Admin::WebsitesController < ApplicationController
       Page.bootstrap @website_subject
 
       create_latest_news
-      
+
       flash[:notice] = "Successfully added new website."
       redirect_to action: 'index'
     else
@@ -39,13 +38,13 @@ class Admin::WebsitesController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     @website_subject.destroy
     flash[:notice] = "Website deleted."
     redirect_to action: 'index'
   end
-  
+
   protected
 
   def permission_check
@@ -70,7 +69,7 @@ class Admin::WebsitesController < ApplicationController
     latest_news.save
     @website_subject.blog_id = latest_news.id
     @website_subject.save
-    
+
     # create a vapid placeholder topic to introduce the new website
     topic = Topic.new
     topic.topic = 'New Website Launched'
@@ -87,7 +86,7 @@ class Admin::WebsitesController < ApplicationController
     post.email = @website_subject.email
     post.author = @website_subject.name
     post.save
-    
+
     topic.last_post_id = post.id
     topic.last_post_author = post.author
     topic.last_post_at = post.created_at

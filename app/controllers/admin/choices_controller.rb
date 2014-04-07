@@ -1,18 +1,17 @@
-class Admin::ChoicesController < ApplicationController
-  layout 'admin'
+class Admin::ChoicesController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :find_choice, except: [:new, :create]
-  
+
   def new
     @choice = Choice.new
     @choice.feature_id = params[:feature_id]
     redirect_to admin_products_path and return unless feature_valid?
   end
-  
+
   def edit
     @feature = @choice.feature
   end
-  
+
   def update
     redirect_to products_path and return unless feature_valid?
     if @choice.update_attributes(choice_params)
@@ -22,7 +21,7 @@ class Admin::ChoicesController < ApplicationController
       render :edit
     end
   end
-  
+
   def create
     @choice = Choice.new(choice_params)
     redirect_to admin_products_path and return unless feature_valid?
@@ -34,16 +33,16 @@ class Admin::ChoicesController < ApplicationController
       render :new
     end
   end
-  
+
   def destroy
     redirect_to admin_products_path and return unless feature_valid?
     @choice.destroy
     flash[:notice] = "Choice deleted."
     redirect_to edit_admin_feature_path(@choice.feature)
   end
-  
+
   protected
-  
+
   def find_choice
     @choice = Choice.find(params[:id])
     not_found unless @choice.feature.product.website_id == @w.id

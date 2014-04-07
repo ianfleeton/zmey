@@ -1,8 +1,6 @@
-class Admin::OrdersController < ApplicationController
+class Admin::OrdersController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :find_order, only: [:show, :destroy]
-
-  layout 'admin'
 
   def index
     if params[:user_id]
@@ -11,7 +9,7 @@ class Admin::OrdersController < ApplicationController
       @orders = website.orders
     end
   end
-  
+
   def show; end
 
   def purge_old_unpaid

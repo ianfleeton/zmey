@@ -1,7 +1,6 @@
 include ActionView::Helpers::TextHelper
 
-class Admin::ImagesController < ApplicationController
-  layout 'admin'
+class Admin::ImagesController < Admin::AdminController
   before_action :admin_or_manager_required
 
   def index

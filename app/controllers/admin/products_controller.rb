@@ -1,17 +1,15 @@
-class Admin::ProductsController < ApplicationController
+class Admin::ProductsController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :set_product, only: [:edit, :update, :destroy]
-
-  layout 'admin'
 
   def index
     @products = website.products.order(:name)
   end
-  
+
   def new
     @product = Product.new
   end
-  
+
   def edit
   end
 
@@ -26,7 +24,7 @@ class Admin::ProductsController < ApplicationController
       render :new
     end
   end
-  
+
   def update
     if @product.update_attributes(product_params)
       flash[:notice] = 'Product saved.'

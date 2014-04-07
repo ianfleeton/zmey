@@ -1,5 +1,4 @@
-class Admin::LiquidTemplatesController < ApplicationController
-  layout 'admin'
+class Admin::LiquidTemplatesController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :find_liquid_template, only: [:edit, :update, :destroy]
 

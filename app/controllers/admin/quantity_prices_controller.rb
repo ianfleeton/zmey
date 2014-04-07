@@ -1,5 +1,4 @@
-class Admin::QuantityPricesController < ApplicationController
-  layout 'admin'
+class Admin::QuantityPricesController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :find_quantity_price, only: [:edit, :destroy, :update]
 
@@ -8,7 +7,7 @@ class Admin::QuantityPricesController < ApplicationController
     @quantity_price.product_id = params[:product_id]
     redirect_to admin_products_path and return unless product_valid?
   end
-  
+
   def create
     @quantity_price = QuantityPrice.new(quantity_price_params)
     redirect_to admin_products_path and return unless product_valid?
@@ -20,7 +19,7 @@ class Admin::QuantityPricesController < ApplicationController
       render :new
     end
   end
-  
+
   def update
     if @quantity_price.update_attributes(quantity_price_params)
       flash[:notice] = "Quantity/price rule successfully updated."
@@ -29,23 +28,23 @@ class Admin::QuantityPricesController < ApplicationController
       render :edit
     end
   end
-  
+
   def edit
   end
-  
+
   def destroy
     @quantity_price.destroy
     flash[:notice] = "Quantity/price rule deleted."
     redirect_to edit_admin_product_path(@quantity_price.product)
   end
-  
+
   protected
-  
+
   def find_quantity_price
     @quantity_price = QuantityPrice.find(params[:id])
     redirect_to admin_products_path and return unless product_valid?
   end
-  
+
   def product_valid?
     if Product.find_by(id: @quantity_price.product_id, website_id: @w.id)
       true

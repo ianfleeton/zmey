@@ -1,5 +1,4 @@
-class Admin::PagesController < ApplicationController
-  layout 'admin'
+class Admin::PagesController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :set_page, only: [:edit, :update, :destroy, :move_up, :move_down]
 
@@ -15,7 +14,7 @@ class Admin::PagesController < ApplicationController
     @page.move_higher
     moved
   end
-  
+
   def move_down
     @page.move_lower
     moved
@@ -54,12 +53,12 @@ class Admin::PagesController < ApplicationController
   end
 
   protected
-  
+
     def set_page
       @page = Page.find_by(id: params[:id], website_id: website.id)
       not_found unless @page
     end
-  
+
     def moved
       flash[:notice] = 'Moved'
       redirect_to action: 'index'

@@ -1,5 +1,4 @@
-class Admin::CarouselSlidesController < ApplicationController
-  layout 'admin'
+class Admin::CarouselSlidesController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :find_carousel_slide, only: [:edit, :update, :destroy, :move_up, :move_down]
 
@@ -42,7 +41,7 @@ class Admin::CarouselSlidesController < ApplicationController
     @carousel_slide.move_higher
     moved
   end
-  
+
   def move_down
     @carousel_slide.move_lower
     moved

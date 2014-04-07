@@ -1,4 +1,4 @@
-class Admin::OrderLinesController < ApplicationController
+class Admin::OrderLinesController < Admin::AdminController
   before_action :admin_required
 
   def update

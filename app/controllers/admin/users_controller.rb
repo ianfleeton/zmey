@@ -1,26 +1,24 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < Admin::AdminController
   before_action :set_user, except: [:index, :new, :create]
   before_action :admin_required, only: [:destroy]
   before_action :admin_or_manager_required, except: [:destroy]
 
-  layout 'admin'
-
   def index
     @users = website.users
   end
-  
+
   def show
   end
 
   def new
     @user = User.new
   end
-  
+
   def create
     @user = User.new(user_params)
     @user.admin = false
     @user.website = website
-    
+
     if @user.save
       flash[:notice] = "New user account has been created."
       redirect_to users_path
@@ -28,10 +26,10 @@ class Admin::UsersController < ApplicationController
       render :new
     end
   end
-  
+
   def edit
   end
-  
+
   def update
     # only administrators can update protected attributes
     if admin?
@@ -56,7 +54,7 @@ class Admin::UsersController < ApplicationController
   end
 
   private
-  
+
     def set_user
       @user = User.find(params[:id])
     end

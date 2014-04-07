@@ -1,5 +1,4 @@
-class Admin::CountriesController < ApplicationController
-  layout 'admin'
+class Admin::CountriesController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :find_country, only: [:edit, :update, :destroy]
 

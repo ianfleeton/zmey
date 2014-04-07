@@ -1,5 +1,4 @@
-class Admin::AdditionalProductsController < ApplicationController
-  layout 'admin'
+class Admin::AdditionalProductsController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :find_additional_product, only: [:edit, :destroy, :update]
 
@@ -40,7 +39,7 @@ class Admin::AdditionalProductsController < ApplicationController
   end
 
   protected
-  
+
   def find_additional_product
     @additional_product = AdditionalProduct.find(params[:id])
     redirect_to admin_products_path and return unless product_valid?

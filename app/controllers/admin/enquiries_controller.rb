@@ -1,5 +1,4 @@
-class Admin::EnquiriesController < ApplicationController
-  layout 'admin'
+class Admin::EnquiriesController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :set_enquiry, except: [:index]
 

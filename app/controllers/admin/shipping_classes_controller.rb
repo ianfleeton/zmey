@@ -1,5 +1,4 @@
-class Admin::ShippingClassesController < ApplicationController
-  layout 'admin'
+class Admin::ShippingClassesController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :set_shipping_class, only: [:edit, :update, :destroy]
 

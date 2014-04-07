@@ -1,5 +1,4 @@
-class Admin::FeaturesController < ApplicationController
-  layout 'admin'
+class Admin::FeaturesController < Admin::AdminController
   before_action :admin_or_manager_required
   before_action :set_feature, only: [:edit, :destroy, :update]
 
@@ -10,7 +9,7 @@ class Admin::FeaturesController < ApplicationController
     redirect_to products_path and return unless product_valid?
     @feature.required = true
   end
-  
+
   def create
     @feature = Feature.new(feature_params)
     redirect_to admin_products_path and return unless product_valid?
@@ -22,7 +21,7 @@ class Admin::FeaturesController < ApplicationController
       render :new
     end
   end
-  
+
   def update
     if @feature.update_attributes(feature_params)
       flash[:notice] = "Feature successfully updated."
@@ -38,19 +37,19 @@ class Admin::FeaturesController < ApplicationController
 
   def edit
   end
-  
+
   def destroy
     @feature.destroy
     redirect_to edit_admin_product_path(@feature.product), notice: 'Feature deleted.'
   end
-  
+
   protected
-  
+
     def set_feature
       @feature = Feature.find(params[:id])
       redirect_to admin_products_path and return unless product_valid?
     end
-  
+
     def product_valid?
       if Product.find_by(id: @feature.product_id, website_id: @w.id)
         true
