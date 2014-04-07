@@ -1,5 +1,4 @@
 class Admin::CarouselSlidesController < Admin::AdminController
-  before_action :admin_or_manager_required
   before_action :find_carousel_slide, only: [:edit, :update, :destroy, :move_up, :move_down]
 
   def index

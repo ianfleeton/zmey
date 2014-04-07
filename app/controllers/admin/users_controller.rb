@@ -1,7 +1,7 @@
 class Admin::UsersController < Admin::AdminController
   before_action :set_user, except: [:index, :new, :create]
   before_action :admin_required, only: [:destroy]
-  before_action :admin_or_manager_required, except: [:destroy]
+  skip_before_action :admin_or_manager_required, only: [:destroy]
 
   def index
     @users = website.users

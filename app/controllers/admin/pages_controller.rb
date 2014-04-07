@@ -1,5 +1,4 @@
 class Admin::PagesController < Admin::AdminController
-  before_action :admin_or_manager_required
   before_action :set_page, only: [:edit, :update, :destroy, :move_up, :move_down]
 
   def index

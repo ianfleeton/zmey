@@ -1,5 +1,4 @@
 class Admin::ProductsController < Admin::AdminController
-  before_action :admin_or_manager_required
   before_action :set_product, only: [:edit, :update, :destroy]
 
   def index

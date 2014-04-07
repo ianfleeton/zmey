@@ -1,5 +1,4 @@
 class Admin::FeaturesController < Admin::AdminController
-  before_action :admin_or_manager_required
   before_action :set_feature, only: [:edit, :destroy, :update]
 
   def new

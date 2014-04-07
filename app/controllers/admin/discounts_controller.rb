@@ -1,5 +1,4 @@
 class Admin::DiscountsController < Admin::AdminController
-  before_action :admin_or_manager_required
   before_action :find_discount, only: [:edit, :update, :destroy]
 
   def index

@@ -1,5 +1,4 @@
 class Admin::ChoicesController < Admin::AdminController
-  before_action :admin_or_manager_required
   before_action :find_choice, except: [:new, :create]
 
   def new

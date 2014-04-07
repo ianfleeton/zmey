@@ -1,6 +1,4 @@
 class Admin::OrderLinesController < Admin::AdminController
-  before_action :admin_or_manager_required
-
   def update
     @order_line = OrderLine.find(params[:id])
     if @order_line.update_attributes(order_line_params)

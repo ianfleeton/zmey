@@ -1,8 +1,6 @@
 include ActionView::Helpers::TextHelper
 
 class Admin::ImagesController < Admin::AdminController
-  before_action :admin_or_manager_required
-
   def index
     @images = website.images
   end
