@@ -3,6 +3,11 @@ class UsersController < ApplicationController
   before_action :admin_or_manager_or_same_user_required, only: [:show, :edit]
   before_action :can_users_create_accounts, only: [:new, :create]
 
+  skip_before_action :protect_private_website, only: [
+    :forgot_password, :forgot_password_send,
+    :forgot_password_new, :forgot_password_change
+  ]
+
   def show
     @title = 'Your Account'
   end
@@ -10,12 +15,12 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-  
+
   def create
     @user = User.new(user_params)
     @user.admin = false
     @user.website_id = @w.id
-    
+
     if @user.save
       if admin_or_manager?
         flash[:notice] = "New user account has been created."
@@ -30,10 +35,10 @@ class UsersController < ApplicationController
       render :new
     end
   end
-  
+
   def edit
   end
-  
+
   def update
     # only administrators can update protected attributes
     if admin?
@@ -54,7 +59,7 @@ class UsersController < ApplicationController
 
   def forgot_password
   end
-  
+
   def forgot_password_send
     @user = User.find_by(email: params[:email])
     if @user.nil?
@@ -70,7 +75,7 @@ class UsersController < ApplicationController
   def forgot_password_new
     forgot_password_params_ok?
   end
-  
+
   def forgot_password_change
     if forgot_password_params_ok?
       @user.password = params[:password]
@@ -80,9 +85,9 @@ class UsersController < ApplicationController
       redirect_to controller: 'sessions', action: 'new'
     end
   end
-  
+
   private
-  
+
   def forgot_password_params_ok?
     if @user.forgot_password_token.blank?
       flash[:notice] = "Please enter your email address below"
@@ -96,7 +101,7 @@ class UsersController < ApplicationController
     end
     true
   end
-  
+
   def find_user
     @user = User.find(params[:id])
   end
