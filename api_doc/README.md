@@ -22,7 +22,7 @@ A 404 status is returned if an API key matching `:name` is not found.
 
 An example curl request:
 
-`curl example.com/admin/api_keys/retrieve/ios -u ianf@yesl.co.uk:secret`
+`curl https://example.com/admin/api_keys/retrieve/ios -u ianf@yesl.co.uk:secret`
 
 A successful retrieval will return JSON similar to the example:
 
