@@ -10,6 +10,8 @@ en:
         key: Key
         name: Name
         no_keys: "You don't have any keys set up yet."
+      new:
+        heading: New API Key
     orders:
       index:
         full_name: 'Full Name'
@@ -63,6 +65,11 @@ en:
   view_cart: View Basket
 
   controllers:
+    admin:
+      api_keys:
+        create:
+          flash:
+            created: 'Your new API key has been created.'
     enquiries: Enquiries
     images: Images
     liquid_templates: Liquid Templates

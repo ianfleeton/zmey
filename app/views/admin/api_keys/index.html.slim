@@ -1,5 +1,7 @@
 = page_header(t('.heading'))
 
+p= new_button [:admin, ApiKey]
+
 - if @api_keys.any?
   table.table.table-bordered
     thead

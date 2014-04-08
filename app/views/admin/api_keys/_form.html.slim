@@ -1,0 +1,13 @@
+- if @api_key.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@api_key.errors.count, "error")} prohibited this API key from being saved:"
+    ul
+      - @api_key.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for [:admin, @api_key] do |form|
+  .form-group
+    = form.label :name
+    = form.text_field :name, class: 'form-control'
+  p= form.submit class: 'btn btn-primary'
