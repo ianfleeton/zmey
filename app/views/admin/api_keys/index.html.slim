@@ -1,0 +1,15 @@
+= page_header(t('.heading'))
+
+- if @api_keys.any?
+  table.table.table-bordered
+    thead
+      tr
+        th= t('.name')
+        th= t('.key')
+    tbody
+      - @api_keys.each do |api_key|
+        tr
+          td= api_key.name
+          td= api_key.key
+- else
+  p= t('.no_keys')

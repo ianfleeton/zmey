@@ -15,6 +15,11 @@ FactoryGirl.define do
     association    :country
   end
 
+  factory :api_key do
+    sequence(:name) { |n| "Key #{n}" }
+    association :user
+  end
+
   factory :carousel_slide do
     caption      'A slide'
     link         '#'

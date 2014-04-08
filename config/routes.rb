@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     get '' => 'admin#index'
 
     resources :additional_products, except: [:show]
+    resources :api_keys, except: [:show]
     resources :carousel_slides, except: [:show] do
       member do
         get 'move_up'

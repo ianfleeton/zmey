@@ -4,6 +4,12 @@
 en:
   add_to_cart: Add to Basket
   admin:
+    api_keys:
+      index:
+        heading: Your API Keys
+        key: Key
+        name: Name
+        no_keys: "You don't have any keys set up yet."
     orders:
       index:
         full_name: 'Full Name'
