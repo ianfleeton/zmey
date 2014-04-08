@@ -59,4 +59,45 @@ describe Admin::ApiKeysController do
       end
     end
   end
+
+  describe 'GET retrieve' do
+    let(:key_name) { SecureRandom.hex }
+    let(:api_key)  { ApiKey.new }
+
+    before do
+      api_key
+      controller.stub(:authenticate_with_http_basic).and_return user
+      get :retrieve, 'name' => key_name
+    end
+
+    context 'with successful authentication' do
+      let(:user) { FactoryGirl.create(:user) }
+
+      context 'with key matching given name found for user' do
+        let(:api_key) { FactoryGirl.create(:api_key, name: key_name, user_id: user.id) }
+
+        it 'succeeds' do
+          expect(response).to be_success
+        end
+
+        it 'assigns the key to @api_key' do
+          expect(assigns(:api_key)).to eq api_key
+        end
+      end
+
+      context 'with no key found' do
+        it 'responds not found' do
+          expect(response).to be_not_found
+        end
+      end
+    end
+
+    context 'with failed authentication' do
+      let(:user) { nil }
+
+      it 'responds unauthorized' do
+        expect(response.status).to eq 401
+      end
+    end
+  end
 end

@@ -34,4 +34,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Prevent "Unexpected error while processing request: deadlock; recursive
+  # locking" error, similar to:
+  # https://github.com/jamesotron/faye-rails/issues/41
+  config.middleware.delete Rack::Lock
 end

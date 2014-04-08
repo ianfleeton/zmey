@@ -1,7 +1,7 @@
 class ApiKey < ActiveRecord::Base
   belongs_to :user
 
-  validates :name, presence: true, uniqueness: { scope: :user_id }
+  validates :name, format: /\A[-a-zA-Z0-9]+\Z/, uniqueness: { scope: :user_id }
   validates :user_id, presence: true
 
   before_create :generate_key

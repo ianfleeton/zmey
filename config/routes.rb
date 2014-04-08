@@ -4,7 +4,11 @@ Rails.application.routes.draw do
     get '' => 'admin#index'
 
     resources :additional_products, except: [:show]
-    resources :api_keys, except: [:show]
+    resources :api_keys, except: [:show] do
+      collection do
+        get 'retrieve/:name' => 'api_keys#retrieve', format: :json
+      end
+    end
     resources :carousel_slides, except: [:show] do
       member do
         get 'move_up'

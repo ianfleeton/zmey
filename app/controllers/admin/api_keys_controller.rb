@@ -1,4 +1,6 @@
 class Admin::ApiKeysController < Admin::AdminController
+  skip_before_action :admin_or_manager_required, only: [:retrieve]
+
   def index
     @api_keys = current_user.api_keys
   end
@@ -14,6 +16,20 @@ class Admin::ApiKeysController < Admin::AdminController
       redirect_to admin_api_keys_path, notice: I18n.t('controllers.admin.api_keys.create.flash.created')
     else
       render :new
+    end
+  end
+
+  def retrieve
+    user = authenticate_with_http_basic { |u, p| User.authenticate(u, p) }
+    if user
+      @api_key = ApiKey.find_by(user: user, name: params[:name])
+      if @api_key
+        render formats: :json
+      else
+        render nothing: true, status: :not_found unless @api_key
+      end
+    else
+      render nothing: true, status: :unauthorized
     end
   end
 

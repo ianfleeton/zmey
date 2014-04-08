@@ -16,7 +16,7 @@ FactoryGirl.define do
   end
 
   factory :api_key do
-    sequence(:name) { |n| "Key #{n}" }
+    sequence(:name) { |n| "key-#{n}" }
     association :user
   end
 
