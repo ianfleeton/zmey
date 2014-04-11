@@ -14,8 +14,7 @@ p= mail_to @user.email
 - if @w.shop?
   p= link_to(@user.name + '’s orders', user_orders_path(@user))
 - unless @user.managed_website.nil?
-  p Website manager for
-    = h @user.managed_website.name
+  p Website manager for #{@user.managed_website.name}
 - if admin_or_manager?
   p
     = edit_button([:admin, @user])
