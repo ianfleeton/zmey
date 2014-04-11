@@ -7,6 +7,14 @@ Zmey has a REST API that returns data in JSON format.
 Requests are made using HTTP basic authentication over SSL, providing an API
 key as the username and a blank password.
 
+## Failure responses
+
+* **401 Unauthorized** — the key is invalid.
+* **403 Forbidden** — the key is not associated with a website or the object is
+owned by another website.
+* **426 Upgrade Required** — you are trying to access the API over an
+unencrypted connection but SSL should be used.
+
 ## Retrieving an API key for client applications
 
 Client applications can exchange a manager or admin's username and password
