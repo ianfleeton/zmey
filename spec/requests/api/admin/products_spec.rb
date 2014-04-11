@@ -14,21 +14,23 @@ describe 'Admin products API' do
     Api::Admin::AdminController.any_instance.stub(:authenticated_api_key).and_return(@api_key)
   end
 
-  it 'deletes all products in the website' do
-    product_1 = FactoryGirl.create(:product, website_id: @website.id)
-    product_2 = FactoryGirl.create(:product, website_id: @website.id)
-    product_3 = FactoryGirl.create(:product)
+  describe 'DELETE delete_all' do
+    it 'deletes all products in the website' do
+      product_1 = FactoryGirl.create(:product, website_id: @website.id)
+      product_2 = FactoryGirl.create(:product, website_id: @website.id)
+      product_3 = FactoryGirl.create(:product)
 
-    delete 'api/admin/products'
+      delete 'api/admin/products'
 
-    expect(Product.find_by(id: product_1.id)).not_to be
-    expect(Product.find_by(id: product_2.id)).not_to be
-    expect(Product.find_by(id: product_3.id)).to be
-  end
+      expect(Product.find_by(id: product_1.id)).not_to be
+      expect(Product.find_by(id: product_2.id)).not_to be
+      expect(Product.find_by(id: product_3.id)).to be
+    end
 
-  it 'responds with 204 No Content' do
-    delete 'api/admin/products'
+    it 'responds with 204 No Content' do
+      delete 'api/admin/products'
 
-    expect(status).to eq 204
+      expect(status).to eq 204
+    end
   end
 end
