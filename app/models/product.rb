@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
   validates_presence_of :name, :sku
   validates_uniqueness_of :sku, scope: :website_id
+  validates_presence_of :website_id
 
   # Google feed attributes
   AVAILABILITIES = ['in stock', 'available for order', 'out of stock', 'preorder']
@@ -36,7 +37,7 @@ class Product < ActiveRecord::Base
   def name_with_sku
     name + ' [' + sku + ']'
   end
-  
+
   # the price of a single product when quantity q is purchased as entered
   # by the merchant -- tax is not considered
   def price_at_quantity(q)
@@ -57,7 +58,7 @@ class Product < ActiveRecord::Base
       0
     end
   end
-  
+
   # the price exclusive of tax for a single product when quantity q is purchased
   def price_ex_tax(q=1)
     if tax_type == Product::INC_VAT

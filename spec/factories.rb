@@ -96,6 +96,7 @@ FactoryGirl.define do
   factory :product do
     name 'Product'
     sequence(:sku) { |n| "SKU#{n}" }
+    association :website
   end
 
   factory :quantity_price do
