@@ -10,12 +10,16 @@ class Api::Admin::AdminController < ApplicationController
       render nothing: true, status: 426 and return unless request.ssl?
     end
 
-    key = authenticate_with_http_basic { |u, p| ApiKey.find_by(key: u) }
+    key = authenticated_api_key
     if key
       @website = key.user.managed_website
       render nothing: true, status: 403 unless @website # forbidden
     else
       render nothing: true, status: 401 # unauthorized
     end
+  end
+
+  def authenticated_api_key
+    authenticate_with_http_basic { |u, p| ApiKey.find_by(key: u) }
   end
 end

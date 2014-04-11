@@ -95,7 +95,7 @@ FactoryGirl.define do
 
   factory :product do
     name 'Product'
-    sku 'SKU'
+    sequence(:sku) { |n| "SKU#{n}" }
   end
 
   factory :quantity_price do

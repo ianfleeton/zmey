@@ -57,6 +57,8 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     namespace :admin do
       resources :orders, only: [:index]
+
+      delete 'products', to: 'products#delete_all'
     end
   end
 

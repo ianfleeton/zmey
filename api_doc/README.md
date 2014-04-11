@@ -52,3 +52,7 @@ A successful retrieval will return JSON similar to the example:
 ### Orders
 
 * [`GET` api/admin/orders](endpoints/admin/orders/GET_index.md)
+
+### Products
+
+* [`DELETE` api/admin/products](endpoints/admin/products/DELETE_delete_all.md)
