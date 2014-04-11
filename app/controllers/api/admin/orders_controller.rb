@@ -1,6 +1,4 @@
-class Api::Admin::OrdersController < ApplicationController
-  before_action :admin_required # TODO: Replace with API authentication
-
+class Api::Admin::OrdersController < Api::Admin::AdminController
   def index
     @orders = website.orders
   end
