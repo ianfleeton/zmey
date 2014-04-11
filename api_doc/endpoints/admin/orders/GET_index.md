@@ -60,8 +60,7 @@ Returns a list of all orders and the order lines they contain.
           "order_id":1,
           "product_id":2,
           "product_sku":"IDV13",
-          "product_name":
-          "iDevice",
+          "product_name":"iDevice",
           "product_price":"300.0",
           "tax_amount":"0.0",
           "quantity":1,
