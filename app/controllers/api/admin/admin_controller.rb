@@ -3,6 +3,9 @@ class Api::Admin::AdminController < ApplicationController
 
   def set_website_for_api
     if Rails.env.production?
+      # TODO: Look into HTTP Strict Transport Security configuration and
+      # document.
+      # TODO: Disable keys that are transmitted over an unencrypted connection.
       # upgrade required if not using SSL
       render nothing: true, status: 426 and return unless request.ssl?
     end
