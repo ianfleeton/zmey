@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     if @user.save
       if admin_or_manager?
         flash[:notice] = "New user account has been created."
-        redirect_to users_path
+        redirect_to admin_users_path
       else
         @current_user  = @user
         session[:user] = @user.id
