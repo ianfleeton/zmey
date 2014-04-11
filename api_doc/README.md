@@ -38,3 +38,9 @@ A successful retrieval will return JSON similar to the example:
   }
 }
 ```
+
+## Endpoints
+
+### Orders
+
+* [`GET` api/admin/orders](endpoints/admin/orders/GET_index.md)
