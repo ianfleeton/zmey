@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :orders, only: [:index]
 
+      resources :products, only: [:create]
       delete 'products', to: 'products#delete_all'
     end
   end

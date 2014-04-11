@@ -14,6 +14,15 @@ describe 'Admin products API' do
     Api::Admin::AdminController.any_instance.stub(:authenticated_api_key).and_return(@api_key)
   end
 
+  describe 'POST create' do
+    it 'inserts a new product into the website' do
+      name = SecureRandom.hex
+      sku = SecureRandom.hex
+      post 'api/admin/products', product: {name: name, sku: sku}
+      expect(Product.find_by(sku: sku, website: @website)).to be
+    end
+  end
+
   describe 'DELETE delete_all' do
     it 'deletes all products in the website' do
       product_1 = FactoryGirl.create(:product, website_id: @website.id)

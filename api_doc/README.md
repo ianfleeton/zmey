@@ -55,4 +55,5 @@ A successful retrieval will return JSON similar to the example:
 
 ### Products
 
+* [`POST` api/admin/products](endpoints/admin/products/POST_create.md)
 * [`DELETE` api/admin/products](endpoints/admin/products/DELETE_delete_all.md)
