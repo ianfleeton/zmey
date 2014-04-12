@@ -2,7 +2,12 @@ require 'spec_helper'
 require 'shared_examples_for_controllers'
 
 describe Admin::ImagesController do
-  before { logged_in_as_admin }
+  let(:website) { FactoryGirl.build(:website) }
+
+  before do
+    Website.stub(:for).and_return(website)
+    logged_in_as_admin
+  end
 
   describe 'GET index' do
     it_behaves_like 'a website owned objects finder', :image
