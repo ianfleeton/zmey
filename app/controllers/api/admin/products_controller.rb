@@ -14,6 +14,6 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
 
     def product_params
       params.require(:product).permit(:description, :meta_description, :name,
-      :price, :sku)
+      :page_title, :price, :sku)
     end
 end
