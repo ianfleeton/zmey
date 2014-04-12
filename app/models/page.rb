@@ -8,7 +8,9 @@ class Page < ActiveRecord::Base
   belongs_to :website
 
   validates_presence_of :title, :name, :description, :website_id
-  validates_format_of :slug, with: /\A[-a-z0-9]+\Z/, message: 'can only contain lowercase letters, numbers and hyphens', allow_blank: true
+  validates_format_of :slug, with: /\A[-a-z0-9\/]+\Z/,
+    message: 'can only contain lowercase letters, numbers, hyphens and forward slashes',
+    allow_blank: true
   validates_uniqueness_of :slug, scope: :website_id, case_sensitive: false
   validates_uniqueness_of :title, scope: :website_id, case_sensitive: false
   validates_uniqueness_of :name, scope: :parent_id, case_sensitive: false, unless: Proc.new { |page| page.parent_id.nil? }
@@ -37,7 +39,7 @@ class Page < ActiveRecord::Base
       parent_id: nav_page.id
     ) {|hp| hp.website_id = website.id}
   end
-  
+
   def self.create_navigation website, slug
     create(
       title: slug.titleize + ' Navigation',
@@ -54,7 +56,7 @@ class Page < ActiveRecord::Base
       nav = Navigation.new
       nav.id_attribute = nr.slug.gsub('-', '_') + '_nav'
       nav.pages = Page.where(parent_id: nr.id).order('position')
-      navs << nav 
+      navs << nav
     end
     navs
   end
