@@ -11,10 +11,10 @@ Create a new product.
 
 ### Additional attributes
 
-* **price** — Price of the product with decimal to separate pounds and pence,
-for example, 10.99.
 * **description** — A description of the product.
 * **meta_description** — A description meta tag for the product's main page.
+* **price** — Price of the product with decimal to separate pounds and pence,
+for example, 10.99.
 
 ## Example
 
