@@ -7,10 +7,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :website, :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_action :set_time_zone, :require_website, :initialize_meta_tags, :current_user, :set_locale, :protect_private_website, :initialize_tax_display, :set_resolver
+  before_action :set_time_zone, :website, :initialize_meta_tags, :current_user, :set_locale, :protect_private_website, :initialize_tax_display, :set_resolver
 
-  attr_reader :website
-  
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_error
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
@@ -26,6 +24,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by(id: session[:user])
   end
 
+  def website
+    @website ||= find_website
+  end
+
   protected
 
   def logged_in?
@@ -35,11 +37,11 @@ class ApplicationController < ActionController::Base
   def admin?
     logged_in? and current_user.admin?
   end
-  
+
   def manager?
     logged_in? and current_user.managed_website == @w
   end
-  
+
   def admin_or_manager?
     admin? or manager?
   end
@@ -50,7 +52,7 @@ class ApplicationController < ActionController::Base
       redirect_to sign_in_path
     end
   end
-  
+
   def user_required
     unless logged_in?
       flash[:notice] = 'You need to be logged in to do that.'
@@ -79,12 +81,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def require_website
-    @website = @w = Website.for(request.host, request.subdomains) || Website.first
+  def find_website
+    @w = Website.for(request.host, request.subdomains) || Website.first
     if @w
       if request.host == @w.domain
         set_cookie_domain(@w.domain)
       end
+      return @w
     else
       not_found
     end
@@ -102,11 +105,11 @@ class ApplicationController < ActionController::Base
   end
 
   def initialize_meta_tags
-    @description = @w.name
+    @description = website.name
   end
 
   def protect_private_website
-    if @w.private? && !logged_in?
+    if website.private? && !logged_in?
       flash[:notice] = 'You must be logged in to view this website.'
       redirect_to sign_in_path
     end
@@ -115,8 +118,8 @@ class ApplicationController < ActionController::Base
   def initialize_tax_display
     @inc_tax = false
 
-    unless @w.vat_number.empty?
-      @inc_tax = @w.show_vat_inclusive_prices
+    unless website.vat_number.empty?
+      @inc_tax = website.show_vat_inclusive_prices
       # override with user's preference
       unless session[:inc_tax].nil?
         @inc_tax = session[:inc_tax]
@@ -126,7 +129,7 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     session[:locale] = params[:locale] if params[:locale]
-    I18n.locale = session[:locale] || @w.default_locale
+    I18n.locale = session[:locale] || website.default_locale
 
     locale_path = "#{LOCALES_DIRECTORY}#{I18n.locale}.yml"
 

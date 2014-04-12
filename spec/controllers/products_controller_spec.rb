@@ -2,16 +2,14 @@ require 'spec_helper'
 require 'shared_examples_for_controllers'
 
 describe ProductsController do
-  let(:website) { mock_model(Website).as_null_object }
+  let(:website) { FactoryGirl.build(:website) }
 
   def mock_product(stubs={})
     @mock_product ||= mock_model(Product, stubs)
   end
 
   before do
-    Website.stub(:for).and_return(website)
-    website.stub(:private?).and_return(false)
-    website.stub(:vat_number).and_return('')
+    controller.stub(:website).and_return(website)
   end
 
   describe "GET show" do

@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
     redirect_to controller: 'basket', action: 'index' and return unless (@order.payment_received? or @order.status==Order::PAYMENT_ON_ACCOUNT)
     @google_ecommerce_tracking = true
   end
-  
+
   def show
     if can_access_order?
       render :receipt
@@ -57,7 +57,7 @@ class OrdersController < ApplicationController
 
   # get specific order
   def find_order
-    @order = Order.find_by(id: params[:id], website_id: @w.id)
+    @order = Order.find_by(id: params[:id], website_id: website.id)
     if @order.nil?
       redirect_to orders_path, notice: 'Cannot find order.'
     end
@@ -74,9 +74,9 @@ class OrdersController < ApplicationController
   end
 
   def cardsave_hash_pre
-    plain="PreSharedKey=" + @w.cardsave_pre_shared_key
-    plain=plain + '&MerchantID=' + @w.cardsave_merchant_id
-    plain=plain + '&Password=' + @w.cardsave_password
+    plain="PreSharedKey=" + website.cardsave_pre_shared_key
+    plain=plain + '&MerchantID=' + website.cardsave_merchant_id
+    plain=plain + '&Password=' + website.cardsave_password
     plain=plain + '&Amount=' + (@order.total * 100).to_int.to_s
     plain=plain + '&CurrencyCode=826'
     plain=plain + '&OrderID=' + @order.order_number

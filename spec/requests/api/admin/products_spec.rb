@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-include Rack::Test::Methods
-
 def prepare_api_website
   @website = FactoryGirl.create(:website)
   @api_user = FactoryGirl.create(:user, manages_website_id: @website.id)

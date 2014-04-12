@@ -3,6 +3,10 @@ require 'spec_helper'
 feature 'Forgot password' do
   let(:existing_user) { FactoryGirl.create(:user, email: 'exists@example.org') }
 
+  background do
+    FactoryGirl.create(:website)
+  end
+
   scenario 'Forget and reset password' do
     visit sign_in_path
     click_link I18n.t('forgot_your_password')

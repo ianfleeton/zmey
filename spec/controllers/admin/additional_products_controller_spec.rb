@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::AdditionalProductsController do
-  let(:website) { mock_model(Website).as_null_object }
+  let(:website) { FactoryGirl.build(:website) }
 
   def mock_additional_product(stubs={})
     @mock_additional_product ||= mock_model(AdditionalProduct, stubs)
@@ -12,9 +12,8 @@ describe Admin::AdditionalProductsController do
   end
 
   before do
-    Website.stub(:for).and_return(website)
+    controller.stub(:website).and_return(website)
     logged_in_as_admin
-    website.stub(:private?).and_return(false)
   end
 
   describe 'GET new' do

@@ -10,16 +10,16 @@ class PaymentsController < ApplicationController
   def index
     @payments = Payment.order('created_at DESC')
   end
-  
+
   def show
     @payment = Payment.find(params[:id])
   end
 
   def paypal_auto_return
-    response = pdt_notification_sync(params[:tx], @w.paypal_identity_token)
+    response = pdt_notification_sync(params[:tx], website.paypal_identity_token)
     @payment = Payment.new
     @payment.service_provider = 'PayPal'
-    @payment.installation_id = @w.paypal_email_address
+    @payment.installation_id = website.paypal_email_address
     @payment.cart_id = response[:item_name]
     @payment.description = 'Web purchase'
     @payment.amount = response[:mc_gross]
@@ -117,12 +117,12 @@ class PaymentsController < ApplicationController
 
     if params[:transStatus].nil? or params[:transStatus] != 'Y'
       @message = 'No payment was made'
-    elsif !@w.skip_payment? and (params[:callbackPW].nil? or params[:callbackPW] != @w.worldpay_payment_response_password)
+    elsif !website.skip_payment? and (params[:callbackPW].nil? or params[:callbackPW] != website.worldpay_payment_response_password)
       @message = FAILURE_MESSAGE
     elsif params[:cartId].nil?
       @message = FAILURE_MESSAGE
-    elsif params[:testMode] and !@w.worldpay_test_mode? and params[:testMode] != '0'
-      @message = FAILURE_MESSAGE      
+    elsif params[:testMode] and !website.worldpay_test_mode? and params[:testMode] != '0'
+      @message = FAILURE_MESSAGE
     else
       @message = 'Payment received'
       @payment.accepted = true
@@ -232,9 +232,9 @@ class PaymentsController < ApplicationController
   end
 
   def cardsave_hash_post
-    plain="PreSharedKey=" + @w.cardsave_pre_shared_key
-    plain=plain + '&MerchantID=' + @w.cardsave_merchant_id
-    plain=plain + '&Password=' + @w.cardsave_password
+    plain="PreSharedKey=" + website.cardsave_pre_shared_key
+    plain=plain + '&MerchantID=' + website.cardsave_merchant_id
+    plain=plain + '&Password=' + website.cardsave_password
     plain=plain + '&StatusCode=' + params[:StatusCode]
     plain=plain + '&Message=' + params[:Message]
     plain=plain + '&PreviousStatusCode=' + params[:PreviousStatusCode]

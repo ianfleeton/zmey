@@ -14,7 +14,7 @@ class Admin::ProductsController < Admin::AdminController
 
   def create
     @product = Product.new(product_params)
-    @product.website_id = @w.id
+    @product.website_id = website.id
 
     if @product.save
       flash[:notice] = "Successfully added new product."

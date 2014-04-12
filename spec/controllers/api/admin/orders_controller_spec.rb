@@ -5,6 +5,7 @@ describe Api::Admin::OrdersController do
 
   describe 'GET index' do
     it 'assigns all orders for the website to @orders' do
+      pending 'Make me into a request spec'
       website = FactoryGirl.create(:website)
       o1 = FactoryGirl.build(:order)
       o2 = FactoryGirl.build(:order)

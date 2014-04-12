@@ -1,12 +1,10 @@
 require 'spec_helper'
 
 describe Admin::WebsitesController do
-  let(:website) { mock_model(Website).as_null_object }
+  let(:website) { FactoryGirl.build(:website) }
 
   before do
-    Website.stub(:for).and_return(website)
-    website.stub(:private?).and_return(false)
-    website.stub(:vat_number).and_return('')
+    controller.stub(:website).and_return(website)
   end
 
   def mock_website(stubs={})

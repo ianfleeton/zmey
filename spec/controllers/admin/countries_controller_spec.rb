@@ -7,7 +7,7 @@ describe Admin::CountriesController do
   before do
     Website.delete_all
     logged_in_as_admin
-    Website.stub(:for).and_return(website)
+    controller.stub(:website).and_return(website)
   end
 
   describe 'GET index' do

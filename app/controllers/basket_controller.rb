@@ -1,6 +1,6 @@
 class BasketController < ApplicationController
   before_action :find_basket
-  
+
   before_action :require_delivery_address, only: [:place_order]
   before_action :remove_invalid_discounts, only: [:index, :checkout, :place_order]
   before_action :calculate_discounts, only: [:index, :checkout, :place_order]
@@ -35,7 +35,7 @@ class BasketController < ApplicationController
       redirect_to action: 'index', page_id: params[:page_id]
     end
   end
-  
+
   def update
     update_quantities if params[:update_quantities]
     remove_item if params[:remove_item]
@@ -43,7 +43,7 @@ class BasketController < ApplicationController
     flash[:notice] = 'Basket updated.'
     redirect_to action: 'index'
   end
-  
+
   def checkout
     redirect_to action: 'index' and return if @basket.basket_items.empty?
 
@@ -58,7 +58,7 @@ class BasketController < ApplicationController
         @address.full_name = @current_user.name
       end
     end
-    
+
     @shipping_amount = shipping_amount
   end
 
@@ -66,7 +66,7 @@ class BasketController < ApplicationController
     delete_previous_unpaid_order_if_any
 
     @order = Order.new
-    @order.website_id = @w.id
+    @order.website_id = website.id
     @order.user_id = @current_user.id if logged_in?
     @order.ip_address = request.remote_ip
     @order.copy_address @address
@@ -74,8 +74,8 @@ class BasketController < ApplicationController
     unless params[:preferred_delivery_date].nil?
       @order.preferred_delivery_date = Date.strptime(params[:preferred_delivery_date],
         @w.preferred_delivery_date_settings.date_format)
-      @order.preferred_delivery_date_prompt = @w.preferred_delivery_date_settings.prompt
-      @order.preferred_delivery_date_format = @w.preferred_delivery_date_settings.date_format
+      @order.preferred_delivery_date_prompt = website.preferred_delivery_date_settings.prompt
+      @order.preferred_delivery_date_format = website.preferred_delivery_date_settings.date_format
     end
 
     @basket.basket_items.each do |i|
@@ -107,18 +107,18 @@ class BasketController < ApplicationController
     @order.basket_id = @basket.id
     @order.save!
     session[:order_id] = @order.id
-    if @w.only_accept_payment_on_account?
+    if website.only_accept_payment_on_account?
       @order.status = Order::PAYMENT_ON_ACCOUNT
       @order.save
-      OrderNotifier.notification(@w, @order).deliver
+      OrderNotifier.notification(website, @order).deliver
       @order.empty_basket(session)
       redirect_to controller: 'orders', action: 'receipt'
     else
-      OrderNotifier.admin_waiting_for_payment(@w, @order).deliver
+      OrderNotifier.admin_waiting_for_payment(website, @order).deliver
       redirect_to controller: 'orders', action: 'select_payment_method'
     end
   end
-  
+
   def purge_old
     Basket.purge_old
     flash[:notice] = 'Old baskets purged.'

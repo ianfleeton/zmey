@@ -5,7 +5,7 @@ describe Admin::ImagesController do
   let(:website) { FactoryGirl.build(:website) }
 
   before do
-    Website.stub(:for).and_return(website)
+    controller.stub(:website).and_return(website)
     logged_in_as_admin
   end
 

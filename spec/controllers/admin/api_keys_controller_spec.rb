@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Admin::ApiKeysController do
-  let(:website) { mock_model(Website, :private? => false).as_null_object }
+  let(:website) { FactoryGirl.build(:website) }
 
   before do
-    Website.stub(:for).and_return(website)
+    controller.stub(:website).and_return(website)
     logged_in_as_admin
   end
 

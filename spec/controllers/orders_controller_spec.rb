@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe OrdersController do
-  let(:website) { mock_model(Website).as_null_object }
+  let(:website) { FactoryGirl.build(:website) }
   let(:current_user) { FactoryGirl.create(:user) }
 
   def mock_order(stubs={})
@@ -9,8 +9,7 @@ describe OrdersController do
   end
 
   before do
-    Website.stub(:for).and_return(website)
-    website.stub(:private?).and_return(false)
+    controller.stub(:website).and_return(website)
   end
 
   describe 'GET index' do

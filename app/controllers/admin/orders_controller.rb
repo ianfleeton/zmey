@@ -25,7 +25,7 @@ class Admin::OrdersController < Admin::AdminController
 
   # get specific order
   def find_order
-    @order = Order.find_by(id: params[:id], website_id: @w.id)
+    @order = Order.find_by(id: params[:id], website_id: website.id)
     if @order.nil?
       redirect_to orders_path, notice: 'Cannot find order.'
     end

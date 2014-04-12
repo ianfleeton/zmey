@@ -1,6 +1,6 @@
 class Admin::WebsitesController < Admin::AdminController
   before_action :admin_required, except: [:edit, :update]
-  before_action :find_website, only: [:edit, :update, :destroy]
+  before_action :find_website_subject, only: [:edit, :update, :destroy]
   before_action :permission_check, only: [:edit, :update]
 
   def index
@@ -56,7 +56,7 @@ class Admin::WebsitesController < Admin::AdminController
     end
   end
 
-  def find_website
+  def find_website_subject
     @website_subject = Website.find(params[:id])
   end
 

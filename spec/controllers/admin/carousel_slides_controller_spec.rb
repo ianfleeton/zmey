@@ -2,11 +2,10 @@ require 'spec_helper'
 require 'shared_examples_for_controllers'
 
 describe Admin::CarouselSlidesController do
-  let(:website) { mock_model(Website).as_null_object }
+  let(:website) { FactoryGirl.build(:website) }
 
   before do
-    Website.stub(:for).and_return(website)
-    website.stub(:private?).and_return(false)
+    controller.stub(:website).and_return(website)
   end
 
   def mock_carousel_slide(stubs={})
@@ -45,14 +44,14 @@ describe Admin::CarouselSlidesController do
       let(:valid_params) {{ 'carousel_slide' => { 'caption' => 'A Caption' } }}
 
       it 'assigns a newly created but unsaved carousel slide as @carousel_slide' do
-        CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website_id= => website.id, save: false))
+        CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website= => website, save: false))
         post :create, carousel_slide: {these: 'params'}
         expect(assigns(:carousel_slide)).to equal(mock_carousel_slide)
       end
 
       describe 'when save succeeds' do
         before do
-          CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website_id= => website.id, save: true))
+          CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website= => website, save: true))
         end
 
         it 'redirects to the carousel slides list' do
@@ -63,7 +62,7 @@ describe Admin::CarouselSlidesController do
 
       describe 'when save fails' do
         before do
-          CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website_id= => website.id, save: false))
+          CarouselSlide.stub(:new).and_return(mock_carousel_slide(:website= => website, save: false))
         end
 
         it "re-renders the 'new' template" do
@@ -128,8 +127,8 @@ describe Admin::CarouselSlidesController do
     end
 
     context 'moving' do
-      let!(:first) { FactoryGirl.create(:carousel_slide, website: website) } 
-      let!(:last)  { FactoryGirl.create(:carousel_slide, website: website) } 
+      let!(:first) { FactoryGirl.create(:carousel_slide, website: website) }
+      let!(:last)  { FactoryGirl.create(:carousel_slide, website: website) }
 
       describe 'GET move_up' do
         it 'moves the carousel slide up the list' do

@@ -9,7 +9,7 @@ describe Admin::OrdersController do
   end
 
   before do
-    Website.stub(:for).and_return(website)
+    controller.stub(:website).and_return(website)
   end
 
   context 'when admin or manager' do

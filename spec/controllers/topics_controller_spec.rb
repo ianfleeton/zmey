@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TopicsController do
   describe 'GET new' do
     let(:forum)   { FactoryGirl.create(:forum) }
-    let(:website) { mock_model(Website).as_null_object }
+    let(:website) { FactoryGirl.build(:website) }
     let(:admin)   { false }
 
     before do

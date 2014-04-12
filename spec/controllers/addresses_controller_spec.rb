@@ -1,15 +1,14 @@
 require 'spec_helper'
 
 describe AddressesController do
-  let(:website) { mock_model(Website).as_null_object }
+  let(:website) { FactoryGirl.build(:website) }
 
   def mock_address(stubs={})
     @mock_address ||= mock_model(Address, stubs)
   end
 
   before do
-    Website.stub(:for).and_return(website)
-    website.stub(:private?).and_return(false)
+    controller.stub(:website).and_return(website)
   end
 
   describe 'GET new' do

@@ -11,7 +11,7 @@ class Admin::CountriesController < Admin::AdminController
 
   def create
     @country = Country.new(country_params)
-    @country.website_id = @w.id
+    @country.website = website
 
     if @country.save
       redirect_to admin_countries_path, notice: 'Saved.'

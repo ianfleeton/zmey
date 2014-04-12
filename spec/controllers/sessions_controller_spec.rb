@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe SessionsController do
-  let(:website) { mock_model(Website).as_null_object }
+  let(:website) { FactoryGirl.build(:website) }
   let(:customer) { mock_model(User, admin?: false).as_null_object }
 
   before do
-    Website.stub(:for).and_return(website)
-    website.stub(:private?).and_return(false)
+    controller.stub(:website).and_return(website)
   end
 
   describe 'POST #create' do
