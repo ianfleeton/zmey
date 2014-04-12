@@ -86,8 +86,10 @@ FactoryGirl.define do
 
   factory :page do
     name 'Page Name'
-    title 'Page Title'
+    sequence(:title) { |n| "Page Title #{n}" }
+    sequence(:slug)  { |n| "page-#{n}" }
     description 'Meta description...'
+    association :website
   end
 
   factory :payment do

@@ -53,6 +53,10 @@ A successful retrieval will return JSON similar to the example:
 
 * [`GET` api/admin/orders](endpoints/admin/orders/GET_index.md)
 
+### Pages
+
+* [`GET` api/admin/pages](endpoints/admin/pages/GET_index.md)
+
 ### Products
 
 * [`POST` api/admin/products](endpoints/admin/products/POST_create.md)
