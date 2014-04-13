@@ -56,6 +56,7 @@ A successful retrieval will return JSON similar to the example:
 ### Pages
 
 * [`GET` api/admin/pages](endpoints/admin/pages/GET_index.md)
+* [`POST` api/admin/pages](endpoints/admin/pages/POST_create.md)
 
 ### Products
 

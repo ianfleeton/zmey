@@ -45,4 +45,15 @@ describe 'Admin pages API' do
       end
     end
   end
+
+  describe 'POST create' do
+    it 'inserts a new page into the website' do
+      name = SecureRandom.hex
+      slug = SecureRandom.hex
+      title = SecureRandom.hex
+      description = 'Description'
+      post 'api/admin/pages', page: {description: description, name: name, slug: slug, title: title}
+      expect(Page.find_by(slug: slug, website: @website)).to be
+    end
+  end
 end
