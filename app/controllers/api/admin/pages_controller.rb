@@ -7,7 +7,9 @@ class Api::Admin::PagesController < Api::Admin::AdminController
   def create
     @page = Page.new(page_params)
     @page.website = website
-    @page.save
+    unless @page.save
+      render json: @page.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   private

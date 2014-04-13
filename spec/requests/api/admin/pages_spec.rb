@@ -55,5 +55,10 @@ describe 'Admin pages API' do
       post 'api/admin/pages', page: {description: description, name: name, slug: slug, title: title}
       expect(Page.find_by(slug: slug, website: @website)).to be
     end
+
+    it 'returns 422 with bad params' do
+      post 'api/admin/pages', page: {title: ''}
+      expect(response.status).to eq 422
+    end
   end
 end
