@@ -26,12 +26,14 @@ Things you may want to cover:
 === Environment variables
 
 [ZMEY_ASSETS]
-Location of additional assets. This allows a website's custom assets to be
-stored outside of the core Zmey repository.
+
+    Location of additional assets. This allows a website's custom assets to be
+    stored outside of the core Zmey repository.
 
 [ZMEY_THEMES]
-Location of themes that will override the core views. Use this to theme websites
-without modifying views in the core repository. To use external themes, set
-a website's custom view resolver attribute to CustomView::ThemeResolver. Themes
-are looked up in ZMEY_THEMES/subdomain where subdomain is the website's
-subdomain attribute.
+
+    Location of themes that will override the core views. Use this to theme
+    websites without modifying views in the core repository. To use external
+    themes, set a website's custom view resolver attribute to
+    CustomView::ThemeResolver. Themes are looked up in ZMEY_THEMES/subdomain
+    where subdomain is the website's subdomain attribute.
