@@ -23,6 +23,8 @@ Things you may want to cover:
 
 * ...
 
+=== Environment variables
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+[ZMEY_ASSETS]
+Location of additional assets. This allows a website's custom assets to be
+stored outside of the core Zmey repository.

@@ -30,5 +30,7 @@ module Zmey
 
     config.autoload_paths += Dir["#{config.root}/lib"]
     config.assets.precompile += %w( admin.css screen.css.scss )
+
+    config.assets.paths << ENV['ZMEY_ASSETS']
   end
 end
