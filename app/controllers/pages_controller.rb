@@ -7,10 +7,6 @@ class PagesController < ApplicationController
       if request.path == '/'
         @blog = website.blog
       end
-      if admin_or_manager?
-        # set up objects for admin use
-        @product_placement = ProductPlacement.new
-      end
     else
       not_found
     end
