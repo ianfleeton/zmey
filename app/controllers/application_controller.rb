@@ -149,7 +149,7 @@ class ApplicationController < ActionController::Base
     # Allows the use of a website custom view template resolver to let
     # websites override the base templates with custom ones, either in the
     # database or in the filesystem under the directory specified in
-    # +ENV['ZMEY_THEMES']+.
+    # +ENV['ZMEY_THEMES']/app/views+.
     #
     # Since templates can execute arbitrary Ruby code this should be used in
     # a deployment where:
