@@ -62,3 +62,7 @@ A successful retrieval will return JSON similar to the example:
 
 * [`POST` api/admin/products](endpoints/admin/products/POST_create.md)
 * [`DELETE` api/admin/products](endpoints/admin/products/DELETE_delete_all.md)
+
+### Product placements
+
+* [`POST` api/admin/product_placements](endpoints/admin/product_placements/POST_create.md)
