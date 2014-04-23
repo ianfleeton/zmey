@@ -13,4 +13,3 @@ template('product_detail',
   product_image_url: @product.image ? @product.image.url(@w.product_image_size) : ''
   )
 %>
-<%= render partial: 'products/admin_controls', locals: {product: @product} %>

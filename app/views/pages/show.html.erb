@@ -28,7 +28,6 @@
     product_image_url: product.image.nil? ? '' : product.image.url(website.product_thumbnail_size)
     )
   %>
-  <% product_summaries += render partial: 'products/admin_controls', locals: {product: product, placement: placement } %>
 <% end %>
 <% product_summaries += template("product_summaries_after") %>
 
@@ -40,19 +39,3 @@ template('page',
   product_summaries: product_summaries
 )
 %>
-
-<% if admin_or_manager? -%>
-<div id="page_admin_controls">
-  <h2>Admin Controls</h2>
-  <!-- I probably need moving to product_placement/_form.html -->
-  <% if website.products.any? -%>
-  <%= form_for @product_placement do |form| %>
-  <input type="hidden" name="product_placement[page_id]" value="<%= @page.id %>" />
-  <%= form.collection_select :product_id, website.products, :id, :name_with_sku %>
-  <%= submit_tag 'Add Product' %>
-  <% end %>
-  <% end -%>
-  <p><%= link_to 'Edit this page', edit_admin_page_path(@page) %></p>
-  <%= delete_button [:admin, @page] %>
-</div>
-<% end -%>
