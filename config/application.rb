@@ -32,5 +32,7 @@ module Zmey
     config.assets.precompile += %w( admin.css screen.css.scss )
 
     config.assets.paths << ENV['ZMEY_ASSETS']
+
+    require ENV['ZMEY_CONFIG'] if ENV['ZMEY_CONFIG']
   end
 end
