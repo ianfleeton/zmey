@@ -8,8 +8,8 @@ class Page < ActiveRecord::Base
   belongs_to :website
 
   validates_presence_of :title, :name, :description, :website_id
-  validates_format_of :slug, with: /\A[-a-z0-9\/]+\Z/,
-    message: 'can only contain lowercase letters, numbers, hyphens and forward slashes',
+  validates_format_of :slug, with: /\A[-a-z0-9_\/\.]+\Z/,
+    message: 'can only contain lowercase letters, numbers, hyphens, dots, underscores and forward slashes',
     allow_blank: true
   validates_uniqueness_of :slug, scope: :website_id, case_sensitive: false
   validates_uniqueness_of :title, scope: :website_id, case_sensitive: false

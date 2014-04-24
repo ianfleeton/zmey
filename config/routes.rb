@@ -161,7 +161,7 @@ Rails.application.routes.draw do
 
   resources :pages, only: [:show]
 
-  get ':slug' => 'pages#show', as: :slug, constraints: { slug: /[-a-z0-9\/]*/ }
+  get ':slug' => 'pages#show', as: :slug, constraints: { slug: /[-a-z0-9_\/\.]*/ }
 
   root controller: 'pages', action: 'show', slug: ''
 
