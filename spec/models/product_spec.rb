@@ -7,6 +7,28 @@ describe Product do
 
   it { should ensure_inclusion_of(:gender).in_array(Product::GENDERS) }
 
+  describe 'image validations' do
+    it 'allows an image to be absent' do
+      product = FactoryGirl.build(:product, image_id: nil)
+      expect(product.valid?).to be_true
+    end
+
+    it 'validates that given image exists' do
+      product = FactoryGirl.build(:product)
+      Image.destroy_all
+      product.image_id = 1
+      product.valid?
+      expect(product.errors[:image]).to include "can't be blank"
+    end
+
+    it 'validates that image belongs to same website' do
+      image = FactoryGirl.create(:image)
+      product = FactoryGirl.build(:product, image_id: image.id)
+      product.valid?
+      product.errors[:image].should include I18n.t('activerecord.errors.models.product.attributes.image.invalid')
+    end
+  end
+
   describe "#name_with_sku" do
     it "returns the name followed by the SKU in square brackets" do
       @product.name = 'Banana'

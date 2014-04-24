@@ -2,6 +2,8 @@ class Product < ActiveRecord::Base
   validates_presence_of :name, :sku
   validates_uniqueness_of :sku, scope: :website_id
   validates_presence_of :website_id
+  validates_presence_of :image, unless: Proc.new { |p| p.image_id.nil? }
+  validate :image_belongs_to_same_website
 
   # Google feed attributes
   AVAILABILITIES = ['in stock', 'available for order', 'out of stock', 'preorder']
@@ -117,5 +119,13 @@ class Product < ActiveRecord::Base
 
   def delete
     destroy
+  end
+
+  # Custom validations
+
+  def image_belongs_to_same_website
+    if image && image.website != website
+      errors.add(:image, I18n.t('activerecord.errors.models.product.attributes.image.invalid'))
+    end
   end
 end

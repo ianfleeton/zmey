@@ -2,6 +2,13 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  activerecord:
+    errors:
+      models:
+        product:
+          attributes:
+            image:
+              invalid: 'is invalid'
   add_to_cart: Add to Basket
   admin:
     api_keys:
