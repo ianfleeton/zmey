@@ -49,6 +49,10 @@ A successful retrieval will return JSON similar to the example:
 
 ## Endpoints
 
+### Images
+
+* [`GET` api/admin/images](endpoints/admin/images/GET_index.md)
+
 ### Orders
 
 * [`GET` api/admin/orders](endpoints/admin/orders/GET_index.md)

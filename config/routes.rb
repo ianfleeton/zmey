@@ -56,6 +56,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :admin do
+      resources :images, only: [:index]
+
       resources :orders, only: [:index]
 
       resources :pages, only: [:create, :index]
