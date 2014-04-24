@@ -12,6 +12,7 @@ Create a new product.
 ### Additional attributes
 
 * **description** — A description of the product.
+* **image_id** — ID of the main product image.
 * **meta_description** — A description meta tag for the product's main page.
 * **page_title** — Title of the HTML document for the product's main page.
 * **price** — Price of the product with decimal to separate pounds and pence,
