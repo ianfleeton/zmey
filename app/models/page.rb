@@ -7,7 +7,8 @@ class Page < ActiveRecord::Base
   belongs_to :image
   belongs_to :website
 
-  validates_presence_of :title, :name, :description, :website_id
+  validates_presence_of :title, :name, :website_id
+  validates :description, presence: true, length: { maximum: 200 }
   validates_format_of :slug, with: /\A[-a-z0-9_\/\.]+\Z/,
     message: 'can only contain lowercase letters, numbers, hyphens, dots, underscores and forward slashes',
     allow_blank: true
