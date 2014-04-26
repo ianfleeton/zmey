@@ -6,7 +6,7 @@ Create a new page.
 
 ### Required attributes
 
-* **description** — A description meta tag.
+* **description** — A description meta tag. Maximum length is 200 characters.
 * **name** — Name of the page.
 * **slug** — Used to form the page's URL. Can contain numbers, lowercase
 letters, hyphens and forward slashes.
