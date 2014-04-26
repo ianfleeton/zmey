@@ -71,6 +71,7 @@ Rails.application.routes.draw do
 
   resources :addresses
 
+  get 'basket' => 'basket#index', as: :basket
   post 'basket/add' => 'basket#add', as: :add_to_basket
   get 'basket/checkout', as: :checkout
   post 'basket/enter_coupon' => 'basket#enter_coupon'

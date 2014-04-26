@@ -30,9 +30,9 @@ class BasketController < ApplicationController
 
     flash[:notice] = 'Added to basket.'
     if params[:page_id].nil?
-      redirect_to action: 'index'
+      redirect_to basket_path
     else
-      redirect_to action: 'index', page_id: params[:page_id]
+      redirect_to basket_path, page_id: params[:page_id]
     end
   end
 
@@ -41,11 +41,11 @@ class BasketController < ApplicationController
     remove_item if params[:remove_item]
     redirect_to action: 'checkout' and return if params[:checkout]
     flash[:notice] = 'Basket updated.'
-    redirect_to action: 'index'
+    redirect_to basket_path
   end
 
   def checkout
-    redirect_to action: 'index' and return if @basket.basket_items.empty?
+    redirect_to basket_path and return if @basket.basket_items.empty?
 
     @address = nil
     @address = Address.find_by(id: session[:address_id]) if session[:address_id]
@@ -122,7 +122,7 @@ class BasketController < ApplicationController
   def purge_old
     Basket.purge_old
     flash[:notice] = 'Old baskets purged.'
-    redirect_to action: 'index'
+    redirect_to basket_path
   end
 
   def enter_coupon
@@ -140,7 +140,7 @@ class BasketController < ApplicationController
         run_trigger_for_coupon_discount(discount)
       end
     end
-    redirect_to :action => 'index'
+    redirect_to basket_path
   end
 
   def remove_coupon
@@ -148,7 +148,7 @@ class BasketController < ApplicationController
       session[:coupons].subtract [params[:coupon_code].upcase]
     end
     flash[:notice] = 'Your coupon has been removed.'
-    redirect_to action: 'index'
+    redirect_to basket_path
   end
 
   protected

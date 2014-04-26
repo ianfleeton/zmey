@@ -14,7 +14,7 @@
     <%= nav_link_to I18n.t('login'), controller: 'sessions', action: 'new' %>
     <% end -%>
     <% if @w.shop? -%>
-    <%= nav_link_to I18n.t('view_cart'), controller: 'basket' %>
+    <%= nav_link_to I18n.t('view_cart'), basket_path %>
     <%= nav_link_to I18n.t('checkout'), controller: 'basket', action: 'checkout' %>
     <% end -%>
   <% end %>
