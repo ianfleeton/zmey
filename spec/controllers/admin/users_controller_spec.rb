@@ -18,6 +18,24 @@ describe Admin::UsersController do
 
     describe 'POST create' do
       it_behaves_like 'a website association creator', :user
+
+      def post_valid
+        post 'create', user: {'some' => 'params'}
+      end
+
+      context 'when create succeeds' do
+        before { User.any_instance.stub(:save).and_return(true) }
+
+        it 'sets a flash notice' do
+          post_valid
+          expect(flash[:notice]).to eq I18n.t('controllers.admin.users.create.flash.created')
+        end
+
+        it 'redirects to the admin users path' do
+          post_valid
+          expect(response).to redirect_to admin_users_path
+        end
+      end
     end
 
     describe 'PATCH update' do

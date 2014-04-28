@@ -20,8 +20,8 @@ class Admin::UsersController < Admin::AdminController
     @user.website = website
 
     if @user.save
-      flash[:notice] = "New user account has been created."
-      redirect_to users_path
+      flash[:notice] = I18n.t('controllers.admin.users.create.flash.created')
+      redirect_to admin_users_path
     else
       render :new
     end

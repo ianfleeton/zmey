@@ -77,6 +77,10 @@ en:
         create:
           flash:
             created: 'Your new API key has been created.'
+      users:
+        create:
+          flash:
+            created: 'New user account has been created.'
     enquiries: Enquiries
     images: Images
     liquid_templates: Liquid Templates
