@@ -7,7 +7,9 @@ class ApplicationController < ActionController::Base
 
   helper_method :website, :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_action :set_time_zone, :website, :initialize_meta_tags, :current_user, :set_locale, :protect_private_website, :initialize_tax_display, :set_resolver
+  before_action :set_time_zone, :website, :initialize_meta_tags, :current_user,
+    :set_locale, :protect_private_website, :initialize_tax_display,
+    :set_resolver, :find_basket
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_error
@@ -145,6 +147,21 @@ class ApplicationController < ActionController::Base
     I18n.load_path -= [locale_path]
     I18n.locale = session[:locale] = I18n.default_locale
   end
+
+    def find_basket
+      if session[:basket_id]
+        @basket = Basket.find_by(id: session[:basket_id])
+        create_basket if @basket.nil?
+      else
+        create_basket
+      end
+    end
+
+    def create_basket
+      @basket = Basket.new
+      @basket.save
+      session[:basket_id] = @basket.id
+    end
 
     # Allows the use of a website custom view template resolver to let
     # websites override the base templates with custom ones, either in the

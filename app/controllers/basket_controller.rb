@@ -1,6 +1,4 @@
 class BasketController < ApplicationController
-  before_action :find_basket
-
   before_action :require_delivery_address, only: [:place_order]
   before_action :remove_invalid_discounts, only: [:index, :checkout, :place_order]
   before_action :calculate_discounts, only: [:index, :checkout, :place_order]
@@ -275,21 +273,6 @@ class BasketController < ApplicationController
         end
       end
     end
-  end
-
-  def find_basket
-    if session[:basket_id]
-      @basket = Basket.find_by(id: session[:basket_id])
-      create_basket if @basket.nil?
-    else
-      create_basket
-    end
-  end
-
-  def create_basket
-    @basket = Basket.new
-    @basket.save
-    session[:basket_id] = @basket.id
   end
 
   # calculates shipping amount based on the global website shipping amount
