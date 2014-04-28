@@ -162,6 +162,8 @@ Rails.application.routes.draw do
     resources :orders
   end
 
+  post 'pipe_boxings/add_to_basket' => 'pipe_boxings#add_to_basket'
+
   resources :pages, only: [:show]
 
   get ':slug' => 'pages#show', as: :slug, constraints: { slug: /[-a-z0-9_\/\.]*/ }
