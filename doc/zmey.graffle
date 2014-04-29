@@ -3171,7 +3171,7 @@ checked}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{1358.8463968296251, 477.73174985061411}, {14, 21}}</string>
+			<string>{{1358.8347954298868, 478.39915755530274}, {14, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3238,7 +3238,7 @@ checked}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{1352.843374004633, 438.63467702109762}, {26, 21}}</string>
+			<string>{{1352.8347954298868, 443.01089470504621}, {26, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3956,8 +3956,8 @@ required}</string>
 			<integer>78</integer>
 			<key>Points</key>
 			<array>
-				<string>{1354.5748525739159, 437.27981567382812}</string>
-				<string>{1354.5793352887351, 495.259033203125}</string>
+				<string>{1354.5671906020059, 442.77981567382812}</string>
+				<string>{1354.5671906020059, 495.259033203125}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -4268,8 +4268,8 @@ accepted}</string>
 			<integer>70</integer>
 			<key>Points</key>
 			<array>
-				<string>{1283.249205136719, 338.27996577247364}</string>
-				<string>{1229.6014709472656, 338.28007868159909}</string>
+				<string>{1283.249205136719, 338.22528868301492}</string>
+				<string>{1229.6014709472656, 338.18427169165665}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -4401,7 +4401,7 @@ shipped}</string>
 			<key>Points</key>
 			<array>
 				<string>{1354.567138671875, 201.64579772949219}</string>
-				<string>{1354.5671550958621, 239.27981567382812}</string>
+				<string>{1354.5671526955887, 233.77981567382812}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -4430,7 +4430,7 @@ shipped}</string>
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1283.249205136719, 239.27981567382812}, {142.635986328125, 11}}</string>
+					<string>{{1283.249205136719, 233.77981567382812}, {142.635986328125, 11}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -4466,7 +4466,7 @@ shipped}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1283.249205136719, 250.27981567382812}, {142.635986328125, 187}}</string>
+					<string>{{1283.249205136719, 244.77981567382812}, {142.635986328125, 198}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -4506,6 +4506,7 @@ postcode\
 phone_number\
 shipping_amount\
 shipping_method\
+shipping_tax_amount\
 status\
 total\
 preferred_delivery_date\
@@ -5557,7 +5558,7 @@ sage_pay_test_mode}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2014-04-29 12:04:36 +0000</string>
+	<string>2014-04-29 13:15:05 +0000</string>
 	<key>Modifier</key>
 	<string>Ian Fleeton</string>
 	<key>NotesVisible</key>
@@ -5638,7 +5639,7 @@ sage_pay_test_mode}</string>
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{96, 50}, {1258, 728}}</string>
+		<string>{{-261, 50}, {1258, 728}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
@@ -5652,7 +5653,7 @@ sage_pay_test_mode}</string>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{0.5, 94.5}, {1123, 589}}</string>
+		<string>{{554, 194}, {1123, 589}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140429115859) do
+ActiveRecord::Schema.define(version: 20140429131225) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -245,6 +245,7 @@ ActiveRecord::Schema.define(version: 20140429115859) do
     t.string   "preferred_delivery_date_prompt"
     t.string   "preferred_delivery_date_format"
     t.string   "ip_address"
+    t.decimal  "shipping_tax_amount",            precision: 10, scale: 3, default: 0.0, null: false
   end
 
   add_index "orders", ["basket_id"], name: "index_orders_on_basket_id", using: :btree

@@ -15,11 +15,11 @@ class Order < ActiveRecord::Base
   WAITING_FOR_PAYMENT = 1
   PAYMENT_RECEIVED    = 2
   PAYMENT_ON_ACCOUNT  = 3
-  
+
   def self.from_session session
     session[:order_id] ? find_by(id: session[:order_id]) : nil
   end
-  
+
   def self.purge_old_unpaid(age = 1.month)
     self.destroy_all(["created_at < ? and status = ?", Time.now - age, Order::WAITING_FOR_PAYMENT])
   end
@@ -35,7 +35,7 @@ class Order < ActiveRecord::Base
       PAYMENT_ON_ACCOUNT => 'Payment on account'
     }[status]
   end
-  
+
   def empty_basket(session)
     # TODO: I know too much; this code is used by PaymentsController and BasketController
     unless basket.nil?
@@ -49,7 +49,7 @@ class Order < ActiveRecord::Base
   def payment_received?
     status == Order::PAYMENT_RECEIVED
   end
-  
+
   def copy_address a
     self.email_address   = a.email_address
     self.full_name       = a.full_name
@@ -61,7 +61,7 @@ class Order < ActiveRecord::Base
     self.country_id      = a.country_id
     self.phone_number    = a.phone_number
   end
-  
+
   def delivery_address
     Address.new(
       email_address: email_address,
@@ -75,16 +75,47 @@ class Order < ActiveRecord::Base
       phone_number: phone_number
     )
   end
-  
+
   def calculate_total
-    t = order_lines.inject(shipping_amount) {|sum, l| sum + l.tax_amount + l.quantity * l.product_price}
+    t = total_gross
     t = t + 0.001 # in case of x.x499999
     t = (t * 100).round.to_f / 100
     self.total = t
   end
-  
+
+  # Total amount for the order excluding any taxes.
+  def total_net
+    shipping_amount + line_total_net
+  end
+
+  # Overall total amount for the order including all taxes.
+  def total_gross
+    shipping_amount_gross + line_total_gross
+  end
+
+  # Shipping amount including shipping tax.
+  def shipping_amount_gross
+    shipping_amount + shipping_tax_amount
+  end
+
+  # Total amount of all order lines excluding any tax.
+  def line_total_net
+    order_lines.inject(0) {|sum, l| sum + l.line_total_net}
+  end
+
+  # Total amount of all order lines including any tax.
+  def line_total_gross
+    order_lines.inject(0) {|sum, l| sum + l.line_total_net + l.tax_amount}
+  end
+
+  # Tax amount for all order lines.
+  def line_tax_total
+    order_lines.inject(0) { |sum, l| sum + l.tax_amount }
+  end
+
+  # Tax amount for the whole order including any shipping tax.
   def tax_total
-    order_lines.inject(0) {|sum, l| sum + l.tax_amount}
+    line_tax_total + shipping_tax_amount
   end
 
   # create an order number
