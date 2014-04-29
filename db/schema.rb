@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140407153240) do
+ActiveRecord::Schema.define(version: 20140429115859) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -404,10 +404,11 @@ ActiveRecord::Schema.define(version: 20140407153240) do
   add_index "quantity_prices", ["product_id"], name: "index_quantity_prices_on_product_id", using: :btree
 
   create_table "shipping_classes", force: true do |t|
-    t.integer  "shipping_zone_id", default: 0,  null: false
-    t.string   "name",             default: "", null: false
+    t.integer  "shipping_zone_id",  default: 0,              null: false
+    t.string   "name",              default: "",             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "table_rate_method", default: "basket_total", null: false
   end
 
   add_index "shipping_classes", ["shipping_zone_id"], name: "index_shipping_classes_on_shipping_zone_id", using: :btree

@@ -103,6 +103,10 @@ en:
           ex_vat: 'Price excludes VAT'
           inc_vat: 'Price includes VAT'
           no_tax: 'No tax'
+      shipping_classes:
+        table_rate_method_options:
+          basket_total: 'Basket total including VAT'
+          weight: 'Weight'
 
   users:
     show:

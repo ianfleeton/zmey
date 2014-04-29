@@ -309,15 +309,25 @@ class BasketController < ApplicationController
   end
 
   def calculate_shipping_from_class(shipping_class)
-    basket_total = @basket.total(true)
+    case shipping_class.table_rate_method
+    when 'basket_total'
+      value = @basket.total(true)
+    when 'weight'
+      value = @basket.weight
+    else
+      raise 'Unknown table rate method'
+    end
+
     shipping = nil
+
     unless shipping_class.shipping_table_rows.empty?
       shipping_class.shipping_table_rows.each do |row|
-        if basket_total >= row.trigger_value
+        if value >= row.trigger_value
           shipping = row.amount
         end
       end
     end
+
     shipping
   end
 

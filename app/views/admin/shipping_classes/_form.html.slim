@@ -23,4 +23,8 @@
       = form.collection_select :shipping_zone_id, website.shipping_zones, :id, :name, {}, class: 'form-control'
 
     .form-group
+      = form.label :table_rate_method
+      = select('shipping_class', 'table_rate_method', table_rate_method_options, {}, class: 'form-control')
+
+    .form-group
       = form.submit class: 'btn btn-primary'
