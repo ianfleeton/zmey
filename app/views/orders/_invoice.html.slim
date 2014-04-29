@@ -27,6 +27,10 @@
           br
           b Website
           =< website.domain
+          - if order.website.vat_number.present?
+            br
+            b VAT Number:
+            =< order.website.vat_number
         td
           p
             = order.full_name.upcase
