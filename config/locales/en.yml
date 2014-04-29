@@ -96,6 +96,14 @@ en:
     products: Products
     users: Users
 
+  helpers:
+    admin:
+      products:
+        tax_type_options:
+          ex_vat: 'Price excludes VAT'
+          inc_vat: 'Price includes VAT'
+          no_tax: 'No tax'
+
   users:
     show:
       registered_email_address: registered email address

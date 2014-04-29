@@ -34,7 +34,7 @@
 
   .form-group
     = form.label :tax_type
-    = select('product', 'tax_type', Product::TAX_TYPES, {}, class: 'form-control')
+    = select('product', 'tax_type', tax_type_options, {}, class: 'form-control')
 
   .form-group
     = form.label :weight, 'Weight (kg)'
