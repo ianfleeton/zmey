@@ -79,7 +79,7 @@ duplicate of it first and then using CSS to hide it.
       <td class="empty">&nbsp;</td>
       <% end %>
     </tr>
-    <% if !website.vat_number.empty? && !inc_tax %>
+    <% if website.vat_number.present? && !inc_tax %>
     <tr class="vat_amount">
       <th colspan="4">VAT:</th>
       <td><% vat_total = @basket.vat_total + discount_lines_tax_total %><%= formatted_price vat_total %></td>
