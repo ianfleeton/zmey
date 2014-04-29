@@ -16,9 +16,10 @@ describe 'Admin products API' do
     it 'inserts a new product into the website' do
       name = SecureRandom.hex
       sku = SecureRandom.hex
+      tax_type = Product::INC_VAT
       weight = 1.234
-      post 'api/admin/products', product: {name: name, sku: sku, weight: weight}
-      expect(Product.find_by(sku: sku, weight: weight, website: @website)).to be
+      post 'api/admin/products', product: {name: name, sku: sku, tax_type: tax_type, weight: weight}
+      expect(Product.find_by(sku: sku, tax_type: tax_type, weight: weight, website: @website)).to be
     end
   end
 
