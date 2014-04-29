@@ -19,7 +19,7 @@
 <h2>Deliver to</h2>
 
 <%= format_address @order %>
- 
+
 <table id="receipt">
 
   <tr>
@@ -44,7 +44,7 @@
     </td>
     <td class="qty"><%= line.quantity %></td>
 <% if admin? -%>
-    <td class="shipped"><%= form_for line do |f| %>
+    <td class="shipped"><%= form_for [:admin, line] do |f| %>
       <%= f.text_field :shipped %>
       <%= f.submit 'Update' %>
     <% end %></td>
@@ -75,7 +75,7 @@
 <% end -%>
     <td class="price total"><%= formatted_price(@order.total) %></td>
   </tr>
-  
+
 </table>
 
 <% unless @w.vat_number.empty? -%>
