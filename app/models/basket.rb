@@ -37,6 +37,10 @@ class Basket < ActiveRecord::Base
     total
   end
 
+  def total_quantity
+    basket_items.inject(0) {|q, i| q + i.quantity}
+  end
+
   def vat_total
     total = 0.0
     basket_items.each {|i| total += i.product.tax_amount(i.quantity) * i.quantity}
