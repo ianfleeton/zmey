@@ -6,6 +6,7 @@ describe Product do
   end
 
   it { should ensure_inclusion_of(:gender).in_array(Product::GENDERS) }
+  it { should ensure_inclusion_of(:tax_type).in_array(Product::TAX_TYPES) }
 
   describe 'image validations' do
     it 'allows an image to be absent' do

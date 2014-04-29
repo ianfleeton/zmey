@@ -32,6 +32,9 @@ class Product < ActiveRecord::Base
   INC_VAT = 2
   EX_VAT = 3
 
+  TAX_TYPES = [NO_TAX, INC_VAT, EX_VAT]
+  validates_inclusion_of :tax_type, in: TAX_TYPES
+
   VAT_RATE = 0.2
 
   def name_with_sku
