@@ -22,7 +22,7 @@ class ShippingTableRowsController < ApplicationController
   def destroy
     @shipping_table_row.destroy
     flash[:notice] = "Shipping rule deleted."
-    redirect_to edit_shipping_class_path(@shipping_table_row.shipping_class)
+    redirect_to edit_admin_shipping_class_path(@shipping_table_row.shipping_class)
   end
 
   protected
