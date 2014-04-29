@@ -58,6 +58,7 @@ class BasketController < ApplicationController
     end
 
     @shipping_amount = shipping_amount
+    @shipping_tax_amount = shipping_tax_amount(@shipping_amount)
   end
 
   def place_order
@@ -100,6 +101,7 @@ class BasketController < ApplicationController
     @order.status = Order::WAITING_FOR_PAYMENT
     @order.shipping_method = 'Standard Shipping'
     @order.shipping_amount = shipping_amount(0)
+    @order.shipping_tax_amount = shipping_tax_amount(@order.shipping_amount)
     # Store the basket with the order to clean up after payment.
     # Payment callbacks do not use session information.
     @order.basket_id = @basket.id
@@ -292,6 +294,14 @@ class BasketController < ApplicationController
     amount += @basket.shipping_supplement
 
     (amount == 0.0) ? return_if_nil : amount
+  end
+
+  def shipping_tax_amount(shipping_amount_net)
+    if shipping_amount_net && website.vat_number.present?
+      Product::VAT_RATE * shipping_amount_net
+    else
+      0
+    end
   end
 
   def calculate_shipping_from_address(address)
