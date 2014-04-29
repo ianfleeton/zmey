@@ -1,18 +1,9 @@
 <%= page_header 'New Shipping Rule' %>
 
-<ul class="breadcrumb">
-  <li>
-    <%= link_to 'Shipping Classes', shipping_classes_path %>
-    <span class="divider">/</span>
-  </li>
-  <li>
-    <%= link_to @shipping_table_row.shipping_class.name, edit_shipping_class_path(@shipping_table_row.shipping_class) %>
-    <span class="divider">/</span>
-  </li>
-  <li class="active">
-    New Shipping Rule
-  </li>
-</ul>
+<%= breadcrumbs({
+    'Shipping Classes' => admin_shipping_classes_path,
+    @shipping_table_row.shipping_class.name => edit_admin_shipping_class_path(@shipping_table_row.shipping_class)
+  }, 'New Shipping Rule') %>
 
 <% if @shipping_table_row.errors.any? -%>
 <div class="alert alert-error fade in">
@@ -30,6 +21,8 @@
 <%= form_for @shipping_table_row do |form| %>
   <%= render partial: 'form', object: form %>
 
-  <br><%= submit_tag "Save", class: 'btn btn-primary' %>
+  <p>
+    <%= submit_tag "Save", class: 'btn btn-primary' %>
+  </p>
 
 <% end %>

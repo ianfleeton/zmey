@@ -36,4 +36,14 @@ feature 'Shipping classes admin' do
     click_link "Delete #{shipping_class}"
     expect(ShippingClass.find_by(id: shipping_class.id)).to be_nil
   end
+
+  scenario 'Add shipping table row to class' do
+    shipping_class.save!
+    visit edit_admin_shipping_class_path(shipping_class)
+    click_link 'New'
+    fill_in 'Trigger value', with: '10.5'
+    fill_in 'Amount', with: '5.99'
+    click_button 'Save'
+    expect(ShippingTableRow.find_by(trigger_value: 10.5, amount: 5.99, shipping_class: shipping_class)).to be
+  end
 end

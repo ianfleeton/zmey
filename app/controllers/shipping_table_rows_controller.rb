@@ -13,7 +13,7 @@ class ShippingTableRowsController < ApplicationController
 
     if @shipping_table_row.save
       flash[:notice] = "Saved."
-      redirect_to edit_shipping_class_path(@shipping_table_row.shipping_class)
+      redirect_to edit_admin_shipping_class_path(@shipping_table_row.shipping_class)
     else
       render :new
     end
