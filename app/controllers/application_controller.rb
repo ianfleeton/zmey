@@ -18,10 +18,6 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::UnknownController, with: :not_found
   end
 
-  def routing_error
-    not_found
-  end
-
   def current_user
     @current_user ||= User.find_by(id: session[:user])
   end

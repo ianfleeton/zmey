@@ -169,7 +169,4 @@ Rails.application.routes.draw do
   get ':slug' => 'pages#show', as: :slug, constraints: { slug: /[-a-z0-9_\/\.]*/ }
 
   root controller: 'pages', action: 'show', slug: ''
-
-  # Catch unroutable paths and send to the routing error handler
-  get '*a', to: 'application#routing_error'
 end
