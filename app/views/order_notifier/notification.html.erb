@@ -1,0 +1,75 @@
+<h2 style="color:#333;font-weight:normal;"><%= @order.full_name %></h2>
+
+<p>Thank you for placing an order at <%= @website.name %></p>
+
+<p>Your order number is: <%= @order.order_number %></p>
+
+<p>The status of your order is: <b><%= @order.status_description %></b></p>
+
+<% if @order.preferred_delivery_date -%>
+<p>
+  <%= @order.preferred_delivery_date_prompt %>:
+  <%= @order.preferred_delivery_date.strftime(@order.preferred_delivery_date_format) %>
+</p>
+<% end -%>
+
+<p>You have ordered:</p>
+
+<table style="background:#fff;font-size:14px;color:#333;width:100%;">
+  <tr>
+    <th style="padding:2px 10px;"></td>
+    <th style="padding:2px 10px;"></td>
+    <th style="padding:2px 10px;">Qty</td>
+    <th style="padding:2px 10px; text-align:right;">Price</td>
+  </tr>
+  <% @order.order_lines.each do |l| %>
+  <tr>
+    <td style="padding:2px 10px;"><%= l.product_sku %></td>
+    <td style="padding:2px 10px;"><%= l.product_name %>
+      <% if l.feature_descriptions.present? %>
+      <br>
+      <small><%= l.feature_descriptions %></small>
+      <% end %>
+    </td>
+    <td style="padding:2px 10px; text-align:center;"><%= l.quantity %></td>
+    <td style="padding:2px 10px; text-align:right;"><%= formatted_price(l.line_total_net) %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <td style="padding:2px 10px; text-align:right;" colspan="3">
+      <%= @order.shipping_method %>:
+    </td>
+    <td style="padding:2px 10px; text-align:right;">
+      <%= formatted_price(@order.shipping_amount) %>
+    </td>
+  </tr>
+<% unless @website.vat_number.empty? -%>
+  <tr>
+    <td style="padding:2px 10px; text-align:right;" colspan="3">
+      VAT:
+    </td>
+    <td style="padding:2px 10px; text-align:right;">
+      <%= formatted_price(@order.tax_total) %>
+    </td>
+  </tr>
+<% end -%>
+  <tr>
+    <td style="padding:2px 10px; text-align:right;" colspan="3">
+      Order total:
+    </td>
+    <td style="padding:2px 10px; text-align:right;">
+      <%= formatted_price(@order.total) %>
+    </td>
+  </tr>
+</table>
+
+<p>To be delivered to:</p>
+
+<p>
+  <%= @order.address_line_1 %><br>
+  <%= @order.address_line_2 %><br>
+  <%= @order.town_city %><br>
+  <%= @order.county %><br>
+  <%= @order.postcode %><br>
+  <%= @order.country %>
+</p>
