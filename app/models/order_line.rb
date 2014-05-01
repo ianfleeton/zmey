@@ -16,4 +16,9 @@ class OrderLine < ActiveRecord::Base
   def line_total_net
     product_price * quantity
   end
+
+  # Combined weight of the products in this order line.
+  def weight
+    product_weight * quantity
+  end
 end

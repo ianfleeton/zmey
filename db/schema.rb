@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140429131225) do
+ActiveRecord::Schema.define(version: 20140501184246) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -216,6 +216,7 @@ ActiveRecord::Schema.define(version: 20140429131225) do
     t.datetime "updated_at"
     t.text     "feature_descriptions"
     t.integer  "shipped",                                       default: 0,   null: false
+    t.decimal  "product_weight",       precision: 10, scale: 3, default: 0.0, null: false
   end
 
   add_index "order_lines", ["order_id"], name: "index_order_lines_on_order_id", using: :btree

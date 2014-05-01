@@ -20,6 +20,15 @@ FactoryGirl.define do
     association :user
   end
 
+  factory :basket do
+  end
+
+  factory :basket_item do
+    quantity 1
+    association :basket
+    association :product
+  end
+
   factory :carousel_slide do
     caption      'A slide'
     link         '#'

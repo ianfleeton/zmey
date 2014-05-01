@@ -118,6 +118,11 @@ class Order < ActiveRecord::Base
     line_tax_total + shipping_tax_amount
   end
 
+  # Weight of all products in this order.
+  def weight
+    order_lines.inject(0) { |sum, l| sum + l.weight }
+  end
+
   # create an order number
   # order numbers include date but are not sequential so as to prevent competitor analysis of sales volume
   def create_order_number

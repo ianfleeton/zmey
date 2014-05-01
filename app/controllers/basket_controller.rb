@@ -83,6 +83,7 @@ class BasketController < ApplicationController
         product_sku: i.product.sku,
         product_name: i.product.name,
         product_price: i.product.price_ex_tax(i.quantity),
+        product_weight: i.product.weight,
         tax_amount: i.product.tax_amount(i.quantity) * i.quantity,
         quantity: i.quantity,
         feature_descriptions: i.feature_descriptions
@@ -286,7 +287,7 @@ class BasketController < ApplicationController
 
     if @basket.apply_shipping?
       @address = find_delivery_address
-      amount = @w.shipping_amount
+      amount = website.shipping_amount
       amount_by_address = calculate_shipping_from_address(@address)
       amount = amount_by_address.nil? ? amount : amount_by_address
     end
