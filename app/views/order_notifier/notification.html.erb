@@ -73,10 +73,16 @@
 <p>To be delivered to:</p>
 
 <p>
+  <%= @order.full_name %><br>
   <%= @order.address_line_1 %><br>
   <%= @order.address_line_2 %><br>
   <%= @order.town_city %><br>
   <%= @order.county %><br>
   <%= @order.postcode %><br>
   <%= @order.country %>
+</p>
+
+<p>
+  <%= @order.email_address %><br>
+  <%= @order.phone_number %>
 </p>
