@@ -6,6 +6,8 @@ class Product < ActiveRecord::Base
   validate :image_belongs_to_same_website
 
   # Google feed attributes
+  AGE_GROUPS = %w(adult kids)
+  validates_inclusion_of :age_group, in: AGE_GROUPS, allow_blank: true
   AVAILABILITIES = ['in stock', 'available for order', 'out of stock', 'preorder']
   validates_inclusion_of :availability, in: AVAILABILITIES
   CONDITIONS = %w(new used refurbished)

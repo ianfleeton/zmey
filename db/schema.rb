@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140501184246) do
+ActiveRecord::Schema.define(version: 20140506131007) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -393,6 +393,7 @@ ActiveRecord::Schema.define(version: 20140501184246) do
     t.decimal  "rrp",                     precision: 10, scale: 3
     t.boolean  "active",                                           default: true,       null: false
     t.string   "gender",                                           default: "",         null: false
+    t.string   "age_group",                                        default: "",         null: false
   end
 
   create_table "quantity_prices", force: true do |t|

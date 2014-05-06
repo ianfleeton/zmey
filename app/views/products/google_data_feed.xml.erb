@@ -32,6 +32,9 @@ xmlns:c="http://base.google.com/cns/1.0">
 <% unless p.mpn.blank? -%>
     <g:mpn><%= p.mpn %></g:mpn>
 <% end -%>
+<% if p.age_group.present? -%>
+    <g:age_group><%= p.age_group %></g:age_group>
+<% end -%>
 <% unless p.gender.blank? -%>
     <g:gender><%= p.gender %></g:gender>
 <% end -%>

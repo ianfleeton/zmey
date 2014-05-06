@@ -5,6 +5,7 @@ describe Product do
     @product = Product.new(:price => 1.0)
   end
 
+  it { should ensure_inclusion_of(:age_group).in_array(Product::AGE_GROUPS) }
   it { should ensure_inclusion_of(:gender).in_array(Product::GENDERS) }
   it { should ensure_inclusion_of(:tax_type).in_array(Product::TAX_TYPES) }
 

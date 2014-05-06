@@ -120,6 +120,10 @@
         = form.text_field :mpn, class: 'form-control'
 
       .form-group
+        = form.label :age_group
+        = select('product', 'age_group', Product::AGE_GROUPS, {include_blank: true}, class: 'form-control')
+
+      .form-group
         = form.label :gender
         = select('product', 'gender', Product::GENDERS, {include_blank: true}, class: 'form-control')
 
