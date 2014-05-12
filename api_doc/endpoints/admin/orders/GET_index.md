@@ -38,7 +38,8 @@ Returns a list of all orders and the order lines they contain.
         "preferred_delivery_date":null,
         "preferred_delivery_date_prompt":null,
         "preferred_delivery_date_format":null,
-        "ip_address":"127.0.0.1"
+        "ip_address":"127.0.0.1",
+        "customer_notes": "Please leave parcel with neighbour if nobody is in."
       },
       "order_lines":[
         {
