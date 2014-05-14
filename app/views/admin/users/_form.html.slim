@@ -8,6 +8,9 @@
 .form
   = form_for [:admin, @user] do |form|
     .form-group
+      = form.label :customer_reference
+      = form.text_field :customer_reference, size: 35, class: 'form-control'
+    .form-group
       = form.label :name
       = form.text_field :name, size: 35, required: true, class: 'form-control'
     .form-group

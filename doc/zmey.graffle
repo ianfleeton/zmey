@@ -154,7 +154,7 @@
 			<integer>189</integer>
 			<key>Points</key>
 			<array>
-				<string>{1016.0600466293804, 627}</string>
+				<string>{1016.0600466293804, 638}</string>
 				<string>{1016.0600466293804, 660}</string>
 			</array>
 			<key>Style</key>
@@ -3456,7 +3456,7 @@ checked}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{898.08800753228059, 427.36712491457018}, {26, 21}}</string>
+			<string>{{897.45132614492707, 429.14331463275761}, {26, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3523,7 +3523,7 @@ checked}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{974.9239101385059, 514.4243722243026}, {14, 21}}</string>
+			<string>{{971.54792898715459, 514.79082758163827}, {14, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3590,7 +3590,7 @@ checked}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{905.30837088991984, 477.71017526262131}, {48, 21}}</string>
+			<string>{{903.33028129822628, 478.71716205559295}, {48, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3660,8 +3660,8 @@ checked}</string>
 			<integer>90</integer>
 			<key>Points</key>
 			<array>
-				<string>{982.75716000937905, 550}</string>
-				<string>{875.85962000000006, 426.42039472075339}</string>
+				<string>{978.8009794111515, 550}</string>
+				<string>{875.85961999999995, 428.43436758644395}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -3726,7 +3726,7 @@ checked}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{953.613037109375, 561}, {124.89398193359375, 66}}</string>
+					<string>{{953.613037109375, 561}, {124.89398193359375, 77}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FitText</key>
@@ -3760,7 +3760,8 @@ email\
 encrypted_password\
 salt\
 forgot_password_token\
-admin}</string>
+admin\
+customer_reference}</string>
 						<key>VerticalPad</key>
 						<integer>0</integer>
 					</dict>
@@ -5621,7 +5622,7 @@ sage_pay_test_mode}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2014-05-14 12:37:52 +0000</string>
+	<string>2014-05-14 15:05:12 +0000</string>
 	<key>Modifier</key>
 	<string>Ian Fleeton</string>
 	<key>NotesVisible</key>
@@ -5716,7 +5717,7 @@ sage_pay_test_mode}</string>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{319.5, 194}, {1123, 589}}</string>
+		<string>{{401.5, 194}, {1123, 589}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>
