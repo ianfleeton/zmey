@@ -1,14 +1,14 @@
 <div>
   <%= form.label :full_name %>:<br>
-  <%= form.text_field :full_name %>
+  <%= form.text_field :full_name, required: true %>
 </div>
 <div>
   <%= form.label :email_address %>:<br>
-  <%= form.email_field :email_address %> <small>We hate spam too!</small>
+  <%= form.email_field :email_address, required: true %> <small>We hate spam too!</small>
 </div>
 <div>
   <%= form.label :address_line_1 %>:<br>
-  <%= form.text_field :address_line_1 %>
+  <%= form.text_field :address_line_1, required: true %>
 </div>
 <div>
   <%= form.label :address_line_2 %>:<br>
@@ -16,7 +16,7 @@
 </div>
 <div>
   <%= form.label :town_city, 'Town/city' %>:<br>
-  <%= form.text_field :town_city %>
+  <%= form.text_field :town_city, required: true %>
 </div>
 <div>
   <%= form.label :county %>:<br>
@@ -24,7 +24,7 @@
 </div>
 <div>
   <%= form.label :postcode %>:<br>
-  <%= form.text_field :postcode %>
+  <%= form.text_field :postcode, required: true %>
 </div>
 <p>
   Please contact us for a delivery quote if your
