@@ -1,4 +1,4 @@
-<h1><% if @product.pages.first %><%= link_to @product.pages.first.name, @product.pages.first.path %> &rarr; <% end %><%= @product.name %></h1>
+<h1 class="product-name"><% if @product.pages.first %><%= link_to @product.pages.first.name, @product.pages.first.path %> &rarr; <% end %><%= @product.name %></h1>
 <%= flash_notice %>
 <% basket_form_start, basket_form_end = (form_tag(controller: 'basket', action: 'add') {'@@'}).split('@@') %>
 <%=
