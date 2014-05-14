@@ -24,3 +24,8 @@ Order total: <%= formatted_gbp_price(@order.total) %>
 
 To be delivered to:
 <%= format_address(@order.delivery_address, false) %>
+
+<% if @order.customer_note.present? -%>
+Customer note:
+<%= @order.customer_note %>
+<% end -%>

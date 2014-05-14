@@ -86,3 +86,8 @@
   <%= @order.email_address %><br>
   <%= @order.phone_number %>
 </p>
+
+<% if @order.customer_note.present? -%>
+<h3 style="color:#333;font-weight:normal;">Customer note</h3>
+<%= simple_format @order.customer_note %>
+<% end -%>
