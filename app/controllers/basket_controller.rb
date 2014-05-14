@@ -2,6 +2,7 @@ class BasketController < ApplicationController
   before_action :require_delivery_address, only: [:place_order]
   before_action :remove_invalid_discounts, only: [:index, :checkout, :place_order]
   before_action :calculate_discounts, only: [:index, :checkout, :place_order]
+  before_action :update_customer_note, only: [:update, :checkout, :place_order]
 
   def index
     @page = params[:page_id] ? Page.find_by(id: params[:page_id]) : nil
@@ -69,6 +70,7 @@ class BasketController < ApplicationController
     @order.user_id = @current_user.id if logged_in?
     @order.ip_address = request.remote_ip
     @order.copy_address @address
+    @order.customer_note = @basket.customer_note
 
     unless params[:preferred_delivery_date].nil?
       @order.preferred_delivery_date = Date.strptime(params[:preferred_delivery_date],
@@ -439,4 +441,10 @@ class BasketController < ApplicationController
       end
     end
   end
+
+    def update_customer_note
+      if params[:customer_note]
+        @basket.update_attribute(:customer_note, params[:customer_note])
+      end
+    end
 end

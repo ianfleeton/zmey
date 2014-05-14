@@ -43,6 +43,9 @@ en:
         heading: 'New User Account'
       show:
         users: 'Users'
+  basket:
+    customer_note:
+      label: 'Please enter any additional notes here:'
   cart: Basket
   checkout: Checkout
   components:

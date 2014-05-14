@@ -104,6 +104,7 @@ duplicate of it first and then using CSS to hide it.
   </tbody>
 </table>
 <% if can_update -%>
+<%= render partial: 'customer_note', locals: { customer_note: @basket.customer_note } %>
 <p class="basket_buttons">
 <input type="submit" name="update_quantities" value="Update Quantities" />
 <input type="submit" name="checkout" value="<%= I18n.t('checkout') %>" />
