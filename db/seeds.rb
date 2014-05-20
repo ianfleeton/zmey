@@ -10,6 +10,7 @@ Website.destroy_all
 
 website = Website.create!(
   domain: 'www.localhost',
+  email: 'merchant@example.com',
   name: 'Shop',
   subdomain: 'local'
 )
