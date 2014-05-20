@@ -13,6 +13,7 @@ describe Website do
 
   describe 'validations that need an existing record' do
     before do
+      Website.delete_all
       @website.save
     end
 
