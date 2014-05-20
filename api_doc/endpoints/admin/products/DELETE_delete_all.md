@@ -3,7 +3,7 @@
 Deletes all products from the website. All product relationships are removed as
 appropriate.
 
-## Example
+## Example
 
 ### Request
 

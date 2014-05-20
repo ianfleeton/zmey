@@ -3,7 +3,7 @@
 Deletes all pages from the website. All page relationships are removed as
 appropriate.
 
-## Example
+## Example
 
 ### Request
 
