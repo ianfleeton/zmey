@@ -51,6 +51,11 @@ class Image < ActiveRecord::Base
       unless FileTest.exists?(path)
         begin
           ImageScience.with_image("#{IMAGE_STORAGE_PATH}/#{id}/#{filename}") do |img|
+            # protect against crashes
+            if img.height <= 1 || img.width <= 1
+              return IMAGE_MISSING
+            end
+
             img.thumbnail(size) do |thumb|
               thumb.save path
             end
