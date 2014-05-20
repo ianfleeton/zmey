@@ -5,8 +5,6 @@ application up and running.
 
 Things you may want to cover:
 
-* System dependencies
-
 * Configuration
 
 * Database creation
@@ -25,6 +23,11 @@ Things you may want to cover:
 
 Zmey should run fine on Ruby 2.0 or above. It is currently in use on MRI
 Ruby 2.1.1.
+
+=== System dependencies
+
+Zmey uses ImageScience, which depends on FreeImage, for image resizing. See
+http://docs.seattlerb.org/ImageScience.html for details.
 
 === Environment variables
 
