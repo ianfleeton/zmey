@@ -61,6 +61,7 @@ Rails.application.routes.draw do
       resources :orders, only: [:index]
 
       resources :pages, only: [:create, :index]
+      delete 'pages', to: 'pages#delete_all'
 
       resources :product_placements, only: [:create]
 

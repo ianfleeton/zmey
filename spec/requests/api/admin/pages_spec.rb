@@ -61,4 +61,27 @@ describe 'Admin pages API' do
       expect(response.status).to eq 422
     end
   end
+
+  describe 'DELETE delete_all' do
+    it 'deletes all pages in the website' do
+      page_1 = FactoryGirl.create(:page, website_id: @website.id)
+      page_2 = FactoryGirl.create(:page, website_id: @website.id, parent_id: page_1.id)
+      page_3 = FactoryGirl.create(:page)
+      page_1.save!
+      page_2.save!
+      page_3.save!
+
+      delete 'api/admin/pages'
+
+      expect(Page.find_by(id: page_1.id)).not_to be
+      expect(Page.find_by(id: page_2.id)).not_to be
+      expect(Page.find_by(id: page_3.id)).to be
+    end
+
+    it 'responds with 204 No Content' do
+      delete 'api/admin/pages'
+
+      expect(status).to eq 204
+    end
+  end
 end

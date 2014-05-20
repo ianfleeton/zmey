@@ -61,6 +61,7 @@ A successful retrieval will return JSON similar to the example:
 
 * [`GET` api/admin/pages](endpoints/admin/pages/GET_index.md)
 * [`POST` api/admin/pages](endpoints/admin/pages/POST_create.md)
+* [`DELETE` api/admin/pages](endpoints/admin/pages/DELETE_delete_all.md)
 
 ### Products
 

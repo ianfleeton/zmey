@@ -12,6 +12,11 @@ class Api::Admin::PagesController < Api::Admin::AdminController
     end
   end
 
+  def delete_all
+    website.pages.destroy_all
+    render nothing: :true, status: 204
+  end
+
   private
 
     def page_params
