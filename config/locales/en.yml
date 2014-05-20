@@ -5,6 +5,10 @@ en:
   activerecord:
     errors:
       models:
+        page:
+          attributes:
+            parent:
+              invalid: 'is invalid'
         product:
           attributes:
             image:
