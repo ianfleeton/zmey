@@ -11,6 +11,7 @@ Create a new product.
 
 ### Additional attributes
 
+* **brand** — Brand / manufacturer of the product. Used in Google Shopping feed.
 * **description** — A description of the product.
 * **image_id** — ID of the main product image.
 * **meta_description** — A description meta tag for the product's main page.
