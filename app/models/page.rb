@@ -15,6 +15,7 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :website_id, case_sensitive: false
   validates_uniqueness_of :title, scope: :website_id, case_sensitive: false
   validates_uniqueness_of :name, scope: :parent_id, case_sensitive: false, unless: Proc.new { |page| page.parent_id.nil? }
+  validate :parent_belongs_to_same_website
 
   liquid_methods :image, :name, :path, :url
 
@@ -77,5 +78,13 @@ class Page < ActiveRecord::Base
   def parent_id=(parent_id)
     self.position = 1
     super
+  end
+
+  # Custom validations
+
+  def parent_belongs_to_same_website
+    if parent && parent.website != website
+      errors.add(:parent, I18n.t('activerecord.errors.models.page.attributes.parent.invalid'))
+    end
   end
 end
