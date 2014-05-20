@@ -68,7 +68,7 @@ group :test do
   gem 'cucumber-rails', require: false
   gem 'capybara'
   gem 'launchy'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', require: false
   gem 'simplecov', require: false
   gem 'database_cleaner'
 end
