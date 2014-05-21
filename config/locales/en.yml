@@ -88,6 +88,8 @@ en:
 
   controllers:
     addresses:
+      create:
+        saved: 'Your address has been saved.'
       update:
         invalid: "Something's wrong with that address. Please create a new one."
         updated: 'Your address has been updated.'

@@ -24,7 +24,7 @@ class AddressesController < ApplicationController
     end
 
     if @address.save
-      flash[:notice] = "Saved address."
+      flash[:notice] = I18n.t('controllers.addresses.create.saved')
       session[:address_id] = @address.id
       redirect_to controller: 'basket', action: 'checkout'
     else
