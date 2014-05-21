@@ -45,6 +45,7 @@ class BasketController < ApplicationController
 
   def checkout
     redirect_to basket_path and return if @basket.basket_items.empty?
+    session[:return_to] = 'checkout'
 
     @address = nil
     @address = Address.find_by(id: session[:address_id]) if session[:address_id]

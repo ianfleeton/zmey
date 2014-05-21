@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   def index
+    session[:return_to] = 'address_book'
     @addresses = current_user.addresses
   end
 
@@ -26,7 +27,7 @@ class AddressesController < ApplicationController
     if @address.save
       flash[:notice] = I18n.t('controllers.addresses.create.saved')
       session[:address_id] = @address.id
-      redirect_to controller: 'basket', action: 'checkout'
+      redirect_to path_after_save
     else
       render :new
     end
@@ -47,7 +48,7 @@ class AddressesController < ApplicationController
 
     if @address.update_attributes(address_params)
       flash[:notice] = I18n.t('controllers.addresses.update.updated')
-      redirect_to controller: 'basket', action: 'checkout'
+      redirect_to path_after_save
     else
       render :edit
     end
@@ -59,5 +60,13 @@ class AddressesController < ApplicationController
       params.require(:address).permit(:address_line_1, :address_line_2,
       :country_id, :county, :email_address, :full_name, :label,
       :phone_number, :postcode, :town_city)
+    end
+
+    def path_after_save
+      if session[:return_to] && session[:return_to] == 'address_book'
+        addresses_path
+      else
+        checkout_path
+      end
     end
 end

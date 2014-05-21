@@ -2,6 +2,8 @@ h1= t('.heading')
 
 p= t('.introduction')
 
+p= link_to t('.add_new_address'), new_address_path
+
 ol.address-book
   - @addresses.each do |address|
     li

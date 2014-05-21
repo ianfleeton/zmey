@@ -15,6 +15,22 @@ feature 'Address book' do
       click_button 'Sign In'
     end
 
+    context 'without addresses' do
+      scenario 'Add a new address' do
+        visit addresses_path
+        click_link I18n.t('addresses.index.add_new_address')
+        fill_in 'Full name',      with: 'A. Shopper'
+        fill_in 'Email',          with: 'shopper@example.org'
+        fill_in 'Address line 1', with: '123 Street'
+        fill_in 'Town/city',      with: 'London'
+        fill_in 'Postcode',       with: 'L0N D0N'
+        click_button 'Save'
+        expect(Address.find_by(full_name: 'A. Shopper')).to be
+        # Should return to address book
+        expect(page).to have_content I18n.t('addresses.index.heading')
+      end
+    end
+
     context 'with addresses' do
       let(:work_address) { 'My Work Address' }
       let(:home_address) { 'My Home Address' }
