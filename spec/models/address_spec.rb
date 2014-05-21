@@ -18,4 +18,10 @@ describe Address do
       end
     end
   end
+
+  describe '#to_s' do
+    it 'returns label attribute' do
+      expect(Address.new(label: 'x').to_s).to eq 'x'
+    end
+  end
 end

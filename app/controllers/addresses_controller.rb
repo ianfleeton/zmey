@@ -8,8 +8,12 @@ class AddressesController < ApplicationController
   end
 
   def edit
-    # get a valid address from the session; if not send the user to new
-    @address = session[:address_id] ? Address.find_by(id: session[:address_id]) : nil
+    if logged_in?
+      @address = Address.find_by(id: params[:id], user_id: current_user.id)
+    else
+      # get a valid address from the session
+      @address = session[:address_id] ? Address.find_by(id: session[:address_id]) : nil
+    end
     redirect_to action: 'new' and return if @address.nil?
   end
 
@@ -29,24 +33,31 @@ class AddressesController < ApplicationController
   end
   
   def update
-    @address = Address.find(params[:id])
-    if session[:address_id] && session[:address_id] == @address.id
-      if @address.update_attributes(address_params)
-        flash[:notice] = 'Address updated.'
-        redirect_to controller: 'basket', action: 'checkout'
-      else
-        render :edit
-      end
-    else
+    if logged_in?
+      @address = Address.find_by(id: params[:id], user_id: current_user.id)
+    elsif session[:address_id] && session[:address_id] == params[:id]
+      @address = Address.find_by(id: params[:id])
+    end
+
+    if @address.nil?
       # shouldn't happen usually to regular users
-      flash[:notice] = "Something's wrong with that address. Please create a new one."
-      redirect_to action: 'new'
+      flash[:notice] = I18n.t('controllers.addresses.update.invalid')
+      redirect_to action: 'new' and return
+    end
+
+    if @address.update_attributes(address_params)
+      flash[:notice] = I18n.t('controllers.addresses.update.updated')
+      redirect_to controller: 'basket', action: 'checkout'
+    else
+      render :edit
     end
   end
 
   private
 
     def address_params
-      params.require(:address).permit(:address_line_1, :address_line_2, :country_id, :county, :email_address, :full_name, :phone_number, :postcode, :town_city)
+      params.require(:address).permit(:address_line_1, :address_line_2,
+      :country_id, :county, :email_address, :full_name, :label,
+      :phone_number, :postcode, :town_city)
     end
 end

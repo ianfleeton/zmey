@@ -8,4 +8,8 @@ class Address < ActiveRecord::Base
   def set_default_label
     self.label = "#{full_name} - #{postcode}" if label.blank?
   end
+
+  def to_s
+    label
+  end
 end

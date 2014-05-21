@@ -19,15 +19,23 @@ feature 'Address book' do
       let(:work_address) { 'My Work Address' }
       let(:home_address) { 'My Home Address' }
 
-      background do
-        FactoryGirl.create(:address, user_id: user.id, label: work_address)
-        FactoryGirl.create(:address, user_id: user.id, label: home_address)
-      end
+      let!(:work_address) { FactoryGirl.create(:address, user_id: user.id, label: 'Work') }
+      let!(:home_address) { FactoryGirl.create(:address, user_id: user.id, label: 'Home') }
 
       scenario "Address book shows customer's addresses" do
         visit addresses_path
-        expect(page).to have_content work_address
-        expect(page).to have_content home_address
+        expect(page).to have_content work_address.label
+        expect(page).to have_content home_address.label
+      end
+
+      scenario "Update an address" do
+        visit addresses_path
+        click_link "Edit #{work_address}"
+        new_label = SecureRandom.hex
+        fill_in 'Label', with: new_label
+        click_button 'Save'
+        work_address.reload
+        expect(work_address.label).to eq new_label
       end
     end
   end

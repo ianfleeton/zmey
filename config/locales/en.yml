@@ -3,6 +3,9 @@
 
 en:
   activerecord:
+    attributes:
+      address:
+        label: 'Label to use in dropdown menu'
     errors:
       models:
         page:
@@ -84,6 +87,10 @@ en:
   view_cart: View Basket
 
   controllers:
+    addresses:
+      update:
+        invalid: "Something's wrong with that address. Please create a new one."
+        updated: 'Your address has been updated.'
     admin:
       api_keys:
         create:
