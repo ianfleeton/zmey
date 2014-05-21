@@ -79,8 +79,7 @@ class Choice < ActiveRecord::Base
         permutation.save unless permutation.permutation.blank?
       end
     else
-      connection.delete "DELETE FROM permutations WHERE component_id = #{connection.quote(feature.component.id)}" +
-      " AND permutation LIKE #{connection.quote(match)}"
+      Permutation.where('component_id = ? AND permutation LIKE ?', feature.component.id, match).delete_all
     end
   end
 end
