@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140514150318) do
+ActiveRecord::Schema.define(version: 20140521113125) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20140514150318) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email_address",  default: "", null: false
+    t.string   "label",                       null: false
   end
 
   create_table "api_keys", force: true do |t|

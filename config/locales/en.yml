@@ -14,6 +14,11 @@ en:
             image:
               invalid: 'is invalid'
   add_to_cart: Add to Basket
+  addresses:
+    index:
+      heading: 'Address Book'
+      introduction: 'You can use this page to edit addresses in your address book, delete addresses that you no longer need, or add a new address.'
+      label_info: 'Will display in dropdown as "%{label}"'
   admin:
     api_keys:
       index:
