@@ -13,8 +13,6 @@ curl https://zmey.co.uk/api/admin/images
 
 ### Response
 
-A status of 404 will be returned if there are no images.
-
 ```json
 {
   "images": [

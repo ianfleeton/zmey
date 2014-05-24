@@ -13,8 +13,6 @@ curl https://zmey.co.uk/api/admin/pages
 
 ### Response
 
-A status of 404 will be returned if there are no pages.
-
 ```json
 {
   "pages": [

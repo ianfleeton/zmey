@@ -37,9 +37,15 @@ describe 'Admin images API' do
     end
 
     context 'with no images' do
-      it 'returns 404 Not Found' do
+      it 'returns 200 OK' do
         get 'api/admin/images'
-        expect(response.status).to eq 404
+        expect(response.status).to eq 200
+      end
+
+      it 'returns an empty set' do
+        get 'api/admin/images'
+        images = JSON.parse(response.body)
+        expect(images['images'].length).to eq 0
       end
     end
   end

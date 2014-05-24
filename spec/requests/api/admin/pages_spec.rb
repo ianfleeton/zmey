@@ -39,9 +39,15 @@ describe 'Admin pages API' do
     end
 
     context 'with no pages' do
-      it 'returns 404 Not Found' do
+      it 'returns 200 OK' do
         get 'api/admin/pages'
-        expect(response.status).to eq 404
+        expect(response.status).to eq 200
+      end
+
+      it 'returns an empty set' do
+        get 'api/admin/pages'
+        pages = JSON.parse(response.body)
+        expect(pages['pages'].length).to eq 0
       end
     end
   end
