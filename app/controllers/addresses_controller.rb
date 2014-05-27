@@ -76,6 +76,7 @@ class AddressesController < ApplicationController
   def destroy
     @address = Address.find_by(id: params[:id], user_id: current_user.id)
     if @address
+      session[:address_id] = nil if session[:address_id] == @address.id
       @address.destroy
       flash[:notice] = I18n.t('controllers.addresses.destroy.deleted')
     end
