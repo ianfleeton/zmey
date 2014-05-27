@@ -1,5 +1,4 @@
 <h1><%= I18n.t('checkout') %></h1>
-<%= flash_notice %>
 <h2>Delivery Address</h2>
 <% if @address.new_record? -%>
 <%= form_for @address do |f| %>

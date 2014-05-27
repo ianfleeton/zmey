@@ -1,5 +1,5 @@
 <h1><%= link_to @topic.forum.name, @topic.forum %> &rarr; <%= @topic.topic %></h1>
-<%= flash_notice %>
+
 <% if admin? -%>
 <%= button_to('Delete Topic', { action: 'destroy', id: @topic.id }, method: :delete) %>
 <% end %>
