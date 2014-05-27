@@ -4,7 +4,6 @@
   <%= link_to('Terms', terms_path) unless website.terms_and_conditions.blank? %>
   <%= website.footer_html %>
 </footer>
-<%= website.worldpay_active? ? template("worldpay_logos", installation_id: website.worldpay_installation_id) : '' %>
 </div><!--#wrapper-->
 <div id="bottom"></div>
 </body>
