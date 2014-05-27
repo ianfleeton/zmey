@@ -71,7 +71,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :addresses
+  resources :addresses do
+    collection do
+      get 'choose_delivery_address'
+    end
+    member do
+      post 'select_for_delivery'
+    end
+  end
 
   get 'basket' => 'basket#index', as: :basket
   post 'basket/add' => 'basket#add', as: :add_to_basket

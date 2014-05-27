@@ -1,7 +1,21 @@
 class AddressesController < ApplicationController
   def index
-    session[:return_to] = 'address_book'
+    if params[:return_to] = 'checkout'
+      session[:return_to] = 'checkout'
+    else
+      session[:return_to] = 'address_book'
+    end
     @addresses = current_user.addresses
+  end
+
+  def choose_delivery_address
+    @addresses = current_user.addresses
+  end
+
+  def select_for_delivery
+    @address = Address.find_by(id: params[:id], user_id: current_user.id)
+    session[:address_id] = @address.id if @address
+    redirect_to checkout_path
   end
 
   def new
@@ -48,6 +62,11 @@ class AddressesController < ApplicationController
 
     if @address.update_attributes(address_params)
       flash[:notice] = I18n.t('controllers.addresses.update.updated')
+
+      if session[:return_to] == 'checkout'
+        session[:address_id] = @address.id
+      end
+
       redirect_to path_after_save
     else
       render :edit

@@ -18,6 +18,11 @@ en:
               invalid: 'is invalid'
   add_to_cart: Add to Basket
   addresses:
+    choose_delivery_address:
+      add: 'Add a new delivery address'
+      deliver_to_this_address: 'Deliver to this address'
+      edit_or_delete: 'Edit or delete addresses'
+      heading: 'Choose a delivery address'
     index:
       add_new_address: 'Add new address'
       heading: 'Address Book'

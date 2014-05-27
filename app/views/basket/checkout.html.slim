@@ -7,7 +7,10 @@ h2= t('.delivery_address')
     = submit_tag 'Next'
 - else
   = format_address @address
-  p= link_to t('.change_address'), controller: 'addresses', action: 'edit', id: @address.id
+  - if logged_in?
+    p= link_to t('.change_address'), choose_delivery_address_addresses_path
+  - else
+    p= link_to t('.change_address'), controller: 'addresses', action: 'edit', id: @address.id
 
 h2= t('.your_basket')
 = render partial: 'basket', object: @basket, locals: {can_update: false, shipping_amount: @shipping_amount, shipping_tax_amount: @shipping_tax_amount, inc_tax: @inc_tax}

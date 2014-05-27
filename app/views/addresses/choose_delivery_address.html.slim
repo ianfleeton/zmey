@@ -1,0 +1,28 @@
+h1= t('.heading')
+
+.address-actions
+  ul
+    li= link_to t('.add'), new_address_path
+    li= link_to t('.edit_or_delete'), addresses_path(return_to: 'checkout')
+
+ol.address-book
+  - @addresses.each do |address|
+    li
+      .address
+        p
+          strong= address.full_name
+          br
+          = address.address_line_1
+          br
+          = address.address_line_2
+          br
+          = address.town_city
+          br
+          = address.county
+          br
+          = address.postcode
+          br
+          = address.country
+        p.address-deliver-to
+          = form_tag(action: 'select_for_delivery', id: address.id) do
+            = submit_tag t('.deliver_to_this_address')
