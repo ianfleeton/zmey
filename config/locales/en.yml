@@ -60,6 +60,11 @@ en:
         users: 'Users'
         website_manager_for: 'Website manager for %{website}'
   basket:
+    checkout:
+      change_address: 'Change address'
+      delivery_address: 'Delivery Address'
+      place_order: 'Place Order'
+      your_basket: 'Your Basket'
     customer_note:
       label: 'Please enter any additional notes here:'
   cart: Basket
