@@ -2,6 +2,14 @@
   h1.order-number
     = "Order no.: #{order.order_number}"
 
+  - if order.user && order.user.customer_reference.present?
+    table width="100%" cellspacing="10"
+      tr
+        td.box width="50%"
+          strong= t('.customer_reference')
+          =< order.user.customer_reference
+        td &nbsp;
+
   table width="100%"
     tr
       td width="50%"

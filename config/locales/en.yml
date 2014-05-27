@@ -76,6 +76,9 @@ en:
   login: Sign In
   logout: Logout
   my_account: My Account
+  orders:
+    invoice:
+      customer_reference: 'Customer reference:'
   password: Password
   payments:
     show:
