@@ -50,12 +50,16 @@ class BasketController < ApplicationController
     @address = nil
     @address = Address.find_by(id: session[:address_id]) if session[:address_id]
     if @address.nil?
-      @address = Address.new
-      @address.country = Country.find_by(name: 'United Kingdom', website_id: @w.id)
-      if logged_in?
-        @address.user_id = @current_user.id
-        @address.email_address = @current_user.email
-        @address.full_name = @current_user.name
+      if logged_in? && current_user.addresses.any?
+        redirect_to choose_delivery_address_addresses_path
+      else
+        @address = Address.new
+        @address.country = Country.find_by(name: 'United Kingdom', website_id: @w.id)
+        if logged_in?
+          @address.user_id = @current_user.id
+          @address.email_address = @current_user.email
+          @address.full_name = @current_user.name
+        end
       end
     end
 
