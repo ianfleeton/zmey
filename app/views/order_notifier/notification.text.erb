@@ -29,3 +29,8 @@ To be delivered to:
 Customer note:
 <%= @order.customer_note %>
 <% end -%>
+
+<% if @order.user && @order.user.customer_reference.present? -%>
+Customer reference:
+<%= @order.user.customer_reference %>
+<% end -%>
