@@ -73,6 +73,16 @@ class AddressesController < ApplicationController
     end
   end
 
+  def destroy
+    @address = Address.find_by(id: params[:id], user_id: current_user.id)
+    if @address
+      @address.destroy
+      flash[:notice] = I18n.t('controllers.addresses.destroy.deleted')
+    end
+
+    redirect_to path_after_destroy
+  end
+
   private
 
     def address_params
@@ -86,6 +96,14 @@ class AddressesController < ApplicationController
         addresses_path
       else
         checkout_path
+      end
+    end
+
+    def path_after_destroy
+      if session[:return_to] && session[:return_to] == 'checkout'
+        choose_delivery_address_addresses_path
+      else
+        addresses_path
       end
     end
 end

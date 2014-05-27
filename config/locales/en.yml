@@ -107,6 +107,8 @@ en:
     addresses:
       create:
         saved: 'Your address has been saved.'
+      destroy:
+        deleted: 'That address has now been deleted from your address book.'
       update:
         invalid: "Something's wrong with that address. Please create a new one."
         updated: 'Your address has been updated.'
