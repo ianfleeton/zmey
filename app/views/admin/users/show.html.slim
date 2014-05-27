@@ -1,9 +1,5 @@
-h1
-  = link_to t('.users'), action: 'index'
-  = '&rarr;'.html_safe
-  = @user.name
-  = '&#8217;s Account'.html_safe
-
+= page_header t('.heading')
+= breadcrumbs({t('.users') => admin_users_path}, @user.name)
 
 h2
   = @user.name
@@ -14,7 +10,7 @@ p= mail_to @user.email
 - if @w.shop?
   p= link_to(@user.name + '’s orders', user_orders_path(@user))
 - unless @user.managed_website.nil?
-  p Website manager for #{@user.managed_website.name}
+  p= t('.website_manager_for', website: @user.managed_website.name)
 - if admin_or_manager?
   p
     = edit_button([:admin, @user])
