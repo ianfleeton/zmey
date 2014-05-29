@@ -1,4 +1,4 @@
-class ProductGroupsController < ApplicationController
+class Admin::ProductGroupsController < ApplicationController
   layout 'admin'
   before_action :admin_or_manager_required
   before_action :find_product_group, only: [:show, :edit, :update, :destroy]
@@ -21,7 +21,7 @@ class ProductGroupsController < ApplicationController
 
     if @product_group.save
       flash[:notice] = "Successfully added new product group."
-      redirect_to product_groups_path
+      redirect_to admin_product_groups_path
     else
       render :new
     end
@@ -34,7 +34,7 @@ class ProductGroupsController < ApplicationController
   def update
     if @product_group.update_attributes(product_group_params)
       flash[:notice] = "Product group successfully updated."
-      redirect_to product_groups_path
+      redirect_to admin_product_groups_path
     else
       render :edit
     end
@@ -42,7 +42,7 @@ class ProductGroupsController < ApplicationController
 
   def destroy
     @product_group.destroy
-    redirect_to product_groups_path, notice: 'Product group deleted.'
+    redirect_to admin_product_groups_path, notice: 'Product group deleted.'
   end
 
   protected

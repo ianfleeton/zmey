@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :product_groups, except: [:show]
     resources :quantity_prices, except: [:show]
     resources :shipping_classes, except: [:show]
     resources :shipping_zones, except: [:show]
@@ -119,8 +120,6 @@ Rails.application.routes.draw do
   end
 
   resources :permutations
-
-  resources :product_groups
 
   resources :product_group_placements
 

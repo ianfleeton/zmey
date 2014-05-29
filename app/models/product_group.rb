@@ -4,4 +4,8 @@ class ProductGroup < ActiveRecord::Base
 
   has_many :product_group_placements, dependent: :delete_all
   has_many :products, through: :product_group_placements
+
+  def to_s
+    name
+  end
 end

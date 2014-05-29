@@ -110,6 +110,10 @@ FactoryGirl.define do
     association :website
   end
 
+  factory :product_group do
+    name 'Product Group'
+  end
+
   factory :quantity_price do
     quantity 2
     association :product

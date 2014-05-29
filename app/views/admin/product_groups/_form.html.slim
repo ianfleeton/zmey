@@ -6,7 +6,7 @@
       - @product_group.errors.full_messages.each do |msg|
         li= msg
 
-= form_for @product_group do |form|
+= form_for [:admin, @product_group] do |form|
 
   .form-group
     = form.label :name, required: true

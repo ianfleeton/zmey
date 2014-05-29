@@ -1,6 +1,6 @@
 = page_header 'Product Groups'
 
-p= link_to 'New Product Group', new_product_group_path, class: 'btn btn-primary'
+p= new_button [:admin, ProductGroup]
 
 - unless @product_groups.empty?
   table.table.table-striped.table-bordered
@@ -11,5 +11,5 @@ p= link_to 'New Product Group', new_product_group_path, class: 'btn btn-primary'
       tr
         td= p.name
         td style="width: 200px;"
-          => edit_button(p)
-          = delete_button(p)
+          => edit_button [:admin, p]
+          = delete_button [:admin, p]
