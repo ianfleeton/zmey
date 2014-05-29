@@ -1,0 +1,27 @@
+= page_header 'Edit Product Group'
+
+= breadcrumbs({'Product Groups' => product_groups_path}, 'Edit Product Group')
+
+= render 'form'
+
+h2 Products in this group
+
+- unless website.products.empty?
+  = form_for @product_group_placement do |form|
+    input type="hidden" name="product_group_placement[product_group_id]" value="#{@product_group.id}"
+    .form-group
+      = form.collection_select(:product_id, website.products, :id, :name, {}, class: 'form-control')
+    .form-group
+      = submit_tag 'Add Product', class: 'btn btn-default'
+
+- if @product_group.products.empty?
+  p There are no products in this group yet.
+- else
+  table.table.table-bordered.table-striped
+    - @product_group.product_group_placements.each do |placement|
+      tr
+        td= placement.product.name
+        td
+          = link_to '<i class="icon-trash icon-white"></i> Remove From Group'.html_safe,\
+            placement, method: :delete,\
+            confirm: 'Are you sure?', class: 'btn btn-danger btn-mini'
