@@ -98,7 +98,7 @@ class Admin::WebsitesController < Admin::AdminController
       :blog_id, :can_users_create_accounts, :cardsave_active,
       :cardsave_merchant_id, :cardsave_password, :cardsave_pre_shared_key,
       :country_id, :county,
-      :css_url, :default_locale, :domain, :email, :fax_number, :footer_html,
+      :css_url, :default_locale, :domain, :email, :fax_number,
       :google_analytics_code, :google_domain_name, :google_ftp_password,
       :google_ftp_username, :invoice_details, :name, :page_image_size,
       :page_thumbnail_size, :paypal_active, :paypal_email_address,

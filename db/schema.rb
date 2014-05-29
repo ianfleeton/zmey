@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140521113125) do
+ActiveRecord::Schema.define(version: 20140529151407) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -499,7 +499,6 @@ ActiveRecord::Schema.define(version: 20140521113125) do
     t.boolean  "render_blog_before_content",                                  default: true,  null: false
     t.string   "google_ftp_username",                                         default: "",    null: false
     t.string   "google_ftp_password",                                         default: "",    null: false
-    t.text     "footer_html"
     t.text     "invoice_details"
     t.string   "google_domain_name",                                          default: "",    null: false
     t.boolean  "paypal_active",                                               default: false, null: false
