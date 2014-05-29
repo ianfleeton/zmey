@@ -1,6 +1,6 @@
 class AddressesController < ApplicationController
   def index
-    if params[:return_to] = 'checkout'
+    if params[:return_to] == 'checkout'
       session[:return_to] = 'checkout'
     else
       session[:return_to] = 'address_book'
