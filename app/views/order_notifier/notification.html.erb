@@ -4,6 +4,10 @@
 
 <p>Your order number is: <%= @order.order_number %></p>
 
+<% if @order.user -%>
+<p>Your registered email address is: <%= @order.user.email %></p>
+<% end -%>
+
 <p>The status of your order is: <b><%= @order.status_description %></b></p>
 
 <% if @order.preferred_delivery_date -%>

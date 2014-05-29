@@ -6,6 +6,10 @@ Your order number is: <%= @order.order_number %>
 
 The status of your order is: <%= @order.status_description %>
 
+<% if @order.user -%>
+Your registered email address is: <%= @order.user.email %>
+<% end -%>
+
 <% if @order.preferred_delivery_date -%>
 <%= @order.preferred_delivery_date_prompt %>: <%= @order.preferred_delivery_date.strftime(@order.preferred_delivery_date_format) %>
 <% end -%>
