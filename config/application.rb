@@ -29,7 +29,6 @@ module Zmey
     config.i18n.enforce_available_locales = true
 
     config.autoload_paths += Dir["#{config.root}/lib"]
-    config.assets.precompile += %w( admin.css screen.css.scss )
 
     config.assets.paths << ENV['ZMEY_ASSETS'] if ENV['ZMEY_ASSETS']
 
