@@ -5,6 +5,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :image, unless: Proc.new { |p| p.image_id.nil? }
   validate :image_belongs_to_same_website
   validates :meta_description, length: { maximum: 255 }
+  validates :price, numericality: { greater_than_or_equal_to: 0 }
 
   # Google feed attributes
   AGE_GROUPS = %w(adult kids)

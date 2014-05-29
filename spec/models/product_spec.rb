@@ -10,6 +10,7 @@ describe Product do
   it { should ensure_inclusion_of(:tax_type).in_array(Product::TAX_TYPES) }
 
   it { should ensure_length_of(:meta_description).is_at_most(255) }
+  it { should validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
 
   describe 'image validations' do
     it 'allows an image to be absent' do
