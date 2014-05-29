@@ -8,6 +8,7 @@ describe '/admin/products/index.html.slim' do
       stub_model(Product),
       stub_model(Product)
     ]
+    @products.stub!(:total_pages).and_return(0)
   end
 
   it "renders a list of products" do
