@@ -21,6 +21,11 @@ describe 'Admin products API' do
       post 'api/admin/products', product: {name: name, sku: sku, tax_type: tax_type, weight: weight}
       expect(Product.find_by(sku: sku, tax_type: tax_type, weight: weight, website: @website)).to be
     end
+
+    it 'returns 422 if product cannot be created' do
+      post 'api/admin/products', product: {name: 'is not enough'}
+      expect(status).to eq 422
+    end
   end
 
   describe 'DELETE delete_all' do

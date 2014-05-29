@@ -2,7 +2,9 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   def create
     @product = Product.new(product_params)
     @product.website = website
-    @product.save
+    unless @product.save
+      render json: @product.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   def delete_all
