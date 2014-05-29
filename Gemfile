@@ -14,6 +14,10 @@ gem 'exception_notification'
 gem 'slim'
 gem 'factory_girl_rails'
 
+# Pagination
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
+
 # Monitor with New Relic
 gem 'newrelic_rpm'
 

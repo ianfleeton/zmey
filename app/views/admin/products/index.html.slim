@@ -5,6 +5,7 @@ p= new_button [:admin, Product]
 - if @products.empty?
   p No products
 - else
+  = will_paginate @products
   table.table.table-striped.table-bordered
     thead
       tr
