@@ -50,7 +50,7 @@ class Admin::UsersController < Admin::AdminController
 
   def destroy
     @user.destroy
-    redirect_to users_path, 'User account successfully destroyed.'
+    redirect_to admin_users_path, notice: I18n.t('controller.admin.users.destroy.flash.destroyed')
   end
 
   private

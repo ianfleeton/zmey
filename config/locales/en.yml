@@ -121,6 +121,9 @@ en:
         create:
           flash:
             created: 'New user account has been created.'
+        destroy:
+          flash:
+            destroyed: 'User account has been deleted.'
     enquiries: Enquiries
     images: Images
     liquid_templates: Liquid Templates

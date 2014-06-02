@@ -14,4 +14,6 @@ table.table.table-bordered
         td= link_to u.name, [:admin, u]
         td= mail_to u.email, u.email
         td= tick u.admin
-        td= edit_button([:admin, u])
+        td
+          = edit_button([:admin, u])
+          =< delete_button([:admin, u])
