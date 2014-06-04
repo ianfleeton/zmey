@@ -119,6 +119,10 @@ en:
         invalid: "Something's wrong with that address. Please create a new one."
         updated: 'Your address has been updated.'
     admin:
+      addresses:
+        destroy:
+          flash:
+            destroyed: 'Address deleted.'
       api_keys:
         create:
           flash:

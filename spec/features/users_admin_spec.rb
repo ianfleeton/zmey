@@ -27,4 +27,14 @@ feature 'Users admin' do
     click_link I18n.t('admin.users.show.addresses')
     expect(page).to have_content(address.address_line_1)
   end
+
+  scenario 'Delete user address' do
+    user = FactoryGirl.create(:user, website_id: website.id)
+    address = FactoryGirl.create(:address, user_id: user.id)
+
+    visit admin_user_addresses_path(user)
+    click_link "Delete #{address}"
+    expect(Address.find_by(address.id)).to be_nil
+    expect(current_path).to eq admin_user_addresses_path(user)
+  end
 end
