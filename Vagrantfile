@@ -146,4 +146,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, privileged: false, inline: %q{cd /vagrant && bundle install}
   # Copy in sample database config.
   config.vm.provision :shell, inline: %q{cp /vagrant/config/database.sample.yml /vagrant/config/database.yml}
+  # Set up database.
+  config.vm.provision :shell, privileged: false, inline: %q{cd /vagrant && rake db:create db:migrate db:seed}
 end
