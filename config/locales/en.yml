@@ -29,6 +29,11 @@ en:
       introduction: 'You can use this page to edit addresses in your address book, delete addresses that you no longer need, or add a new address.'
       label_info: 'Will display in dropdown as "%{label}"'
   admin:
+    addresses:
+      address:
+        label_info: 'Will display in dropdown as "%{label}"'
+      index:
+        heading: "Addresses for %{user}"
     api_keys:
       index:
         heading: Your API Keys
@@ -60,6 +65,7 @@ en:
       new:
         heading: 'New User Account'
       show:
+        addresses: 'Addresses'
         heading: 'View User'
         registered_email_address: 'Registered email address'
         users: 'Users'

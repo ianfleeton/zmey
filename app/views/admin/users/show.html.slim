@@ -13,5 +13,6 @@ p= mail_to @user.email
   p= t('.website_manager_for', website: @user.managed_website.name)
 - if admin_or_manager?
   p
+    = link_to t('.addresses'), admin_user_addresses_path(@user)
     = edit_button([:admin, @user])
     = delete_button([:admin, @user])

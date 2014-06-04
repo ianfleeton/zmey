@@ -49,7 +49,9 @@ Rails.application.routes.draw do
     resources :quantity_prices, except: [:show]
     resources :shipping_classes, except: [:show]
     resources :shipping_zones, except: [:show]
+
     resources :users do
+      resources :addresses, shallow: true
     end
 
     resources :websites

@@ -1,0 +1,13 @@
+= page_header t('.heading', user: @user)
+
+table.table.table-bordered.addresses
+  - @addresses.each do |address|
+    tr
+      td
+        = render partial: 'address', locals: { address: address }
+      td
+        p.address-edit
+          = edit_button [:admin, address]
+        p.address-delete
+          = delete_button [:admin, address]
+
