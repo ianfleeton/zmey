@@ -9,6 +9,7 @@
 Website.destroy_all
 
 website = Website.create!(
+  country_id: 1, # FIXME as I am a circular dependency :-(
   domain: 'www.localhost',
   email: 'merchant@example.com',
   name: 'Shop',
