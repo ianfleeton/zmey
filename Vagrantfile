@@ -144,4 +144,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Bundle install our gems.
   config.vm.provision :shell, privileged: false, inline: %q{cd /vagrant && bundle install}
+  # Copy in sample database config.
+  config.vm.provision :shell, inline: %q{cp /vagrant/config/database.sample.yml /vagrant/config/database.yml}
 end
