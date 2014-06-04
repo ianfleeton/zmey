@@ -120,6 +120,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   #   chef.validation_client_name = "ORGNAME-validator"
 
+  # Set up some swap space.
+  config.vm.provision :shell, inline: %q{fallocate -l 1024M /swapfile}
+  config.vm.provision :shell, inline: %q{chmod 600 /swapfile}
+  config.vm.provision :shell, inline: %q{mkswap /swapfile}
+  config.vm.provision :shell, inline: %q{swapon /swapfile}
+
   # Update apt.
   config.vm.provision :shell, inline: %q{apt-get update}
 
@@ -131,7 +137,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, inline: %q{debconf-set-selections <<< 'mysql-server-5.6 mysql-server/root_password_again password secret'}
   config.vm.provision :shell, inline: %q{apt-get -y install mysql-server-5.6}
   config.vm.provision :shell, inline: %q{apt-get -y install mysql-client-5.6}
+  config.vm.provision :shell, inline: %q{apt-get -y install libmysqlclient-dev}
 
   # Install rvm and ruby.
   config.vm.provision :shell, privileged: false, path: 'install-rvm-ruby.sh'
+
+  # Bundle install our gems.
+  config.vm.provision :shell, privileged: false, inline: %q{cd /vagrant && bundle install}
 end
