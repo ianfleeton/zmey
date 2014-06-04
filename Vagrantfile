@@ -45,13 +45,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider "virtualbox" do |vb|
+  config.vm.provider "virtualbox" do |vb|
   #   # Don't boot with headless mode
   #   vb.gui = true
   #
   #   # Use VBoxManage to customize the VM. For example to change memory:
-  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
-  # end
+    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  end
   #
   # View the documentation for the provider you're using for more
   # information on available options.
@@ -119,6 +119,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
+
+  # Update apt.
+  config.vm.provision :shell, inline: %q{apt-get update}
+
+  # Install MySQL.
+  config.vm.provision :shell, inline: %q{debconf-set-selections <<< 'mysql-server-5.6 mysql-server/root_password password secret'}
+  config.vm.provision :shell, inline: %q{debconf-set-selections <<< 'mysql-server-5.6 mysql-server/root_password_again password secret'}
+  config.vm.provision :shell, inline: %q{apt-get -y install mysql-server-5.6}
+  config.vm.provision :shell, inline: %q{apt-get -y install mysql-client-5.6}
 
   # Install rvm and ruby.
   config.vm.provision :shell, privileged: false, path: 'install-rvm-ruby.sh'
