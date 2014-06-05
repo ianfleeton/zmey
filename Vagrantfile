@@ -124,7 +124,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, inline: %q{fallocate -l 1024M /swapfile}
   config.vm.provision :shell, inline: %q{chmod 600 /swapfile}
   config.vm.provision :shell, inline: %q{mkswap /swapfile}
-  config.vm.provision :shell, inline: %q{swapon /swapfile}
+  config.vm.provision :shell, inline: %q{swapon /swapfile}, run: 'always'
 
   # Update apt.
   config.vm.provision :shell, inline: %q{apt-get update}
