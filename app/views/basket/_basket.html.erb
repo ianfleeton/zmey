@@ -54,7 +54,7 @@ duplicate of it first and then using CSS to hide it.
       <td><%= dl.name %></td>
       <td class="empty">&nbsp;</td>
       <td class="empty">&nbsp;</td>
-      <td><%= formatted_price(dl.price_with_tax(inc_tax)) %></td>
+      <td class="price"><%= formatted_price(dl.price_with_tax(inc_tax)) %></td>
       <% if can_update %>
       <td class="empty">&nbsp;</td>
       <% end %>
@@ -71,7 +71,7 @@ duplicate of it first and then using CSS to hide it.
     <% end -%>
     <tr class="basket_total">
       <th colspan="4">Basket total<% unless @w.vat_number.empty? %><% if inc_tax %> inc VAT<% else %> ex VAT<% end %><% end %>:</th>
-      <td>
+      <td class="price">
         <% basket_total = @basket.total(inc_tax) + (shipping_amount.nil? ? 0 : shipping_amount) + discount_lines_price_total %>
         <% basket_total += discount_lines_tax_total if inc_tax %>
         <%= formatted_price basket_total %></td>
@@ -82,7 +82,7 @@ duplicate of it first and then using CSS to hide it.
     <% if website.vat_number.present? && !inc_tax %>
     <tr class="vat_amount">
       <th colspan="4">VAT:</th>
-      <td>
+      <td class="price">
         <% vat_total = @basket.vat_total + discount_lines_tax_total %>
         <% if website.vat_number.present? && shipping_tax_amount %>
           <% vat_total += shipping_tax_amount %>
@@ -95,7 +95,7 @@ duplicate of it first and then using CSS to hide it.
     </tr>
     <tr class="total">
       <th colspan="4">Total:</th>
-      <td><%= formatted_price(basket_total + vat_total) %></td>
+      <td class="price"><%= formatted_price(basket_total + vat_total) %></td>
       <% if can_update %>
       <td class="empty">&nbsp;</td>
       <% end %>
