@@ -108,6 +108,10 @@ en:
       active: 'Show product on website'
   quantity: Qty
   register: Sign Up
+  users:
+    show:
+      registered_email_address: 'Your registered email address'
+      your_account: 'Your Account'
   view_cart: View Basket
 
   controllers:
@@ -162,6 +166,3 @@ en:
           basket_total: 'Basket total including VAT'
           weight: 'Weight'
 
-  users:
-    show:
-      registered_email_address: registered email address
