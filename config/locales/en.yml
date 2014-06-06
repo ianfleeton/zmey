@@ -78,7 +78,7 @@ en:
       place_order: 'Place Order'
       your_basket: 'Your Basket'
     customer_note:
-      label: 'Please enter any additional notes here:'
+      label: 'Please enter any additional notes about your order, such as delivery instructions:'
   cart: Basket
   checkout: Checkout
   components:
