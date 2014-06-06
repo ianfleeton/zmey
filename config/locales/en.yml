@@ -110,7 +110,9 @@ en:
   register: Sign Up
   users:
     show:
+      manage_address_book: 'Manage Address Book'
       registered_email_address: 'Your registered email address'
+      view_your_orders: 'View Your Orders'
       your_account: 'Your Account'
   view_cart: View Basket
 
