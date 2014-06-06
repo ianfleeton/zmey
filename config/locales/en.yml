@@ -62,6 +62,7 @@ en:
       index:
         heading: 'Users'
         new_user: 'New User'
+        switch_user: 'Switch User'
       new:
         heading: 'New User Account'
       show:

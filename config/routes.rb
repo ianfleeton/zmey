@@ -141,7 +141,8 @@ Rails.application.routes.draw do
   resources :sessions do
     post 'destroy', on: :collection
   end
-  get 'sign-in' => 'sessions#new', as: :sign_in
+  get  'sign-in'              => 'sessions#new',         as: :sign_in
+  post 'switch_user/:user_id' => 'sessions#switch_user', as: :switch_user
 
   resources :shipping_table_rows
 
