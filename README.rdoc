@@ -36,6 +36,10 @@ http://docs.seattlerb.org/ImageScience.html for details.
     Location of additional assets. This allows a website's custom assets to be
     stored outside of the core Zmey repository.
 
+[ZMEY_REPOSITORY]
+
+    URL of the git repository. Used when deploying with Capistrano.
+
 [ZMEY_THEMES]
 
     Location of themes that will override the core views. Use this to theme
