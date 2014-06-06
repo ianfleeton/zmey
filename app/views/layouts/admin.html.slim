@@ -46,7 +46,7 @@ html
                 li= link_to 'Discounts', admin_discounts_path
                 li= link_to 'Website Settings', edit_admin_website_path(website)
           ul.nav.navbar-nav.navbar-right
-            li= link_to '<span class="glyphicon glyphicon-log-out"></span>'.html_safe, sessions_path, title: t('.sign_out')
+            li= link_to '<span class="glyphicon glyphicon-log-out"></span>'.html_safe, sessions_path, method: 'post', title: t('.sign_out')
     .container
       - if flash[:notice]
         .alert.alert-info.fade.in

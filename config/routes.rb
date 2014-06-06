@@ -139,7 +139,7 @@ Rails.application.routes.draw do
   end
 
   resources :sessions do
-    get 'destroy', on: :collection
+    post 'destroy', on: :collection
   end
   get 'sign-in' => 'sessions#new', as: :sign_in
 
