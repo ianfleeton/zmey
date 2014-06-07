@@ -106,8 +106,8 @@ duplicate of it first and then using CSS to hide it.
 <% if can_update -%>
 <%= render partial: 'customer_note', locals: { customer_note: @basket.customer_note } %>
 <p class="basket_buttons">
-<input type="submit" name="update_quantities" value="Update Quantities" />
-<input type="submit" name="checkout" value="<%= I18n.t('checkout') %>" />
+<input type="submit" name="update_quantities" value="Update Quantities" class="update-quantities pure-button">
+<input type="submit" name="checkout" value="<%= I18n.t('checkout') %>" class="checkout pure-button pure-button-primary">
 </p>
 <% end -%>
 <% end %>
