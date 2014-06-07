@@ -5,9 +5,9 @@ h1= t('.heading')
     li= link_to t('.add'), new_address_path
     li= link_to t('.edit_or_delete'), addresses_path(return_to: 'checkout')
 
-ol.address-book
+.address-book.pure-g
   - @addresses.each do |address|
-    li
+    .address-container.pure-u-1-2
       .address
         p
           strong= address.full_name
@@ -25,4 +25,4 @@ ol.address-book
           = address.country
         p.address-deliver-to
           = form_tag(action: 'select_for_delivery', id: address.id) do
-            = submit_tag t('.deliver_to_this_address')
+            = submit_tag t('.deliver_to_this_address'), class: 'pure-button'

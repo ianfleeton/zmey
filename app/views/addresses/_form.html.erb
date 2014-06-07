@@ -1,44 +1,34 @@
-<div>
-  <%= form.label :full_name %>:<br>
-  <%= form.text_field :full_name, required: true %>
-</div>
-<div>
-  <%= form.label :email_address %>:<br>
-  <%= form.email_field :email_address, required: true %> <small>We hate spam too!</small>
-</div>
-<div>
-  <%= form.label :address_line_1 %>:<br>
-  <%= form.text_field :address_line_1, required: true %>
-</div>
-<div>
-  <%= form.label :address_line_2 %>:<br>
-  <%= form.text_field :address_line_2 %>
-</div>
-<div>
-  <%= form.label :town_city, 'Town/city' %>:<br>
-  <%= form.text_field :town_city, required: true %>
-</div>
-<div>
-  <%= form.label :county %>:<br>
-  <%= form.text_field :county %>
-</div>
-<div>
-  <%= form.label :postcode %>:<br>
-  <%= form.text_field :postcode, required: true %>
-</div>
+<%= form.label :full_name %>
+<%= form.text_field :full_name, required: true %>
+
+<%= form.label :email_address %>
+<%= form.email_field :email_address, required: true, class: 'pure-input-1-2' %>
+
+<%= form.label :address_line_1 %>
+<%= form.text_field :address_line_1, required: true %>
+
+<%= form.label :address_line_2 %>
+<%= form.text_field :address_line_2 %>
+
+<%= form.label :town_city, 'Town/city' %>
+<%= form.text_field :town_city, required: true %>
+
+<%= form.label :county %>
+<%= form.text_field :county %>
+
+<%= form.label :postcode %>
+<%= form.text_field :postcode, required: true %>
+
 <p>
   Please contact us for a delivery quote if your
   country is not provided in the list below.
 </p>
-<div>
-  <%= form.label :country_id %>:<br>
-  <%= collection_select :address, :country_id, @w.shipping_countries, :id, :name %>
-</div>
-<div>
-  <%= form.label :phone_number %>:<br>
-  <%= form.phone_field :phone_number %>
-</div>
-<div>
-  <%= form.label :label %>:<br>
-  <%= form.phone_field :label %>
-</div>
+
+<%= form.label :country_id %>
+<%= collection_select :address, :country_id, @w.shipping_countries, :id, :name %>
+
+<%= form.label :phone_number %>
+<%= form.phone_field :phone_number %>
+
+<%= form.label :label %>
+<%= form.phone_field :label %>
