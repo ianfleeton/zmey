@@ -41,6 +41,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
   config.vm.synced_folder ".", "/vagrant", type: "rsync"
+  if ENV['ZMEY_CONFIG']
+    config.vm.synced_folder File.dirname(ENV['ZMEY_CONFIG']), File.dirname(ENV['ZMEY_CONFIG']), type: "rsync"
+  end
   if ENV['ZMEY_THEMES']
     config.vm.synced_folder ENV['ZMEY_THEMES'], ENV['ZMEY_THEMES'], type: "rsync"
   end
