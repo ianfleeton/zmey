@@ -63,7 +63,7 @@ duplicate of it first and then using CSS to hide it.
     <% unless shipping_amount.nil? -%>
     <tr class="shipping_amount">
       <th colspan="4">Shipping amount:</th>
-      <td><%= formatted_price shipping_amount %></td>
+      <td class="price"><%= formatted_price shipping_amount %></td>
       <% if can_update %>
       <td class="empty">&nbsp;</td>
       <% end %>
