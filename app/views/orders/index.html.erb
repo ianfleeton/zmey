@@ -17,7 +17,7 @@
   <% @orders.each do |o| -%>
     <tr class="<%= cycle('odd', 'even') %>">
       <td><%= link_to o.order_number, order_path(o) %></td>
-      <td><%= link_to 'Invoice (PDF)', invoice_order_path(o) %></td>
+      <td><%= link_to 'Invoice (PDF)', invoice_order_path(o), data: { no_turbolink: true } %></td>
       <td><%= formatted_price(o.total) %></td>
       <td><%= o.created_at %></td>
       <td><%= o.status_description %></td>
