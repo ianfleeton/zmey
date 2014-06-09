@@ -1,12 +1,19 @@
 require 'spec_helper'
 
 feature 'Address book' do
+  let(:website) { FactoryGirl.create(:website) }
+
   background do
-    FactoryGirl.create(:website)
+    Website.delete_all
+    website
+
+    # FIXME: when website <> country circular dependency removed
+    website.country.website = website
+    website.country.save
   end
 
   context 'signed in' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:user, website_id: website.id) }
 
     background do
       visit sign_in_path
