@@ -77,7 +77,7 @@ Rails.application.routes.draw do
 
       resources :product_placements, only: [:create]
 
-      resources :products, only: [:create]
+      resources :products, only: [:create, :index]
       delete 'products', to: 'products#delete_all'
     end
   end

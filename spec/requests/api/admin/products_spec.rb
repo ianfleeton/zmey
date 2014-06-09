@@ -12,6 +12,43 @@ describe 'Admin products API' do
     Api::Admin::AdminController.any_instance.stub(:authenticated_api_key).and_return(@api_key)
   end
 
+  describe 'GET index' do
+    context 'with products' do
+      before do
+        @product1 = FactoryGirl.create(:product, website_id: @website.id)
+        @product2 = FactoryGirl.create(:product)
+      end
+
+      it 'returns products for the website' do
+        get 'api/admin/products'
+
+        products = JSON.parse(response.body)
+
+        expect(products['products'].length).to eq 1
+        expect(products['products'][0]['id']).to eq @product1.id
+        expect(products['products'][0]['sku']).to eq @product1.sku
+      end
+
+      it 'returns 200 OK' do
+        get 'api/admin/products'
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'with no products' do
+      it 'returns 200 OK' do
+        get 'api/admin/products'
+        expect(response.status).to eq 200
+      end
+
+      it 'returns an empty set' do
+        get 'api/admin/products'
+        products = JSON.parse(response.body)
+        expect(products['products'].length).to eq 0
+      end
+    end
+  end
+
   describe 'POST create' do
     it 'inserts a new product into the website' do
       name = SecureRandom.hex

@@ -1,4 +1,8 @@
 class Api::Admin::ProductsController < Api::Admin::AdminController
+  def index
+    @products = website.products
+  end
+
   def create
     @product = Product.new(product_params)
     @product.website = website
