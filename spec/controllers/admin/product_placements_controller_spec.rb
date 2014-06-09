@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ProductPlacementsController do
+describe Admin::ProductPlacementsController do
   let(:website) { FactoryGirl.build(:website) }
 
   before do
