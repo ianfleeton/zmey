@@ -46,6 +46,14 @@ Rails.application.routes.draw do
     end
 
     resources :product_groups, except: [:show]
+
+    resources :product_placements do
+      member do
+        post 'move_down'
+        post 'move_up'
+      end
+    end
+
     resources :quantity_prices, except: [:show]
     resources :shipping_classes, except: [:show]
     resources :shipping_zones, except: [:show]
@@ -124,13 +132,6 @@ Rails.application.routes.draw do
   resources :permutations
 
   resources :product_group_placements
-
-  resources :product_placements do
-    member do
-      post 'move_down'
-      post 'move_up'
-    end
-  end
 
   resources :products, only: [:show] do
     collection do

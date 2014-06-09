@@ -1,6 +1,6 @@
-class ProductPlacementsController < ApplicationController
+class Admin::ProductPlacementsController < ApplicationController
   before_action :admin_or_manager_required
-  before_action :find_product_placement, except: [:create]
+  before_action :set_product_placement, except: [:create]
   # TODO: restrict by website
   
   def create
@@ -29,18 +29,18 @@ class ProductPlacementsController < ApplicationController
     moved
   end
 
-  protected
+  private
 
-  def find_product_placement
-    @product_placement = ProductPlacement.find(params[:id])
-  end
+    def set_product_placement
+      @product_placement = ProductPlacement.find(params[:id])
+    end
 
-  def moved
-    flash[:notice] = "Moved."
-    redirect_to edit_admin_page_path(@product_placement.page)
-  end
+    def moved
+      flash[:notice] = "Moved."
+      redirect_to edit_admin_page_path(@product_placement.page)
+    end
 
-  def product_placement_params
-    params.require(:product_placement).permit(:page_id, :position, :product_id)
-  end
+    def product_placement_params
+      params.require(:product_placement).permit(:page_id, :position, :product_id)
+    end
 end
