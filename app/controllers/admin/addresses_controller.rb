@@ -1,7 +1,6 @@
 class Admin::AddressesController < ApplicationController
   NESTED_ACTIONS = [:index]
   SHALLOW_ACTIONS = [:destroy]
-  before_action :admin_or_manager_required
   before_action :set_address, only: SHALLOW_ACTIONS
   before_action :set_user, only: NESTED_ACTIONS
 

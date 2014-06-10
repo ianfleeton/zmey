@@ -1,5 +1,4 @@
 class Admin::ProductPlacementsController < ApplicationController
-  before_action :admin_or_manager_required
   before_action :set_product_placement, except: [:create]
   # TODO: restrict by website
   
