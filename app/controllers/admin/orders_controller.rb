@@ -3,9 +3,9 @@ class Admin::OrdersController < Admin::AdminController
 
   def index
     if params[:user_id]
-      @orders = User.find(params[:user_id]).orders.where(website_id: website.id)
+      @orders = User.find(params[:user_id]).orders.where(website_id: website.id).paginate(page: params[:page], per_page: 50)
     else
-      @orders = website.orders
+      @orders = website.orders.paginate(page: params[:page], per_page: 250)
     end
   end
 

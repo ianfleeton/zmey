@@ -3,6 +3,7 @@
 - if @orders.empty?
   p= t('.no_orders')
 - else
+  = will_paginate @orders
   table#orders.table.table-bordered.table-striped
     thead
       tr
