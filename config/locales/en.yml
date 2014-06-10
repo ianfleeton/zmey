@@ -23,11 +23,15 @@ en:
       deliver_to_this_address: 'Deliver to this address'
       edit_or_delete: 'Edit or delete addresses'
       heading: 'Choose a delivery address'
+    edit:
+      heading: 'Change Address'
     index:
       add_new_address: 'Add new address'
       heading: 'Address Book'
       introduction: 'You can use this page to edit addresses in your address book, delete addresses that you no longer need, or add a new address.'
       label_info: 'Will display in dropdown as "%{label}"'
+    new:
+      heading: 'New Address'
   admin:
     addresses:
       address:
@@ -72,6 +76,22 @@ en:
         users: 'Users'
         website_manager_for: 'Website manager for %{website}'
   basket:
+    basket:
+      apply_coupon: 'Apply Coupon'
+      basket_total: 'Basket total:'
+      basket_total_ex_tax: 'Basket total ex VAT:'
+      basket_total_inc_tax: 'Basket total inc VAT:'
+      coupons: 'Coupons'
+      coupons_applied: 'You have applied the following coupons:'
+      discount: 'DISCOUNT'
+      enter_coupon_code: 'If you have a coupon code, enter it here.'
+      item: 'Item'
+      remove_item: 'Remove Item'
+      shipping_amount: 'Shipping amount:'
+      sku: 'Ref'
+      tax: 'VAT:'
+      total: 'Total:'
+      update_quantities: 'Update Quantities'
     checkout:
       change_address: 'Change address'
       delivery_address: 'Delivery Address'
@@ -141,6 +161,9 @@ en:
         destroy:
           flash:
             destroyed: 'User account has been deleted.'
+        update:
+          flash:
+            updated: 'User account details have been saved.'
     enquiries: Enquiries
     images: Images
     liquid_templates: Liquid Templates
