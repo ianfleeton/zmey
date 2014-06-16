@@ -36,6 +36,8 @@ en:
     addresses:
       address:
         label_info: 'Will display in dropdown as "%{label}"'
+      edit:
+        heading: "Edit address for %{user}"
       index:
         heading: "Addresses for %{user}"
     api_keys:

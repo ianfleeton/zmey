@@ -1,0 +1,52 @@
+- if @address.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@address.errors.count, "error")} prohibited this address from being saved:"
+    ul
+      - @address.errors.full_messages.each do |msg|
+        li= msg
+
+
+= form_for([:admin, @address]) do |form|
+  .form-group
+    = form.label :full_name
+    = form.text_field :full_name, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :email_address
+    = form.email_field :email_address, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :address_line_1
+    = form.text_field :address_line_1, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :address_line_2
+    = form.text_field :address_line_2, class: 'form-control'
+
+  .form-group
+    = form.label :town_city, 'Town/city'
+    = form.text_field :town_city, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :county
+    = form.text_field :county, class: 'form-control'
+
+  .form-group
+    = form.label :postcode
+    = form.text_field :postcode, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :country_id
+    = form.collection_select :country_id, website.countries, :id, :name, {}, { class: 'form-control' }
+
+  .form-group
+    = form.label :phone_number
+    = form.phone_field :phone_number, class: 'form-control'
+
+  .form-group
+    = form.label :label
+    = form.phone_field :label, class: 'form-control'
+
+  .form-group
+    = form.submit class: 'btn btn-primary'
