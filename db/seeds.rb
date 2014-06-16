@@ -31,3 +31,11 @@ ProductPlacement.create!(
   page: home_page,
   product: idevice
 )
+
+admin = User.create!(
+  admin: true,
+  email: 'merchant@example.com',
+  name: 'Alice Adams',
+  password: 'secret',
+  website: website
+)
