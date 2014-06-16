@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   belongs_to :managed_website, foreign_key: :manages_website_id, class_name: 'Website'
 
   # validation
+  validates_presence_of :website_id
+
   validates_uniqueness_of :customer_reference, allow_blank: true, scope: :website_id
 
   validates_length_of     :email, within: 3..100
