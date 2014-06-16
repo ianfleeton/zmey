@@ -39,3 +39,20 @@ admin = User.create!(
   password: 'secret',
   website: website
 )
+
+bob = User.create!(
+  email: 'bob@example.com',
+  name: 'Bob Brown',
+  password: 'letmein',
+  website: website
+)
+
+bob_home = Address.create!(
+  address_line_1: '1 Somerset Road',
+  country: website.countries.first,
+  email_address: 'bob@example.org',
+  full_name: 'Bob Brown',
+  postcode: 'L0N D0N',
+  town_city: 'London',
+  user: bob
+)
