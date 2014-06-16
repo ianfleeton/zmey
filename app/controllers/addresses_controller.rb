@@ -1,4 +1,6 @@
 class AddressesController < ApplicationController
+  before_action :user_required, only: [:choose_delivery_address, :index]
+
   def index
     if params[:return_to] == 'checkout'
       session[:return_to] = 'checkout'
