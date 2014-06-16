@@ -69,22 +69,9 @@ class ApplicationController < ActionController::Base
     Time.zone = 'London'
   end
 
-  def set_cookie_domain(domain)
-    cookies = session.instance_eval("@dbprot")
-    unless cookies.blank?
-      cookies.each do |cookie|
-        options = cookie.instance_eval("@cookie_options")
-        options["domain"] = domain unless options.blank?
-      end
-    end
-  end
-
   def find_website
     @w = Website.for(request.host, request.subdomains) || Website.first
     if @w
-      if request.host == @w.domain
-        set_cookie_domain(@w.domain)
-      end
       return @w
     else
       not_found
