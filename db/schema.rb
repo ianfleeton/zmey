@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529151407) do
+ActiveRecord::Schema.define(version: 20140617140646) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -398,6 +398,8 @@ ActiveRecord::Schema.define(version: 20140529151407) do
     t.string   "gender",                                           default: "",         null: false
     t.string   "age_group",                                        default: "",         null: false
   end
+
+  add_index "products", ["website_id"], name: "index_products_on_website_id", using: :btree
 
   create_table "quantity_prices", force: true do |t|
     t.integer  "product_id"
