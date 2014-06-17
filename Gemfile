@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.2.rc1'
+gem 'rails', '4.1.2.rc2'
 gem 'mysql2'
 gem 'RedCloth'
 gem 'image_science'
@@ -67,7 +67,7 @@ gem 'rvm-capistrano', group: :development
 # gem 'debugger', group: [:development, :test]
 
 group :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.0'
   gem 'cucumber-rails', require: false
   gem 'capybara'
   gem 'launchy'
