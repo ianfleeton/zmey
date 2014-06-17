@@ -1,0 +1,16 @@
+= page_header 'Images'
+
+p= link_to 'Upload New Image', new_admin_image_path, class: 'btn btn-primary'
+
+= content_tag(:p, 'No images') if @images.empty?
+
+= will_paginate @images
+
+- @images.each_slice(4) do |slice|
+  .row
+    - slice.each do |i|
+      .col-xs-6.col-md-3
+        .thumbnail
+          img src="#{i.url}"
+          h5= truncate(i.name, 20)
+          p= edit_button([:admin, i])
