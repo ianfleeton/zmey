@@ -58,6 +58,10 @@ en:
         order_total: 'Order Total'
         status: 'Status'
         when_placed: 'When Placed'
+    pages:
+      form:
+        no_follow: 'NOFOLLOW (search engines should not follow links from this page)'
+        no_index: 'NOINDEX (search engines should not index this page)'
     users:
       edit:
         heading: 'Edit User Account Details'

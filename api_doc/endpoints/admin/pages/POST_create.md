@@ -14,6 +14,8 @@ letters, hyphens and forward slashes.
 
 ### Additional attributes
 
+* **no_follow** — Robots should not follow links from this page if set to true. Default is false.
+* **no_index** — Robots should not index this page if set to true. Default is false.
 * **parent_id** — ID of the parent page. If not provided, null is assumed.
 
 ## Example

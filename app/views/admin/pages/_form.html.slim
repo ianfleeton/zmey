@@ -24,6 +24,14 @@
     = form.label :parent_id, 'Parent page or navigation'
     = form.collection_select :parent_id, @w.pages, :id, :name_with_ancestors, {include_blank: '-- No parent --'}, class: 'form-control'
 
+  label.checkbox
+    = form.check_box :no_index
+    = t('.no_index')
+
+  label.checkbox
+    = form.check_box :no_follow
+    = t('.no_follow')
+
   .form-group
     = form.label :image_id
     = select :page, :image_id, image_options, {}, class: 'form-control'
