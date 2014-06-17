@@ -19,7 +19,7 @@ class PagesController < ApplicationController
   def sitemap
     @pages = Array.new
     @pages.concat website.pages.reject {|p| p.parent.nil?}
-    @pages.concat website.products
+    @pages.concat website.products.select(:id, :name, :website_id)
     @other_urls = ['/enquiries/new', '/users/forgot_password', '/users/new',
       '/sessions/new', '/basket', '/pages/terms'].collect{|x| 'http://' + website.domain + x}
 
