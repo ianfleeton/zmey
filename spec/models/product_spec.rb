@@ -15,7 +15,7 @@ describe Product do
   describe 'image validations' do
     it 'allows an image to be absent' do
       product = FactoryGirl.build(:product, image_id: nil)
-      expect(product.valid?).to be_true
+      expect(product.valid?).to be_truthy
     end
 
     it 'validates that given image exists' do
@@ -67,22 +67,22 @@ describe Product do
 
   describe '#reduced?' do
     it 'returns false if rrp is blank' do
-      expect(@product.reduced?).to be_false
+      expect(@product.reduced?).to be_falsey
     end
 
     it 'returns true if price < rrp' do
       @product.price = 1.0
       @product.rrp = 1.5
-      expect(@product.reduced?).to be_true
+      expect(@product.reduced?).to be_truthy
     end
 
     it 'returns false if price >= rrp' do
       @product.price = 1.5
       @product.rrp = 1.0
-      expect(@product.reduced?).to be_false
+      expect(@product.reduced?).to be_falsey
 
       @product.price = 1.0
-      expect(@product.reduced?).to be_false
+      expect(@product.reduced?).to be_falsey
     end
   end
 end

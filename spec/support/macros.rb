@@ -22,7 +22,7 @@ module Macros
 
       it "should respond_to? anything, when given the private flag" do
         formatter = described_class.new({ }, StringIO.new)
-        formatter.respond_to?(:method_missing, true).should be_true
+        formatter.respond_to?(:method_missing, true).should be_truthy
       end
     end
   end

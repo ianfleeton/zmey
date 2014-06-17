@@ -63,14 +63,14 @@ describe Website do
   it "should only accept payment on account when payment on account is accepted and no other payment methods are" do
     @website.accept_payment_on_account = true
     @website.worldpay_active = false
-    expect(@website.only_accept_payment_on_account?).to be_true
+    expect(@website.only_accept_payment_on_account?).to be_truthy
 
     @website.worldpay_active = true
-    expect(@website.only_accept_payment_on_account?).to be_false
+    expect(@website.only_accept_payment_on_account?).to be_falsey
 
     @website.accept_payment_on_account = false
     @website.worldpay_active = false
-    expect(@website.only_accept_payment_on_account?).to be_false
+    expect(@website.only_accept_payment_on_account?).to be_falsey
   end
 
   it 'orders enquiries in reverse chronological order' do
@@ -99,7 +99,7 @@ describe Website do
     it 'should populate itself with a number of countries' do
       @website.save
       @website.populate_countries!
-      expect(@website.countries).to have(248).countries
+      expect(@website.countries.size).to eq 248
     end
   end
 
