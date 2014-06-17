@@ -138,6 +138,6 @@ duplicate of it first and then using CSS to hide it.
 <p><%= t('.enter_coupon_code') %></p>
 <%= form_tag controller: 'basket', action: 'enter_coupon' do %>
 <input type="text" name="coupon_code" id="coupon_code">
-<input type="submit" value="<%= t('.apply_coupon') %>">
+<input type="submit" value="<%= t('.apply_coupon') %>" class="apply-coupon pure-button">
 <% end %>
 <% end -%>
