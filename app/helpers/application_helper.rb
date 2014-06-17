@@ -103,4 +103,17 @@ module ApplicationHelper
       end
     end
   end
+
+  # Creates a robots meta tag.
+  #
+  # ==== Options
+  # * <tt>:index</tt> - Robots should index this page.
+  # * <tt>:follow</tt> - Robots should follow links from this page.
+  def robots_meta_tag(options = {})
+    options.reverse_merge! index: true, follow: true
+    values = []
+    values << (options[:index]  ? 'index'  : 'noindex')
+    values << (options[:follow] ? 'follow' : 'nofollow')
+    tag(:meta, {name: 'robots', content: values.join(', ')})
+  end
 end
