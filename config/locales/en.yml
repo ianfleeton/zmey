@@ -134,6 +134,9 @@ en:
       active: 'Show product on website'
   quantity: Qty
   register: Sign Up
+  sessions:
+    new:
+      sign_up: 'Sign Up'
   users:
     show:
       manage_address_book: 'Manage Address Book'
