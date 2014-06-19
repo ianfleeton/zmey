@@ -27,6 +27,7 @@ describe 'Admin products API' do
         expect(products['products'].length).to eq 1
         expect(products['products'][0]['id']).to eq @product1.id
         expect(products['products'][0]['sku']).to eq @product1.sku
+        expect(products['products'][0]['name']).to eq @product1.name
       end
 
       it 'returns 200 OK' do
