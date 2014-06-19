@@ -1,14 +1,14 @@
-<% tax_total = @w.vat_number.empty? ? '' : @order.tax_total -%>
+<% tax_total = website.vat_number.empty? ? '' : @order.tax_total -%>
 
     _gaq.push(['_addTrans',
-      '<%= h @order.order_number %>',
-      '<%= h @w.name %>',
+      '<%= @order.order_number %>',
+      '<%= website.name %>',
       '<%= @order.total %>',
       '<%= tax_total %>',
       '<%= @order.shipping_amount %>',
-      '<%= h @order.town_city %>',
-      '<%= h @order.county %>',
-      '<%= h @order.country.name %>'
+      '<%= @order.delivery_town_city %>',
+      '<%= @order.delivery_county %>',
+      '<%= @order.delivery_country.name %>'
     ]);
 <%
 @order.order_lines.each do |line|
@@ -16,10 +16,10 @@
 -%>
 
     _gaq.push(['_addItem',
-      '<%= h @order.order_number %>',
-      '<%= h line.product_sku %>',
-      '<%= h line.product_name %>',
-      '<%= h category_or_variation %>',
+      '<%= @order.order_number %>',
+      '<%= line.product_sku %>',
+      '<%= line.product_name %>',
+      '<%= category_or_variation %>',
       '<%= line.product_price %>',
       '<%= line.quantity %>'
     ]);

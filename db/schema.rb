@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140617142617) do
+ActiveRecord::Schema.define(version: 20140618175009) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -228,14 +228,14 @@ ActiveRecord::Schema.define(version: 20140617142617) do
     t.integer  "user_id"
     t.string   "order_number",                                            default: "",  null: false
     t.string   "email_address",                                           default: "",  null: false
-    t.string   "full_name",                                               default: "",  null: false
-    t.string   "address_line_1",                                          default: "",  null: false
-    t.string   "address_line_2",                                          default: "",  null: false
-    t.string   "town_city",                                               default: "",  null: false
-    t.string   "county",                                                  default: "",  null: false
-    t.string   "postcode",                                                default: "",  null: false
-    t.integer  "country_id",                                                            null: false
-    t.string   "phone_number",                                            default: "",  null: false
+    t.string   "delivery_full_name",                                      default: "",  null: false
+    t.string   "delivery_address_line_1",                                 default: "",  null: false
+    t.string   "delivery_address_line_2",                                 default: "",  null: false
+    t.string   "delivery_town_city",                                      default: "",  null: false
+    t.string   "delivery_county",                                         default: "",  null: false
+    t.string   "delivery_postcode",                                       default: "",  null: false
+    t.integer  "delivery_country_id",                                                   null: false
+    t.string   "delivery_phone_number",                                   default: "",  null: false
     t.decimal  "shipping_amount",                precision: 10, scale: 3, default: 0.0, null: false
     t.string   "shipping_method",                                         default: "",  null: false
     t.integer  "status",                                                  default: 0,   null: false

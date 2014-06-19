@@ -1,11 +1,11 @@
 class Order < ActiveRecord::Base
-  validates_presence_of :email_address, :address_line_1, :town_city, :postcode, :country_id
+  validates_presence_of :email_address, :delivery_address_line_1, :delivery_town_city, :delivery_postcode, :delivery_country_id
 
   before_save :calculate_total
   before_create :create_order_number
 
   # Associations
-  belongs_to :country
+  belongs_to :delivery_country, class_name: 'Country'
   belongs_to :basket
   belongs_to :user
   belongs_to :website
@@ -50,29 +50,29 @@ class Order < ActiveRecord::Base
     status == Order::PAYMENT_RECEIVED
   end
 
-  def copy_address a
-    self.email_address   = a.email_address
-    self.full_name       = a.full_name
-    self.address_line_1  = a.address_line_1
-    self.address_line_2  = a.address_line_2
-    self.town_city       = a.town_city
-    self.county          = a.county
-    self.postcode        = a.postcode
-    self.country_id      = a.country_id
-    self.phone_number    = a.phone_number
+  def copy_delivery_address(a)
+    self.email_address            = a.email_address
+    self.delivery_full_name       = a.full_name
+    self.delivery_address_line_1  = a.address_line_1
+    self.delivery_address_line_2  = a.address_line_2
+    self.delivery_town_city       = a.town_city
+    self.delivery_county          = a.county
+    self.delivery_postcode        = a.postcode
+    self.delivery_country_id      = a.country_id
+    self.delivery_phone_number    = a.phone_number
   end
 
   def delivery_address
     Address.new(
-      email_address: email_address,
-      full_name: full_name,
-      address_line_1: address_line_1,
-      address_line_2: address_line_2,
-      town_city: town_city,
-      county: county,
-      postcode: postcode,
-      country_id: country_id,
-      phone_number: phone_number
+      email_address:  email_address,
+      full_name:      delivery_full_name,
+      address_line_1: delivery_address_line_1,
+      address_line_2: delivery_address_line_2,
+      town_city:      delivery_town_city,
+      county:         delivery_county,
+      postcode:       delivery_postcode,
+      country_id:     delivery_country_id,
+      phone_number:   delivery_phone_number
     )
   end
 

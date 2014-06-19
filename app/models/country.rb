@@ -6,7 +6,7 @@ class Country < ActiveRecord::Base
   belongs_to :website
   belongs_to :shipping_zone
   has_many :addresses, dependent: :restrict_with_exception
-  has_many :orders, dependent: :restrict_with_exception
+  has_many :delivery_orders, foreign_key: 'delivery_country_id', class_name: 'Order', dependent: :restrict_with_exception
 
   def to_s
     name

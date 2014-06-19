@@ -13,7 +13,7 @@ $(function() {
 <%= render 'sage_pay' %>
 <% end -%>
 
-<% if @w.paypal_active? -%>
+<% if website.paypal_active? -%>
 <div class="pay-by" id="pay_by_paypal">
 <h2>Pay by PayPal</h2>
 <p>
@@ -23,10 +23,10 @@ $(function() {
 <form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post">
   <input type="hidden" name="return" value="<%= paypal_auto_return_payments_url %>">
   <input type="hidden" name="cmd" value="_xclick">
-  <input type="hidden" name="business" value="<%= @w.paypal_email_address %>">
+  <input type="hidden" name="business" value="<%= website.paypal_email_address %>">
   <input type="hidden" name="currency_code" value="GBP">
   <input type="hidden" name="item_name" value="<%= @order.order_number %>">
-<% if @w.skip_payment? -%>
+<% if website.skip_payment? -%>
   <input type="hidden" name="amount" value="0.01">
 <% else -%>
   <input type="hidden" name="amount" value="<%= @order.total %>">
@@ -39,12 +39,12 @@ $(function() {
 </div><!--#pay_by_paypal-->
 <% end -%>
 
-<% if @w.cardsave_active? -%>
+<% if website.cardsave_active? -%>
 <div class="pay-by" id="pay_by_cardsave">
 <h2>Pay by Credit/Debit Card</h2>
 <form method="post" action="https://mms.cardsaveonlinepayments.com/Pages/PublicPages/PaymentForm.aspx">
   <input type="hidden" name="HashDigest" value="<%= @cardsave_hash %>">
-  <input type="hidden" name="MerchantID" value="<%= @w.cardsave_merchant_id %>">
+  <input type="hidden" name="MerchantID" value="<%= website.cardsave_merchant_id %>">
   <input type="hidden" name="Amount" value="<%= (@order.total * 100).to_int %>">
   <input type="hidden" name="CurrencyCode" value="826">
   <input type="hidden" name="OrderID" value="<%= @order.order_number %>">
@@ -52,14 +52,14 @@ $(function() {
   <input type="hidden" name="TransactionDateTime" value="<%= @cardsave_transaction_date_time %>">
   <input type="hidden" name="CallbackURL" value="<%= cardsave_callback_payments_url %>">
   <input type="hidden" name="OrderDescription" value="Web purchase">
-  <input type="hidden" name="CustomerName" value="<%= @order.full_name %>">
-  <input type="hidden" name="Address1" value="<%= @order.address_line_1 %>">
-  <input type="hidden" name="Address2" value="<%= @order.address_line_2 %>">
+  <input type="hidden" name="CustomerName" value="<%= @order.delivery_full_name %>">
+  <input type="hidden" name="Address1" value="<%= @order.delivery_address_line_1 %>">
+  <input type="hidden" name="Address2" value="<%= @order.delivery_address_line_2 %>">
   <input type="hidden" name="Address3" value="">
   <input type="hidden" name="Address4" value="">
-  <input type="hidden" name="City" value="<%= @order.town_city %>">
-  <input type="hidden" name="State" value="<%= @order.county %>">
-  <input type="hidden" name="PostCode" value="<%= @order.postcode %>">
+  <input type="hidden" name="City" value="<%= @order.delivery_town_city %>">
+  <input type="hidden" name="State" value="<%= @order.delivery_county %>">
+  <input type="hidden" name="PostCode" value="<%= @order.delivery_postcode %>">
   <input type="hidden" name="CountryCode" value="826">
   <input type="hidden" name="CV2Mandatory" value="true">
   <input type="hidden" name="Address1Mandatory" value="true">
@@ -75,9 +75,9 @@ $(function() {
 </div><!--#pay_by_cardsave-->
 <% end -%>
 
-<% if @w.worldpay_active? -%>
+<% if website.worldpay_active? -%>
 <div class="pay-by" id="pay_by_worldpay">
-  <% if @w.skip_payment? -%>
+  <% if website.skip_payment? -%>
   <h2>Skipping payment for WorldPay</h2>
   <p>The correct values are entered below and can be changed for testing.
     <code>callbackPW</code> is neither displayed nor verified in this test mode.</p>
@@ -87,7 +87,7 @@ $(function() {
     </div>
     <div>
       <label>instId</label>:<br>
-      <input type="text" name="instId" value="<%= @w.worldpay_installation_id %>" />
+      <input type="text" name="instId" value="<%= website.worldpay_installation_id %>" />
     </div>
     <div>
       <label>cartId</label>:<br>
@@ -111,19 +111,19 @@ $(function() {
     </div>
     <div>
       <label>name</label>:<br>
-      <input type="text" name="name" value="<%= @order.full_name %>" />
+      <input type="text" name="name" value="<%= @order.delivery_full_name %>" />
     </div>
     <div>
       <label>address</label>:<br>
-      <textarea name="address"><%= address_for_worldpay(@order) %></textarea>
+      <textarea name="address"><%= address_for_worldpay(@order.delivery_address) %></textarea>
     </div>
     <div>
       <label>postcode</label>:<br>
-      <input type="text" name="postcode" value="<%= @order.postcode %>" />
+      <input type="text" name="postcode" value="<%= @order.delivery_postcode %>" />
     </div>
     <div>
       <label>country</label>:<br>
-      <input type="text" name="country" value="<%= @order.country.iso_3166_1_alpha_2 %>" />
+      <input type="text" name="country" value="<%= @order.delivery_country.iso_3166_1_alpha_2 %>" />
     </div>
     <div>
       <label>tel</label>:<br>
@@ -158,22 +158,22 @@ $(function() {
     </div>
   </form>
   <% else -%>
-<form action="https://secure<%= (@w.worldpay_test_mode? ? '-test' : '') %>.worldpay.com/wcc/purchase" method="post">
+<form action="https://secure<%= (website.worldpay_test_mode? ? '-test' : '') %>.worldpay.com/wcc/purchase" method="post">
 <input type="hidden" name="cartId" value="<%= @order.order_number %>" />
-<input type="hidden" value="<%= @w.worldpay_installation_id %>" name="instId" />
+<input type="hidden" value="<%= website.worldpay_installation_id %>" name="instId" />
 <input type="hidden" value="<%= @order.total %>" name="amount" />
 <input type="hidden" value="Web purchase" name="desc" />
 <input type="hidden" value="GBP" name="currency" />
-<% if @w.worldpay_test_mode? -%>
+<% if website.worldpay_test_mode? -%>
 <input type="hidden" value="100" name="testMode" />
 <% end -%>
-<input type="hidden" value="<%= @order.full_name %>" name="name" />
+<input type="hidden" value="<%= @order.delivery_full_name %>" name="name" />
 
 
-<input type="hidden" value="<%= address_for_worldpay(@order) %>" name="address" />
-<input type="hidden" value="<%= @order.postcode %>" name="postcode" />
-<input type="hidden" value="<%= @order.country.iso_3166_1_alpha_2 %>" name="country" />
-<input type="hidden" name="tel" value="<%= @order.phone_number %>" />
+<input type="hidden" value="<%= address_for_worldpay(@order.delivery_address) %>" name="address" />
+<input type="hidden" value="<%= @order.delivery_postcode %>" name="postcode" />
+<input type="hidden" value="<%= @order.delivery_country.iso_3166_1_alpha_2 %>" name="country" />
+<input type="hidden" name="tel" value="<%= @order.delivery_phone_number %>" />
 <input type="hidden" value="<%= @order.email_address %>" name="email" />
 
 <input name="submit" type="submit" class="button" value="Proceed to WorldPay" />

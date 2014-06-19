@@ -32,7 +32,7 @@ class Admin::CountriesController < Admin::AdminController
   def destroy
     if @country.addresses.length > 0
       flash[:notice] = 'This country cannot be removed as there are addresses that refer to this country.'
-    elsif @country.orders.length > 0
+    elsif @country.delivery_orders.length > 0
       flash[:notice] = 'This country cannot be removed as there are orders that refer to this country.'
     else
       @country.destroy

@@ -81,11 +81,12 @@ FactoryGirl.define do
   end
 
   factory :order do
-    email_address 'buyer@example.org'
-    address_line_1 '123 Street'
-    town_city 'Harrogate'
-    postcode 'HG1 9ZZ'
-    association :country
+    email_address           'buyer@example.org'
+    delivery_address_line_1 '123 Street'
+    delivery_town_city      'Harrogate'
+    delivery_postcode       'HG1 9ZZ'
+    association :delivery_country, factory: :country
+    association :website
   end
 
   factory :order_line do

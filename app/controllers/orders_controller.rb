@@ -84,14 +84,14 @@ class OrdersController < ApplicationController
     plain=plain + '&TransactionDateTime=' + @cardsave_transaction_date_time
     plain=plain + '&CallbackURL=' + cardsave_callback_payments_url
     plain=plain + '&OrderDescription=Web purchase';
-    plain=plain + '&CustomerName=' + @order.full_name
-    plain=plain + '&Address1=' + @order.address_line_1
-    plain=plain + '&Address2=' + @order.address_line_2
+    plain=plain + '&CustomerName=' + @order.delivery_full_name
+    plain=plain + '&Address1=' + @order.delivery_address_line_1
+    plain=plain + '&Address2=' + @order.delivery_address_line_2
     plain=plain + '&Address3='
     plain=plain + '&Address4='
-    plain=plain + '&City=' + @order.town_city
-    plain=plain + '&State=' + @order.county
-    plain=plain + '&PostCode=' + @order.postcode
+    plain=plain + '&City=' + @order.delivery_town_city
+    plain=plain + '&State=' + @order.delivery_county
+    plain=plain + '&PostCode=' + @order.delivery_postcode
     plain=plain + '&CountryCode=826'
     plain=plain + "&CV2Mandatory=true"
     plain=plain + "&Address1Mandatory=true"
@@ -112,12 +112,12 @@ class OrdersController < ApplicationController
       pre_shared_key: website.sage_pay_pre_shared_key,
       vendor_tx_code: @order.order_number,
       amount: @order.total,
-      delivery_surname: @order.full_name,
-      delivery_firstnames: @order.full_name,
-      delivery_address: @order.address_line_1,
-      delivery_city: @order.town_city,
-      delivery_post_code: @order.postcode,
-      delivery_country: @order.country ? @order.country.iso_3166_1_alpha_2 : 'GB',
+      delivery_surname: @order.delivery_full_name,
+      delivery_firstnames: @order.delivery_full_name,
+      delivery_address: @order.delivery_address_line_1,
+      delivery_city: @order.delivery_town_city,
+      delivery_post_code: @order.delivery_postcode,
+      delivery_country: @order.delivery_country ? @order.delivery_country.iso_3166_1_alpha_2 : 'GB',
       success_url: sage_pay_success_payments_url,
       failure_url: sage_pay_failure_payments_url
     )

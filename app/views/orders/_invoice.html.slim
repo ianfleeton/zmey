@@ -31,73 +31,73 @@
           =< order.website.phone_number
           br
           b Email
-          =< website.email
+          =< order.website.email
           br
           b Website
-          =< website.domain
+          =< order.website.domain
           - if order.website.vat_number.present?
             br
             b VAT Number:
             =< order.website.vat_number
         td
           p
-            = order.full_name.upcase
+            = order.delivery_full_name.upcase
             br
-            = order.address_line_1.upcase
+            = order.delivery_address_line_1.upcase
             br
-            = order.address_line_2.upcase
+            = order.delivery_address_line_2.upcase
             br
-            = order.town_city.upcase
+            = order.delivery_town_city.upcase
             br
-            = order.county.upcase
+            = order.delivery_county.upcase
             br
-            = order.postcode.upcase
+            = order.delivery_postcode.upcase
             br
-            = order.country.name.upcase
+            = order.delivery_country.name.upcase
     h1.invoice-title Invoice
     table width="100%" cellspacing="10"
       tr
         td.box width="50%"
           b Invoice Address:
           br
-          = order.full_name.upcase
+          = order.delivery_full_name.upcase
           br
-          = order.address_line_1.upcase
+          = order.delivery_address_line_1.upcase
           br
-          = order.address_line_2.upcase
+          = order.delivery_address_line_2.upcase
           br
-          = order.town_city.upcase
+          = order.delivery_town_city.upcase
           br
-          = order.county.upcase
+          = order.delivery_county.upcase
           br
-          = order.postcode.upcase
+          = order.delivery_postcode.upcase
           br
-          = order.country.name.upcase
+          = order.delivery_country.name.upcase
           br
           b Phone:
-          = order.phone_number
+          = order.delivery_phone_number
           br
           b Email:
           = order.email_address
         td.box
           b Deliver to:
           br
-          = order.full_name.upcase
+          = order.delivery_full_name.upcase
           br
-          = order.address_line_1.upcase
+          = order.delivery_address_line_1.upcase
           br
-          = order.address_line_2.upcase
+          = order.delivery_address_line_2.upcase
           br
-          = order.town_city.upcase
+          = order.delivery_town_city.upcase
           br
-          = order.county.upcase
+          = order.delivery_county.upcase
           br
-          = order.postcode.upcase
+          = order.delivery_postcode.upcase
           br
-          = order.country.name.upcase
+          = order.delivery_country.name.upcase
           br
           b Phone:
-          = order.phone_number
+          = order.delivery_phone_number
           br
           b Email:
           = order.email_address

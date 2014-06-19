@@ -1,4 +1,4 @@
-<h2 style="color:#333;font-weight:normal;"><%= @order.full_name %></h2>
+<h2 style="color:#333;font-weight:normal;"><%= @order.delivery_full_name %></h2>
 
 <p>Thank you for placing an order at <%= @website.name %></p>
 
@@ -77,18 +77,18 @@
 <p>To be delivered to:</p>
 
 <p>
-  <%= @order.full_name %><br>
-  <%= @order.address_line_1 %><br>
-  <%= @order.address_line_2 %><br>
-  <%= @order.town_city %><br>
-  <%= @order.county %><br>
-  <%= @order.postcode %><br>
-  <%= @order.country %>
+  <%= @order.delivery_full_name %><br>
+  <%= @order.delivery_address_line_1 %><br>
+  <%= @order.delivery_address_line_2 %><br>
+  <%= @order.delivery_town_city %><br>
+  <%= @order.delivery_county %><br>
+  <%= @order.delivery_postcode %><br>
+  <%= @order.delivery_country %>
 </p>
 
 <p>
   <%= @order.email_address %><br>
-  <%= @order.phone_number %>
+  <%= @order.delivery_phone_number %>
 </p>
 
 <% if @order.customer_note.present? -%>
