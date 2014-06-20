@@ -29,6 +29,10 @@ Ruby 2.1.1.
 Zmey uses ImageScience, which depends on FreeImage, for image resizing. See
 http://docs.seattlerb.org/ImageScience.html for details.
 
+### REST API documentation
+
+Zmey can be accessed remotely using its [REST API](api_doc/README.md).
+
 ### Environment variables
 
 #### ZMEY_ASSETS
