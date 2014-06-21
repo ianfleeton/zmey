@@ -62,6 +62,8 @@ Rails.application.routes.draw do
       resources :addresses, shallow: true
     end
 
+    resources :webhooks
+
     resources :websites
   end
 

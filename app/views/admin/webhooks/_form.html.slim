@@ -1,0 +1,9 @@
+= form_for [:admin, @webhook] do |f|
+  .form-group
+    = f.label :event
+    = f.text_field :event, required: true, class: 'form-control'
+  .form-group
+    = f.label :url, 'URL'
+    = f.url_field :url, required: true, class: 'form-control'
+  .form-group
+    = f.submit class: 'btn btn-primary'

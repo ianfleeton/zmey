@@ -1,0 +1,16 @@
+= page_header t('.heading')
+
+p= new_button [:admin, Webhook]
+
+- if @webhooks.any?
+  table.table.table-bordered
+    thead
+      tr
+        th= t('.event')
+        th= 'URL'
+    tbody
+      - @webhooks.each do |w|
+        tr
+          td= w.event
+          td= w.url
+

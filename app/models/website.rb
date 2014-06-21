@@ -37,6 +37,7 @@ class Website < ActiveRecord::Base
   has_many :shipping_table_rows, -> { order 'trigger_value' }, through: :shipping_classes
   has_many :users, -> { order 'name' }, dependent: :destroy
   has_many :countries, -> { order 'name' }, dependent: :destroy
+  has_many :webhooks, dependent: :delete_all
   belongs_to :blog, class_name: 'Forum'
   belongs_to :country
 

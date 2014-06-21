@@ -81,6 +81,12 @@ en:
         registered_email_address: 'Registered email address'
         users: 'Users'
         website_manager_for: 'Website manager for %{website}'
+    webhooks:
+      index:
+        event: 'Event'
+        heading: 'Webhooks'
+      new:
+        heading: 'New Webhook'
   basket:
     basket:
       apply_coupon: 'Apply Coupon'
@@ -173,6 +179,9 @@ en:
         update:
           flash:
             updated: 'User account details have been saved.'
+      webhooks:
+        create:
+          created: 'Webhook created.'
     enquiries: Enquiries
     images: Images
     liquid_templates: Liquid Templates
