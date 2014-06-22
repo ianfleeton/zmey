@@ -1,0 +1,29 @@
+= page_header t('.heading')
+
+- if @enquiries.empty?
+  p= t('.no_enquiries')
+- else
+  table.table.table-bordered.table-striped
+    tr
+      th= t('.sent')
+      th= t('.name')
+      th= t('.organisation')
+      th= t('.postcode')
+      th= t('.telephone')
+      th= t('.email')
+      th= t('.call_back')
+      th= t('.actions')
+
+    - @enquiries.each do |enquiry|
+      tr
+        td= enquiry.created_at
+        td= enquiry.name
+        td= enquiry.organisation
+        td= enquiry.postcode
+        td= enquiry.telephone
+        td= enquiry.email
+        td= enquiry.call_back
+        td style="width: 150px;"
+          => link_to t('.view'), [:admin, enquiry], class: 'btn btn-default'
+          => edit_button [:admin, enquiry]
+          = delete_button [:admin, enquiry]

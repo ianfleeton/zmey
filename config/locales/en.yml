@@ -48,6 +48,19 @@ en:
         no_keys: "You don't have any keys set up yet."
       new:
         heading: New API Key
+    enquiries:
+      index:
+        actions: 'Actions'
+        call_back: 'Call back'
+        email: 'Email'
+        heading: 'Enquiries'
+        name: 'Name'
+        no_enquiries: 'No enquiries have been sent yet.'
+        organisation: 'Organisation'
+        postcode: 'Postcode'
+        sent: 'Sent'
+        telephone: 'Telephone'
+        view: 'View'
     orders:
       index:
         full_name: 'Full Name'
