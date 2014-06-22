@@ -1,10 +1,8 @@
-class Admin::AddressesController < ApplicationController
+class Admin::AddressesController < Admin::AdminController
   NESTED_ACTIONS = [:index]
   SHALLOW_ACTIONS = [:destroy, :edit, :update]
   before_action :set_address, only: SHALLOW_ACTIONS
   before_action :set_user, only: NESTED_ACTIONS
-
-  layout 'admin'
 
   def index
     @addresses = @user.addresses
