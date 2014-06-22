@@ -66,9 +66,11 @@ gem 'rvm-capistrano', group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-group :test do
+group :development, :test do
   gem 'rspec-rails', '~> 2.0'
-  gem 'cucumber-rails', require: false
+end
+
+group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'shoulda-matchers', require: false
