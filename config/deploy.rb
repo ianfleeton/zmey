@@ -1,8 +1,8 @@
 require "bundler/capistrano"
 
 require "rvm/capistrano"
-set :rvm_type, :system
-set :rvm_path, "/usr/local/rvm"
+set :rvm_type, :user
+set :rvm_path, "/home/admin/.rvm"
 
 set :application, "zmey"
 raise 'Set the ZMEY_REPOSITORY environment variable before deploying' unless ENV['ZMEY_REPOSITORY']
