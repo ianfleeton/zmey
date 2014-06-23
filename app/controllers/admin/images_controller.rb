@@ -46,7 +46,7 @@ class Admin::ImagesController < Admin::AdminController
       @image.errors.add(:base, e)
       redirect_to(edit_image_path(@image), alert: "#{e}") and return
     end
-    redirect_to images_path
+    redirect_to admin_images_path
   end
 
   private
