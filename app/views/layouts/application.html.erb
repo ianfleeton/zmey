@@ -11,7 +11,7 @@
     <% if @w.can_users_create_accounts? -%>
     <%= nav_link_to I18n.t('register'), controller: 'users', action: 'new' %>
     <% end -%>
-    <%= nav_link_to I18n.t('login'), controller: 'sessions', action: 'new' %>
+    <%= nav_link_to I18n.t('login'), sign_in_path %>
     <% end -%>
     <% if @w.shop? -%>
     <%= nav_link_to I18n.t('view_cart'), basket_path %>
