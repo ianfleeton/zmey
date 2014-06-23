@@ -31,6 +31,7 @@ class Admin::ImagesController < Admin::AdminController
     @image = Image.find(params[:id])
 
     if @image.update_attributes(image_params)
+      Webhook.trigger('image_updated', @image)
       flash[:notice] = 'Image saved.'
       redirect_to action: 'index'
     else
