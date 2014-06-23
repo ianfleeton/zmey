@@ -24,8 +24,15 @@ class Webhook < ActiveRecord::Base
   def trigger(payload)
     inject_payload!(payload)
     uri = URI(url)
-    Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
-      http.post(uri.request_uri, payload.to_json, {'Content-Type' => 'application/json'})
+    begin
+      Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+        response = http.post(uri.request_uri, payload.to_json, {'Content-Type' => 'application/json'})
+        if response.code.to_i != 200
+          logger.warn "Webhook responded #{response.code}"
+        end
+      end
+    rescue => e
+      logger.warn(e)
     end
   end
 
