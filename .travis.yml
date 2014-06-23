@@ -3,6 +3,8 @@ rvm:
   - '2.1.1'
 env:
   - DB=mysql
+install:
+  - sudo apt-get install libfreeimage3 libfreeimage-dev
 bundler_args: --without production
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
