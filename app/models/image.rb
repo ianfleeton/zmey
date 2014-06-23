@@ -86,4 +86,13 @@ class Image < ActiveRecord::Base
     e = '' if e.nil?
     e
   end
+
+  def to_webhook_payload(event)
+    {
+      image: {
+        id: id,
+        url: "http://#{website.domain}#{url}"
+      }
+    }
+  end
 end

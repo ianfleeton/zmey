@@ -9,6 +9,16 @@ class Webhook < ActiveRecord::Base
 
   delegate :domain, to: :website
 
+  # Triggers any webhooks that are registered for the object's website and
+  # the specified event.
+  def self.trigger(event, object)
+    hooks = Webhook.where(website: object.website, event: event)
+    if hooks.any?
+      payload = object.to_webhook_payload(event)      
+      hooks.each { |h| h.trigger(payload) }
+    end
+  end
+
   # Triggers the webhook, sending a POST request to the configured URL with
   # the request body containing a JSONified payload.
   def trigger(payload)

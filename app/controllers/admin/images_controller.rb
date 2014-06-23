@@ -15,6 +15,7 @@ class Admin::ImagesController < Admin::AdminController
     flash[:notice] = "#{pluralize(uploader.images.length, 'image')} uploaded."
 
     if uploader.images.length > 0
+      uploader.images.each { |i| Webhook.trigger('image_created', i) }
       redirect_to admin_images_path
     else
       @image = uploader.failed.first || Image.new
