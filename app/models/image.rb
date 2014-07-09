@@ -91,7 +91,7 @@ class Image < ActiveRecord::Base
     {
       image: {
         id: id,
-        url: "http://#{website.domain}#{url}"
+        url: "#{website.url}#{url}"
       }
     }
   end
