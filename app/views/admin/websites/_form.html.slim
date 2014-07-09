@@ -23,6 +23,14 @@
             = form.text_field :domain, class: 'form-control'
 
           .form-group
+            = form.label :scheme
+            = form.text_field :scheme, class: 'form-control'
+
+          .form-group
+            = form.label :port
+            = form.number_field :port, class: 'form-control'
+
+          .form-group
             = form.label :name
             = form.text_field :name, class: 'form-control', required: true
 

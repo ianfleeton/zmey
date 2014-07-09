@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140621205314) do
+ActiveRecord::Schema.define(version: 20140709140336) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -482,62 +482,64 @@ ActiveRecord::Schema.define(version: 20140621205314) do
   add_index "webhooks", ["website_id", "event"], name: "index_webhooks_on_website_id_and_event", using: :btree
 
   create_table "websites", force: true do |t|
-    t.string   "subdomain",                                                   default: "",    null: false
-    t.string   "domain",                                                      default: "",    null: false
+    t.string   "subdomain",                                                   default: "",     null: false
+    t.string   "domain",                                                      default: "",     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "google_analytics_code",                                       default: "",    null: false
-    t.string   "name",                                                        default: "",    null: false
-    t.string   "email",                                                       default: "",    null: false
+    t.string   "google_analytics_code",                                       default: "",     null: false
+    t.string   "name",                                                        default: "",     null: false
+    t.string   "email",                                                       default: "",     null: false
     t.text     "css_url"
-    t.boolean  "use_default_css",                                             default: false, null: false
-    t.boolean  "shop",                                                        default: false, null: false
-    t.boolean  "worldpay_active",                                             default: false, null: false
-    t.string   "worldpay_installation_id",                                    default: "",    null: false
-    t.string   "worldpay_payment_response_password",                          default: "",    null: false
-    t.boolean  "worldpay_test_mode",                                          default: false, null: false
-    t.boolean  "can_users_create_accounts",                                   default: true,  null: false
-    t.boolean  "skip_payment",                                                default: false, null: false
+    t.boolean  "use_default_css",                                             default: false,  null: false
+    t.boolean  "shop",                                                        default: false,  null: false
+    t.boolean  "worldpay_active",                                             default: false,  null: false
+    t.string   "worldpay_installation_id",                                    default: "",     null: false
+    t.string   "worldpay_payment_response_password",                          default: "",     null: false
+    t.boolean  "worldpay_test_mode",                                          default: false,  null: false
+    t.boolean  "can_users_create_accounts",                                   default: true,   null: false
+    t.boolean  "skip_payment",                                                default: false,  null: false
     t.integer  "blog_id"
-    t.decimal  "shipping_amount",                    precision: 10, scale: 3, default: 0.0,   null: false
-    t.boolean  "private",                                                     default: false, null: false
-    t.boolean  "accept_payment_on_account",                                   default: false, null: false
-    t.string   "vat_number",                                                  default: "",    null: false
-    t.boolean  "show_vat_inclusive_prices",                                   default: false, null: false
+    t.decimal  "shipping_amount",                    precision: 10, scale: 3, default: 0.0,    null: false
+    t.boolean  "private",                                                     default: false,  null: false
+    t.boolean  "accept_payment_on_account",                                   default: false,  null: false
+    t.string   "vat_number",                                                  default: "",     null: false
+    t.boolean  "show_vat_inclusive_prices",                                   default: false,  null: false
     t.text     "terms_and_conditions"
-    t.string   "default_locale",                                              default: "en",  null: false
+    t.string   "default_locale",                                              default: "en",   null: false
     t.integer  "page_image_size",                                             default: 400
     t.integer  "page_thumbnail_size",                                         default: 200
     t.integer  "product_image_size",                                          default: 400
     t.integer  "product_thumbnail_size",                                      default: 200
-    t.boolean  "render_blog_before_content",                                  default: true,  null: false
-    t.string   "google_ftp_username",                                         default: "",    null: false
-    t.string   "google_ftp_password",                                         default: "",    null: false
+    t.boolean  "render_blog_before_content",                                  default: true,   null: false
+    t.string   "google_ftp_username",                                         default: "",     null: false
+    t.string   "google_ftp_password",                                         default: "",     null: false
     t.text     "invoice_details"
-    t.string   "google_domain_name",                                          default: "",    null: false
-    t.boolean  "paypal_active",                                               default: false, null: false
-    t.string   "paypal_email_address",                                        default: "",    null: false
-    t.string   "paypal_identity_token",                                       default: "",    null: false
-    t.boolean  "cardsave_active",                                             default: false, null: false
-    t.string   "cardsave_merchant_id",                                        default: "",    null: false
-    t.string   "cardsave_password",                                           default: "",    null: false
-    t.string   "cardsave_pre_shared_key",                                     default: "",    null: false
-    t.string   "address_line_1",                                              default: "",    null: false
-    t.string   "address_line_2",                                              default: "",    null: false
-    t.string   "town_city",                                                   default: "",    null: false
-    t.string   "county",                                                      default: "",    null: false
-    t.string   "postcode",                                                    default: "",    null: false
-    t.integer  "country_id",                                                                  null: false
-    t.string   "phone_number",                                                default: "",    null: false
-    t.string   "fax_number",                                                  default: "",    null: false
-    t.string   "twitter_username",                                            default: "",    null: false
-    t.string   "skype_name",                                                  default: "",    null: false
-    t.boolean  "sage_pay_active",                                             default: false, null: false
-    t.string   "sage_pay_vendor",                                             default: "",    null: false
-    t.string   "sage_pay_pre_shared_key",                                     default: "",    null: false
-    t.boolean  "sage_pay_test_mode",                                          default: false, null: false
-    t.integer  "custom_view_cache_count",                                     default: 0,     null: false
+    t.string   "google_domain_name",                                          default: "",     null: false
+    t.boolean  "paypal_active",                                               default: false,  null: false
+    t.string   "paypal_email_address",                                        default: "",     null: false
+    t.string   "paypal_identity_token",                                       default: "",     null: false
+    t.boolean  "cardsave_active",                                             default: false,  null: false
+    t.string   "cardsave_merchant_id",                                        default: "",     null: false
+    t.string   "cardsave_password",                                           default: "",     null: false
+    t.string   "cardsave_pre_shared_key",                                     default: "",     null: false
+    t.string   "address_line_1",                                              default: "",     null: false
+    t.string   "address_line_2",                                              default: "",     null: false
+    t.string   "town_city",                                                   default: "",     null: false
+    t.string   "county",                                                      default: "",     null: false
+    t.string   "postcode",                                                    default: "",     null: false
+    t.integer  "country_id",                                                                   null: false
+    t.string   "phone_number",                                                default: "",     null: false
+    t.string   "fax_number",                                                  default: "",     null: false
+    t.string   "twitter_username",                                            default: "",     null: false
+    t.string   "skype_name",                                                  default: "",     null: false
+    t.boolean  "sage_pay_active",                                             default: false,  null: false
+    t.string   "sage_pay_vendor",                                             default: "",     null: false
+    t.string   "sage_pay_pre_shared_key",                                     default: "",     null: false
+    t.boolean  "sage_pay_test_mode",                                          default: false,  null: false
+    t.integer  "custom_view_cache_count",                                     default: 0,      null: false
     t.string   "custom_view_resolver"
+    t.string   "scheme",                                                      default: "http", null: false
+    t.integer  "port",                                                        default: 80,     null: false
   end
 
 end

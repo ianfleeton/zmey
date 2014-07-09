@@ -7,8 +7,6 @@ class Webhook < ActiveRecord::Base
   validates_presence_of :url
   validates_presence_of :website_id
 
-  delegate :domain, to: :website
-
   # Triggers any webhooks that are registered for the object's website and
   # the specified event.
   def self.trigger(event, object)
@@ -36,9 +34,9 @@ class Webhook < ActiveRecord::Base
     end
   end
 
-  # Adds domain and event attributes to the payload.
+  # Adds site URL and event attributes to the payload.
   def inject_payload!(payload)
-    payload[:domain] = domain
+    payload[:site_url] = website.url
     payload[:event] = event
   end
 end

@@ -6,8 +6,10 @@ class Website < ActiveRecord::Base
   validates_uniqueness_of :google_analytics_code, allow_blank: true
   validates_format_of :google_analytics_code, with: /\AUA-\d\d\d\d\d\d(\d)?(\d)?-\d\Z/, allow_blank: true
   validates_presence_of :name
+  validates_numericality_of :port, greater_than: 0, less_than: 65536, only_integer: true
   validates_inclusion_of :private, in: [true, false]
   validates_inclusion_of :render_blog_before_content, in: [true, false]
+  validates_inclusion_of :scheme, in: %w{http https}
   validates :subdomain, presence: true, uniqueness: true, format: /\A[a-z0-9]+[-a-z0-9]*\Z/i
 
   # WorldPay validations
@@ -331,6 +333,11 @@ class Website < ActiveRecord::Base
     else
       nil
     end
+  end
+
+  # Constructs a URL from the website's scheme, domain and port.
+  def url
+    "#{scheme}://#{domain}" + ((port == 80) ? '' : ":#{port}")
   end
 
   private
