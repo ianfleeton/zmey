@@ -37,6 +37,16 @@ Zmey can be accessed remotely using its REST API:
 
 * https://github.com/ianfleeton/zmey/tree/master/api_doc
 
+=== Webhooks
+
+Zmey uses webhooks to allow:
+
+* non-essential or idiosyncratic behaviour to be implemented as microservices
+* external actions to be triggered when events occur
+
+Zmey has some default webhook implementations. To use any or all of these
+webhooks, run the adapter service: https://github.com/ianfleeton/zmey-webhook-handlers
+
 === Environment variables
 
 [ZMEY_ASSETS]
