@@ -320,6 +320,27 @@
           = form.label :paypal_identity_token, 'PayPal identity token'
       	  = form.text_field :paypal_identity_token, class: 'form-control'
 
+    .col-md-4
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title UPG Atlas
+        .panel-body
+
+          label for="website_upg_atlas_active_true" Active?
+          label.radio
+            = form.radio_button :upg_atlas_active, true
+            | Yes
+
+          label.radio
+            = form.radio_button :upg_atlas_active, false
+            | No
+
+          = form.label :upg_atlas_sh_reference, 'SH Reference'
+          = form.text_field :upg_atlas_sh_reference, class: 'form-control'
+
+          = form.label :upg_atlas_check_code, 'Check Code'
+      	  = form.text_field :upg_atlas_check_code, class: 'form-control'
+
   .form-group
     = form.label :terms_and_conditions
     = form.text_area :terms_and_conditions, rows: 12, class: 'form-control'
