@@ -14,6 +14,10 @@ gem 'exception_notification'
 gem 'slim'
 gem 'factory_girl_rails'
 
+# Run jobs in the background
+gem 'daemons'
+gem 'delayed_job_active_record'
+
 # Pagination
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
