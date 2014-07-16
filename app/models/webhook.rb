@@ -13,7 +13,7 @@ class Webhook < ActiveRecord::Base
     hooks = Webhook.where(website: object.website, event: event)
     if hooks.any?
       payload = object.to_webhook_payload(event)      
-      hooks.each { |h| h.trigger(payload) }
+      hooks.each { |h| h.delay.trigger(payload) }
     end
   end
 
