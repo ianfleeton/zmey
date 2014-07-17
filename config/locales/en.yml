@@ -139,6 +139,14 @@ en:
   logout: Logout
   my_account: My Account
   orders:
+    index:
+      heading: 'Orders'
+      invoice: 'Invoice (PDF)'
+      no_orders: 'There are no orders for you.'
+      order_number: 'Order Number'
+      order_total: 'Order Total'
+      status: 'Status'
+      when_placed: 'When Placed'
     invoice:
       customer_reference: 'Customer reference:'
   password: Password
