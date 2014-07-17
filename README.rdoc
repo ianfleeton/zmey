@@ -31,6 +31,15 @@ Ruby 2.1.1.
 Zmey uses ImageScience, which depends on FreeImage, for image resizing. See
 http://docs.seattlerb.org/ImageScience.html for details.
 
+Zmey uses the LGPL wkhtmltopdf tool for generating invoices and other PDF
+documents from HTML. Some binaries are included in the repository for
+convenience. Its license can be found at:
+https://github.com/wkhtmltopdf/wkhtmltopdf/blob/master/COPYING
+
+wkhtmltopdf's dependencies can be installed on Ubuntu with:
+
+  apt-get install libqt4-gui libqt4-network libqt4-webkit libxrender-dev xorg
+
 === REST API documentation
 
 Zmey can be accessed remotely using its REST API:
