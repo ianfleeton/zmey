@@ -81,6 +81,8 @@ Rails.application.routes.draw do
 
       resources :products, only: [:create, :index]
       delete 'products', to: 'products#delete_all'
+
+      resources :users, only: [:index]
     end
   end
 

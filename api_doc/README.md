@@ -74,3 +74,7 @@ A successful retrieval will return JSON similar to the example:
 ### Product placements
 
 * [`POST` api/admin/product_placements](endpoints/admin/product_placements/POST_create.md)
+
+### Users
+
+* [`GET` api/admin/users](endpoints/admin/users/GET_index.md)
