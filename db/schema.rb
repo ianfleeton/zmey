@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716152823) do
+ActiveRecord::Schema.define(version: 20140717121442) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -559,6 +559,7 @@ ActiveRecord::Schema.define(version: 20140716152823) do
     t.boolean  "upg_atlas_active",                                            default: false,  null: false
     t.string   "upg_atlas_sh_reference",                                      default: "",     null: false
     t.string   "upg_atlas_check_code",                                        default: "",     null: false
+    t.string   "upg_atlas_filename",                                          default: "",     null: false
   end
 
 end

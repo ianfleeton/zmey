@@ -113,7 +113,8 @@ class Admin::WebsitesController < Admin::AdminController
       :shop, :show_vat_inclusive_prices, :skip_payment, :skype_name,
       :subdomain,
       :terms_and_conditions, :town_city, :twitter_username,
-      :upg_atlas_active, :upg_atlas_check_code, :upg_atlas_sh_reference,
+      :upg_atlas_active, :upg_atlas_check_code,
+      :upg_atlas_filename, :upg_atlas_sh_reference,
       :use_default_css,
       :vat_number)
   end
