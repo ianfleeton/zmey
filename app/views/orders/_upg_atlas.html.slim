@@ -1,0 +1,10 @@
+.pay-by
+  form action="https://www.secure-server-hosting.com/secutran/secuitems.php" method="post"
+    input type="hidden" name="checkcode" value="#{website.upg_atlas_check_code}"
+    input type="hidden" name="filename" value="#{website.upg_atlas_sh_reference}/#{website.upg_atlas_filename}"
+    input type="hidden" name="shippingcharge" value="0"
+    input type="hidden" name="shreference" value="#{website.upg_atlas_sh_reference}"
+    input type="hidden" name="transactionamount" value="#{@order.total}"
+    input type="hidden" name="transactioncurrency" value="GBP"
+    input type="hidden" name="transactiontax" value="0"
+    input type="submit" value="Pay Securely"
