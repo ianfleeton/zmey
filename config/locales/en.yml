@@ -71,6 +71,8 @@ en:
         order_total: 'Order Total'
         status: 'Status'
         when_placed: 'When Placed'
+      show:
+        heading: 'Order Details'
     pages:
       form:
         no_follow: 'NOFOLLOW (search engines should not follow links from this page)'
