@@ -1,4 +1,6 @@
 class PaymentsController < ApplicationController
+  include ResetBasket
+
   skip_before_action :verify_authenticity_token, only: [:cardsave_callback, :paypal_auto_return, :rbs_worldpay_callback]
 
   before_action :admin_required, only: [:index, :show]
@@ -185,7 +187,7 @@ class PaymentsController < ApplicationController
 
   def clean_up
     if order = Order.find_by(order_number: @payment.cart_id)
-      order.empty_basket(session)
+      reset_basket(order)
       update_order order
     end
   end

@@ -36,14 +36,8 @@ class Order < ActiveRecord::Base
     }[status]
   end
 
-  def empty_basket(session)
-    # TODO: I know too much; this code is used by PaymentsController and BasketController
-    unless basket.nil?
-      basket.basket_items.clear
-    end
-    unless session[:coupons].nil?
-      session[:coupons] = nil
-    end
+  def empty_basket
+    basket.basket_items.clear if basket
   end
 
   def payment_received?

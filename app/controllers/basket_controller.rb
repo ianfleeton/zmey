@@ -1,4 +1,6 @@
 class BasketController < ApplicationController
+  include ResetBasket
+
   before_action :require_delivery_address, only: [:place_order]
   before_action :remove_invalid_discounts, only: [:index, :checkout, :place_order]
   before_action :calculate_discounts, only: [:index, :checkout, :place_order]
@@ -119,7 +121,7 @@ class BasketController < ApplicationController
       @order.status = Order::PAYMENT_ON_ACCOUNT
       @order.save
       OrderNotifier.notification(website, @order).deliver
-      @order.empty_basket(session)
+      reset_basket(@order)
       redirect_to controller: 'orders', action: 'receipt'
     else
       OrderNotifier.admin_waiting_for_payment(website, @order).deliver
