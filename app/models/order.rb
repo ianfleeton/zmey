@@ -136,12 +136,4 @@ class Order < ActiveRecord::Base
       return if existing_order.nil?
     end
   end
-
-  # http://alt.pluralsight.com/wiki/default.aspx/Craig/BirthdayProblemCalculator.html
-  # this method is not used
-  # k = number of orders in a day
-  # n = number of possible values for order number
-  def probability_of_collision k, n
-    1 - Math.exp((-k**2.0)/(2.0*n))
-  end
 end
