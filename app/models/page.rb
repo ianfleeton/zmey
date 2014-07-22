@@ -90,6 +90,11 @@ class Page < ActiveRecord::Base
     a
   end
 
+  # Returns the <tt>extra</tt> attribute parsed as JSON.
+  def extra_json
+    @extra_json ||= JSON.parse(extra)
+  end
+
   # Custom validations
 
   def image_belongs_to_same_website

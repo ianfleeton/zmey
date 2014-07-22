@@ -14,6 +14,7 @@ letters, hyphens and forward slashes.
 
 ### Additional attributes
 
+* **extra** — Additional custom data such as text, XML or JSON.
 * **image_id** — ID of the main page image.
 * **no_follow** — Robots should not follow links from this page if set to true. Default is false.
 * **no_index** — Robots should not index this page if set to true. Default is false.
