@@ -80,6 +80,7 @@ Rails.application.routes.draw do
       delete 'pages', to: 'pages#delete_all'
 
       resources :product_placements, only: [:create]
+      delete 'product_placements', to: 'product_placements#delete_all'
 
       resources :products, only: [:create, :index]
       delete 'products', to: 'products#delete_all'

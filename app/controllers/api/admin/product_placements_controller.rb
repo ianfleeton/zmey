@@ -11,6 +11,11 @@ class Api::Admin::ProductPlacementsController < Api::Admin::AdminController
     end
   end
 
+  def delete_all
+    website.product_placements.each {|pp| pp.delete}
+    render nothing: :true, status: 204
+  end
+
   private
 
     def product_placement_params
