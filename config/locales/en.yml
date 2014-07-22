@@ -10,6 +10,8 @@ en:
       models:
         page:
           attributes:
+            image:
+              invalid: 'is invalid'
             parent:
               invalid: 'is invalid'
         product:
