@@ -34,4 +34,9 @@ module PagesHelper
   def delete_page(page)
     content_tag(:td, delete_button([:admin, page]))
   end
+
+  # Returns an array of links to the page's ancestors.
+  def page_breadcrumbs(page)
+    page.ancestors.reverse.map {|p| link_to(p.name, p.path)}
+  end
 end

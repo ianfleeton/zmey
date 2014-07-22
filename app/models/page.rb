@@ -81,6 +81,15 @@ class Page < ActiveRecord::Base
     super
   end
 
+  # Returns an array of ancestors with closest ancestor first.
+  def ancestors
+    p, a = self, []
+    while p = p.parent
+      a << (p)
+    end
+    a
+  end
+
   # Custom validations
 
   def image_belongs_to_same_website
