@@ -49,6 +49,10 @@ A successful retrieval will return JSON similar to the example:
 
 ## Endpoints
 
+### Carousel slides
+
+* [`DELETE` api/admin/carousel_slides](endpoints/admin/carousel_slides/DELETE_delete_all.md)
+
 ### Images
 
 * [`GET` api/admin/images](endpoints/admin/images/GET_index.md)

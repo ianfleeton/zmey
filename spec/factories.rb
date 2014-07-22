@@ -33,6 +33,7 @@ FactoryGirl.define do
     caption      'A slide'
     link         '#'
     association  :image
+    association  :website
     active_from  Date.today - 1.day
     active_until Date.today + 1.day
   end
