@@ -16,8 +16,12 @@ class Api::Admin::ImagesController < Api::Admin::AdminController
   end
 
   def delete_all
-    website.images.destroy_all
-    render nothing: :true, status: 204
+    begin
+      website.images.destroy_all
+      render nothing: :true, status: 204
+    rescue ActiveRecord::DeleteRestrictionError => e
+      render json: {'error' => e.to_s}, status: 400
+    end
   end
 
   private

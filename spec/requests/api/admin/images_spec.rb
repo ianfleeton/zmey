@@ -49,4 +49,32 @@ describe 'Admin images API' do
       end
     end
   end
+
+  describe 'DELETE delete_all' do
+    before do
+      @image1 = FactoryGirl.create(:image, website_id: @website.id)
+      @image2 = FactoryGirl.create(:image)
+    end
+
+    context 'with no DeleteRestrictionErrors' do
+      it 'deletes all images in the website' do
+        delete 'api/admin/images'
+        expect(Image.find_by(id: @image1.id)).to be_nil
+        expect(Image.find_by(id: @image2.id)).to be
+      end
+
+      it 'returns 204 No Content' do
+        delete 'api/admin/images'
+        expect(response.status).to eq 204
+      end
+    end
+
+    context 'with DeleteRestrictionError' do
+      it 'returns 400 Bad Request' do
+        FactoryGirl.create(:carousel_slide, image_id: @image1.id, website_id: @website.id)
+        delete 'api/admin/images'
+        expect(response.status).to eq 400
+      end
+    end
+  end
 end
