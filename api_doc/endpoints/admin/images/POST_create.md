@@ -1,6 +1,6 @@
-# POST api/admin/images
+# POST api/admin/images
 
-Create a new image.
+Create a new image and trigger the `image_created` webhook.
 
 ## Attributes
 

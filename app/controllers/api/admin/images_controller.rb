@@ -8,7 +8,9 @@ class Api::Admin::ImagesController < Api::Admin::AdminController
     io = StringIO.new(Base64.decode64(params[:image][:data]))
     @image.image = io
     @image.website = website
-    unless @image.save
+    if @image.save
+      Webhook.trigger('image_created', @image)
+    else
       render json: @image.errors.full_messages, status: :unprocessable_entity
     end
   end
