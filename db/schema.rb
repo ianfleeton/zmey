@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722142554) do
+ActiveRecord::Schema.define(version: 20140722150943) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -275,20 +275,20 @@ ActiveRecord::Schema.define(version: 20140722142554) do
   add_index "orders", ["website_id"], name: "index_orders_on_website_id", using: :btree
 
   create_table "pages", force: true do |t|
-    t.string   "title",       default: "",    null: false
-    t.string   "slug",        default: "",    null: false
-    t.integer  "website_id",                  null: false
+    t.string   "title",                          default: "",    null: false
+    t.string   "slug",                           default: "",    null: false
+    t.integer  "website_id",                                     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",        default: "",    null: false
-    t.string   "description", default: "",    null: false
+    t.string   "name",                           default: "",    null: false
+    t.string   "description",                    default: "",    null: false
     t.text     "content"
     t.integer  "parent_id"
-    t.integer  "position",    default: 0
+    t.integer  "position",                       default: 0
     t.integer  "image_id"
-    t.boolean  "no_follow",   default: false, null: false
-    t.boolean  "no_index",    default: false, null: false
-    t.text     "extra"
+    t.boolean  "no_follow",                      default: false, null: false
+    t.boolean  "no_index",                       default: false, null: false
+    t.text     "extra",       limit: 2147483647
   end
 
   add_index "pages", ["parent_id"], name: "index_pages_on_parent_id", using: :btree
