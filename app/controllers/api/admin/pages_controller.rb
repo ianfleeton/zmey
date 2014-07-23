@@ -19,7 +19,8 @@ class Api::Admin::PagesController < Api::Admin::AdminController
   private
 
     def page_params
-      params.require(:page).permit(:description, :extra, :image_id, :name, :no_follow,
+      params.require(:page).permit(:content, :description, :extra, :image_id,
+      :name, :no_follow,
       :no_index, :parent_id, :slug, :title)
     end
 end
