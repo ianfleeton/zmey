@@ -14,4 +14,10 @@ describe Page do
     page.slug = 'legacy_page'
     expect(page).to be_valid
   end
+
+  describe '#extra_json' do
+    it 'handles nil values of extra' do
+      expect { Page.new.extra_json }.not_to raise_error
+    end
+  end
 end

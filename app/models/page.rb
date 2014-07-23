@@ -92,7 +92,7 @@ class Page < ActiveRecord::Base
 
   # Returns the <tt>extra</tt> attribute parsed as JSON.
   def extra_json
-    @extra_json ||= JSON.parse(extra)
+    @extra_json ||= JSON.parse(extra || '{}')
   end
 
   # Custom validations
