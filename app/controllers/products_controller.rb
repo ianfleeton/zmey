@@ -1,21 +1,20 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show]
+  include ShowPage
 
   def show
-    @title = @product.page_title.blank? ? @product.name + ' at ' + website.name : @product.page_title
-    @description = @product.meta_description
+    @product = Product.find_by(id: params[:id], website_id: website.id)
 
-    not_found unless @product.active? || admin?
+    if @product
+      @title = @product.page_title.blank? ? @product.name + ' at ' + website.name : @product.page_title
+      @description = @product.meta_description
+      
+      not_found unless @product.active? || admin?
+    else
+      show_page("products/#{params[:id]}")
+    end
   end
-  
+
   def google_data_feed
     @products = website.google_products
   end
-
-  private
-  
-    def set_product
-      @product = Product.find_by(id: params[:id], website_id: website.id)
-      not_found unless @product
-    end
 end
