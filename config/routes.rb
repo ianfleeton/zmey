@@ -74,7 +74,7 @@ Rails.application.routes.draw do
       resources :images, only: [:create, :index]
       delete 'images', to: 'images#delete_all'
 
-      resources :orders, only: [:index]
+      resources :orders, only: [:index, :show]
 
       resources :pages, only: [:create, :index]
       delete 'pages', to: 'pages#delete_all'
@@ -85,7 +85,7 @@ Rails.application.routes.draw do
       resources :products, only: [:create, :index]
       delete 'products', to: 'products#delete_all'
 
-      resources :users, only: [:index]
+      resources :users, only: [:show, :index]
     end
   end
 
