@@ -26,11 +26,11 @@ letters, hyphens and forward slashes.
 ### Request
 
 ```
-curl https://zmey.co.uk/api/admin/pages
-  -u 22cbbfeaef6085872dbe6c0e978fa098:
-  -d "page[description]=All kinds of hammers for DIY and professional use"
-  -d "page[name]=Hammers"
-  -d "page[slug]=tools/hammers"
+curl https://zmey.co.uk/api/admin/pages \
+  -u 22cbbfeaef6085872dbe6c0e978fa098: \
+  -d "page[description]=All kinds of hammers for DIY and professional use" \
+  -d "page[name]=Hammers" \
+  -d "page[slug]=tools/hammers" \
   -d "page[title]=Hammers | Tools"
 ```
 

@@ -7,7 +7,7 @@ Returns a summary list of all products.
 ### Request
 
 ```
-curl https://zmey.co.uk/api/admin/products
+curl https://zmey.co.uk/api/admin/products \
   -u 22cbbfeaef6085872dbe6c0e978fa098:
 ```
 

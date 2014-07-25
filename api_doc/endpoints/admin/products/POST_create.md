@@ -34,9 +34,9 @@ for example, 10.99.
 ### Request
 
 ```
-curl https://zmey.co.uk/api/admin/products
-  -u 22cbbfeaef6085872dbe6c0e978fa098:
-  -d product[sku]=CB01
+curl https://zmey.co.uk/api/admin/products \
+  -u 22cbbfeaef6085872dbe6c0e978fa098: \
+  -d product[sku]=CB01 \
   -d "product[name]=Cool Beans"
 ```
 

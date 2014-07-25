@@ -14,10 +14,10 @@ Places a product within a page.
 ### Request
 
 ```
-curl https://zmey.co.uk/api/admin/product_placements
-  -u 22cbbfeaef6085872dbe6c0e978fa098:
-  -d product_placement[page_id]=2
-  -d product_placement[product_id]=3"
+curl https://zmey.co.uk/api/admin/product_placements \
+  -u 22cbbfeaef6085872dbe6c0e978fa098: \
+  -d product_placement[page_id]=2 \
+  -d product_placement[product_id]=3
 ```
 
 ### Response

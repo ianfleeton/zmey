@@ -7,7 +7,7 @@ Returns a list of all images.
 ### Request
 
 ```
-curl https://zmey.co.uk/api/admin/images
+curl https://zmey.co.uk/api/admin/images \
   -u 22cbbfeaef6085872dbe6c0e978fa098:
 ```
 

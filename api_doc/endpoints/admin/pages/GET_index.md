@@ -7,7 +7,7 @@ Returns a list of all pages.
 ### Request
 
 ```
-curl https://zmey.co.uk/api/admin/pages
+curl https://zmey.co.uk/api/admin/pages \
   -u 22cbbfeaef6085872dbe6c0e978fa098:
 ```
 

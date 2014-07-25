@@ -7,7 +7,11 @@ appropriate.
 
 ### Request
 
-`DELETE api/admin/products`
+```
+curl https://zmey.co.uk/api/admin/products \
+  -X DELETE \
+  -u 22cbbfeaef6085872dbe6c0e978fa098:
+```
 
 ### Response
 

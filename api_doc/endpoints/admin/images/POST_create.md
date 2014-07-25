@@ -18,9 +18,9 @@ None yet.
 ### Request
 
 ```
-curl https://zmey.co.uk/api/admin/images
-  -u 22cbbfeaef6085872dbe6c0e978fa098:
-  -d "image[name]=A box"
+curl https://zmey.co.uk/api/admin/images \
+  -u 22cbbfeaef6085872dbe6c0e978fa098: \
+  -d "image[name]=A box" \
   -d "image[data]=/9j/4A...AD//Z"
 ```
 

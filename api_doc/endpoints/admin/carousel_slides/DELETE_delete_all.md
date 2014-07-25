@@ -6,7 +6,11 @@ Deletes all carousel slides from the website.
 
 ### Request
 
-`DELETE api/admin/carousel_slides`
+```
+curl https://zmey.co.uk/api/admin/carousel_slides \
+  -X DELETE \
+  -u 22cbbfeaef6085872dbe6c0e978fa098:
+```
 
 ### Response
 

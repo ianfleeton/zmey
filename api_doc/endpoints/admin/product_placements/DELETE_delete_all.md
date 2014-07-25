@@ -6,7 +6,11 @@ Deletes all product placements from the website.
 
 ### Request
 
-`DELETE api/admin/product_placements`
+```
+curl https://zmey.co.uk/api/admin/product_placements \
+  -X DELETE \
+  -u 22cbbfeaef6085872dbe6c0e978fa098:
+```
 
 ### Response
 

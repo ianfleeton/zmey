@@ -10,7 +10,11 @@ slide, then the owning object should be deleted first.
 
 ### Request
 
-`DELETE api/admin/images`
+```
+curl https://zmey.co.uk/api/admin/images \
+  -X DELETE \
+  -u 22cbbfeaef6085872dbe6c0e978fa098:
+```
 
 ### Response
 
