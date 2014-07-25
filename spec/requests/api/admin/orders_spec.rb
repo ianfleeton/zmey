@@ -53,4 +53,24 @@ describe 'Admin orders API' do
       expect(orders['orders'].length).to eq 0
     end
   end
+
+  describe 'GET show' do
+    context 'when order found' do
+      before do
+        @order = FactoryGirl.create(:order, website_id: @website.id)
+      end
+
+      it 'returns 200 OK' do
+        get api_admin_order_path(@order)
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when no order' do
+      it 'returns 404 Not Found' do
+        get 'api/admin/orders/0'
+        expect(response.status).to eq 404
+      end
+    end
+  end
 end

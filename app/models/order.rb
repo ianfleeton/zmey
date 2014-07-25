@@ -39,6 +39,10 @@ class Order < ActiveRecord::Base
     }[status]
   end
 
+  def api_status_description
+    status_description.downcase.tr(' ', '_')
+  end
+
   def empty_basket
     basket.basket_items.clear if basket
   end
