@@ -11,10 +11,13 @@ class Order < ActiveRecord::Base
   belongs_to :website
   has_many :order_lines, dependent: :delete_all
   has_many :payments, dependent: :delete_all
+
   # Order statuses
   WAITING_FOR_PAYMENT = 1
   PAYMENT_RECEIVED    = 2
   PAYMENT_ON_ACCOUNT  = 3
+  ORDER_STATUSES = [WAITING_FOR_PAYMENT, PAYMENT_RECEIVED, PAYMENT_ON_ACCOUNT]
+  validates_inclusion_of :status, in: ORDER_STATUSES
 
   def self.from_session session
     session[:order_id] ? find_by(id: session[:order_id]) : nil

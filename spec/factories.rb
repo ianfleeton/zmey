@@ -88,6 +88,7 @@ FactoryGirl.define do
     delivery_postcode       'HG1 9ZZ'
     association :delivery_country, factory: :country
     association :website
+    status                  Order::WAITING_FOR_PAYMENT
   end
 
   factory :order_line do
