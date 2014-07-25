@@ -62,6 +62,7 @@ A successful retrieval will return JSON similar to the example:
 ### Orders
 
 * [`GET` api/admin/orders](endpoints/admin/orders/GET_index.md)
+* [`GET` api/admin/orders/:id](endpoints/admin/orders/GET_order_by_id.md)
 
 ### Pages
 
