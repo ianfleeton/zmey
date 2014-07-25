@@ -13,7 +13,7 @@ curl https://zmey.co.uk/api/admin/orders/1 \
 
 ### Response
 
-*200 OK* is returned when the order is found, otherwise *404 Not Found* is
+**200 OK** is returned when the order is found, otherwise **404 Not Found** is
 returned.
 
 ```json
