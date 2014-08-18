@@ -177,6 +177,24 @@ class BasketController < ApplicationController
     redirect_to basket_path
   end
 
+  def save_and_email
+    cloned_basket = basket.deep_clone include: :basket_items
+    BasketMailer.saved_basket(website, params[:email_address], cloned_basket).deliver
+    redirect_to basket_path, notice: I18n.t('controllers.basket.save_and_email.email_sent', email_address: params[:email_address])
+  end
+
+  # Loads a saved basket by its token.
+  def load
+    saved_basket = Basket.find_by(token: params[:token])
+    if saved_basket
+      session[:basket_id] = saved_basket.id
+      notice = I18n.t('controllers.basket.load.basket_loaded')
+    else
+      notice = I18n.t('controllers.basket.load.invalid_basket')
+    end
+    redirect_to basket_path, notice: notice
+  end
+
   protected
 
   def delete_previous_unpaid_order_if_any

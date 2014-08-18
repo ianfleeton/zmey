@@ -1,0 +1,5 @@
+= form_tag(save_and_email_basket_path, class: 'pure-form') do
+  fieldset
+    legend= t('.heading')
+    = email_field_tag(:email_address, '', required: true, placeholder: t('.email_address'))
+    =< submit_tag t('.send'), class: 'pure-button pure-button-primary'

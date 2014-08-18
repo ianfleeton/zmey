@@ -9,13 +9,17 @@ class ApplicationController < ActionController::Base
 
   before_action :set_time_zone, :website, :initialize_meta_tags, :current_user,
     :set_locale, :protect_private_website, :initialize_tax_display,
-    :set_resolver, :find_basket
+    :set_resolver, :basket
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_error
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
     rescue_from ActionController::RoutingError, with: :not_found
     rescue_from ActionController::UnknownController, with: :not_found
+  end
+
+  def basket
+    @basket ||= find_basket
   end
 
   def current_user
@@ -134,16 +138,14 @@ class ApplicationController < ActionController::Base
     def find_basket
       if session[:basket_id]
         @basket = Basket.find_by(id: session[:basket_id])
-        create_basket if @basket.nil?
-      else
-        create_basket
       end
+      @basket || create_basket
     end
 
     def create_basket
-      @basket = Basket.new
-      @basket.save
+      @basket = Basket.create
       session[:basket_id] = @basket.id
+      @basket
     end
 
     # Allows the use of a website custom view template resolver to let

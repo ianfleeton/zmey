@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe BasketController do
-  let(:website) { FactoryGirl.create(:website, name: 'www', email: 'anon@example.org') }
+  let(:website) { FactoryGirl.create(:website, name: 'www', email: 'anon@example.org', domain: 'example.org') }
   let(:valid_address) { Address.new(email_address: 'anon@example.org', address_line_1: '123 Street', town_city: 'Harrogate', postcode: 'HG1', country: FactoryGirl.create(:country)) }
 
   before do
@@ -56,6 +56,48 @@ describe BasketController do
         post 'place_order'
         expect(assigns(:order).weight).to eq 0.75
       end
+    end
+  end
+
+  describe 'POST save_and_email' do
+    let(:email_address) { 'shopper@example.org' }
+
+    it 'clones the basket and its contents' do
+      basket = double(Basket)
+      controller.stub(:basket).and_return basket
+      basket.should_receive(:deep_clone).with(include: :basket_items)
+        .and_return(double(Basket, token: 'token'))
+      post :save_and_email, email_address: email_address
+    end
+
+    it 'sends an email to params[:email_address] with the cloned basket' do
+      cloned_basket = double(Basket)
+      Basket.any_instance.stub(:deep_clone).and_return(cloned_basket)
+      BasketMailer.should_receive(:saved_basket)
+        .with(website, email_address, cloned_basket)
+        .and_return(double(BasketMailer, deliver: true))
+      post :save_and_email, email_address: email_address
+    end
+
+    it 'redirects to the basket' do
+      post :save_and_email, email_address: email_address
+      expect(response).to redirect_to(basket_path)
+    end
+  end
+
+  describe 'GET load' do
+    context 'with valid token' do
+      let(:basket) { FactoryGirl.create(:basket) }
+
+      it 'sets the session basket to the matching basket' do
+        get :load, token: basket.token
+        expect(Basket.find(session[:basket_id])).to eq basket
+      end
+    end
+
+    it 'redirects to the basket' do
+      get :load, token: 'TOKEN'
+      expect(response).to redirect_to(basket_path)
     end
   end
 end
