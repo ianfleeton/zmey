@@ -23,6 +23,31 @@ class Basket < ActiveRecord::Base
     item.save
   end
 
+  # Sets the quantity for each item in the basket matching the product ID.
+  # Products that are not yet in the basket are added.
+  # Products with a quantity of less than one are removed.
+  # FeatureSelections are not supported.
+  def set_product_quantities(quantities)
+    quantities.each_pair do |product_id, quantity|
+      quantity = quantity.to_i
+      if quantity < 1
+        BasketItem.where(basket_id: id, product_id: product_id).destroy_all
+      else
+        item = BasketItem.find_by(basket_id: id, product_id: product_id)
+        if item
+          item.quantity = quantity
+          item.save
+        else
+          BasketItem.create(basket_id: id, product_id: product_id, quantity: quantity)
+        end
+      end
+    end
+  end
+
+  def quantity_of_product(product)
+    BasketItem.find_by(basket: self, product: product).try(:quantity) || 0
+  end
+
   def items_at_full_price
     basket_items.select { |i| i.product.full_price? }
   end

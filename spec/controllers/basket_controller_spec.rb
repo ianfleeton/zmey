@@ -8,6 +8,19 @@ describe BasketController do
     controller.stub(:website).and_return(website)
   end
 
+  describe 'POST add_update_multiple' do
+    context 'with no quantities' do
+      it 'does not raise' do
+        expect { post :add_update_multiple }.not_to raise_error
+      end
+    end
+
+    it 'redirects to the basket' do
+      post :add_update_multiple
+      expect(response).to redirect_to(basket_path)
+    end
+  end
+
   describe 'POST place_order' do
     let(:basket) { FactoryGirl.build(:basket) }
     let(:t_shirt) { FactoryGirl.create(:product, weight: 0.2) }

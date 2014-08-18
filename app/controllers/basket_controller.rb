@@ -37,6 +37,22 @@ class BasketController < ApplicationController
     end
   end
 
+  # Update the quantities in the basket for one or more products. Products
+  # need not be in the basket to begin with.
+  #
+  # FeatureSelections are not supported.
+  #
+  # Quantities are supplied in the +qty+ param, indexed by +product_id+.
+  #
+  #   <input type="text" name="qty[1]" value="0">
+  #   <input type="text" name="qty[2]" value="3">
+  def add_update_multiple
+    if params[:qty].kind_of?(Hash)
+      @basket.set_product_quantities(params[:qty])
+    end
+    redirect_to basket_path
+  end
+
   def update
     update_quantities if params[:update_quantities]
     remove_item if params[:remove_item]
