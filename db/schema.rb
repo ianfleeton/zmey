@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140723130723) do
+ActiveRecord::Schema.define(version: 20140818143044) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -63,7 +63,10 @@ ActiveRecord::Schema.define(version: 20140723130723) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "customer_note"
+    t.string   "token",         null: false
   end
+
+  add_index "baskets", ["token"], name: "index_baskets_on_token", unique: true, using: :btree
 
   create_table "carousel_slides", force: true do |t|
     t.integer  "website_id",   null: false

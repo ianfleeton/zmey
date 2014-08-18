@@ -3,6 +3,8 @@ class Basket < ActiveRecord::Base
   has_many :basket_items, dependent: :destroy
   has_one :order, dependent: :nullify
 
+  before_create :generate_token
+
   def add(product, feature_selections, quantity)
     feature_descriptions = BasketItem.describe_feature_selections(feature_selections)
 
@@ -86,5 +88,9 @@ class Basket < ActiveRecord::Base
 
   def self.purge_old(age = 1.month)
     self.destroy_all(["created_at < ?", Time.now - age])
+  end
+
+  def generate_token
+    self.token = SecureRandom.urlsafe_base64(nil, false)
   end
 end
