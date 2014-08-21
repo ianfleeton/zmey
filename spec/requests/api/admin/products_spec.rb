@@ -50,6 +50,26 @@ describe 'Admin products API' do
     end
   end
 
+  describe 'GET show' do
+    context 'when product found' do
+      before do
+        @product = FactoryGirl.create(:product, website_id: @website.id)
+      end
+
+      it 'returns 200 OK' do
+        get api_admin_product_path(@product)
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when no product' do
+      it 'returns 404 Not Found' do
+        get 'api/admin/products/0'
+        expect(response.status).to eq 404
+      end
+    end
+  end
+
   describe 'POST create' do
     it 'inserts a new product into the website' do
       name = SecureRandom.hex

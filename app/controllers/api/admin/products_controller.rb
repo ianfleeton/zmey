@@ -3,6 +3,11 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
     @products = website.products
   end
 
+  def show
+    @product = Product.find_by(id: params[:id], website: website)
+    render nothing: true, status: 404 unless @product
+  end
+
   def create
     @product = Product.new(product_params)
     @product.website = website

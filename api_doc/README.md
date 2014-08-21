@@ -73,6 +73,7 @@ A successful retrieval will return JSON similar to the example:
 ### Products
 
 * [`GET` api/admin/products](endpoints/admin/products/GET_index.md)
+* [`GET` api/admin/products/:id](endpoints/admin/products/GET_product_by_id.md)
 * [`POST` api/admin/products](endpoints/admin/products/POST_create.md)
 * [`DELETE` api/admin/products](endpoints/admin/products/DELETE_delete_all.md)
 

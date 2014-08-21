@@ -71,7 +71,7 @@ Rails.application.routes.draw do
     namespace :admin do
       delete 'carousel_slides', to: 'carousel_slides#delete_all'
 
-      resources :images, only: [:create, :index]
+      resources :images, only: [:create, :index, :show]
       delete 'images', to: 'images#delete_all'
 
       resources :order_lines, only: [:show]
