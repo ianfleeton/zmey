@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140818143044) do
+ActiveRecord::Schema.define(version: 20140821104734) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -511,7 +511,6 @@ ActiveRecord::Schema.define(version: 20140818143044) do
     t.string   "email",                                                       default: "",     null: false
     t.text     "css_url"
     t.boolean  "use_default_css",                                             default: false,  null: false
-    t.boolean  "shop",                                                        default: false,  null: false
     t.boolean  "worldpay_active",                                             default: false,  null: false
     t.string   "worldpay_installation_id",                                    default: "",     null: false
     t.string   "worldpay_payment_response_password",                          default: "",     null: false

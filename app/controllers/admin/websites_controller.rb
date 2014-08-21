@@ -110,7 +110,7 @@ class Admin::WebsitesController < Admin::AdminController
       :worldpay_active, :worldpay_installation_id,
       :worldpay_payment_response_password, :worldpay_test_mode,
       :scheme, :shipping_amount,
-      :shop, :show_vat_inclusive_prices, :skip_payment, :skype_name,
+      :show_vat_inclusive_prices, :skip_payment, :skype_name,
       :subdomain,
       :terms_and_conditions, :town_city, :twitter_username,
       :upg_atlas_active, :upg_atlas_check_code,
