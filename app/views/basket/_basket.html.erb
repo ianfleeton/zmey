@@ -130,7 +130,7 @@ duplicate of it first and then using CSS to hide it.
   <p><%= t('.coupons_applied') %></p>
   <ul>
     <% session[:coupons].each do |coupon| -%>
-    <li><%= coupon %> (<%= Discount.find_by(coupon: coupon, website_id: @w.id).name %>) <%= link_to('Remove', controller: :basket, action: :remove_coupon, coupon_code: coupon) %></li>
+    <li><%= coupon %> (<%= Discount.find_by(coupon: coupon, website_id: @w.id).name %>) <%= link_to('Remove', { controller: :basket, action: :remove_coupon, coupon_code: coupon }, title: "Remove #{coupon}") %></li>
     <% end %>
   </ul>
 </div>

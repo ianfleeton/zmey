@@ -216,9 +216,15 @@ en:
         create:
           created: 'Webhook created.'
     basket:
+      enter_coupon:
+        applied: 'Your coupon has been applied to your basket.'
       load:
         basket_loaded: 'Welcome back. Your saved basket has been loaded.'
         invalid_basket: 'That basket could not be found.'
+      remove_coupon:
+        removed: 'Your coupon has been removed.'
+      remove_invalid_discounts:
+        removed: 'Invalid coupon(s) have been removed from your basket.'
       save_and_email:
         email_sent: "Your basket has been emailed to %{email_address}."
     enquiries: Enquiries

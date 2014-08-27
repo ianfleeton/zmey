@@ -161,7 +161,7 @@ class BasketController < ApplicationController
       elsif !discount.currently_valid?
         flash[:notice] = 'This coupon is not currently valid.'
       else
-        flash[:notice] = 'Your coupon has been applied to your basket.'
+        flash[:notice] = I18n.t('controllers.basket.enter_coupon.applied')
         add_coupon_to_session(discount.coupon)
         run_trigger_for_coupon_discount(discount)
       end
@@ -171,9 +171,9 @@ class BasketController < ApplicationController
 
   def remove_coupon
     unless session[:coupons].nil?
-      session[:coupons].subtract [params[:coupon_code].upcase]
+      session[:coupons].delete(params[:coupon_code].upcase)
     end
-    flash[:notice] = 'Your coupon has been removed.'
+    flash[:notice] = I18n.t('controllers.basket.remove_coupon.removed')
     redirect_to basket_path
   end
 
@@ -210,9 +210,9 @@ class BasketController < ApplicationController
 
   def add_coupon_to_session(coupon)
     if session[:coupons].nil?
-      session[:coupons] = Set.new
+      session[:coupons] = Array.new
     end
-    session[:coupons] << coupon
+    session[:coupons] << coupon unless session[:coupons].include?(coupon)
   end
 
   def run_trigger_for_coupon_discount(discount)
@@ -252,8 +252,8 @@ class BasketController < ApplicationController
     session[:coupons].each do |coupon|
       discount = Discount.find_by(coupon: coupon, website_id: website.id)
       if !discount || !discount.currently_valid?
-        session[:coupons].subtract [coupon]
-        flash[:now] = 'Invalid coupon(s) have been removed from your basket.'
+        session[:coupons].delete(coupon)
+        flash[:now] = I18n.t('controllers.basket.remove_invalid_discounts.removed')
       end
     end
   end
