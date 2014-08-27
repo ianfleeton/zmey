@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140821104734) do
+ActiveRecord::Schema.define(version: 20140827164243) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20140821104734) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "discounts", force: true do |t|
-    t.integer  "website_id",                                        default: 0,    null: false
+    t.integer  "website_id",                                                       null: false
     t.string   "name",                                              default: "",   null: false
     t.string   "coupon",                                            default: "",   null: false
     t.string   "reward_type",                                       default: "",   null: false
