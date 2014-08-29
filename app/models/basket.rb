@@ -5,6 +5,10 @@ class Basket < ActiveRecord::Base
 
   before_create :generate_token
 
+  def self.old
+    where('updated_at < ?', 90.days.ago)
+  end
+
   def add(product, feature_selections, quantity)
     feature_descriptions = BasketItem.describe_feature_selections(feature_selections)
 

@@ -17,6 +17,7 @@ gem 'factory_girl_rails'
 # Run jobs in the background
 gem 'daemons'
 gem 'delayed_job_active_record'
+gem 'whenever', require: false
 
 # Pagination
 gem 'will_paginate'

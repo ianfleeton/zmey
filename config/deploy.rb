@@ -1,5 +1,8 @@
 require "bundler/capistrano"
 
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
+
 require "rvm/capistrano"
 set :rvm_type, :user
 set :rvm_path, "/home/admin/.rvm"
