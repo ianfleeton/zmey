@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827164243) do
+ActiveRecord::Schema.define(version: 20140829100022) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -482,7 +482,7 @@ ActiveRecord::Schema.define(version: 20140827164243) do
     t.string   "salt"
     t.string   "forgot_password_token", default: "",    null: false
     t.boolean  "admin",                 default: false, null: false
-    t.integer  "manages_website_id",    default: 0,     null: false
+    t.integer  "manages_website_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "website_id",            default: 0,     null: false
