@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'orders/select_payment_method.html.erb' do
   context 'when WorldPay active' do
@@ -6,7 +6,7 @@ describe 'orders/select_payment_method.html.erb' do
     let(:order)   { FactoryGirl.create(:order, website: website) }
 
     before do
-      view.stub(:website).and_return(website)
+      allow(view).to receive(:website).and_return(website)
       assign(:order, order)
     end
 
@@ -28,7 +28,7 @@ describe 'orders/select_payment_method.html.erb' do
     let(:order)   { FactoryGirl.create(:order, website: website) }
 
     before do
-      view.stub(:website).and_return(website)
+      allow(view).to receive(:website).and_return(website)
       assign(:order, order)
     end
 

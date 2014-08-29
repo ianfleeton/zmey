@@ -1,12 +1,12 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'products/google_data_feed.xml.erb' do
-  let(:website)  { FactoryGirl.build(:website) }
+  let(:website)  { FactoryGirl.create(:website) }
   let(:products) { [FactoryGirl.create(:product, age_group: 'adult', gender: 'unisex')] }
 
   before do
     assign(:products, products)
-    view.stub(:website).and_return(website)
+    allow(view).to receive(:website).and_return(website)
   end
 
   it 'includes age group' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe TopicsController do
   describe 'GET new' do
@@ -7,8 +7,8 @@ describe TopicsController do
     let(:admin)   { false }
 
     before do
-      controller.stub(:website).and_return(website)
-      controller.stub(:admin?).and_return(admin)
+      allow(controller).to receive(:website).and_return(website)
+      allow(controller).to receive(:admin?).and_return(admin)
       get :new, forum_id: forum.id
     end
 

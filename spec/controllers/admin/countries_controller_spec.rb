@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'shared_examples_for_controllers'
 
 describe Admin::CountriesController do
@@ -7,7 +7,7 @@ describe Admin::CountriesController do
   before do
     Website.delete_all
     logged_in_as_admin
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
   end
 
   describe 'GET index' do
@@ -16,7 +16,7 @@ describe Admin::CountriesController do
 
   describe 'POST create' do
     context 'when save succeeds' do
-      before { Country.any_instance.stub(:save).and_return(true) }
+      before { allow_any_instance_of(Country).to receive(:save).and_return(true) }
 
       it 'redirects to admin countries page' do
         post :create, country: Country.new.attributes
@@ -29,7 +29,7 @@ describe Admin::CountriesController do
     let(:country) { FactoryGirl.create(:country, website: website) }
 
     context 'when update succeeds' do
-      before { Country.any_instance.stub(:update_attributes).and_return(true) }
+      before { allow_any_instance_of(Country).to receive(:update_attributes).and_return(true) }
 
       def patch_update
         patch :update, id: country.id, country: country.attributes

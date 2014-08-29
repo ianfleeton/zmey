@@ -49,7 +49,7 @@ class Admin::ChoicesController < Admin::AdminController
 
   def feature_valid?
     @feature = Feature.find_by(id: @choice.feature_id)
-    if @feature && @feature.product.website_id == @w.id
+    if @feature && @feature.product.website_id == website.id
       true
     else
       flash[:notice] = 'Invalid feature.'

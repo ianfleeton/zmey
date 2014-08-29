@@ -13,7 +13,6 @@ class Admin::ProductPlacementsController < Admin::AdminController
   end
 
   def destroy
-    page = @product_placement.page
     @product_placement.destroy
     redirect_to edit_admin_page_path(@product_placement.page), notice: 'Product removed from page.'
   end

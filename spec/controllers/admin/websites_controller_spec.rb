@@ -1,14 +1,14 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::WebsitesController do
   let(:website) { FactoryGirl.build(:website) }
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
   end
 
   def mock_website(stubs={})
-    @mock_website ||= mock_model(Website, stubs)
+    @mock_website ||= double(Website, stubs)
   end
 
   describe 'POST create' do
@@ -18,19 +18,19 @@ describe Admin::WebsitesController do
       before { logged_in_as_admin }
 
       it "creates a new website with the given params" do
-        Page.stub(:bootstrap)
-        controller.stub(:create_latest_news)
+        allow(Page).to receive(:bootstrap)
+        allow(controller).to receive(:create_latest_news)
 
-        Website.should_receive(:new).with(valid_params['website']).and_return(website)
+        expect(Website).to receive(:new).with(valid_params['website']).and_return(website)
         post 'create', valid_params
       end
 
       it "should populate the website's countries" do
-        controller.stub(:create_latest_news)
+        allow(controller).to receive(:create_latest_news)
 
         website = mock_website({save: true, id: 1, name: 'foo', :blog_id= => nil})
-        Website.stub(:new).and_return(website)
-        website.should_receive(:populate_countries!)
+        allow(Website).to receive(:new).and_return(website)
+        expect(website).to receive(:populate_countries!)
         post 'create', valid_params
       end
     end

@@ -1,13 +1,13 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PagesController do
   describe 'GET show' do
     let(:website) { FactoryGirl.create(:website) }
     let(:slug)    { 'slug' }
-    before { controller.stub(:website).and_return(website) }
+    before { allow(controller).to receive(:website).and_return(website) }
 
     it 'finds a page by its slug and the current website' do
-      Page.should_receive(:find_by).with hash_including(slug: slug, website_id: website)
+      expect(Page).to receive(:find_by).with hash_including(slug: slug, website_id: website)
       get :show, slug: slug
     end
 
@@ -15,8 +15,8 @@ describe PagesController do
       it 'sets @title and @description from the page' do
         title       = 'title'
         description = 'description'
-        Page.stub(:find_by).and_return(
-          mock_model(Page, title: title, description: description)
+        allow(Page).to receive(:find_by).and_return(
+          double(Page, title: title, description: description)
           .as_null_object
         )
         get :show, slug: slug
@@ -26,7 +26,7 @@ describe PagesController do
     end
 
     context 'when page not found' do
-      before { Page.stub(:find_by).and_return(nil) }
+      before { allow(Page).to receive(:find_by).and_return(nil) }
 
       it 'renders 404' do
         get :show, slug: slug
@@ -37,7 +37,7 @@ describe PagesController do
 
   describe 'GET terms' do
     it 'populates @terms from the website config' do
-      controller.stub(:website).and_return(
+      allow(controller).to receive(:website).and_return(
         FactoryGirl.build(:website, terms_and_conditions: 'T&C')
       )
       get :terms

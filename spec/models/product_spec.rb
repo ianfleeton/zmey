@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Product do
   before(:each) do
-    @product = Product.new(:price => 1.0)
+    @product = Product.new(price: 1.0)
   end
 
   it { should ensure_inclusion_of(:age_group).in_array(Product::AGE_GROUPS) }
@@ -30,7 +30,7 @@ describe Product do
       image = FactoryGirl.create(:image)
       product = FactoryGirl.build(:product, image_id: image.id)
       product.valid?
-      product.errors[:image].should include I18n.t('activerecord.errors.models.product.attributes.image.invalid')
+      expect(product.errors[:image]).to include I18n.t('activerecord.errors.models.product.attributes.image.invalid')
     end
   end
 

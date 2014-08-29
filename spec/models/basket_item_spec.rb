@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe BasketItem do
   describe '#line_total(inc_tax)' do
     context 'when inc_tax is true' do
       it 'returns the quantity times the price of the product including tax when buying that quantity' do
-        product = mock_model(Product)
-        product.stub(:price_inc_tax).with(2).and_return(12)
+        product = FactoryGirl.build(:product)
+        allow(product).to receive(:price_inc_tax).with(2).and_return(12)
         item = BasketItem.new(quantity: 2)
         item.product = product
         expect(item.line_total(true)).to eq 24
@@ -14,8 +14,8 @@ describe BasketItem do
 
     context 'when inc_tax is false' do
       it 'returns the quantity times the price of the product excluding tax when buying that quantity' do
-        product = mock_model(Product)
-        product.stub(:price_ex_tax).with(2).and_return(10)
+        product = FactoryGirl.build(:product)
+        allow(product).to receive(:price_ex_tax).with(2).and_return(10)
         item = BasketItem.new(quantity: 2)
         item.product = product
         expect(item.line_total(false)).to eq 20
@@ -25,7 +25,7 @@ describe BasketItem do
 
   describe '#weight' do
     it 'returns the weight of the product times the quantity' do
-      product = mock_model(Product, {weight: 2.5})
+      product = FactoryGirl.build(:product, weight: 2.5)
       item = BasketItem.new(quantity: 3)
       item.product = product
       expect(item.weight).to eq 7.5

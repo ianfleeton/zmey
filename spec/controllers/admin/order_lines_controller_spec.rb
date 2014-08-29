@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::OrderLinesController do
   let(:website) { FactoryGirl.build(:website) }
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
     logged_in_as_admin
   end
 

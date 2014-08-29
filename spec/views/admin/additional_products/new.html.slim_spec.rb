@@ -1,9 +1,9 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'admin/additional_products/new.html.slim' do
   let(:abacus) { Product.new }
   let(:additional_product) { AdditionalProduct.new(product: abacus) }
-  let(:website) { mock_model(Website, products: [abacus]) }
+  let(:website) { double(Website, products: [abacus]) }
 
   before do
     assign(:additional_product, additional_product)

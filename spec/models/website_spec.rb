@@ -1,13 +1,13 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Website do
   before(:each) do
     @website = Website.new(
-      :subdomain => 'bonsai',
-      :domain => 'www.artofbonsai.com',
-      :name => 'Art of Bonsai',
-      :email => 'artofbonsai@example.org',
-      :google_analytics_code => 'UA-9999999-9',
+      subdomain: 'bonsai',
+      domain: 'www.artofbonsai.com',
+      name: 'Art of Bonsai',
+      email: 'artofbonsai@example.org',
+      google_analytics_code: 'UA-9999999-9',
       country: FactoryGirl.create(:country))
   end
 
@@ -114,7 +114,7 @@ describe Website do
 
     it 'associates the image with the itself' do
       image = FactoryGirl.create(:image)
-      Image.stub(:new).and_return(image)
+      allow(Image).to receive(:new).and_return(image)
       uploader
       expect(image.website).to eq website
     end
@@ -149,7 +149,7 @@ describe Website do
 
     it 'builds a new custom view resolver initialized with itself' do
       website = Website.new(custom_view_resolver: 'CustomView::DatabaseResolver')
-      CustomView::DatabaseResolver.should_receive(:new).with(website).and_call_original
+      expect(CustomView::DatabaseResolver).to receive(:new).with(website).and_call_original
       expect(website.build_custom_view_resolver).to be_instance_of CustomView::DatabaseResolver
     end
   end

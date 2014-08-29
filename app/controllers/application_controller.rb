@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :website, :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_action :set_time_zone, :website, :initialize_meta_tags, :current_user,
+  before_action :set_time_zone, :website, :initialize_page_defaults, :current_user,
     :set_locale, :protect_private_website, :initialize_tax_display,
     :set_resolver, :basket
 
@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   end
 
   def manager?
-    logged_in? and current_user.managed_website == @w
+    logged_in? and current_user.managed_website == website
   end
 
   def admin_or_manager?
@@ -93,9 +93,13 @@ class ApplicationController < ActionController::Base
     render "#{Rails.root.to_s}/public/500", layout: false, status: 500
   end
 
-  def initialize_meta_tags
-    @description = website.name
-  end
+    def initialize_page_defaults
+      @blog         = nil
+      @description  = website.name
+      @no_follow    = nil
+      @no_index     = nil
+      @title        = nil
+    end
 
   def protect_private_website
     if website.private? && !logged_in?
@@ -138,8 +142,9 @@ class ApplicationController < ActionController::Base
     def find_basket
       if session[:basket_id]
         @basket = Basket.find_by(id: session[:basket_id])
-      end
-      @basket || create_basket
+      else
+        @basket = nil
+      end || create_basket
     end
 
     def create_basket

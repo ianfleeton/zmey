@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'products/_additional_products.html.erb' do
-  let(:product) { mock_model(Product).as_null_object }
+  let(:product) { FactoryGirl.create(:product) }
 
   it 'renders' do
     render 'products/additional_products', product: product
@@ -10,7 +10,7 @@ describe 'products/_additional_products.html.erb' do
   context 'with additional products' do
     before do
       ad = AdditionalProduct.new(additional_product: product)
-      product.stub(:additional_products).and_return([ad])
+      allow(product).to receive(:additional_products).and_return([ad])
     end
 
     it 'renders' do

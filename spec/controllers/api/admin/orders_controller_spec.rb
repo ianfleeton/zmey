@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Api::Admin::OrdersController do
   before { logged_in_as_admin }
@@ -11,7 +11,7 @@ describe Api::Admin::OrdersController do
       o2 = FactoryGirl.build(:order)
       website.orders << o1
       website.orders << o2
-      controller.stub(:website).and_return(website)
+      allow(controller).to receive(:website).and_return(website)
       get :index, format: :json
       expect(assigns(:orders)).to match_array([o1, o2])
     end

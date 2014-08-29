@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'orders/receipt.html.erb' do
   let(:order) { FactoryGirl.create(:order) }
@@ -14,7 +14,7 @@ describe 'orders/receipt.html.erb' do
 
   context 'as regular shopper' do
     before do
-      view.stub(:admin?).and_return(false)
+      allow(view).to receive(:admin?).and_return(false)
     end
 
     it 'renders' do
@@ -24,7 +24,7 @@ describe 'orders/receipt.html.erb' do
 
   context 'as admin' do
     before do
-      view.stub(:admin?).and_return(true)
+      allow(view).to receive(:admin?).and_return(true)
     end
 
     it 'renders' do

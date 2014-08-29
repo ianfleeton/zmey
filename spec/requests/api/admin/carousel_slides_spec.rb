@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 def prepare_api_website
   @website = FactoryGirl.create(:website)
@@ -9,7 +9,7 @@ end
 describe 'Admin carousel slides API' do
   before do
     prepare_api_website
-    Api::Admin::AdminController.any_instance.stub(:authenticated_api_key).and_return(@api_key)
+    allow_any_instance_of(Api::Admin::AdminController).to receive(:authenticated_api_key).and_return(@api_key)
   end
 
   describe 'DELETE delete_all' do

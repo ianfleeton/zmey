@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'payments/index.html.erb' do
-  let(:alice) { mock_model(Payment, name: 'Alice', amount: '123').as_null_object }
-  let(:bob) { mock_model(Payment, name: 'Bob', amount: '456').as_null_object }
+  let(:alice) { FactoryGirl.create(:payment, name: 'Alice', amount: '123') }
+  let(:bob)   { FactoryGirl.create(:payment, name: 'Bob', amount: '456') }
 
   it 'displays each payment' do
     assign(:payments, [alice, bob])
@@ -19,11 +19,11 @@ describe 'payments/index.html.erb' do
 
   context 'with associated orders' do
     it 'links to the orders' do
-      order = mock_model(Order, order_number: 'ORDER123')
-      alice.stub(:order).and_return(order)
+      order = FactoryGirl.create(:order)
+      allow(alice).to receive(:order).and_return(order)
       assign(:payments, [alice])
       render
-      expect(rendered).to have_content('ORDER123')
+      expect(rendered).to have_content(order.order_number)
       expect(rendered).to have_selector("a[href='/orders/#{order.id}']")
     end
   end

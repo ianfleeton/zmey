@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Quantity prices administration' do
   let(:website) { FactoryGirl.create(:website) }

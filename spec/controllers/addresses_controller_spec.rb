@@ -1,19 +1,19 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe AddressesController do
   let(:website) { FactoryGirl.build(:website) }
 
   def mock_address(stubs={})
-    @mock_address ||= mock_model(Address, stubs)
+    @mock_address ||= double(Address, stubs)
   end
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
   end
 
   describe 'GET new' do
     it 'assigns a new Address to @address' do
-      Address.stub(:new).and_return(mock_address)
+      allow(Address).to receive(:new).and_return(mock_address)
       get 'new'
       expect(assigns(:address)).to eq mock_address
     end
@@ -24,12 +24,12 @@ describe AddressesController do
       before { session[:address_id] = 2 }
 
       it 'finds the address from the stored ID' do
-        Address.should_receive(:find_by).with(id: 2)
+        expect(Address).to receive(:find_by).with(id: 2)
         get 'edit', id: '1'
       end
 
       context 'when found' do
-        before { Address.stub(:find_by).and_return(mock_address) }
+        before { allow(Address).to receive(:find_by).and_return(mock_address) }
 
         it 'renders edit' do
           get 'edit', id: '1'
@@ -38,7 +38,7 @@ describe AddressesController do
       end
 
       context 'when not found' do
-        before { Address.stub(:find_by).and_return(nil) }
+        before { allow(Address).to receive(:find_by).and_return(nil) }
 
         it 'redirects to new' do
           get 'edit', id: '1'

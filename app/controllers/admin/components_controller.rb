@@ -1,5 +1,5 @@
 class Admin::ComponentsController < Admin::AdminController
-  before_action :find_component, only: [:edit, :destroy, :update]
+  before_action :set_component, only: [:edit, :destroy, :update]
 
   def new
     @component = Component.new
@@ -32,7 +32,6 @@ class Admin::ComponentsController < Admin::AdminController
     @features = @component.features.sort {|a,b| b.choices.count <=> a.choices.count}
 
     num_permutations = 1
-    num_features = @features.count
     @choice_array = []
     f_index = 0
 
@@ -84,23 +83,23 @@ class Admin::ComponentsController < Admin::AdminController
     redirect_to edit_admin_product_path(@component.product)
   end
 
-  protected
+  private
 
-  def find_component
-    @component = Component.find(params[:id])
-    redirect_to admin_products_path and return unless product_valid?
-  end
-
-  def product_valid?
-    if Product.find_by(id: @component.product_id, website_id: website.id)
-      true
-    else
-      flash[:notice] = 'Invalid product.'
-      false
+    def set_component
+      @component = Component.find(params[:id])
+      redirect_to admin_products_path and return unless product_valid?
     end
-  end
 
-  def component_params
-    params.require(:component).permit(:name, :product_id)
-  end
+    def product_valid?
+      if Product.find_by(id: @component.product_id, website_id: website.id)
+        true
+      else
+        flash[:notice] = 'Invalid product.'
+        false
+      end
+    end
+
+    def component_params
+      params.require(:component).permit(:name, :product_id)
+    end
 end

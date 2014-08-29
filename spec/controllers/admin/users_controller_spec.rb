@@ -1,16 +1,16 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'shared_examples_for_controllers'
 
 describe Admin::UsersController do
   let(:website) { FactoryGirl.build(:website) }
-  let(:user) { mock_model(User).as_null_object }
+  let(:user)    { FactoryGirl.create(:user) }
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
   end
 
   context 'when admin or manager' do
-    before { controller.stub(:admin_or_manager?).and_return(true) }
+    before { allow(controller).to receive(:admin_or_manager?).and_return(true) }
 
     describe 'GET index' do
       it_behaves_like 'a website owned objects finder', :user
@@ -24,7 +24,7 @@ describe Admin::UsersController do
       end
 
       context 'when create succeeds' do
-        before { User.any_instance.stub(:save).and_return(true) }
+        before { allow_any_instance_of(User).to receive(:save).and_return(true) }
 
         it 'sets a flash notice' do
           post_valid
@@ -44,26 +44,26 @@ describe Admin::UsersController do
       end
 
       it 'finds the user' do
-        User.should_receive(:find).with('1').and_return(user)
+        expect(User).to receive(:find).with('1').and_return(user)
         patch_valid
       end
 
       it 'sets @user' do
-        User.stub(:find).with('1').and_return(user)
+        allow(User).to receive(:find).with('1').and_return(user)
         patch_valid
         expect(assigns(:user)).to eq user
       end
 
       context 'when the user is found' do
-        before { User.stub(:find).with('1').and_return(user) }
+        before { allow(User).to receive(:find).with('1').and_return(user) }
 
         it 'updates the user' do
-          user.should_receive(:update_attributes)
+          expect(user).to receive(:update_attributes)
           patch_valid
         end
 
         context 'when the update succeeds' do
-          before { user.stub(:update_attributes).and_return(true) }
+          before { allow(user).to receive(:update_attributes).and_return(true) }
 
           it 'redirects to the admin show user path' do
             patch_valid

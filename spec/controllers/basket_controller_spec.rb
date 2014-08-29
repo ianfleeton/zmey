@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe BasketController do
   let(:website) { FactoryGirl.create(:website, name: 'www', email: 'anon@example.org', domain: 'example.org') }
   let(:valid_address) { Address.new(email_address: 'anon@example.org', address_line_1: '123 Street', town_city: 'Harrogate', postcode: 'HG1', country: FactoryGirl.create(:country)) }
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
   end
 
   describe 'POST add_update_multiple' do
@@ -29,16 +29,16 @@ describe BasketController do
     before do
       basket.basket_items << FactoryGirl.build(:basket_item, product_id: t_shirt.id, quantity: 2)      
       basket.basket_items << FactoryGirl.build(:basket_item, product_id: jeans.id, quantity: 1)
-      Basket.stub(:new).and_return(basket)
+      allow(Basket).to receive(:new).and_return(basket)
     end
 
     context 'with an address' do
       before do
-        controller.stub(:find_delivery_address).and_return(valid_address)
+        allow(controller).to receive(:find_delivery_address).and_return(valid_address)
       end
 
       it 'deletes a previous unpaid order if one exists' do
-        controller.should_receive(:delete_previous_unpaid_order_if_any)
+        expect(controller).to receive(:delete_previous_unpaid_order_if_any)
         post 'place_order'
       end
 
@@ -64,16 +64,16 @@ describe BasketController do
 
     it 'clones the basket and its contents' do
       basket = double(Basket)
-      controller.stub(:basket).and_return basket
-      basket.should_receive(:deep_clone).with(include: :basket_items)
+      allow(controller).to receive(:basket).and_return basket
+      expect(basket).to receive(:deep_clone).with(include: :basket_items)
         .and_return(double(Basket, token: 'token'))
       post :save_and_email, email_address: email_address
     end
 
     it 'sends an email to params[:email_address] with the cloned basket' do
       cloned_basket = double(Basket)
-      Basket.any_instance.stub(:deep_clone).and_return(cloned_basket)
-      BasketMailer.should_receive(:saved_basket)
+      allow_any_instance_of(Basket).to receive(:deep_clone).and_return(cloned_basket)
+      expect(BasketMailer).to receive(:saved_basket)
         .with(website, email_address, cloned_basket)
         .and_return(double(BasketMailer, deliver: true))
       post :save_and_email, email_address: email_address

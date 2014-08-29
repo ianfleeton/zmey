@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::ApiKeysController do
   let(:website) { FactoryGirl.build(:website) }
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
     logged_in_as_admin
   end
 
@@ -12,7 +12,7 @@ describe Admin::ApiKeysController do
     it 'assigns keys belonging to the current user' do
       user = FactoryGirl.create(:user)
       api_key = FactoryGirl.create(:api_key, user_id: user.id)
-      controller.stub(:current_user).and_return(user)
+      allow(controller).to receive(:current_user).and_return(user)
       get :index
       expect(assigns(:api_keys)).to match_array [api_key]
     end
@@ -32,7 +32,7 @@ describe Admin::ApiKeysController do
     let(:current_user) { FactoryGirl.create(:admin) }
 
     before do
-      controller.stub(:current_user).and_return(current_user)
+      allow(controller).to receive(:current_user).and_return(current_user)
       post :create, params
     end
 
@@ -71,7 +71,7 @@ describe Admin::ApiKeysController do
 
     before do
       api_key
-      controller.stub(:authenticate_with_http_basic).and_return user
+      allow(controller).to receive(:authenticate_with_http_basic).and_return user
       get :retrieve, 'name' => key_name
     end
 

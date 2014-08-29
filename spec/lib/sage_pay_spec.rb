@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SagePay do
   describe '#encrypt' do
     it 'returns the tx_string xor-ed with key, base 64 encoded' do
       sp = SagePay.new(pre_shared_key: 'XXX')
-      sp.stub(:tx_string).and_return('AAA')
+      allow(sp).to receive(:tx_string).and_return('AAA')
       expect(sp.encrypt).to eq "GRkZ\n"
     end
   end
@@ -12,7 +12,7 @@ describe SagePay do
   describe '#tx_string' do
     it 'returns a valid query string for the tx_vars' do
       sp = SagePay.new({})
-      sp.stub(:tx_vars).and_return(
+      allow(sp).to receive(:tx_vars).and_return(
         'VendorTxCode' => 'Order',
         'Amount' => '123'
       )

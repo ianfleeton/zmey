@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Forgot password' do
   let(:existing_user) { FactoryGirl.create(:user, email: 'exists@example.org') }

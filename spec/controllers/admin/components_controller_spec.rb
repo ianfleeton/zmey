@@ -1,40 +1,42 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::ComponentsController do
   let(:website) { FactoryGirl.build(:website) }
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
   end
 
   describe 'GET new' do
     context 'when logged in as an administrator' do
       before do
-        controller.stub(:admin?).and_return(true)
+        allow(controller).to receive(:admin?).and_return(true)
       end
 
       it 'instantiates a new Component' do
-        Component.should_receive(:new).and_return(mock_model(Component).as_null_object)
+        allow(controller).to receive(:product_valid?)
+        expect(Component).to receive(:new).and_return(double(Component).as_null_object)
         get 'new'
       end
 
       it 'assigns @component' do
-        component = mock_model(Component).as_null_object
-        Component.stub(:new).and_return(component)
+        allow(controller).to receive(:product_valid?)
+        component = double(Component).as_null_object
+        allow(Component).to receive(:new).and_return(component)
         get 'new'
         expect(assigns(:component)).to eq component
       end
 
       it 'sets @component.product_id to the product_id supplied as a parameter' do
         component = Component.new
-        Component.stub(:new).and_return(component)
+        allow(Component).to receive(:new).and_return(component)
         get 'new', product_id: 123
         expect(component.product_id).to eq 123
       end
 
       context 'when the product is valid' do
         it "renders 'new'" do
-          controller.stub(:product_valid?).and_return(true)
+          allow(controller).to receive(:product_valid?).and_return(true)
           get 'new'
           expect(response).to render_template('new')
         end
@@ -42,7 +44,7 @@ describe Admin::ComponentsController do
 
       context 'when the product is invalid' do
         it 'redirects to the products page' do
-          controller.stub(:product_valid?).and_return(false)
+          allow(controller).to receive(:product_valid?).and_return(false)
           get 'new'
           expect(response).to redirect_to(admin_products_path)
         end
@@ -62,7 +64,7 @@ describe Admin::ComponentsController do
 
     context 'when product valid' do
       before do
-        controller.stub(:admin?).and_return(true)
+        allow(controller).to receive(:admin?).and_return(true)
         component.product.website = website
         component.product.save
       end
@@ -80,8 +82,8 @@ describe Admin::ComponentsController do
     let(:component) { FactoryGirl.create(:component) }
 
     before do
-      controller.stub(:admin?).and_return(true)
-      controller.stub(:product_valid?).and_return(true)
+      allow(controller).to receive(:admin?).and_return(true)
+      allow(controller).to receive(:product_valid?).and_return(true)
     end
 
     def delete_destroy

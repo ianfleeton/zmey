@@ -1,17 +1,17 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'shared_examples_for_controllers'
 
 describe Admin::EnquiriesController do
-  let(:website) { mock_model(Website).as_null_object }
+  let(:website) { double(Website).as_null_object }
 
   def mock_enquiry(stubs={})
-    @mock_enquiry ||= mock_model(Enquiry, stubs)
+    @mock_enquiry ||= double(Enquiry, stubs)
   end
 
   before do
-    Website.stub(:for).and_return(website)
-    website.stub(:private?).and_return(false)
-    website.stub(:vat_number).and_return('')
+    allow(Website).to receive(:for).and_return(website)
+    allow(website).to receive(:private?).and_return(false)
+    allow(website).to receive(:vat_number).and_return('')
   end
 
   describe 'GET index' do

@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PaymentsController do
   let(:website) { FactoryGirl.build(:website) }
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
   end
 
   describe 'GET index' do

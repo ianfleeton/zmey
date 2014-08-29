@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'payments/show.html.slim' do
   let(:payment) { FactoryGirl.create(:payment) }

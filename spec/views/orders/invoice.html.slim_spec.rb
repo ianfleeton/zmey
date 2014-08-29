@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'orders/invoice.html.slim' do
   it 'renders' do

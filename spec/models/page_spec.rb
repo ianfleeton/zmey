@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Page do
   it { should ensure_length_of(:description).is_at_most(200) }

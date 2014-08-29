@@ -1,15 +1,15 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'shared_examples_for_controllers'
 
 describe ProductsController do
   let(:website) { FactoryGirl.build(:website) }
 
   def mock_product(stubs={})
-    @mock_product ||= mock_model(Product, stubs)
+    @mock_product ||= double(Product, stubs)
   end
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
   end
 
   describe "GET show" do
@@ -52,6 +52,6 @@ describe ProductsController do
   end
 
   def find_requested_product(stubs={})
-    Product.should_receive(:find_by).with(id: '37', website_id: website.id).and_return(mock_product(stubs))
+    expect(Product).to receive(:find_by).with(id: '37', website_id: website.id).and_return(mock_product(stubs))
   end
 end

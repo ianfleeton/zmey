@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 include ActionDispatch::TestProcess
 
@@ -7,9 +7,9 @@ describe ImageUploader do
 
   describe '.initialize' do
     it 'creates an image' do
-      Image.should_receive(:new)
+      expect(Image).to receive(:new)
         .with(hash_including(image: upload, name: 'image'))
-        .and_return(mock_model(Image).as_null_object)
+        .and_return(double(Image).as_null_object)
       ImageUploader.new(image: upload, name: 'image')
     end
 
@@ -22,23 +22,23 @@ describe ImageUploader do
     end
 
     it 'saves the image' do
-      image = mock_model(Image).as_null_object
-      Image.stub(:new).and_return(image)
-      image.should_receive(:save)
+      image = double(Image).as_null_object
+      allow(Image).to receive(:new).and_return(image)
+      expect(image).to receive(:save)
       ImageUploader.new(image: upload, name: 'image')
     end
 
     it 'makes accessible the saved images via #images' do
-      image = mock_model(Image, save: true)
-      Image.stub(:new).and_return(image)
+      image = double(Image, save: true)
+      allow(Image).to receive(:new).and_return(image)
       uploader = ImageUploader.new(image: upload, name: 'image')
       expect(uploader.images).to eq [image]
       expect(uploader.failed).to eq []
     end
 
     it 'makes accessible via #failed images that failed to save' do
-      image = mock_model(Image, save: false).as_null_object
-      Image.stub(:new).and_return(image)
+      image = double(Image, save: false).as_null_object
+      allow(Image).to receive(:new).and_return(image)
       uploader = ImageUploader.new(image: upload, name: 'image')
       expect(uploader.images).to eq []
       expect(uploader.failed).to eq [image]

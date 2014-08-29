@@ -1,22 +1,22 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SessionsController do
   let(:website) { FactoryGirl.build(:website) }
-  let(:customer) { mock_model(User, admin?: false).as_null_object }
+  let(:customer) { FactoryGirl.create(:user, admin: false) }
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
   end
 
   describe 'POST #create' do
     it 'authenticates the user' do
-      User.should_receive(:authenticate)
+      expect(User).to receive(:authenticate)
       post 'create'
     end
 
     context 'when the user authenticates as a customer' do
       before do
-        User.stub(:authenticate).and_return(customer)
+        allow(User).to receive(:authenticate).and_return(customer)
       end
 
       it "redirects to the customer's account page" do
@@ -27,8 +27,8 @@ describe SessionsController do
 
     context 'when the user authenticates as an admin or manager' do
       before do
-        User.stub(:authenticate).and_return(User.new)
-        controller.stub(:admin_or_manager?).and_return(true)
+        allow(User).to receive(:authenticate).and_return(User.new)
+        allow(controller).to receive(:admin_or_manager?).and_return(true)
       end
 
       it 'redirects to the admin page' do

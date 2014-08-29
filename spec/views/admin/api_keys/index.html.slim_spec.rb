@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'admin/api_keys/index.html.slim' do
   let(:api_keys) { [] }

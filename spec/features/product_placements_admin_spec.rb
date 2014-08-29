@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Product placements admin' do
   let(:website)  { FactoryGirl.create(:website) }

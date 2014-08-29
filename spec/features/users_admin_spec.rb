@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Users admin' do
   let(:website) { FactoryGirl.create(:website) }

@@ -1,15 +1,15 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'shared_examples_for_controllers'
 
 describe Admin::ProductsController do
   let(:website) { FactoryGirl.build(:website) }
 
   def mock_product(stubs={})
-    @mock_product ||= mock_model(Product, stubs)
+    @mock_product ||= double(Product, stubs)
   end
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
   end
 
   describe "GET index" do
@@ -25,7 +25,7 @@ describe Admin::ProductsController do
       before { logged_in_as_admin }
 
       it "assigns a new product as @product" do
-        Product.stub(:new).and_return(mock_product)
+        allow(Product).to receive(:new).and_return(mock_product)
         get :new
         expect(assigns[:product]).to equal(mock_product)
       end
@@ -51,14 +51,14 @@ describe Admin::ProductsController do
       before { logged_in_as_admin }
 
       it "assigns a newly created product as @product" do
-        Product.stub(:new).with(valid_params['product']).and_return(mock_product(:website_id= => website.id, save: true))
+        allow(Product).to receive(:new).with(valid_params['product']).and_return(mock_product(:website_id= => website.id, save: true))
         post :create, valid_params
         expect(assigns[:product]).to equal(mock_product)
       end
 
       describe "with valid params" do
         before do
-          Product.stub(:new).with(valid_params['product']).and_return(mock_product(:website_id= => website.id, save: true))
+          allow(Product).to receive(:new).with(valid_params['product']).and_return(mock_product(:website_id= => website.id, save: true))
         end
 
         it "redirects to the new product page" do
@@ -69,11 +69,11 @@ describe Admin::ProductsController do
 
       describe "with invalid params" do
         before do
-          Product.stub(:new).with({'these' => 'params'}).and_return(mock_product(:website_id= => website.id, save: false))
+          allow(Product).to receive(:new).with({'these' => 'params'}).and_return(mock_product(:website_id= => website.id, save: false))
         end
 
         it "re-renders the 'new' template" do
-          Product.stub(:new).and_return(mock_product(:website_id= => website.id, :save => false))
+          allow(Product).to receive(:new).and_return(mock_product(:website_id= => website.id, :save => false))
           post :create, valid_params
           expect(response).to render_template('new')
         end
@@ -90,18 +90,18 @@ describe Admin::ProductsController do
       describe "with valid params" do
         it "updates the requested product" do
           find_requested_product
-          mock_product.should_receive(:update_attributes).with(valid_params['product'])
+          expect(mock_product).to receive(:update_attributes).with(valid_params['product'])
           put :update, valid_params
         end
 
         it "assigns the requested product as @product" do
-          Product.stub(:find_by).and_return(mock_product(update_attributes: true))
+          allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: true))
           put :update, valid_params
           expect(assigns(:product)).to equal(mock_product)
         end
 
         it "redirects to the edit product page again" do
-          Product.stub(:find_by).and_return(mock_product(update_attributes: true))
+          allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: true))
           put :update, valid_params
           expect(response).to redirect_to(edit_admin_product_path(mock_product))
         end
@@ -110,18 +110,18 @@ describe Admin::ProductsController do
       describe "with invalid params" do
         it "updates the requested product" do
           find_requested_product
-          mock_product.should_receive(:update_attributes).with(valid_params['product'])
+          expect(mock_product).to receive(:update_attributes).with(valid_params['product'])
           put :update, valid_params
         end
 
         it "assigns the product as @product" do
-          Product.stub(:find_by).and_return(mock_product(update_attributes: false))
+          allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: false))
           put :update, valid_params
           expect(assigns(:product)).to equal(mock_product)
         end
 
         it "re-renders the 'edit' template" do
-          Product.stub(:find_by).and_return(mock_product(update_attributes: false))
+          allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: false))
           put :update, valid_params
           expect(response).to render_template('edit')
         end
@@ -135,12 +135,12 @@ describe Admin::ProductsController do
 
       it "destroys the requested product" do
         find_requested_product
-        mock_product.should_receive(:destroy)
+        expect(mock_product).to receive(:destroy)
         delete :destroy, id: '37'
       end
 
       it "redirects to the products list" do
-        Product.stub(:find_by).and_return(mock_product(destroy: true))
+        allow(Product).to receive(:find_by).and_return(mock_product(destroy: true))
         delete :destroy, id: '1'
         expect(response).to redirect_to(admin_products_path)
       end
@@ -148,6 +148,6 @@ describe Admin::ProductsController do
   end
 
   def find_requested_product(stubs={})
-    Product.should_receive(:find_by).with(id: '37', website_id: website.id).and_return(mock_product(stubs))
+    expect(Product).to receive(:find_by).with(id: '37', website_id: website.id).and_return(mock_product(stubs))
   end
 end

@@ -1,11 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'shared_examples_for_controllers'
 
 describe Admin::ImagesController do
   let(:website) { FactoryGirl.build(:website) }
 
   before do
-    controller.stub(:website).and_return(website)
+    allow(controller).to receive(:website).and_return(website)
     logged_in_as_admin
   end
 
@@ -21,7 +21,7 @@ describe Admin::ImagesController do
     end
 
     it 'creates a new ImageUploader' do
-      ImageUploader.should_receive(:new)
+      expect(ImageUploader).to receive(:new)
         .with(hash_including('image' => red_image, 'name' => 'red'))
         .and_return double(ImageUploader).as_null_object
       post_create
@@ -29,20 +29,20 @@ describe Admin::ImagesController do
 
     it 'associates the image with the current website' do
       image = FactoryGirl.create(:image)
-      Image.stub(:new).and_return(image)
+      allow(Image).to receive(:new).and_return(image)
       post_create
       expect(image.website).to eq controller.website
     end
 
     it 'sets a flash notice stating how many images were uploaded' do
-      ImageUploader.any_instance.stub(:images).and_return [Image.new]
+      allow_any_instance_of(ImageUploader).to receive(:images).and_return [Image.new]
       post_create
       expect(flash[:notice]).to eq '1 image uploaded.'
     end
 
     context 'when some images uploaded' do
       before do
-        Image.any_instance.stub(:save).and_return true
+        allow_any_instance_of(Image).to receive(:save).and_return true
       end
 
       it 'redirects to images index' do
@@ -53,18 +53,18 @@ describe Admin::ImagesController do
 
     context 'when no images uploaded' do
       before do
-        Image.any_instance.stub(:save).and_return false
+        allow_any_instance_of(Image).to receive(:save).and_return false
       end
 
       it 'assigns the first failed image to @image if there is one' do
         image = Image.new
-        ImageUploader.any_instance.stub(:failed).and_return [image]
+        allow_any_instance_of(ImageUploader).to receive(:failed).and_return [image]
         post_create
         expect(assigns(:image)).to eq image
       end
 
       it 'assigns a new Image to @image if none in failed' do
-        ImageUploader.any_instance.stub(:failed).and_return []
+        allow_any_instance_of(ImageUploader).to receive(:failed).and_return []
         post_create
         expect(assigns(:image)).to be_instance_of Image
       end

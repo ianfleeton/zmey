@@ -21,7 +21,7 @@ class Image < ActiveRecord::Base
   end
 
   def determine_filename
-    if @file_data
+    if defined?(@file_data) && @file_data
       self.filename = "image.#{uploaded_extension}"
     end
   end
@@ -31,7 +31,7 @@ class Image < ActiveRecord::Base
   # saves the file with the filename of the model id
   # together with the file original extension
   def write_file
-    if @file_data
+    if defined?(@file_data) && @file_data
       @file_data.rewind
       # remove any existing images (which may have different extensions)
       delete_files
