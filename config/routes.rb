@@ -81,7 +81,7 @@ Rails.application.routes.draw do
       resources :pages, only: [:create, :index]
       delete 'pages', to: 'pages#delete_all'
 
-      resources :payments, only: [:show]
+      resources :payments, only: [:index, :show]
 
       resources :product_placements, only: [:create]
       delete 'product_placements', to: 'product_placements#delete_all'

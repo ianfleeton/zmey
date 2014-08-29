@@ -31,6 +31,7 @@ class Website < ActiveRecord::Base
   has_many :product_groups, -> { order 'name' }, dependent: :destroy
   has_many :product_placements, through: :products
   has_many :orders, -> { order 'created_at DESC' }, dependent: :destroy
+  has_many :payments, through: :orders
   has_many :pages, -> { order 'name' }, dependent: :destroy
   has_many :images, dependent: :destroy
   has_many :forums, dependent: :destroy

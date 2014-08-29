@@ -70,6 +70,10 @@ A successful retrieval will return JSON similar to the example:
 * [`POST` api/admin/pages](endpoints/admin/pages/POST_create.md)
 * [`DELETE` api/admin/pages](endpoints/admin/pages/DELETE_delete_all.md)
 
+### Payments
+
+* [`GET` api/admin/payments](endpoints/admin/payments/GET_index.md)
+
 ### Products
 
 * [`GET` api/admin/products](endpoints/admin/products/GET_index.md)
