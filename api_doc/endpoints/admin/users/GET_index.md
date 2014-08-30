@@ -18,11 +18,13 @@ curl https://zmey.co.uk/api/admin/users
   "users": [
     {
       "id": 1,
+      "href": "https://zmey.co.uk/api/admin/users/1",
       "name": "Joanne Shopper",
       "email": "shopper@example.com"
     },
     {
       "id": 2,
+      "href": "https://zmey.co.uk/api/admin/users/2",
       "name": "Bill Buyer",
       "email": "buyer@example.org"
     }
