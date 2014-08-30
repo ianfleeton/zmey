@@ -22,6 +22,13 @@ feature 'Websites admin' do
     expect(Website.find_by(name: name)).to be_nil
   end
 
+  scenario 'Delete website' do
+    website_to_delete = FactoryGirl.create(:website)
+    visit admin_websites_path
+    click_link "Delete #{website_to_delete}"
+    expect(Website.find_by(id: website_to_delete.id)).to be_nil
+  end
+
   scenario 'Edit Sage Pay settings' do
     visit edit_admin_website_path(website)
 

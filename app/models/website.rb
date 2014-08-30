@@ -342,6 +342,10 @@ class Website < ActiveRecord::Base
     "#{scheme}://#{domain}" + ((port == 80) ? '' : ":#{port}")
   end
 
+  def to_s
+    subdomain
+  end
+
   private
 
     def delete_country_addresses

@@ -2,6 +2,9 @@
 
 p= link_to 'Add a New Website', new_admin_website_path, class: 'btn btn-primary'
 
-ul
+table.table.table-bordered
   - @websites.each do |w|
-    li= link_to w.name, edit_admin_website_path(w)
+    tr
+      td= w.name
+      td= edit_button [:admin, w]
+      td= delete_button [:admin, w]

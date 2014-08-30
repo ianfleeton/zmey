@@ -171,4 +171,10 @@ describe Website do
       expect { website.destroy }.to_not raise_error
     end
   end
+
+  describe '#to_s' do
+    it 'returns subdomain' do
+      expect(Website.new(subdomain: 'xyzzy').to_s).to eq 'xyzzy'
+    end
+  end
 end
