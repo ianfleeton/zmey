@@ -73,6 +73,7 @@ A successful retrieval will return JSON similar to the example:
 ### Payments
 
 * [`GET` api/admin/payments](endpoints/admin/payments/GET_index.md)
+* [`GET` api/admin/payments/:id](endpoints/admin/payments/GET_payment_by_id.md)
 
 ### Products
 

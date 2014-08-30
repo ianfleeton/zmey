@@ -59,4 +59,25 @@ describe 'Admin payments API' do
       expect(payments['payments'].length).to eq 0
     end
   end
+
+  describe 'GET show' do
+    context 'when payment found' do
+      before do
+        @order = FactoryGirl.create(:order, website_id: @website.id)
+        @payment = FactoryGirl.create(:payment, order_id: @order.id)
+      end
+
+      it 'returns 200 OK' do
+        get api_admin_payment_path(@payment)
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when no payment' do
+      it 'returns 404 Not Found' do
+        get 'api/admin/payments/0'
+        expect(response.status).to eq 404
+      end
+    end
+  end
 end
