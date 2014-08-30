@@ -90,3 +90,4 @@ A successful retrieval will return JSON similar to the example:
 ### Users
 
 * [`GET` api/admin/users](endpoints/admin/users/GET_index.md)
+* [`GET` api/admin/users/:id](endpoints/admin/users/GET_user_by_id.md)
