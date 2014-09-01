@@ -37,4 +37,18 @@ describe SessionsController do
       end
     end
   end
+
+  describe 'POST #destroy' do
+    it 'redirects to sessions#new' do
+      post 'destroy'
+      expect(response).to redirect_to(action: 'new')
+    end
+
+    context 'with redirect_to set' do
+      it 'redirects to the given uri' do
+        post 'destroy', redirect_to: '/'
+        expect(response).to redirect_to('/')
+      end
+    end
+  end
 end
