@@ -12,13 +12,16 @@ feature 'Pages admin' do
   let(:the_page) { FactoryGirl.build(:page, website: website) }
 
   scenario 'Create page' do
+    image = FactoryGirl.create(:image, website_id: website.id)
+
     visit admin_pages_path
     click_link 'New'
     fill_in 'Name', with: the_page.name
     fill_in 'Title', with: the_page.title
     fill_in 'Description', with: the_page.description
+    select image.name, from: 'Thumbnail image'
     click_button 'Create New Page'
-    expect(Page.find_by(name: the_page.name)).to be
+    expect(Page.find_by(name: the_page.name, thumbnail_image: image.id)).to be
   end
 
   scenario 'Edit page' do

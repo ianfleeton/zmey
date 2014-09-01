@@ -5,6 +5,7 @@ class Page < ActiveRecord::Base
   has_many :product_placements, -> { order('position') }, dependent: :delete_all
   has_many :products, through: :product_placements
   belongs_to :image
+  belongs_to :thumbnail_image, class_name: 'Image'
   belongs_to :website
 
   validates_presence_of :title, :name, :website_id

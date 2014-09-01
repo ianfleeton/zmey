@@ -37,6 +37,10 @@
     = select :page, :image_id, image_options, {}, class: 'form-control'
 
   .form-group
+    = form.label :thumbnail_image_id
+    = select :page, :thumbnail_image_id, image_options, {}, class: 'form-control'
+
+  .form-group
     = form.label :content
     = form.text_area :content, class: 'form-control', rows: 12
 
