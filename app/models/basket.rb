@@ -33,6 +33,9 @@ class Basket < ActiveRecord::Base
   # Products that are not yet in the basket are added.
   # Products with a quantity of less than one are removed.
   # FeatureSelections are not supported.
+  #
+  # +quantities+ is a +Hash+ with product IDs for keys and quantities for
+  # values.
   def set_product_quantities(quantities)
     quantities.each_pair do |product_id, quantity|
       quantity = quantity.to_i
