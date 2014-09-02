@@ -3,6 +3,8 @@ class OrdersController < ApplicationController
   before_action :require_order, only: [:select_payment_method, :receipt]
   before_action :user_required, only: [:index, :show, :invoice]
 
+  layout 'basket_checkout', only: [:receipt, :select_payment_method]
+
   def index
     @orders = current_user.orders.where(website_id: website.id)
   end

@@ -1,6 +1,8 @@
 class BasketController < ApplicationController
   include ResetBasket
 
+  layout 'basket_checkout'
+
   before_action :require_delivery_address, only: [:place_order]
   before_action :remove_invalid_discounts, only: [:index, :checkout, :place_order]
   before_action :calculate_discounts, only: [:index, :checkout, :place_order]
