@@ -177,6 +177,11 @@ en:
     new:
       sign_up: 'Sign Up'
   users:
+    new:
+      heading: 'Create An Account'
+      new_user_details: 'New user details'
+      sign_up: 'Sign Up'
+      your_details: 'Your details'
     show:
       manage_address_book: 'Manage Address Book'
       registered_email_address: 'Your registered email address'

@@ -1,0 +1,25 @@
+h1= t('.heading')
+.pure-form.pure-form-stacked
+  - if @user.errors.any?
+    #error_explanation
+      h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+      ul
+        - @user.errors.full_messages.each do |msg|
+          li= msg
+
+  = form_for @user do |form|
+    fieldset
+      - if admin?
+        legend= t('.new_user_details')
+      - else
+        legend= t('.your_details')
+      = form.label :name
+      = form.text_field :name, required: true, placeholder: 'Name'
+      = form.label :email
+      = form.email_field :email, required: true, placeholder: 'Email'
+      = form.label :password
+      = form.password_field :password, required: true, placeholder: 'Password'
+      = form.label :password_confirmation
+      = form.password_field :password_confirmation, required: true, placeholder: 'Confirm'
+
+      = submit_tag t('.sign_up'), class: 'pure-button pure-button-primary'
