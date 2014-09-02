@@ -68,6 +68,11 @@ class Basket < ActiveRecord::Base
     total
   end
 
+  # Returns +true+ if the basket is empty.
+  def empty?
+    basket_items.none?
+  end
+
   def total_quantity
     basket_items.inject(0) {|q, i| q + i.quantity}
   end

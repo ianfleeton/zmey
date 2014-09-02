@@ -50,4 +50,24 @@ describe Basket do
       expect(basket.weight).to eq 15
     end
   end
+
+  describe '#empty?' do
+    let(:basket) { Basket.new }
+
+    context 'when the basket has some items' do
+      before do
+        basket.basket_items << BasketItem.new
+      end
+
+      it 'returns false' do
+        expect(basket.empty?).to be_falsey
+      end
+    end
+
+    context 'when the basket has no items' do
+      it 'returns true' do
+        expect(basket.empty?).to be_truthy
+      end
+    end
+  end
 end
