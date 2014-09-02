@@ -1,31 +1,4 @@
 <%= render 'header' %>
-  <% Page.navs(@w).each do |nav| %>
-  <ul id="<%= nav.id_attribute %>">
-<% nav.pages.each do |p| %><%= nav_link_to(p, p.path) %><% end %>
-  <% if nav.id_attribute == 'primary_nav' -%>
-    <%= nav_link_to I18n.t('controllers.enquiries'), new_enquiry_path %>
-    <% if logged_in? -%>
-    <%= nav_link_to I18n.t('my_account'), {controller: 'users', action: 'show', id: @current_user}, nil, 'n_account' %>
-    <%= nav_link_to I18n.t('logout'), sessions_path, method: 'post' %>
-    <% else -%>
-    <% if @w.can_users_create_accounts? -%>
-    <%= nav_link_to I18n.t('register'), controller: 'users', action: 'new' %>
-    <% end -%>
-    <%= nav_link_to I18n.t('login'), sign_in_path %>
-    <% end -%>
-    <%= nav_link_to I18n.t('view_cart'), basket_path %>
-    <%= nav_link_to I18n.t('checkout'), controller: 'basket', action: 'checkout' %>
-  <% end %>
-  </ul>
-  <% end %>
-  <div id="content">
-    <% if !@blog.nil? && @w.render_blog_before_content? %>
-    <%= render partial: 'forums/blog_sidebar', object: @blog %>
-    <% end %>
-    <%= flash_notice %>
-<%= yield %>
-    <% if !@blog.nil? && !@w.render_blog_before_content? %>
-    <%= render partial: 'forums/blog_sidebar', object: @blog %>
-    <% end %>
-</div>
+<%= render 'navigation' %>
+<%= render 'content' %>
 <%= render 'footer' %>
