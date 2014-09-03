@@ -1,5 +1,5 @@
 class Admin::QuantityPricesController < Admin::AdminController
-  before_action :find_quantity_price, only: [:edit, :destroy, :update]
+  before_action :set_quantity_price, only: [:edit, :destroy, :update]
 
   def new
     @quantity_price = QuantityPrice.new
@@ -37,23 +37,23 @@ class Admin::QuantityPricesController < Admin::AdminController
     redirect_to edit_admin_product_path(@quantity_price.product)
   end
 
-  protected
+  private
 
-  def find_quantity_price
-    @quantity_price = QuantityPrice.find(params[:id])
-    redirect_to admin_products_path and return unless product_valid?
-  end
-
-  def product_valid?
-    if Product.find_by(id: @quantity_price.product_id, website_id: @w.id)
-      true
-    else
-      flash[:notice] = 'Invalid product.'
-      false
+    def set_quantity_price
+      @quantity_price = QuantityPrice.find(params[:id])
+      redirect_to admin_products_path and return unless product_valid?
     end
-  end
 
-  def quantity_price_params
-    params.require(:quantity_price).permit(:price, :product_id, :quantity)
-  end
+    def product_valid?
+      if Product.find_by(id: @quantity_price.product_id, website_id: website.id)
+        true
+      else
+        flash[:notice] = 'Invalid product.'
+        false
+      end
+    end
+
+    def quantity_price_params
+      params.require(:quantity_price).permit(:price, :product_id, :quantity)
+    end
 end

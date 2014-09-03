@@ -22,7 +22,7 @@ class Admin::ApiKeysController < Admin::AdminController
   def retrieve
     user = authenticate_with_http_basic { |u, p| User.authenticate(u, p) }
     if user
-      @api_key = ApiKey.find_by(user: user, name: params[:name])
+      @api_key = ApiKey.find_by(user_id: user.id, name: params[:name])
       if @api_key
         render formats: :json
       else

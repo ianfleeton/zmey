@@ -40,7 +40,7 @@ describe Admin::ApiKeysController do
       let(:params) { valid_params }
 
       it 'creates a new API key with the given params linked to current_user' do
-        expect(ApiKey.find_by(user: current_user, name: name)).to be
+        expect(ApiKey.find_by(user_id: current_user.id, name: name)).to be
       end
 
       it 'assigns @api_key' do

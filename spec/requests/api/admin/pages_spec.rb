@@ -14,7 +14,7 @@ describe 'Admin pages API' do
       end
 
       it 'returns pages for the website' do
-        get 'api/admin/pages'
+        get '/api/admin/pages'
 
         pages = JSON.parse(response.body)
 
@@ -26,19 +26,19 @@ describe 'Admin pages API' do
       end
 
       it 'returns 200 OK' do
-        get 'api/admin/pages'
+        get '/api/admin/pages'
         expect(response.status).to eq 200
       end
     end
 
     context 'with no pages' do
       it 'returns 200 OK' do
-        get 'api/admin/pages'
+        get '/api/admin/pages'
         expect(response.status).to eq 200
       end
 
       it 'returns an empty set' do
-        get 'api/admin/pages'
+        get '/api/admin/pages'
         pages = JSON.parse(response.body)
         expect(pages['pages'].length).to eq 0
       end
@@ -52,12 +52,12 @@ describe 'Admin pages API' do
       title = SecureRandom.hex
       image = FactoryGirl.create(:image, website_id: @website.id)
       description = 'Description'
-      post 'api/admin/pages', page: {description: description, name: name, slug: slug, thumbnail_image_id: image.id, title: title}
-      expect(Page.find_by(slug: slug, thumbnail_image: image, website: @website)).to be
+      post '/api/admin/pages', page: {description: description, name: name, slug: slug, thumbnail_image_id: image.id, title: title}
+      expect(Page.find_by(slug: slug, thumbnail_image_id: image.id, website_id: @website.id)).to be
     end
 
     it 'returns 422 with bad params' do
-      post 'api/admin/pages', page: {title: ''}
+      post '/api/admin/pages', page: {title: ''}
       expect(response.status).to eq 422
     end
   end
@@ -71,7 +71,7 @@ describe 'Admin pages API' do
       page_2.save!
       page_3.save!
 
-      delete 'api/admin/pages'
+      delete '/api/admin/pages'
 
       expect(Page.find_by(id: page_1.id)).not_to be
       expect(Page.find_by(id: page_2.id)).not_to be
@@ -79,7 +79,7 @@ describe 'Admin pages API' do
     end
 
     it 'responds with 204 No Content' do
-      delete 'api/admin/pages'
+      delete '/api/admin/pages'
 
       expect(status).to eq 204
     end

@@ -13,7 +13,7 @@ describe 'Admin products API' do
       end
 
       it 'returns products for the website' do
-        get 'api/admin/products'
+        get '/api/admin/products'
 
         products = JSON.parse(response.body)
 
@@ -24,19 +24,19 @@ describe 'Admin products API' do
       end
 
       it 'returns 200 OK' do
-        get 'api/admin/products'
+        get '/api/admin/products'
         expect(response.status).to eq 200
       end
     end
 
     context 'with no products' do
       it 'returns 200 OK' do
-        get 'api/admin/products'
+        get '/api/admin/products'
         expect(response.status).to eq 200
       end
 
       it 'returns an empty set' do
-        get 'api/admin/products'
+        get '/api/admin/products'
         products = JSON.parse(response.body)
         expect(products['products'].length).to eq 0
       end
@@ -57,7 +57,7 @@ describe 'Admin products API' do
 
     context 'when no product' do
       it 'returns 404 Not Found' do
-        get 'api/admin/products/0'
+        get '/api/admin/products/0'
         expect(response.status).to eq 404
       end
     end
@@ -69,12 +69,12 @@ describe 'Admin products API' do
       sku = SecureRandom.hex
       tax_type = Product::INC_VAT
       weight = 1.234
-      post 'api/admin/products', product: {name: name, sku: sku, tax_type: tax_type, weight: weight}
-      expect(Product.find_by(sku: sku, tax_type: tax_type, weight: weight, website: @website)).to be
+      post '/api/admin/products', product: {name: name, sku: sku, tax_type: tax_type, weight: weight}
+      expect(Product.find_by(sku: sku, tax_type: tax_type, weight: weight, website_id: @website.id)).to be
     end
 
     it 'returns 422 if product cannot be created' do
-      post 'api/admin/products', product: {name: 'is not enough'}
+      post '/api/admin/products', product: {name: 'is not enough'}
       expect(status).to eq 422
     end
   end
@@ -85,7 +85,7 @@ describe 'Admin products API' do
       product_2 = FactoryGirl.create(:product, website_id: @website.id)
       product_3 = FactoryGirl.create(:product)
 
-      delete 'api/admin/products'
+      delete '/api/admin/products'
 
       expect(Product.find_by(id: product_1.id)).not_to be
       expect(Product.find_by(id: product_2.id)).not_to be
@@ -93,7 +93,7 @@ describe 'Admin products API' do
     end
 
     it 'responds with 204 No Content' do
-      delete 'api/admin/products'
+      delete '/api/admin/products'
 
       expect(status).to eq 204
     end

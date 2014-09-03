@@ -21,7 +21,7 @@ feature 'Pages admin' do
     fill_in 'Description', with: the_page.description
     select image.name, from: 'Thumbnail image'
     click_button 'Create New Page'
-    expect(Page.find_by(name: the_page.name, thumbnail_image: image.id)).to be
+    expect(Page.find_by(name: the_page.name, thumbnail_image_id: image.id)).to be
   end
 
   scenario 'Edit page' do

@@ -12,7 +12,7 @@ describe 'Admin orders API' do
     end
 
     it 'returns orders for the website' do
-      get 'api/admin/orders'
+      get '/api/admin/orders'
 
       orders = JSON.parse(response.body)
 
@@ -29,19 +29,19 @@ describe 'Admin orders API' do
     end
 
     it 'returns 200 OK' do
-      get 'api/admin/orders'
+      get '/api/admin/orders'
       expect(response.status).to eq 200
     end
   end
 
   context 'with no orders' do
     it 'returns 200 OK' do
-      get 'api/admin/orders'
+      get '/api/admin/orders'
       expect(response.status).to eq 200
     end
 
     it 'returns an empty set' do
-      get 'api/admin/orders'
+      get '/api/admin/orders'
       orders = JSON.parse(response.body)
       expect(orders['orders'].length).to eq 0
     end
@@ -61,7 +61,7 @@ describe 'Admin orders API' do
 
     context 'when no order' do
       it 'returns 404 Not Found' do
-        get 'api/admin/orders/0'
+        get '/api/admin/orders/0'
         expect(response.status).to eq 404
       end
     end

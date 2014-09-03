@@ -12,7 +12,7 @@ module ShowPage
   # Page slugs can fall back behind predefined routes without being fully
   # shadowed by them.
   def show_page(slug)
-    @page = Page.find_by(slug: slug, website_id: website)
+    @page = Page.find_by(slug: slug, website_id: website.id)
     if @page
       @title       = @page.title
       @description = @page.description

@@ -16,7 +16,7 @@ class PipeBoxingsController < ApplicationController
     depth = params[:depth].to_i
     sku = "#{product_map[params[:product]]}-#{height}X#{depth}"
 
-    product = Product.find_by(sku: sku, website: website)
+    product = Product.find_by(sku: sku, website_id: website.id)
     if product
       @basket.add(product, [], 1)
     end

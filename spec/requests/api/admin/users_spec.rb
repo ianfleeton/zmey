@@ -13,7 +13,7 @@ describe 'Admin users API' do
       end
 
       it 'returns users for the website' do
-        get 'api/admin/users'
+        get '/api/admin/users'
 
         users = JSON.parse(response.body)
 
@@ -26,19 +26,19 @@ describe 'Admin users API' do
       end
 
       it 'returns 200 OK' do
-        get 'api/admin/users'
+        get '/api/admin/users'
         expect(response.status).to eq 200
       end
     end
 
     context 'with no users' do
       it 'returns 200 OK' do
-        get 'api/admin/users'
+        get '/api/admin/users'
         expect(response.status).to eq 200
       end
 
       it 'returns an empty set' do
-        get 'api/admin/users'
+        get '/api/admin/users'
         users = JSON.parse(response.body)
         expect(users['users'].length).to eq 0
       end
@@ -79,7 +79,7 @@ describe 'Admin users API' do
 
     context 'when no user' do
       it 'returns 404 Not Found' do
-        get 'api/admin/users/0'
+        get '/api/admin/users/0'
         expect(response.status).to eq 404
       end
     end

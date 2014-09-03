@@ -32,7 +32,7 @@ class Admin::AddressesController < Admin::AdminController
     end
 
     def set_user
-      @user = User.find_by(id: params[:user_id], website: website)
+      @user = User.find_by(id: params[:user_id], website_id: website.id)
       not_found unless @user
     end
 

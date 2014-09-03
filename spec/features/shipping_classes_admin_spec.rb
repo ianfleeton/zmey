@@ -44,12 +44,12 @@ feature 'Shipping classes admin' do
     fill_in 'Trigger value', with: '10.5'
     fill_in 'Amount', with: '5.99'
     click_button 'Save'
-    expect(ShippingTableRow.find_by(trigger_value: 10.5, amount: 5.99, shipping_class: shipping_class)).to be
+    expect(ShippingTableRow.find_by(trigger_value: 10.5, amount: 5.99, shipping_class_id: shipping_class.id)).to be
   end
 
   scenario 'Delete shipping table row' do
     shipping_class.save!
-    str = ShippingTableRow.create!(trigger_value: 10.5, amount: 5.99, shipping_class: shipping_class)
+    str = ShippingTableRow.create!(trigger_value: 10.5, amount: 5.99, shipping_class_id: shipping_class.id)
     visit edit_admin_shipping_class_path(shipping_class)
     click_link "Delete #{str}"
     expect(ShippingTableRow.find_by(id: str.id)).to be_nil

@@ -1,5 +1,5 @@
 class Admin::AdditionalProductsController < Admin::AdminController
-  before_action :find_additional_product, only: [:edit, :destroy, :update]
+  before_action :set_additional_product, only: [:edit, :destroy, :update]
 
   def new
     @additional_product = AdditionalProduct.new
@@ -37,27 +37,27 @@ class Admin::AdditionalProductsController < Admin::AdminController
     redirect_to edit_admin_product_path(@additional_product.product)
   end
 
-  protected
+  private
 
-  def find_additional_product
-    @additional_product = AdditionalProduct.find(params[:id])
-    redirect_to admin_products_path and return unless product_valid?
-  end
-
-  def product_valid?
-    if find_product
-      true
-    else
-      flash[:notice] = 'Invalid product.'
-      false
+    def set_additional_product
+      @additional_product = AdditionalProduct.find(params[:id])
+      redirect_to admin_products_path and return unless product_valid?
     end
-  end
 
-  def find_product
-    Product.find_by(id: @additional_product.product_id, website: website)
-  end
+    def product_valid?
+      if find_product
+        true
+      else
+        flash[:notice] = 'Invalid product.'
+        false
+      end
+    end
 
-  def additional_product_params
-    params.require(:additional_product).permit(:additional_product_id, :product_id, :selected_by_default)
-  end
+    def find_product
+      Product.find_by(id: @additional_product.product_id, website_id: website.id)
+    end
+
+    def additional_product_params
+      params.require(:additional_product).permit(:additional_product_id, :product_id, :selected_by_default)
+    end
 end

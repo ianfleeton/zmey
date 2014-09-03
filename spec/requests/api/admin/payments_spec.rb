@@ -21,7 +21,7 @@ describe 'Admin payments API' do
     end
 
     it 'returns payments for the website' do
-      get 'api/admin/payments'
+      get '/api/admin/payments'
 
       payments = JSON.parse(response.body)
 
@@ -42,19 +42,19 @@ describe 'Admin payments API' do
     end
 
     it 'returns 200 OK' do
-      get 'api/admin/payments'
+      get '/api/admin/payments'
       expect(response.status).to eq 200
     end
   end
 
   context 'with no payments' do
     it 'returns 200 OK' do
-      get 'api/admin/payments'
+      get '/api/admin/payments'
       expect(response.status).to eq 200
     end
 
     it 'returns an empty set' do
-      get 'api/admin/payments'
+      get '/api/admin/payments'
       payments = JSON.parse(response.body)
       expect(payments['payments'].length).to eq 0
     end
@@ -75,7 +75,7 @@ describe 'Admin payments API' do
 
     context 'when no payment' do
       it 'returns 404 Not Found' do
-        get 'api/admin/payments/0'
+        get '/api/admin/payments/0'
         expect(response.status).to eq 404
       end
     end

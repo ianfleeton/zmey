@@ -1,5 +1,5 @@
 class Admin::ProductGroupsController < Admin::AdminController
-  before_action :find_product_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_product_group, only: [:show, :edit, :update, :destroy]
 
   def index
     @title = 'Product Groups'
@@ -43,14 +43,14 @@ class Admin::ProductGroupsController < Admin::AdminController
     redirect_to admin_product_groups_path, notice: 'Product group deleted.'
   end
 
-  protected
+  private
 
-  def find_product_group
-    @product_group = ProductGroup.find_by(id: params[:id], website_id: @w.id)
-    not_found unless @product_group
-  end
+    def set_product_group
+      @product_group = ProductGroup.find_by(id: params[:id], website_id: website.id)
+      not_found unless @product_group
+    end
 
-  def product_group_params
-    params.require(:product_group).permit(:name)
-  end
+    def product_group_params
+      params.require(:product_group).permit(:name)
+    end
 end

@@ -4,7 +4,7 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   end
 
   def show
-    @product = Product.find_by(id: params[:id], website: website)
+    @product = Product.find_by(id: params[:id], website_id: website.id)
     render nothing: true, status: 404 unless @product
   end
 

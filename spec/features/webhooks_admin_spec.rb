@@ -15,6 +15,6 @@ feature 'Webhooks admin' do
     fill_in 'Event', with: 'image_created'
     fill_in 'URL', with: 'http://url'
     click_button 'Create Webhook'
-    expect(Webhook.find_by(website: website, event: 'image_created', url: 'http://url')).to be
+    expect(Webhook.find_by(website_id: website.id, event: 'image_created', url: 'http://url')).to be
   end
 end

@@ -7,7 +7,7 @@ describe PagesController do
     before { allow(controller).to receive(:website).and_return(website) }
 
     it 'finds a page by its slug and the current website' do
-      expect(Page).to receive(:find_by).with hash_including(slug: slug, website_id: website)
+      expect(Page).to receive(:find_by).with hash_including(slug: slug, website_id: website.id)
       get :show, slug: slug
     end
 

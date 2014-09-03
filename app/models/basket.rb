@@ -54,7 +54,7 @@ class Basket < ActiveRecord::Base
   end
 
   def quantity_of_product(product)
-    BasketItem.find_by(basket: self, product: product).try(:quantity) || 0
+    BasketItem.find_by(basket_id: id, product_id: product.id).try(:quantity) || 0
   end
 
   def items_at_full_price
