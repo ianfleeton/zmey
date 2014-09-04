@@ -9,7 +9,6 @@ cache website, expires_in: 15.minutes do
         xml.loc("#{url}/#{page.slug}")
         xml.lastmod(Time.now.strftime("%Y-%m-%d"))
         xml.changefreq('monthly')
-        xml.priority('0.4')
       end
     end
     for other_url in @other_urls
@@ -17,7 +16,6 @@ cache website, expires_in: 15.minutes do
         xml.loc(other_url)
         xml.lastmod(Time.now.strftime("%Y-%m-%d"))
         xml.changefreq('monthly')
-        xml.priority('0.4')
       end
     end
   }
