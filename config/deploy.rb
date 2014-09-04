@@ -10,6 +10,7 @@ set :rvm_path, "/home/admin/.rvm"
 set :application, "zmey"
 raise 'Set the ZMEY_REPOSITORY environment variable before deploying' unless ENV['ZMEY_REPOSITORY']
 set :repository,  ENV['ZMEY_REPOSITORY']
+set :branch,      ENV['ZMEY_BRANCH'] || 'master'
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
