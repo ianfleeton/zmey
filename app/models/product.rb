@@ -110,8 +110,12 @@ class Product < ActiveRecord::Base
     '/products/' + to_param
   end
 
+  def slug
+    'products/' + to_param
+  end
+
   def url
-    'http://' + website.domain + path
+    website.url + path
   end
 
   def to_param

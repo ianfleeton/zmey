@@ -66,7 +66,7 @@ class Page < ActiveRecord::Base
   end
 
   def url
-    'http://' + website.domain + '/' + slug
+    website.url + '/' + slug
   end
 
   def to_s
