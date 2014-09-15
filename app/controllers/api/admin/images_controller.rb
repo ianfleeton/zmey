@@ -3,6 +3,11 @@ class Api::Admin::ImagesController < Api::Admin::AdminController
     @images = website.images
   end
 
+  def show
+    @image = Image.find_by(id: params[:id], website_id: website.id)
+    render nothing: true, status: 404 unless @image
+  end
+
   def create
     @image = Image.new(image_params)
     io = StringIO.new(Base64.decode64(params[:image][:data]))

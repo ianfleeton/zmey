@@ -56,6 +56,7 @@ A successful retrieval will return JSON similar to the example:
 ### Images
 
 * [`GET` api/admin/images](endpoints/admin/images/GET_index.md)
+* [`GET` api/admin/images/:id](endpoints/admin/images/GET_image_by_id.md)
 * [`POST` api/admin/images](endpoints/admin/images/POST_create.md)
 * [`DELETE` api/admin/images](endpoints/admin/images/DELETE_delete_all.md)
 

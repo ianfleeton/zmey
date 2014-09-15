@@ -78,6 +78,23 @@ class Image < ActiveRecord::Base
     "#{IMAGE_STORAGE_URL}/#{id}/#{f}"
   end
 
+  # Returns the orginal file data in Base64 encoding.
+  # Returns an empty string if the image file is missing or cannot be opened.
+  def data_base64
+    d = data
+    d ? Base64::encode64(d) : ''
+  end
+
+  # Returns the raw file data for the original image.
+  # Returns nil if the image file is missing or cannot be opened.
+  def data
+    begin
+      File.open(original_path, 'rb') { |f| f.read }
+    rescue
+      nil
+    end
+  end
+
   # deletes the file(s) by removing the whole dir
   def delete_files
     FileUtils.rm_rf(directory_path)

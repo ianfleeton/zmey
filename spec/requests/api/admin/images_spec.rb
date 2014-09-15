@@ -44,6 +44,26 @@ describe 'Admin images API' do
     end
   end
 
+  describe 'GET show' do
+    context 'when image found' do
+      before do
+        @image = FactoryGirl.create(:image, website_id: @website.id)
+      end
+
+      it 'returns 200 OK' do
+        get api_admin_image_path(@image)
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when no image' do
+      it 'returns 404 Not Found' do
+        get '/api/admin/images/0'
+        expect(response.status).to eq 404
+      end
+    end
+  end
+
   describe 'DELETE delete_all' do
     before do
       @image1 = FactoryGirl.create(:image, website_id: @website.id)
