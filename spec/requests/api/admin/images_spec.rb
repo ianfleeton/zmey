@@ -19,6 +19,7 @@ describe 'Admin images API' do
 
         expect(images['images'].length).to eq 1
         expect(images['images'][0]['id']).to eq @image1.id
+        expect(images['images'][0]['href']).to eq api_admin_image_url(@image1)
         expect(images['images'][0]['filename']).to eq @image1.filename
         expect(images['images'][0]['name']).to eq @image1.name
       end
