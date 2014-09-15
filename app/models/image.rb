@@ -36,10 +36,19 @@ class Image < ActiveRecord::Base
       @file_data.rewind
       # remove any existing images (which may have different extensions)
       delete_files
-      path = "#{IMAGE_STORAGE_PATH}/#{id}"
-      FileUtils.makedirs(path)
-      File.open(path + '/' + filename, "wb") { |file| file.write(@file_data.read) }
+      FileUtils.makedirs(directory_path)
+      File.open(original_path, "wb") { |file| file.write(@file_data.read) }
     end
+  end
+
+  # Returns the path of the directory that the local file is stored in.
+  def directory_path
+    File.join(IMAGE_STORAGE_PATH, id.to_s)
+  end
+
+  # Returns the path of the original local image.
+  def original_path
+    File.join(directory_path, filename)
   end
 
   def url(size=nil)
@@ -47,11 +56,11 @@ class Image < ActiveRecord::Base
       f = filename
     else
       f = 'sized_' + size.to_s + '.' + extension
-      path = "#{IMAGE_STORAGE_PATH}/#{id}/#{f}"
+      path = File.join(directory_path, f)
       # create a new image of the required size if it doesn't exist
       unless FileTest.exists?(path)
         begin
-          ImageScience.with_image("#{IMAGE_STORAGE_PATH}/#{id}/#{filename}") do |img|
+          ImageScience.with_image(original_path) do |img|
             # protect against crashes
             if img.height <= 1 || img.width <= 1
               return IMAGE_MISSING
@@ -71,7 +80,7 @@ class Image < ActiveRecord::Base
 
   # deletes the file(s) by removing the whole dir
   def delete_files
-    FileUtils.rm_rf("#{IMAGE_STORAGE_PATH}/#{id}")
+    FileUtils.rm_rf(directory_path)
   end
 
   def uploaded_extension
