@@ -1,4 +1,4 @@
-= form_tag controller: 'basket', action: 'update' do
+= form_tag({controller: 'basket', action: 'update'}, class: 'pure-form') do
   - if can_update
     / Hack to make Update Quantities the default submit button by putting a
     / duplicate of it first and then using CSS to hide it.
@@ -32,7 +32,7 @@
           td.line_total= formatted_price(item.line_total(inc_tax))
           - if can_update
             td
-              input type="submit" value="#{t('.remove_item')}" name="remove_item[#{item.id}]"
+              input.pure-button type="submit" value="#{t('.remove_item')}" name="remove_item[#{item.id}]"
       - @discount_lines.each do |dl|
         tr
           td= t('.discount')
