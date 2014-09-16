@@ -1,0 +1,104 @@
+= form_tag controller: 'basket', action: 'update' do
+  - if can_update
+    / Hack to make Update Quantities the default submit button by putting a
+    / duplicate of it first and then using CSS to hide it.
+    span style="position: absolute; left: -100%;"
+      input type="submit" name="update_quantities" value="#{t('.update_quantities')}"
+  table#basket.basket.pure-table.pure-table-bordered
+    thead
+      tr
+        th= t('.sku')
+        th= t('.item')
+        th= I18n.t('quantity')
+        th.price= I18n.t('price')
+        th.line_total= I18n.t('cost')
+        - if can_update
+          th= t('.remove_item')
+    tbody
+      - @basket.basket_items.each do |item|
+        tr
+          td= item.product.sku
+          td
+            = item.product.name
+            - unless item.feature_descriptions.empty?
+              br
+              small= item.feature_descriptions
+          td
+            - if can_update
+              input name="qty[#{item.id}]" size="2" maxlength="7" value="#{item.quantity}"
+            - else
+              = item.quantity
+          td.price= formatted_price(item.product.price_with_tax(item.quantity, inc_tax))
+          td.line_total= formatted_price(item.line_total(inc_tax))
+          - if can_update
+            td
+              input type="submit" value="#{t('.remove_item')}" name="remove_item[#{item.id}]"
+      - @discount_lines.each do |dl|
+        tr
+          td= t('.discount')
+          td= dl.name
+          td.empty &nbsp;
+          td.empty &nbsp;
+          td.price= formatted_price(dl.price_with_tax(inc_tax))
+          - if can_update
+            td.empty &nbsp;
+      - unless shipping_amount.nil?
+        tr.shipping_amount
+          th colspan="4"= t('.shipping_amount')
+          td.price= formatted_price shipping_amount
+          - if can_update
+            td.empty &nbsp;
+      tr.basket_total
+        th colspan="4"
+          - if website.vat_number.present?
+            - if inc_tax
+              = t('.basket_total_inc_tax')
+            - else
+              = t('.basket_total_ex_tax')
+          - else
+            = t('.basket_total')
+        td.price
+          - basket_total = @basket.total(inc_tax) + (shipping_amount.nil? ? 0 : shipping_amount) + discount_lines_price_total
+          - basket_total += discount_lines_tax_total if inc_tax
+          = formatted_price basket_total
+        - if can_update
+          td.empty &nbsp;
+      - if website.vat_number.present? && !inc_tax
+        tr.vat_amount
+          th colspan="4"= t('.tax')
+          td.price
+            - vat_total = @basket.vat_total + discount_lines_tax_total
+            - if website.vat_number.present? && shipping_tax_amount
+              - vat_total += shipping_tax_amount
+            = formatted_price vat_total
+          - if can_update
+            td.empty &nbsp;
+        tr.total
+          th colspan="4"= t('.total')
+          td class="price"= formatted_price(basket_total + vat_total)
+          - if can_update
+            td.empty &nbsp;
+  - if can_update
+    = render partial: 'customer_note', locals: { customer_note: @basket.customer_note }
+    p.basket_buttons
+      input.update-quantities.pure-button type="submit" name="update_quantities" value="#{t('.update_quantities')}"
+      = ' '
+      input.checkout.pure-button.pure-button-primary type="submit" name="checkout" value="#{t('checkout')}"
+
+- if can_update
+  h2= t('.coupons')
+  - unless session[:coupons].nil? or session[:coupons].empty?
+    div#applied_coupons
+      p= t('.coupons_applied')
+      ul
+        - session[:coupons].each do |coupon|
+          li
+            = coupon
+            = " (#{Discount.find_by(coupon: coupon, website_id: @w.id).name}) "
+            = link_to('Remove', { controller: :basket, action: :remove_coupon, coupon_code: coupon }, title: "Remove #{coupon}")
+
+  p= t('.enter_coupon_code')
+  = form_tag controller: 'basket', action: 'enter_coupon' do
+    input#coupon_code type="text" name="coupon_code"
+    = ' '
+    input.apply-coupon.pure-button type="submit" value="#{t('.apply_coupon')}"
