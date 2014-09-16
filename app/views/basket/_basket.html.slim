@@ -97,8 +97,9 @@
             = " (#{Discount.find_by(coupon: coupon, website_id: @w.id).name}) "
             = link_to('Remove', { controller: :basket, action: :remove_coupon, coupon_code: coupon }, title: "Remove #{coupon}")
 
-  p= t('.enter_coupon_code')
-  = form_tag controller: 'basket', action: 'enter_coupon' do
-    input#coupon_code type="text" name="coupon_code"
-    = ' '
-    input.apply-coupon.pure-button type="submit" value="#{t('.apply_coupon')}"
+  = form_tag({controller: 'basket', action: 'enter_coupon'}, class: 'pure-form') do
+    fieldset
+      legend= t('.enter_coupon_code')
+      input#coupon_code type="text" name="coupon_code"
+      = ' '
+      input.apply-coupon.pure-button type="submit" value="#{t('.apply_coupon')}"
