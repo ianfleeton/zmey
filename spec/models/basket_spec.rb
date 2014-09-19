@@ -70,4 +70,34 @@ describe Basket do
       end
     end
   end
+
+  describe '#deep_clone' do
+    it 'returns a copy of the basket' do
+      b = Basket.new
+      expect(b.deep_clone).not_to eq b
+    end
+
+    it 'copies the basket information' do
+      note = SecureRandom.hex
+      b = Basket.new(customer_note: note)
+      expect(b.deep_clone.customer_note).to eq note
+    end
+
+    it 'generates a new token for the clone' do
+      b = Basket.new
+      b.generate_token
+      expect(b.deep_clone.token).not_to eq b.token
+    end
+
+    it 'saves the clone' do
+      expect(Basket.new.deep_clone.new_record?).to be_falsey
+    end
+
+    it 'copies basket items' do
+      b = FactoryGirl.create(:basket)
+      b.basket_items << BasketItem.new
+      expect(b.deep_clone.basket_items.count).to eq 1
+      expect(b.basket_items.count).to eq 1
+    end
+  end
 end

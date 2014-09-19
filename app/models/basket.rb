@@ -1,6 +1,6 @@
 class Basket < ActiveRecord::Base
   # basket items are destroyed so that their feature selections can be cleaned up
-  has_many :basket_items, dependent: :destroy
+  has_many :basket_items, inverse_of: :basket, dependent: :destroy
   has_one :order, dependent: :nullify
 
   before_create :generate_token
@@ -104,5 +104,14 @@ class Basket < ActiveRecord::Base
 
   def generate_token
     self.token = SecureRandom.urlsafe_base64(nil, false)
+  end
+
+  # Returns a copy of this basket and its contents, but with a new token.
+  def deep_clone
+    b = dup
+    b.generate_token
+    b.save
+    basket_items.each {|i| b.basket_items << i.dup}
+    b
   end
 end

@@ -23,9 +23,6 @@ gem 'whenever', require: false
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 
-# Simplify cloning of Active Record objects
-gem 'deep_cloneable', '~> 2.0.0'
-
 # Monitor with New Relic
 gem 'newrelic_rpm'
 

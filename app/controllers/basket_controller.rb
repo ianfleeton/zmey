@@ -180,7 +180,7 @@ class BasketController < ApplicationController
   end
 
   def save_and_email
-    cloned_basket = basket.deep_clone include: :basket_items
+    cloned_basket = basket.deep_clone
     BasketMailer.saved_basket(website, params[:email_address], cloned_basket).deliver
     redirect_to basket_path, notice: I18n.t('controllers.basket.save_and_email.email_sent', email_address: params[:email_address])
   end
