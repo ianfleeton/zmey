@@ -18,21 +18,20 @@ module PagesHelper
     content_tag(:tr,
       content_tag(:td, 
         indent_tag(indent) +
-          link_to(page.name, page.path) + ' '.html_safe
-        ) +
-        edit_page(page) +
-        move_up_cell(:move_up_admin_page_path, page) +
-        move_down_cell(:move_down_admin_page_path, page) +
-        delete_page(page)
+        page.name
+      ) +
+      move_up_cell(:move_up_admin_page_path, page) +
+      move_down_cell(:move_down_admin_page_path, page) +
+      content_tag(
+        :td,
+        content_tag(
+          :div,
+          view_button(page, page.path) +
+          edit_button([:admin, page]),
+          class: 'btn-group'
+        ) + ' ' + delete_button([:admin, page])
+      )
     )
-  end
-
-  def edit_page(page)
-    content_tag(:td, edit_button([:admin, page]))
-  end
-
-  def delete_page(page)
-    content_tag(:td, delete_button([:admin, page]))
   end
 
   # Returns an array of links to the page's ancestors.

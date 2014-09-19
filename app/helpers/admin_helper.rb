@@ -30,6 +30,15 @@ module AdminHelper
     title: "New #{object_title(type)}"
   end
 
+  # Renders a button to view an object. If <tt>link</tt> is supplied then this
+  # is used for the hyperlink, otherwise the link is determined from the object.
+  def view_button(object, link = nil)
+    link_to '<span class="glyphicon glyphicon-eye-open"></span> View'.html_safe,
+    link ? link : polymorphic_path(object),
+    class: 'btn btn-default',
+    title: "View #{object_title(object)}"
+  end
+
   def edit_button(object)
     link_to '<span class="glyphicon glyphicon-edit"></span> Edit'.html_safe,
     edit_polymorphic_path(object),
