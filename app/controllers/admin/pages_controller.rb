@@ -3,7 +3,8 @@ class Admin::PagesController < Admin::AdminController
 
   def index
     @title = 'Pages'
-    @pages = Page.where(website_id: website, parent_id: nil).order(:position)
+    @parent = params[:parent_id] ? Page.find_by(id: params[:parent_id], website_id: website.id) : nil
+    @pages = Page.select(:id, :name, :parent_id, :position, :slug, :title).where(website_id: website, parent_id: @parent.try(:id)).order(:position)
   end
 
   def edit
@@ -60,7 +61,7 @@ class Admin::PagesController < Admin::AdminController
 
     def moved
       flash[:notice] = 'Moved'
-      redirect_to action: 'index'
+      redirect_to admin_pages_path(parent_id: @page.parent_id)
     end
 
     def page_params

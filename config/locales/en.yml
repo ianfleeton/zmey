@@ -79,6 +79,8 @@ en:
       form:
         no_follow: 'NOFOLLOW (search engines should not follow links from this page)'
         no_index: 'NOINDEX (search engines should not index this page)'
+      index:
+        top: 'Top'
     users:
       edit:
         heading: 'Edit User Account Details'

@@ -2,8 +2,15 @@
 
 p= new_button [:admin, Page]
 
+ol.breadcrumb
+  li= link_to_if(@parent, t('.top'), admin_pages_path)
+  - if @parent
+    - @parent.ancestors.reverse.each do |page|
+      li= link_to(page.name, admin_pages_path(parent_id: page.id))
+    li= @parent.name
+
 table.table.table-striped.table-bordered
   - @pages.each do |p|
-    = page_tree(p) { |page, indent| page_edit_table_row(page, indent) }
+    = page_edit_table_row(p)
 
   = content_tag(:tr, content_tag(:td, 'No pages')) if @pages.empty?

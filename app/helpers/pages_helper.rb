@@ -1,24 +1,8 @@
 module PagesHelper
-  def indent_tag indent
-    ('<span class="indent">&nbsp; &nbsp;</span>' * indent).html_safe
-  end
-
-  def page_tree(p, indent=0, &block)
-    subs = ''
-    unless p.children.empty?
-      p.children.each do |c|
-        subs += page_tree(c, indent+1, &block)
-      end
-    end
-
-    capture(p, indent, &block) + subs.html_safe
-  end
-
-  def page_edit_table_row(page, indent)
+  def page_edit_table_row(page)
     content_tag(:tr,
-      content_tag(:td, 
-        indent_tag(indent) +
-        page.name
+      content_tag(:td,
+        link_to(page.name, admin_pages_path(parent_id: page.id), class: 'admin-page-nav')
       ) +
       move_up_cell(:move_up_admin_page_path, page) +
       move_down_cell(:move_down_admin_page_path, page) +
