@@ -13,7 +13,7 @@ class BasketController < ApplicationController
   # <tt>@page</tt> is set if <tt>params[:page_id]</tt> is set. This can be used
   # in the view to allow the user to continue shopping on the previous page.
   def index
-    @page = params[:page_id] ? Page.find_by(id: params[:page_id]) : nil
+    @page = params[:page_id] ? Page.find_by(id: params[:page_id], website_id: website.id) : nil
   end
 
   def add

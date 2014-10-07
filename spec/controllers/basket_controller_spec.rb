@@ -8,6 +8,29 @@ describe BasketController do
     allow(controller).to receive(:website).and_return(website)
   end
 
+  describe 'GET index' do
+    let(:our_page)   { FactoryGirl.create(:page, website_id: website.id) }
+    let(:other_page) { FactoryGirl.create(:page) }
+
+    before { get :index, page_id: page_id }
+
+    context 'with valid params[:page_id]' do
+      let(:page_id) { our_page.id }
+
+      it 'sets @page' do
+        expect(assigns(:page)).to eq our_page
+      end
+    end
+
+    context 'with invalid params[:page_id]' do
+      let(:page_id) { other_page.id }
+
+      it 'sets @page' do
+        expect(assigns(:page)).to be_nil
+      end
+    end
+  end
+
   describe 'POST add_update_multiple' do
     context 'with no quantities' do
       it 'does not raise' do
