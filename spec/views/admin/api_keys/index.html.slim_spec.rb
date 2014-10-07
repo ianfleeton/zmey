@@ -9,7 +9,7 @@ describe 'admin/api_keys/index.html.slim' do
   end
 
   it 'has a link to create a new API key' do
-    expect(rendered).to have_selector "a[href='#{new_admin_api_key_path(routing_type: 'path')}']"
+    expect(rendered).to have_selector "a[href='#{new_admin_api_key_path}']"
   end
 
   context 'when @api_keys is empty' do

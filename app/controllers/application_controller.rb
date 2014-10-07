@@ -81,14 +81,14 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found
-    render "#{Rails.root.to_s}/public/404", formats: [:html], layout: false, status: 404
+    render file: "#{Rails.root.to_s}/public/404", formats: [:html], layout: false, status: 404
   end
 
   def render_error(exception)
     ExceptionNotifier::Notifier
       .exception_notification(request.env, exception)
       .deliver
-    render "#{Rails.root.to_s}/public/500", layout: false, status: 500
+    render file: "#{Rails.root.to_s}/public/500", layout: false, status: 500
   end
 
     def initialize_page_defaults
