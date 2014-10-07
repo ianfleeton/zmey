@@ -98,7 +98,7 @@ describe BasketController do
       allow_any_instance_of(Basket).to receive(:deep_clone).and_return(cloned_basket)
       expect(BasketMailer).to receive(:saved_basket)
         .with(website, email_address, cloned_basket)
-        .and_return(double(BasketMailer, deliver: true))
+        .and_return(double(BasketMailer, deliver_now: true))
       post :save_and_email, email_address: email_address
     end
 

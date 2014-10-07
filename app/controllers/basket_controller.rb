@@ -142,11 +142,11 @@ class BasketController < ApplicationController
     if website.only_accept_payment_on_account?
       @order.status = Order::PAYMENT_ON_ACCOUNT
       @order.save
-      OrderNotifier.notification(website, @order).deliver
+      OrderNotifier.notification(website, @order).deliver_now
       reset_basket(@order)
       redirect_to controller: 'orders', action: 'receipt'
     else
-      OrderNotifier.admin_waiting_for_payment(website, @order).deliver
+      OrderNotifier.admin_waiting_for_payment(website, @order).deliver_now
       redirect_to controller: 'orders', action: 'select_payment_method'
     end
   end
@@ -194,7 +194,7 @@ class BasketController < ApplicationController
   # The user is redirected to their current basket.
   def save_and_email
     cloned_basket = basket.deep_clone
-    BasketMailer.saved_basket(website, params[:email_address], cloned_basket).deliver
+    BasketMailer.saved_basket(website, params[:email_address], cloned_basket).deliver_now
     redirect_to basket_path, notice: I18n.t('controllers.basket.save_and_email.email_sent', email_address: params[:email_address])
   end
 
