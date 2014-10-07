@@ -74,6 +74,8 @@ Rails.application.routes.draw do
       resources :images, only: [:create, :index, :show]
       delete 'images', to: 'images#delete_all'
 
+      delete 'liquid_templates', to: 'liquid_templates#delete_all'
+
       resources :order_lines, only: [:show]
 
       resources :orders, only: [:index, :show]
