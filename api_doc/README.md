@@ -62,6 +62,7 @@ A successful retrieval will return JSON similar to the example:
 
 ### Liquid Templates
 
+* [`POST` api/admin/liquid_templates](endpoints/admin/liquid_templates/POST_create.md)
 * [`DELETE` api/admin/liquid_templates](endpoints/admin/liquid_templates/DELETE_delete_all.md)
 
 ### Orders

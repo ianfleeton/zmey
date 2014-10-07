@@ -5,6 +5,21 @@ describe 'Admin Liquid templates API' do
     prepare_api_website
   end
 
+  describe 'POST create' do
+    it 'inserts a new Liquid template into the website' do
+      markup = SecureRandom.hex
+      name   = SecureRandom.hex
+      title  = SecureRandom.hex
+      post '/api/admin/liquid_templates', liquid_template: {markup: markup, name: name, title: title}
+      expect(LiquidTemplate.find_by(markup: markup, name: name, title: title, website_id: @website.id)).to be
+    end
+
+    it 'returns 422 with bad params' do
+      post '/api/admin/liquid_templates', liquid_template: {name: ''}
+      expect(response.status).to eq 422
+    end
+  end
+
   describe 'DELETE delete_all' do
     it 'deletes all Liquid templates in the website' do
       template_1 = FactoryGirl.create(:liquid_template, website_id: @website.id)
