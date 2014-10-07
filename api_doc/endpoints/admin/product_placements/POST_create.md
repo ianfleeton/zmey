@@ -1,4 +1,4 @@
-# POST api/admin/product_placements
+# POST api/admin/product_placements
 
 Places a product within a page.
 

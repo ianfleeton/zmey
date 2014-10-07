@@ -1,4 +1,4 @@
-# POST api/admin/pages
+# POST api/admin/pages
 
 Create a new page.
 

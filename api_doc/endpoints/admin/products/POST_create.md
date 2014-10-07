@@ -1,4 +1,4 @@
-# POST api/admin/products
+# POST api/admin/products
 
 Create a new product.
 

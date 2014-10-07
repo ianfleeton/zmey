@@ -1,4 +1,4 @@
-# POST api/admin/liquid_templates
+# POST api/admin/liquid_templates
 
 Create a new Liquid template.
 
