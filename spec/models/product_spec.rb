@@ -5,9 +5,9 @@ describe Product do
     @product = Product.new(price: 1.0)
   end
 
-  it { should ensure_inclusion_of(:age_group).in_array(Product::AGE_GROUPS) }
-  it { should ensure_inclusion_of(:gender).in_array(Product::GENDERS) }
-  it { should ensure_inclusion_of(:tax_type).in_array(Product::TAX_TYPES) }
+  it { should validate_inclusion_of(:age_group).in_array(Product::AGE_GROUPS) }
+  it { should validate_inclusion_of(:gender).in_array(Product::GENDERS) }
+  it { should validate_inclusion_of(:tax_type).in_array(Product::TAX_TYPES) }
 
   it { should ensure_length_of(:meta_description).is_at_most(255) }
   it { should validate_numericality_of(:price).is_greater_than_or_equal_to(0) }

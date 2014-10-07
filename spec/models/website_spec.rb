@@ -24,7 +24,7 @@ describe Website do
   it { should validate_presence_of :email }
   it { should validate_presence_of :name }
   it { should validate_presence_of :subdomain }
-  it { should ensure_inclusion_of(:custom_view_resolver).in_array(%w{CustomView::DatabaseResolver CustomView::ThemeResolver}) }
+  it { should validate_inclusion_of(:custom_view_resolver).in_array(%w{CustomView::DatabaseResolver CustomView::ThemeResolver}) }
 
   describe "validations" do
     it "should be valid with valid attributes" do
