@@ -37,7 +37,7 @@ curl https://zmey.co.uk/api/admin/pages \
 
 ### Response
 
-A status of 422 Unprocessable Entity will be returned if the product cannot be
+A status of 422 Unprocessable Entity will be returned if the page cannot be
 created.
 
 ```json
