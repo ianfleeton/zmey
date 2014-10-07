@@ -46,7 +46,7 @@ class Admin::LiquidTemplatesController < Admin::AdminController
     not_found unless @liquid_template
   end
 
-  def liquid_template_params
-    params.require(:liquid_template).permit(:markup, :name)
-  end
+    def liquid_template_params
+      params.require(:liquid_template).permit(:markup, :name, :title)
+    end
 end

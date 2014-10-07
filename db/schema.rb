@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140901121938) do
+ActiveRecord::Schema.define(version: 20141007130123) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",                            null: false
@@ -215,11 +215,12 @@ ActiveRecord::Schema.define(version: 20140901121938) do
   end
 
   create_table "liquid_templates", force: true do |t|
-    t.integer  "website_id", null: false
-    t.string   "name",       null: false
+    t.integer  "website_id",              null: false
+    t.string   "name",                    null: false
     t.text     "markup"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title",      default: "", null: false
   end
 
   add_index "liquid_templates", ["name"], name: "index_liquid_templates_on_name", using: :btree

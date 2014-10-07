@@ -9,15 +9,16 @@ feature 'Liquid Templates admin' do
     sign_in_as_admin
   end
 
-  let(:liquid_template) { FactoryGirl.build(:liquid_template, website: website) }
+  let(:liquid_template) { FactoryGirl.build(:liquid_template, title: SecureRandom.hex, website: website) }
 
   scenario 'Create Liquid Template' do
     visit admin_liquid_templates_path
     click_link 'New'
-    fill_in 'Name', with: liquid_template.name
+    fill_in 'Name',   with: liquid_template.name
     fill_in 'Markup', with: liquid_template.markup
+    fill_in 'Title',  with: liquid_template.title
     click_button 'Create Liquid template'
-    expect(LiquidTemplate.find_by(name: liquid_template.name)).to be
+    expect(LiquidTemplate.find_by(name: liquid_template.name, title: liquid_template.title)).to be
   end
 
   scenario 'Edit Liquid Template' do
