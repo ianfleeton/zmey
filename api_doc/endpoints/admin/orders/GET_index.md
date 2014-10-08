@@ -2,6 +2,11 @@
 
 Returns a summary list of all orders.
 
+## Parameters
+
+* **page** — Page number of results. Numbering starts from 1. Default is 1.
+* **page_size** — Number of results per page. Default is 50.
+
 ## Example
 
 ### Request
@@ -12,6 +17,9 @@ curl https://zmey.co.uk/api/admin/orders \
 ```
 
 ### Response
+
+The response contains a total count of all matching orders in the **count**
+attribute.
 
 ```json
 {
@@ -42,6 +50,7 @@ curl https://zmey.co.uk/api/admin/orders \
       "created_at": "2014-04-12T10:00:00.000+01:00",
       "updated_at": "2014-04-12T10:00:00.000+01:00"
     }
-  ]
+  ],
+  "count": 2
 }
 ```

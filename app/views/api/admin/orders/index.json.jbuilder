@@ -13,3 +13,5 @@ json.orders(@orders) do |order|
   json.created_at     order.created_at
   json.updated_at     order.updated_at
 end
+
+json.count @orders.total_entries
