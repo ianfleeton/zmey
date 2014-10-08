@@ -1,3 +1,53 @@
+# == Order
+#
+# Stores details of an order placed on the website.
+#
+# === Attributes
+#
+# +customer_note+::
+#   A note that may be left by the customer, for example, additional delivery
+#   instructions. The +customer_note+ field may be used in different ways based
+#   on the merchant's needs.
+#
+# +email_address+::
+#   Email address as entered by the customer. Email addresses are required for
+#   all orders.
+#
+# +ip_address+::
+#   IP address of the customer's host at the time the order was placed.
+#
+# +order_number+::
+#   Unique order reference. May contain alphanumeric characters and hyphens.
+#
+# +shipping_amount+::
+#   Shipping amount excluding tax.
+#
+# +shipping_method+::
+#   String describing the shipping method chosen for the order.
+#
+# +status+::
+#   Status of payment for the order. One of <tt>Order::STATUSES</tt>.
+#
+# === Associations
+#
+# +basket+::
+#   The customer's basket at the time the order was placed. This is stored so
+#   that the basket can be emptied after the order has been completed.
+#
+# +order_lines+::
+#   Describe each line of the order. Each OrderLine can include purchase of a
+#   product or may be a discount adjustment.
+#
+# +payments+::
+#   Payments, successful or otherwise, that have been recorded for this order.
+#   A complete order can have zero, one or many payments.
+#
+# +user+::
+#   The User account associated with the order. This is set when orders are
+#   placed by registered customers.
+#
+# +website+::
+#   Website the customer was using to place the order.
 class Order < ActiveRecord::Base
   validates_presence_of :email_address, :delivery_address_line_1, :delivery_town_city, :delivery_postcode, :delivery_country_id
 
@@ -19,18 +69,23 @@ class Order < ActiveRecord::Base
   ORDER_STATUSES = [WAITING_FOR_PAYMENT, PAYMENT_RECEIVED, PAYMENT_ON_ACCOUNT]
   validates_inclusion_of :status, in: ORDER_STATUSES
 
+  # Returns the order from the customer's session, or +nil+ if it does not
+  # exist.
   def self.from_session session
     session[:order_id] ? find_by(id: session[:order_id]) : nil
   end
 
+  # Deletes all orders that have not received payment and are older than +age+.
   def self.purge_old_unpaid(age = 1.month)
     self.destroy_all(["created_at < ? and status = ?", Time.now - age, Order::WAITING_FOR_PAYMENT])
   end
 
+  # String representation of the order. Returns the order number.
   def to_s
     order_number
   end
 
+  # Describes the +status+ attribute in English.
   def status_description
     {
       WAITING_FOR_PAYMENT => 'Waiting for payment',
@@ -39,30 +94,37 @@ class Order < ActiveRecord::Base
     }[status]
   end
 
+  # Returns a status string for use in the REST API.
   def api_status_description
     status_description.downcase.tr(' ', '_')
   end
 
+  # Empties the basket associated with this order if there is one.
   def empty_basket
     basket.basket_items.clear if basket
   end
 
+  # Returns +true+ if payment has been received.
   def payment_received?
     status == Order::PAYMENT_RECEIVED
   end
 
-  def copy_delivery_address(a)
-    self.email_address            = a.email_address
-    self.delivery_full_name       = a.full_name
-    self.delivery_address_line_1  = a.address_line_1
-    self.delivery_address_line_2  = a.address_line_2
-    self.delivery_town_city       = a.town_city
-    self.delivery_county          = a.county
-    self.delivery_postcode        = a.postcode
-    self.delivery_country_id      = a.country_id
-    self.delivery_phone_number    = a.phone_number
+  # Copies +address+ (an Address) into the +email_address+ and
+  # <tt>delivery_*</tt> attributes.
+  def copy_delivery_address(address)
+    self.email_address            = address.email_address
+    self.delivery_full_name       = address.full_name
+    self.delivery_address_line_1  = address.address_line_1
+    self.delivery_address_line_2  = address.address_line_2
+    self.delivery_town_city       = address.town_city
+    self.delivery_county          = address.county
+    self.delivery_postcode        = address.postcode
+    self.delivery_country_id      = address.country_id
+    self.delivery_phone_number    = address.phone_number
   end
 
+  # Returns a new Address from the +email_address+ and <tt>delivery_*</tt>
+  # attributes.
   def delivery_address
     Address.new(
       email_address:  email_address,
@@ -77,6 +139,8 @@ class Order < ActiveRecord::Base
     )
   end
 
+  # Calculates the total, including shipping and taxes, and assigns it to
+  # +total+. This is called +before_save+.
   def calculate_total
     t = total_gross
     t = t + 0.001 # in case of x.x499999
@@ -84,12 +148,12 @@ class Order < ActiveRecord::Base
     self.total = t
   end
 
-  # Total amount for the order excluding any taxes.
+  # Total amount for the order including shipping but excluding any taxes.
   def total_net
     shipping_amount + line_total_net
   end
 
-  # Overall total amount for the order including all taxes.
+  # Overall total amount for the order including shipping and all taxes.
   def total_gross
     shipping_amount_gross + line_total_gross
   end
@@ -124,8 +188,12 @@ class Order < ActiveRecord::Base
     order_lines.inject(0) { |sum, l| sum + l.weight }
   end
 
-  # create an order number
-  # order numbers include date but are not sequential so as to prevent competitor analysis of sales volume
+  # Create an order number and assign to +order_number+.
+  #
+  # Order numbers include date but are not sequential so as to prevent
+  # competitor analysis of sales volume.
+  #
+  # Called +before_create+.
   def create_order_number
     alpha = %w(0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z)
     # try a short order number first
