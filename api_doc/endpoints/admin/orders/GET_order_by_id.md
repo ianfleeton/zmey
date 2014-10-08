@@ -40,6 +40,7 @@ returned.
     "status": "payment_received",
     "total": "17.5",
     "ip_address": "127.0.0.1",
+    "processed_at": null,
     "created_at": "2014-04-11T10:00:00.000+01:00",
     "updated_at": "2014-04-11T10:00:00.000+01:00",
     "order_lines": [

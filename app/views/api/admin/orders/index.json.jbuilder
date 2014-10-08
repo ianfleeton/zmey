@@ -10,6 +10,7 @@ json.orders(@orders) do |order|
   end
   json.email_address  order.email_address
   json.total          order.total
+  json.processed_at   order.processed_at
   json.created_at     order.created_at
   json.updated_at     order.updated_at
 end

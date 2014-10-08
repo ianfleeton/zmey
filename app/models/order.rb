@@ -19,6 +19,11 @@
 # +order_number+::
 #   Unique order reference. May contain alphanumeric characters and hyphens.
 #
+# +processed_at+::
+#   When the order was processed. This can be used to help integrate with
+#   external systems such as accounts or stock control software. This is not
+#   used by Zmey internally.
+#
 # +shipping_amount+::
 #   Shipping amount excluding tax.
 #

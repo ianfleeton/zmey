@@ -22,6 +22,7 @@ json.order do
   json.status                   @order.api_status_description
   json.total                    @order.total
   json.ip_address               @order.ip_address
+  json.processed_at             @order.processed_at
   json.created_at               @order.created_at
   json.updated_at               @order.updated_at
   json.order_lines(@order.order_lines) do |order_line|

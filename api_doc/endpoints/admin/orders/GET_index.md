@@ -34,6 +34,7 @@ attribute.
       },
       "email_address": "shopper@example.org",
       "total": "350.0",
+      "processed_at": null,
       "created_at": "2014-04-11T10:00:00.000+01:00",
       "updated_at": "2014-04-11T10:00:00.000+01:00"
     },
@@ -47,6 +48,7 @@ attribute.
       },
       "email_address": "buyer@example.com",
       "total": "129.99",
+      "processed_at": null,
       "created_at": "2014-04-12T10:00:00.000+01:00",
       "updated_at": "2014-04-12T10:00:00.000+01:00"
     }
