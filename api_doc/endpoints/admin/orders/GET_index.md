@@ -6,6 +6,8 @@ Returns a summary list of all orders.
 
 * **page** — Page number of results. Numbering starts from 1. Default is 1.
 * **page_size** — Number of results per page. Default is 50.
+* **processed** — Boolean filter to only include processed (when true) or
+  unprocessed (when false) orders.
 * **status** — Filters the orders by payment status. Can be one of:
   waiting_for_payment, payment_received, or payment_on_account.
 
@@ -13,8 +15,17 @@ Returns a summary list of all orders.
 
 ### Request
 
+Retrieve up to 50 most recent orders:
+
 ```
 curl https://zmey.co.uk/api/admin/orders \
+  -u 22cbbfeaef6085872dbe6c0e978fa098:
+```
+
+Retrieve unprocessed orders where payment has been received:
+
+```
+curl 'https://zmey.co.uk/api/admin/orders?status=payment_received&processed=false' \
   -u 22cbbfeaef6085872dbe6c0e978fa098:
 ```
 

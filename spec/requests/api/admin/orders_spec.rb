@@ -10,8 +10,12 @@ describe 'Admin orders API' do
     let(:num_orders)        { 1 }
     let(:page)              { nil }
     let(:page_size)         { nil }
+    let(:processed)         { nil }
     let(:status)            { nil }
     let(:default_page_size) { 3 }
+
+    # +more_setup+ lambda allows more setup in the outer before block.
+    let(:more_setup)        { nil }
 
     before do
       # Reduce default page size for spec execution speed.
@@ -30,7 +34,10 @@ describe 'Admin orders API' do
       @order1 = Order.first
       @order2 = FactoryGirl.create(:order)
 
-      get '/api/admin/orders', page: page, page_size: page_size, status: status
+      more_setup.try(:call)
+
+      get '/api/admin/orders', page: page, page_size: page_size,
+        processed: processed, status: status
     end
 
     it 'returns orders for the website' do
@@ -64,6 +71,31 @@ describe 'Admin orders API' do
 
       it 'returns 0 orders' do
         expect(orders['orders'].length).to eq 0
+      end
+    end
+
+    context 'with processed set' do
+      let!(:more_setup) {->{
+        @processed_order = FactoryGirl.create(:order, website_id: @website.id,
+          processed_at: Date.today - 1.day)
+      }}
+
+      context 'to true' do
+        let(:processed) { true }
+
+        it 'returns processed orders only' do
+          expect(orders['orders'].length).to eq 1
+          expect(orders['orders'][0]['id']).to eq @processed_order.id
+        end
+      end
+
+      context 'to false' do
+        let(:processed) { false }
+
+        it 'returns unprocessed orders only' do
+          expect(orders['orders'].length).to eq 1
+          expect(orders['orders'][0]['id']).to eq Order.first.id
+        end
       end
     end
 

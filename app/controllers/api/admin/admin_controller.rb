@@ -24,4 +24,23 @@ class Api::Admin::AdminController < ApplicationController
   def authenticated_api_key
     authenticate_with_http_basic { |u, p| ApiKey.find_by(key: u) }
   end
+
+  # Returns +true+ or +false+ if an API parameter is recognised as a boolean
+  # value, or +nil+ otherwise. +value+ should be a string as it is expected
+  # to be a member of the +params+ hash.
+  #
+  #   api_boolean('false') # => false
+  #   api_boolean('1')     # => true
+  #   api_boolean('YES')   # => true
+  #   api_boolean('X')     # => nil
+  def api_boolean(value)
+    {
+      '0'     => false,
+      'false' => false,
+      'no'    => false,
+      '1'     => true,
+      'true'  => true,
+      'yes'   => true
+    }[value.try(:downcase)]
+  end
 end

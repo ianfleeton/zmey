@@ -1,8 +1,8 @@
 class Api::Admin::OrdersController < Api::Admin::AdminController
   def index
-    page     = params[:page] || 1
-    per_page = params[:page_size] || default_page_size
-    @orders  = index_query.paginate(page: page, per_page: per_page)
+    page      = params[:page] || 1
+    per_page  = params[:page_size] || default_page_size
+    @orders   = index_query.paginate(page: page, per_page: per_page)
   end
 
   def show
@@ -19,11 +19,19 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
 
     # Returns a query for the index action using filters in +params+.
     def index_query
-      q = website.orders
-      status = Order.status_from_api(params[:status])
-      if status
-        q = q.where(status: status)
+      status     = Order.status_from_api(params[:status])
+      processed  = api_boolean(params[:processed])
+
+      conditions = {}
+      not_conditions = {}
+      conditions[:status] = status if status
+
+      if processed == false
+        conditions[:processed_at] = nil
+      elsif processed == true
+        not_conditions[:processed_at] = nil
       end
-      q
+
+      website.orders.where(conditions).where.not(not_conditions)
     end
 end
