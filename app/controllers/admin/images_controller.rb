@@ -46,7 +46,7 @@ class Admin::ImagesController < Admin::AdminController
       flash[:notice] = 'Image deleted.'
     rescue ActiveRecord::DeleteRestrictionError => e
       @image.errors.add(:base, e)
-      redirect_to(edit_image_path(@image), alert: "#{e}") and return
+      render :edit and return
     end
     redirect_to admin_images_path
   end
