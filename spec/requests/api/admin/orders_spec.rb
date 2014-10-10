@@ -44,6 +44,7 @@ describe 'Admin orders API' do
       expect(user['href']).to eq api_admin_user_url(@order1.user)
       expect(order['email_address']).to eq @order1.email_address
       expect(order['total']).to         eq @order1.total.to_s
+      expect(order['status']).to        eq @order1.api_status_description
     end
 
     it 'returns 200 OK' do
