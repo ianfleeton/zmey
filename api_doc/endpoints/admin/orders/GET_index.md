@@ -6,6 +6,8 @@ Returns a summary list of all orders.
 
 * **page** — Page number of results. Numbering starts from 1. Default is 1.
 * **page_size** — Number of results per page. Default is 50.
+* **status** — Filters the orders by payment status. Can be one of:
+  waiting_for_payment, payment_received, or payment_on_account.
 
 ## Example
 

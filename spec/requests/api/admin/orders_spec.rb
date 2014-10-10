@@ -10,6 +10,7 @@ describe 'Admin orders API' do
     let(:num_orders)        { 1 }
     let(:page)              { nil }
     let(:page_size)         { nil }
+    let(:status)            { nil }
     let(:default_page_size) { 3 }
 
     before do
@@ -29,7 +30,7 @@ describe 'Admin orders API' do
       @order1 = Order.first
       @order2 = FactoryGirl.create(:order)
 
-      get '/api/admin/orders', page: page, page_size: page_size
+      get '/api/admin/orders', page: page, page_size: page_size, status: status
     end
 
     it 'returns orders for the website' do
@@ -47,6 +48,22 @@ describe 'Admin orders API' do
 
     it 'returns 200 OK' do
       expect(response.status).to eq 200
+    end
+
+    context 'with status filtered to waiting_for_payment' do
+      let(:status) { 'waiting_for_payment' }
+
+      it 'returns 1 order' do
+        expect(orders['orders'].length).to eq 1
+      end
+    end
+
+    context 'with status filtered to payment_received' do
+      let(:status) { 'payment_received' }
+
+      it 'returns 0 orders' do
+        expect(orders['orders'].length).to eq 0
+      end
     end
 
     context 'with more orders than default page size' do

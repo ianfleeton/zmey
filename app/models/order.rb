@@ -104,6 +104,18 @@ class Order < ActiveRecord::Base
     status_description.downcase.tr(' ', '_')
   end
 
+  # Returns one of Order::ORDER_STATUSES matching the +status+ string from
+  # an API request. Complements Order#api_status_description.
+  #
+  #   Order.status_from_api('payment_received') # => PAYMENT_RECEIVED
+  def self.status_from_api(status)
+    {
+      'waiting_for_payment' => WAITING_FOR_PAYMENT,
+      'payment_received'    => PAYMENT_RECEIVED,
+      'payment_on_account'  => PAYMENT_ON_ACCOUNT
+    }[status]
+  end
+
   # Empties the basket associated with this order if there is one.
   def empty_basket
     basket.basket_items.clear if basket
