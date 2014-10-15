@@ -2,6 +2,8 @@ doctype html
 html
   head
     meta charset="utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    meta name="viewport" content="width=device-width, initial-scale=1"
     title= website.name
     = javascript_include_tag "application"
     = csrf_meta_tags
@@ -45,7 +47,7 @@ html
                 li= link_to 'Website Settings', edit_admin_website_path(website)
           ul.nav.navbar-nav.navbar-right
             li= link_to '<span class="glyphicon glyphicon-log-out"></span>'.html_safe, sessions_path, method: 'post', title: t('.sign_out')
-    .container
+    .container-fluid
       - if flash[:notice]
         .alert.alert-info.fade.in
           a.close data-dismiss="alert" href="#" &times;
