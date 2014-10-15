@@ -61,7 +61,7 @@ module AdminHelper
     if object.first? || object.parent_id.nil?
       content_tag(:td, '&nbsp;'.html_safe)
     else
-      content_tag(:td, link_to('Move Up', send(path_helper, object), class: 'btn btn-default'))
+      content_tag(:td, link_to('<span class="glyphicon glyphicon-arrow-up"></span>'.html_safe, send(path_helper, object), title: 'Move Up', class: 'btn btn-default'))
     end
   end
 
@@ -71,7 +71,7 @@ module AdminHelper
     if object.last? || object.parent_id.nil?
       content_tag(:td, '&nbsp;'.html_safe)
     else
-      content_tag(:td, link_to('Move Down', send(path_helper, object), class: 'btn btn-default'))
+      content_tag(:td, link_to('<span class="glyphicon glyphicon-arrow-down"></span>'.html_safe, send(path_helper, object), title: 'Move Down', class: 'btn btn-default'))
     end
   end
 
