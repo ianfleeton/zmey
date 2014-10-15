@@ -55,23 +55,23 @@ module AdminHelper
     title: "Delete #{object_title(object)}"
   end
 
-  # Provides a button in a table cell to move the object up if it is not
-  # already first in the list, or an empty cell if it is.
-  def move_up_cell(path_helper, object)
-    if object.first? || object.parent_id.nil?
-      content_tag(:td, '&nbsp;'.html_safe)
+  # Provides a button to move the object up if it is not
+  # already first in the list, or an empty string if it is.
+  def move_up_button(path_helper, object)
+    if object.first?
+      ''.html_safe
     else
-      content_tag(:td, link_to('<span class="glyphicon glyphicon-arrow-up"></span>'.html_safe, send(path_helper, object), title: 'Move Up', class: 'btn btn-default'))
+      link_to('<span class="glyphicon glyphicon-arrow-up"></span>'.html_safe, send(path_helper, object), title: 'Move Up', class: 'btn btn-default').html_safe
     end
   end
 
-  # Provides a button in a table cell to move the object down if it is not
-  # already last in the list, or an empty cell if it is.
-  def move_down_cell(path_helper, object)
-    if object.last? || object.parent_id.nil?
-      content_tag(:td, '&nbsp;'.html_safe)
+  # Provides a button to move the object down if it is not
+  # already last in the list, or an empty string if it is.
+  def move_down_button(path_helper, object)
+    if object.last?
+      ''.html_safe
     else
-      content_tag(:td, link_to('<span class="glyphicon glyphicon-arrow-down"></span>'.html_safe, send(path_helper, object), title: 'Move Down', class: 'btn btn-default'))
+      link_to('<span class="glyphicon glyphicon-arrow-down"></span>'.html_safe, send(path_helper, object), title: 'Move Down', class: 'btn btn-default').html_safe
     end
   end
 
