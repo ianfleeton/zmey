@@ -20,4 +20,12 @@ module ProductsHelper
       end
     end
   end
+
+  # Returns a cache key for the collection of all products in +website+.
+  def products_cache_key(website)
+    [
+      website.products.count,
+      Product.where(website_id: website.id).order('updated_at DESC').first
+    ]
+  end
 end
