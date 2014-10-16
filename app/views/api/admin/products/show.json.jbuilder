@@ -10,6 +10,13 @@ json.product do
       json.href api_admin_image_url(@product.image)
     end
   end
+  if @product.nominal_code
+    json.nominal_code do
+      json.id   @product.nominal_code.id
+      json.code @product.nominal_code.code
+      json.href api_admin_nominal_code_url(@product.nominal_code)
+    end
+  end
   json.description  @product.description
   json.in_stock     @product.in_stock
 end

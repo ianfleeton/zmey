@@ -15,6 +15,7 @@ Create a new product.
 * **description** — A description of the product.
 * **image_id** — ID of the main product image.
 * **meta_description** — A description meta tag for the product's main page. Maximum length is 255 characters.
+* **nominal_code** — A nominal (account) code for use in external accounts software packages. The code must match an existing nominal code in the system.
 * **page_title** — Title of the HTML document for the product's main page.
 * **price** — Price of the product with decimal to separate pounds and pence,
 for example, 10.99.

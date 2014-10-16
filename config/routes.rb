@@ -82,6 +82,8 @@ Rails.application.routes.draw do
       resources :liquid_templates, only: [:create, :show]
       delete 'liquid_templates', to: 'liquid_templates#delete_all'
 
+      resources :nominal_codes, only: [:show]
+
       resources :order_lines, only: [:show]
 
       resources :orders, only: [:index, :show]

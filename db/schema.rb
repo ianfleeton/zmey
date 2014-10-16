@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016163949) do
+ActiveRecord::Schema.define(version: 20141016183617) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -435,8 +435,11 @@ ActiveRecord::Schema.define(version: 20141016163949) do
     t.boolean  "active",                  limit: 1,                              default: true,       null: false
     t.string   "gender",                  limit: 255,                            default: "",         null: false
     t.string   "age_group",               limit: 255,                            default: "",         null: false
+    t.integer  "nominal_code_id",         limit: 4
   end
 
+  add_index "products", ["name"], name: "index_products_on_name", using: :btree
+  add_index "products", ["nominal_code_id"], name: "index_products_on_nominal_code_id", using: :btree
   add_index "products", ["website_id"], name: "index_products_on_website_id", using: :btree
 
   create_table "quantity_prices", force: true do |t|

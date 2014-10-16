@@ -21,6 +21,10 @@
     = form.text_field :name, required: true, class: 'form-control'
 
   .form-group
+    = form.label :nominal_code_id
+    = form.collection_select :nominal_code_id, website.nominal_codes, :id, :to_s, {include_blank: '-- No code --'}, class: 'form-control'
+
+  .form-group
     = form.label :price
     = form.text_field :price, class: 'form-control'
 

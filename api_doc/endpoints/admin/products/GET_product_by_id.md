@@ -28,6 +28,11 @@ returned.
       "id": 1,
       "href": "https://zmey.co.uk/api/admin/images/1"
     },
+    "nominal_code": {
+      "id": 1,
+      "code": "4000",
+      "href": "https://zmey.co.uk/api/admin/nominal_codes/1"
+    },
     "description": "Shiny shiny designed in California",
     "in_stock": true
   }

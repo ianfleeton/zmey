@@ -64,13 +64,27 @@ describe 'Admin products API' do
   end
 
   describe 'POST create' do
+    let(:name)     { SecureRandom.hex }
+    let(:sku)      { SecureRandom.hex }
+    let(:tax_type) { Product::INC_VAT }
+    let(:weight)   { 1.234 }
+    let(:basic_params) {{
+      name: name,
+      sku: sku,
+      tax_type: tax_type,
+      weight: weight
+    }}
+
     it 'inserts a new product into the website' do
-      name = SecureRandom.hex
-      sku = SecureRandom.hex
-      tax_type = Product::INC_VAT
-      weight = 1.234
-      post '/api/admin/products', product: {name: name, sku: sku, tax_type: tax_type, weight: weight}
-      expect(Product.find_by(sku: sku, tax_type: tax_type, weight: weight, website_id: @website.id)).to be
+      post '/api/admin/products', product: basic_params
+      expect(Product.find_by(basic_params.merge(website_id: @website.id))).to be
+    end
+
+    it 'associates product with nominal code' do
+      nominal_code = FactoryGirl.create(:nominal_code, website_id: @website.id)
+      params = basic_params.merge(nominal_code: nominal_code.code)
+      post '/api/admin/products', product: params
+      expect(Product.last.nominal_code).to eq nominal_code
     end
 
     it 'returns 422 if product cannot be created' do
