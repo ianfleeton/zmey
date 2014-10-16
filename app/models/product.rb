@@ -130,6 +130,10 @@ class Product < ActiveRecord::Base
     destroy
   end
 
+  def to_s
+    name
+  end
+
   # Custom validations
 
   def image_belongs_to_same_website
