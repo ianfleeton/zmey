@@ -52,6 +52,14 @@ class Admin::PagesController < Admin::AdminController
     redirect_to action: 'index', notice: 'Page deleted.'
   end
 
+  def search_products
+    words = params[:query].split(' ')
+    query = Product.where(website_id: website.id)
+    words.each { |word| query = query.where(['name LIKE ?', "%#{word}%"]) }
+    @products = query.limit(100)
+    render layout: false
+  end
+
   protected
 
     def set_page

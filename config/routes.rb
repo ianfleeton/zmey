@@ -33,6 +33,10 @@ Rails.application.routes.draw do
     resources :order_lines
 
     resources :pages, except: [:show] do
+      collection do
+        get 'search_products'
+      end
+
       member do
         get 'move_up'
         get 'move_down'

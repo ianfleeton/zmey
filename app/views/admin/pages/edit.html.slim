@@ -38,7 +38,28 @@
       - unless Product.count == 0
         = form_for [:admin, ProductPlacement.new] do |form|
           input type="hidden" name="product_placement[page_id]" value="#{@page.id}"
-          - cache products_cache_key(website)
-            = form.collection_select :product_id, website.products, :id, :name_with_sku, {}, class: 'form-control'
-          = submit_tag 'Add Product', class: 'btn btn-default'
+          javascript:
+            $(function() {
+              $('#search-products').click(function() {
+                $.get('/admin/pages/search_products', {query: $('#product-search-query').val()}, function(data) {
+                  $('#product_placement_product_id').replaceWith(data);
+                  $('#product_placement_product_id').focus();
+                });
+                return false;
+              });
+            });
+          .form-group
+            .row
+              .col-xs-9                  
+                label.sr-only Search Products
+                input.form-control#product-search-query type="search" name="query" placeholder="Product to find"
+              .col-xs-3
+                button.btn.btn-default#search-products Search
+          .form-group
+            .row
+              .col-xs-9
+                - cache products_cache_key(website)
+                  = form.collection_select :product_id, website.products.limit(100), :id, :name_with_sku, {}, class: 'form-control'
+              .col-xs-3
+                = submit_tag 'Add Product', class: 'btn btn-default'
     = delete_button(@page)
