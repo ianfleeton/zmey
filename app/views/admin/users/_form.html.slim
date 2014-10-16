@@ -37,5 +37,5 @@
         = form.label :manages_website_id, t('.manager_for_website')
         = form.collection_select :manages_website_id, Website.order('name'), :id, :name, {include_blank: t('.does_not_manage_a_website')}, class: 'form-control'
 
-    = form.submit(t('.save'), clasS: 'btn btn-primary')
+    = form.submit(t('.save'), class: 'btn btn-primary')
     = link_to t('.cancel'), admin_users_path
