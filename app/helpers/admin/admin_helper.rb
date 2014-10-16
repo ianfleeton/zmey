@@ -1,4 +1,4 @@
-module AdminHelper
+module Admin::AdminHelper
   def admin_menu_links(links)
     links.map { |text, path| admin_menu_link(text, path) }.join.html_safe
   end
@@ -20,6 +20,13 @@ module AdminHelper
       crumbs.map {|k,v| content_tag(:li, link_to(k,v)) }.join.html_safe +
       content_tag(:li, heading, class: 'active'),
       class: 'breadcrumb'
+    )
+  end
+
+  def admin_submit_button(form)
+    form.submit(
+      t('helpers.admin.admin.admin_submit_button.save'),
+      class: 'btn btn-primary'
     )
   end
 

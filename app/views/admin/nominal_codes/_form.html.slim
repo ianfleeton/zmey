@@ -1,0 +1,17 @@
+- if @nominal_code.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@nominal_code.errors.count, "error")} prohibited this nominal code from being saved:"
+    ul
+      - @nominal_code.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for([:admin, @nominal_code]) do |f|
+  .form-group
+    = f.label :code
+    = f.text_field :code, class: 'form-control', required: true
+  .form-group
+    = f.label :description
+    = f.text_field :description, class: 'form-control', required: true
+  .form-group
+    = admin_submit_button(f)

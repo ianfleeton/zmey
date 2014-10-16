@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :features, except: [:show]
     resources :images
     resources :liquid_templates, except: [:show]
+    resources :nominal_codes, except: [:show]
 
     resources :orders do
       collection do

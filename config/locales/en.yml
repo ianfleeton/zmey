@@ -63,6 +63,16 @@ en:
         sent: 'Sent'
         telephone: 'Telephone'
         view: 'View'
+    nominal_codes:
+      edit:
+        heading: 'Edit Nominal Code'
+      index:
+        code: 'Code'
+        description: 'Description'
+        heading: 'Nominal Codes'
+        no_nominal_codes: 'No nominal codes have been set up.'
+      new:
+        heading: 'New Nominal Code'
     orders:
       index:
         full_name: 'Full Name'
@@ -251,6 +261,9 @@ en:
 
   helpers:
     admin:
+      admin:
+        admin_submit_button:
+          save: 'Save'
       products:
         tax_type_options:
           ex_vat: 'Price excludes VAT'

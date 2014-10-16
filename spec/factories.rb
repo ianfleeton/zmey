@@ -81,6 +81,12 @@ FactoryGirl.define do
     sequence(:name) { |n| "Template #{n}" }
   end
 
+  factory :nominal_code do
+    association :website
+    sequence(:code) { |n| n.to_s.rjust(4, '0') }
+    description 'Nominal Code'
+  end
+
   factory :order do
     email_address           'buyer@example.org'
     delivery_address_line_1 '123 Street'

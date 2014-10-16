@@ -42,10 +42,11 @@ html
                 b.caret
               ul.dropdown-menu
                 li= link_to 'Countries', admin_countries_path
-                li= link_to 'Shipping Zones', admin_shipping_zones_path
-                li= link_to 'Shipping Classes', admin_shipping_classes_path
-                li= link_to 'Product Groups', admin_product_groups_path
                 li= link_to 'Discounts', admin_discounts_path
+                li= link_to 'Nominal Codes', admin_nominal_codes_path
+                li= link_to 'Product Groups', admin_product_groups_path
+                li= link_to 'Shipping Classes', admin_shipping_classes_path
+                li= link_to 'Shipping Zones', admin_shipping_zones_path
                 li= link_to 'Website Settings', edit_admin_website_path(website)
           ul.nav.navbar-nav.navbar-right
             li= link_to '<span class="glyphicon glyphicon-log-out"></span>'.html_safe, sessions_path, method: 'post', title: t('.sign_out')
