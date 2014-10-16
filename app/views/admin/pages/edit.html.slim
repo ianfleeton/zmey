@@ -26,12 +26,13 @@
               - else
                 span.muted= pp.product.name
             td
-              => edit_button([:admin, pp.product])
-              => link_to 'Remove', admin_product_placement_path(pp), class: 'btn btn-default', title: 'Remove from page', method: :delete
-              - unless pp.first?
-                = link_to 'Move Up'.html_safe, { controller: '/admin/product_placements', action: 'move_up', id: pp.id }, class: 'btn btn-default', method: :post
-              - unless pp.last?
-                = link_to 'Move Down'.html_safe, { controller: '/admin/product_placements', action: 'move_down', id: pp.id }, class: 'btn btn-default', method: :post
+              .btn-group
+                - unless pp.first?
+                  = link_to icon_up, { controller: '/admin/product_placements', action: 'move_up', id: pp.id }, title: 'Move Up', class: 'btn btn-default', method: :post
+                - unless pp.last?
+                  = link_to icon_down, { controller: '/admin/product_placements', action: 'move_down', id: pp.id }, title: 'Move Down', class: 'btn btn-default', method: :post
+                = edit_button([:admin, pp.product])
+                = link_to icon_remove, admin_product_placement_path(pp), class: 'btn btn-default', title: 'Remove from page', method: :delete
 
     .well
       - unless Product.count == 0

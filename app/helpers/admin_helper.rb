@@ -40,14 +40,14 @@ module AdminHelper
   end
 
   def edit_button(object)
-    link_to '<span class="glyphicon glyphicon-edit"></span> Edit'.html_safe,
+    link_to icon_edit,
     edit_polymorphic_path(object),
     class: 'btn btn-default',
     title: "Edit #{object_title(object)}"
   end
 
   def delete_button(object)
-    link_to '<span class="glyphicon glyphicon-trash"></i> Delete'.html_safe,
+    link_to icon_delete,
     object,
     data: { confirm: 'Are you sure?' },
     method: :delete,
@@ -61,7 +61,7 @@ module AdminHelper
     if object.first?
       ''.html_safe
     else
-      link_to('<span class="glyphicon glyphicon-arrow-up"></span>'.html_safe, send(path_helper, object), title: 'Move Up', class: 'btn btn-default').html_safe
+      link_to(icon_up, send(path_helper, object), title: 'Move Up', class: 'btn btn-default').html_safe
     end
   end
 
@@ -71,8 +71,28 @@ module AdminHelper
     if object.last?
       ''.html_safe
     else
-      link_to('<span class="glyphicon glyphicon-arrow-down"></span>'.html_safe, send(path_helper, object), title: 'Move Down', class: 'btn btn-default').html_safe
+      link_to(icon_down, send(path_helper, object), title: 'Move Down', class: 'btn btn-default').html_safe
     end
+  end
+
+  def icon_delete
+    '<span class="glyphicon glyphicon-trash"></span>'.html_safe
+  end
+
+  def icon_down
+    '<span class="glyphicon glyphicon-arrow-down"></span>'.html_safe
+  end
+
+  def icon_edit
+    '<span class="glyphicon glyphicon-edit"></span>'.html_safe
+  end
+
+  def icon_up
+    '<span class="glyphicon glyphicon-arrow-up"></span>'.html_safe
+  end
+
+  def icon_remove
+    '<span class="glyphicon glyphicon-remove"></span>'.html_safe
   end
 
   protected
