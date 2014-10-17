@@ -11,6 +11,22 @@ class Admin::OrdersController < Admin::AdminController
 
   def show; end
 
+  def new
+    @order = Order.new
+  end
+
+  def create
+    @order = Order.new(order_params)
+    @order.status = Order::WAITING_FOR_PAYMENT
+    @order.website = website
+
+    if @order.save
+      redirect_to admin_orders_path
+    else
+      render :new
+    end
+  end
+
   def purge_old_unpaid
     Order.purge_old_unpaid
     redirect_to admin_orders_path, notice: 'Old and unpaid orders purged.'
@@ -22,6 +38,16 @@ class Admin::OrdersController < Admin::AdminController
   end
 
   protected
+
+    def order_params
+      params.require(:order).permit(
+        :delivery_address_line_1,
+        :delivery_country_id,
+        :delivery_postcode,
+        :delivery_town_city,
+        :email_address,
+      )
+    end
 
   # get specific order
   def find_order

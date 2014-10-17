@@ -12,6 +12,22 @@ feature 'Orders admin' do
   let(:order)      { FactoryGirl.create(:order, website_id: website.id) }
   let(:order_line) { FactoryGirl.create(:order_line, order_id: order.id) }
 
+  scenario 'Create order' do
+    FactoryGirl.create(:country, website_id: website.id)
+
+    visit admin_orders_path
+    click_link 'New'
+    email = "#{SecureRandom.hex}@example.org"
+    fill_in 'Email address', with: email
+    fill_in 'Delivery address line 1', with: '123 Street'
+    fill_in 'Delivery town city', with: 'Doncaster'
+    fill_in 'Delivery postcode', with: 'DN99 1AB'
+    select website.countries.first, from: 'Delivery country'
+    click_button 'Save'
+
+    expect(Order.find_by(email_address: email)).to be
+  end
+
   scenario 'Delete order' do
     order
     visit admin_orders_path

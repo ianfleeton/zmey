@@ -56,7 +56,7 @@
 
           .form-group
             = form.label :country_id
-            = form.select :country_id, website.countries.map {|c| [c.name, c.id]}, {prompt: 'Choose Country'}, class: 'form-control', required: true
+            = form.select :country_id, countries_options(website), {prompt: 'Choose Country'}, class: 'form-control', required: true
 
           .form-group
             = form.label :postcode

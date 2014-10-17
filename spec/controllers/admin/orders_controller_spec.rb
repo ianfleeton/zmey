@@ -33,6 +33,56 @@ describe Admin::OrdersController do
       end
     end
 
+    describe 'GET new' do
+      it 'assigns a new Order to @order' do
+        get :new
+        expect(assigns(:order)).to be_instance_of(Order)
+        expect(assigns(:order).new_record?).to be_truthy
+      end
+    end
+
+    describe 'POST create' do
+      let(:email) { SecureRandom.hex }
+      let(:order) { FactoryGirl.build(:order, email_address: email, website_id: nil) }
+
+      it 'creates an order' do
+        post :create, order: order.attributes
+        expect(Order.find_by(email_address: email)).to be
+      end
+
+      it 'associates the order with the website' do
+        post :create, order: order.attributes
+        expect(Order.find_by(email_address: email).website).to eq website
+      end
+
+      it 'sets the order status to WAITING_FOR_PAYMENT' do
+        post :create, order: order.attributes
+        expect(Order.last.status).to eq Order::WAITING_FOR_PAYMENT
+      end
+
+      context 'when save succeeds' do
+        before do
+          allow_any_instance_of(Order).to receive(:save).and_return(true)
+        end
+
+        it 'redirects to the admin orders page' do
+          post :create, order: order.attributes
+          expect(response).to redirect_to admin_orders_path
+        end
+      end
+
+      context 'when save succeeds' do
+        before do
+          allow_any_instance_of(Order).to receive(:save).and_return(false)
+        end
+
+        it 'renders new' do
+          post :create, order: order.attributes
+          expect(response).to render_template 'new'
+        end
+      end
+    end
+
     describe 'GET purge_old_unpaid' do
       it 'purges old unpaid orders' do
         expect(Order).to receive(:purge_old_unpaid)

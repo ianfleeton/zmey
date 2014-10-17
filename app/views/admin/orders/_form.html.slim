@@ -1,0 +1,26 @@
+- if @order.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@order.errors.count, "error")} prohibited this order from being saved:"
+    ul
+      - @order.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for [:admin, @order] do |f|
+  .form-group
+    = f.label :email_address
+    = f.email_field :email_address, class: 'form-control', required: true
+  .form-group
+    = f.label :delivery_address_line_1
+    = f.text_field :delivery_address_line_1, class: 'form-control', required: true
+  .form-group
+    = f.label :delivery_town_city
+    = f.text_field :delivery_town_city, class: 'form-control', required: true
+  .form-group
+    = f.label :delivery_postcode
+    = f.text_field :delivery_postcode, class: 'form-control', required: true
+  .form-group
+    = f.label :delivery_country_id
+    = f.select :delivery_country_id, countries_options(website), {prompt: 'Choose Country'}, class: 'form-control', required: true
+  .form_group
+    = admin_submit_button(f)

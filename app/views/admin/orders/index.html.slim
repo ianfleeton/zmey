@@ -1,5 +1,7 @@
 = page_header t('.heading')
 
+p= new_button [:admin, Order]
+
 - if @orders.empty?
   p= t('.no_orders')
 - else
