@@ -38,11 +38,11 @@
   - cache images_cache_key(website)
     .form-group
       = form.label :image_id
-      = select :page, :image_id, image_options, {}, class: 'form-control'
+      = select :page, :image_id, image_options(website), {}, class: 'form-control'
 
   .form-group
     = form.label :thumbnail_image_id
-    = select :page, :thumbnail_image_id, image_options, {}, class: 'form-control'
+    = select :page, :thumbnail_image_id, image_options(website), {}, class: 'form-control'
 
   .form-group
     = form.label :content

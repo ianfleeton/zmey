@@ -18,7 +18,7 @@
 
   .form-group
     = form.label :image_id
-    = select :carousel_slide, :image_id, image_options, {}, class: 'form-control'
+    = select :carousel_slide, :image_id, image_options(website), {}, class: 'form-control'
 
   .form-group
     = form.label :active_from

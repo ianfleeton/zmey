@@ -46,7 +46,7 @@
 
   .form-group
     = form.label :image_id
-    = select :product, :image_id, image_options, {}, class: 'form-control'
+    = select :product, :image_id, image_options(website), {}, class: 'form-control'
 
   .form-group
     = form.label :description

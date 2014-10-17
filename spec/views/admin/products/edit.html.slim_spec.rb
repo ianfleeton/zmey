@@ -5,7 +5,7 @@ describe '/admin/products/edit.html.slim' do
 
   before(:each) do
     assigns[:product] = @product = FactoryGirl.create(:product)
-    assign(:w, FactoryGirl.build(:website))
+    allow(view).to receive(:website).and_return(FactoryGirl.build(:website))
   end
 
   it "renders the edit product form" do
