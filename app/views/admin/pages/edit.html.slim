@@ -1,6 +1,11 @@
 = page_header 'Edit Page'
 
-= breadcrumbs({ 'Pages' => admin_pages_path }, 'Edit Page')
+ol.breadcrumb
+  li= link_to_if(@parent, t('.top'), admin_pages_path)
+  - @page.ancestors.reverse.each do |page|
+    li= link_to(page.name, admin_pages_path(parent_id: page.id))
+  li= link_to(@page.name, admin_pages_path(parent_id: @page.id))
+  li= 'Edit Page'
 
 .row
   .col-md-5
