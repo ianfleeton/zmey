@@ -83,6 +83,15 @@ describe Admin::OrdersController do
       end
     end
 
+    describe 'GET edit' do
+      let(:order) { FactoryGirl.create(:order, website_id: website.id) }
+
+      it 'assigns the order to @order' do
+        get :edit, id: order.id
+        expect(assigns(:order)).to eq order
+      end
+    end
+
     describe 'GET purge_old_unpaid' do
       it 'purges old unpaid orders' do
         expect(Order).to receive(:purge_old_unpaid)

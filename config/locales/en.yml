@@ -74,6 +74,8 @@ en:
       new:
         heading: 'New Nominal Code'
     orders:
+      edit:
+        heading: 'Edit Order'
       index:
         full_name: 'Full Name'
         heading: 'Orders'

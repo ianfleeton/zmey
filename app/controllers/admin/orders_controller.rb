@@ -1,5 +1,5 @@
 class Admin::OrdersController < Admin::AdminController
-  before_action :find_order, only: [:show, :destroy]
+  before_action :set_order, only: [:show, :edit, :destroy]
 
   def index
     if params[:user_id]
@@ -27,6 +27,8 @@ class Admin::OrdersController < Admin::AdminController
     end
   end
 
+  def edit; end
+
   def purge_old_unpaid
     Order.purge_old_unpaid
     redirect_to admin_orders_path, notice: 'Old and unpaid orders purged.'
@@ -49,11 +51,11 @@ class Admin::OrdersController < Admin::AdminController
       )
     end
 
-  # get specific order
-  def find_order
-    @order = Order.find_by(id: params[:id], website_id: website.id)
-    if @order.nil?
-      redirect_to orders_path, notice: 'Cannot find order.'
+    # get specific order
+    def set_order
+      @order = Order.find_by(id: params[:id], website_id: website.id)
+      if @order.nil?
+        redirect_to orders_path, notice: 'Cannot find order.'
+      end
     end
-  end
 end
