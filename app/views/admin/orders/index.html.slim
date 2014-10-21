@@ -31,4 +31,7 @@ p= new_button [:admin, Order]
           td= o.created_at
           td= o.delivery_full_name
           td= o.status_description
-          td style="width: 70px;"= delete_button [:admin, o]
+          td style="width: 100px;"
+            .btn-group
+              = edit_button [:admin, o]
+              = delete_button [:admin, o]

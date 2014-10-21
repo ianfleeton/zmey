@@ -1,1 +1,38 @@
 = page_header t('.heading')
+
+= form_for [:admin, @order] do |f|
+
+  table.table.table-bordered
+    tr
+      th.qty Qty
+      th Product name
+      th Weight (each)
+      th.price Price (each)
+      th Tax (%)
+      th Total
+
+    - @order.order_lines.each do |line|
+      tr
+        td
+          input name="order_line_quantity[#{line.id}]" value="#{line.quantity}"
+        td
+          input name="order_line_product_name[#{line.id}]" value="#{line.product_name}"
+        td
+          input name="order_line_product_weight[#{line.id}]" value="#{line.product_weight}"
+        td
+          input name="order_line_product_price[#{line.id}]" value="#{line.product_price}"
+        td
+          input name="order_line_tax_percentage[#{line.id}]" value="#{line.tax_percentage}"
+        td
+          = line.line_total_net
+    tr
+      td colspan="4"
+      th VAT
+      td.price.total= formatted_price(@order.tax_total)
+    tr
+      td colspan="4"
+      th Total
+      td.price.total= formatted_price(@order.total)
+
+  .form-group
+    = admin_submit_button(f)

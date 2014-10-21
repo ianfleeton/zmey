@@ -92,6 +92,20 @@ describe Admin::OrdersController do
       end
     end
 
+    describe 'PATCH update' do
+      let(:order) { FactoryGirl.create(:order, website_id: website.id) }
+
+      it 'assigns the order to @order' do
+        patch :update, id: order.id
+        expect(assigns(:order)).to eq order
+      end      
+
+      it 'redirects to the edit order page' do
+        patch :update, id: order.id
+        expect(response).to redirect_to edit_admin_order_path(order)
+      end
+    end
+
     describe 'GET purge_old_unpaid' do
       it 'purges old unpaid orders' do
         expect(Order).to receive(:purge_old_unpaid)
