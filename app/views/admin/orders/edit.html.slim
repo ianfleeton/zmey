@@ -25,8 +25,10 @@
           input name="order_line_tax_percentage[#{line.id}]" value="#{line.tax_percentage}"
         td
           = line.line_total_net
+    tbody.additional-lines
     tr
       td colspan="4"
+        button#add-line Add Line
       th VAT
       td.price.total= formatted_price(@order.tax_total)
     tr
@@ -36,3 +38,22 @@
 
   .form-group
     = admin_submit_button(f)
+
+javascript:
+  $(function() {
+    var id = -1;
+    $('#add-line').click(function() {
+      html = '<tr>' +
+        '<td><input name="order_line_quantity[' + id + ']" value="1"></td>' +
+        '<td><input name="order_line_product_name[' + id + ']"></td>' +
+        '<td><input name="order_line_product_weight[' + id + ']" value="0.0"></td>' +
+        '<td><input name="order_line_product_price[' + id + ']" value="0.0"></td>' +
+        '<td><input name="order_line_tax_percentage[' + id + ']" value="0.0"></td>' +
+        '<td></td>' +
+        '</tr>';
+      $('.additional-lines').append(html);
+      id -= 1;
+      return false;
+    });
+  });
+
