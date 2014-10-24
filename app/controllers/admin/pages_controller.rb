@@ -53,10 +53,7 @@ class Admin::PagesController < Admin::AdminController
   end
 
   def search_products
-    words = params[:query].split(' ')
-    query = Product.where(website_id: website.id)
-    words.each { |word| query = query.where(['name LIKE ?', "%#{word}%"]) }
-    @products = query.limit(100)
+    @products = Product.admin_search(website.id, params[:query])
     render layout: false
   end
 

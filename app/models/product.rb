@@ -131,6 +131,14 @@ class Product < ActiveRecord::Base
     destroy
   end
 
+  # Returns products matched by search +query+ for the website +website_id+.
+  def self.admin_search(website_id, query)
+    words = query.split(' ')
+    q = Product.where(website_id: website_id)
+    words.each { |word| q = q.where(['name LIKE ?', "%#{word}%"]) }
+    q.limit(100)
+  end
+
   def to_s
     name
   end

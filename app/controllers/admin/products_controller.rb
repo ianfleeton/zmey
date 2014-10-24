@@ -38,6 +38,11 @@ class Admin::ProductsController < Admin::AdminController
     redirect_to admin_products_path, notice: 'Product deleted.'
   end
 
+  def search
+    @products = Product.admin_search(website.id, params[:query])
+    render json: @products
+  end
+
   def upload_google_data_feed
     google_data_feed
     @xml = render_to_string(action: 'google_data_feed.xml.erb', layout: false)

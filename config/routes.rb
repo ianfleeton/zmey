@@ -46,6 +46,7 @@ Rails.application.routes.draw do
 
     resources :products, except: [:show] do
       collection do
+        get 'search'
         get 'upload_google_data_feed'
       end
     end
