@@ -1,7 +1,7 @@
 class Webhook < ActiveRecord::Base
   belongs_to :website
 
-  EVENTS = %w(image_created image_updated)
+  EVENTS = %w(image_created image_updated order_created)
 
   validates_inclusion_of :event, in: EVENTS
   validates_presence_of :url
