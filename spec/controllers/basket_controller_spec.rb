@@ -79,6 +79,11 @@ describe BasketController do
         post 'place_order'
         expect(assigns(:order).weight).to eq 0.75
       end
+
+      it 'triggers an order_created Webhook' do
+        expect(Webhook).to receive(:trigger).with('order_created', anything)
+        post 'place_order'
+      end
     end
   end
 

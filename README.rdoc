@@ -67,6 +67,11 @@ Zmey uses webhooks to allow:
 Zmey has some default webhook implementations. To use any or all of these
 webhooks, run the adapter service: https://github.com/ianfleeton/zmey-webhook-handlers
 
+==== List of webhooks
+
+* Image (image_created)
+* Order (order_created)
+
 === Environment variables
 
 [ZMEY_ASSETS]

@@ -222,4 +222,16 @@ class Order < ActiveRecord::Base
       return if existing_order.nil?
     end
   end
+
+  def to_webhook_payload(event)
+    {
+      order: {
+        id: id,
+        href: Rails.application.routes.url_helpers.api_admin_order_url(self, host: website.domain),
+        email_address: email_address,
+        status: api_status_description,
+        total: total
+      }
+    }
+  end
 end

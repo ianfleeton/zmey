@@ -137,7 +137,10 @@ class BasketController < ApplicationController
     # Store the basket with the order to clean up after payment.
     # Payment callbacks do not use session information.
     @order.basket_id = @basket.id
+
     @order.save!
+    Webhook.trigger('order_created', @order)
+
     session[:order_id] = @order.id
     if website.only_accept_payment_on_account?
       @order.status = Order::PAYMENT_ON_ACCOUNT
