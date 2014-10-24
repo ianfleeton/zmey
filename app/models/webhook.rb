@@ -39,4 +39,8 @@ class Webhook < ActiveRecord::Base
     payload[:site_url] = website.url
     payload[:event] = event
   end
+
+  def to_s
+    "#{event} -> #{url}"
+  end
 end

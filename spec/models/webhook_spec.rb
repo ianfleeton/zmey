@@ -19,4 +19,11 @@ describe Webhook do
       expect(payload[:event]).to eq webhook.event
     end
   end
+
+  describe 'to_s' do
+    it 'returns a string containing event and URL' do
+      webhook = Webhook.new(event: 'image_updated', url: 'http://example.org')
+      expect(webhook.to_s).to eq 'image_updated -> http://example.org'
+    end
+  end
 end
