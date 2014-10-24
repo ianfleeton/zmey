@@ -115,6 +115,8 @@ en:
         users: 'Users'
         website_manager_for: 'Website manager for %{website}'
     webhooks:
+      edit:
+        heading: 'Edit Webhook'
       index:
         event: 'Event'
         heading: 'Webhooks'

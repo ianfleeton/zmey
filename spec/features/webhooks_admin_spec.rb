@@ -17,4 +17,14 @@ feature 'Webhooks admin' do
     click_button 'Create Webhook'
     expect(Webhook.find_by(website_id: website.id, event: 'image_created', url: 'http://url')).to be
   end
+
+  scenario 'Edit a webhook' do
+    url = "http://#{SecureRandom.hex}"
+    webhook = FactoryGirl.create(:webhook, website_id: website.id)
+    visit admin_webhooks_path
+    click_link "Edit #{webhook}"
+    fill_in 'URL', with: url
+    click_button 'Update Webhook'
+    expect(Webhook.find_by(url: url)).to be
+  end
 end

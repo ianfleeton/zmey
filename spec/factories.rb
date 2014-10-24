@@ -144,6 +144,12 @@ FactoryGirl.define do
     password 'secret'
   end
 
+  factory :webhook do
+    association :website
+    event 'image_created'
+    url 'http://example.org'
+  end
+
   factory :website do
     email 'merchant@example.org'
     name  'Website'

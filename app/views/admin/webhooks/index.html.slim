@@ -13,4 +13,6 @@ p= new_button [:admin, Webhook]
         tr
           td= w.event
           td= w.url
-
+          td
+            .btn-group
+              = edit_button [:admin, w]
