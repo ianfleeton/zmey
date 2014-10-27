@@ -10,6 +10,17 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
     render nothing: true, status: 404 unless @order
   end
 
+  def create
+    params[:order][:status] = Order.status_from_api(params[:order][:status])
+
+    @order = Order.new(order_params)
+    @order.website = website
+
+    unless @order.save
+      render json: @order.errors.full_messages, status: :unprocessable_entity
+    end
+  end
+
   # Returns the default number of orders to include in a collection request.
   def default_page_size
     50
@@ -33,5 +44,24 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       end
 
       website.orders.where(conditions).where.not(not_conditions)
+    end
+
+    def order_params
+      params.require(:order).permit(
+      :billing_address_line_1,
+      :billing_address_line_2,
+      :billing_country_id,
+      :billing_postcode,
+      :billing_town_city,
+      :customer_note,
+      :delivery_address_line_1,
+      :delivery_address_line_2,
+      :delivery_country_id,
+      :delivery_full_name,
+      :delivery_postcode,
+      :delivery_town_city,
+      :email_address,
+      :status
+      )
     end
 end

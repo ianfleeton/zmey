@@ -161,4 +161,41 @@ describe 'Admin orders API' do
       end
     end
   end
+
+  describe 'POST create' do
+    let(:country) { FactoryGirl.create(:country, website_id: @website.id) }
+    let(:billing_address_line_1)  { SecureRandom.hex }
+    let(:billing_country_id)      { country.id }
+    let(:billing_postcode)        { SecureRandom.hex }
+    let(:billing_town_city)       { SecureRandom.hex }
+    let(:delivery_address_line_1) { SecureRandom.hex }
+    let(:delivery_country_id)     { country.id }
+    let(:delivery_postcode)       { SecureRandom.hex }
+    let(:delivery_town_city)      { SecureRandom.hex }
+    let(:email_address)           { "#{SecureRandom.hex}@example.org" }
+    let(:payment_status)          { 'waiting_for_payment' }
+
+    let(:basic_params) {{
+      billing_address_line_1: billing_address_line_1,
+      billing_country_id: billing_country_id,
+      billing_postcode: billing_postcode,
+      billing_town_city: billing_town_city,
+      delivery_address_line_1: delivery_address_line_1,
+      delivery_country_id: delivery_country_id,
+      delivery_postcode: delivery_postcode,
+      delivery_town_city: delivery_town_city,
+      email_address: email_address,
+      status: payment_status
+    }}
+
+    it 'inserts a new order into the website' do
+      post '/api/admin/orders', order: basic_params
+      expect(Order.find_by(basic_params.merge(website_id: @website.id, status: Order::WAITING_FOR_PAYMENT))).to be
+    end
+
+    it 'returns 422 if order cannot be created' do
+      post '/api/admin/orders', order: {email_address: 'is not enough'}
+      expect(status).to eq 422
+    end
+  end
 end
