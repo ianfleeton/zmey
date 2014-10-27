@@ -26,6 +26,11 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
     50
   end
 
+  def delete_all
+    website.orders.destroy_all
+    render nothing: :true, status: 204
+  end
+
   private
 
     # Returns a query for the index action using filters in +params+.

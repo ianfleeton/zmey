@@ -198,4 +198,24 @@ describe 'Admin orders API' do
       expect(status).to eq 422
     end
   end
+
+  describe 'DELETE delete_all' do
+    it 'deletes all orders in the website' do
+      order_1 = FactoryGirl.create(:order, website_id: @website.id)
+      order_2 = FactoryGirl.create(:order, website_id: @website.id)
+      order_3 = FactoryGirl.create(:order)
+
+      delete '/api/admin/orders'
+
+      expect(Order.find_by(id: order_1.id)).not_to be
+      expect(Order.find_by(id: order_2.id)).not_to be
+      expect(Order.find_by(id: order_3.id)).to be
+    end
+
+    it 'responds with 204 No Content' do
+      delete '/api/admin/orders'
+
+      expect(status).to eq 204
+    end
+  end
 end
