@@ -47,7 +47,8 @@ curl https://zmey.co.uk/api/admin/orders \
   -d "order[delivery_country_id]=1" \
   -d "order[delivery_postcode]=HG1 9ZZ" \
   -d "order[delivery_town_city]=Harrogate" \
-  -d "order[email_address]=shopper@example.org"
+  -d "order[email_address]=shopper@example.org",
+  -d "order[status]=payment_received"
 ```
 
 ### Response
