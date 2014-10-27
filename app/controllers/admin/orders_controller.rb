@@ -48,6 +48,10 @@ class Admin::OrdersController < Admin::AdminController
 
     def order_params
       params.require(:order).permit(
+        :billing_address_line_1,
+        :billing_country_id,
+        :billing_postcode,
+        :billing_town_city,
         :delivery_address_line_1,
         :delivery_country_id,
         :delivery_postcode,

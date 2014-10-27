@@ -54,12 +54,15 @@
 # +website+::
 #   Website the customer was using to place the order.
 class Order < ActiveRecord::Base
-  validates_presence_of :email_address, :delivery_address_line_1, :delivery_town_city, :delivery_postcode, :delivery_country_id
+  validates_presence_of :email_address
+  validates_presence_of :billing_address_line_1,  :billing_town_city,  :billing_postcode,  :billing_country_id
+  validates_presence_of :delivery_address_line_1, :delivery_town_city, :delivery_postcode, :delivery_country_id
 
   before_save :calculate_total
   before_create :create_order_number
 
   # Associations
+  belongs_to :billing_country,  class_name: 'Country'
   belongs_to :delivery_country, class_name: 'Country'
   belongs_to :basket
   belongs_to :user
@@ -138,6 +141,18 @@ class Order < ActiveRecord::Base
     self.delivery_postcode        = address.postcode
     self.delivery_country_id      = address.country_id
     self.delivery_phone_number    = address.phone_number
+  end
+
+  # Copies +address+ (an Address) into the <tt>billing_*</tt> attributes.
+  def copy_billing_address(address)
+    self.billing_full_name       = address.full_name
+    self.billing_address_line_1  = address.address_line_1
+    self.billing_address_line_2  = address.address_line_2
+    self.billing_town_city       = address.town_city
+    self.billing_county          = address.county
+    self.billing_postcode        = address.postcode
+    self.billing_country_id      = address.country_id
+    self.billing_phone_number    = address.phone_number
   end
 
   # Returns a new Address from the +email_address+ and <tt>delivery_*</tt>

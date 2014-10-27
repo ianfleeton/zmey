@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016183617) do
+ActiveRecord::Schema.define(version: 20141027104439) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -282,6 +282,14 @@ ActiveRecord::Schema.define(version: 20141016183617) do
     t.decimal  "shipping_tax_amount",                          precision: 10, scale: 3, default: 0.0, null: false
     t.text     "customer_note",                  limit: 65535
     t.datetime "processed_at"
+    t.string   "billing_full_name",              limit: 255,                            default: "",  null: false
+    t.string   "billing_address_line_1",         limit: 255,                            default: "",  null: false
+    t.string   "billing_address_line_2",         limit: 255,                            default: "",  null: false
+    t.string   "billing_town_city",              limit: 255,                            default: "",  null: false
+    t.string   "billing_county",                 limit: 255,                            default: "",  null: false
+    t.string   "billing_postcode",               limit: 255,                            default: "",  null: false
+    t.integer  "billing_country_id",             limit: 4,                                            null: false
+    t.string   "billing_phone_number",           limit: 255,                            default: "",  null: false
   end
 
   add_index "orders", ["basket_id"], name: "index_orders_on_basket_id", using: :btree

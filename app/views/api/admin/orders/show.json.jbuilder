@@ -16,6 +16,13 @@ json.order do
   json.delivery_county          @order.delivery_county
   json.delivery_postcode        @order.delivery_postcode
   json.delivery_phone_number    @order.delivery_phone_number
+  json.billing_full_name        @order.billing_full_name
+  json.billing_address_line_1   @order.billing_address_line_1
+  json.billing_address_line_2   @order.billing_address_line_2
+  json.billing_town_city        @order.billing_town_city
+  json.billing_county           @order.billing_county
+  json.billing_postcode         @order.billing_postcode
+  json.billing_phone_number     @order.billing_phone_number
   json.shipping_amount          @order.shipping_amount
   json.shipping_tax_amount      @order.shipping_tax_amount
   json.shipping_method          @order.shipping_method

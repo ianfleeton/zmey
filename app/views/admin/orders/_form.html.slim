@@ -11,6 +11,18 @@
     = f.label :email_address
     = f.email_field :email_address, class: 'form-control', required: true
   .form-group
+    = f.label :billing_address_line_1
+    = f.text_field :billing_address_line_1, class: 'form-control', required: true
+  .form-group
+    = f.label :billing_town_city
+    = f.text_field :billing_town_city, class: 'form-control', required: true
+  .form-group
+    = f.label :billing_postcode
+    = f.text_field :billing_postcode, class: 'form-control', required: true
+  .form-group
+    = f.label :billing_country_id
+    = f.select :billing_country_id, countries_options(website), {prompt: 'Choose Country'}, class: 'form-control', required: true
+  .form-group
     = f.label :delivery_address_line_1
     = f.text_field :delivery_address_line_1, class: 'form-control', required: true
   .form-group

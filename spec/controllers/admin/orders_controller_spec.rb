@@ -24,8 +24,8 @@ describe Admin::OrdersController do
         it 'assigns all orders for the supplied user to @orders' do
           u = User.create!(email: 'user@example.org', name: 'Alice', password: 'secret')
           country = FactoryGirl.create(:country)
-          Order.create!(user_id: u.id, email_address: 'user@example.org', delivery_address_line_1: 'a', delivery_town_city: 'tc', delivery_postcode: 'pc', delivery_country: country, website_id: website.id, status: Order::WAITING_FOR_PAYMENT)
-          Order.create!(user_id: u.id, email_address: 'user@example.org', delivery_address_line_1: 'a', delivery_town_city: 'tc', delivery_postcode: 'pc', delivery_country: country, website_id: website.id, status: Order::WAITING_FOR_PAYMENT, created_at: Date.today - 1.day)
+          FactoryGirl.create(:order, user_id: u.id, website_id: website.id)
+          FactoryGirl.create(:order, user_id: u.id, website_id: website.id, created_at: Date.today - 1.day)
           expect(u.orders.count).to eq 2
           get 'index', user_id: u.id
           expect(assigns(:orders).to_a).to eq u.orders.to_a

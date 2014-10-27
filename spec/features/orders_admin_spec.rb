@@ -19,6 +19,10 @@ feature 'Orders admin' do
     click_link 'New'
     email = "#{SecureRandom.hex}@example.org"
     fill_in 'Email address', with: email
+    fill_in 'Billing address line 1', with: '123 Street'
+    fill_in 'Billing town city', with: 'Doncaster'
+    fill_in 'Billing postcode', with: 'DN99 1AB'
+    select website.countries.first, from: 'Billing country'
     fill_in 'Delivery address line 1', with: '123 Street'
     fill_in 'Delivery town city', with: 'Doncaster'
     fill_in 'Delivery postcode', with: 'DN99 1AB'

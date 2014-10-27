@@ -89,9 +89,13 @@ FactoryGirl.define do
 
   factory :order do
     email_address           'buyer@example.org'
+    billing_address_line_1  '123 Street'
+    billing_town_city       'Harrogate'
+    billing_postcode        'HG1 9ZZ'
     delivery_address_line_1 '123 Street'
     delivery_town_city      'Harrogate'
     delivery_postcode       'HG1 9ZZ'
+    association :billing_country,  factory: :country
     association :delivery_country, factory: :country
     association :website
     status                  Order::WAITING_FOR_PAYMENT
