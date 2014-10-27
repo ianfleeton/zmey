@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027104439) do
+ActiveRecord::Schema.define(version: 20141027144020) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -444,6 +444,7 @@ ActiveRecord::Schema.define(version: 20141027104439) do
     t.string   "gender",                  limit: 255,                            default: "",         null: false
     t.string   "age_group",               limit: 255,                            default: "",         null: false
     t.integer  "nominal_code_id",         limit: 4
+    t.text     "google_description",      limit: 65535
   end
 
   add_index "products", ["name"], name: "index_products_on_name", using: :btree

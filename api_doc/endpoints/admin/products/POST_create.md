@@ -13,6 +13,7 @@ Create a new product.
 
 * **brand** — Brand / manufacturer of the product. Used in Google Shopping feed.
 * **description** — A description of the product.
+* **google_description** — An alternative description to use in Google feeds to meet editorial guidelines.
 * **image_id** — ID of the main product image.
 * **meta_description** — A description meta tag for the product's main page. Maximum length is 255 characters.
 * **nominal_code** — A nominal (account) code for use in external accounts software packages. The code must match an existing nominal code in the system.

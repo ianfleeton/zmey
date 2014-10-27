@@ -28,7 +28,9 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   private
 
     def product_params
-      params.require(:product).permit(:brand, :description, :image_id,
+      params.require(:product).permit(:brand, :description,
+      :google_description,
+      :image_id,
       :meta_description, :name,
       :page_title, :price, :sku, :tax_type, :weight)
     end

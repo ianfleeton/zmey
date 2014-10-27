@@ -95,6 +95,10 @@
         = form.text_field :google_title, class: 'form-control'
 
       .form-group
+        = form.label :google_description
+        = form.text_area :google_description, rows: 8, class: 'form-control'
+
+      .form-group
         = form.label :availability
         = select('product', 'availability', Product::AVAILABILITIES, {}, class: 'form-control')
 

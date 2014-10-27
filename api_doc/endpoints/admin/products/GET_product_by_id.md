@@ -34,7 +34,8 @@ returned.
       "href": "https://zmey.co.uk/api/admin/nominal_codes/1"
     },
     "description": "Shiny shiny designed in California",
-    "in_stock": true
+    "in_stock": true,
+    "google_description": ""
   }
 }
 ```

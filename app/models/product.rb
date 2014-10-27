@@ -4,6 +4,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :website_id
   validates_presence_of :image, unless: Proc.new { |p| p.image_id.nil? }
   validate :image_belongs_to_same_website
+  validates :google_description, length: { maximum: 5000 }
   validates :meta_description, length: { maximum: 255 }
   validates :price, numericality: { greater_than_or_equal_to: 0 }
 
@@ -137,6 +138,11 @@ class Product < ActiveRecord::Base
     q = Product.where(website_id: website_id)
     words.each { |word| q = q.where(['name LIKE ?', "%#{word}%"]) }
     q.limit(100)
+  end
+
+  # Returns the description appropriate for Google Products Feed.
+  def description_for_google
+    google_description.present? ? google_description : description
   end
 
   def to_s

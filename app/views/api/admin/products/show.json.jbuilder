@@ -17,6 +17,7 @@ json.product do
       json.href api_admin_nominal_code_url(@product.nominal_code)
     end
   end
-  json.description  @product.description
-  json.in_stock     @product.in_stock
+  json.description        @product.description
+  json.in_stock           @product.in_stock
+  json.google_description @product.google_description
 end

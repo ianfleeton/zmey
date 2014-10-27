@@ -75,7 +75,9 @@ class Admin::ProductsController < Admin::AdminController
       params.require(:product).permit(
         :active, :age_group,
         :apply_shipping, :availability, :brand, :condition, :description,
-        :full_detail, :gender, :gtin, :google_product_category, :google_title, :image_id,
+        :full_detail, :gender, :gtin,
+        :google_description,
+        :google_product_category, :google_title, :image_id,
         :meta_description, :mpn, :name,
         :nominal_code_id,
         :page_title, :price, :product_type, :rrp,
