@@ -88,6 +88,7 @@ end
 group :test do
   gem 'capybara'
   gem 'launchy'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers', require: false
   gem 'simplecov', require: false
   gem 'database_cleaner'

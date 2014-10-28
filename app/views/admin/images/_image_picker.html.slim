@@ -1,0 +1,88 @@
+javascript:
+  $(function() {
+    var hiddenField = "#{form.object.class.to_s.tableize.singularize}_#{attribute}";
+    var nextField = hiddenField + '_next';
+    var prevField = hiddenField + '_prev';
+    var imagesModal = "#{attribute}_images"
+    var imagePicker = "#{attribute}_image_picker"
+    var imagePreview = "#{attribute}_image_preview"
+    var page = 1;
+
+    $('#' + imagePicker).click(function(event) {
+      event.preventDefault();
+      $('#' + imagesModal).modal('show');
+      getImages();
+    });
+
+    function getImages() {
+      $.getJSON('/admin/images', { page: page, per_page: 64 }, function(data) {
+        var items = [];
+        if(data.images.length == 0) {
+          items.push('<li>No results found</li>');
+        }
+        if(data.current_page > 1 || data.current_page < data.total_pages) {
+          items.push('<li><div class="btn-group">');
+          items.push(arrowButton(prevField, 'Previous', 'left', data.current_page > 1));
+          items.push(arrowButton(nextField, 'Next', 'right', data.current_page < data.total_pages));
+          items.push('</div></li>');
+        }
+        $.each(data.images, function(key, image) {
+          var i = '<li class="picker-image"><a href="#" data-id="' + image.id + '" id="image-' + image.id + '"><img src="' + image.url + '" title="' + image.name + '"></a></li>';
+          items.push(i);
+        });
+        $('#' + imagesModal + ' .results-body').replaceWith(
+          $('<ul/>', {
+            'class': 'clearfix results-body',
+            html: items.join('')
+          })
+        );
+        $('#' + nextField).click(function() {
+          page += 1;
+          getImages();
+        });
+        $('#' + prevField).click(function() {
+          page -= 1;
+          getImages();
+        });
+        $('#' + imagesModal + ' .results-body a').click(function() {
+          $('#' + hiddenField).val($(this).data('id'));
+          $('#' + imagesModal).modal('hide');
+          $('#' + imagePreview + ' img').attr('src', $(this).find('img').attr('src'));
+        });
+      });
+    }
+
+    function arrowButton(id, title, icon, active) {
+      var items = [];
+      items.push('<a');
+      if(active) {
+        items.push(' id="' + id + '"');
+      }
+      items.push(' class="btn btn-default');
+      if(!active) {
+        items.push(' disabled');
+      }
+      items.push('" title="' + title + '">');
+      items.push('<span class="glyphicon glyphicon-arrow-' + icon + '">');
+      items.push('</span></a>');
+      return items.join('');
+    }
+  });
+.modal.fade.modal-picker id="#{attribute}_images"
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close type="button" data-dismiss="modal"
+          span aria-hidden="true" &times;
+          span.sr-only Close
+        h4.modal-title Images
+      .modal-body
+        span.results-body
+
+.form-action
+  = form.hidden_field(attribute)
+  .image-preview id="#{attribute}_image_preview"
+    - image_url = Image.find_by(id: form.object.send(attribute)).try(:url)
+    - image_url ||= '#'
+    img src="#{image_url}"
+  button.btn.btn-default id="#{attribute}_image_picker" Pick

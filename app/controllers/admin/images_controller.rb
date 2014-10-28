@@ -2,7 +2,11 @@ include ActionView::Helpers::TextHelper
 
 class Admin::ImagesController < Admin::AdminController
   def index
-    @images = website.images.paginate(page: params[:page], per_page: 100)
+    @images = website.images.paginate(page: params[:page], per_page: params[:per_page] || 100)
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
 
   def new

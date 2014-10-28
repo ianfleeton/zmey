@@ -1,0 +1,35 @@
+body {
+  padding-top: 60px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+}
+
+.admin-page-nav {
+  display: block;
+}
+
+.form-control {
+  font-size: 13px;
+}
+
+/* Image picker */
+
+.image-preview img {
+  max-width: 100%;
+}
+
+.modal-picker li {
+  list-style: none;  
+}
+
+.picker-image {
+  float: left;
+  height: 72px;
+  border: 1px solid #fff;
+
+  img {
+    cursor: pointer;
+    width: 96px;
+    max-height: 72px
+  }
+}

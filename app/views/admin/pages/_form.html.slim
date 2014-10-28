@@ -35,14 +35,13 @@
       = form.check_box :no_follow
       = t('.no_follow')
 
-  - cache images_cache_key(website)
-    .form-group
-      = form.label :image_id
-      = select :page, :image_id, image_options(website), {}, class: 'form-control'
+  .form-group
+    = form.label :image_id
+    = render partial: 'admin/images/image_picker', locals: { form: form, attribute: :image_id }
 
   .form-group
     = form.label :thumbnail_image_id
-    = select :page, :thumbnail_image_id, image_options(website), {}, class: 'form-control'
+    = render partial: 'admin/images/image_picker', locals: { form: form, attribute: :thumbnail_image_id }
 
   .form-group
     = form.label :content

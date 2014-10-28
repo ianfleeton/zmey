@@ -12,13 +12,14 @@ feature 'Carousel slides admin' do
   let(:image) { FactoryGirl.create(:image, website: website) }
   let(:carousel_slide) { FactoryGirl.build(:carousel_slide, image: image, website: website) }
 
-  scenario 'Create carousel slide' do
+  scenario 'Create carousel slide', js: true do
     image
     visit admin_carousel_slides_path
     click_link 'New'
     fill_in 'Caption', with: carousel_slide.caption
     fill_in 'Link', with: '#'
-    select image.name, from: 'Image'
+    click_button 'Pick'
+    click_link "image-#{image.id}"
 
     select Date.today.year, from: :carousel_slide_active_from_1i
     select 'January',       from: :carousel_slide_active_from_2i
