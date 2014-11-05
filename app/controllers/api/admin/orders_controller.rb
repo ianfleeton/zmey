@@ -50,11 +50,13 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
 
     # Returns a query for the index action using filters in +params+.
     def index_query
-      status     = Order.status_from_api(params[:status])
-      processed  = api_boolean(params[:processed])
+      order_number = params[:order_number]
+      status       = Order.status_from_api(params[:status])
+      processed    = api_boolean(params[:processed])
 
       conditions = {}
       not_conditions = {}
+      conditions[:order_number] = order_number if order_number
       conditions[:status] = status if status
 
       if processed == false

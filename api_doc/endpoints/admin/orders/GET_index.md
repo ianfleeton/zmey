@@ -4,6 +4,7 @@ Returns a summary list of all orders.
 
 ## Parameters
 
+* **order_number** — Filters by order number. Returns a maximum of 1 result.
 * **page** — Page number of results. Numbering starts from 1. Default is 1.
 * **page_size** — Number of results per page. Default is 50.
 * **processed** — Boolean filter to only include processed (when true) or

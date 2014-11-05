@@ -8,6 +8,7 @@ describe 'Admin orders API' do
   describe 'GET index' do
     let(:orders)            { JSON.parse(response.body) }
     let(:num_orders)        { 1 }
+    let(:order_number)      { nil }
     let(:page)              { nil }
     let(:page_size)         { nil }
     let(:processed)         { nil }
@@ -36,7 +37,9 @@ describe 'Admin orders API' do
 
       more_setup.try(:call)
 
-      get '/api/admin/orders', page: page, page_size: page_size,
+      get '/api/admin/orders',
+        order_number: order_number,
+        page: page, page_size: page_size,
         processed: processed, status: status
     end
 
@@ -56,6 +59,21 @@ describe 'Admin orders API' do
 
     it 'returns 200 OK' do
       expect(response.status).to eq 200
+    end
+
+    context 'with order_number set' do
+      let(:order_number) { SecureRandom.hex }
+
+      let!(:more_setup) {->{
+        @matching_order = FactoryGirl.create(:order, website_id: @website.id)
+        @matching_order.order_number = order_number
+        @matching_order.save
+      }}
+
+      it 'returns the matching order' do
+        expect(orders['orders'].length).to eq 1
+        expect(orders['orders'][0]['order_number']).to eq @matching_order.order_number
+      end
     end
 
     context 'with status filtered to waiting_for_payment' do
