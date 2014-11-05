@@ -218,4 +218,32 @@ describe 'Admin orders API' do
       expect(status).to eq 204
     end
   end
+
+  describe 'PATCH update' do
+    let(:processed_at) { '2014-05-14T14:03:56.000+01:00' }
+
+    before do
+      patch api_admin_order_path(order), order: { processed_at: processed_at }
+    end
+
+    context 'when order found' do
+      let(:order) { FactoryGirl.create(:order, website_id: @website.id) }
+
+      it 'responds with 204 No Content' do
+        expect(status).to eq 204
+      end
+
+      it 'updates an order' do
+        expect(Order.find(order.id).processed_at).to eq processed_at
+      end
+    end
+
+    context 'when order not found' do
+      let(:order) { FactoryGirl.create(:order) }
+
+      it 'responds 404 Not Found' do
+        expect(status).to eq 404
+      end
+    end
+  end
 end

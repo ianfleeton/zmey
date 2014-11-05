@@ -1,4 +1,6 @@
 class Api::Admin::OrdersController < Api::Admin::AdminController
+  before_action :set_order, only: [:show, :update]
+
   def index
     page      = params[:page] || 1
     per_page  = params[:page_size] || default_page_size
@@ -6,8 +8,6 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
   end
 
   def show
-    @order = Order.find_by(id: params[:id], website_id: website.id)
-    render nothing: true, status: 404 unless @order
   end
 
   def create
@@ -17,6 +17,16 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
     @order.website = website
 
     unless @order.save
+      render json: @order.errors.full_messages, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @order.update_attributes(order_params)
+
+    if @order.save
+      render nothing: true, status: 204
+    else
       render json: @order.errors.full_messages, status: :unprocessable_entity
     end
   end
@@ -32,6 +42,11 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
   end
 
   private
+
+    def set_order
+      @order = Order.find_by(id: params[:id], website_id: website.id)
+      render nothing: true, status: 404 unless @order
+    end
 
     # Returns a query for the index action using filters in +params+.
     def index_query
@@ -66,7 +81,8 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       :delivery_postcode,
       :delivery_town_city,
       :email_address,
-      :status
+      :status,
+      :processed_at
       )
     end
 end
