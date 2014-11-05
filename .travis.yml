@@ -16,3 +16,6 @@ before_script:
   - mysql -e 'create database zmey_test;'
   - cp config/database.travis.yml config/database.yml
   - cp config/secrets.sample.yml config/secrets.yml
+  # Selenium WebDriver
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
