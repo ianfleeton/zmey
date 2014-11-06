@@ -53,6 +53,10 @@ A successful retrieval will return JSON similar to the example:
 
 * [`DELETE` api/admin/carousel_slides](endpoints/admin/carousel_slides/DELETE_delete_all.md)
 
+### Countries
+
+* [`GET` api/admin/countries](endpoints/admin/countries/GET_index.md)
+
 ### Images
 
 * [`GET` api/admin/images](endpoints/admin/images/GET_index.md)
