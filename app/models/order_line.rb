@@ -33,6 +33,14 @@ class OrderLine < ActiveRecord::Base
     end
   end
 
+  def calculate_product_price
+    product.price_ex_tax(quantity)
+  end
+
+  def calculate_tax_amount
+    product.tax_amount(quantity) * quantity
+  end
+
   def recalculate_order_total
     order.calculate_total
     order.save
