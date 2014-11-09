@@ -77,6 +77,10 @@ A successful retrieval will return JSON similar to the example:
 * [`PATCH` api/admin/orders/:id](endpoints/admin/orders/PATCH_update.md)
 * [`DELETE` api/admin/orders](endpoints/admin/orders/DELETE_delete_all.md)
 
+### Order Lines
+
+* [`POST` api/admin/order_lines](endpoints/admin/order_lines/POST_create.md)
+
 ### Pages
 
 * [`GET` api/admin/pages](endpoints/admin/pages/GET_index.md)
