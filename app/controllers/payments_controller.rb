@@ -179,10 +179,10 @@ class PaymentsController < ApplicationController
   private
 
   def update_order order
-    order.status = Order::PAYMENT_RECEIVED
+    order.status = Enums::PaymentStatus::PAYMENT_RECEIVED
     order.save
     @payment.order_id = order.id
-    OrderNotifier.notification(@w, order).deliver
+    OrderNotifier.notification(website, order).deliver_now
   end
 
   def clean_up

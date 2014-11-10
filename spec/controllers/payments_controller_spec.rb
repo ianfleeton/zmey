@@ -60,4 +60,36 @@ describe PaymentsController do
       expect{post :cardsave_callback, params}.to change{Payment.count}.by(1)
     end
   end
+
+  describe '#rbs_worldpay_callback' do
+    context 'with successful payment details' do
+      let(:cartId) { 'NO SUCH CART' }
+      let(:params) {
+        {
+          callbackPW: '',
+          cartId: cartId,
+          transStatus: 'Y',
+        }
+      }
+
+      it 'creates a new payment' do
+        expect{post :rbs_worldpay_callback, params}.to change{Payment.count}.by(1)
+      end
+
+      it 'sets a message' do
+        post :rbs_worldpay_callback, params
+        expect(assigns(:message)).to eq 'Payment received'
+      end
+
+      context 'with matching order' do
+        let(:order)  { FactoryGirl.create(:order) }
+        let(:cartId) { order.order_number }
+
+        it 'sets the order status to payment received' do
+          post :rbs_worldpay_callback, params
+          expect(order.reload.status).to eq Enums::PaymentStatus::PAYMENT_RECEIVED
+        end
+      end
+    end
+  end
 end

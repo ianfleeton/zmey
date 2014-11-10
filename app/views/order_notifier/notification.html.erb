@@ -8,7 +8,7 @@
 <p>Your registered email address is: <%= @order.user.email %></p>
 <% end -%>
 
-<p>The status of your order is: <b><%= @order.status_description %></b></p>
+<p>The status of your order is: <b><%= payment_status(@order) %></b></p>
 
 <% if @order.preferred_delivery_date -%>
 <p>
