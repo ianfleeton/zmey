@@ -17,7 +17,7 @@ class Admin::OrdersController < Admin::AdminController
 
   def create
     @order = Order.new(order_params)
-    @order.status = Order::WAITING_FOR_PAYMENT
+    @order.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
     @order.website = website
 
     if @order.save

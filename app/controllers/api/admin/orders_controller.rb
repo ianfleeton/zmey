@@ -1,4 +1,6 @@
 class Api::Admin::OrdersController < Api::Admin::AdminController
+  include Enums::Conversions
+
   before_action :set_order, only: [:show, :update]
 
   def index
@@ -11,7 +13,9 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
   end
 
   def create
-    params[:order][:status] = Order.status_from_api(params[:order][:status])
+    if params[:order][:status]
+      params[:order][:status] = PaymentStatus(params[:order][:status]).to_i
+    end
 
     @order = Order.new(order_params)
     @order.website = website
@@ -51,13 +55,14 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
     # Returns a query for the index action using filters in +params+.
     def index_query
       order_number = params[:order_number]
-      status       = Order.status_from_api(params[:status])
       processed    = api_boolean(params[:processed])
 
       conditions = {}
       not_conditions = {}
       conditions[:order_number] = order_number if order_number
-      conditions[:status] = status if status
+      if params[:status]
+        conditions[:status] = PaymentStatus(params[:status])
+      end
 
       if processed == false
         conditions[:processed_at] = nil

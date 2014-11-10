@@ -6,4 +6,4 @@ You probably should not act on this notification alone.
 
 The order number is: <%= @order.order_number %>
 
-The status of the order is: <%= @order.status_description %>
+The status of the order is: <%= payment_status(@order) %>

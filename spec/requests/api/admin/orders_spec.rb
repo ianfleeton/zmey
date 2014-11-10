@@ -54,7 +54,7 @@ describe 'Admin orders API' do
       expect(user['href']).to eq api_admin_user_url(@order1.user)
       expect(order['email_address']).to eq @order1.email_address
       expect(order['total']).to         eq @order1.total.to_s
-      expect(order['status']).to        eq @order1.api_status_description
+      expect(order['status']).to        eq Enums::PaymentStatus.new(@order1.status).to_api
     end
 
     it 'returns 200 OK' do
@@ -208,7 +208,7 @@ describe 'Admin orders API' do
 
     it 'inserts a new order into the website' do
       post '/api/admin/orders', order: basic_params
-      expect(Order.find_by(basic_params.merge(website_id: @website.id, status: Order::WAITING_FOR_PAYMENT))).to be
+      expect(Order.find_by(basic_params.merge(website_id: @website.id, status: Enums::PaymentStatus::WAITING_FOR_PAYMENT))).to be
     end
 
     it 'returns 422 if order cannot be created' do

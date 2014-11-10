@@ -135,7 +135,7 @@ class BasketController < ApplicationController
         quantity: 1
       )
     end
-    @order.status = Order::WAITING_FOR_PAYMENT
+    @order.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
     @order.shipping_method = 'Standard Shipping'
     @order.shipping_amount = shipping_amount(0)
     @order.shipping_tax_amount = shipping_tax_amount(@order.shipping_amount)
@@ -148,7 +148,7 @@ class BasketController < ApplicationController
 
     session[:order_id] = @order.id
     if website.only_accept_payment_on_account?
-      @order.status = Order::PAYMENT_ON_ACCOUNT
+      @order.status = Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
       @order.save
       OrderNotifier.notification(website, @order).deliver_now
       reset_basket(@order)

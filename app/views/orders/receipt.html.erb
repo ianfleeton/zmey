@@ -8,7 +8,7 @@
 
 <p>Order placed: <%= @order.created_at %></p>
 
-<p>Order status: <%= @order.status_description %></p>
+<p>Order status: <%= payment_status(@order) %></p>
 
 <% if @order.preferred_delivery_date -%>
 <p><%= @order.preferred_delivery_date_prompt %>: <%= @order.preferred_delivery_date.strftime(@order.preferred_delivery_date_format) %></p>

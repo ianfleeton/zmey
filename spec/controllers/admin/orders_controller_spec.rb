@@ -57,7 +57,7 @@ describe Admin::OrdersController do
 
       it 'sets the order status to WAITING_FOR_PAYMENT' do
         post :create, order: order.attributes
-        expect(Order.last.status).to eq Order::WAITING_FOR_PAYMENT
+        expect(Order.last.status).to eq Enums::PaymentStatus::WAITING_FOR_PAYMENT
       end
 
       context 'when save succeeds' do

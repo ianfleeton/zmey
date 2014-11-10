@@ -98,7 +98,7 @@ FactoryGirl.define do
     association :billing_country,  factory: :country
     association :delivery_country, factory: :country
     association :website
-    status                  Order::WAITING_FOR_PAYMENT
+    status                  Enums::PaymentStatus::WAITING_FOR_PAYMENT
   end
 
   factory :order_line do

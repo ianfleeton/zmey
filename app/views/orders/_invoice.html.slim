@@ -117,7 +117,7 @@
                 - else
                   = order.payments.first.service_provider
               td: b Payment status:
-              td= order.status_description
+              td= payment_status(order)
             tr
               td: b Shipping Method:
               td= order.shipping_method

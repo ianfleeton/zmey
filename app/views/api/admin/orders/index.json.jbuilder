@@ -10,7 +10,7 @@ json.orders(@orders) do |order|
   end
   json.email_address  order.email_address
   json.total          order.total
-  json.status         order.api_status_description
+  json.status         Enums::PaymentStatus.new(order.status).to_api
   json.processed_at   order.processed_at
   json.created_at     order.created_at
   json.updated_at     order.updated_at

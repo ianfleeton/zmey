@@ -1,4 +1,5 @@
 class OrderNotifier < ActionMailer::Base
+  helper :orders
   helper :products # price formatting
   helper :addresses # address formatting
 

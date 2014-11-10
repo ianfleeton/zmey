@@ -11,7 +11,7 @@ table.table.table-bordered
     td= @order.created_at
   tr
     th Order status
-    td= @order.status_description
+    td= payment_status(@order)
   - if @order.preferred_delivery_date
     tr
       th= @order.preferred_delivery_date_prompt

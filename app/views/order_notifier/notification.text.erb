@@ -4,7 +4,7 @@ Thank you for placing an order at <%= @website.name %>
 
 Your order number is: <%= @order.order_number %>
 
-The status of your order is: <%= @order.status_description %>
+The status of your order is: <%= payment_status(@order) %>
 
 <% if @order.user -%>
 Your registered email address is: <%= @order.user.email %>

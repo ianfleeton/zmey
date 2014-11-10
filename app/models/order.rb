@@ -31,7 +31,7 @@
 #   String describing the shipping method chosen for the order.
 #
 # +status+::
-#   Status of payment for the order. One of <tt>Order::STATUSES</tt>.
+#   Status of payment for the order. One of <tt>Enums::PaymentStatus::VALUES</tt>.
 #
 # === Associations
 #
@@ -54,6 +54,9 @@
 # +website+::
 #   Website the customer was using to place the order.
 class Order < ActiveRecord::Base
+  include Enums
+  include Enums::Conversions
+
   validates_presence_of :email_address
   validates_presence_of :billing_address_line_1,  :billing_town_city,  :billing_postcode,  :billing_country_id
   validates_presence_of :delivery_address_line_1, :delivery_town_city, :delivery_postcode, :delivery_country_id
@@ -70,12 +73,7 @@ class Order < ActiveRecord::Base
   has_many :order_lines, dependent: :delete_all
   has_many :payments, dependent: :delete_all
 
-  # Order statuses
-  WAITING_FOR_PAYMENT = 1
-  PAYMENT_RECEIVED    = 2
-  PAYMENT_ON_ACCOUNT  = 3
-  ORDER_STATUSES = [WAITING_FOR_PAYMENT, PAYMENT_RECEIVED, PAYMENT_ON_ACCOUNT]
-  validates_inclusion_of :status, in: ORDER_STATUSES
+  validates_inclusion_of :status, in: PaymentStatus::VALUES
 
   # Returns the order from the customer's session, or +nil+ if it does not
   # exist.
@@ -85,38 +83,12 @@ class Order < ActiveRecord::Base
 
   # Deletes all orders that have not received payment and are older than +age+.
   def self.purge_old_unpaid(age = 1.month)
-    self.destroy_all(["created_at < ? and status = ?", Time.now - age, Order::WAITING_FOR_PAYMENT])
+    self.destroy_all(["created_at < ? and status = ?", Time.now - age, PaymentStatus::WAITING_FOR_PAYMENT])
   end
 
   # String representation of the order. Returns the order number.
   def to_s
     order_number
-  end
-
-  # Describes the +status+ attribute in English.
-  def status_description
-    {
-      WAITING_FOR_PAYMENT => 'Waiting for payment',
-      PAYMENT_RECEIVED => 'Payment received',
-      PAYMENT_ON_ACCOUNT => 'Payment on account'
-    }[status]
-  end
-
-  # Returns a status string for use in the REST API.
-  def api_status_description
-    status_description.downcase.tr(' ', '_')
-  end
-
-  # Returns one of Order::ORDER_STATUSES matching the +status+ string from
-  # an API request. Complements Order#api_status_description.
-  #
-  #   Order.status_from_api('payment_received') # => PAYMENT_RECEIVED
-  def self.status_from_api(status)
-    {
-      'waiting_for_payment' => WAITING_FOR_PAYMENT,
-      'payment_received'    => PAYMENT_RECEIVED,
-      'payment_on_account'  => PAYMENT_ON_ACCOUNT
-    }[status]
   end
 
   # Empties the basket associated with this order if there is one.
@@ -126,7 +98,7 @@ class Order < ActiveRecord::Base
 
   # Returns +true+ if payment has been received.
   def payment_received?
-    status == Order::PAYMENT_RECEIVED
+    status == Enums::PaymentStatus::PAYMENT_RECEIVED
   end
 
   # Copies +address+ (an Address) into the +email_address+ and
@@ -244,7 +216,7 @@ class Order < ActiveRecord::Base
         id: id,
         href: Rails.application.routes.url_helpers.api_admin_order_url(self, host: website.domain),
         email_address: email_address,
-        status: api_status_description,
+        status: PaymentStatus(status).to_api,
         total: total
       }
     }

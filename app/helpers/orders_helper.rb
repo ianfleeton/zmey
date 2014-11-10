@@ -5,6 +5,10 @@ module OrdersHelper
       h(o.county);
   end
 
+  def payment_status(order)
+    Enums::Conversions::PaymentStatus(order.status).to_s
+  end
+
   def sage_pay_form_url(test_mode)
     "https://#{test_mode ? 'test' : 'live'}.sagepay.com/gateway/service/vspform-register.vsp"
   end
