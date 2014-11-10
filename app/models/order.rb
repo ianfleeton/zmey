@@ -73,7 +73,7 @@ class Order < ActiveRecord::Base
   has_many :order_lines, dependent: :delete_all
   has_many :payments, dependent: :delete_all
 
-  validates_inclusion_of :status, in: PaymentStatus::VALUES
+  validates_inclusion_of :status, in: Enums::PaymentStatus::VALUES
 
   # Returns the order from the customer's session, or +nil+ if it does not
   # exist.
