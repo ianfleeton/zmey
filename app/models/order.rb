@@ -147,7 +147,7 @@ class Order < ActiveRecord::Base
   # +total+. This is called +before_save+.
   def calculate_total
     t = total_gross
-    t = t + 0.001 # in case of x.x499999
+    t = t + 0.0001 # in case of x.x499999
     t = (t * 100).round.to_f / 100
     self.total = t
   end
