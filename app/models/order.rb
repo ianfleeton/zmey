@@ -70,7 +70,7 @@ class Order < ActiveRecord::Base
   belongs_to :basket
   belongs_to :user
   belongs_to :website
-  has_many :order_lines, dependent: :delete_all
+  has_many :order_lines, dependent: :delete_all, inverse_of: :order
   has_many :payments, dependent: :delete_all
 
   validates_inclusion_of :status, in: Enums::PaymentStatus::VALUES
