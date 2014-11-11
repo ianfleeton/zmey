@@ -5,7 +5,7 @@ class OrderLine < ActiveRecord::Base
   validates_numericality_of :quantity, greater_than_or_equal_to: 1
 
   before_save :keep_shipped_in_bounds
-  before_save :recalculate_order_total
+  after_save :recalculate_order_total
 
   def keep_shipped_in_bounds
     if shipped > quantity
