@@ -28,6 +28,7 @@ Create a new order.
 ### Additional attributes
 
 * **billing_address_line_2**
+* **billing_full_name** — Full name of the customer.
 * **customer_note** — A note left by the customer such as delivery instructions.
 * **delivery_address_line_2**
 * **delivery_full_name** — Full name of the customer.

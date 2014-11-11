@@ -78,6 +78,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       :billing_address_line_1,
       :billing_address_line_2,
       :billing_country_id,
+      :billing_full_name,
       :billing_postcode,
       :billing_town_city,
       :customer_note,
