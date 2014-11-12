@@ -93,7 +93,7 @@ class Order < ActiveRecord::Base
 
   # Empties the basket associated with this order if there is one.
   def empty_basket
-    basket.basket_items.clear if basket
+    basket.basket_items.destroy_all if basket
   end
 
   # Returns +true+ if payment has been received.
