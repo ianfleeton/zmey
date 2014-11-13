@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
   end
 
   def receipt
-    redirect_to controller: 'basket', action: 'index' and return unless (@order.payment_received? or @order.status==Order::PAYMENT_ON_ACCOUNT)
+    redirect_to controller: 'basket', action: 'index' and return unless (@order.payment_received? or @order.status==Enums::PaymentStatus::PAYMENT_ON_ACCOUNT)
     @google_ecommerce_tracking = true
   end
 
