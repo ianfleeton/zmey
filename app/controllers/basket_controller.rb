@@ -228,7 +228,7 @@ class BasketController < ApplicationController
 
   def delete_previous_unpaid_order_if_any
     if session[:order_id] && @order = Order.find_by(id: session[:order_id])
-      @order.destroy if @order.status == Order::WAITING_FOR_PAYMENT
+      @order.destroy if @order.status == Enums::PaymentStatus::WAITING_FOR_PAYMENT
     end
   end
 
