@@ -18,4 +18,4 @@ h1= t('.heading')
           td= link_to t('.invoice'), invoice_order_path(o), data: { no_turbolink: true }
           td= formatted_price(o.total)
           td= o.created_at
-          td= o.status_description
+          td= payment_status(o)
