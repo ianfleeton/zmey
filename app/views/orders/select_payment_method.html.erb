@@ -38,7 +38,7 @@ $(function() {
   <input type="hidden" name="shipping" value="0.00">
   <input type="hidden" name="tax" value="0.00">
   <input type="image" src="http://www.paypal.com/en_US/i/btn/btn_buynow_LG.gif" align="top"
-  border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+  border="0" alt="Make payments with PayPal - it's fast, free and secure!">
 </form>
 </div><!--#pay_by_paypal-->
 <% end -%>
@@ -180,7 +180,7 @@ $(function() {
 <input type="hidden" name="tel" value="<%= @order.delivery_phone_number %>" />
 <input type="hidden" value="<%= @order.email_address %>" name="email" />
 
-<input name="submit" type="submit" class="button" value="Proceed to WorldPay" />
+<input type="submit" class="button" value="Proceed to WorldPay" />
 </form>
   <% end -%>
 </div><!--#pay_by_worldpay-->
