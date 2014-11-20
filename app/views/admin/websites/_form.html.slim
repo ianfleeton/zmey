@@ -206,13 +206,15 @@
           h2.panel-title Cardsave
         .panel-body
           label for="website_cardsave_active_true" Active?
-          label.radio
-            = form.radio_button :cardsave_active, true
-            | Yes
+          .radio
+            label
+              = form.radio_button :cardsave_active, true
+              | Yes
 
-          label.radio
-            = form.radio_button :cardsave_active, false
-            | No
+          .radio
+            label
+              = form.radio_button :cardsave_active, false
+              | No
 
           = form.label :cardsave_merchant_id, 'Merchant ID'
           = form.text_field :cardsave_merchant_id, class: 'form-control'
@@ -229,23 +231,27 @@
           h2.panel-title WorldPay
         .panel-body
           label for="website_worldpay_active_true" Active?
-          label.radio
-            = form.radio_button :worldpay_active, true
-            | Active
+          .radio
+            label
+              = form.radio_button :worldpay_active, true
+              | Active
 
-          label.radio
-            = form.radio_button :worldpay_active, false
-      	    | Inactive
+          .radio
+            label
+              = form.radio_button :worldpay_active, false
+              | Inactive
 
 
           label Mode
-          label.radio
-            = form.radio_button :worldpay_test_mode, false
-      	    | Production mode
+          .radio
+            label
+              = form.radio_button :worldpay_test_mode, false
+              | Production mode
 
-          label.radio
-            = form.radio_button :worldpay_test_mode, true
-            | Test mode
+          .radio
+            label
+              = form.radio_button :worldpay_test_mode, true
+              | Test mode
 
           = form.label :worldpay_installation_id, 'Installation ID'
           = form.text_field :worldpay_installation_id, class: 'form-control'
@@ -259,22 +265,26 @@
           h2.panel-title Sage Pay
         .panel-body
           label Active?
-          label.radio
-            = form.radio_button :sage_pay_active, true
-            | Active
+          .radio
+            label
+              = form.radio_button :sage_pay_active, true
+              | Active
     
-          label.radio
-            = form.radio_button :sage_pay_active, false
-            | Inactive
+          .radio
+            label
+              = form.radio_button :sage_pay_active, false
+              | Inactive
 
           label Mode
-          label.radio
-            = form.radio_button :sage_pay_test_mode, false
-            | Production mode
+          .radio
+            label
+              = form.radio_button :sage_pay_test_mode, false
+              | Production mode
     
-          label.radio
-            = form.radio_button :sage_pay_test_mode, true
-            | Test mode
+          .radio
+            label
+              = form.radio_button :sage_pay_test_mode, true
+              | Test mode
 
           = form.label :sage_pay_vendor, 'Vendor'
           = form.text_field :sage_pay_vendor, class: 'form-control'
@@ -294,13 +304,15 @@
             p You will also need to specify an Auto Return URL but the shop will override this with its own. The dummy URL should exist and contain the text "Thank you for your payment. Your transaction has been completed and a receipt for your purchase has been emailed to you. You may log into your account at www.paypal.com/uk to view details of this transaction."
 
           label for="website_paypal_active_true" Active?
-          label.radio
-            = form.radio_button :paypal_active, true
-            | Yes
+          .radio
+            label
+              = form.radio_button :paypal_active, true
+              | Yes
 
-          label.radio
-            = form.radio_button :paypal_active, false
-            | No
+          .radio
+            label
+              = form.radio_button :paypal_active, false
+              | No
 
           = form.label :paypal_email_address, 'PayPal email address'
           = form.email_field :paypal_email_address, class: 'form-control'
@@ -315,13 +327,15 @@
         .panel-body
 
           label for="website_upg_atlas_active_true" Active?
-          label.radio
-            = form.radio_button :upg_atlas_active, true
-            | Yes
+          .radio
+            label
+              = form.radio_button :upg_atlas_active, true
+              | Yes
 
-          label.radio
-            = form.radio_button :upg_atlas_active, false
-            | No
+          .radio
+            label
+              = form.radio_button :upg_atlas_active, false
+              | No
 
           = form.label :upg_atlas_sh_reference, 'SH Reference'
           = form.text_field :upg_atlas_sh_reference, class: 'form-control'
