@@ -18,18 +18,21 @@ curl https://zmey.co.uk/api/admin/pages \
   "pages": [
     {
       "id": 1,
+      "href": "https://zmey.co.uk/api/admin/pages/1",
       "parent_id": null,
       "slug": "tools",
       "title": "Tools"
     },
     {
       "id": 2,
+      "href": "https://zmey.co.uk/api/admin/pages/2",
       "parent_id": 1,
       "slug": "hammers",
       "title": "Hammers"
     },
     {
       "id": 3,
+      "href": "https://zmey.co.uk/api/admin/pages/3",
       "parent_id": 1,
       "slug": "saws",
       "title": "Saws"

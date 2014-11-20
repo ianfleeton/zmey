@@ -92,7 +92,7 @@ Rails.application.routes.draw do
       resources :orders, only: [:create, :index, :show, :update]
       delete 'orders', to: 'orders#delete_all'
 
-      resources :pages, only: [:create, :index]
+      resources :pages, only: [:create, :index, :show]
       delete 'pages', to: 'pages#delete_all'
 
       resources :payments, only: [:index, :show]

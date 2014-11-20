@@ -20,6 +20,7 @@ describe 'Admin pages API' do
 
         expect(pages['pages'].length).to eq 2
         expect(pages['pages'][0]['id']).to eq @page1.id
+        expect(pages['pages'][0]['href']).to eq api_admin_page_url(@page1)
         expect(pages['pages'][1]['parent_id']).to eq @page1.id
         expect(pages['pages'][0]['slug']).to eq @page1.slug
         expect(pages['pages'][0]['title']).to eq @page1.title
