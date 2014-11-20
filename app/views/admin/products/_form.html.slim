@@ -50,11 +50,11 @@
 
   .form-group
     = form.label :description
-    = form.text_area :description, rows: 8, class: 'form-control'
+    = editor(form, :description, :html)
 
   .form-group
     = form.label :full_detail
-    = form.text_area :full_detail, rows: 12, class: 'form-control'
+    = editor(form, :full_detail, :html)
 
   label for="product_apply_shipping_true" Apply shipping?
   .radio

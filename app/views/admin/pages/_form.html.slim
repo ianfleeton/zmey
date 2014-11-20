@@ -45,7 +45,7 @@
 
   .form-group
     = form.label :content
-    = form.text_area :content, class: 'form-control', rows: 12
+    = editor(form, :content, :html)
 
   .form-group
     = form.label :extra

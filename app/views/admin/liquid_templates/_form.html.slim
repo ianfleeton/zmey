@@ -18,7 +18,7 @@
 
   .form-group
     = form.label :markup
-    = form.text_area :markup, class: 'form-control', rows: 10
+    = editor(form, :markup, :html)
 
   br
   = form.submit class: 'btn btn-primary'
