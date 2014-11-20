@@ -115,6 +115,10 @@
             = form.radio_button :private, false, class: 'radio'
             | No
 
+      .form-group
+        = form.label :mandrill_subaccount
+        = form.text_field :mandrill_subaccount, class: 'form-control'
+
   .row
     .col-md-4
       .panel.panel-default

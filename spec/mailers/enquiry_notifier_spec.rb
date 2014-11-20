@@ -22,4 +22,13 @@ describe EnquiryNotifier do
       user_name: user
     })
   end
+
+  it 'sets Mandrill subaccount header' do
+    account = 'Monkey Business'
+    website = Website.new(
+      mandrill_subaccount: account
+    )
+    mail = EnquiryNotifier.enquiry(website, Enquiry.new)
+    expect(mail.header['X-MC-Subaccount'].to_s).to eq account
+  end
 end
