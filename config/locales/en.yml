@@ -122,6 +122,9 @@ en:
         heading: 'Webhooks'
       new:
         heading: 'New Webhook'
+    websites:
+      form:
+        smtp_settings: 'SMTP Settings'
   basket:
     basket:
       apply_coupon: 'Apply Coupon'

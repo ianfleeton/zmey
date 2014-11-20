@@ -107,6 +107,7 @@ class Admin::WebsitesController < Admin::AdminController
       :product_thumbnail_size,
       :sage_pay_active, :sage_pay_pre_shared_key,
       :sage_pay_test_mode, :sage_pay_vendor,
+      :smtp_active, :smtp_host, :smtp_password, :smtp_port, :smtp_username,
       :worldpay_active, :worldpay_installation_id,
       :worldpay_payment_response_password, :worldpay_test_mode,
       :scheme, :shipping_amount,

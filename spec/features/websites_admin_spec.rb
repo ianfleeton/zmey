@@ -50,4 +50,29 @@ feature 'Websites admin' do
       sage_pay_test_mode: test_mode
     )).to be
   end
+
+  scenario 'Edit SMTP settings' do
+    visit edit_admin_website_path(website)
+
+    active   = [true, false].sample
+    host     = SecureRandom.hex
+    username = SecureRandom.hex
+    password = SecureRandom.hex
+    port     = [25, 587].sample
+
+    fill_in 'website_smtp_host',     with: host
+    fill_in 'website_smtp_username', with: username
+    fill_in 'website_smtp_password', with: password
+    fill_in 'website_smtp_port',     with: port
+    choose "website_smtp_active_#{active}"
+    click_button 'Save'
+
+    expect(Website.find_by(
+      smtp_host:     host,
+      smtp_username: username,
+      smtp_password: password,
+      smtp_port:     port,
+      smtp_active:   active
+    )).to be
+  end
 end

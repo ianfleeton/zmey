@@ -175,6 +175,34 @@
             label
               = form.radio_button :show_vat_inclusive_prices, false, class: 'radio'
               | No
+  .row
+    .col-md-4
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title= t('.smtp_settings')
+        .panel-body
+          label for="website_smtp_active_true" Active?
+          .radio
+            label
+              = form.radio_button :smtp_active, true
+              | Active
+
+          .radio
+            label
+              = form.radio_button :smtp_active, false
+              | Inactive
+
+          = form.label :smtp_host
+          = form.text_field :smtp_host, class: 'form-control'
+
+          = form.label :smtp_username
+          = form.text_field :smtp_username, class: 'form-control'
+
+          = form.label :smtp_password
+          = form.text_field :smtp_password, class: 'form-control'
+
+          = form.label :smtp_port
+          = form.text_field :smtp_port, class: 'form-control'
 
   h2 Shop Settings
 
