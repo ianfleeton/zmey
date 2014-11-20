@@ -1,5 +1,10 @@
+require 'concerns/email_setup'
+
 class EnquiryNotifier < ActionMailer::Base
+  include EmailSetup
+
   def enquiry website, e
+    @website = website
     @name = e.name
     @organisation = e.organisation
     @address = e.address

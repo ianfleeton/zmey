@@ -177,4 +177,16 @@ describe Website do
       expect(Website.new(subdomain: 'xyzzy').to_s).to eq 'xyzzy'
     end
   end
+
+  describe '#smtp_settings' do
+    it 'returns a hash of settings usable with ActionMailer' do
+      website = Website.new(smtp_username: 'u', smtp_password: 'p', smtp_host: 'h', smtp_port: 465)
+      expect(website.smtp_settings).to eq({
+        address: 'h',
+        password: 'p',
+        port: 465,
+        user_name: 'u'
+      })
+    end
+  end
 end

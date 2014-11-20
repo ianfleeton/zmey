@@ -1,5 +1,13 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe BasketMailer do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:website) { FactoryGirl.build(:website) }
+  let(:basket) { FactoryGirl.build(:basket, token: 'xyz') }
+  let(:email_address) { 'shopper@example.com' }
+
+  describe 'saved_basket' do
+    it 'works' do
+      BasketMailer.saved_basket(website, email_address, basket).deliver_now
+    end
+  end
 end

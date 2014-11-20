@@ -347,6 +347,16 @@ class Website < ActiveRecord::Base
     subdomain
   end
 
+  # Returns a hash of settings usable with ActionMailer.
+  def smtp_settings
+    {
+      address: smtp_host,
+      password: smtp_password,
+      port: smtp_port,
+      user_name: smtp_username
+    }
+  end
+
   private
 
     def delete_country_addresses

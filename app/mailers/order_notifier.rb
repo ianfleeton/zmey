@@ -1,4 +1,8 @@
+require 'concerns/email_setup'
+
 class OrderNotifier < ActionMailer::Base
+  include EmailSetup
+
   helper :orders
   helper :products # price formatting
   helper :addresses # address formatting

@@ -1,5 +1,10 @@
+require 'concerns/email_setup'
+
 class UserNotifier < ActionMailer::Base
+  include EmailSetup
+
   def token(website, user)
+    @website = website
     @domain = website.domain
     @id = user.id
     @name = user.name
