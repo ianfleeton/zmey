@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141120212731) do
+ActiveRecord::Schema.define(version: 20141121154323) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 20141120212731) do
   add_index "api_keys", ["user_id"], name: "index_api_keys_on_user_id", using: :btree
 
   create_table "basket_items", force: true do |t|
-    t.integer  "basket_id",            limit: 4,     default: 0, null: false
-    t.integer  "product_id",           limit: 4,     default: 0, null: false
+    t.integer  "basket_id",            limit: 4,                 null: false
+    t.integer  "product_id",           limit: 4,                 null: false
     t.integer  "quantity",             limit: 4,     default: 1, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
