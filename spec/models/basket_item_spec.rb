@@ -23,6 +23,31 @@ describe BasketItem do
     end
   end
 
+  describe '#adjust_quantity' do
+    let(:basket_item) { FactoryGirl.build(:basket_item, product_id: product.id) }
+
+    before do
+      basket_item.quantity = 1.6
+      basket_item.save
+    end
+
+    context 'when product allows fractional quantity' do
+      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: true) }
+
+      it 'leaves the quantity as a decimal' do
+        expect(basket_item.reload.quantity).to eq 1.6
+      end
+    end
+
+    context 'when product disallows fractional quantity' do
+      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: false) }
+
+      it 'rounds the quantity up' do
+        expect(basket_item.reload.quantity).to eq 2
+      end
+    end
+  end
+
   describe '#weight' do
     it 'returns the weight of the product times the quantity' do
       product = FactoryGirl.build(:product, weight: 2.5)

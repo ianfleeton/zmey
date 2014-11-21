@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121155757) do
+ActiveRecord::Schema.define(version: 20141121161611) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -414,37 +414,38 @@ ActiveRecord::Schema.define(version: 20141121155757) do
   add_index "product_placements", ["product_id"], name: "index_product_placements_on_product_id", using: :btree
 
   create_table "products", force: true do |t|
-    t.integer  "website_id",              limit: 4
-    t.string   "sku",                     limit: 255,                            default: "",         null: false
-    t.string   "name",                    limit: 255,                            default: "",         null: false
-    t.decimal  "price",                                 precision: 10, scale: 3, default: 0.0,        null: false
-    t.integer  "image_id",                limit: 4
-    t.text     "description",             limit: 65535
-    t.boolean  "in_stock",                limit: 1,                              default: true,       null: false
+    t.integer  "website_id",                limit: 4
+    t.string   "sku",                       limit: 255,                            default: "",         null: false
+    t.string   "name",                      limit: 255,                            default: "",         null: false
+    t.decimal  "price",                                   precision: 10, scale: 3, default: 0.0,        null: false
+    t.integer  "image_id",                  limit: 4
+    t.text     "description",               limit: 65535
+    t.boolean  "in_stock",                  limit: 1,                              default: true,       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "apply_shipping",          limit: 1,                              default: true,       null: false
-    t.text     "full_detail",             limit: 65535
-    t.integer  "tax_type",                limit: 4,                              default: 1,          null: false
-    t.decimal  "shipping_supplement",                   precision: 10, scale: 3, default: 0.0,        null: false
-    t.string   "page_title",              limit: 255,                            default: "",         null: false
-    t.string   "meta_description",        limit: 255,                            default: "",         null: false
-    t.decimal  "weight",                                precision: 10, scale: 3, default: 0.0,        null: false
-    t.string   "google_title",            limit: 255,                            default: "",         null: false
-    t.string   "condition",               limit: 255,                            default: "new",      null: false
-    t.string   "google_product_category", limit: 255,                            default: "",         null: false
-    t.string   "product_type",            limit: 255,                            default: "",         null: false
-    t.string   "brand",                   limit: 255,                            default: "",         null: false
-    t.string   "availability",            limit: 255,                            default: "in stock", null: false
-    t.string   "gtin",                    limit: 255,                            default: "",         null: false
-    t.string   "mpn",                     limit: 255,                            default: "",         null: false
-    t.boolean  "submit_to_google",        limit: 1,                              default: true,       null: false
-    t.decimal  "rrp",                                   precision: 10, scale: 3
-    t.boolean  "active",                  limit: 1,                              default: true,       null: false
-    t.string   "gender",                  limit: 255,                            default: "",         null: false
-    t.string   "age_group",               limit: 255,                            default: "",         null: false
-    t.integer  "nominal_code_id",         limit: 4
-    t.text     "google_description",      limit: 65535
+    t.boolean  "apply_shipping",            limit: 1,                              default: true,       null: false
+    t.text     "full_detail",               limit: 65535
+    t.integer  "tax_type",                  limit: 4,                              default: 1,          null: false
+    t.decimal  "shipping_supplement",                     precision: 10, scale: 3, default: 0.0,        null: false
+    t.string   "page_title",                limit: 255,                            default: "",         null: false
+    t.string   "meta_description",          limit: 255,                            default: "",         null: false
+    t.decimal  "weight",                                  precision: 10, scale: 3, default: 0.0,        null: false
+    t.string   "google_title",              limit: 255,                            default: "",         null: false
+    t.string   "condition",                 limit: 255,                            default: "new",      null: false
+    t.string   "google_product_category",   limit: 255,                            default: "",         null: false
+    t.string   "product_type",              limit: 255,                            default: "",         null: false
+    t.string   "brand",                     limit: 255,                            default: "",         null: false
+    t.string   "availability",              limit: 255,                            default: "in stock", null: false
+    t.string   "gtin",                      limit: 255,                            default: "",         null: false
+    t.string   "mpn",                       limit: 255,                            default: "",         null: false
+    t.boolean  "submit_to_google",          limit: 1,                              default: true,       null: false
+    t.decimal  "rrp",                                     precision: 10, scale: 3
+    t.boolean  "active",                    limit: 1,                              default: true,       null: false
+    t.string   "gender",                    limit: 255,                            default: "",         null: false
+    t.string   "age_group",                 limit: 255,                            default: "",         null: false
+    t.integer  "nominal_code_id",           limit: 4
+    t.text     "google_description",        limit: 65535
+    t.boolean  "allow_fractional_quantity", limit: 1,                              default: false,      null: false
   end
 
   add_index "products", ["name"], name: "index_products_on_name", using: :btree

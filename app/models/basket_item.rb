@@ -6,6 +6,7 @@ class BasketItem < ActiveRecord::Base
   belongs_to :product
   has_many :feature_selections, -> { order 'id' }, dependent: :delete_all
   before_save :update_features
+  before_save :adjust_quantity
 
   def line_total(inc_tax)
     quantity * (inc_tax ? product_price_inc_tax : product_price_ex_tax)
@@ -31,6 +32,12 @@ class BasketItem < ActiveRecord::Base
   # described for this item in the basket
   def update_features
     self.feature_descriptions = BasketItem.describe_feature_selections(feature_selections)
+  end
+
+  # Converts quantity to an integer unless product allows a fractional
+  # quantity.
+  def adjust_quantity
+    self.quantity = quantity.ceil unless product.allow_fractional_quantity?
   end
 
   def weight
