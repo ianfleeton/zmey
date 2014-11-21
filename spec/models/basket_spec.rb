@@ -94,8 +94,9 @@ describe Basket do
     end
 
     it 'copies basket items' do
+      p = FactoryGirl.create(:product)
       b = FactoryGirl.create(:basket)
-      b.basket_items << BasketItem.new
+      b.basket_items << BasketItem.new(product_id: p.id)
       expect(b.deep_clone.basket_items.count).to eq 1
       expect(b.basket_items.count).to eq 1
     end
