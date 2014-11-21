@@ -1,6 +1,11 @@
 class Api::Admin::PagesController < Api::Admin::AdminController
+  before_action :set_page, only: [:show]
+
   def index
     @pages = website.pages
+  end
+
+  def show
   end
 
   def create
@@ -26,6 +31,11 @@ class Api::Admin::PagesController < Api::Admin::AdminController
   end
 
   private
+
+    def set_page
+      @page = Page.find_by(id: params[:id], website_id: website.id)
+      render nothing: true, status: 404 unless @page
+    end
 
     def page_params
       params.require(:page).permit(:content, :description, :extra, :image_id,

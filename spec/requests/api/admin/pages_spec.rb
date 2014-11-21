@@ -46,6 +46,26 @@ describe 'Admin pages API' do
     end
   end
 
+  describe 'GET show' do
+    context 'when page found' do
+      before do
+        @page = FactoryGirl.create(:page, website_id: @website.id)
+      end
+
+      it 'returns 200 OK' do
+        get api_admin_page_path(@page)
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when no page' do
+      it 'returns 404 Not Found' do
+        get '/api/admin/pages/0'
+        expect(response.status).to eq 404
+      end
+    end
+  end
+
   describe 'POST create' do
     it 'inserts a new page into the website' do
       name = SecureRandom.hex

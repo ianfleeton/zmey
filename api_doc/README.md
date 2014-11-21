@@ -84,6 +84,7 @@ A successful retrieval will return JSON similar to the example:
 ### Pages
 
 * [`GET` api/admin/pages](endpoints/admin/pages/GET_index.md)
+* [`GET` api/admin/pages/:id](endpoints/admin/pages/GET_page_by_id.md)
 * [`POST` api/admin/pages](endpoints/admin/pages/POST_create.md)
 * [`DELETE` api/admin/pages](endpoints/admin/pages/DELETE_delete_all.md)
 
