@@ -8,8 +8,6 @@
 /coverage
 
 *.doc
-*.jpg
-*.gif
 *.odt
 *.pdf
 *.psd
