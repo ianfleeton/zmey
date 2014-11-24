@@ -448,7 +448,6 @@ ActiveRecord::Schema.define(version: 20141121161611) do
     t.boolean  "allow_fractional_quantity", limit: 1,                              default: false,      null: false
   end
 
-  add_index "products", ["name"], name: "index_products_on_name", using: :btree
   add_index "products", ["nominal_code_id"], name: "index_products_on_nominal_code_id", using: :btree
   add_index "products", ["website_id"], name: "index_products_on_website_id", using: :btree
 
