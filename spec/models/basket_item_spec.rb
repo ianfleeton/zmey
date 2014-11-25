@@ -101,4 +101,32 @@ describe BasketItem do
       expect(item.weight).to eq 7.5
     end
   end
+
+  describe '#preserve_immutable_quantity' do
+    it 'allows quantity to change when mutable' do
+      item = FactoryGirl.create(:basket_item, immutable_quantity: false, quantity: 1)
+      item.quantity = 2
+      item.save
+      item.reload
+      expect(item.quantity).to eq 2
+    end
+
+    it 'prevents quantity from changing when immutable' do
+      item = FactoryGirl.create(:basket_item, immutable_quantity: true, quantity: 1)
+      item.quantity = 2
+      item.save
+      item.reload
+      expect(item.quantity).to eq 1
+    end
+
+    it 'prevents immutable_quantity from changing back to false once true' do
+      item = FactoryGirl.create(:basket_item, immutable_quantity: true)
+      item.immutable_quantity = false
+      item.quantity = 2
+      item.save
+      item.reload
+      expect(item.quantity).to eq 1
+      expect(item.immutable_quantity?).to be_truthy
+    end
+  end
 end

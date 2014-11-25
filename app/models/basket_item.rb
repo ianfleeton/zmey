@@ -7,6 +7,7 @@ class BasketItem < ActiveRecord::Base
   has_many :feature_selections, -> { order 'id' }, dependent: :delete_all
   before_save :update_features
   before_save :adjust_quantity
+  before_update :preserve_immutable_quantity
 
   def line_total(inc_tax)
     quantity * (inc_tax ? product_price_inc_tax : product_price_ex_tax)
@@ -55,5 +56,17 @@ class BasketItem < ActiveRecord::Base
 
   def weight
     product.weight * quantity
+  end
+
+  # If quantity is immutable then prevents any changes to quantity attribute.
+  # Also prevents immutable quantity being changed to mutable.
+  #
+  # Using immutable quantity allows an item to be added to the basket with
+  # a quantity that cannot be changed later.
+  def preserve_immutable_quantity
+    self.immutable_quantity = true if immutable_quantity_changed?
+    if immutable_quantity? && quantity_changed?
+      self.quantity = quantity_was
+    end
   end
 end
