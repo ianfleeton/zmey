@@ -9,6 +9,8 @@ class Basket < ActiveRecord::Base
     where('updated_at < ?', 90.days.ago)
   end
 
+  # Adds +product+ to the basket.
+  # Yields the container +BasketItem+ for editing if a block is given.
   def add(product, feature_selections, quantity)
     feature_descriptions = BasketItem.describe_feature_selections(feature_selections)
 
@@ -26,6 +28,7 @@ class Basket < ActiveRecord::Base
         quantity: quantity,
         feature_selections: feature_selections)
     end
+    yield item if block_given?
     item.save
   end
 
