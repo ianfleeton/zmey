@@ -97,6 +97,7 @@ en:
         top: 'Top'
     products:
       form:
+        active: 'Show product on website'
         allow_fractional_quantity: 'Allow fractional quantity to be ordered'
     users:
       edit:
@@ -192,9 +193,6 @@ en:
       heading: 'Payment Details'
       order: 'Order'
   price: Price
-  products:
-    form:
-      active: 'Show product on website'
   quantity: Qty
   register: Sign Up
   sessions:
