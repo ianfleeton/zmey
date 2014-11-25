@@ -32,6 +32,11 @@
     = form.label :rrp, 'RRP (leave blank if same as price)'
     = form.text_field :rrp, class: 'form-control'
 
+  .checkbox
+    label
+      => form.check_box :allow_fractional_quantity
+      = t('.allow_fractional_quantity')
+
   .form-group
     = form.label :shipping_supplement
     = form.text_field :shipping_supplement, class: 'form-control'

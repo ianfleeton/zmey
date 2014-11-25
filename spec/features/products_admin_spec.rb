@@ -12,6 +12,7 @@ feature 'Products admin' do
   scenario 'Create product' do
     product = FactoryGirl.build(:product,
       age_group: 'kids',
+      allow_fractional_quantity: [true, false].sample,
       gender: 'unisex',
       name:   SecureRandom.hex,
       sku:    SecureRandom.hex
@@ -24,10 +25,15 @@ feature 'Products admin' do
     fill_in 'Name',   with: product.name
     fill_in 'SKU',    with: product.sku
 
+    if product.allow_fractional_quantity?
+      check I18n.t('admin.products.form.allow_fractional_quantity')
+    end
+
     click_button 'Create Product'
 
     expect(Product.find_by(
       age_group: product.age_group,
+      allow_fractional_quantity: product.allow_fractional_quantity,
       gender:    product.gender,
       name:      product.name,
       sku:       product.sku

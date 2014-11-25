@@ -74,6 +74,7 @@ class Admin::ProductsController < Admin::AdminController
     def product_params
       params.require(:product).permit(
         :active, :age_group,
+        :allow_fractional_quantity,
         :apply_shipping, :availability, :brand, :condition, :description,
         :full_detail, :gender, :gtin,
         :google_description,
