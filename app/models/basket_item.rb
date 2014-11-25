@@ -47,6 +47,12 @@ class BasketItem < ActiveRecord::Base
     product.allow_fractional_quantity? ? 1 : quantity
   end
 
+  # Returns the quantity in a type suitable for display. If the product allows
+  # a fractional quantity then it's a decimal, otherwise it's an integer.
+  def display_quantity
+    product.allow_fractional_quantity? ? quantity : quantity.to_i
+  end
+
   def weight
     product.weight * quantity
   end

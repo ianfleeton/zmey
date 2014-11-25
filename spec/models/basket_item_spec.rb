@@ -70,6 +70,29 @@ describe BasketItem do
     end
   end
 
+  describe '#display_quantity' do
+    let(:basket_item) { BasketItem.new(product: product, quantity: quantity) }
+
+    context 'with product allowing fractional quantity' do
+      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: true) }
+      let(:quantity) { 2.5 }
+
+      it 'returns a decimal' do
+        expect(basket_item.display_quantity).to eq 2.5
+      end
+    end
+
+    context 'with product disallowing fractional quantity' do
+      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: false) }
+      let(:quantity) { 2 }
+
+      it 'returns an integer' do
+        expect(basket_item.display_quantity).to eq 2
+        expect(basket_item.display_quantity.kind_of?(Integer)).to be_truthy
+      end
+    end
+  end
+
   describe '#weight' do
     it 'returns the weight of the product times the quantity' do
       product = FactoryGirl.build(:product, weight: 2.5)

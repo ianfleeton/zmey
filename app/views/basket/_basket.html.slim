@@ -25,9 +25,9 @@
               small= item.feature_descriptions
           td
             - if can_update
-              input name="qty[#{item.id}]" size="2" maxlength="7" value="#{item.quantity}"
+              input name="qty[#{item.id}]" size="2" maxlength="7" value="#{item.display_quantity}"
             - else
-              = item.quantity
+              = item.display_quantity
           td.price= formatted_price(item.product.price_with_tax(item.quantity, inc_tax))
           td.line_total= formatted_price(item.line_total(inc_tax))
           - if can_update
