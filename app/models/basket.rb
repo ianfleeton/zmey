@@ -76,8 +76,10 @@ class Basket < ActiveRecord::Base
     basket_items.none?
   end
 
+  # Returns the total quantity of items in the basket. Items that can have
+  # fractional quantities are counted as 1 per line.
   def total_quantity
-    basket_items.inject(0) {|q, i| q + i.quantity}
+    basket_items.inject(0) {|q, i| q + i.counting_quantity}
   end
 
   def vat_total

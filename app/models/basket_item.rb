@@ -40,6 +40,13 @@ class BasketItem < ActiveRecord::Base
     self.quantity = quantity.ceil unless product.allow_fractional_quantity?
   end
 
+  # Returns the quantity of product in the line. Products that have a
+  # fractional quantity (for example, representating weight or area) are
+  # counted as 1.
+  def counting_quantity
+    product.allow_fractional_quantity? ? 1 : quantity
+  end
+
   def weight
     product.weight * quantity
   end
