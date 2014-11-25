@@ -69,6 +69,7 @@ describe 'Admin products API' do
     let(:tax_type) { Product::INC_VAT }
     let(:weight)   { 1.234 }
     let(:basic_params) {{
+      allow_fractional_quantity: true,
       name: name,
       sku: sku,
       tax_type: tax_type,

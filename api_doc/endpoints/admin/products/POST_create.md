@@ -11,6 +11,7 @@ Create a new product.
 
 ### Additional attributes
 
+* **allow_fractional_quantity** — Whether a fractional amount of this product can be added to the basket. Useful for products sold by weight, volume, length or area. Default is false.
 * **brand** — Brand / manufacturer of the product. Used in Google Shopping feed.
 * **description** — A description of the product.
 * **google_description** — An alternative description to use in Google feeds to meet editorial guidelines.

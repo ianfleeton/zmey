@@ -28,7 +28,9 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   private
 
     def product_params
-      params.require(:product).permit(:brand, :description,
+      params.require(:product).permit(
+      :allow_fractional_quantity,
+      :brand, :description,
       :google_description,
       :image_id,
       :meta_description, :name,
