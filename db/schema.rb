@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125213639) do
+ActiveRecord::Schema.define(version: 20141125230436) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -27,12 +27,12 @@ ActiveRecord::Schema.define(version: 20141125213639) do
     t.integer  "user_id",        limit: 4
     t.string   "full_name",      limit: 255, default: "", null: false
     t.string   "address_line_1", limit: 255, default: "", null: false
-    t.string   "address_line_2", limit: 255, default: "", null: false
+    t.string   "address_line_2", limit: 255
     t.string   "town_city",      limit: 255, default: "", null: false
-    t.string   "county",         limit: 255, default: "", null: false
+    t.string   "county",         limit: 255
     t.string   "postcode",       limit: 255, default: "", null: false
     t.integer  "country_id",     limit: 4,                null: false
-    t.string   "phone_number",   limit: 255, default: "", null: false
+    t.string   "phone_number",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email_address",  limit: 255, default: "", null: false
@@ -262,12 +262,12 @@ ActiveRecord::Schema.define(version: 20141125213639) do
     t.string   "email_address",                  limit: 255,                            default: "",  null: false
     t.string   "delivery_full_name",             limit: 255,                            default: "",  null: false
     t.string   "delivery_address_line_1",        limit: 255,                            default: "",  null: false
-    t.string   "delivery_address_line_2",        limit: 255,                            default: "",  null: false
+    t.string   "delivery_address_line_2",        limit: 255
     t.string   "delivery_town_city",             limit: 255,                            default: "",  null: false
-    t.string   "delivery_county",                limit: 255,                            default: "",  null: false
+    t.string   "delivery_county",                limit: 255
     t.string   "delivery_postcode",              limit: 255,                            default: "",  null: false
     t.integer  "delivery_country_id",            limit: 4,                                            null: false
-    t.string   "delivery_phone_number",          limit: 255,                            default: "",  null: false
+    t.string   "delivery_phone_number",          limit: 255
     t.decimal  "shipping_amount",                              precision: 10, scale: 3, default: 0.0, null: false
     t.string   "shipping_method",                limit: 255,                            default: "",  null: false
     t.integer  "status",                         limit: 4,                              default: 0,   null: false
@@ -285,12 +285,12 @@ ActiveRecord::Schema.define(version: 20141125213639) do
     t.datetime "processed_at"
     t.string   "billing_full_name",              limit: 255,                            default: "",  null: false
     t.string   "billing_address_line_1",         limit: 255,                            default: "",  null: false
-    t.string   "billing_address_line_2",         limit: 255,                            default: "",  null: false
+    t.string   "billing_address_line_2",         limit: 255
     t.string   "billing_town_city",              limit: 255,                            default: "",  null: false
-    t.string   "billing_county",                 limit: 255,                            default: "",  null: false
+    t.string   "billing_county",                 limit: 255
     t.string   "billing_postcode",               limit: 255,                            default: "",  null: false
     t.integer  "billing_country_id",             limit: 4,                                            null: false
-    t.string   "billing_phone_number",           limit: 255,                            default: "",  null: false
+    t.string   "billing_phone_number",           limit: 255
   end
 
   add_index "orders", ["basket_id"], name: "index_orders_on_basket_id", using: :btree
