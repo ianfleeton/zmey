@@ -67,6 +67,7 @@ FactoryGirl.define do
   factory :feature do
     name 'Colour'
     association :product
+    ui_type Feature::TEXT_FIELD
   end
 
   factory :forum do
