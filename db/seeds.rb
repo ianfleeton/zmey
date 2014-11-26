@@ -6,6 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+Order.fast_delete_all
+CarouselSlide.destroy_all
+Page.destroy_all
+Product.destroy_all
 Website.destroy_all
 
 website = Website.create!(
@@ -24,7 +28,6 @@ home_page = Page.find_by(name: 'Home')
 idevice = Product.create!(
   name: 'iDevice',
   sku: 'IDV13',
-  website: website
 )
 
 ProductPlacement.create!(
