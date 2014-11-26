@@ -58,7 +58,7 @@ class Image < ActiveRecord::Base
       f = 'sized_' + size.to_s + '.' + extension
       path = File.join(directory_path, f)
       # create a new image of the required size if it doesn't exist
-      unless FileTest.exists?(path)
+      unless FileTest.exist?(path)
         begin
           ImageScience.with_image(original_path) do |img|
             # protect against crashes
