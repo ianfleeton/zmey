@@ -16,7 +16,7 @@ class Api::Admin::AdminController < ApplicationController
       @website = key.user.managed_website
       render nothing: true, status: 403 unless @website # forbidden
     else
-      render nothing: true, status: 401 # unauthorized
+      render nothing: true, status: 401 # unauthorized
     end
   end
 
