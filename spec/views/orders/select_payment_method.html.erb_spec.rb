@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'orders/select_payment_method.html.erb' do
   context 'when WorldPay active' do
     let(:website) { FactoryGirl.create(:website, worldpay_active: true, worldpay_installation_id: '1234', worldpay_payment_response_password: 'secret') }
-    let(:order)   { FactoryGirl.create(:order, website: website) }
+    let(:order)   { FactoryGirl.create(:order) }
 
     before do
       allow(view).to receive(:website).and_return(website)
@@ -25,7 +25,7 @@ describe 'orders/select_payment_method.html.erb' do
 
   context 'when Cardsave active' do
     let(:website) { FactoryGirl.create(:website, cardsave_active: true) }
-    let(:order)   { FactoryGirl.create(:order, website: website) }
+    let(:order)   { FactoryGirl.create(:order) }
 
     before do
       allow(view).to receive(:website).and_return(website)

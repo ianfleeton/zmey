@@ -9,7 +9,7 @@ feature 'Orders admin' do
     sign_in_as_admin
   end
 
-  let(:order)      { FactoryGirl.create(:order, website_id: website.id) }
+  let(:order)      { FactoryGirl.create(:order) }
   let(:order_line) { FactoryGirl.create(:order_line, order_id: order.id) }
 
   scenario 'Create order' do

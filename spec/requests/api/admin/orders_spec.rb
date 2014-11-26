@@ -27,13 +27,11 @@ describe 'Admin orders API' do
       num_orders.times do |x|
         FactoryGirl.create(
           :order,
-          website_id: @website.id,
           user_id: FactoryGirl.create(:user).id,
           created_at: Date.today - x.days # affects ordering
         )
       end
       @order1 = Order.first
-      @order2 = FactoryGirl.create(:order)
 
       more_setup.try(:call)
 
@@ -43,7 +41,7 @@ describe 'Admin orders API' do
         processed: processed, status: status
     end
 
-    it 'returns orders for the website' do
+    it 'returns all orders' do
       expect(orders['orders'].length).to eq 1
       order = orders['orders'][0]
       expect(order['id']).to eq @order1.id
@@ -65,7 +63,7 @@ describe 'Admin orders API' do
       let(:order_number) { SecureRandom.hex }
 
       let!(:more_setup) {->{
-        @matching_order = FactoryGirl.create(:order, website_id: @website.id)
+        @matching_order = FactoryGirl.create(:order)
         @matching_order.order_number = order_number
         @matching_order.save
       }}
@@ -94,7 +92,7 @@ describe 'Admin orders API' do
 
     context 'with processed set' do
       let!(:more_setup) {->{
-        @processed_order = FactoryGirl.create(:order, website_id: @website.id,
+        @processed_order = FactoryGirl.create(:order,
           processed_at: Date.today - 1.day)
       }}
 
@@ -163,7 +161,7 @@ describe 'Admin orders API' do
   describe 'GET show' do
     context 'when order found' do
       before do
-        @order = FactoryGirl.create(:order, website_id: @website.id)
+        @order = FactoryGirl.create(:order)
       end
 
       it 'returns 200 OK' do
@@ -208,7 +206,7 @@ describe 'Admin orders API' do
 
     it 'inserts a new order into the website' do
       post '/api/admin/orders', order: basic_params
-      expect(Order.find_by(basic_params.merge(website_id: @website.id, status: Enums::PaymentStatus::WAITING_FOR_PAYMENT))).to be
+      expect(Order.find_by(basic_params.merge(status: Enums::PaymentStatus::WAITING_FOR_PAYMENT))).to be
     end
 
     it 'returns 422 if order cannot be created' do
@@ -219,15 +217,13 @@ describe 'Admin orders API' do
 
   describe 'DELETE delete_all' do
     it 'deletes all orders in the website' do
-      order_1 = FactoryGirl.create(:order, website_id: @website.id)
-      order_2 = FactoryGirl.create(:order, website_id: @website.id)
-      order_3 = FactoryGirl.create(:order)
+      order_1 = FactoryGirl.create(:order)
+      order_2 = FactoryGirl.create(:order)
 
       delete '/api/admin/orders'
 
       expect(Order.find_by(id: order_1.id)).not_to be
       expect(Order.find_by(id: order_2.id)).not_to be
-      expect(Order.find_by(id: order_3.id)).to be
     end
 
     it 'responds with 204 No Content' do
@@ -245,7 +241,7 @@ describe 'Admin orders API' do
     end
 
     context 'when order found' do
-      let(:order) { FactoryGirl.create(:order, website_id: @website.id) }
+      let(:order) { FactoryGirl.create(:order) }
 
       it 'responds with 204 No Content' do
         expect(status).to eq 204
@@ -257,7 +253,11 @@ describe 'Admin orders API' do
     end
 
     context 'when order not found' do
-      let(:order) { FactoryGirl.create(:order) }
+      let(:order) do
+        o = FactoryGirl.create(:order)
+        o.id += 1
+        o
+      end
 
       it 'responds 404 Not Found' do
         expect(status).to eq 404

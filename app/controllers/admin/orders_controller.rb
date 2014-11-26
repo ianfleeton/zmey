@@ -3,9 +3,9 @@ class Admin::OrdersController < Admin::AdminController
 
   def index
     if params[:user_id]
-      @orders = User.find(params[:user_id]).orders.where(website_id: website.id).paginate(page: params[:page], per_page: 50)
+      @orders = User.find(params[:user_id]).orders.paginate(page: params[:page], per_page: 50)
     else
-      @orders = website.orders.paginate(page: params[:page], per_page: 250)
+      @orders = Order.all.paginate(page: params[:page], per_page: 250)
     end
   end
 
@@ -18,7 +18,6 @@ class Admin::OrdersController < Admin::AdminController
   def create
     @order = Order.new(order_params)
     @order.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
-    @order.website = website
 
     if @order.save
       redirect_to admin_orders_path
@@ -62,7 +61,7 @@ class Admin::OrdersController < Admin::AdminController
 
     # get specific order
     def set_order
-      @order = Order.find_by(id: params[:id], website_id: website.id)
+      @order = Order.find_by(id: params[:id])
       if @order.nil?
         redirect_to orders_path, notice: 'Cannot find order.'
       end

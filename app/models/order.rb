@@ -50,9 +50,6 @@
 # +user+::
 #   The User account associated with the order. This is set when orders are
 #   placed by registered customers.
-#
-# +website+::
-#   Website the customer was using to place the order.
 class Order < ActiveRecord::Base
   include Enums
   include Enums::Conversions
@@ -69,7 +66,6 @@ class Order < ActiveRecord::Base
   belongs_to :delivery_country, class_name: 'Country'
   belongs_to :basket
   belongs_to :user
-  belongs_to :website
   has_many :order_lines, dependent: :delete_all, inverse_of: :order
   has_many :payments, dependent: :delete_all
 
@@ -214,7 +210,7 @@ class Order < ActiveRecord::Base
     {
       order: {
         id: id,
-        href: Rails.application.routes.url_helpers.api_admin_order_url(self, host: website.domain),
+        href: Rails.application.routes.url_helpers.api_admin_order_url(self, host: Website.first.domain),
         email_address: email_address,
         status: PaymentStatus(status).to_api,
         total: total

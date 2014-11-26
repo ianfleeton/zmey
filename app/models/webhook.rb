@@ -7,10 +7,9 @@ class Webhook < ActiveRecord::Base
   validates_presence_of :url
   validates_presence_of :website_id
 
-  # Triggers any webhooks that are registered for the object's website and
-  # the specified event.
+  # Triggers any webhooks that are registered for the specified event.
   def self.trigger(event, object)
-    hooks = Webhook.where(website: object.website, event: event)
+    hooks = Webhook.where(event: event)
     if hooks.any?
       payload = object.to_webhook_payload(event)      
       hooks.each { |h| h.delay.trigger(payload) }

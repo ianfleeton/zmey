@@ -95,7 +95,6 @@ class BasketController < ApplicationController
     delete_previous_unpaid_order_if_any
 
     @order = Order.new
-    @order.website_id = website.id
     @order.user_id = @current_user.id if logged_in?
     @order.ip_address = request.remote_ip
     @order.copy_delivery_address @address

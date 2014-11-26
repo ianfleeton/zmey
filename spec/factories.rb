@@ -97,7 +97,6 @@ FactoryGirl.define do
     delivery_postcode       'HG1 9ZZ'
     association :billing_country,  factory: :country
     association :delivery_country, factory: :country
-    association :website
     status                  Enums::PaymentStatus::WAITING_FOR_PAYMENT
   end
 

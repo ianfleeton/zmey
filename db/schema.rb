@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126114811) do
+ActiveRecord::Schema.define(version: 20141126134839) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -274,7 +274,6 @@ ActiveRecord::Schema.define(version: 20141126114811) do
     t.decimal  "total",                                        precision: 10, scale: 3, default: 0.0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "website_id",                     limit: 4,                              default: 0,   null: false
     t.integer  "basket_id",                      limit: 4
     t.date     "preferred_delivery_date"
     t.string   "preferred_delivery_date_prompt", limit: 255
@@ -298,7 +297,6 @@ ActiveRecord::Schema.define(version: 20141126114811) do
   add_index "orders", ["email_address"], name: "index_orders_on_email_address", using: :btree
   add_index "orders", ["processed_at"], name: "index_orders_on_processed_at", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
-  add_index "orders", ["website_id"], name: "index_orders_on_website_id", using: :btree
 
   create_table "pages", force: true do |t|
     t.string   "title",              limit: 255,        default: "",    null: false

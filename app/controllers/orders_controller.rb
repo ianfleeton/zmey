@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
   layout 'basket_checkout', only: [:receipt, :select_payment_method]
 
   def index
-    @orders = current_user.orders.where(website_id: website.id)
+    @orders = current_user.orders
   end
 
   def select_payment_method
@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
 
   # get specific order
   def find_order
-    @order = Order.find_by(id: params[:id], website_id: website.id)
+    @order = Order.find_by(id: params[:id])
     if @order.nil?
       redirect_to orders_path, notice: 'Cannot find order.'
     end

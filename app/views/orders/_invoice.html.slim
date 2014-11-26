@@ -13,32 +13,32 @@
   table width="100%"
     tr
       td width="50%"
-        h1= order.website.name
+        h1= website.name
         p
-          = order.website.address_line_1
+          = website.address_line_1
           br
-          = order.website.address_line_2
+          = website.address_line_2
           br
-          = order.website.town_city
+          = website.town_city
           br
-          = order.website.county
+          = website.county
           br
-          = order.website.postcode
+          = website.postcode
           br
-          = order.website.country
+          = website.country
           br
           b Phone
-          =< order.website.phone_number
+          =< website.phone_number
           br
           b Email
-          =< order.website.email
+          =< website.email
           br
           b Website
-          =< order.website.domain
-          - if order.website.vat_number.present?
+          =< website.domain
+          - if website.vat_number.present?
             br
             b VAT Number:
-            =< order.website.vat_number
+            =< website.vat_number
         td
           p
             = order.delivery_full_name.upcase

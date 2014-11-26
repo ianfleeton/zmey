@@ -18,7 +18,6 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
     end
 
     @order = Order.new(order_params)
-    @order.website = website
 
     unless @order.save
       render json: @order.errors.full_messages, status: :unprocessable_entity
@@ -48,7 +47,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
   private
 
     def set_order
-      @order = Order.find_by(id: params[:id], website_id: website.id)
+      @order = Order.find_by(id: params[:id])
       render nothing: true, status: 404 unless @order
     end
 
@@ -70,7 +69,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
         not_conditions[:processed_at] = nil
       end
 
-      website.orders.where(conditions).where.not(not_conditions)
+      Order.where(conditions).where.not(not_conditions)
     end
 
     def order_params

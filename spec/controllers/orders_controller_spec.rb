@@ -18,15 +18,13 @@ describe OrdersController do
         allow(controller).to receive(:current_user).and_return(current_user)
       end
 
-      it 'assigns orders belonging to the current user and website to @orders' do
+      it 'assigns orders belonging to the current user to @orders' do
         another_website = FactoryGirl.create(:website)
-        expected_order = FactoryGirl.create(:order, user: current_user, website: website)
-        unexpected_order_1 = FactoryGirl.create(:order, user: current_user, website: another_website)
-        unexpected_order_2 = FactoryGirl.create(:order, user: FactoryGirl.create(:user), website: website)
+        expected_order = FactoryGirl.create(:order, user: current_user)
+        unexpected_order = FactoryGirl.create(:order, user: FactoryGirl.create(:user))
         get 'index'
         expect(assigns(:orders)).to include(expected_order)
-        expect(assigns(:orders)).not_to include(unexpected_order_1)
-        expect(assigns(:orders)).not_to include(unexpected_order_2)
+        expect(assigns(:orders)).not_to include(unexpected_order)
       end
 
       it 'renders index' do

@@ -9,6 +9,8 @@ describe Order do
   end
 
   describe '#to_webhook_payload' do
+    before { FactoryGirl.create(:website) }
+
     context 'when event="order_created"' do
       let(:event) { 'order_created' }
       let(:order) { FactoryGirl.create(:order) }

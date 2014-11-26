@@ -2,7 +2,7 @@ class Api::Admin::OrderLinesController < Api::Admin::AdminController
   def create
     @order_line = OrderLine.new(order_line_params)
 
-    if params[:order_line][:order_id].blank? || !Order.exists?(id: params[:order_line][:order_id], website_id: website.id)
+    if params[:order_line][:order_id].blank? || !Order.exists?(id: params[:order_line][:order_id])
       @order_line.errors.add(:base, 'Order does not exist.')
     end
 

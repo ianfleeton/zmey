@@ -17,15 +17,15 @@ describe Admin::OrdersController do
 
     describe 'GET index' do
       context 'with no user supplied' do
-        it_behaves_like 'a website owned objects finder', :order
+        pending
       end
 
       context 'with user supplied' do
         it 'assigns all orders for the supplied user to @orders' do
           u = User.create!(email: 'user@example.org', name: 'Alice', password: 'secret')
           country = FactoryGirl.create(:country)
-          FactoryGirl.create(:order, user_id: u.id, website_id: website.id)
-          FactoryGirl.create(:order, user_id: u.id, website_id: website.id, created_at: Date.today - 1.day)
+          FactoryGirl.create(:order, user_id: u.id)
+          FactoryGirl.create(:order, user_id: u.id, created_at: Date.today - 1.day)
           expect(u.orders.count).to eq 2
           get 'index', user_id: u.id
           expect(assigns(:orders).to_a).to eq u.orders.to_a
@@ -43,16 +43,11 @@ describe Admin::OrdersController do
 
     describe 'POST create' do
       let(:email) { SecureRandom.hex }
-      let(:order) { FactoryGirl.build(:order, email_address: email, website_id: nil) }
+      let(:order) { FactoryGirl.build(:order, email_address: email) }
 
       it 'creates an order' do
         post :create, order: order.attributes
         expect(Order.find_by(email_address: email)).to be
-      end
-
-      it 'associates the order with the website' do
-        post :create, order: order.attributes
-        expect(Order.find_by(email_address: email).website).to eq website
       end
 
       it 'sets the order status to WAITING_FOR_PAYMENT' do
@@ -84,7 +79,7 @@ describe Admin::OrdersController do
     end
 
     describe 'GET edit' do
-      let(:order) { FactoryGirl.create(:order, website_id: website.id) }
+      let(:order) { FactoryGirl.create(:order) }
 
       it 'assigns the order to @order' do
         get :edit, id: order.id
@@ -93,7 +88,7 @@ describe Admin::OrdersController do
     end
 
     describe 'PATCH update' do
-      let(:order) { FactoryGirl.create(:order, website_id: website.id) }
+      let(:order) { FactoryGirl.create(:order) }
 
       it 'assigns the order to @order' do
         patch :update, id: order.id
@@ -120,7 +115,7 @@ describe Admin::OrdersController do
 
     describe 'POST destroy' do
       it 'finds the order' do
-        expect(Order).to receive(:find_by).with(id: '1', website_id: website.id)
+        expect(Order).to receive(:find_by).with(id: '1')
         post_destroy
       end
 

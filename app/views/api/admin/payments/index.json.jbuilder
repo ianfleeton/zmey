@@ -8,8 +8,10 @@ json.payments(@payments) do |payment|
   json.test_mode        payment.test_mode
   json.created_at       payment.created_at
   json.updated_at       payment.updated_at
-  json.order do
-    json.id   payment.order.id
-    json.href api_admin_order_url(payment.order)
+  if payment.order
+    json.order do
+      json.id   payment.order.id
+      json.href api_admin_order_url(payment.order)
+    end
   end
 end

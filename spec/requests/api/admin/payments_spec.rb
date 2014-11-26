@@ -7,7 +7,7 @@ describe 'Admin payments API' do
 
   describe 'GET index' do
     before do
-      @order1 = FactoryGirl.create(:order, website_id: @website.id)
+      @order1 = FactoryGirl.create(:order)
       @payment1 = FactoryGirl.create(
         :payment,
         order_id: @order1.id,
@@ -25,7 +25,7 @@ describe 'Admin payments API' do
 
       payments = JSON.parse(response.body)
 
-      expect(payments['payments'].length).to eq 1
+      expect(payments['payments'].length).to eq 2
       payment = payments['payments'][0]
       expect(payment['id']).to eq @payment1.id
       expect(payment['href']).to eq api_admin_payment_url(@payment1)
@@ -63,7 +63,7 @@ describe 'Admin payments API' do
   describe 'GET show' do
     context 'when payment found' do
       before do
-        @order = FactoryGirl.create(:order, website_id: @website.id)
+        @order = FactoryGirl.create(:order)
         @payment = FactoryGirl.create(:payment, order_id: @order.id)
       end
 
