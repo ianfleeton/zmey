@@ -10,10 +10,9 @@ key as the username and a blank password.
 ## Failure responses
 
 * **401 Unauthorized** — the key is invalid.
-* **403 Forbidden** — the key is not associated with a website or the object is
-owned by another website.
-* **426 Upgrade Required** — you are trying to access the API over an
-unencrypted connection but SSL should be used.
+* **403 Forbidden** — the key's owner does not manage the the website or you
+are trying to access the API over an unencrypted connection but SSL should be
+used.
 
 ## Retrieving an API key for client applications
 
