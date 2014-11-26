@@ -56,6 +56,10 @@ A successful retrieval will return JSON similar to the example:
 
 * [`GET` api/admin/countries](endpoints/admin/countries/GET_index.md)
 
+### Features
+
+* [`POST` api/admin/features](endpoints/admin/features/POST_create.md)
+
 ### Images
 
 * [`GET` api/admin/images](endpoints/admin/images/GET_index.md)

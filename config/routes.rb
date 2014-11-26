@@ -79,6 +79,8 @@ Rails.application.routes.draw do
 
       resources :countries, only: [:index, :show]
 
+      resources :features, only: [:create, :show]
+
       resources :images, only: [:create, :index, :show]
       delete 'images', to: 'images#delete_all'
 
