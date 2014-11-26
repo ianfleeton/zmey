@@ -24,7 +24,7 @@
               br
               small= item.feature_descriptions
           td
-            - if can_update
+            - if can_update && !item.immutable_quantity?
               input name="qty[#{item.id}]" size="2" maxlength="7" value="#{item.display_quantity}"
             - else
               = item.display_quantity
