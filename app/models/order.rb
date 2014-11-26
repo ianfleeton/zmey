@@ -221,4 +221,11 @@ class Order < ActiveRecord::Base
       }
     }
   end
+
+  # Implements a fast deletion of all orders and dependents.
+  def self.fast_delete_all
+    Payment.delete_all
+    OrderLine.delete_all
+    Order.delete_all
+  end
 end

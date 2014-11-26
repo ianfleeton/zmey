@@ -41,7 +41,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
   end
 
   def delete_all
-    website.orders.destroy_all
+    Order.fast_delete_all
     render nothing: :true, status: 204
   end
 
