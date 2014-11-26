@@ -42,11 +42,11 @@ class CustomView < ActiveRecord::Base
     include ResolverCacheManager
   end
 
-  # Find views associated with the website in the themes directory.
+  # Find views associated with the website in the theme directory.
   class ThemeResolver < ActionView::FileSystemResolver
     def initialize(website)
       @website = website
-      super(File.join([ENV['ZMEY_THEMES'], website.subdomain, 'app', 'views']))
+      super(File.join(Rails.root, 'app', 'views', website.subdomain))
     end
 
     include ResolverCacheManager

@@ -83,10 +83,11 @@ webhooks, run the adapter service: https://github.com/ianfleeton/zmey-webhook-ha
 
     URL of the git repository. Used when deploying with Capistrano.
 
-[ZMEY_THEMES]
+=== Create your own theme
 
-    Location of themes that will override the core views. Use this to theme
-    websites without modifying views in the core repository. To use external
-    themes, set a website's custom view resolver attribute to
-    CustomView::ThemeResolver. Themes are looked up in ZMEY_THEMES/subdomain
-    where subdomain is the website's subdomain attribute.
+Set the +subdomain+ attribute in your website settings.
+
+Set the +custom_view_resolver+ attribute to +CustomView::ThemeResolver+.
+
+Create a subdirectory matching this name under app/views. Any views you create
+here will override the base views.
