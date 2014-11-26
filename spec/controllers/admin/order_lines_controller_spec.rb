@@ -11,7 +11,7 @@ describe Admin::OrderLinesController do
   describe 'PATCH update' do
     it 'updates an order line' do
       ol = FactoryGirl.create(:order_line)
-      new_quantity = rand(100)
+      new_quantity = rand(100) + 1
       patch :update, id: ol.id, order_line: {
         quantity: new_quantity
       }
