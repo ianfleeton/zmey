@@ -122,4 +122,21 @@ class Image < ActiveRecord::Base
       }
     }
   end
+
+  def self.fast_delete_all
+    raise ActiveRecord::DeleteRestrictionError.new('carousel_slides') if CarouselSlide.any?
+
+    Page.where.not(image_id: nil).update_all(image_id: nil, updated_at: Time.zone.now)
+    Page.where.not(thumbnail_image_id: nil).update_all(thumbnail_image_id: nil, updated_at: Time.zone.now)
+    Product.where.not(image_id: nil).update_all(image_id: nil, updated_at: Time.zone.now)
+
+    Image.delete_all
+
+    delete_files
+  end
+
+  def self.delete_files
+    FileUtils.rm_rf(IMAGE_STORAGE_PATH)
+    FileUtils.makedirs(IMAGE_STORAGE_PATH)
+  end
 end
