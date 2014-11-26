@@ -10,12 +10,14 @@ class Feature < ActiveRecord::Base
   belongs_to :product
   belongs_to :component
 
-  # UI types
-  TEXT_FIELD = 1
-  TEXT_AREA = 2
-  RADIO_BUTTONS = 3
-  DROP_DOWN = 4
-  CHECK_BOX = 5
+  UI_TYPES = [
+    TEXT_FIELD = 1,
+    TEXT_AREA = 2,
+    RADIO_BUTTONS = 3,
+    DROP_DOWN = 4,
+    CHECK_BOX = 5
+  ]
+  validates_inclusion_of :ui_type, in: UI_TYPES
 
   def to_s
     name
