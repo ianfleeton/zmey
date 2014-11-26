@@ -43,14 +43,6 @@ class Website < ActiveRecord::Base
 
   before_destroy :delete_country_addresses, prepend: true
 
-  def self.for(domain, subdomains)
-    website = find_by(domain: domain)
-    unless subdomains.blank?
-      website ||= find_by(subdomain: subdomains.first)
-    end
-    website
-  end
-
   def shipping_countries
     c = countries.where('shipping_zone_id IS NOT NULL')
     c.empty? ? countries : c

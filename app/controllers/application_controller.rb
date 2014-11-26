@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_website
-    @w = Website.for(request.host, request.subdomains) || Website.first
+    @w = Website.first
     if @w
       return @w
     else
