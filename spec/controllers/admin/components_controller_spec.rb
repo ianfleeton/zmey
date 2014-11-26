@@ -65,7 +65,6 @@ describe Admin::ComponentsController do
     context 'when product valid' do
       before do
         allow(controller).to receive(:admin?).and_return(true)
-        component.product.website = website
         component.product.save
       end
 

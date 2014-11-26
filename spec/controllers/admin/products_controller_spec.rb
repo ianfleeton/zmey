@@ -16,7 +16,7 @@ describe Admin::ProductsController do
     context "when logged in as admin" do
       before { logged_in_as_admin }
 
-      it_behaves_like 'a website owned objects finder', :product
+      pending
     end
   end
 
@@ -148,6 +148,6 @@ describe Admin::ProductsController do
   end
 
   def find_requested_product(stubs={})
-    expect(Product).to receive(:find_by).with(id: '37', website_id: website.id).and_return(mock_product(stubs))
+    expect(Product).to receive(:find_by).with(id: '37').and_return(mock_product(stubs))
   end
 end

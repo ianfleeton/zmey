@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Product placements admin' do
   let(:website)  { FactoryGirl.create(:website) }
   let(:page_obj) { FactoryGirl.create(:page, website_id: website.id) }
-  let(:product)  { FactoryGirl.create(:product, website_id: website.id) }
+  let(:product)  { FactoryGirl.create(:product) }
 
   background do
     Website.delete_all

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Components admin' do
   let(:website) { FactoryGirl.create(:website) }
-  let(:product) { FactoryGirl.create(:product, website: website) }
+  let(:product) { FactoryGirl.create(:product) }
   let(:component) { FactoryGirl.build(:component, product: product) }
 
   background do

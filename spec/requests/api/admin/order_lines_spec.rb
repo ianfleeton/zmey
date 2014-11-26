@@ -7,7 +7,7 @@ describe 'Admin order lines API' do
 
   describe 'POST create' do
     let(:order) { FactoryGirl.create(:order, website_id: @website.id) }
-    let(:product) { FactoryGirl.create(:product, website_id: @website.id, price: 12.0, tax_type: Product::INC_VAT) }
+    let(:product) { FactoryGirl.create(:product, price: 12.0, tax_type: Product::INC_VAT) }
 
     let(:order_id)   { order.id }
     let(:product_id) { nil }

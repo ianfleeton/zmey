@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125230436) do
+ActiveRecord::Schema.define(version: 20141126114811) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -415,7 +415,6 @@ ActiveRecord::Schema.define(version: 20141125230436) do
   add_index "product_placements", ["product_id"], name: "index_product_placements_on_product_id", using: :btree
 
   create_table "products", force: true do |t|
-    t.integer  "website_id",                limit: 4
     t.string   "sku",                       limit: 255,                            default: "",         null: false
     t.string   "name",                      limit: 255,                            default: "",         null: false
     t.decimal  "price",                                   precision: 10, scale: 3, default: 0.0,        null: false
@@ -450,7 +449,6 @@ ActiveRecord::Schema.define(version: 20141125230436) do
   end
 
   add_index "products", ["nominal_code_id"], name: "index_products_on_nominal_code_id", using: :btree
-  add_index "products", ["website_id"], name: "index_products_on_website_id", using: :btree
 
   create_table "quantity_prices", force: true do |t|
     t.integer  "product_id", limit: 4

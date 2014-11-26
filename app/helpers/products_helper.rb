@@ -21,11 +21,11 @@ module ProductsHelper
     end
   end
 
-  # Returns a cache key for the collection of all products in +website+.
-  def products_cache_key(website)
+  # Returns a cache key for the collection of all products.
+  def products_cache_key
     [
-      website.products.count,
-      Product.where(website_id: website.id).order('updated_at DESC').first
+      Product.count,
+      Product.order('updated_at DESC').first
     ]
   end
 end

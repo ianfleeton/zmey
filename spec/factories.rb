@@ -120,7 +120,6 @@ FactoryGirl.define do
   factory :product do
     name 'Product'
     sequence(:sku) { |n| "SKU#{n}" }
-    association :website
   end
 
   factory :product_group do

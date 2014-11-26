@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Choices admin' do
   let(:website) { FactoryGirl.create(:website) }
-  let(:product) { FactoryGirl.create(:product, website: website) }
+  let(:product) { FactoryGirl.create(:product) }
   let(:feature) { FactoryGirl.create(:feature, product: product) }
   let(:choice) { FactoryGirl.create(:choice, feature: feature) }
 

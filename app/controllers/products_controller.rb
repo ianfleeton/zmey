@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   include ShowPage
 
   def show
-    @product = Product.find_by(id: params[:id], website_id: website.id)
+    @product = Product.find_by(id: params[:id])
 
     if @product
       @title = @product.page_title.blank? ? @product.name + ' at ' + website.name : @product.page_title
@@ -15,6 +15,6 @@ class ProductsController < ApplicationController
   end
 
   def google_data_feed
-    @products = website.google_products
+    @products = Product.for_google
   end
 end

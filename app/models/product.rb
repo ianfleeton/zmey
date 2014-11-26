@@ -1,9 +1,7 @@
 class Product < ActiveRecord::Base
   validates_presence_of :name, :sku
-  validates_uniqueness_of :sku, scope: :website_id
-  validates_presence_of :website_id
+  validates_uniqueness_of :sku
   validates_presence_of :image, unless: Proc.new { |p| p.image_id.nil? }
-  validate :image_belongs_to_same_website
   validates :google_description, length: { maximum: 5000 }
   validates :meta_description, length: { maximum: 255 }
   validates :price, numericality: { greater_than_or_equal_to: 0 }
@@ -26,7 +24,6 @@ class Product < ActiveRecord::Base
   has_many :quantity_prices, -> { order 'quantity' }, dependent: :delete_all
   belongs_to :image
   belongs_to :nominal_code, inverse_of: :products
-  belongs_to :website
   has_many :product_group_placements, dependent: :delete_all
   has_many :product_groups, through: :product_group_placements
   has_many :basket_items, dependent: :destroy
@@ -117,11 +114,15 @@ class Product < ActiveRecord::Base
   end
 
   def url
-    website.url + path
+    Website.first.url + path
   end
 
   def to_param
     "#{id}-#{name.parameterize}"
+  end
+
+  def self.for_google
+    where(submit_to_google: true)
   end
 
   def self.delete_all
@@ -135,7 +136,7 @@ class Product < ActiveRecord::Base
   # Returns products matched by search +query+ for the website +website_id+.
   def self.admin_search(website_id, query)
     words = query.split(' ')
-    q = Product.where(website_id: website_id)
+    q = Product
     words.each { |word| q = q.where(['name LIKE ?', "%#{word}%"]) }
     q.limit(100)
   end
@@ -147,13 +148,5 @@ class Product < ActiveRecord::Base
 
   def to_s
     name
-  end
-
-  # Custom validations
-
-  def image_belongs_to_same_website
-    if image && image.website != website
-      errors.add(:image, I18n.t('activerecord.errors.models.product.attributes.image.invalid'))
-    end
   end
 end

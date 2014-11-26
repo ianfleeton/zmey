@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Discounts' do
   let(:website) { FactoryGirl.create(:website) }
-  let(:product) { FactoryGirl.create(:product, website_id: website.id) }
+  let(:product) { FactoryGirl.create(:product) }
 
   before do
     d = Discount.create!(name: 'Discount', coupon: 'DISCOUNT', website: website)

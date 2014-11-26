@@ -25,13 +25,6 @@ describe Product do
       product.valid?
       expect(product.errors[:image]).to include "can't be blank"
     end
-
-    it 'validates that image belongs to same website' do
-      image = FactoryGirl.create(:image)
-      product = FactoryGirl.build(:product, image_id: image.id)
-      product.valid?
-      expect(product.errors[:image]).to include I18n.t('activerecord.errors.models.product.attributes.image.invalid')
-    end
   end
 
   describe "#name_with_sku" do

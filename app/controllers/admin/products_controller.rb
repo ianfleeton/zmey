@@ -2,7 +2,7 @@ class Admin::ProductsController < Admin::AdminController
   before_action :set_product, only: [:edit, :update, :destroy]
 
   def index
-    @products = website.products.paginate(page: params[:page], per_page: 250).order('name')
+    @products = Product.paginate(page: params[:page], per_page: 250).order('name')
   end
 
   def new
@@ -14,7 +14,6 @@ class Admin::ProductsController < Admin::AdminController
 
   def create
     @product = Product.new(product_params)
-    @product.website_id = website.id
 
     if @product.save
       flash[:notice] = "Successfully added new product."
@@ -67,7 +66,7 @@ class Admin::ProductsController < Admin::AdminController
   private
 
     def set_product
-      @product = Product.find_by(id: params[:id], website_id: website.id)
+      @product = Product.find_by(id: params[:id])
       not_found unless @product
     end
 

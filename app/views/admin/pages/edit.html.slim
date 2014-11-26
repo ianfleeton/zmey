@@ -63,8 +63,8 @@ ol.breadcrumb
           .form-group
             .row
               .col-xs-9
-                - cache products_cache_key(website)
-                  = form.collection_select :product_id, website.products.limit(100), :id, :name_with_sku, {}, class: 'form-control'
+                - cache products_cache_key
+                  = form.collection_select :product_id, Product.limit(100), :id, :name_with_sku, {}, class: 'form-control'
               .col-xs-3
                 = submit_tag 'Add Product', class: 'btn btn-default'
     = delete_button(@page)

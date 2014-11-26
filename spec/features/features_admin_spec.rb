@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Features administration' do
   let(:website) { FactoryGirl.create(:website) }
-  let(:product) { FactoryGirl.create(:product, website: website) }
+  let(:product) { FactoryGirl.create(:product) }
   let(:feature) { FactoryGirl.build(:feature, product: product) }
 
   background do

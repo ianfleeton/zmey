@@ -8,16 +8,16 @@ describe 'Admin products API' do
   describe 'GET index' do
     context 'with products' do
       before do
-        @product1 = FactoryGirl.create(:product, website_id: @website.id)
+        @product1 = FactoryGirl.create(:product)
         @product2 = FactoryGirl.create(:product)
       end
 
-      it 'returns products for the website' do
+      it 'returns all products' do
         get '/api/admin/products'
 
         products = JSON.parse(response.body)
 
-        expect(products['products'].length).to eq 1
+        expect(products['products'].length).to eq 2
         expect(products['products'][0]['id']).to eq @product1.id
         expect(products['products'][0]['sku']).to eq @product1.sku
         expect(products['products'][0]['name']).to eq @product1.name
@@ -46,7 +46,7 @@ describe 'Admin products API' do
   describe 'GET show' do
     context 'when product found' do
       before do
-        @product = FactoryGirl.create(:product, website_id: @website.id)
+        @product = FactoryGirl.create(:product)
       end
 
       it 'returns 200 OK' do
@@ -76,9 +76,9 @@ describe 'Admin products API' do
       weight: weight
     }}
 
-    it 'inserts a new product into the website' do
+    it 'inserts a new product' do
       post '/api/admin/products', product: basic_params
-      expect(Product.find_by(basic_params.merge(website_id: @website.id))).to be
+      expect(Product.find_by(basic_params)).to be
     end
 
     it 'associates product with nominal code' do
@@ -95,16 +95,14 @@ describe 'Admin products API' do
   end
 
   describe 'DELETE delete_all' do
-    it 'deletes all products in the website' do
-      product_1 = FactoryGirl.create(:product, website_id: @website.id)
-      product_2 = FactoryGirl.create(:product, website_id: @website.id)
-      product_3 = FactoryGirl.create(:product)
+    it 'deletes all products' do
+      product_1 = FactoryGirl.create(:product)
+      product_2 = FactoryGirl.create(:product)
 
       delete '/api/admin/products'
 
       expect(Product.find_by(id: product_1.id)).not_to be
       expect(Product.find_by(id: product_2.id)).not_to be
-      expect(Product.find_by(id: product_3.id)).to be
     end
 
     it 'responds with 204 No Content' do

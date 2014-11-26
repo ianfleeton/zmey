@@ -14,10 +14,6 @@ en:
               invalid: 'is invalid'
             parent:
               invalid: 'is invalid'
-        product:
-          attributes:
-            image:
-              invalid: 'is invalid'
   add_to_cart: Add to Basket
   addresses:
     choose_delivery_address:

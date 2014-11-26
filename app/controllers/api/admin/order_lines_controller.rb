@@ -7,7 +7,7 @@ class Api::Admin::OrderLinesController < Api::Admin::AdminController
     end
 
     if params[:order_line][:product_id].present?
-      if @order_line.product.nil? || @order_line.product.website != website
+      if @order_line.product.nil?
         @order_line.errors.add(:base, 'Product is invalid')
       else
         @order_line.product_price = @order_line.calculate_product_price

@@ -91,7 +91,7 @@ class Admin::ComponentsController < Admin::AdminController
     end
 
     def product_valid?
-      if Product.find_by(id: @component.product_id, website_id: website.id)
+      if Product.find_by(id: @component.product_id)
         true
       else
         flash[:notice] = 'Invalid product.'

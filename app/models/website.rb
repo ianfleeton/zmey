@@ -26,10 +26,7 @@ class Website < ActiveRecord::Base
   has_many :custom_views, dependent: :delete_all
   has_many :discounts, -> { order 'name' }, dependent: :destroy
   has_many :liquid_templates, -> { order 'name' }, dependent: :destroy
-  has_many :products, -> { order 'name' }, dependent: :destroy
-  has_many :google_products, -> { where(submit_to_google: true) }, class_name: 'Product'
   has_many :product_groups, -> { order 'name' }, dependent: :destroy
-  has_many :product_placements, through: :products
   has_many :nominal_codes, -> { order 'code' }, dependent: :destroy, inverse_of: :website
   has_many :orders, -> { order 'created_at DESC' }, dependent: :destroy
   has_many :payments, through: :orders

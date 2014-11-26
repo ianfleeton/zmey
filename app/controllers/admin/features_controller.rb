@@ -50,7 +50,7 @@ class Admin::FeaturesController < Admin::AdminController
     end
 
     def product_valid?
-      if Product.find_by(id: @feature.product_id, website_id: website.id)
+      if Product.find_by(id: @feature.product_id)
         true
       else
         flash[:notice] = 'Invalid product.'

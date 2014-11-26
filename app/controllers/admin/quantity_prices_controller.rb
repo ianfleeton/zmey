@@ -45,7 +45,7 @@ class Admin::QuantityPricesController < Admin::AdminController
     end
 
     def product_valid?
-      if Product.find_by(id: @quantity_price.product_id, website_id: website.id)
+      if Product.find_by(id: @quantity_price.product_id)
         true
       else
         flash[:notice] = 'Invalid product.'

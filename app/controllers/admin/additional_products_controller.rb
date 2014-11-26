@@ -54,7 +54,7 @@ class Admin::AdditionalProductsController < Admin::AdminController
     end
 
     def find_product
-      Product.find_by(id: @additional_product.product_id, website_id: website.id)
+      Product.find_by(id: @additional_product.product_id)
     end
 
     def additional_product_params

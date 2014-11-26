@@ -19,7 +19,7 @@ class BasketController < ApplicationController
   def add
     go_back_to = request.referrer ? request.referrer : {action: 'index'}
 
-    product = Product.find_by(id: params[:product_id], website_id: @w.id)
+    product = Product.find_by(id: params[:product_id])
     if product.nil?
       flash[:notice] = "Oops, we can't add that product to the basket."
       redirect_to go_back_to and return

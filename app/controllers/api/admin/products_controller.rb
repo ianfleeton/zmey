@@ -2,17 +2,16 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   before_action :set_nominal_code, only: [:create]
 
   def index
-    @products = website.products
+    @products = Product.all
   end
 
   def show
-    @product = Product.find_by(id: params[:id], website_id: website.id)
+    @product = Product.find_by(id: params[:id])
     render nothing: true, status: 404 unless @product
   end
 
   def create
     @product = Product.new(product_params)
-    @product.website = website
     @product.nominal_code = @nominal_code
 
     unless @product.save
@@ -21,7 +20,7 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   end
 
   def delete_all
-    website.products.destroy_all
+    Product.destroy_all
     render nothing: :true, status: 204
   end
 
