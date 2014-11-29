@@ -22,8 +22,13 @@ Ruby 2.1.1.
 
 === System dependencies
 
-Zmey uses ImageScience, which depends on FreeImage, for image resizing. See
-http://docs.seattlerb.org/ImageScience.html for details.
+Zmey uses ImageScience, which depends on FreeImage, for image resizing.
+
+For Ubuntu:
+
+  apt-get install libfreeimage3 libfreeimage-dev
+
+For other operating systems see http://docs.seattlerb.org/ImageScience.html.
 
 Zmey uses the LGPL wkhtmltopdf tool for generating invoices and other PDF
 documents from HTML. Some binaries are included in the repository for
