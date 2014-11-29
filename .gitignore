@@ -27,7 +27,8 @@ newrelic.yml
 secrets.yml
 
 # Ignore all logfiles and tempfiles.
-/log/*.log
+/log/*
+!/log/.keep
 /tmp
 
 # Ignore uploaded images.
