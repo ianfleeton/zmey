@@ -44,9 +44,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if ENV['ZMEY_CONFIG']
     config.vm.synced_folder File.dirname(ENV['ZMEY_CONFIG']), File.dirname(ENV['ZMEY_CONFIG']), type: "rsync"
   end
-  if ENV['ZMEY_THEMES']
-    config.vm.synced_folder ENV['ZMEY_THEMES'], ENV['ZMEY_THEMES'], type: "rsync"
-  end
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
