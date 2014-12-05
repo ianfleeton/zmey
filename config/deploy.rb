@@ -20,7 +20,6 @@ set :scm, :git # You can set :scm explicitly or Capistrano will make an intellig
 set :deploy_to, "/home/admin/railsapps/#{application}"
 
 server 'io.yesl.co.uk', :app, :web, :db, primary: true
-server 'straylight.yesl.co.uk', :app, :web, :db, primary: true
 set :user, 'admin'
 default_run_options[:pty] = true
 
