@@ -11,6 +11,8 @@ module ShowPage
   #
   # Page slugs can fall back behind predefined routes without being fully
   # shadowed by them.
+  #
+  # Pages include layout for normal requests but exclude layout for XHR.
   def show_page(slug)
     @page = Page.find_by(slug: slug, website_id: website.id)
     if @page
@@ -21,7 +23,7 @@ module ShowPage
       if request.path == '/'
         @blog = website.blog
       end
-      render 'pages/show'
+      render 'pages/show', layout: !request.xhr?
     else
       not_found
     end

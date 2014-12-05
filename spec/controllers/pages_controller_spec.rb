@@ -12,16 +12,34 @@ describe PagesController do
     end
 
     context 'when page found' do
-      it 'sets @title and @description from the page' do
-        title       = 'title'
-        description = 'description'
+      let(:title)       { 'title' }
+      let(:description) { 'description' }
+
+      before do
         allow(Page).to receive(:find_by).and_return(
           double(Page, title: title, description: description)
           .as_null_object
         )
+      end
+
+      it 'sets @title and @description from the page' do
         get :show, slug: slug
         expect(assigns(:title)).to eq title
         expect(assigns(:description)).to eq description
+      end
+
+      context 'when not XHR' do
+        it 'renders with layout' do
+          get :show, slug: slug
+          expect(response).to render_template('application')
+        end
+      end
+
+      context 'when XHR' do
+        it 'renders without layout' do
+          xhr :get, :show, slug: slug
+          expect(response).not_to render_template('application')
+        end
       end
     end
 
