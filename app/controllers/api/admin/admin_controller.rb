@@ -4,7 +4,7 @@ class Api::Admin::AdminController < ApplicationController
   before_action :set_website_for_api
 
   def set_website_for_api
-    if Rails.env.production?
+    if Rails.env.production? && remote_connection?
       # TODO: Look into HTTP Strict Transport Security configuration and
       # document.
       # TODO: Disable keys that are transmitted over an unencrypted connection.
@@ -42,4 +42,10 @@ class Api::Admin::AdminController < ApplicationController
       'yes'   => true
     }[value.try(:downcase)]
   end
+
+  private
+
+    def remote_connection?
+      request.remote_ip != '127.0.0.1'
+    end
 end
