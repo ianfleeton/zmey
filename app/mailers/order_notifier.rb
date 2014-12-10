@@ -1,5 +1,3 @@
-require 'concerns/email_setup'
-
 class OrderNotifier < ActionMailer::Base
   include EmailSetup
 

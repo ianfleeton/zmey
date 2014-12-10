@@ -1,5 +1,3 @@
-require 'concerns/email_setup'
-
 class BasketMailer < ActionMailer::Base
   include EmailSetup
 
