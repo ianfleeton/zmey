@@ -1,7 +1,7 @@
 - if @website_subject.errors.any?
   .alert.alert-error.fade.in
     a.close data-dismiss="alert" href="#" &times;
-    h2= "#{pluralize(@website.errors.count, "error")} prohibited this website from being saved:"
+    h2= "#{pluralize(@website_subject.errors.count, "error")} prohibited this website from being saved:"
     ul
       - @website_subject.errors.full_messages.each do |msg|
         li= msg
@@ -91,7 +91,7 @@
 
       .form-group
         = form.label :blog_id
-        = form.collection_select :blog_id, Forum.where(website_id: @website.id).order('name'), :id, :name, {include_blank: '-- No blog --'}, class: 'form-control'
+        = form.collection_select :blog_id, Forum.where(website_id: @website_subject.id).order('name'), :id, :name, {include_blank: '-- No blog --'}, class: 'form-control'
 
       .form-group
         p.form-control-static Can users create accounts?
