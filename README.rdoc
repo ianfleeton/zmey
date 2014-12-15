@@ -90,7 +90,7 @@ webhooks, run the adapter service: https://github.com/ianfleeton/zmey-webhook-ha
 
 === Create your own theme
 
-Set the +subdomain+ attribute in your website settings.
+Set the +theme+ attribute in your website settings.
 
 Set the +custom_view_resolver+ attribute to +CustomView::ThemeResolver+.
 

@@ -35,6 +35,10 @@
             = form.text_field :name, class: 'form-control', required: true
 
           .form-group
+            = form.label :theme
+            = form.text_field :theme, class: 'form-control'
+
+          .form-group
             = form.label :email
             = form.email_field :email, class: 'form-control', required: true
 

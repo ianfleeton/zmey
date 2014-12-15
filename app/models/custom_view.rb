@@ -46,7 +46,7 @@ class CustomView < ActiveRecord::Base
   class ThemeResolver < ActionView::FileSystemResolver
     def initialize(website)
       @website = website
-      super(File.join(Rails.root, 'app', 'views', website.subdomain))
+      super(File.join(Rails.root, 'app', 'views', website.theme))
     end
 
     include ResolverCacheManager
