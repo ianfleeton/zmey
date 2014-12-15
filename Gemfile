@@ -12,7 +12,6 @@ gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'exception_notification'
 gem 'slim'
-gem 'factory_girl_rails'
 
 # Run jobs in the background
 gem 'daemons'
@@ -84,6 +83,9 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Fixtures
+  gem 'factory_girl_rails'
 end
 
 group :test do
