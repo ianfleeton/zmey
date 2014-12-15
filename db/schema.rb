@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126134839) do
+ActiveRecord::Schema.define(version: 20141215161050) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -594,6 +594,7 @@ ActiveRecord::Schema.define(version: 20141126134839) do
     t.string   "smtp_password",                      limit: 255,                            default: "",     null: false
     t.integer  "smtp_port",                          limit: 4,                              default: 25,     null: false
     t.string   "mandrill_subaccount",                limit: 255,                            default: "",     null: false
+    t.string   "theme",                              limit: 255
   end
 
 end
