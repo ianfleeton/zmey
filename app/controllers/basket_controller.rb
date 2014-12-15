@@ -78,7 +78,7 @@ class BasketController < ApplicationController
         redirect_to choose_delivery_address_addresses_path
       else
         @address = Address.new
-        @address.country = Country.find_by(name: 'United Kingdom', website_id: @w.id)
+        @address.country = Country.find_by(name: 'United Kingdom')
         if logged_in?
           @address.user_id = @current_user.id
           @address.email_address = @current_user.email
