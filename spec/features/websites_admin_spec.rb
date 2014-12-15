@@ -13,13 +13,19 @@ feature 'Websites admin' do
     click_link 'New Website'
     name = SecureRandom.hex
     fill_in 'Name', with: name
+    fill_in 'Email', with: 'merchant@example.com'
+
     fill_in 'Address line 1', with: '123 Street'
     fill_in 'Address line 2', with: 'Balby'
     fill_in 'Town city', with: 'Doncaster'
     fill_in 'County', with: 'South Yorkshire'
     fill_in 'Postcode', with: 'DN4 9ZZ'
+    select 'United Kingdom', from: 'Country'
+
+    fill_in 'Subdomain', with: 'www'
+
     click_button 'Create New Website'
-    expect(Website.find_by(name: name)).to be_nil
+    expect(Website.find_by(name: name)).to be
   end
 
   scenario 'Delete website' do

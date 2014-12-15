@@ -11,6 +11,19 @@ describe Admin::WebsitesController do
     @mock_website ||= double(Website, stubs)
   end
 
+  describe 'GET new' do
+    context 'when logged in as an administrator' do
+      before { logged_in_as_admin }
+
+      context 'when no countries' do
+        it 'should populate countries' do
+          expect(Country).to receive(:populate!)
+          get :new
+        end
+      end
+    end
+  end
+
   describe 'POST create' do
     context 'when logged in as an administrator' do
       let(:valid_params) { { 'website' => { 'name' => 'foo' } } }
@@ -22,15 +35,6 @@ describe Admin::WebsitesController do
         allow(controller).to receive(:create_latest_news)
 
         expect(Website).to receive(:new).with(valid_params['website']).and_return(website)
-        post 'create', valid_params
-      end
-
-      it "should populate countries" do
-        allow(controller).to receive(:create_latest_news)
-
-        website = mock_website({save: true, id: 1, name: 'foo', :blog_id= => nil})
-        allow(Website).to receive(:new).and_return(website)
-        expect(Country).to receive(:populate!)
         post 'create', valid_params
       end
     end
