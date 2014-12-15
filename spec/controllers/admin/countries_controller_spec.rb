@@ -11,7 +11,13 @@ describe Admin::CountriesController do
   end
 
   describe 'GET index' do
-    it_behaves_like 'a website owned objects finder', :country
+    it 'assigns all countries to @countries in alphabet order' do
+      zambia = FactoryGirl.create(:country, name: 'Zambia')
+      austria = FactoryGirl.create(:country, name: 'Austria')
+      get :index
+      expect(assigns(:countries).first).to eq austria
+      expect(assigns(:countries).last).to eq zambia
+    end
   end
 
   describe 'POST create' do
@@ -26,7 +32,7 @@ describe Admin::CountriesController do
   end
 
   describe 'PATCH update' do
-    let(:country) { FactoryGirl.create(:country, website: website) }
+    let(:country) { FactoryGirl.create(:country) }
 
     context 'when update succeeds' do
       before { allow_any_instance_of(Country).to receive(:update_attributes).and_return(true) }

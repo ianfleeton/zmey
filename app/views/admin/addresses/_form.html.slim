@@ -38,7 +38,7 @@
 
   .form-group
     = form.label :country_id
-    = form.collection_select :country_id, website.countries, :id, :name, {}, { class: 'form-control' }
+    = form.collection_select :country_id, Country.order('name'), :id, :name, {}, { class: 'form-control' }
 
   .form-group
     = form.label :phone_number

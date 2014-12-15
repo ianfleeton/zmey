@@ -49,7 +49,7 @@ FactoryGirl.define do
   end
 
   factory :country do
-    name 'Country'
+    sequence(:name) { |n| "Country #{n}" }
     sequence(:iso_3166_1_alpha_2) { |n| n.to_s(36).rjust(2, '0') }
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141215161050) do
+ActiveRecord::Schema.define(version: 20141215165819) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -104,11 +104,8 @@ ActiveRecord::Schema.define(version: 20141215161050) do
     t.string   "iso_3166_1_alpha_2", limit: 255, default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "website_id",         limit: 4,   default: 0,  null: false
     t.integer  "shipping_zone_id",   limit: 4
   end
-
-  add_index "countries", ["website_id"], name: "index_countries_on_website_id", using: :btree
 
   create_table "custom_views", force: true do |t|
     t.integer  "website_id", limit: 4,     null: false

@@ -95,14 +95,6 @@ describe Website do
     expect(@website.enquiries.third).to eq enquiries.first
   end
 
-  describe '#populate_countries!' do
-    it 'should populate itself with a number of countries' do
-      @website.save
-      @website.populate_countries!
-      expect(@website.countries.size).to eq 248
-    end
-  end
-
   describe '#image_uploader' do
     let(:params)   { { image: fixture_file_upload('images/red.png'), name: 'Red' } }
     let(:website)  { Website.new }
@@ -151,24 +143,6 @@ describe Website do
       website = Website.new(custom_view_resolver: 'CustomView::DatabaseResolver')
       expect(CustomView::DatabaseResolver).to receive(:new).with(website).and_call_original
       expect(website.build_custom_view_resolver).to be_instance_of CustomView::DatabaseResolver
-    end
-  end
-
-  describe '#destroy' do
-    it 'destroys associations in an order to prevent restriction dependencies' do
-      website = FactoryGirl.create(:website)
-      country = FactoryGirl.create(:country, website_id: website.id)
-      address = FactoryGirl.create(:address, country_id: country.id)
-      user = FactoryGirl.create(:user, website_id: website.id)
-      user.addresses << address
-      expect { website.destroy }.to_not raise_error
-    end
-
-    it 'deletes addresses associated through country' do
-      website = FactoryGirl.create(:website)
-      country = FactoryGirl.create(:country, website_id: website.id)
-      address = FactoryGirl.create(:address, country_id: country.id)
-      expect { website.destroy }.to_not raise_error
     end
   end
 

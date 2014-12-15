@@ -13,8 +13,6 @@ feature 'Orders admin' do
   let(:order_line) { FactoryGirl.create(:order_line, order_id: order.id) }
 
   scenario 'Create order' do
-    FactoryGirl.create(:country, website_id: website.id)
-
     visit admin_orders_path
     click_link 'New'
     email = "#{SecureRandom.hex}@example.org"
@@ -22,11 +20,11 @@ feature 'Orders admin' do
     fill_in 'Billing address line 1', with: '123 Street'
     fill_in 'Billing town city', with: 'Doncaster'
     fill_in 'Billing postcode', with: 'DN99 1AB'
-    select website.countries.first, from: 'Billing country'
+    select Country.first, from: 'Billing country'
     fill_in 'Delivery address line 1', with: '123 Street'
     fill_in 'Delivery town city', with: 'Doncaster'
     fill_in 'Delivery postcode', with: 'DN99 1AB'
-    select website.countries.first, from: 'Delivery country'
+    select Country.first, from: 'Delivery country'
     click_button 'Save'
 
     expect(Order.find_by(email_address: email)).to be

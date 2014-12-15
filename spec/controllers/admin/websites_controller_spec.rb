@@ -25,12 +25,12 @@ describe Admin::WebsitesController do
         post 'create', valid_params
       end
 
-      it "should populate the website's countries" do
+      it "should populate countries" do
         allow(controller).to receive(:create_latest_news)
 
         website = mock_website({save: true, id: 1, name: 'foo', :blog_id= => nil})
         allow(Website).to receive(:new).and_return(website)
-        expect(website).to receive(:populate_countries!)
+        expect(Country).to receive(:populate!)
         post 'create', valid_params
       end
     end

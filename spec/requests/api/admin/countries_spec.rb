@@ -8,19 +8,21 @@ describe 'Admin countries API' do
   describe 'GET index' do
     context 'with countries' do
       before do
-        @country1 = FactoryGirl.create(:country, website_id: @website.id)
+        @country1 = FactoryGirl.create(:country)
         @country2 = FactoryGirl.create(:country)
       end
 
-      it 'returns countries for the website' do
+      it 'returns all countries' do
         get '/api/admin/countries'
 
         countries = JSON.parse(response.body)
 
-        expect(countries['countries'].length).to eq 1
-        expect(countries['countries'][0]['id']).to eq @country1.id
-        expect(countries['countries'][0]['href']).to eq api_admin_country_url(@country1)
-        expect(countries['countries'][0]['name']).to eq @country1.name
+        # First country is created with the website fixture.
+        expect(countries['countries'].length).to eq 3
+
+        expect(countries['countries'][1]['id']).to eq @country1.id
+        expect(countries['countries'][1]['href']).to eq api_admin_country_url(@country1)
+        expect(countries['countries'][1]['name']).to eq @country1.name
       end
 
       it 'returns 200 OK' do
@@ -30,6 +32,10 @@ describe 'Admin countries API' do
     end
 
     context 'with no countries' do
+      before do
+        Country.delete_all
+      end
+
       it 'returns 200 OK' do
         get '/api/admin/countries'
         expect(response.status).to eq 200

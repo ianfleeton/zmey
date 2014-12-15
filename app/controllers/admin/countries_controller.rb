@@ -2,7 +2,7 @@ class Admin::CountriesController < Admin::AdminController
   before_action :find_country, only: [:edit, :update, :destroy]
 
   def index
-    @countries = website.countries
+    @countries = Country.order('name')
   end
 
   def new
@@ -11,7 +11,6 @@ class Admin::CountriesController < Admin::AdminController
 
   def create
     @country = Country.new(country_params)
-    @country.website = website
 
     if @country.save
       redirect_to admin_countries_path, notice: 'Saved.'
@@ -44,7 +43,7 @@ class Admin::CountriesController < Admin::AdminController
   protected
 
   def find_country
-    @country = Country.find_by(id: params[:id], website_id: website.id)
+    @country = Country.find_by(id: params[:id])
   end
 
   def country_params

@@ -9,7 +9,7 @@ feature 'Countries admin' do
     sign_in_as_admin
   end
 
-  let(:country) { FactoryGirl.build(:country, website: website) }
+  let(:country) { FactoryGirl.build(:country) }
 
   scenario 'Create country' do
     visit admin_countries_path
@@ -21,7 +21,7 @@ feature 'Countries admin' do
   end
 
   scenario 'Edit country' do
-    country.save!
+    country.save
     visit admin_countries_path
     click_link "Edit #{country}"
     new_name = SecureRandom.hex

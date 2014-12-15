@@ -1,5 +1,5 @@
 class Api::Admin::CountriesController < Api::Admin::AdminController
   def index
-    @countries = website.countries
+    @countries = Country.all
   end
 end

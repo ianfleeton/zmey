@@ -1,15 +1,12 @@
 require 'rails_helper'
 
 feature 'Address book' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:country) { FactoryGirl.create(:country) }
+  let(:website) { FactoryGirl.create(:website, country: country) }
 
   background do
     Website.delete_all
     website
-
-    # FIXME: when website <> country circular dependency removed
-    website.country.website = website
-    website.country.save
   end
 
   context 'signed in' do

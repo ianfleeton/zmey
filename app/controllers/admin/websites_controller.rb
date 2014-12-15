@@ -18,7 +18,7 @@ class Admin::WebsitesController < Admin::AdminController
     @website_subject = Website.new(website_params)
 
     if @website_subject.save
-      @website_subject.populate_countries!
+      Country.populate!
       Page.bootstrap @website_subject
 
       create_latest_news

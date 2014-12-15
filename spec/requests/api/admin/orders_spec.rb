@@ -179,7 +179,7 @@ describe 'Admin orders API' do
   end
 
   describe 'POST create' do
-    let(:country) { FactoryGirl.create(:country, website_id: @website.id) }
+    let(:country) { FactoryGirl.create(:country) }
     let(:billing_address_line_1)  { SecureRandom.hex }
     let(:billing_country_id)      { country.id }
     let(:billing_postcode)        { SecureRandom.hex }
