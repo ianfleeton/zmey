@@ -67,6 +67,10 @@ describe BasketItem do
       it 'returns quantity' do
         expect(basket_item.counting_quantity).to eq 2
       end
+
+      it 'returns an integer' do
+        expect(basket_item.counting_quantity).to be_kind_of(Integer)
+      end
     end
   end
 

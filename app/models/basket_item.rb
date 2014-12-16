@@ -44,8 +44,10 @@ class BasketItem < ActiveRecord::Base
   # Returns the quantity of product in the line. Products that have a
   # fractional quantity (for example, representating weight or area) are
   # counted as 1.
+  #
+  # Always returns an integer.
   def counting_quantity
-    product.allow_fractional_quantity? ? 1 : quantity
+    product.allow_fractional_quantity? ? 1 : quantity.to_i
   end
 
   # Returns the quantity in a type suitable for display. If the product allows
