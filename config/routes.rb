@@ -75,6 +75,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :admin do
+      resources :carousel_slides, only: [:create, :show]
       delete 'carousel_slides', to: 'carousel_slides#delete_all'
 
       resources :countries, only: [:index, :show]

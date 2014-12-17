@@ -5,6 +5,22 @@ describe 'Admin carousel slides API' do
     prepare_api_website
   end
 
+  describe 'POST create' do
+    it 'inserts a new slide into the website' do
+      caption = SecureRandom.hex
+      image = FactoryGirl.create(:image)
+      link = SecureRandom.hex
+
+      post '/api/admin/carousel_slides', carousel_slide: {caption: caption, image_id: image.id, link: link}
+      expect(CarouselSlide.find_by(caption: caption, image_id: image.id, link: link)).to be
+    end
+
+    it 'returns 422 with bad params' do
+      post '/api/admin/carousel_slides', carousel_slide: {caption: ''}
+      expect(response.status).to eq 422
+    end
+  end
+
   describe 'DELETE delete_all' do
     before do
       @carousel_slide1 = FactoryGirl.create(:carousel_slide, website_id: @website.id)
