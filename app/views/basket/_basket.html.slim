@@ -94,7 +94,7 @@
         - session[:coupons].each do |coupon|
           li
             = coupon
-            = " (#{Discount.find_by(coupon: coupon, website_id: @w.id).name}) "
+            = " (#{Discount.find_by(coupon: coupon).name}) "
             = link_to('Remove', { controller: :basket, action: :remove_coupon, coupon_code: coupon }, title: "Remove #{coupon}")
 
   = form_tag({controller: 'basket', action: 'enter_coupon'}, class: 'pure-form') do

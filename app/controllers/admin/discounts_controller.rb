@@ -2,7 +2,7 @@ class Admin::DiscountsController < Admin::AdminController
   before_action :find_discount, only: [:edit, :update, :destroy]
 
   def index
-    @discounts = website.discounts
+    @discounts = Discount.order(:name)
   end
 
   def new
@@ -14,7 +14,6 @@ class Admin::DiscountsController < Admin::AdminController
 
   def create
     @discount = Discount.new(discount_params)
-    @discount.website = website
 
     if @discount.save
       redirect_to admin_discounts_path, notice: 'Successfully added new discount.'
@@ -40,7 +39,7 @@ class Admin::DiscountsController < Admin::AdminController
   protected
 
   def find_discount
-    @discount = Discount.find_by(id: params[:id], website_id: website.id)
+    @discount = Discount.find_by(id: params[:id])
     not_found unless @discount
   end
 

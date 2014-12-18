@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 feature 'Discounts' do
-  let(:website) { FactoryGirl.create(:website) }
+  let!(:website) { FactoryGirl.create(:website) }
   let(:product) { FactoryGirl.create(:product) }
 
   before do
-    d = Discount.create!(name: 'Discount', coupon: 'DISCOUNT', website: website)
+    d = Discount.create!(name: 'Discount', coupon: 'DISCOUNT')
   end
 
   scenario 'Apply and remove discount' do
@@ -19,7 +19,7 @@ feature 'Discounts' do
   end
 
   scenario 'Invalid coupons removed from session' do
-    invalid = Discount.create!(name: 'Invalid', coupon: 'INVALID', website: website)
+    invalid = Discount.create!(name: 'Invalid', coupon: 'INVALID')
     visit product_path(product)
     click_button I18n.t('add_to_cart')
     fill_in 'coupon_code', with: 'INVALID'

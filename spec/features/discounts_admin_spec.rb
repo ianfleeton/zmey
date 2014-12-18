@@ -9,7 +9,7 @@ feature 'Discounts admin' do
     sign_in_as_admin
   end
 
-  let(:discount) { FactoryGirl.build(:discount, website: website) }
+  let(:discount) { FactoryGirl.build(:discount) }
 
   scenario 'Create discount' do
     visit admin_discounts_path

@@ -165,7 +165,7 @@ class BasketController < ApplicationController
   end
 
   def enter_coupon
-    discount = Discount.find_by(coupon: params[:coupon_code].upcase, website_id: website.id)
+    discount = Discount.find_by(coupon: params[:coupon_code].upcase)
     if(discount.nil?)
       flash[:notice] = 'Sorry, your coupon code was not recognised.'
     else
@@ -277,7 +277,7 @@ class BasketController < ApplicationController
     return unless session[:coupons]
 
     session[:coupons].each do |coupon|
-      discount = Discount.find_by(coupon: coupon, website_id: website.id)
+      discount = Discount.find_by(coupon: coupon)
       if !discount || !discount.currently_valid?
         session[:coupons].delete(coupon)
         flash[:now] = I18n.t('controllers.basket.remove_invalid_discounts.removed')
@@ -415,7 +415,7 @@ class BasketController < ApplicationController
 
   def calculate_discounts
     @discount_lines = Array.new
-    website.discounts.each do |discount|
+    Discount.all.each do |discount|
       if discount.coupon && session_contains_coupon?(discount.coupon)
         if discount.reward_type.to_sym == :free_products
           discount_free_products(discount.product_group.products)
