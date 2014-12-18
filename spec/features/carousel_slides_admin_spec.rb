@@ -10,7 +10,7 @@ feature 'Carousel slides admin' do
   end
 
   let(:image) { FactoryGirl.create(:image, website: website) }
-  let(:carousel_slide) { FactoryGirl.build(:carousel_slide, image: image, website: website) }
+  let(:carousel_slide) { FactoryGirl.build(:carousel_slide, image: image) }
 
   scenario 'Create carousel slide', js: true do
     image

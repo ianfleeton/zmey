@@ -16,7 +16,13 @@ describe Admin::CarouselSlidesController do
     before { logged_in_as_admin }
 
     describe 'GET index' do
-      it_behaves_like 'a website owned objects finder', :carousel_slide
+      it 'assigns all slides to @carousel_slides' do
+        c1 = FactoryGirl.create(:carousel_slide)
+        c2 = FactoryGirl.create(:carousel_slide)
+        get :index
+        expect(assigns(:carousel_slides)).to include(c1)
+        expect(assigns(:carousel_slides)).to include(c2)
+      end
     end
 
     describe 'GET new' do
@@ -127,8 +133,8 @@ describe Admin::CarouselSlidesController do
     end
 
     context 'moving' do
-      let!(:first) { FactoryGirl.create(:carousel_slide, website: website) }
-      let!(:last)  { FactoryGirl.create(:carousel_slide, website: website) }
+      let!(:first) { FactoryGirl.create(:carousel_slide) }
+      let!(:last)  { FactoryGirl.create(:carousel_slide) }
 
       describe 'GET move_up' do
         it 'moves the carousel slide up the list' do
@@ -172,7 +178,7 @@ describe Admin::CarouselSlidesController do
 
   def find_requested_carousel_slide(stubs={})
     expect(CarouselSlide).to receive(:find_by)
-      .with(id: '37', website_id: website.id)
+      .with(id: '37')
       .and_return(mock_carousel_slide(stubs))
   end
 end

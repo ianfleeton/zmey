@@ -1,7 +1,6 @@
 class Api::Admin::CarouselSlidesController < Api::Admin::AdminController
   def create
     @carousel_slide = CarouselSlide.new(carousel_slide_params)
-    @carousel_slide.website = website
 
     if params[:image_id].present? && !Image.exists?(id: params[:image_id])
       @carousel_slide.errors.add(:base, 'Image does not exist.')
@@ -13,7 +12,7 @@ class Api::Admin::CarouselSlidesController < Api::Admin::AdminController
   end
 
   def delete_all
-    website.carousel_slides.destroy_all
+    CarouselSlide.destroy_all
     render nothing: :true, status: 204
   end
 

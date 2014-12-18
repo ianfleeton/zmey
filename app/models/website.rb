@@ -22,7 +22,6 @@ class Website < ActiveRecord::Base
   validates :country_id, presence: true
 
   has_one :preferred_delivery_date_settings, dependent: :delete
-  has_many :carousel_slides, -> { order 'position' }
   has_many :custom_views, dependent: :delete_all
   has_many :discounts, -> { order 'name' }, dependent: :destroy
   has_many :liquid_templates, -> { order 'name' }, dependent: :destroy
@@ -49,10 +48,6 @@ class Website < ActiveRecord::Base
       image.website = self
       yield image if block_given?
     end
-  end
-
-  def active_carousel_slides
-    carousel_slides.where('active_from <= ? AND active_until >= ?', DateTime.now, DateTime.now)
   end
 
   # Returns an initialized custom view resolver, or nil if there isn't one.

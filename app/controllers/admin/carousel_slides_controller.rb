@@ -2,7 +2,7 @@ class Admin::CarouselSlidesController < Admin::AdminController
   before_action :find_carousel_slide, only: [:edit, :update, :destroy, :move_up, :move_down]
 
   def index
-    @carousel_slides = website.carousel_slides
+    @carousel_slides = CarouselSlide.order(:position)
   end
 
   def new
@@ -14,7 +14,6 @@ class Admin::CarouselSlidesController < Admin::AdminController
 
   def create
     @carousel_slide = CarouselSlide.new(carousel_slide_params)
-    @carousel_slide.website = website
 
     if @carousel_slide.save
       redirect_to admin_carousel_slides_path, notice: 'Successfully added new carousel slide.'
@@ -49,7 +48,7 @@ class Admin::CarouselSlidesController < Admin::AdminController
   private
 
     def find_carousel_slide
-      @carousel_slide = CarouselSlide.find_by(id: params[:id], website_id: website.id)
+      @carousel_slide = CarouselSlide.find_by(id: params[:id])
       not_found unless @carousel_slide
     end
 

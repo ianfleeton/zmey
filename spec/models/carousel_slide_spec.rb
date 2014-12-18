@@ -15,4 +15,14 @@ describe CarouselSlide do
       expect(cs.active_until).to be > Date.today + 1.year
     end
   end
+
+  describe '.active' do
+    it 'returns slides that, based on current time, are currently active' do
+      active_slide   = FactoryGirl.create(:carousel_slide, active_from: Date.today - 1.day, active_until: Date.today + 1.day)
+      inactive_slide = FactoryGirl.create(:carousel_slide, active_from: Date.today + 1.day, active_until: Date.today + 2.days)
+      expired_slide  = FactoryGirl.create(:carousel_slide, active_from: Date.today - 2.days, active_until: Date.today - 1.day)
+      expect(CarouselSlide.active.count).to eq 1
+      expect(CarouselSlide.active.first).to eq active_slide
+    end
+  end
 end

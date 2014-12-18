@@ -91,7 +91,7 @@ describe 'Admin images API' do
       end
 
       it 'returns 400 Bad Request' do
-        FactoryGirl.create(:carousel_slide, image_id: @image.id, website_id: @website.id)
+        FactoryGirl.create(:carousel_slide, image_id: @image.id)
         delete '/api/admin/images'
         expect(response.status).to eq 400
       end

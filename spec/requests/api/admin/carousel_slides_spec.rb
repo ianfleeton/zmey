@@ -23,14 +23,12 @@ describe 'Admin carousel slides API' do
 
   describe 'DELETE delete_all' do
     before do
-      @carousel_slide1 = FactoryGirl.create(:carousel_slide, website_id: @website.id)
-      @carousel_slide2 = FactoryGirl.create(:carousel_slide)
+      @carousel_slide = FactoryGirl.create(:carousel_slide)
     end
 
     it 'deletes all carousel slides in the website' do
       delete '/api/admin/carousel_slides'
-      expect(CarouselSlide.find_by(id: @carousel_slide1.id)).to be_nil
-      expect(CarouselSlide.find_by(id: @carousel_slide2.id)).to be
+      expect(CarouselSlide.any?).to be_falsey
     end
 
     it 'returns 204 No Content' do

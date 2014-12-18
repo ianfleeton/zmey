@@ -120,20 +120,6 @@ describe Website do
     end
   end
 
-  describe '#active_carousel_slides' do
-    it 'returns carousel slides that, based on current time, are currently active' do
-      @website.save
-      active_slide   = FactoryGirl.build(:carousel_slide, active_from: Date.today - 1.day, active_until: Date.today + 1.day)
-      inactive_slide = FactoryGirl.build(:carousel_slide, active_from: Date.today + 1.day, active_until: Date.today + 2.days)
-      expired_slide  = FactoryGirl.build(:carousel_slide, active_from: Date.today - 2.days, active_until: Date.today - 1.day)
-      @website.carousel_slides << active_slide
-      @website.carousel_slides << inactive_slide
-      @website.carousel_slides << expired_slide
-      expect(@website.active_carousel_slides.count).to eq 1
-      expect(@website.active_carousel_slides.first).to eq active_slide
-    end
-  end
-
   describe '#build_custom_view_resolver' do
     it 'returns nil when no custom view resolver set' do
       expect(Website.new.build_custom_view_resolver).to be_nil
