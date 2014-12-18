@@ -19,7 +19,6 @@ class CustomView < ActiveRecord::Base
     end
 
     def find_templates(name, prefix, partial, details)
-      puts "#{name}, #{prefix}, #{partial}"
       path = Path.build(name, prefix, partial)
       conditions = {
         path:    path.to_s,
@@ -28,7 +27,6 @@ class CustomView < ActiveRecord::Base
         handler: details[:handlers],
         partial: partial || false
       }
-      puts conditions
       @website.custom_views.where(conditions).map do |record|
         handler = ActionView::Template.handler_for_extension(record.handler)
         ActionView::Template.new(record.template, path.to_s, handler,

@@ -252,7 +252,6 @@ class BasketController < ApplicationController
   def add_additional_products
     unless params[:additional_product].nil?
       params[:additional_product].each_pair do |additional_product_id, value|
-        puts "value=#{value}"
         if value=="on"
           @basket.add(AdditionalProduct.find(additional_product_id).additional_product, [], 1)
         end
@@ -294,7 +293,6 @@ class BasketController < ApplicationController
     f_selections = Array.new
     unless params[:feature].nil?
       params[:feature].each_pair do |feature_id, value|
-        puts feature_id + ': ' + value
         feature = Feature.find(feature_id)
         f_selection = FeatureSelection.new
         f_selection.feature_id = feature.id

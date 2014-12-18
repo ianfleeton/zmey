@@ -39,8 +39,6 @@ class Admin::ComponentsController < Admin::AdminController
 
     @rows = []
 
-    require 'pp'
-
     @features.each do |feature|
       @headings = @headings.unshift(feature.name)
       choices = feature.choices
@@ -50,12 +48,6 @@ class Admin::ComponentsController < Admin::AdminController
       choices.each {|choice| @choice_array[f_index] << choice.id}
       f_index += 1
     end
-
-    pp @headings
-
-    pp @choice_array
-
-    puts "num_permutations = #{num_permutations}"
 
     (0...num_permutations).each do |c_index|
       permutation_array = []
@@ -73,8 +65,6 @@ class Admin::ComponentsController < Admin::AdminController
       (0...permutation_array.count).each {|i| string += "_#{permutation_array[i]}_"}
       @rows[c_index][:permutation] = Permutation.find_by(permutation: string)
     end
-
-    pp @rows
   end
 
   def destroy
