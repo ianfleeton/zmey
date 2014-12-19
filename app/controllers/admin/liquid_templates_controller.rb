@@ -2,7 +2,7 @@ class Admin::LiquidTemplatesController < Admin::AdminController
   before_action :find_liquid_template, only: [:edit, :update, :destroy]
 
   def index
-    @liquid_templates = website.liquid_templates
+    @liquid_templates = LiquidTemplate.order('name')
   end
 
   def new
@@ -14,7 +14,6 @@ class Admin::LiquidTemplatesController < Admin::AdminController
 
   def create
     @liquid_template = LiquidTemplate.new(liquid_template_params)
-    @liquid_template.website_id = website.id
 
     if @liquid_template.save
       flash[:notice] = "Successfully added new Liquid template."
@@ -42,7 +41,7 @@ class Admin::LiquidTemplatesController < Admin::AdminController
   protected
 
   def find_liquid_template
-    @liquid_template = LiquidTemplate.find_by(id: params[:id], website_id: website.id)
+    @liquid_template = LiquidTemplate.find_by(id: params[:id])
     not_found unless @liquid_template
   end
 

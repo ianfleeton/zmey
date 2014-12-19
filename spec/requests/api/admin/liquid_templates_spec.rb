@@ -11,7 +11,7 @@ describe 'Admin Liquid templates API' do
       name   = SecureRandom.hex
       title  = SecureRandom.hex
       post '/api/admin/liquid_templates', liquid_template: {markup: markup, name: name, title: title}
-      expect(LiquidTemplate.find_by(markup: markup, name: name, title: title, website_id: @website.id)).to be
+      expect(LiquidTemplate.find_by(markup: markup, name: name, title: title)).to be
     end
 
     it 'returns 422 with bad params' do
@@ -21,14 +21,12 @@ describe 'Admin Liquid templates API' do
   end
 
   describe 'DELETE delete_all' do
-    it 'deletes all Liquid templates in the website' do
-      template_1 = FactoryGirl.create(:liquid_template, website_id: @website.id)
-      template_2 = FactoryGirl.create(:liquid_template, website_id: FactoryGirl.create(:website).id)
+    it 'deletes all Liquid templates' do
+      template = FactoryGirl.create(:liquid_template)
 
       delete '/api/admin/liquid_templates'
 
-      expect(LiquidTemplate.find_by(id: template_1.id)).not_to be
-      expect(LiquidTemplate.find_by(id: template_2.id)).to be
+      expect(LiquidTemplate.any?).to be_falsey
     end
 
     it 'responds with 204 No Content' do

@@ -23,7 +23,6 @@ class Website < ActiveRecord::Base
 
   has_one :preferred_delivery_date_settings, dependent: :delete
   has_many :custom_views, dependent: :delete_all
-  has_many :liquid_templates, -> { order 'name' }, dependent: :destroy
   has_many :product_groups, -> { order 'name' }, dependent: :destroy
   has_many :nominal_codes, -> { order 'code' }, dependent: :destroy, inverse_of: :website
   has_many :pages, -> { order 'name' }, dependent: :destroy

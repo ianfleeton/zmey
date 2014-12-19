@@ -92,14 +92,14 @@ module ApplicationHelper
   end
 
   def template(name, args = {})
-    lt = LiquidTemplate.find_by(name: name, website_id: @w.id)
+    lt = LiquidTemplate.find_by(name: name)
     if lt
       raw Liquid::Template.parse(lt.markup).render(args.stringify_keys!)
     else
       begin
         render partial: "default_templates/#{name}", locals: args
       rescue ActionView::MissingTemplate
-        raw LiquidTemplate.new_called(name, @w.id).markup
+        raw LiquidTemplate.new_called(name).markup
       end
     end
   end
