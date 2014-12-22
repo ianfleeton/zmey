@@ -21,6 +21,8 @@ class Page < ActiveRecord::Base
 
   liquid_methods :image, :name, :path, :url
 
+  nilify_blanks only: [:extra]
+
   def active_product_placements
     product_placements.joins(:product).where(products: { active: true }).includes(:product)
   end

@@ -11,6 +11,7 @@ gem 'liquid'
 gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'exception_notification'
+gem 'nilify_blanks'
 gem 'slim'
 
 # Run jobs in the background

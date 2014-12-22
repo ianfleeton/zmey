@@ -15,6 +15,12 @@ describe Page do
     expect(page).to be_valid
   end
 
+  it 'nilifies blanks for extra' do
+    page = FactoryGirl.build(:page, extra: '')
+    page.save
+    expect(page.extra).to be_nil
+  end
+
   describe '#extra_json' do
     it 'handles nil values of extra' do
       expect { Page.new.extra_json }.not_to raise_error
