@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :countries, except: [:show]
     resources :discounts, except: [:show]
     resources :enquiries
+    resources :extra_attributes, except: [:show]
     resources :features, except: [:show]
     resources :images
     resources :liquid_templates, except: [:show]
