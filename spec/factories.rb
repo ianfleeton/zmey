@@ -63,6 +63,11 @@ FactoryGirl.define do
     enquiry 'Do you sell widgets?'
   end
 
+  factory :extra_attribute do
+    class_name "ClassName"
+    attribute_name "attribute_name"
+  end
+
   factory :feature do
     name 'Colour'
     association :product

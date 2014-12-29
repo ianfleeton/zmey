@@ -59,6 +59,10 @@ en:
         sent: 'Sent'
         telephone: 'Telephone'
         view: 'View'
+    extra_attributes:
+      index:
+        attribute_name: 'Attribute name'
+        class_name: 'Class name'
     nominal_codes:
       edit:
         heading: 'Edit Nominal Code'

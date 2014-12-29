@@ -49,7 +49,7 @@
 
   .form-group
     = form.label :extra
-    = form.text_area :extra, class: 'form-control', rows: 8
+    = form.text_area :extra, class: 'form-control', rows: 8, readonly: true
 
   .panel.panel-default
     .panel-heading
@@ -57,6 +57,8 @@
     .panel-body
       = form.label :description
       = form.text_field :description, required: true, maxlength: 200, class: 'form-control'
+
+  = render partial: 'admin/extra_attributes/form_mixin', locals: { object: @page }
 
   br
   = submit_tag submit_label, class: 'btn btn-primary'

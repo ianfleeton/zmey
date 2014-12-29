@@ -1,0 +1,17 @@
+= new_button [:admin, ExtraAttribute]
+
+- if @extra_attributes.any?
+  table.table
+    thead
+      tr
+        th= t('.class_name')
+        th= t('.attribute_name')
+    tbody
+      - @extra_attributes.each do |a|
+        tr
+          td= a.class_name
+          td= a.attribute_name
+          td
+            .btn-group
+              = edit_button [:admin, a]
+              = delete_button [:admin, a]

@@ -1,0 +1,12 @@
+= form_for [:admin, @extra_attribute] do |form|
+
+  .form-group
+    = form.label :class_name
+    = form.text_field :class_name, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :attribute_name
+    = form.text_field :attribute_name, required: true, class: 'form-control'
+
+  .form-group
+    = form.submit 'Save'

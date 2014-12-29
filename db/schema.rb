@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141219142556) do
+ActiveRecord::Schema.define(version: 20141222195613) do
 
   create_table "additional_products", force: true do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -168,6 +168,13 @@ ActiveRecord::Schema.define(version: 20141219142556) do
   end
 
   add_index "enquiries", ["website_id"], name: "index_enquiries_on_website_id", using: :btree
+
+  create_table "extra_attributes", force: true do |t|
+    t.string   "class_name",     limit: 255
+    t.string   "attribute_name", limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
 
   create_table "feature_selections", force: true do |t|
     t.integer  "basket_item_id", limit: 4,     default: 0,     null: false
