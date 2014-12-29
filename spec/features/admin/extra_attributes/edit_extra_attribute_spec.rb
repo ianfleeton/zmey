@@ -18,7 +18,7 @@ feature 'Edit extra attribute' do
     given_i_am_on_the_edit_extra_attribute_page
     when_i_edit_the_form
     and_i_save
-    then_a_the_attribute_is_updated
+    then_the_attribute_is_updated
   end
 
   def given_i_am_on_the_extra_attributes_page
@@ -46,5 +46,11 @@ feature 'Edit extra attribute' do
 
   def then_i_should_be_on_the_new_attribute_page
     expect(current_path).to eq edit_admin_extra_attribute_path(extra_attribute)
+  end
+
+  def then_the_attribute_is_updated
+    extra_attribute.reload
+    expect(extra_attribute.attribute_name).to eq @new_attribute_name
+    expect(extra_attribute.class_name).to eq @new_class_name
   end
 end
