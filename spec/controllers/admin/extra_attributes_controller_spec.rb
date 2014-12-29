@@ -68,6 +68,46 @@ describe Admin::ExtraAttributesController do
       end
     end
 
+    describe 'PATCH update' do
+      let(:extra_attribute) { FactoryGirl.create(:extra_attribute) }
+      let(:new_attribute_name) { SecureRandom.hex }
+      let(:new_class_name) { SecureRandom.hex }
+
+      context 'when successful' do
+        it 'updates the extra attribute' do
+          patch_update
+          extra_attribute.reload
+          expect(extra_attribute.attribute_name).to eq new_attribute_name
+          expect(extra_attribute.class_name).to eq new_class_name
+        end
+
+        it 'redirects to index' do
+          patch_update
+          expect(response).to redirect_to admin_extra_attributes_path
+        end
+      end
+
+      context 'when fail' do
+        before do
+          allow_any_instance_of(ExtraAttribute).to receive(:update_attributes).and_return(false)
+        end
+
+        it 'renders edit' do
+          patch_update
+          expect(response).to render_template 'edit'
+        end
+
+        it 'assigns @extra_attribute' do
+          patch_update
+          expect(assigns(:extra_attribute)).to be_instance_of(ExtraAttribute)
+        end
+      end
+
+      def patch_update
+        patch :update, id: extra_attribute.id, extra_attribute: {attribute_name: new_attribute_name, class_name: new_class_name}
+      end
+    end
+
     describe 'DELETE destroy' do
       let(:a) { FactoryGirl.create(:extra_attribute) }
 

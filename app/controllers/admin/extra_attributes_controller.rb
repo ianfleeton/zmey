@@ -1,5 +1,5 @@
 class Admin::ExtraAttributesController < Admin::AdminController
-  before_action :set_extra_attribute, only: [:destroy, :edit]
+  before_action :set_extra_attribute, only: [:destroy, :edit, :update]
 
   def index
     @extra_attributes = ExtraAttribute.all
@@ -19,6 +19,14 @@ class Admin::ExtraAttributesController < Admin::AdminController
   end
 
   def edit
+  end
+
+  def update
+    if @extra_attribute.update_attributes(extra_attribute_params)
+      redirect_to admin_extra_attributes_path
+    else
+      render :edit
+    end
   end
 
   def destroy
