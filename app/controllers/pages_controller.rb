@@ -11,7 +11,7 @@ class PagesController < ApplicationController
 
   def sitemap
     pages = website.pages.select(:id, :parent_id, :slug, :updated_at, :website_id).where(no_index: false).where('parent_id IS NOT NULL')
-    products = website.products.select(:id, :name, :updated_at, :website_id)
+    products = Product.select(:id, :name, :updated_at)
     @collections = [pages, products]
     @other_urls = ['/enquiries/new', '/users/forgot_password', '/users/new',
       '/sessions/new', '/basket', '/pages/terms'].collect{|x| website.url + x}
