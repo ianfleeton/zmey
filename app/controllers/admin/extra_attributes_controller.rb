@@ -1,4 +1,6 @@
 class Admin::ExtraAttributesController < Admin::AdminController
+  before_action :set_extra_attribute, only: [:destroy, :edit]
+
   def index
     @extra_attributes = ExtraAttribute.all
   end
@@ -16,8 +18,11 @@ class Admin::ExtraAttributesController < Admin::AdminController
     end
   end
 
+  def edit
+  end
+
   def destroy
-    ExtraAttribute.find(params[:id]).destroy
+    @extra_attribute.destroy
     redirect_to admin_extra_attributes_path
   end
 
@@ -28,5 +33,9 @@ class Admin::ExtraAttributesController < Admin::AdminController
       :attribute_name,
       :class_name,
       )
+    end
+
+    def set_extra_attribute
+      @extra_attribute = ExtraAttribute.find(params[:id])
     end
 end

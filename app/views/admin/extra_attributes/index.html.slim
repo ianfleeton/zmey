@@ -11,4 +11,7 @@
         tr
           td= a.class_name
           td= a.attribute_name
-          td= delete_button [:admin, a]
+          td
+            .btn-group
+              = edit_button [:admin, a]
+              = delete_button [:admin, a]

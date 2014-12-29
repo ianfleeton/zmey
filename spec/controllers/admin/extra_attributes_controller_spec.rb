@@ -60,6 +60,14 @@ describe Admin::ExtraAttributesController do
       end
     end
 
+    describe 'GET edit' do
+      it 'finds and assigns @extra_attribute' do
+        a = FactoryGirl.create(:extra_attribute)
+        get :edit, id: a.id
+        expect(assigns(:extra_attribute)).to eq a
+      end
+    end
+
     describe 'DELETE destroy' do
       let(:a) { FactoryGirl.create(:extra_attribute) }
 

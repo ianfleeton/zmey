@@ -16,6 +16,11 @@ describe 'admin/extra_attributes/index.html.slim' do
     let(:extra_attribute) { FactoryGirl.create(:extra_attribute) }
     let(:extra_attributes) { [extra_attribute] }
 
+    it 'has a link to edit attribute' do
+      render
+      expect(rendered).to have_selector "a[href='#{edit_admin_extra_attribute_path(extra_attribute)}']"
+    end
+
     it 'has a link to delete attribute' do
       render
       expect(rendered).to have_selector "a[href='#{admin_extra_attribute_path(extra_attribute)}'][data-method='delete']"
