@@ -64,8 +64,8 @@ FactoryGirl.define do
   end
 
   factory :extra_attribute do
-    class_name "MyString"
-    attribute "MyString"
+    class_name "ClassName"
+    attribute_name "attribute_name"
   end
 
   factory :feature do

@@ -1,4 +1,8 @@
 class Admin::ExtraAttributesController < Admin::AdminController
+  def index
+    @extra_attributes = ExtraAttribute.all
+  end
+
   def new
     @extra_attribute = ExtraAttribute.new
   end
@@ -10,6 +14,11 @@ class Admin::ExtraAttributesController < Admin::AdminController
     else
       render 'new'
     end
+  end
+
+  def destroy
+    ExtraAttribute.find(params[:id]).destroy
+    redirect_to admin_extra_attributes_path
   end
 
   private

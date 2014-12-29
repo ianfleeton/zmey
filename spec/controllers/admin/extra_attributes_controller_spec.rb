@@ -12,6 +12,14 @@ describe Admin::ExtraAttributesController do
       logged_in_as_admin
     end
 
+    describe 'GET index' do
+      it 'assigns all extra attributes to @extra_attributes' do
+        a = FactoryGirl.create(:extra_attribute)
+        get :index
+        expect(assigns(:extra_attributes)).to include(a)
+      end
+    end
+
     describe 'GET new' do
       it 'assigns a new ExtraAttribute to @extra_attribute' do
         get :new
@@ -49,6 +57,22 @@ describe Admin::ExtraAttributesController do
 
       def post_create
         post :create, extra_attribute: {attribute_name: 'a', class_name: 'Page'}
+      end
+    end
+
+    describe 'DELETE destroy' do
+      let(:a) { FactoryGirl.create(:extra_attribute) }
+
+      before do
+        delete :destroy, id: a.id
+      end
+
+      it 'destroys the attribute' do
+        expect(ExtraAttribute.find_by(id: a.id)).to be_nil
+      end
+
+      it 'redirects to index' do
+        expect(response).to redirect_to admin_extra_attributes_path
       end
     end
   end
