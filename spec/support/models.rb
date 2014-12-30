@@ -53,4 +53,24 @@ shared_examples_for 'an object with extra attributes' do
       expect(object.extra_json['exists']).to eq 'already'
     end
   end
+
+  describe '#method_missing' do
+    let(:attribute_name) { SecureRandom.hex }
+    let(:value) { SecureRandom.hex }
+    let(:object) { described_class.new }
+
+    before do
+      ExtraAttribute.create!(attribute_name: attribute_name, class_name: described_class)
+    end
+
+    it 'provides getters and setters for extra attributes' do
+      object.send("#{attribute_name}=".to_sym, value)
+      expect(object.send(attribute_name.to_sym)).to eq value
+    end
+
+    it 'updates the extra attribute' do
+      object.send("#{attribute_name}=".to_sym, value)
+      expect(object.extra_json[attribute_name]).to eq value
+    end
+  end
 end
