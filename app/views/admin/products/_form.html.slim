@@ -140,4 +140,6 @@
         = form.label :gender
         = select('product', 'gender', Product::GENDERS, {include_blank: true}, class: 'form-control')
 
-  p= form.submit class: 'btn btn-primary'
+  = render partial: 'admin/extra_attributes/form_mixin', locals: { object: @product }
+
+  p= form.submit t('.save'), class: 'btn btn-primary'

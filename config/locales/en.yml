@@ -99,6 +99,7 @@ en:
       form:
         active: 'Show product on website'
         allow_fractional_quantity: 'Allow fractional quantity to be ordered'
+        save: 'Save'
     users:
       edit:
         heading: 'Edit User Account Details'

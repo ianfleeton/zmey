@@ -1,4 +1,6 @@
 class Product < ActiveRecord::Base
+  include ExtraAttributes
+
   validates_presence_of :name, :sku
   validates_uniqueness_of :sku
   validates_presence_of :image, unless: Proc.new { |p| p.image_id.nil? }

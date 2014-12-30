@@ -29,7 +29,7 @@ feature 'Products admin' do
       check I18n.t('admin.products.form.allow_fractional_quantity')
     end
 
-    click_button 'Create Product'
+    click_button 'Save'
 
     expect(Product.find_by(
       age_group: product.age_group,

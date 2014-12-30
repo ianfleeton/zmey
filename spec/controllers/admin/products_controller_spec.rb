@@ -91,17 +91,20 @@ describe Admin::ProductsController do
         it "updates the requested product" do
           find_requested_product
           expect(mock_product).to receive(:update_attributes).with(valid_params['product'])
+          allow(mock_product).to receive(:update_extra)
           put :update, valid_params
         end
 
         it "assigns the requested product as @product" do
           allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: true))
+          allow(mock_product).to receive(:update_extra)
           put :update, valid_params
           expect(assigns(:product)).to equal(mock_product)
         end
 
         it "redirects to the edit product page again" do
           allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: true))
+          allow(mock_product).to receive(:update_extra)
           put :update, valid_params
           expect(response).to redirect_to(edit_admin_product_path(mock_product))
         end
@@ -111,17 +114,20 @@ describe Admin::ProductsController do
         it "updates the requested product" do
           find_requested_product
           expect(mock_product).to receive(:update_attributes).with(valid_params['product'])
+          allow(mock_product).to receive(:update_extra)
           put :update, valid_params
         end
 
         it "assigns the product as @product" do
           allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: false))
+          allow(mock_product).to receive(:update_extra)
           put :update, valid_params
           expect(assigns(:product)).to equal(mock_product)
         end
 
         it "re-renders the 'edit' template" do
           allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: false))
+          allow(mock_product).to receive(:update_extra)
           put :update, valid_params
           expect(response).to render_template('edit')
         end

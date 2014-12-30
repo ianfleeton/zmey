@@ -78,4 +78,6 @@ describe Product do
       expect(@product.reduced?).to be_falsey
     end
   end
+
+  it_behaves_like 'an object with extra attributes'
 end
