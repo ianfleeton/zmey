@@ -14,6 +14,7 @@ Create a new product.
 * **allow_fractional_quantity** — Whether a fractional amount of this product can be added to the basket. Useful for products sold by weight, volume, length or area. Default is false.
 * **brand** — Brand / manufacturer of the product. Used in Google Shopping feed.
 * **description** — A description of the product.
+* **extra** — Additional custom JSON data.
 * **google_description** — An alternative description to use in Google feeds to meet editorial guidelines.
 * **image_id** — ID of the main product image.
 * **meta_description** — A description meta tag for the product's main page. Maximum length is 255 characters.

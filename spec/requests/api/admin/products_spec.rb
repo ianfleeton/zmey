@@ -64,12 +64,14 @@ describe 'Admin products API' do
   end
 
   describe 'POST create' do
+    let(:extra)    { '{"some": "data"}' }
     let(:name)     { SecureRandom.hex }
     let(:sku)      { SecureRandom.hex }
     let(:tax_type) { Product::INC_VAT }
     let(:weight)   { 1.234 }
     let(:basic_params) {{
       allow_fractional_quantity: true,
+      extra: extra,
       name: name,
       sku: sku,
       tax_type: tax_type,
