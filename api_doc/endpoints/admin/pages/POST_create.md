@@ -15,7 +15,7 @@ letters, hyphens and forward slashes.
 ### Additional attributes
 
 * **content** — Main page content.
-* **extra** — Additional custom data such as text, XML or JSON.
+* **extra** — Additional custom JSON data.
 * **image_id** — ID of the main page image.
 * **thumbnail_image_id**  — ID of the thumbnail or secondary image.
 * **no_follow** — Robots should not follow links from this page if set to true. Default is false.
