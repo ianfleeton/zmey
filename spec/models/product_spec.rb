@@ -79,5 +79,13 @@ describe Product do
     end
   end
 
+  describe 'before_save' do
+    it 'sets nil weight to zero' do
+      product = FactoryGirl.build(:product, weight: nil)
+      product.save
+      expect(product.weight).to eq 0
+    end
+  end
+
   it_behaves_like 'an object with extra attributes'
 end

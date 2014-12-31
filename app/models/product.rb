@@ -32,6 +32,8 @@ class Product < ActiveRecord::Base
 
   liquid_methods :id, :description, :full_detail, :name, :path, :rrp?, :rrp, :shipping_supplement, :sku, :url
 
+  before_save :set_nil_weight_to_zero
+
   # Tax types
   NO_TAX = 1
   INC_VAT = 2
@@ -151,4 +153,10 @@ class Product < ActiveRecord::Base
   def to_s
     name
   end
+
+  private
+
+    def set_nil_weight_to_zero
+      self.weight ||= 0
+    end
 end
