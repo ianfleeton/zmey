@@ -18,7 +18,7 @@ p= new_button [:admin, Product]
               items.push('<li>No results found</li>');
             }
             $.each(data, function(key, product) {
-              var i = '<li><a href="/products/admin/' + product.id + '/edit">' + product.name + '</a></li>';
+              var i = '<li><a href="/admin/products/' + product.id + '/edit">' + product.name + '</a></li>';
               items.push(i);
             });
             $('#results-body').replaceWith(

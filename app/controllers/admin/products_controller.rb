@@ -39,7 +39,7 @@ class Admin::ProductsController < Admin::AdminController
   end
 
   def search
-    @products = Product.admin_search(website.id, params[:query])
+    @products = Product.admin_search(params[:query])
     render json: @products
   end
 

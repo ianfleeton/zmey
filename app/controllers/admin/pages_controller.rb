@@ -54,7 +54,7 @@ class Admin::PagesController < Admin::AdminController
   end
 
   def search_products
-    @products = Product.admin_search(website.id, params[:query])
+    @products = Product.admin_search(params[:query])
     render layout: false
   end
 
