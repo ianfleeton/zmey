@@ -1,10 +1,10 @@
 class Api::Admin::ImagesController < Api::Admin::AdminController
   def index
-    @images = website.images
+    @images = Image.all
   end
 
   def show
-    @image = Image.find_by(id: params[:id], website_id: website.id)
+    @image = Image.find_by(id: params[:id])
     render nothing: true, status: 404 unless @image
   end
 
@@ -12,7 +12,6 @@ class Api::Admin::ImagesController < Api::Admin::AdminController
     @image = Image.new(image_params)
     io = StringIO.new(Base64.decode64(params[:image][:data]))
     @image.image = io
-    @image.website = website
     if @image.save
       Webhook.trigger('image_created', @image)
     else

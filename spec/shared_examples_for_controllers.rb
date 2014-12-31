@@ -1,3 +1,13 @@
+shared_examples 'an objects finder' do |object_type|
+  it 'gets objects' do
+    FactoryGirl.create(:website)
+    object = FactoryGirl.create(object_type)
+    get :index
+    collection = object_type.to_s.pluralize.to_sym
+    expect(assigns(collection)).to include(object)
+  end
+end
+
 shared_examples 'a website owned objects finder' do |object_type|
   it 'gets objects for the current site' do
     our_site = FactoryGirl.create(:website)

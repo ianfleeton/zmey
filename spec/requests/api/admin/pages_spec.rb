@@ -71,7 +71,7 @@ describe 'Admin pages API' do
       name = SecureRandom.hex
       slug = SecureRandom.hex
       title = SecureRandom.hex
-      image = FactoryGirl.create(:image, website_id: @website.id)
+      image = FactoryGirl.create(:image)
       description = 'Description'
       post '/api/admin/pages', page: {description: description, name: name, slug: slug, thumbnail_image_id: image.id, title: title}
       expect(Page.find_by(slug: slug, thumbnail_image_id: image.id, website_id: @website.id)).to be

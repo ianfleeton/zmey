@@ -1,8 +1,6 @@
 class Image < ActiveRecord::Base
-  validates_presence_of :name, :website_id
-  validates_uniqueness_of :name, scope: :website_id
-
-  belongs_to :website
+  validates_presence_of :name
+  validates_uniqueness_of :name
 
   has_many :carousel_slides, dependent: :restrict_with_exception
   has_many :pages, dependent: :nullify
@@ -118,7 +116,7 @@ class Image < ActiveRecord::Base
     {
       image: {
         id: id,
-        url: "#{website.url}#{url}"
+        url: "#{Website.first.url}#{url}"
       }
     }
   end

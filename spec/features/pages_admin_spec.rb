@@ -12,7 +12,7 @@ feature 'Pages admin' do
   let(:the_page) { FactoryGirl.build(:page, website: website) }
 
   scenario 'Create page', js: true do
-    image = FactoryGirl.create(:image, website_id: website.id)
+    image = FactoryGirl.create(:image)
 
     visit admin_pages_path
     click_link 'New'

@@ -104,13 +104,6 @@ describe Website do
       expect(uploader).to be_instance_of ImageUploader
     end
 
-    it 'associates the image with the itself' do
-      image = FactoryGirl.create(:image)
-      allow(Image).to receive(:new).and_return(image)
-      uploader
-      expect(image.website).to eq website
-    end
-
     it 'yields the image' do
       image = nil
       website.image_uploader(params) do |yielded|

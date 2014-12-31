@@ -8,16 +8,16 @@ describe 'Admin images API' do
   describe 'GET index' do
     context 'with images' do
       before do
-        @image1 = FactoryGirl.create(:image, website_id: @website.id)
+        @image1 = FactoryGirl.create(:image)
         @image2 = FactoryGirl.create(:image)
       end
 
-      it 'returns images for the website' do
+      it 'returns all images' do
         get '/api/admin/images'
 
         images = JSON.parse(response.body)
 
-        expect(images['images'].length).to eq 1
+        expect(images['images'].length).to eq 2
         expect(images['images'][0]['id']).to eq @image1.id
         expect(images['images'][0]['href']).to eq api_admin_image_url(@image1)
         expect(images['images'][0]['filename']).to eq @image1.filename
@@ -47,7 +47,7 @@ describe 'Admin images API' do
   describe 'GET show' do
     context 'when image found' do
       before do
-        @image = FactoryGirl.create(:image, website_id: @website.id)
+        @image = FactoryGirl.create(:image)
       end
 
       it 'returns 200 OK' do
@@ -66,7 +66,7 @@ describe 'Admin images API' do
 
   describe 'DELETE delete_all' do
     before do
-      @image = FactoryGirl.create(:image, website_id: @website.id)
+      @image = FactoryGirl.create(:image)
     end
 
     context 'with no DeleteRestrictionErrors' do

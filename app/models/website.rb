@@ -26,7 +26,6 @@ class Website < ActiveRecord::Base
   has_many :product_groups, -> { order 'name' }, dependent: :destroy
   has_many :nominal_codes, -> { order 'code' }, dependent: :destroy, inverse_of: :website
   has_many :pages, -> { order 'name' }, dependent: :destroy
-  has_many :images, dependent: :destroy
   has_many :forums, dependent: :destroy
   has_many :enquiries, -> { order 'created_at DESC' }, dependent: :destroy
   has_many :shipping_zones, -> { order 'shipping_zones.name' }, dependent: :destroy
@@ -43,7 +42,6 @@ class Website < ActiveRecord::Base
 
   def image_uploader(image_params)
     ImageUploader.new(image_params) do |image|
-      image.website = self
       yield image if block_given?
     end
   end

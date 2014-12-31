@@ -10,7 +10,7 @@ describe Admin::ImagesController do
   end
 
   describe 'GET index' do
-    it_behaves_like 'a website owned objects finder', :image
+    it_behaves_like 'an objects finder', :image
   end
 
   describe 'POST create' do
@@ -25,13 +25,6 @@ describe Admin::ImagesController do
         .with(hash_including('image' => red_image, 'name' => 'red'))
         .and_return double(ImageUploader).as_null_object
       post_create
-    end
-
-    it 'associates the image with the current website' do
-      image = FactoryGirl.create(:image)
-      allow(Image).to receive(:new).and_return(image)
-      post_create
-      expect(image.website).to eq controller.website
     end
 
     it 'sets a flash notice stating how many images were uploaded' do
