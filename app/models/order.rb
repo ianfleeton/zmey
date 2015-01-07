@@ -206,6 +206,19 @@ class Order < ActiveRecord::Base
     end
   end
 
+  # Records preferred delivery date.
+  #
+  # * <tt>settings</tt> is an instance of <tt>PreferredDeliveryDateSettings</tt>.
+  # * <tt>date</tt> is a string representation of a date which is expected to
+  #   match the format in the settings.
+  def record_preferred_delivery_date(settings, date)
+    return unless date
+
+    self.preferred_delivery_date = Date.strptime(params[:preferred_delivery_date], settings.date_format)
+    self.preferred_delivery_date_prompt = settings.prompt
+    self.preferred_delivery_date_format = settings.date_format
+  end
+
   def to_webhook_payload(event)
     {
       order: {

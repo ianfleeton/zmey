@@ -105,12 +105,10 @@ class BasketController < ApplicationController
 
     @order.customer_note = @basket.customer_note
 
-    unless params[:preferred_delivery_date].nil?
-      @order.preferred_delivery_date = Date.strptime(params[:preferred_delivery_date],
-        @w.preferred_delivery_date_settings.date_format)
-      @order.preferred_delivery_date_prompt = website.preferred_delivery_date_settings.prompt
-      @order.preferred_delivery_date_format = website.preferred_delivery_date_settings.date_format
-    end
+    @order.record_preferred_delivery_date(
+      website.preferred_delivery_date_settings,
+      params[:preferred_delivery_date]
+    )
 
     @basket.basket_items.each do |i|
       @order.order_lines << OrderLine.new(

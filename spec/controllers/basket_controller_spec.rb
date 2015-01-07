@@ -65,6 +65,14 @@ describe BasketController do
         post 'place_order'
       end
 
+      it 'records preferred delivery date' do
+        date = '28/12/15'
+        settings = double(Order).as_null_object
+        allow(website).to receive(:preferred_delivery_date_settings).and_return(settings)
+        expect_any_instance_of(Order).to receive(:record_preferred_delivery_date).with(settings, date)
+        post 'place_order', preferred_delivery_date: date
+      end
+
       it "records the customer's IP address" do
         post 'place_order'
         expect(assigns(:order).ip_address).to eq '0.0.0.0'
