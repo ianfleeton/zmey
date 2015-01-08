@@ -23,6 +23,6 @@ feature 'Delete extra attribute' do
   end
 
   def then_the_attribute_is_deleted
-    expect(ExtraAttribute.count).to eq 0
+    expect(ExtraAttribute.find_by(id: extra_attribute.id)).to be_nil
   end
 end
