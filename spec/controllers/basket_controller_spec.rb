@@ -8,25 +8,39 @@ describe BasketController do
     allow(controller).to receive(:website).and_return(website)
   end
 
+  shared_examples_for 'a shipping class setter' do |method, action|
+    let(:shipping_class) { FactoryGirl.create(:shipping_class) }
+
+    it 'sets @shipping_class from the session' do
+      session[:shipping_class_id] = shipping_class.id
+      send(method, action)
+      expect(assigns(:shipping_class)).to eq shipping_class
+    end
+  end
+
   describe 'GET index' do
     let(:our_page)   { FactoryGirl.create(:page, website_id: website.id) }
     let(:other_page) { FactoryGirl.create(:page) }
 
-    before { get :index, page_id: page_id }
+    it_behaves_like 'a shipping class setter', :get, :index
 
-    context 'with valid params[:page_id]' do
-      let(:page_id) { our_page.id }
+    context 'with page_id param set' do
+      before { get :index, page_id: page_id }
 
-      it 'sets @page' do
-        expect(assigns(:page)).to eq our_page
+      context 'with valid params[:page_id]' do
+        let(:page_id) { our_page.id }
+
+        it 'sets @page' do
+          expect(assigns(:page)).to eq our_page
+        end
       end
-    end
 
-    context 'with invalid params[:page_id]' do
-      let(:page_id) { other_page.id }
+      context 'with invalid params[:page_id]' do
+        let(:page_id) { other_page.id }
 
-      it 'sets @page' do
-        expect(assigns(:page)).to be_nil
+        it 'sets @page' do
+          expect(assigns(:page)).to be_nil
+        end
       end
     end
   end
@@ -44,6 +58,23 @@ describe BasketController do
     end
   end
 
+  shared_examples_for 'a shipping class updater' do |method, action|
+    let(:shipping_class) { FactoryGirl.create(:shipping_class) }
+
+    it 'sets shipping class in the session' do
+      send(method, action, shipping_class_id: shipping_class.id)
+      expect(session[:shipping_class_id]).to eq shipping_class.id
+    end
+  end
+
+  describe 'POST update' do
+    it_behaves_like 'a shipping class updater', :post, :update
+  end
+
+  describe 'GET checkout' do
+    it_behaves_like 'a shipping class setter', :get, :checkout
+  end
+
   describe 'POST place_order' do
     let(:basket) { FactoryGirl.build(:basket) }
     let(:t_shirt) { FactoryGirl.create(:product, weight: 0.2) }
@@ -59,6 +90,8 @@ describe BasketController do
       before do
         allow(controller).to receive(:find_delivery_address).and_return(valid_address)
       end
+
+      it_behaves_like 'a shipping class setter', :post, :place_order
 
       it 'deletes a previous unpaid order if one exists' do
         expect(controller).to receive(:delete_previous_unpaid_order_if_any)

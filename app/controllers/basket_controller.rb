@@ -4,8 +4,13 @@ class BasketController < ApplicationController
   layout 'basket_checkout'
 
   before_action :require_delivery_address, only: [:place_order]
+
+  before_action :update_shipping_class, only: [:update]
+  before_action :set_shipping_class, only: [:index, :checkout, :place_order]
+
   before_action :remove_invalid_discounts, only: [:index, :checkout, :place_order]
   before_action :calculate_discounts, only: [:index, :checkout, :place_order]
+
   before_action :update_customer_note, only: [:update, :checkout, :place_order]
 
   # Main basket page.
@@ -500,5 +505,14 @@ class BasketController < ApplicationController
       if params[:customer_note]
         @basket.update_attribute(:customer_note, params[:customer_note])
       end
+    end
+
+    def update_shipping_class
+      shipping_class = ShippingClass.find_by(id: params[:shipping_class_id])
+      session[:shipping_class_id] = shipping_class.id if shipping_class
+    end
+
+    def set_shipping_class
+      @shipping_class = ShippingClass.find_by(session[:shipping_class_id])
     end
 end
