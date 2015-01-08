@@ -8,6 +8,37 @@ describe Order do
     end
   end
 
+  describe '#add_basket' do
+    let(:order) { Order.new }
+    let(:basket) { Basket.new }
+
+    it 'adds basket items' do
+      expect(order).to receive(:add_basket_items).with(basket.basket_items)
+      order.add_basket(basket)
+    end
+
+    it 'associates the basket with the order' do
+      basket.save!
+      order.add_basket(basket)
+      expect(order.basket).to eq basket
+    end
+  end
+
+  describe '#add_basket_items' do
+    let(:basket) { FactoryGirl.create(:basket) }
+
+    before do
+      basket.basket_items << FactoryGirl.build(:basket_item)
+      basket.basket_items << FactoryGirl.build(:basket_item)
+    end
+
+    it 'creates an order line for each basket item' do
+      o = Order.new
+      o.add_basket_items(basket.basket_items)
+      expect(o.order_lines.length).to eq 2
+    end
+  end
+
   describe '#to_webhook_payload' do
     before { FactoryGirl.create(:website) }
 

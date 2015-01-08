@@ -110,18 +110,8 @@ class BasketController < ApplicationController
       params[:preferred_delivery_date]
     )
 
-    @basket.basket_items.each do |i|
-      @order.order_lines << OrderLine.new(
-        product_id: i.product.id,
-        product_sku: i.product.sku,
-        product_name: i.product.name,
-        product_price: i.product.price_ex_tax(i.quantity),
-        product_weight: i.product.weight,
-        tax_amount: i.product.tax_amount(i.quantity) * i.quantity,
-        quantity: i.quantity,
-        feature_descriptions: i.feature_descriptions
-      )
-    end
+    @order.add_basket(@basket)
+
     @discount_lines.each do |dl|
       @order.order_lines << OrderLine.new(
         product_id: 0,
@@ -136,9 +126,6 @@ class BasketController < ApplicationController
     @order.shipping_method = 'Standard Shipping'
     @order.shipping_amount = shipping_amount(0)
     @order.shipping_tax_amount = shipping_tax_amount(@order.shipping_amount)
-    # Store the basket with the order to clean up after payment.
-    # Payment callbacks do not use session information.
-    @order.basket_id = @basket.id
 
     @order.save!
     Webhook.trigger('order_created', @order)

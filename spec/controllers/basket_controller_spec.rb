@@ -78,9 +78,9 @@ describe BasketController do
         expect(assigns(:order).ip_address).to eq '0.0.0.0'
       end
 
-      it 'creates an order line for each basket item' do
+      it 'adds the basket to the order' do
+        expect_any_instance_of(Order).to receive(:add_basket).with(basket)
         post 'place_order'
-        expect(assigns(:order).order_lines.count).to eq 2
       end
 
       it 'records the weight of the products' do

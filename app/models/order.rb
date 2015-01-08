@@ -219,6 +219,33 @@ class Order < ActiveRecord::Base
     self.preferred_delivery_date_format = settings.date_format
   end
 
+  # Adds the contents of <tt>basket</tt> to the order and associates the basket
+  # with the order.
+  #
+  # Keeping the basket with the order allows the basket to be cleaned up later
+  # during payment callbacks which do not have user session information.
+  def add_basket(basket)
+    add_basket_items(basket.basket_items)
+    self.basket = basket
+  end
+
+  # Creates an <tt>OrderLine<tt> for each <tt>BasketItem</tt> in
+  # <tt>items</tt>.
+  def add_basket_items(items)
+    items.each do |i|
+      self.order_lines.build(
+        product_id: i.product.id,
+        product_sku: i.product.sku,
+        product_name: i.product.name,
+        product_price: i.product.price_ex_tax(i.quantity),
+        product_weight: i.product.weight,
+        tax_amount: i.product.tax_amount(i.quantity) * i.quantity,
+        quantity: i.quantity,
+        feature_descriptions: i.feature_descriptions
+      )
+    end
+  end
+
   def to_webhook_payload(event)
     {
       order: {
