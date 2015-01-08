@@ -31,33 +31,50 @@ describe PaymentsController do
     end
   end
 
+  CALLBACK_PARAMS = {
+    Address1:            'a1',
+    Address2:            'a2',
+    Address3:            'a3',
+    Address4:            'a4',
+    Amount:              '1000',
+    City:                'ct',
+    CountryCode:         '123',
+    CrossReference:      'xr',
+    CurrencyCode:        '456',
+    CustomerName:        'cn',
+    Message:             'msg',
+    OrderDescription:    'od',
+    OrderID:             'id',
+    PostCode:            'pc',
+    PreviousMessage:     'pm',
+    PreviousStatusCode:  'psc',
+    State:               'st',
+    StatusCode:          '0',
+    TransactionDateTime: 'sc',
+    TransactionType:     'tt',
+  }
+
   describe 'POST cardsave_callback' do
-    let(:params) {
-      {
-        Address1:            '',
-        Address2:            '',
-        Address3:            '',
-        Address4:            '',
-        Amount:              '1000',
-        City:                '',
-        CountryCode:         '',
-        CrossReference:      '',
-        CurrencyCode:        '',
-        CustomerName:        '',
-        Message:             '',
-        OrderDescription:    '',
-        OrderID:             '',
-        PostCode:            '',
-        PreviousMessage:     '',
-        PreviousStatusCode:  '',
-        State:               '',
-        StatusCode:          '0',
-        TransactionDateTime: '',
-        TransactionType:     '',
-      }
-    }
+    let(:params) { CALLBACK_PARAMS }
+
     it 'creates a new payment' do
       expect{post :cardsave_callback, params}.to change{Payment.count}.by(1)
+    end
+  end
+
+  describe '#cardsave_plaintext_post' do
+    let(:params) { CALLBACK_PARAMS }
+
+    before do
+      website.cardsave_pre_shared_key = 'xyzzy'
+      website.cardsave_merchant_id = 'plugh'
+      website.cardsave_password = 'plover'
+
+      post :cardsave_callback, params
+    end
+
+    it 'interpolates cardsave settings and callback params in order' do
+      expect(controller.send(:cardsave_plaintext_post)).to eq "PreSharedKey=xyzzy&MerchantID=plugh&Password=plover&StatusCode=0&Message=msg&PreviousStatusCode=psc&PreviousMessage=pm&CrossReference=xr&Amount=1000&CurrencyCode=456&OrderID=id&TransactionType=tt&TransactionDateTime=sc&OrderDescription=od&CustomerName=cn&Address1=a1&Address2=a2&Address3=a3&Address4=a4&City=ct&State=st&PostCode=pc&CountryCode=123"
     end
   end
 

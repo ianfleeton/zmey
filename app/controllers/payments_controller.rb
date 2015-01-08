@@ -234,32 +234,36 @@ class PaymentsController < ApplicationController
   end
 
   def cardsave_hash_post
-    plain="PreSharedKey=" + website.cardsave_pre_shared_key
-    plain=plain + '&MerchantID=' + website.cardsave_merchant_id
-    plain=plain + '&Password=' + website.cardsave_password
-    plain=plain + '&StatusCode=' + params[:StatusCode]
-    plain=plain + '&Message=' + params[:Message]
-    plain=plain + '&PreviousStatusCode=' + params[:PreviousStatusCode]
-    plain=plain + '&PreviousMessage=' + params[:PreviousMessage]
-    plain=plain + '&CrossReference=' + params[:CrossReference]
-    plain=plain + '&Amount=' + params[:Amount]
-    plain=plain + '&CurrencyCode=' + params[:CurrencyCode]
-    plain=plain + '&OrderID=' + params[:OrderID]
-    plain=plain + '&TransactionType=' + params[:TransactionType]
-    plain=plain + '&TransactionDateTime=' + params[:TransactionDateTime]
-    plain=plain + '&OrderDescription=' + params[:OrderDescription]
-    plain=plain + '&CustomerName=' + params[:CustomerName]
-    plain=plain + '&Address1=' + params[:Address1]
-    plain=plain + '&Address2=' + params[:Address2]
-    plain=plain + '&Address3=' + params[:Address3]
-    plain=plain + '&Address4=' + params[:Address4]
-    plain=plain + '&City=' + params[:City]
-    plain=plain + '&State=' + params[:State]
-    plain=plain + '&PostCode=' + params[:PostCode]
-    plain=plain + '&CountryCode=' + params[:CountryCode]
-
     require 'digest/sha1'
-    Digest::SHA1.hexdigest(plain)
+    Digest::SHA1.hexdigest(cardsave_plaintext_post)
+  end
+
+  def cardsave_plaintext_post
+    {
+      'PreSharedKey' => website.cardsave_pre_shared_key,
+      'MerchantID' => website.cardsave_merchant_id,
+      'Password' => website.cardsave_password,
+      'StatusCode' => params[:StatusCode],
+      'Message' => params[:Message],
+      'PreviousStatusCode' => params[:PreviousStatusCode],
+      'PreviousMessage' => params[:PreviousMessage],
+      'CrossReference' => params[:CrossReference],
+      'Amount' => params[:Amount],
+      'CurrencyCode' => params[:CurrencyCode],
+      'OrderID' => params[:OrderID],
+      'TransactionType' => params[:TransactionType],
+      'TransactionDateTime' => params[:TransactionDateTime],
+      'OrderDescription' => params[:OrderDescription],
+      'CustomerName' => params[:CustomerName],
+      'Address1' => params[:Address1],
+      'Address2' => params[:Address2],
+      'Address3' => params[:Address3],
+      'Address4' => params[:Address4],
+      'City' => params[:City],
+      'State' => params[:State],
+      'PostCode' => params[:PostCode],
+      'CountryCode' => params[:CountryCode],
+    }.map {|k,v| "#{k}=#{v}"}.join('&')
   end
 
   def cardsave_hash_matches?
