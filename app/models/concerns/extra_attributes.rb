@@ -6,6 +6,12 @@ module ExtraAttributes
     @extra_json ||= JSON.parse(extra || '{}')
   end
 
+  # Clear memoized values.
+  def reload
+    @extra_json = nil
+    super
+  end
+
   # Updates the <tt>extra</tt> attribute with values in the hash, adding new
   # entries as necessary.
   #
