@@ -40,22 +40,21 @@ module ExtraAttributes
   def method_missing(method_sym, *arguments, &block)
     method_str = method_sym.to_s
 
-    if method_str[-1] == '='
-      method_str = method_str[0...-1]
-      setter = true
-    else
-      setter = false
-    end
+    method_info = ExtraAttribute.method_info(method_str, self.class)
 
-    if ExtraAttribute.exists?(attribute_name: method_str, class_name: self.class)
-      if setter
-        set_extra_attribute(method_str, arguments[0])
+    if method_info[:exists]
+      if method_info[:setter]
+        set_extra_attribute(method_info[:attribute_name], arguments[0])
       else
-        extra_json[method_str]
+        extra_json[method_info[:attribute_name]]
       end
     else
       super
     end
+  end
+
+  def respond_to?(method_sym)
+    ExtraAttribute.method_info(method_sym, self.class)[:exists] || super
   end
 
   private
