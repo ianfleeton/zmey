@@ -1,4 +1,4 @@
-- Page.navs(@w).each do |nav|
+- Page.navs(website).each do |nav|
   ul id="#{nav.id_attribute}"
     - nav.pages.each do |p|
       = nav_link_to(p, p.path)
@@ -8,8 +8,8 @@
         = nav_link_to I18n.t('my_account'), {controller: 'users', action: 'show', id: @current_user}, nil, 'n_account'
         = nav_link_to I18n.t('logout'), sessions_path, method: 'post'
       - else
-        - if @w.can_users_create_accounts?
+        - if website.can_users_create_accounts?
           = nav_link_to I18n.t('register'), controller: 'users', action: 'new'
           = nav_link_to I18n.t('login'), sign_in_path
       = nav_link_to I18n.t('view_cart'), basket_path
-      = nav_link_to I18n.t('checkout.checkout'), controller: 'basket', action: 'checkout'
+      = nav_link_to t('checkout.checkout'), checkout_path
