@@ -113,6 +113,7 @@ Rails.application.routes.draw do
 
   resources :addresses do
     collection do
+      get 'choose_billing_address'
       get 'choose_delivery_address'
     end
     member do

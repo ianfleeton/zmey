@@ -4,7 +4,7 @@ class CheckoutController < ApplicationController
 
   layout 'basket_checkout'
 
-  before_action :require_basket, only: [:index, :confirm]
+  before_action :require_basket, only: [:index, :billing, :confirm]
   before_action :set_shipping_class, only: [:confirm]
   before_action :remove_invalid_discounts, only: [:confirm]
   before_action :calculate_discounts, only: [:confirm]
@@ -18,6 +18,17 @@ class CheckoutController < ApplicationController
   def save_details
     DETAILS_KEYS.each {|k| session[k] = params[k]}
     redirect_to billing_details_path
+  end
+
+  def billing
+    if (@address = billing_address).nil?
+      if current_user.addresses.any?
+        session[:return_to] = 'billing'
+        redirect_to choose_billing_address_addresses_path
+      else
+        @address = prefilled_address
+      end
+    end
   end
 
   def confirm
@@ -46,5 +57,19 @@ class CheckoutController < ApplicationController
 
     def require_basket
       redirect_to basket_path and return if basket.basket_items.empty?
+    end
+
+    def billing_address
+      @billing_address ||= Address.find_by(session[:billing_address_id])
+    end
+
+    def prefilled_address
+      Address.new(
+        user: current_user,
+        full_name: session[:name],
+        phone_number: session[:phone],
+        email_address: session[:email],
+        country: Country.find_by(name: 'United Kingdom')
+      )
     end
 end
