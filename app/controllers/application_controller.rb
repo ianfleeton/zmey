@@ -21,18 +21,18 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user])
+    @current_user ||= User.find_by(id: session[:user]) || User.new
   end
 
   def website
     @website ||= find_website
   end
 
-  protected
-
   def logged_in?
-    current_user.is_a?(User)
+    current_user.persisted?
   end
+
+  protected
 
   def admin?
     logged_in? and current_user.admin?
