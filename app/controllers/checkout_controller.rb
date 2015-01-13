@@ -4,14 +4,19 @@ class CheckoutController < ApplicationController
 
   layout 'basket_checkout'
 
-  before_action :set_shipping_class, only: [:index]
-  before_action :remove_invalid_discounts, only: [:index]
-  before_action :calculate_discounts, only: [:index]
+  before_action :require_basket, only: [:index, :confirm]
+  before_action :set_shipping_class, only: [:confirm]
+  before_action :remove_invalid_discounts, only: [:confirm]
+  before_action :calculate_discounts, only: [:confirm]
+
+  DETAILS_KEYS = [:name, :email, :phone].freeze
 
   def index
-    redirect_to basket_path and return if basket.basket_items.empty?
-    session[:return_to] = 'checkout'
+    redirect_to billing_details_path if DETAILS_KEYS.all?{|k| session[k].present?}
+  end
 
+  def confirm
+    session[:return_to] = 'checkout'
     @address = nil
     @address = Address.find_by(id: session[:address_id]) if session[:address_id]
     if @address.nil?
@@ -31,4 +36,10 @@ class CheckoutController < ApplicationController
     @shipping_amount = shipping_amount
     @shipping_tax_amount = shipping_tax_amount(@shipping_amount)
   end
+
+  protected
+
+    def require_basket
+      redirect_to basket_path and return if basket.basket_items.empty?
+    end
 end

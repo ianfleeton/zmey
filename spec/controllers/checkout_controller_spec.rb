@@ -5,8 +5,11 @@ RSpec.describe CheckoutController, type: :controller do
   before { allow(controller).to receive(:website).and_return(website) }
 
   describe 'GET index' do
-    it_behaves_like 'a shipping class setter', :get, :index
-    it_behaves_like 'a discounts calculator', :get, :index
+    context 'with empty basket' do
+      before { get :index }
+
+      it { should redirect_to basket_path }
+    end
 
     context 'with items in the basket' do
       before do
@@ -15,10 +18,48 @@ RSpec.describe CheckoutController, type: :controller do
         allow(controller).to receive(:basket).and_return(basket)
       end
 
+      context 'with name, phone and email set in session' do
+        before do
+          session[:name] = 'A. Customer'
+          session[:phone] = '01234 567890'
+          session[:email] = 'customer@example.com'
+          get :index
+        end
+
+        it { should redirect_to billing_details_path }
+      end
+
+      context 'without name, phone and email set in session' do
+        before do
+          get :index
+        end
+
+        it { should render_with_layout 'basket_checkout' }
+      end
+    end
+  end
+
+  describe 'GET confirm' do
+    context 'with empty basket' do
+      before { get :confirm }
+
+      it { should redirect_to basket_path }
+    end
+
+    context 'with items in the basket' do
+      before do
+        basket = FactoryGirl.create(:basket)
+        FactoryGirl.create(:basket_item, basket_id: basket.id)
+        allow(controller).to receive(:basket).and_return(basket)
+      end
+
+      it_behaves_like 'a shipping class setter', :get, :confirm
+      it_behaves_like 'a discounts calculator', :get, :confirm
+
       context 'with an address' do
         before do
           session[:address_id] = FactoryGirl.create(:address).id
-          get :index
+          get :confirm
         end
 
         it { should render_with_layout 'basket_checkout' }
