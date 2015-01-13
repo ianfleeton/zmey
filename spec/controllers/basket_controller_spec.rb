@@ -8,16 +8,6 @@ describe BasketController do
     allow(controller).to receive(:website).and_return(website)
   end
 
-  shared_examples_for 'a shipping class setter' do |method, action|
-    let(:shipping_class) { FactoryGirl.create(:shipping_class) }
-
-    it 'sets @shipping_class from the session' do
-      session[:shipping_class_id] = shipping_class.id
-      send(method, action)
-      expect(assigns(:shipping_class)).to eq shipping_class
-    end
-  end
-
   describe 'GET index' do
     let(:our_page)   { FactoryGirl.create(:page, website_id: website.id) }
     let(:other_page) { FactoryGirl.create(:page) }
@@ -69,10 +59,6 @@ describe BasketController do
 
   describe 'POST update' do
     it_behaves_like 'a shipping class updater', :post, :update
-  end
-
-  describe 'GET checkout' do
-    it_behaves_like 'a shipping class setter', :get, :checkout
   end
 
   describe 'POST place_order' do

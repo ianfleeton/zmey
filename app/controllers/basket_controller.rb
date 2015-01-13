@@ -1,12 +1,13 @@
 class BasketController < ApplicationController
   include ResetBasket
+  include Shipping
 
   layout 'basket_checkout'
 
   before_action :require_delivery_address, only: [:place_order]
 
   before_action :update_shipping_class, only: [:update]
-  before_action :set_shipping_class, only: [:index, :checkout, :place_order]
+  before_action :set_shipping_class, only: [:index, :place_order]
 
   before_action :remove_invalid_discounts, only: [:index, :checkout, :place_order]
   before_action :calculate_discounts, only: [:index, :checkout, :place_order]
@@ -70,30 +71,6 @@ class BasketController < ApplicationController
     redirect_to action: 'checkout' and return if params[:checkout]
     flash[:notice] = 'Basket updated.'
     redirect_to basket_path
-  end
-
-  def checkout
-    redirect_to basket_path and return if @basket.basket_items.empty?
-    session[:return_to] = 'checkout'
-
-    @address = nil
-    @address = Address.find_by(id: session[:address_id]) if session[:address_id]
-    if @address.nil?
-      if logged_in? && current_user.addresses.any?
-        redirect_to choose_delivery_address_addresses_path
-      else
-        @address = Address.new
-        @address.country = Country.find_by(name: 'United Kingdom')
-        if logged_in?
-          @address.user_id = @current_user.id
-          @address.email_address = @current_user.email
-          @address.full_name = @current_user.name
-        end
-      end
-    end
-
-    @shipping_amount = shipping_amount
-    @shipping_tax_amount = shipping_tax_amount(@shipping_amount)
   end
 
   def place_order
@@ -313,10 +290,6 @@ class BasketController < ApplicationController
     redirect_to action: 'checkout' if @address.nil?
   end
 
-  def find_delivery_address
-    @address ||= session[:address_id] ? Address.find_by(id: session[:address_id]) : nil
-  end
-
   def remove_item
     params[:remove_item].each_key do |id|
       BasketItem.destroy_all(id: id, basket_id: @basket.id)
@@ -336,71 +309,6 @@ class BasketController < ApplicationController
         end
       end
     end
-  end
-
-  # Calculates shipping amount based on the global website shipping amount
-  # and whether shipping is applicable to any products in the basket.
-  #
-  # Returns +nil+ by default if there is no shipping amount.
-  # Set +return_if_nil+ to 0, for example, if using in a calculation.
-  def shipping_amount(return_if_nil=nil)
-    amount = 0.0
-
-    if @basket.apply_shipping?
-      @address = find_delivery_address
-      amount = website.shipping_amount
-      amount_by_address = calculate_shipping_from_address(@address)
-      amount = amount_by_address.nil? ? amount : amount_by_address
-    end
-
-    amount += @basket.shipping_supplement
-
-    (amount == 0.0) ? return_if_nil : amount
-  end
-
-  def shipping_tax_amount(shipping_amount_net)
-    if shipping_amount_net && website.vat_number.present?
-      Product::VAT_RATE * shipping_amount_net
-    else
-      0
-    end
-  end
-
-  def calculate_shipping_from_address(address)
-    if !address
-      nil
-    elsif !address.country
-      nil
-    elsif !address.country.shipping_zone
-      nil
-    elsif address.country.shipping_zone.shipping_classes.empty?
-      nil
-    else
-      calculate_shipping_from_class(address.country.shipping_zone.shipping_classes.first)
-    end
-  end
-
-  def calculate_shipping_from_class(shipping_class)
-    case shipping_class.table_rate_method
-    when 'basket_total'
-      value = @basket.total(true)
-    when 'weight'
-      value = @basket.weight
-    else
-      raise 'Unknown table rate method'
-    end
-
-    shipping = nil
-
-    unless shipping_class.shipping_table_rows.empty?
-      shipping_class.shipping_table_rows.each do |row|
-        if value >= row.trigger_value
-          shipping = row.amount
-        end
-      end
-    end
-
-    shipping
   end
 
   def calculate_discounts
@@ -510,9 +418,5 @@ class BasketController < ApplicationController
     def update_shipping_class
       shipping_class = ShippingClass.find_by(id: params[:shipping_class_id])
       session[:shipping_class_id] = shipping_class.id if shipping_class
-    end
-
-    def set_shipping_class
-      @shipping_class = ShippingClass.find_by(session[:shipping_class_id])
     end
 end

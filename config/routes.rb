@@ -123,13 +123,14 @@ Rails.application.routes.draw do
   get 'basket' => 'basket#index', as: :basket
   post 'basket/add' => 'basket#add', as: :add_to_basket
   post 'basket/add_update_multiple' => 'basket#add_update_multiple', as: :add_update_multiple_basket
-  get 'basket/checkout', as: :checkout
   post 'basket/enter_coupon' => 'basket#enter_coupon'
   get 'basket/load/:token' => 'basket#load', as: :load_basket
   post 'basket/place_order' => 'basket#place_order'
   post 'basket/save_and_email' => 'basket#save_and_email', as: :save_and_email_basket
   post 'basket/update' => 'basket#update'
   get 'basket(/:action(.:format))', controller: 'basket'
+
+  get 'checkout' => 'checkout#index', as: :checkout
 
   resources :enquiries, only: [:create, :new] do
     collection do
