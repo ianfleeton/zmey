@@ -8,6 +8,18 @@ module Discounts
       return session[:coupons].include? coupon
     end
 
+    def remove_invalid_discounts
+      return unless session[:coupons]
+
+      session[:coupons].each do |coupon|
+        discount = Discount.find_by(coupon: coupon)
+        if !discount || !discount.currently_valid?
+          session[:coupons].delete(coupon)
+          flash[:now] = I18n.t('controllers.basket.remove_invalid_discounts.removed')
+        end
+      end
+    end
+
     def calculate_discounts
       @discount_lines = Array.new
       Discount.all.each do |discount|

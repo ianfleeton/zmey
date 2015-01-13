@@ -10,7 +10,7 @@ class BasketController < ApplicationController
   before_action :update_shipping_class, only: [:update]
   before_action :set_shipping_class, only: [:index, :place_order]
 
-  before_action :remove_invalid_discounts, only: [:index, :checkout, :place_order]
+  before_action :remove_invalid_discounts, only: [:index, :place_order]
   before_action :calculate_discounts, only: [:index, :place_order]
 
   before_action :update_customer_note, only: [:update, :checkout, :place_order]
@@ -234,18 +234,6 @@ class BasketController < ApplicationController
       item.save
     end
     flash[:notice] += ' Free stuff has been added to your basket.'
-  end
-
-  def remove_invalid_discounts
-    return unless session[:coupons]
-
-    session[:coupons].each do |coupon|
-      discount = Discount.find_by(coupon: coupon)
-      if !discount || !discount.currently_valid?
-        session[:coupons].delete(coupon)
-        flash[:now] = I18n.t('controllers.basket.remove_invalid_discounts.removed')
-      end
-    end
   end
 
   # Creates an array of FeatureSeletions based on the form input from

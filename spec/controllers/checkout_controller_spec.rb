@@ -22,6 +22,7 @@ RSpec.describe CheckoutController, type: :controller do
         end
 
         it { should render_with_layout 'basket_checkout' }
+        it { should use_before_action :remove_invalid_discounts }
       end
     end
   end
