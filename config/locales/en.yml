@@ -160,7 +160,7 @@ en:
   cart: Basket
   checkout:
     checkout: 'Checkout'
-    index:
+    confirm:
       change_address: 'Change address'
       delivery_address: 'Delivery Address'
       place_order: 'Place Order'
