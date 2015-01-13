@@ -79,11 +79,11 @@ class BasketController < ApplicationController
     @order = Order.new
     @order.user_id = @current_user.id if logged_in?
     @order.ip_address = request.remote_ip
-    @order.copy_delivery_address @address
+    @order.copy_delivery_address delivery_address
 
     # Copy delivery address into billing address as no billing address UI
     # ready yet.
-    @order.copy_billing_address @address
+    @order.copy_billing_address delivery_address
 
     @order.customer_note = @basket.customer_note
 
