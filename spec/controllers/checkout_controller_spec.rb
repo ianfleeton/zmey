@@ -39,6 +39,18 @@ RSpec.describe CheckoutController, type: :controller do
     end
   end
 
+  describe 'POST save_details' do
+    context 'with valid details' do
+      before { post :save_details, name: 'n', phone: '1', email: 'x' }
+
+      it { should set_session(:name).to('n') }
+      it { should set_session(:phone).to('1') }
+      it { should set_session(:email).to('x') }
+
+      it { should redirect_to billing_details_path }
+    end
+  end
+
   describe 'GET confirm' do
     context 'with empty basket' do
       before { get :confirm }

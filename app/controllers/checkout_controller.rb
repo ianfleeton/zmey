@@ -15,6 +15,11 @@ class CheckoutController < ApplicationController
     redirect_to billing_details_path if DETAILS_KEYS.all?{|k| session[k].present?}
   end
 
+  def save_details
+    DETAILS_KEYS.each {|k| session[k] = params[k]}
+    redirect_to billing_details_path
+  end
+
   def confirm
     session[:return_to] = 'checkout'
     @address = nil
