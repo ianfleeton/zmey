@@ -6,9 +6,10 @@ RSpec.describe CheckoutController, type: :controller do
 
   describe 'GET index' do
     it_behaves_like 'a shipping class setter', :get, :index
+    it_behaves_like 'a discounts calculator', :get, :index
 
     context 'with items in the basket' do
-      before do        
+      before do
         basket = FactoryGirl.create(:basket)
         FactoryGirl.create(:basket_item, basket_id: basket.id)
         allow(controller).to receive(:basket).and_return(basket)

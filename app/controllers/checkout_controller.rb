@@ -1,9 +1,11 @@
 class CheckoutController < ApplicationController
   include Shipping
+  include Discounts
 
   layout 'basket_checkout'
 
   before_action :set_shipping_class, only: [:index]
+  before_action :calculate_discounts, only: [:index]
 
   def index
     redirect_to basket_path and return if basket.basket_items.empty?
