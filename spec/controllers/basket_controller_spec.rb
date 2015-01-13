@@ -59,6 +59,12 @@ describe BasketController do
 
   describe 'POST update' do
     it_behaves_like 'a shipping class updater', :post, :update
+
+    context 'with checkout param set' do
+      before { post :update, checkout: 'Checkout' }
+
+      it { should redirect_to checkout_path }
+    end
   end
 
   describe 'POST place_order' do

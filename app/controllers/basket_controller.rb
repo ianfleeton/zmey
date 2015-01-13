@@ -68,7 +68,7 @@ class BasketController < ApplicationController
   def update
     update_quantities if params[:update_quantities]
     remove_item if params[:remove_item]
-    redirect_to action: 'checkout' and return if params[:checkout]
+    redirect_to checkout_path and return if params[:checkout]
     flash[:notice] = 'Basket updated.'
     redirect_to basket_path
   end
