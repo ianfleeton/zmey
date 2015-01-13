@@ -3,7 +3,9 @@ module Shipping
 
   protected
 
-    def find_delivery_address
+    # Returns the customer's delivery address or <tt>nil</tt> if the customer
+    # has not yet entered one.
+    def delivery_address
       @address ||= session[:address_id] ? Address.find_by(id: session[:address_id]) : nil
     end
 
@@ -20,9 +22,8 @@ module Shipping
       amount = 0.0
 
       if basket.apply_shipping?
-        @address = find_delivery_address
         amount = website.shipping_amount
-        amount_by_address = calculate_shipping_from_address(@address)
+        amount_by_address = calculate_shipping_from_address(delivery_address)
         amount = amount_by_address.nil? ? amount : amount_by_address
       end
 

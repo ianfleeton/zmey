@@ -286,8 +286,7 @@ class BasketController < ApplicationController
 
   # Get valid delivery address or send user back to checkout.
   def require_delivery_address
-    @address = find_delivery_address
-    redirect_to action: 'checkout' if @address.nil?
+    redirect_to checkout_path unless delivery_address
   end
 
   def remove_item

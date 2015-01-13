@@ -74,7 +74,7 @@ describe BasketController do
 
     context 'with an address' do
       before do
-        allow(controller).to receive(:find_delivery_address).and_return(valid_address)
+        allow(controller).to receive(:delivery_address).and_return(valid_address)
       end
 
       it_behaves_like 'a shipping class setter', :post, :place_order
@@ -111,6 +111,12 @@ describe BasketController do
         expect(Webhook).to receive(:trigger).with('order_created', anything)
         post 'place_order'
       end
+    end
+
+    context 'without an address' do
+      before { post :place_order }
+
+      it { should redirect_to checkout_path }
     end
   end
 
