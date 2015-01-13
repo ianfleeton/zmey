@@ -25,7 +25,7 @@ class CheckoutController < ApplicationController
     @address = nil
     @address = Address.find_by(id: session[:address_id]) if session[:address_id]
     if @address.nil?
-      if logged_in? && current_user.addresses.any?
+      if current_user.addresses.any?
         redirect_to choose_delivery_address_addresses_path
       else
         @address = Address.new
