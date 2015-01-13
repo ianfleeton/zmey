@@ -165,6 +165,11 @@ en:
       delivery_address: 'Delivery Address'
       place_order: 'Place Order'
       your_basket: 'Your Basket'
+    index:
+      continue: 'Continue'
+      email_address: 'Email address'
+      full_name: 'Full name'
+      phone_number: 'Phone number'
   components:
     destroy:
       deleted: 'Component deleted.'

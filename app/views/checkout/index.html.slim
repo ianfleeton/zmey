@@ -1,0 +1,11 @@
+= form_tag save_details_path, class: 'pure-form' do
+  label
+    = t('.full_name')
+    = text_field_tag :name
+  label
+    = t('.email_address')
+    = email_field_tag :email
+  label
+    = t('.phone_number')
+    = telephone_field_tag :phone
+  = submit_tag t('.continue'), class: 'pure-button'
