@@ -13,7 +13,7 @@ h2= t('.delivery_address')
     p= link_to t('.change_address'), controller: 'addresses', action: 'edit', id: @address.id
 
 h2= t('.your_basket')
-= render partial: 'basket', object: @basket, locals: {can_update: false, shipping_amount: @shipping_amount, shipping_tax_amount: @shipping_tax_amount, inc_tax: @inc_tax}
+= render partial: 'basket/basket', object: @basket, locals: {can_update: false, shipping_amount: @shipping_amount, shipping_tax_amount: @shipping_tax_amount, inc_tax: @inc_tax}
 
 - unless @address.new_record?
   = form_tag({action: 'place_order'}, class: 'pure-form') do
