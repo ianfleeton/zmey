@@ -11,6 +11,29 @@ describe AddressesController do
     allow(controller).to receive(:website).and_return(website)
   end
 
+  describe 'GET index' do
+    let(:source) { nil }
+
+    before do
+      allow(controller).to receive(:logged_in?).and_return(logged_in)
+      get :index, source: source
+    end
+
+    context 'when signed in' do
+      let(:logged_in) { true }
+
+      context 'when recognised source in param' do
+        let(:source) { 'bad' }
+        it { should set_session(:source).to 'address_book' }
+      end
+
+      context 'when recognised source in param' do
+        let(:source) { 'billing' }
+        it { should set_session(:source).to 'billing' }
+      end
+    end
+  end
+
   describe 'GET new' do
     it 'assigns a new Address to @address' do
       allow(Address).to receive(:new).and_return(mock_address)

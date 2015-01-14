@@ -87,7 +87,7 @@ RSpec.describe CheckoutController, type: :controller do
         context 'when user has addresses' do
           let(:addresses) { [Address.new] }
 
-          it { should set_session(:return_to).to('billing') }
+          it { should set_session(:source).to('billing') }
           it { should redirect_to choose_billing_address_addresses_path }
         end
 

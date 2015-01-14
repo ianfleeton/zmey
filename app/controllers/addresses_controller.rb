@@ -1,11 +1,13 @@
 class AddressesController < ApplicationController
   before_action :user_required, only: [:choose_delivery_address, :index]
 
+  KNOWN_SOURCES = ['address_book', 'billing', 'delivery']
+
   def index
-    if params[:return_to] == 'checkout'
-      session[:return_to] = 'checkout'
+    if KNOWN_SOURCES.include?(params[:source])
+      session[:source] = params[:source]
     else
-      session[:return_to] = 'address_book'
+      session[:source] = 'address_book'
     end
     @addresses = current_user.addresses
   end
@@ -65,7 +67,7 @@ class AddressesController < ApplicationController
     if @address.update_attributes(address_params)
       flash[:notice] = I18n.t('controllers.addresses.update.updated')
 
-      if session[:return_to] == 'checkout'
+      if session[:source] == 'billing'
         session[:address_id] = @address.id
       end
 
@@ -95,18 +97,17 @@ class AddressesController < ApplicationController
     end
 
     def path_after_save
-      if session[:return_to] && session[:return_to] == 'address_book'
-        addresses_path
-      else
-        checkout_path
-      end
+      {
+        'address_book' => addresses_path,
+        'billing'      => delivery_details_path,
+        'delivery'     => confirm_checkout_path
+      }.fetch(session[:source]) { checkout_path }
     end
 
     def path_after_destroy
-      if session[:return_to] && session[:return_to] == 'checkout'
-        choose_delivery_address_addresses_path
-      else
-        addresses_path
-      end
+      {
+        'billing'  => choose_billing_address_addresses_path,
+        'delivery' => choose_delivery_address_addresses_path
+      }.fetch(session[:source]) { addresses_path }
     end
 end

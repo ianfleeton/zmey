@@ -23,7 +23,7 @@ class CheckoutController < ApplicationController
   def billing
     if (@address = billing_address).nil?
       if current_user.addresses.any?
-        session[:return_to] = 'billing'
+        session[:source] = 'billing'
         redirect_to choose_billing_address_addresses_path
       else
         @address = prefilled_address
@@ -32,7 +32,7 @@ class CheckoutController < ApplicationController
   end
 
   def confirm
-    session[:return_to] = 'checkout'
+    session[:source] = 'checkout'
     @address = nil
     @address = Address.find_by(id: session[:address_id]) if session[:address_id]
     if @address.nil?

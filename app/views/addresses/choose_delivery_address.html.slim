@@ -3,7 +3,7 @@ h1= t('.heading')
 .address-actions
   ul
     li= link_to t('.add'), new_address_path
-    li= link_to t('.edit_or_delete'), addresses_path(return_to: 'checkout')
+    li= link_to t('.edit_or_delete'), addresses_path(source: 'delivery')
 
 .address-book.pure-g
   - @addresses.each do |address|
