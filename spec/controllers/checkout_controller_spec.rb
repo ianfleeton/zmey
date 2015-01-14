@@ -70,10 +70,15 @@ RSpec.describe CheckoutController, type: :controller do
       end
 
       context 'with existing billing address' do
-        let(:billing_address_id) { FactoryGirl.create(:address).id }
+        let(:billing_address) { FactoryGirl.create(:address) }
+        let(:billing_address_id) { billing_address.id }
 
         it { should respond_with(200) }
         it { should render_with_layout 'basket_checkout' }
+
+        it 'assigns @address to the billing address' do
+          expect(assigns(:address)).to eq billing_address
+        end
       end
 
       context 'with no existing billing address' do
