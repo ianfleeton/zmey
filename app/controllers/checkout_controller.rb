@@ -60,7 +60,7 @@ class CheckoutController < ApplicationController
     end
 
     def billing_address
-      @billing_address ||= Address.find_by(session[:billing_address_id])
+      @billing_address ||= Address.find_by(id: session[:billing_address_id])
     end
 
     def prefilled_address
