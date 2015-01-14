@@ -159,6 +159,9 @@ en:
       view_basket: 'View Your Basket'
   cart: Basket
   checkout:
+    billing:
+      continue: 'Continue'
+      town_city: 'Town / city'
     checkout: 'Checkout'
     confirm:
       change_address: 'Change address'
