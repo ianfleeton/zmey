@@ -134,6 +134,7 @@ Rails.application.routes.draw do
   get  'checkout'              => 'checkout#index',        as: :checkout
   post 'checkout/save_details' => 'checkout#save_details', as: :save_details
   get  'checkout/billing'      => 'checkout#billing',      as: :billing_details
+  post 'checkout/save_billing' => 'checkout#save_billing', as: :save_billing_details
   get  'checkout/delivery'     => 'checkout#delivery',     as: :delivery_details
   get  'checkout/confirm'      => 'checkout#confirm',      as: :confirm_checkout
 

@@ -21,6 +21,8 @@ class CheckoutController < ApplicationController
   end
 
   def billing
+    redirect_to checkout_path and return if DETAILS_KEYS.any?{|k| session[k].blank?}
+
     if (@address = billing_address).nil?
       if current_user.addresses.any?
         session[:source] = 'billing'
@@ -28,6 +30,24 @@ class CheckoutController < ApplicationController
       else
         @address = prefilled_address
       end
+    end
+  end
+
+  def save_billing
+    success =
+      if @address = billing_address
+        @address.update_attributes(address_params)
+      else
+        @address = Address.new(address_params)
+        if @address.save
+          session[:billing_address_id] = @address.id
+        end
+      end
+
+    if success
+      redirect_to delivery_details_path
+    else
+      render 'billing'
     end
   end
 
@@ -71,5 +91,9 @@ class CheckoutController < ApplicationController
         email_address: session[:email],
         country: Country.find_by(name: 'United Kingdom')
       )
+    end
+
+    def address_params
+      params.require(:address).permit(AddressesController::ADDRESS_PARAMS_WHITELIST)
     end
 end

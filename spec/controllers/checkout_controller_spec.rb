@@ -56,17 +56,29 @@ RSpec.describe CheckoutController, type: :controller do
     context 'with items in the basket' do
       let(:addresses) { [] }
       let(:current_user) { User.new }
+      let(:name) { 'n' }
+      let(:phone) { '1' }
+      let(:email) { 'x' }
       let!(:uk) { FactoryGirl.create(:country, name: 'United Kingdom') }
 
       before do
         add_items_to_basket
-        session[:name] = 'n'
-        session[:phone] = '1'
-        session[:email] = 'x'
+        session[:name] = name
+        session[:phone] = phone
+        session[:email] = email
         session[:billing_address_id] = billing_address_id
         allow_any_instance_of(User).to receive(:addresses).and_return addresses
         allow(controller).to receive(:current_user).and_return(current_user)
         get :billing
+      end
+
+      context 'without name, phone and email set in session' do
+        let(:billing_address_id) { nil }
+        let(:name) { '' }
+
+        before { get :billing }
+
+        it { should redirect_to checkout_path }
       end
 
       context 'with existing billing address' do
@@ -115,6 +127,43 @@ RSpec.describe CheckoutController, type: :controller do
           end
         end
       end
+    end
+  end
+
+  describe 'POST save_billing' do
+    let(:address) { FactoryGirl.build(:address, address_line_1: SecureRandom.hex) }
+    let(:billing_address) { nil }
+
+    before do
+      allow(controller).to receive(:billing_address).and_return(billing_address)
+      post :save_billing, address: address.attributes 
+    end
+
+    context 'when billing address found' do
+      let(:billing_address) { FactoryGirl.create(:address) }
+
+      it 'updates the billing address' do
+        expect(billing_address.reload.address_line_1).to eq address.address_line_1
+      end
+    end
+
+    context 'when billing address not found' do
+      let(:billing_address) { nil }
+
+      it 'creates a new address' do
+        expect(Address.find_by(address_line_1: address.address_line_1)).to be
+      end
+
+      it { should set_session(:billing_address_id) }
+    end
+
+    context 'when create/update succeeds' do
+      it { should redirect_to delivery_details_path }
+    end
+
+    context 'when create/update fails' do
+      let(:address) { Address.new }
+      it { should render_template 'billing' }
     end
   end
 

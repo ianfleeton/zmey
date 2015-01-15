@@ -3,6 +3,10 @@ class AddressesController < ApplicationController
 
   KNOWN_SOURCES = ['address_book', 'billing', 'delivery']
 
+  ADDRESS_PARAMS_WHITELIST = [:address_line_1, :address_line_2,
+      :country_id, :county, :email_address, :full_name, :label,
+      :phone_number, :postcode, :town_city]
+
   def index
     if KNOWN_SOURCES.include?(params[:source])
       session[:source] = params[:source]
@@ -91,9 +95,7 @@ class AddressesController < ApplicationController
   private
 
     def address_params
-      params.require(:address).permit(:address_line_1, :address_line_2,
-      :country_id, :county, :email_address, :full_name, :label,
-      :phone_number, :postcode, :town_city)
+      params.require(:address).permit(ADDRESS_PARAMS_WHITELIST)
     end
 
     def path_after_save

@@ -1,7 +1,18 @@
-= form_for(@address, html: { class: 'pure-form pure-form-stacked' }) do |f|
+- if @address.errors.any?
+  #error_explanation
+    h2= t('.error_explanation')
+    ul
+      - @address.errors.full_messages.each do |msg|
+        li= msg
+
+= form_for(@address, url: save_billing_details_path, html: { class: 'pure-form pure-form-stacked' }) do |f|
+
+  = f.hidden_field :email_address
+  = f.hidden_field :full_name
+  = f.hidden_field :phone_number
 
   = f.label :address_line_1
-  = f.text_field :address_line_1
+  = f.text_field :address_line_1, required: true
 
   = f.label :address_line_2
   = f.text_field :address_line_2

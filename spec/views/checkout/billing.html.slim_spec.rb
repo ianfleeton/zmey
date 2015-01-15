@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'checkout/billing.html.slim', type: :view do
-  let(:address) { Address.new }
+  HIDDEN_PARAMS = { email_address: 'ea', full_name: 'fn', phone_number: '12' }
+  let(:address) { Address.new(HIDDEN_PARAMS) }
 
   before do
     assign(:address, address)
@@ -9,7 +10,7 @@ RSpec.describe 'checkout/billing.html.slim', type: :view do
   end
 
   it 'has a form to save details' do
-    expect(rendered).to have_selector "form[action='#{addresses_path}'][method='post']"
+    expect(rendered).to have_selector "form[action='#{save_billing_details_path}'][method='post']"
   end
 
   [
@@ -17,6 +18,12 @@ RSpec.describe 'checkout/billing.html.slim', type: :view do
   ].each do |component|
     it "has a field for #{component}" do
       expect(rendered).to have_selector "input[name='address[#{component}]']"
+    end
+  end
+
+  HIDDEN_PARAMS.each do |k, v|
+    it "has a hidden field for #{k} with value #{v}" do
+      expect(rendered).to have_selector "input[type='hidden'][name='address[#{k}]'][value='#{v}']"
     end
   end
 
