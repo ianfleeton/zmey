@@ -161,6 +161,7 @@ en:
   checkout:
     billing:
       continue: 'Continue'
+      heading: 'Billing Address'
       town_city: 'Town / city'
     checkout: 'Checkout'
     confirm:
@@ -168,6 +169,10 @@ en:
       delivery_address: 'Delivery Address'
       place_order: 'Place Order'
       your_basket: 'Your Basket'
+    delivery:
+      continue: 'Continue'
+      heading: 'Delivery Address'
+      town_city: 'Town / city'
     index:
       continue: 'Continue'
       email_address: 'Email address'
