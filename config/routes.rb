@@ -132,6 +132,7 @@ Rails.application.routes.draw do
   get 'basket(/:action(.:format))', controller: 'basket'
 
   get   'checkout'               => 'checkout#index',         as: :checkout
+  get   'checkout/details'       => 'checkout#details',       as: :checkout_details
   post  'checkout/save_details'  => 'checkout#save_details',  as: :save_details
   get   'checkout/billing'       => 'checkout#billing',       as: :billing_details
   post  'checkout/save_billing'  => 'checkout#save_billing',  as: :save_billing_details

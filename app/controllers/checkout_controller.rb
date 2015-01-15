@@ -12,12 +12,15 @@ class CheckoutController < ApplicationController
   DETAILS_KEYS = [:name, :email, :phone].freeze
 
   def index
-    redirect_to billing_details_path if DETAILS_KEYS.all?{|k| session[k].present?}
+    advance_checkout
+  end
+
+  def details
   end
 
   def save_details
     DETAILS_KEYS.each {|k| session[k] = params[k]}
-    redirect_to billing_details_path
+    advance_checkout
   end
 
   def billing
@@ -45,7 +48,7 @@ class CheckoutController < ApplicationController
       end
 
     if success
-      redirect_to delivery_details_path
+      advance_checkout
     else
       render 'billing'
     end
@@ -76,7 +79,7 @@ class CheckoutController < ApplicationController
       end
 
     if success
-      redirect_to confirm_checkout_path
+      advance_checkout
     else
       render 'delivery'
     end
@@ -95,6 +98,21 @@ class CheckoutController < ApplicationController
 
     def require_basket
       redirect_to basket_path and return if basket.basket_items.empty?
+    end
+
+    def advance_checkout
+      {
+        :has_checkout_details? => checkout_details_path,
+        :billing_address       => billing_details_path,
+        :delivery_address      => delivery_details_path
+      }.each_pair do |condition, destination|
+        redirect_to destination and return unless send(condition)
+      end
+      redirect_to confirm_checkout_path
+    end
+
+    def has_checkout_details?
+      DETAILS_KEYS.all?{|k| session[k].present?}
     end
 
     def billing_address

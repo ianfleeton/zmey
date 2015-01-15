@@ -167,13 +167,15 @@ en:
     confirm:
       change_address: 'Change address'
       delivery_address: 'Delivery Address'
+      edit_details: 'Edit Details'
       place_order: 'Place Order'
       your_basket: 'Your Basket'
+      your_details: 'Your Details'
     delivery:
       continue: 'Continue'
       heading: 'Delivery Address'
       town_city: 'Town / city'
-    index:
+    details:
       continue: 'Continue'
       email_address: 'Email address'
       full_name: 'Full name'

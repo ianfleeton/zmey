@@ -1,11 +1,11 @@
 = form_tag save_details_path, class: 'pure-form pure-form-stacked' do
   label
     = t('.full_name')
-    = text_field_tag :name
+    = text_field_tag :name, session[:name]
   label
     = t('.email_address')
-    = email_field_tag :email
+    = email_field_tag :email, session[:email]
   label
     = t('.phone_number')
-    = telephone_field_tag :phone
+    = telephone_field_tag :phone, session[:phone]
   = submit_tag t('.continue'), class: 'pure-button'

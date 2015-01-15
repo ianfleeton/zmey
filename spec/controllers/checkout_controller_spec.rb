@@ -4,6 +4,38 @@ RSpec.describe CheckoutController, type: :controller do
   let(:website) { FactoryGirl.create(:website) }
   before { allow(controller).to receive(:website).and_return(website) }
 
+  shared_examples_for 'a checkout advancer' do |method, action, params=nil|
+    let(:has_checkout_details) { true }
+    let(:billing_address) { FactoryGirl.create(:address) }
+    let(:delivery_address) { FactoryGirl.create(:address) }
+
+    before do
+      allow(controller).to receive(:has_checkout_details?).and_return(has_checkout_details)
+      allow(controller).to receive(:billing_address).and_return(billing_address)
+      allow(controller).to receive(:delivery_address).and_return(delivery_address)
+      send(method, action, params)
+    end
+
+    context 'without name, phone and email set in session' do
+      let(:has_checkout_details) { false }
+      it { should redirect_to checkout_details_path }
+    end
+
+    context 'without billing details' do
+      let(:billing_address) { nil }
+      it { should redirect_to billing_details_path }
+    end
+
+    context 'without delivery details' do
+      let(:delivery_address) { nil }
+      it { should redirect_to delivery_details_path }
+    end
+
+    context 'with all details' do
+      it { should redirect_to confirm_checkout_path }
+    end
+  end
+
   describe 'GET index' do
     context 'with empty basket' do
       before { get :index }
@@ -14,25 +46,13 @@ RSpec.describe CheckoutController, type: :controller do
     context 'with items in the basket' do
       before { add_items_to_basket }
 
-      context 'with name, phone and email set in session' do
-        before do
-          session[:name] = 'A. Customer'
-          session[:phone] = '01234 567890'
-          session[:email] = 'customer@example.com'
-          get :index
-        end
-
-        it { should redirect_to billing_details_path }
-      end
-
-      context 'without name, phone and email set in session' do
-        before do
-          get :index
-        end
-
-        it { should render_with_layout 'basket_checkout' }
-      end
+      it_behaves_like 'a checkout advancer', :get, :index
     end
+  end
+
+  describe 'GET details' do
+    before { get :details }
+    it { should render_with_layout 'basket_checkout' }
   end
 
   describe 'POST save_details' do
@@ -43,7 +63,7 @@ RSpec.describe CheckoutController, type: :controller do
       it { should set_session(:phone).to('1') }
       it { should set_session(:email).to('x') }
 
-      it { should redirect_to billing_details_path }
+      it_behaves_like 'a checkout advancer', :post, :save_details, name: 'n', phone: '1', email: 'x'
     end
   end
 
@@ -164,7 +184,7 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when create/update succeeds' do
-      it { should redirect_to delivery_details_path }
+      it_behaves_like 'a checkout advancer', :post, :save_billing, { address: FactoryGirl.build(:address).attributes }
     end
 
     context 'when create/update fails' do
@@ -259,7 +279,7 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when create/update succeeds' do
-      it { should redirect_to confirm_checkout_path }
+      it_behaves_like 'a checkout advancer', :post, :save_delivery, { address: FactoryGirl.build(:address).attributes }
     end
 
     context 'when create/update fails' do

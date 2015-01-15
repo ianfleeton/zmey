@@ -1,5 +1,11 @@
 h1= t('checkout.checkout')
 
+h2= t('.your_details')
+
+p= "#{h(session[:name])}<br>#{h(session[:email])}<br>#{h(session[:phone])}".html_safe
+
+p= link_to t('.edit_details'), checkout_details_path
+
 h2= t('.delivery_address')
 - if @billing_address.new_record?
   = form_for(@billing_address, html: { class: 'pure-form pure-form-stacked' }) do |f|
