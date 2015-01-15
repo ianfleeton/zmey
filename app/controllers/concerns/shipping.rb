@@ -6,7 +6,7 @@ module Shipping
     # Returns the customer's delivery address or <tt>nil</tt> if the customer
     # has not yet entered one.
     def delivery_address
-      @address ||= session[:address_id] ? Address.find_by(id: session[:address_id]) : nil
+      @delivery_address ||= Address.find_by(id: session[:delivery_address_id])
     end
 
     def set_shipping_class

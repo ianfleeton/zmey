@@ -47,6 +47,30 @@ RSpec.describe CheckoutController, type: :controller do
     end
   end
 
+  shared_examples_for 'an address prefiller' do
+    it 'assigns @address' do
+      expect(assigns(:address)).to be_instance_of Address
+    end
+
+    it 'prefills some of the address from session details' do
+      expect(assigns(:address).full_name).to eq 'n'
+      expect(assigns(:address).phone_number).to eq '1'
+      expect(assigns(:address).email_address).to eq 'x'
+    end
+
+    it 'sets the address country as United Kingdom' do
+      expect(assigns(:address).country).to eq uk
+    end
+
+    context 'with authenticated user' do
+      let(:current_user) { FactoryGirl.create(:user) }
+
+      it 'associates address with the user' do
+        expect(assigns(:address).user).to eq current_user
+      end
+    end
+  end
+
   describe 'GET billing' do
     context 'with empty basket' do
       before { get :billing }
@@ -104,27 +128,7 @@ RSpec.describe CheckoutController, type: :controller do
         end
 
         context 'when user has no addresses' do
-          it 'assigns @address' do
-            expect(assigns(:address)).to be_instance_of Address
-          end
-
-          it 'prefills some of the address from session details' do
-            expect(assigns(:address).full_name).to eq 'n'
-            expect(assigns(:address).phone_number).to eq '1'
-            expect(assigns(:address).email_address).to eq 'x'
-          end
-
-          it 'sets the address country as United Kingdom' do
-            expect(assigns(:address).country).to eq uk
-          end
-
-          context 'with authenticated user' do
-            let(:current_user) { FactoryGirl.create(:user) }
-
-            it 'associates address with the user' do
-              expect(assigns(:address).user).to eq current_user
-            end
-          end
+          it_behaves_like 'an address prefiller'
         end
       end
     end
@@ -164,6 +168,69 @@ RSpec.describe CheckoutController, type: :controller do
     context 'when create/update fails' do
       let(:address) { Address.new }
       it { should render_template 'billing' }
+    end
+  end
+
+  describe 'GET delivery' do
+    context 'with empty basket' do
+      before { get :delivery }
+      it { should redirect_to basket_path }
+    end
+
+    context 'with items in the basket' do
+      let(:addresses) { [] }
+      let(:current_user) { User.new }
+      let(:name) { 'n' }
+      let(:phone) { '1' }
+      let(:email) { 'x' }
+      let!(:uk) { FactoryGirl.create(:country, name: 'United Kingdom') }
+
+      before do
+        add_items_to_basket
+        session[:name] = name
+        session[:phone] = phone
+        session[:email] = email
+        session[:delivery_address_id] = delivery_address_id
+        allow_any_instance_of(User).to receive(:addresses).and_return addresses
+        allow(controller).to receive(:current_user).and_return(current_user)
+        get :delivery
+      end
+
+      context 'without name, phone and email set in session' do
+        let(:delivery_address_id) { nil }
+        let(:name) { '' }
+
+        before { get :delivery }
+
+        it { should redirect_to checkout_path }
+      end
+
+      context 'with existing delivery address' do
+        let(:delivery_address) { FactoryGirl.create(:address) }
+        let(:delivery_address_id) { delivery_address.id }
+
+        it { should respond_with(200) }
+        it { should render_with_layout 'basket_checkout' }
+
+        it 'assigns @address to the delivery address' do
+          expect(assigns(:address)).to eq delivery_address
+        end
+      end
+
+      context 'with no existing delivery address' do
+        let(:delivery_address_id) { nil }
+
+        context 'when user has addresses' do
+          let(:addresses) { [Address.new] }
+
+          it { should set_session(:source).to('delivery') }
+          it { should redirect_to choose_delivery_address_addresses_path }
+        end
+
+        context 'when user has no addresses' do
+          it_behaves_like 'an address prefiller'
+        end
+      end
     end
   end
 

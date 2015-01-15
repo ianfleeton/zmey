@@ -131,12 +131,13 @@ Rails.application.routes.draw do
   post 'basket/update' => 'basket#update'
   get 'basket(/:action(.:format))', controller: 'basket'
 
-  get  'checkout'              => 'checkout#index',        as: :checkout
-  post 'checkout/save_details' => 'checkout#save_details', as: :save_details
-  get  'checkout/billing'      => 'checkout#billing',      as: :billing_details
-  post 'checkout/save_billing' => 'checkout#save_billing', as: :save_billing_details
-  get  'checkout/delivery'     => 'checkout#delivery',     as: :delivery_details
-  get  'checkout/confirm'      => 'checkout#confirm',      as: :confirm_checkout
+  get  'checkout'               => 'checkout#index',         as: :checkout
+  post 'checkout/save_details'  => 'checkout#save_details',  as: :save_details
+  get  'checkout/billing'       => 'checkout#billing',       as: :billing_details
+  post 'checkout/save_billing'  => 'checkout#save_billing',  as: :save_billing_details
+  get  'checkout/delivery'      => 'checkout#delivery',      as: :delivery_details
+  post 'checkout/save_delivery' => 'checkout#save_delivery', as: :save_delivery_details
+  get  'checkout/confirm'       => 'checkout#confirm',       as: :confirm_checkout
 
   resources :enquiries, only: [:create, :new] do
     collection do

@@ -4,7 +4,7 @@ class CheckoutController < ApplicationController
 
   layout 'basket_checkout'
 
-  before_action :require_basket, only: [:index, :billing, :confirm]
+  before_action :require_basket, only: [:index, :billing, :delivery, :confirm]
   before_action :set_shipping_class, only: [:confirm]
   before_action :remove_invalid_discounts, only: [:confirm]
   before_action :calculate_discounts, only: [:confirm]
@@ -48,6 +48,19 @@ class CheckoutController < ApplicationController
       redirect_to delivery_details_path
     else
       render 'billing'
+    end
+  end
+
+  def delivery
+    redirect_to checkout_path and return if DETAILS_KEYS.any?{|k| session[k].blank?}
+
+    if (@address = delivery_address).nil?
+      if current_user.addresses.any?
+        session[:source] = 'delivery'
+        redirect_to choose_delivery_address_addresses_path
+      else
+        @address = prefilled_address
+      end
     end
   end
 
