@@ -231,6 +231,43 @@ RSpec.describe CheckoutController, type: :controller do
     end
   end
 
+  describe 'POST save_delivery' do
+    let(:address) { FactoryGirl.build(:address, address_line_1: SecureRandom.hex) }
+    let(:delivery_address) { nil }
+
+    before do
+      allow(controller).to receive(:delivery_address).and_return(delivery_address)
+      post :save_delivery, address: address.attributes 
+    end
+
+    context 'when delivery address found' do
+      let(:delivery_address) { FactoryGirl.create(:address) }
+
+      it 'updates the delivery address' do
+        expect(delivery_address.reload.address_line_1).to eq address.address_line_1
+      end
+    end
+
+    context 'when delivery address not found' do
+      let(:delivery_address) { nil }
+
+      it 'creates a new address' do
+        expect(Address.find_by(address_line_1: address.address_line_1)).to be
+      end
+
+      it { should set_session(:delivery_address_id) }
+    end
+
+    context 'when create/update succeeds' do
+      it { should redirect_to confirm_checkout_path }
+    end
+
+    context 'when create/update fails' do
+      let(:address) { Address.new }
+      it { should render_template 'delivery' }
+    end
+  end
+
   describe 'GET confirm' do
     context 'with empty basket' do
       before { get :confirm }

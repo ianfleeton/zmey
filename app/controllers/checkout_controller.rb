@@ -64,6 +64,24 @@ class CheckoutController < ApplicationController
     end
   end
 
+  def save_delivery
+    success =
+      if @address = delivery_address
+        @address.update_attributes(address_params)
+      else
+        @address = Address.new(address_params)
+        if @address.save
+          session[:delivery_address_id] = @address.id
+        end
+      end
+
+    if success
+      redirect_to confirm_checkout_path
+    else
+      render 'delivery'
+    end
+  end
+
   def confirm
     session[:source] = 'checkout'
     @address = nil
