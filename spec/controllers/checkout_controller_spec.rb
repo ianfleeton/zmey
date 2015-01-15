@@ -71,7 +71,16 @@ RSpec.describe CheckoutController, type: :controller do
     end
   end
 
+  shared_examples_for 'a customer details user' do
+    context 'without name, phone and email set in session' do
+      let(:name) { '' }
+      it { should redirect_to checkout_path }
+    end
+  end
+
   describe 'GET billing' do
+    let(:billing_address_id) { nil }
+
     context 'with empty basket' do
       before { get :billing }
       it { should redirect_to basket_path }
@@ -96,14 +105,7 @@ RSpec.describe CheckoutController, type: :controller do
         get :billing
       end
 
-      context 'without name, phone and email set in session' do
-        let(:billing_address_id) { nil }
-        let(:name) { '' }
-
-        before { get :billing }
-
-        it { should redirect_to checkout_path }
-      end
+      it_behaves_like 'a customer details user'
 
       context 'with existing billing address' do
         let(:billing_address) { FactoryGirl.create(:address) }
@@ -172,6 +174,8 @@ RSpec.describe CheckoutController, type: :controller do
   end
 
   describe 'GET delivery' do
+    let(:delivery_address_id) { nil }
+
     context 'with empty basket' do
       before { get :delivery }
       it { should redirect_to basket_path }
@@ -196,14 +200,7 @@ RSpec.describe CheckoutController, type: :controller do
         get :delivery
       end
 
-      context 'without name, phone and email set in session' do
-        let(:delivery_address_id) { nil }
-        let(:name) { '' }
-
-        before { get :delivery }
-
-        it { should redirect_to checkout_path }
-      end
+      it_behaves_like 'a customer details user'
 
       context 'with existing delivery address' do
         let(:delivery_address) { FactoryGirl.create(:address) }
