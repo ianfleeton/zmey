@@ -1,21 +1,21 @@
 h1= t('checkout.checkout')
 
 h2= t('.delivery_address')
-- if @address.new_record?
-  = form_for(@address, html: { class: 'pure-form pure-form-stacked' }) do |f|
+- if @billing_address.new_record?
+  = form_for(@billing_address, html: { class: 'pure-form pure-form-stacked' }) do |f|
     = render partial: 'addresses/form', object: f
     = submit_tag 'Next', class: 'pure-button pure-button-primary'
 - else
-  = format_address @address
+  = format_address @billing_address
   - if logged_in?
     p= link_to t('.change_address'), choose_delivery_address_addresses_path
   - else
-    p= link_to t('.change_address'), controller: 'addresses', action: 'edit', id: @address.id
+    p= link_to t('.change_address'), controller: 'addresses', action: 'edit', id: @billing_address.id
 
 h2= t('.your_basket')
 = render partial: 'basket/basket', object: @basket, locals: {can_update: false, shipping_amount: @shipping_amount, shipping_tax_amount: @shipping_tax_amount, inc_tax: @inc_tax}
 
-- unless @address.new_record?
+- unless @billing_address.new_record?
   = form_tag({controller: 'basket', action: 'place_order'}, class: 'pure-form') do
     - if website.terms_and_conditions.present?
       .terms_and_conditions#checkout_terms_and_conditions

@@ -276,19 +276,40 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'with items in the basket' do
-      before { add_items_to_basket }
+      let(:billing_address) { FactoryGirl.create(:address) }
+      let(:delivery_address) { FactoryGirl.create(:address) }
+      let(:billing_address_id) { billing_address.id }
+      let(:delivery_address_id) { delivery_address.id }
+
+      before do
+        session[:billing_address_id] = billing_address_id
+        session[:delivery_address_id] = delivery_address_id
+        add_items_to_basket
+        get 'confirm'
+      end
 
       it_behaves_like 'a shipping class setter', :get, :confirm
       it_behaves_like 'a discounts calculator', :get, :confirm
 
-      context 'with an address' do
-        before do
-          session[:address_id] = FactoryGirl.create(:address).id
-          get :confirm
-        end
+      it { should render_with_layout 'basket_checkout' }
+      it { should use_before_action :remove_invalid_discounts }
 
-        it { should render_with_layout 'basket_checkout' }
-        it { should use_before_action :remove_invalid_discounts }
+      it 'assigns billing address to @billing_address' do
+        expect(assigns(:billing_address)).to eq billing_address
+      end
+
+      it 'assigns delivery address to @delivery_address' do
+        expect(assigns(:delivery_address)).to eq delivery_address
+      end
+
+      context 'without a billing address' do
+        let(:billing_address_id) { nil }
+        it { should redirect_to billing_details_path }
+      end
+
+      context 'without a delivery address' do
+        let(:delivery_address_id) { nil }
+        it { should redirect_to delivery_details_path }
       end
     end
   end

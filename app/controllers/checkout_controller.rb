@@ -83,23 +83,10 @@ class CheckoutController < ApplicationController
   end
 
   def confirm
-    session[:source] = 'checkout'
-    @address = nil
-    @address = Address.find_by(id: session[:address_id]) if session[:address_id]
-    if @address.nil?
-      if current_user.addresses.any?
-        redirect_to choose_delivery_address_addresses_path
-      else
-        @address = Address.new
-        @address.country = Country.find_by(name: 'United Kingdom')
-        if logged_in?
-          @address.user_id = @current_user.id
-          @address.email_address = @current_user.email
-          @address.full_name = @current_user.name
-        end
-      end
-    end
+    redirect_to billing_details_path and return unless billing_address
+    redirect_to delivery_details_path and return unless delivery_address
 
+    session[:source] = 'checkout'
     @shipping_amount = shipping_amount
     @shipping_tax_amount = shipping_tax_amount(@shipping_amount)
   end
