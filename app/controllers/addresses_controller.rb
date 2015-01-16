@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
-  before_action :user_required, only: [:choose_delivery_address, :index]
+  before_action :user_required
+  before_action :assign_addresses, only: [:choose_billing_address, :choose_delivery_address, :index]
 
   KNOWN_SOURCES = ['address_book', 'billing', 'delivery']
 
@@ -13,17 +14,20 @@ class AddressesController < ApplicationController
     else
       session[:source] = 'address_book'
     end
-    @addresses = current_user.addresses
+  end
+
+  def choose_billing_address
   end
 
   def choose_delivery_address
-    @addresses = current_user.addresses
+  end
+
+  def select_for_billing
+    select_address(:billing_address_id)
   end
 
   def select_for_delivery
-    @address = Address.find_by(id: params[:id], user_id: current_user.id)
-    session[:address_id] = @address.id if @address
-    redirect_to checkout_path
+    select_address(:delivery_address_id)
   end
 
   def new
@@ -31,12 +35,7 @@ class AddressesController < ApplicationController
   end
 
   def edit
-    if logged_in?
-      @address = Address.find_by(id: params[:id], user_id: current_user.id)
-    else
-      # get a valid address from the session
-      @address = session[:address_id] ? Address.find_by(id: session[:address_id]) : nil
-    end
+    @address = Address.find_by(id: params[:id], user_id: current_user.id)
     redirect_to action: 'new' and return if @address.nil?
   end
 
@@ -93,6 +92,16 @@ class AddressesController < ApplicationController
   end
 
   private
+
+    def assign_addresses
+      @addresses = current_user.addresses
+    end
+
+    def select_address(address_type)
+      @address = Address.find_by(id: params[:id], user_id: current_user.id)
+      session[address_type] = @address.id if @address
+      redirect_to checkout_path
+    end
 
     def address_params
       params.require(:address).permit(ADDRESS_PARAMS_WHITELIST)

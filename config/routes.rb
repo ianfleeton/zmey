@@ -117,6 +117,7 @@ Rails.application.routes.draw do
       get 'choose_delivery_address'
     end
     member do
+      post 'select_for_billing'
       post 'select_for_delivery'
     end
   end

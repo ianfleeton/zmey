@@ -16,10 +16,13 @@ en:
               invalid: 'is invalid'
   add_to_cart: Add to Basket
   addresses:
-    choose_delivery_address:
-      add: 'Add a new delivery address'
-      deliver_to_this_address: 'Deliver to this address'
+    choose_address:
+      billing_add: 'Add a new billing address'
+      delivery_add: 'Add a new delivery address'
       edit_or_delete: 'Edit or delete addresses'
+      select_billing_address: 'Set as billing address'
+      select_delivery_address: 'Deliver to this address'
+    choose_delivery_address:
       heading: 'Choose a delivery address'
     edit:
       heading: 'Change Address'

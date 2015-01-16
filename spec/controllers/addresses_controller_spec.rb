@@ -25,15 +25,25 @@ describe AddressesController do
     end
   end
 
+  shared_examples_for 'an authenticated action' do
+    context 'when not signed in' do
+      let(:logged_in) { false }
+      it { should redirect_to sign_in_path }
+    end
+  end
+
   describe 'GET index' do
-    before { allow(controller).to receive(:logged_in?).and_return(logged_in) }
     let(:logged_in) { true }
     let(:source) { nil }
+
+    before { allow(controller).to receive(:logged_in?).and_return(logged_in) }
 
     it_behaves_like 'an address book', :get, :index
 
     context do
       before { get :index, source: source }
+
+      it_behaves_like 'an authenticated action'
 
       context 'when recognised source in param' do
         let(:source) { 'bad' }
@@ -52,47 +62,90 @@ describe AddressesController do
     end
   end
 
-  describe 'GET new' do
-    it 'assigns a new Address to @address' do
-      allow(Address).to receive(:new).and_return(mock_address)
-      get 'new'
-      expect(assigns(:address)).to eq mock_address
+  describe 'GET choose_billing_address' do
+    let(:logged_in) { true }
+
+    before { allow(controller).to receive(:logged_in?).and_return(logged_in) }
+
+    it_behaves_like 'an address book', :get, :choose_billing_address
+
+    context do
+      before { get :choose_billing_address }
+      it_behaves_like 'an authenticated action'
     end
   end
 
-  describe 'GET edit' do
-    context 'with an address ID stored in session' do
-      before { session[:address_id] = 2 }
+  describe 'GET choose_delivery_address' do
+    let(:logged_in) { true }
 
-      it 'finds the address from the stored ID' do
-        expect(Address).to receive(:find_by).with(id: 2)
-        get 'edit', id: '1'
-      end
+    before { allow(controller).to receive(:logged_in?).and_return(logged_in) }
 
-      context 'when found' do
-        before { allow(Address).to receive(:find_by).and_return(mock_address) }
+    it_behaves_like 'an address book', :get, :choose_delivery_address
 
-        it 'renders edit' do
-          get 'edit', id: '1'
-          expect(response).to render_template('edit')
-        end
-      end
+    context do
+      before { get :choose_delivery_address }
+      it_behaves_like 'an authenticated action'
+    end
+  end
 
-      context 'when not found' do
-        before { allow(Address).to receive(:find_by).and_return(nil) }
+  describe 'POST select_for_billing' do
+    let(:logged_in) { true }
+    let(:address) { FactoryGirl.create(:address) }
 
-        it 'redirects to new' do
-          get 'edit', id: '1'
-          expect(response).to redirect_to(new_address_path)
-        end
-      end
+    before do
+      allow(controller).to receive(:logged_in?).and_return(logged_in)
+      post :select_for_billing, id: address.id
     end
 
-    context 'without an address ID stored in session' do
+    it { should redirect_to checkout_path }
+    it { should set_session(:billing_address_id).to address.id }
+    it_behaves_like 'an authenticated action'
+  end
+
+  describe 'POST select_for_delivery' do
+    let(:logged_in) { true }
+    let(:address) { FactoryGirl.create(:address) }
+
+    before do
+      allow(controller).to receive(:logged_in?).and_return(logged_in)
+      post :select_for_delivery, id: address.id
+    end
+
+    it { should redirect_to checkout_path }
+    it { should set_session(:delivery_address_id).to address.id }
+    it_behaves_like 'an authenticated action'
+  end
+
+  describe 'GET new' do
+    let(:logged_in) { true }
+
+    before do
+      allow(controller).to receive(:logged_in?).and_return(logged_in)
+      allow(Address).to receive(:new).and_return(mock_address)
+      get :new
+    end
+
+    it 'assigns a new Address to @address' do
+      expect(assigns(:address)).to eq mock_address
+    end
+
+    it_behaves_like 'an authenticated action'
+  end
+
+  describe 'GET edit' do
+    let(:logged_in) { true }
+
+    before do
+      allow(controller).to receive(:logged_in?).and_return(logged_in)
+      get :edit, id: '1'
+    end
+
+    context 'when address not found' do
       it 'redirects to new' do
-        get 'edit', id: '1'
         expect(response).to redirect_to(new_address_path)
       end
     end
+
+    it_behaves_like 'an authenticated action'
   end
 end
