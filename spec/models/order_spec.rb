@@ -8,6 +8,28 @@ describe Order do
     end
   end
 
+  describe '#record_preferred_delivery_date' do
+    let(:date_format) { '%d/%m/%y' }
+    let(:prompt) { 'Preferred delivery date' }
+    let(:date_str) { '13/08/15' }
+    let(:date) { Date.new(2015, 8, 13) }
+    let(:settings) { PreferredDeliveryDateSettings.new(date_format: date_format, prompt: prompt) }
+
+    subject(:order) { Order.new.record_preferred_delivery_date(settings, date_str) }
+
+    it 'records the date, parsing with the format given in settings' do
+      expect(order.preferred_delivery_date).to eq date
+    end
+
+    it 'records the prompt' do
+      expect(order.preferred_delivery_date_prompt).to eq prompt
+    end
+
+    it 'records the format' do
+      expect(order.preferred_delivery_date_format).to eq date_format
+    end
+  end
+
   describe '#add_basket' do
     let(:order) { Order.new }
     let(:basket) { Basket.new }

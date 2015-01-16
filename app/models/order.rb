@@ -214,9 +214,10 @@ class Order < ActiveRecord::Base
   def record_preferred_delivery_date(settings, date)
     return unless date
 
-    self.preferred_delivery_date = Date.strptime(params[:preferred_delivery_date], settings.date_format)
+    self.preferred_delivery_date = Date.strptime(date, settings.date_format)
     self.preferred_delivery_date_prompt = settings.prompt
     self.preferred_delivery_date_format = settings.date_format
+    self
   end
 
   # Adds the contents of <tt>basket</tt> to the order and associates the basket
