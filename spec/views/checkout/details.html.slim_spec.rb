@@ -11,14 +11,14 @@ RSpec.describe 'checkout/details.html.slim' do
     expect(rendered).to have_selector 'h1', text: I18n.t('checkout.details.heading')
   end
 
-  it 'has prefilled fields for name, phone and email' do
+  it 'has prefilled, required fields for name, phone and email' do
     session[:name] = SecureRandom.hex
     session[:email] = SecureRandom.hex
     session[:phone] = SecureRandom.hex
     render
-    expect(rendered).to have_selector "input[name='name'][value='#{session[:name]}']"
-    expect(rendered).to have_selector "input[name='email'][type='email'][value='#{session[:email]}']"
-    expect(rendered).to have_selector "input[name='phone'][type='tel'][value='#{session[:phone]}']"
+    expect(rendered).to have_selector "input[name='name'][value='#{session[:name]}'][required]"
+    expect(rendered).to have_selector "input[name='email'][type='email'][value='#{session[:email]}'][required]"
+    expect(rendered).to have_selector "input[name='phone'][type='tel'][value='#{session[:phone]}'][required]"
   end
 
   it 'has a submit button' do
