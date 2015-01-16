@@ -43,21 +43,7 @@ class CheckoutController < ApplicationController
   end
 
   def save_billing
-    success =
-      if @address = billing_address
-        @address.update_attributes(address_params)
-      else
-        @address = Address.new(address_params)
-        if @address.save
-          session[:billing_address_id] = @address.id
-        end
-      end
-
-    if success
-      advance_checkout
-    else
-      render 'billing'
-    end
+    save_address(billing_address, :billing_address_id, 'billing')
   end
 
   def delivery
@@ -74,21 +60,7 @@ class CheckoutController < ApplicationController
   end
 
   def save_delivery
-    success =
-      if @address = delivery_address
-        @address.update_attributes(address_params)
-      else
-        @address = Address.new(address_params)
-        if @address.save
-          session[:delivery_address_id] = @address.id
-        end
-      end
-
-    if success
-      advance_checkout
-    else
-      render 'delivery'
-    end
+    save_address(delivery_address, :delivery_address_id, 'delivery')
   end
 
   def confirm
@@ -182,6 +154,24 @@ class CheckoutController < ApplicationController
         email_address: session[:email],
         country: Country.find_by(name: 'United Kingdom')
       )
+    end
+
+    def save_address(address, address_key, template)
+      success =
+        if @address = address
+          @address.update_attributes(address_params)
+        else
+          @address = Address.new(address_params)
+          if @address.save
+            session[address_key] = @address.id
+          end
+        end
+
+      if success
+        advance_checkout
+      else
+        render template
+      end
     end
 
     def address_params
