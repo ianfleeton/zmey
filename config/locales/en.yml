@@ -165,8 +165,10 @@ en:
       town_city: 'Town / city'
     checkout: 'Checkout'
     confirm:
+      billing_address: 'Billing Address'
       change_address: 'Change address'
       delivery_address: 'Delivery Address'
+      edit_address: 'Edit Address'
       edit_details: 'Edit Details'
       place_order: 'Place Order'
       your_basket: 'Your Basket'
