@@ -386,6 +386,18 @@ RSpec.describe CheckoutController, type: :controller do
       post 'place_order'
     end
 
+    it 'copies the billing address to the order' do
+      expect_any_instance_of(Order).to receive(:copy_billing_address)
+        .with(billing_address).and_call_original
+      post 'place_order'
+    end
+
+    it 'copies the delivery address to the order' do
+      expect_any_instance_of(Order).to receive(:copy_delivery_address)
+        .with(delivery_address).and_call_original
+      post 'place_order'
+    end
+
     context 'without a billing address' do
       let(:billing_address) { nil }
       before { post :place_order }
