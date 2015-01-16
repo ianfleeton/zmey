@@ -30,16 +30,7 @@ class CheckoutController < ApplicationController
   end
 
   def billing
-    redirect_to checkout_path and return if DETAILS_KEYS.any?{|k| session[k].blank?}
-
-    if (@address = billing_address).nil?
-      if current_user.addresses.any?
-        session[:source] = 'billing'
-        redirect_to choose_billing_address_addresses_path
-      else
-        @address = prefilled_address
-      end
-    end
+    prepare_address(billing_address, 'billing', choose_billing_address_addresses_path)
   end
 
   def save_billing
@@ -47,16 +38,7 @@ class CheckoutController < ApplicationController
   end
 
   def delivery
-    redirect_to checkout_path and return if DETAILS_KEYS.any?{|k| session[k].blank?}
-
-    if (@address = delivery_address).nil?
-      if current_user.addresses.any?
-        session[:source] = 'delivery'
-        redirect_to choose_delivery_address_addresses_path
-      else
-        @address = prefilled_address
-      end
-    end
+    prepare_address(delivery_address, 'delivery', choose_delivery_address_addresses_path)
   end
 
   def save_delivery
@@ -154,6 +136,19 @@ class CheckoutController < ApplicationController
         email_address: session[:email],
         country: Country.find_by(name: 'United Kingdom')
       )
+    end
+
+    def prepare_address(address, source, choose_address_path)
+      redirect_to checkout_path and return if DETAILS_KEYS.any?{|k| session[k].blank?}
+
+      if (@address = address).nil?
+        if current_user.addresses.any?
+          session[:source] = source
+          redirect_to choose_address_path
+        else
+          @address = prefilled_address
+        end
+      end
     end
 
     def save_address(address, address_key, template)
