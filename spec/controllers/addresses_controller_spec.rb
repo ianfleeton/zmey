@@ -11,16 +11,29 @@ describe AddressesController do
     allow(controller).to receive(:website).and_return(website)
   end
 
-  describe 'GET index' do
-    let(:source) { nil }
+  shared_examples_for 'an address book' do |method, action|
+    let(:current_user) { FactoryGirl.create(:user) }
 
     before do
-      allow(controller).to receive(:logged_in?).and_return(logged_in)
-      get :index, source: source
+      FactoryGirl.create(:address, user_id: current_user.id)
+      allow(controller).to receive(:current_user).and_return(current_user)
     end
 
-    context 'when signed in' do
-      let(:logged_in) { true }
+    it "assigns the current user's addresses to @addresses" do
+      send(method, action)
+      expect(assigns(:addresses)).to eq current_user.reload.addresses
+    end
+  end
+
+  describe 'GET index' do
+    before { allow(controller).to receive(:logged_in?).and_return(logged_in) }
+    let(:logged_in) { true }
+    let(:source) { nil }
+
+    it_behaves_like 'an address book', :get, :index
+
+    context do
+      before { get :index, source: source }
 
       context 'when recognised source in param' do
         let(:source) { 'bad' }
@@ -30,6 +43,11 @@ describe AddressesController do
       context 'when recognised source in param' do
         let(:source) { 'billing' }
         it { should set_session(:source).to 'billing' }
+      end
+
+      context 'when not signed in' do
+        let(:logged_in) { false }
+        it { should redirect_to sign_in_path }
       end
     end
   end
