@@ -1,5 +1,3 @@
-include ActionDispatch::TestProcess
-
 class Website < ActiveRecord::Base
   validates_inclusion_of :custom_view_resolver, in: %w{CustomView::DatabaseResolver CustomView::ThemeResolver}, allow_blank: true
   validates :email, presence: true

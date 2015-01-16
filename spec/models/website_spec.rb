@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+include ActionDispatch::TestProcess
+
 describe Website do
   before(:each) do
     @website = Website.new(
