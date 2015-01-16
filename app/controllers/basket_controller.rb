@@ -1,5 +1,4 @@
 class BasketController < ApplicationController
-  include ResetBasket
   include Shipping
   include Discounts
 

@@ -371,6 +371,7 @@ RSpec.describe CheckoutController, type: :controller do
     let(:basket) { FactoryGirl.build(:basket) }
     let(:t_shirt) { FactoryGirl.create(:product, weight: 0.2) }
     let(:jeans) { FactoryGirl.create(:product, weight: 0.35) }
+    let(:only_accept_payment_on_account?) { false }
 
     before do
       basket.basket_items << FactoryGirl.build(:basket_item, product_id: t_shirt.id, quantity: 2)      
@@ -378,6 +379,8 @@ RSpec.describe CheckoutController, type: :controller do
       allow(Basket).to receive(:new).and_return(basket)
       allow(controller).to receive(:billing_address).and_return(billing_address)
       allow(controller).to receive(:delivery_address).and_return(delivery_address)
+      allow(website).to receive(:only_accept_payment_on_account?)
+        .and_return(only_accept_payment_on_account?)
     end
 
     it_behaves_like 'a discounts calculator', :post, :place_order
@@ -427,6 +430,15 @@ RSpec.describe CheckoutController, type: :controller do
       expect_any_instance_of(Order).to receive(:copy_delivery_address)
         .with(delivery_address).and_call_original
       post 'place_order'
+    end
+
+    context 'when website only accepts payment on account' do
+      let(:only_accept_payment_on_account?) { true }
+
+      it 'resets the basket' do
+        expect(controller).to receive(:reset_basket).and_call_original
+        post 'place_order'
+      end
     end
 
     context 'without a billing address' do
