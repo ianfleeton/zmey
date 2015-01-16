@@ -22,6 +22,8 @@ en:
       edit_or_delete: 'Edit or delete addresses'
       select_billing_address: 'Set as billing address'
       select_delivery_address: 'Deliver to this address'
+    choose_billing_address:
+      heading: 'Choose a billing address'
     choose_delivery_address:
       heading: 'Choose a delivery address'
     edit:
