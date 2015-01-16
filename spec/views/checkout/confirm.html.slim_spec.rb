@@ -32,6 +32,26 @@ RSpec.describe 'checkout/confirm.html.slim', type: :view do
     expect(rendered).to have_selector "a[href='#{checkout_details_path}']", text: I18n.t('checkout.confirm.edit_details')
   end
 
+  it 'shows billing address' do
+    render
+    expect(rendered).to have_content I18n.t('checkout.confirm.billing_address')
+  end
+
+  it 'links to edit billing address' do
+    render
+    expect(rendered).to have_selector "a[href='#{billing_details_path}']", text: I18n.t('checkout.confirm.edit_address')
+  end
+
+  it 'shows delivery address' do
+    render
+    expect(rendered).to have_content I18n.t('checkout.confirm.delivery_address')
+  end
+
+  it 'links to edit delivery address' do
+    render
+    expect(rendered).to have_selector "a[href='#{delivery_details_path}']", text: I18n.t('checkout.confirm.edit_address')
+  end
+
   it 'has a form to place order' do
     render
     expect(rendered).to have_selector "form[action='#{place_order_path}'][method='post']"
