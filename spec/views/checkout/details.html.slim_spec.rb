@@ -6,6 +6,11 @@ RSpec.describe 'checkout/details.html.slim' do
     expect(rendered).to have_selector "form[action='#{save_details_path}']"
   end
 
+  it 'has a heading' do
+    render
+    expect(rendered).to have_selector 'h1', text: I18n.t('checkout.details.heading')
+  end
+
   it 'has prefilled fields for name, phone and email' do
     session[:name] = SecureRandom.hex
     session[:email] = SecureRandom.hex

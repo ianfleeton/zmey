@@ -181,6 +181,7 @@ en:
       continue: 'Continue'
       email_address: 'Email address'
       full_name: 'Full name'
+      heading: 'Your Details'
       phone_number: 'Phone number'
   components:
     destroy:
