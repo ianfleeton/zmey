@@ -17,6 +17,10 @@ class CheckoutController < ApplicationController
   end
 
   def details
+    if logged_in?
+      session[:name] = current_user.name if session[:name].blank?
+      session[:email] = current_user.email if session[:email].blank?
+    end
   end
 
   def save_details

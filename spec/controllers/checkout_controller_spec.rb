@@ -51,8 +51,39 @@ RSpec.describe CheckoutController, type: :controller do
   end
 
   describe 'GET details' do
-    before { get :details }
+    let(:current_user) { User.new }
+    let(:name) { nil }
+    let(:email) { nil }
+
+    before do
+      allow(controller).to receive(:current_user).and_return(current_user)
+      session[:name] = name
+      session[:email] = email
+      get :details
+    end
+
     it { should render_with_layout 'basket_checkout' }
+
+    context 'when logged in' do
+      let(:current_user) { FactoryGirl.create(:user, name: SecureRandom.hex) }
+
+      context 'when details blank' do
+        it 'populates name and email from user account' do
+          expect(session[:name]).to eq current_user.name
+          expect(session[:email]).to eq current_user.email
+        end
+      end
+
+      context 'when details present' do
+        let(:name) { 'untouched' }
+        let(:email) { 'untouched' }
+
+        it 'leaves details untouched' do
+          expect(session[:name]).to eq name
+          expect(session[:email]).to eq email
+        end
+      end
+    end
   end
 
   describe 'POST save_details' do
