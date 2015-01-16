@@ -22,7 +22,7 @@ h2= t('.your_basket')
 = render partial: 'basket/basket', object: @basket, locals: {can_update: false, shipping_amount: @shipping_amount, shipping_tax_amount: @shipping_tax_amount, inc_tax: @inc_tax}
 
 - unless @billing_address.new_record?
-  = form_tag({controller: 'basket', action: 'place_order'}, class: 'pure-form') do
+  = form_tag(place_order_path, class: 'pure-form') do
     - if website.terms_and_conditions.present?
       .terms_and_conditions#checkout_terms_and_conditions
         = raw textilize(website.terms_and_conditions)

@@ -31,4 +31,9 @@ RSpec.describe 'checkout/confirm.html.slim', type: :view do
     render
     expect(rendered).to have_selector "a[href='#{checkout_details_path}']", text: I18n.t('checkout.confirm.edit_details')
   end
+
+  it 'has a form to place order' do
+    render
+    expect(rendered).to have_selector "form[action='#{place_order_path}'][method='post']"
+  end
 end

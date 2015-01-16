@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe BasketController do
   let(:website) { FactoryGirl.create(:website, name: 'www', email: 'anon@example.org', domain: 'example.org') }
-  let(:valid_address) { Address.new(email_address: 'anon@example.org', address_line_1: '123 Street', town_city: 'Harrogate', postcode: 'HG1', country: FactoryGirl.create(:country)) }
 
   before do
     allow(controller).to receive(:website).and_return(website)
@@ -62,65 +61,6 @@ describe BasketController do
 
     context 'with checkout param set' do
       before { post :update, checkout: 'Checkout' }
-
-      it { should redirect_to checkout_path }
-    end
-  end
-
-  describe 'POST place_order' do
-    let(:basket) { FactoryGirl.build(:basket) }
-    let(:t_shirt) { FactoryGirl.create(:product, weight: 0.2) }
-    let(:jeans) { FactoryGirl.create(:product, weight: 0.35) }
-
-    before do
-      basket.basket_items << FactoryGirl.build(:basket_item, product_id: t_shirt.id, quantity: 2)      
-      basket.basket_items << FactoryGirl.build(:basket_item, product_id: jeans.id, quantity: 1)
-      allow(Basket).to receive(:new).and_return(basket)
-    end
-
-    context 'with an address' do
-      before do
-        allow(controller).to receive(:delivery_address).and_return(valid_address)
-      end
-
-      it_behaves_like 'a shipping class setter', :post, :place_order
-
-      it 'deletes a previous unpaid order if one exists' do
-        expect(controller).to receive(:delete_previous_unpaid_order_if_any)
-        post 'place_order'
-      end
-
-      it 'records preferred delivery date' do
-        date = '28/12/15'
-        settings = double(Order).as_null_object
-        allow(website).to receive(:preferred_delivery_date_settings).and_return(settings)
-        expect_any_instance_of(Order).to receive(:record_preferred_delivery_date).with(settings, date)
-        post 'place_order', preferred_delivery_date: date
-      end
-
-      it "records the customer's IP address" do
-        post 'place_order'
-        expect(assigns(:order).ip_address).to eq '0.0.0.0'
-      end
-
-      it 'adds the basket to the order' do
-        expect_any_instance_of(Order).to receive(:add_basket).with(basket)
-        post 'place_order'
-      end
-
-      it 'records the weight of the products' do
-        post 'place_order'
-        expect(assigns(:order).weight).to eq 0.75
-      end
-
-      it 'triggers an order_created Webhook' do
-        expect(Webhook).to receive(:trigger).with('order_created', anything)
-        post 'place_order'
-      end
-    end
-
-    context 'without an address' do
-      before { post :place_order }
 
       it { should redirect_to checkout_path }
     end

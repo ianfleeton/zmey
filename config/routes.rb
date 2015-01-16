@@ -126,7 +126,6 @@ Rails.application.routes.draw do
   post 'basket/add_update_multiple' => 'basket#add_update_multiple', as: :add_update_multiple_basket
   post 'basket/enter_coupon' => 'basket#enter_coupon'
   get 'basket/load/:token' => 'basket#load', as: :load_basket
-  post 'basket/place_order' => 'basket#place_order'
   post 'basket/save_and_email' => 'basket#save_and_email', as: :save_and_email_basket
   post 'basket/update' => 'basket#update'
   get 'basket(/:action(.:format))', controller: 'basket'
@@ -141,6 +140,7 @@ Rails.application.routes.draw do
   post  'checkout/save_delivery' => 'checkout#save_delivery', as: :save_delivery_details
   patch 'checkout/save_delivery' => 'checkout#save_delivery'
   get   'checkout/confirm'       => 'checkout#confirm',       as: :confirm_checkout
+  post  'checkout/place_order'   => 'checkout#place_order',   as: :place_order
 
   resources :enquiries, only: [:create, :new] do
     collection do

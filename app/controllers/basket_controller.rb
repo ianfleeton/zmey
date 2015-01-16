@@ -5,13 +5,11 @@ class BasketController < ApplicationController
 
   layout 'basket_checkout'
 
-  before_action :require_delivery_address, only: [:place_order]
-
   before_action :update_shipping_class, only: [:update]
-  before_action :set_shipping_class, only: [:index, :place_order]
+  before_action :set_shipping_class, only: [:index]
 
   before_action :remove_invalid_discounts, only: [:index, :place_order]
-  before_action :calculate_discounts, only: [:index, :place_order]
+  before_action :calculate_discounts, only: [:index]
 
   before_action :update_customer_note, only: [:update, :checkout, :place_order]
 
@@ -72,58 +70,6 @@ class BasketController < ApplicationController
     redirect_to checkout_path and return if params[:checkout]
     flash[:notice] = 'Basket updated.'
     redirect_to basket_path
-  end
-
-  def place_order
-    delete_previous_unpaid_order_if_any
-
-    @order = Order.new
-    @order.user_id = @current_user.id if logged_in?
-    @order.ip_address = request.remote_ip
-    @order.copy_delivery_address delivery_address
-
-    # Copy delivery address into billing address as no billing address UI
-    # ready yet.
-    @order.copy_billing_address delivery_address
-
-    @order.customer_note = @basket.customer_note
-
-    @order.record_preferred_delivery_date(
-      website.preferred_delivery_date_settings,
-      params[:preferred_delivery_date]
-    )
-
-    @order.add_basket(@basket)
-
-    @discount_lines.each do |dl|
-      @order.order_lines << OrderLine.new(
-        product_id: 0,
-        product_sku: 'DISCOUNT',
-        product_name: dl.name,
-        product_price: dl.price_adjustment,
-        tax_amount: dl.tax_adjustment,
-        quantity: 1
-      )
-    end
-    @order.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
-    @order.shipping_method = 'Standard Shipping'
-    @order.shipping_amount = shipping_amount(0)
-    @order.shipping_tax_amount = shipping_tax_amount(@order.shipping_amount)
-
-    @order.save!
-    Webhook.trigger('order_created', @order)
-
-    session[:order_id] = @order.id
-    if website.only_accept_payment_on_account?
-      @order.status = Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
-      @order.save
-      OrderNotifier.notification(website, @order).deliver_now
-      reset_basket(@order)
-      redirect_to controller: 'orders', action: 'receipt'
-    else
-      OrderNotifier.admin_waiting_for_payment(website, @order).deliver_now
-      redirect_to controller: 'orders', action: 'select_payment_method'
-    end
   end
 
   def purge_old
@@ -193,12 +139,6 @@ class BasketController < ApplicationController
 
   protected
 
-  def delete_previous_unpaid_order_if_any
-    if session[:order_id] && @order = Order.find_by(id: session[:order_id])
-      @order.destroy if @order.status == Enums::PaymentStatus::WAITING_FOR_PAYMENT
-    end
-  end
-
   def add_coupon_to_session(coupon)
     if session[:coupons].nil?
       session[:coupons] = Array.new
@@ -266,11 +206,6 @@ class BasketController < ApplicationController
       end
     end
     f_selections
-  end
-
-  # Get valid delivery address or send user back to checkout.
-  def require_delivery_address
-    redirect_to checkout_path unless delivery_address
   end
 
   def remove_item
