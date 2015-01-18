@@ -159,14 +159,26 @@ describe 'Admin orders API' do
   end
 
   describe 'GET show' do
+    let(:order) { JSON.parse(response.body)['order'] }
+
     context 'when order found' do
       before do
-        @order = FactoryGirl.create(:order)
+        @order = FactoryGirl.create(:order,
+          billing_company: 'YESL', billing_address_line_3: 'Copley Road',
+          delivery_company: 'FBS', delivery_address_line_3: 'Beighton'
+        )
       end
 
       it 'returns 200 OK' do
         get api_admin_order_path(@order)
         expect(response.status).to eq 200
+      end
+
+      ['billing_address_line_3', 'billing_company', 'delivery_address_line_3', 'delivery_company'].each do |component|
+        it "includes #{component} in JSON" do
+          get api_admin_order_path(@order)
+          expect(order[component]).to eq @order.send(component.to_sym)
+        end
       end
     end
 
@@ -180,11 +192,15 @@ describe 'Admin orders API' do
 
   describe 'POST create' do
     let(:country) { FactoryGirl.create(:country) }
+    let(:billing_company)         { SecureRandom.hex }
     let(:billing_address_line_1)  { SecureRandom.hex }
+    let(:billing_address_line_3)  { SecureRandom.hex }
     let(:billing_country_id)      { country.id }
     let(:billing_postcode)        { SecureRandom.hex }
     let(:billing_town_city)       { SecureRandom.hex }
+    let(:delivery_company)        { SecureRandom.hex }
     let(:delivery_address_line_1) { SecureRandom.hex }
+    let(:delivery_address_line_3) { SecureRandom.hex }
     let(:delivery_country_id)     { country.id }
     let(:delivery_postcode)       { SecureRandom.hex }
     let(:delivery_town_city)      { SecureRandom.hex }
@@ -192,11 +208,15 @@ describe 'Admin orders API' do
     let(:payment_status)          { 'waiting_for_payment' }
 
     let(:basic_params) {{
+      billing_company: billing_company,
       billing_address_line_1: billing_address_line_1,
+      billing_address_line_3: billing_address_line_3,
       billing_country_id: billing_country_id,
       billing_postcode: billing_postcode,
       billing_town_city: billing_town_city,
+      delivery_company: delivery_company,
       delivery_address_line_1: delivery_address_line_1,
+      delivery_address_line_3: delivery_address_line_3,
       delivery_country_id: delivery_country_id,
       delivery_postcode: delivery_postcode,
       delivery_town_city: delivery_town_city,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141231150124) do
+ActiveRecord::Schema.define(version: 20150118184730) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -289,6 +289,10 @@ ActiveRecord::Schema.define(version: 20141231150124) do
     t.string   "billing_postcode",               limit: 255,                            default: "",  null: false
     t.integer  "billing_country_id",             limit: 4,                                            null: false
     t.string   "billing_phone_number",           limit: 255
+    t.string   "billing_company",                limit: 255
+    t.string   "delivery_company",               limit: 255
+    t.string   "billing_address_line_3",         limit: 255
+    t.string   "delivery_address_line_3",        limit: 255
   end
 
   add_index "orders", ["basket_id"], name: "index_orders_on_basket_id", using: :btree

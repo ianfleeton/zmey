@@ -76,6 +76,8 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       params.require(:order).permit(
       :billing_address_line_1,
       :billing_address_line_2,
+      :billing_address_line_3,
+      :billing_company,
       :billing_country_id,
       :billing_full_name,
       :billing_postcode,
@@ -83,6 +85,8 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       :customer_note,
       :delivery_address_line_1,
       :delivery_address_line_2,
+      :delivery_address_line_3,
+      :delivery_company,
       :delivery_country_id,
       :delivery_full_name,
       :delivery_postcode,

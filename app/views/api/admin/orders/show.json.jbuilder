@@ -10,15 +10,19 @@ json.order do
   end
   json.email_address            @order.email_address
   json.delivery_full_name       @order.delivery_full_name
+  json.delivery_company         @order.delivery_company
   json.delivery_address_line_1  @order.delivery_address_line_1
   json.delivery_address_line_2  @order.delivery_address_line_2
+  json.delivery_address_line_3  @order.delivery_address_line_3
   json.delivery_town_city       @order.delivery_town_city
   json.delivery_county          @order.delivery_county
   json.delivery_postcode        @order.delivery_postcode
   json.delivery_phone_number    @order.delivery_phone_number
   json.billing_full_name        @order.billing_full_name
+  json.billing_company          @order.billing_company
   json.billing_address_line_1   @order.billing_address_line_1
   json.billing_address_line_2   @order.billing_address_line_2
+  json.billing_address_line_3   @order.billing_address_line_3
   json.billing_town_city        @order.billing_town_city
   json.billing_county           @order.billing_county
   json.billing_postcode         @order.billing_postcode
