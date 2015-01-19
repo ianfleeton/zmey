@@ -9,13 +9,11 @@ describe Order do
   end
 
   describe '#copy_delivery_address' do
-    before(:all) do
+    before do
       @address = FactoryGirl.build(:random_address)
       @order = Order.new
       @order.copy_delivery_address(@address)
     end
-
-    after(:all) { @address.country.destroy }
 
     from_to = {
       email_address:  :email_address,
@@ -36,13 +34,11 @@ describe Order do
   end
 
   describe '#copy_billing_address' do
-    before(:all) do
+    before do
       @address = FactoryGirl.build(:random_address)
       @order = Order.new
       @order.copy_billing_address(@address)
     end
-
-    after(:all) { @order.country.destroy }
 
     from_to = {
       full_name:      :billing_full_name,
