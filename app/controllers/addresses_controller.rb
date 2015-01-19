@@ -4,8 +4,8 @@ class AddressesController < ApplicationController
 
   KNOWN_SOURCES = ['address_book', 'billing', 'delivery']
 
-  ADDRESS_PARAMS_WHITELIST = [:address_line_1, :address_line_2,
-      :country_id, :county, :email_address, :full_name, :label,
+  ADDRESS_PARAMS_WHITELIST = [:address_line_1, :address_line_2, :address_line_3,
+      :company, :country_id, :county, :email_address, :full_name, :label,
       :phone_number, :postcode, :town_city]
 
   def index

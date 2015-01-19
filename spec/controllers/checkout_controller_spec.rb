@@ -187,8 +187,13 @@ RSpec.describe CheckoutController, type: :controller do
     end
   end
 
+  ATTRIBUTES_TO_SAVE = [
+    'address_line_1', 'address_line_2', 'address_line_3',
+    'company', 'country_id', 'county', 'postcode', 'town_city'
+  ]
+
   describe 'POST save_billing' do
-    let(:address) { FactoryGirl.build(:address, address_line_1: SecureRandom.hex) }
+    let(:address) { FactoryGirl.build(:random_address) }
     let(:billing_address) { nil }
 
     before do
@@ -200,7 +205,8 @@ RSpec.describe CheckoutController, type: :controller do
       let(:billing_address) { FactoryGirl.create(:address) }
 
       it 'updates the billing address' do
-        expect(billing_address.reload.address_line_1).to eq address.address_line_1
+        expect(billing_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
+          .to eq address.attributes.slice(*ATTRIBUTES_TO_SAVE)
       end
     end
 
@@ -283,7 +289,7 @@ RSpec.describe CheckoutController, type: :controller do
   end
 
   describe 'POST save_delivery' do
-    let(:address) { FactoryGirl.build(:address, address_line_1: SecureRandom.hex) }
+    let(:address) { FactoryGirl.build(:random_address) }
     let(:delivery_address) { nil }
 
     before do
@@ -295,7 +301,8 @@ RSpec.describe CheckoutController, type: :controller do
       let(:delivery_address) { FactoryGirl.create(:address) }
 
       it 'updates the delivery address' do
-        expect(delivery_address.reload.address_line_1).to eq address.address_line_1
+        expect(delivery_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
+          .to eq address.attributes.slice(*ATTRIBUTES_TO_SAVE)
       end
     end
 

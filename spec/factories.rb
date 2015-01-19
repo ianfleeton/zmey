@@ -17,12 +17,14 @@ FactoryGirl.define do
 
   factory :random_address, class: Address do
     email_address   "#{SecureRandom.hex}@example.org"
+    full_name       SecureRandom.hex
     company         SecureRandom.hex
     address_line_1  SecureRandom.hex
     address_line_2  SecureRandom.hex
     address_line_3  SecureRandom.hex
     town_city       SecureRandom.hex
     county          SecureRandom.hex
+    postcode        SecureRandom.hex
     association     :country
   end
 
