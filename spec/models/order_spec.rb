@@ -10,7 +10,7 @@ describe Order do
 
   describe '#copy_delivery_address' do
     before(:all) do
-      @address = random_address
+      @address = FactoryGirl.build(:random_address)
       @order = Order.new
       @order.copy_delivery_address(@address)
     end
@@ -37,7 +37,7 @@ describe Order do
 
   describe '#copy_billing_address' do
     before(:all) do
-      @address = random_address
+      @address = FactoryGirl.build(:random_address)
       @order = Order.new
       @order.copy_billing_address(@address)
     end
@@ -59,18 +59,6 @@ describe Order do
         expect(@order.send(to)).to eq @address.send(from)
       end
     end
-  end
-
-  def random_address
-    FactoryGirl.build(:address,
-    email_address: "#{SecureRandom.hex}@example.org",
-    company: SecureRandom.hex,
-    address_line_1: SecureRandom.hex,
-    address_line_2: SecureRandom.hex,
-    address_line_3: SecureRandom.hex,
-    town_city: SecureRandom.hex,
-    county: SecureRandom.hex
-    )
   end
 
   describe '#record_preferred_delivery_date' do
