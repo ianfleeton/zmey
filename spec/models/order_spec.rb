@@ -14,7 +14,9 @@ describe Order do
       @order = Order.new
       @order.copy_delivery_address(@address)
     end
-    
+
+    after(:all) { @address.country.destroy }
+
     from_to = {
       email_address:  :email_address,
       full_name:      :delivery_full_name,
