@@ -7,7 +7,7 @@ install:
   - sudo apt-get update
   - sudo apt-get install libfreeimage3 libfreeimage-dev
   - bundle install
-bundler_args: --without production
+bundler_args: --without production --retry 3
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
