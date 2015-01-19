@@ -39,7 +39,9 @@ describe Order do
       @order = Order.new
       @order.copy_billing_address(@address)
     end
-    
+
+    after(:all) { @order.country.destroy }
+
     from_to = {
       full_name:      :billing_full_name,
       company:        :billing_company,
