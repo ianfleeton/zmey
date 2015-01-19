@@ -100,27 +100,13 @@ class Order < ActiveRecord::Base
   # Copies +address+ (an Address) into the +email_address+ and
   # <tt>delivery_*</tt> attributes.
   def copy_delivery_address(address)
-    self.email_address            = address.email_address
-    self.delivery_full_name       = address.full_name
-    self.delivery_address_line_1  = address.address_line_1
-    self.delivery_address_line_2  = address.address_line_2
-    self.delivery_town_city       = address.town_city
-    self.delivery_county          = address.county
-    self.delivery_postcode        = address.postcode
-    self.delivery_country_id      = address.country_id
-    self.delivery_phone_number    = address.phone_number
+    self.email_address = address.email_address
+    copy_address(:delivery, address)
   end
 
   # Copies +address+ (an Address) into the <tt>billing_*</tt> attributes.
   def copy_billing_address(address)
-    self.billing_full_name       = address.full_name
-    self.billing_address_line_1  = address.address_line_1
-    self.billing_address_line_2  = address.address_line_2
-    self.billing_town_city       = address.town_city
-    self.billing_county          = address.county
-    self.billing_postcode        = address.postcode
-    self.billing_country_id      = address.country_id
-    self.billing_phone_number    = address.phone_number
+    copy_address(:billing, address)
   end
 
   # Returns a new Address from the +email_address+ and <tt>delivery_*</tt>
@@ -264,5 +250,17 @@ class Order < ActiveRecord::Base
     Payment.delete_all
     OrderLine.delete_all
     Order.delete_all
+  end
+
+  private
+
+  def copy_address(address_type, address)
+    [
+      :address_line_1, :address_line_2, :address_line_3, :company, :country_id,
+      :county, :full_name, :phone_number, :postcode, :town_city
+    ].each do |component|
+      setter = "#{address_type}_#{component}="
+      send(setter, address.send(component))
+    end
   end
 end

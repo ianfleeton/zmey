@@ -8,6 +8,67 @@ describe Order do
     end
   end
 
+  describe '#copy_delivery_address' do
+    before(:all) do
+      @address = random_address
+      @order = Order.new
+      @order.copy_delivery_address(@address)
+    end
+    
+    from_to = {
+      email_address:  :email_address,
+      full_name:      :delivery_full_name,
+      company:        :delivery_company,
+      address_line_1: :delivery_address_line_1,
+      address_line_2: :delivery_address_line_2,
+      address_line_3: :delivery_address_line_3,
+      town_city:      :delivery_town_city,
+      county:         :delivery_county,
+      country_id:     :delivery_country_id,
+      phone_number:   :delivery_phone_number
+    }.each do |from, to|
+      it "copies address.#{from} to order.#{to}" do
+        expect(@order.send(to)).to eq @address.send(from)
+      end
+    end
+  end
+
+  describe '#copy_billing_address' do
+    before(:all) do
+      @address = random_address
+      @order = Order.new
+      @order.copy_billing_address(@address)
+    end
+    
+    from_to = {
+      full_name:      :billing_full_name,
+      company:        :billing_company,
+      address_line_1: :billing_address_line_1,
+      address_line_2: :billing_address_line_2,
+      address_line_3: :billing_address_line_3,
+      town_city:      :billing_town_city,
+      county:         :billing_county,
+      country_id:     :billing_country_id,
+      phone_number:   :billing_phone_number
+    }.each do |from, to|
+      it "copies address.#{from} to order.#{to}" do
+        expect(@order.send(to)).to eq @address.send(from)
+      end
+    end
+  end
+
+  def random_address
+    FactoryGirl.build(:address,
+    email_address: "#{SecureRandom.hex}@example.org",
+    company: SecureRandom.hex,
+    address_line_1: SecureRandom.hex,
+    address_line_2: SecureRandom.hex,
+    address_line_3: SecureRandom.hex,
+    town_city: SecureRandom.hex,
+    county: SecureRandom.hex
+    )
+  end
+
   describe '#record_preferred_delivery_date' do
     let(:date_format) { '%d/%m/%y' }
     let(:prompt) { 'Preferred delivery date' }

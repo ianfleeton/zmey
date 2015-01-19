@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150118184730) do
+ActiveRecord::Schema.define(version: 20150119110915) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 20150118184730) do
     t.datetime "updated_at"
     t.string   "email_address",  limit: 255, default: "", null: false
     t.string   "label",          limit: 255,              null: false
+    t.string   "company",        limit: 255
+    t.string   "address_line_3", limit: 255
   end
 
   create_table "api_keys", force: :cascade do |t|
