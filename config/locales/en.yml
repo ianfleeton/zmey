@@ -30,6 +30,8 @@ en:
       heading: 'Change Address'
     index:
       add_new_address: 'Add new address'
+      delete: 'Delete'
+      edit: 'Edit'
       heading: 'Address Book'
       introduction: 'You can use this page to edit addresses in your address book, delete addresses that you no longer need, or add a new address.'
       label_info: 'Will display in dropdown as "%{label}"'
