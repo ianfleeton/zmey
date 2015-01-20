@@ -25,7 +25,7 @@ p= link_to t('.add_new_address'), new_address_path
         p.address-label-info
           = t('.label_info', label: address.label)
         p.address-edit
-          = edit_button address
+          = link_to t('.edit'), edit_address_path(address), class: 'pure-button', title: "Edit #{address}"
         p.address-delete
-          = delete_button address
+          = link_to t('.delete'), address_path(address), data: { confirm: 'Are you sure?' }, method: :delete, class: 'pure-button button-error', title: "Delete #{address}"
           
