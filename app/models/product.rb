@@ -26,6 +26,7 @@ class Product < ActiveRecord::Base
   has_many :quantity_prices, -> { order 'quantity' }, dependent: :delete_all
   belongs_to :image
   belongs_to :nominal_code, inverse_of: :products
+  has_many :order_lines, dependent: :nullify
   has_many :product_group_placements, dependent: :delete_all
   has_many :product_groups, through: :product_group_placements
   has_many :basket_items, dependent: :destroy
