@@ -16,6 +16,9 @@ curl https://zmey.co.uk/api/admin/products/1 \
 **200 OK** is returned when the product is found, otherwise **404 Not Found** is
 returned.
 
+The response contains various product attributes. It is also populated with any
+defined extra attributes for products, such as `length` in the example below.
+
 ```json
 {
   "product": {
@@ -35,7 +38,8 @@ returned.
     },
     "description": "Shiny shiny designed in California",
     "in_stock": true,
-    "google_description": ""
+    "google_description": "",
+    "length": "138"
   }
 }
 ```

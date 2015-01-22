@@ -1,4 +1,31 @@
 shared_examples_for 'an object with extra attributes' do
+  describe '.extra_attributes' do
+    it 'returns ExtraAttributes for this class' do
+      ea1 = ExtraAttribute.create!(attribute_name: 'length', class_name: described_class)
+      ea2 = ExtraAttribute.create!(attribute_name: 'length', class_name: ExtraAttribute)
+      expect(described_class.extra_attributes).to include(ea1)
+      expect(described_class.extra_attributes).not_to include(ea2)
+    end
+  end
+
+  describe '#extra_attributes' do
+    let(:object) { described_class.new(extra: '{"length": "500"}') }
+    let(:subject) { object.extra_attributes }
+
+    before do
+      ExtraAttribute.create!(attribute_name: 'length', class_name: described_class)
+      ExtraAttribute.create!(attribute_name: 'width', class_name: described_class)
+    end
+
+    it 'contains values for supplied extra attributes' do
+      expect(subject.fetch('length')).to eq '500'
+    end
+
+    it 'contains nil values for missing extra attributes' do
+      expect(subject.fetch('width')).to be_nil
+    end
+  end
+
   describe '#extra_json' do
     it 'handles nil values of extra' do
       expect { described_class.new.extra_json }.not_to raise_error

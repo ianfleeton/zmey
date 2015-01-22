@@ -1,6 +1,27 @@
 module ExtraAttributes
   extend ActiveSupport::Concern
 
+  module ClassMethods
+    # Returns <tt>ExtraAttributes</tt> defined for this class.
+    def extra_attributes
+      ExtraAttribute.where(class_name: self)
+    end
+  end
+
+  # Returns a hash of extra attribute names and their values.
+  #
+  #   ExtraAttribute.create!(attribute_name: 'length', class_name: Product)
+  #   ExtraAttribute.create!(attribute_name: 'width',  class_name: Product)
+  #   product = Product.new
+  #   product.length = '1500'
+  #   product.attributes # => {"length" => "1500", "width" => nil}
+  def extra_attributes
+    Hash[
+      self.class.extra_attributes
+        .map { |a| [a.attribute_name, send(a.attribute_name)] }
+    ]
+  end
+
   # Returns the <tt>extra</tt> attribute parsed as JSON.
   def extra_json
     @extra_json ||= JSON.parse(extra || '{}')

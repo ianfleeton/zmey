@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative 'shared_examples/extra_attributes_shared.rb'
 
 describe Product do
   before(:each) do

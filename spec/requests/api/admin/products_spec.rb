@@ -45,13 +45,19 @@ describe 'Admin products API' do
 
   describe 'GET show' do
     context 'when product found' do
-      before do
-        @product = FactoryGirl.create(:product)
-      end
+      let(:product) { FactoryGirl.create(:product) }
 
       it 'returns 200 OK' do
-        get api_admin_product_path(@product)
+        get api_admin_product_path(product)
         expect(response.status).to eq 200
+      end
+
+      it 'includes extra attributes' do
+        ExtraAttribute.create!(attribute_name: 'length', class_name: Product)
+        product.length = '1500'
+        product.save
+        get api_admin_product_path(product)
+        expect(JSON.parse(response.body)['product']['length']).to eq '1500'
       end
     end
 

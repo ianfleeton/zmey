@@ -20,4 +20,7 @@ json.product do
   json.description        @product.description
   json.in_stock           @product.in_stock
   json.google_description @product.google_description
+  @product.extra_attributes.each do |name, value|
+    json.set! name, value
+  end
 end
