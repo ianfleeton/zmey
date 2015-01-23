@@ -2,6 +2,11 @@
 
 Returns a summary list of all products.
 
+## Parameters
+
+* **updated_since** — A time in ISO 8601 format. Returns only products that
+  have been updated since (on or after) this time.
+
 ## Example
 
 ### Request

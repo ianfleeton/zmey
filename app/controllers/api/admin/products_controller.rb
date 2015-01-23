@@ -3,6 +3,10 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
 
   def index
     @products = Product.all
+
+    if params[:updated_since]
+      @products = @products.where ['updated_at >= ?', Time.parse(params[:updated_since])]
+    end
   end
 
   def show

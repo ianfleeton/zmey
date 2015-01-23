@@ -29,6 +29,23 @@ describe 'Admin products API' do
       end
     end
 
+    context 'getting products updated since' do
+      let!(:recently_updated) { FactoryGirl.create(:product, updated_at: Date.new(2015, 1, 31)) }
+      let!(:updated_ages_ago) { FactoryGirl.create(:product, updated_at: Date.new(2013, 3, 14)) }
+
+      before { get '/api/admin/products?updated_since=2014-03-20T10:30:11.123Z' }
+
+      subject { JSON.parse(response.body)['products'] }
+
+      it 'returns 1 product' do
+        expect(subject.length).to eq 1
+      end
+
+      it 'returns the recently updated product' do
+        expect(subject[0]['id']).to eq recently_updated.id
+      end
+    end
+
     context 'with no products' do
       it 'returns 200 OK' do
         get '/api/admin/products'
