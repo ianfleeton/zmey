@@ -23,11 +23,13 @@ curl https://zmey.co.uk/api/admin/products \
   "products": [
     {
       "id": 1,
+      "href": "https://zmey.co.uk/api/admin/products/1",
       "sku": "HMR14",
       "name": "Hammer"
     },
     {
       "id": 2,
+      "href": "https://zmey.co.uk/api/admin/products/2",
       "sku": "NLS28",
       "name": "Nails"
     }
