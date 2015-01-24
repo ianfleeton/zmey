@@ -89,6 +89,8 @@ describe 'Admin products API' do
   describe 'POST create' do
     let(:extra)    { '{"some": "data"}' }
     let(:name)     { SecureRandom.hex }
+    let(:price)    { 2.34 }
+    let(:rrp)      { 3.45 }
     let(:sku)      { SecureRandom.hex }
     let(:tax_type) { Product::INC_VAT }
     let(:weight)   { 1.234 }
@@ -96,6 +98,8 @@ describe 'Admin products API' do
       allow_fractional_quantity: true,
       extra: extra,
       name: name,
+      price: price,
+      rrp: rrp,
       sku: sku,
       tax_type: tax_type,
       weight: weight

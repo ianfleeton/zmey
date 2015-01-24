@@ -22,6 +22,7 @@ Create a new product.
 * **page_title** — Title of the HTML document for the product's main page.
 * **price** — Price of the product with decimal to separate pounds and pence,
 for example, 10.99.
+* **rrp** — Recommended retail price.
 * **tax_type** — Tax type of the product (see table below).
 * **weight** — Weight of the product (decimal).
 
