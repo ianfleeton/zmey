@@ -224,6 +224,7 @@ class Order < ActiveRecord::Base
         product_id: i.product.id,
         product_sku: i.product.sku,
         product_name: i.product.name,
+        product_rrp: i.product.rrp,
         product_price: i.product.price_ex_tax(i.quantity),
         product_weight: i.product.weight,
         tax_amount: i.product.tax_amount(i.quantity) * i.quantity,

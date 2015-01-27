@@ -97,16 +97,22 @@ describe Order do
 
   describe '#add_basket_items' do
     let(:basket) { FactoryGirl.create(:basket) }
+    let(:product) { FactoryGirl.create(:product, rrp: 2.34) }
+    let(:first_item) { FactoryGirl.build(:basket_item, product: product) }
+    let(:order) { Order.new }
 
     before do
+      basket.basket_items << first_item
       basket.basket_items << FactoryGirl.build(:basket_item)
-      basket.basket_items << FactoryGirl.build(:basket_item)
+      order.add_basket_items(basket.basket_items)
     end
 
     it 'creates an order line for each basket item' do
-      o = Order.new
-      o.add_basket_items(basket.basket_items)
-      expect(o.order_lines.length).to eq 2
+      expect(order.order_lines.length).to eq 2
+    end
+
+    it 'copies product RRP' do
+      expect(order.order_lines.first.product_rrp).to eq product.rrp
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119110915) do
+ActiveRecord::Schema.define(version: 20150127134329) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -252,6 +252,7 @@ ActiveRecord::Schema.define(version: 20150119110915) do
     t.text     "feature_descriptions", limit: 65535
     t.integer  "shipped",              limit: 4,                              default: 0,   null: false
     t.decimal  "product_weight",                     precision: 10, scale: 3, default: 0.0, null: false
+    t.decimal  "product_rrp",                        precision: 10, scale: 3
   end
 
   add_index "order_lines", ["order_id"], name: "index_order_lines_on_order_id", using: :btree

@@ -180,6 +180,25 @@ describe 'Admin orders API' do
           expect(order[component]).to eq @order.send(component.to_sym)
         end
       end
+
+      context 'with order lines' do
+        before do
+          @order_line = FactoryGirl.create(:order_line, order: @order, product_rrp: 2.34)
+          get api_admin_order_path(@order)
+        end
+
+        it 'has 1 order line' do
+          expect(order['order_lines'].length).to eq 1
+        end
+
+        describe 'first order line' do
+          subject { order['order_lines'][0] }
+
+          it 'includes product_rrp' do
+            expect(subject['product_rrp']).to eq @order_line.product_rrp.to_s
+          end
+        end
+      end
     end
 
     context 'when no order' do

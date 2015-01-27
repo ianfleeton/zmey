@@ -47,6 +47,7 @@ json.order do
     end
     json.product_name         order_line.product_name
     json.product_sku          order_line.product_sku
+    json.product_rrp          order_line.product_rrp
     json.product_price        order_line.product_price
     json.product_weight       order_line.product_weight
     json.tax_amount           order_line.tax_amount

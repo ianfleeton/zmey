@@ -64,6 +64,7 @@ returned.
         },
         "product_name": "Hammer",
         "product_sku": "HMR01",
+        "product_rrp": null,
         "product_price": "17.5",
         "product_weight": "1.2",
         "tax_amount": "0.0",
