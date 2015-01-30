@@ -10,7 +10,9 @@ module Shipping
     end
 
     def set_shipping_class
-      @shipping_class = ShippingClass.find_by(session[:shipping_class_id])
+      @shipping_class =
+        ShippingClass.find_by(session[:shipping_class_id]) ||
+        delivery_address.try(:first_shipping_class)
     end
 
     # Calculates shipping amount based on the global website shipping amount
