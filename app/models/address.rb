@@ -4,6 +4,8 @@ class Address < ActiveRecord::Base
   belongs_to :country
   belongs_to :user
 
+  delegate :shipping_zone, to: :country, allow_nil: true
+
   before_validation :set_default_label
 
   def set_default_label
