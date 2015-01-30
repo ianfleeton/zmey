@@ -84,7 +84,7 @@ class CheckoutController < ApplicationController
     end
     @order.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
     @order.shipping_method = 'Standard Shipping'
-    @order.shipping_amount = shipping_amount(0)
+    @order.shipping_amount = shipping_amount
     @order.shipping_tax_amount = shipping_tax_amount(@order.shipping_amount)
 
     @order.save!

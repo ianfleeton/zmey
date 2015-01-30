@@ -17,10 +17,7 @@ module Shipping
 
     # Calculates shipping amount based on the global website shipping amount
     # and whether shipping is applicable to any products in the basket.
-    #
-    # Returns +nil+ by default if there is no shipping amount.
-    # Set +return_if_nil+ to 0, for example, if using in a calculation.
-    def shipping_amount(return_if_nil=nil)
+    def shipping_amount
       amount = 0.0
 
       if basket.apply_shipping?
@@ -29,9 +26,7 @@ module Shipping
         amount = amount_by_address.nil? ? amount : amount_by_address
       end
 
-      amount += basket.shipping_supplement
-
-      (amount == 0.0) ? return_if_nil : amount
+      amount + basket.shipping_supplement
     end
 
     def shipping_tax_amount(shipping_amount_net)
