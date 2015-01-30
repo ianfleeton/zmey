@@ -12,6 +12,18 @@ class Address < ActiveRecord::Base
     self.label = "#{full_name} - #{postcode}" if label.blank?
   end
 
+  # Return shipping classes available for this address, or an empty array if
+  # there are none.
+  def shipping_classes
+    shipping_zone.try(:shipping_classes) || []
+  end
+
+  # Returns the first shipping class available for this address, or
+  # <tt>nil</tt> if there isn't one.
+  def first_shipping_class
+    shipping_classes.first
+  end
+
   def to_s
     label
   end
