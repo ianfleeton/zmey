@@ -77,7 +77,7 @@
             td.empty &nbsp;
         tr.total
           th colspan="4"= t('.total')
-          td class="price"= formatted_price(basket_total + vat_total)
+          td class="price"= formatted_price(@basket.total(false) + discount_lines_price_total + shipping_amount.to_f + vat_total)
           - if can_update
             td.empty &nbsp;
   - if can_update
