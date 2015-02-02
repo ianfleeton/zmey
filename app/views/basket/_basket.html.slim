@@ -45,7 +45,10 @@
       - if shipping_amount
         tr.shipping_amount
           th colspan="4"= t('.shipping_amount')
-          td.price= formatted_price shipping_amount
+          - if inc_tax
+            td.price= formatted_price shipping_amount + shipping_tax_amount
+          - else
+            td.price= formatted_price shipping_amount
           - if can_update
             td.empty &nbsp;
       tr.basket_total
