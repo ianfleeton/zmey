@@ -42,7 +42,7 @@
           td.price= formatted_price(dl.price_with_tax(inc_tax))
           - if can_update
             td.empty &nbsp;
-      - unless shipping_amount.nil?
+      - if shipping_amount
         tr.shipping_amount
           th colspan="4"= t('.shipping_amount')
           td.price= formatted_price shipping_amount
