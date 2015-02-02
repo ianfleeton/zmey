@@ -8,6 +8,7 @@ class CheckoutController < ApplicationController
   before_action :require_billing_and_delivery_addresses, only: [:place_order]
   before_action :require_basket, only: [:index, :billing, :delivery, :confirm]
   before_action :set_shipping_class, only: [:confirm, :place_order]
+  before_action :set_shipping_amount, only: [:confirm]
   before_action :remove_invalid_discounts, only: [:confirm]
   before_action :calculate_discounts, only: [:confirm, :place_order]
 
@@ -50,8 +51,6 @@ class CheckoutController < ApplicationController
     redirect_to delivery_details_path and return unless delivery_address
 
     session[:source] = 'checkout'
-    @shipping_amount = shipping_amount
-    @shipping_tax_amount = shipping_tax_amount
   end
 
   def place_order

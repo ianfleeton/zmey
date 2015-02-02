@@ -15,6 +15,11 @@ module Shipping
         delivery_address.try(:first_shipping_class)
     end
 
+    def set_shipping_amount
+      @shipping_amount = shipping_amount
+      @shipping_tax_amount = shipping_tax_amount
+    end
+
     # Calculates shipping amount based on the global website shipping amount
     # and whether shipping is applicable to any products in the basket.
     def shipping_amount

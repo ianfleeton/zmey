@@ -13,6 +13,7 @@ describe BasketController do
     let(:other_page) { FactoryGirl.create(:page) }
 
     it_behaves_like 'a shipping class setter', :get, :index
+    it_behaves_like 'a shipping amount setter', :get, :index
 
     context 'with page_id param set' do
       before { get :index, page_id: page_id }

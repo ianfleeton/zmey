@@ -6,6 +6,7 @@ class BasketController < ApplicationController
 
   before_action :update_shipping_class, only: [:update]
   before_action :set_shipping_class, only: [:index]
+  before_action :set_shipping_amount, only: [:index]
 
   before_action :remove_invalid_discounts, only: [:index, :place_order]
   before_action :calculate_discounts, only: [:index]

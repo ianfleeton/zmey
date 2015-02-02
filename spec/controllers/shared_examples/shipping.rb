@@ -29,3 +29,15 @@ shared_examples_for 'a shipping class setter' do |method, action|
     end
   end
 end
+
+shared_examples_for 'a shipping amount setter' do |method, action|
+  it 'sets @shipping_amount' do
+    send(method, action)
+    expect(assigns(:shipping_amount)).to be
+  end
+
+  it 'sets @shipping_tax_amount' do
+    send(method, action)
+    expect(assigns(:shipping_tax_amount)).to be
+  end
+end

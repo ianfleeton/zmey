@@ -348,6 +348,7 @@ RSpec.describe CheckoutController, type: :controller do
       end
 
       it_behaves_like 'a shipping class setter', :get, :confirm
+      it_behaves_like 'a shipping amount setter', :get, :confirm
       it_behaves_like 'a discounts calculator', :get, :confirm
 
       it { should render_with_layout 'basket_checkout' }
