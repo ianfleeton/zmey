@@ -1,6 +1,8 @@
 module Shipping
   extend ActiveSupport::Concern
 
+  attr_reader :shipping_class
+
   protected
 
     # Returns the customer's delivery address or <tt>nil</tt> if the customer

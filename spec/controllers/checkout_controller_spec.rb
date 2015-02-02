@@ -461,6 +461,24 @@ RSpec.describe CheckoutController, type: :controller do
       before { post :place_order }
       it { should redirect_to checkout_path }
     end
+
+    context 'with a shipping class' do
+      let!(:shipping_class) { FactoryGirl.create(:shipping_class, name: 'Royal Mail') }
+      before do
+        allow(controller).to receive(:shipping_class).and_return(shipping_class)
+        post :place_order
+      end
+      it 'records the shipping class name as the shipping method' do
+        expect(Order.last.shipping_method).to eq 'Royal Mail'
+      end
+    end
+
+    context 'without a shipping class' do
+      before { post :place_order }
+      it 'records "Standard Shipping" as the shipping method' do
+        expect(Order.last.shipping_method).to eq 'Standard Shipping'
+      end
+    end
   end
 
   def add_items_to_basket

@@ -82,9 +82,7 @@ class CheckoutController < ApplicationController
       )
     end
     @order.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
-    @order.shipping_method = 'Standard Shipping'
-    @order.shipping_amount = shipping_amount
-    @order.shipping_tax_amount = shipping_tax_amount
+    record_shipping
 
     @order.save!
     Webhook.trigger('order_created', @order)
@@ -181,5 +179,20 @@ class CheckoutController < ApplicationController
     # Get valid billing and delivery addresses or send user back to checkout.
     def require_billing_and_delivery_addresses
       redirect_to checkout_path unless billing_address && delivery_address
+    end
+
+    # Records shipping amount, tax and method into the order.
+    def record_shipping
+      record_shipping_method
+      @order.shipping_amount = shipping_amount
+      @order.shipping_tax_amount = shipping_tax_amount
+    end
+
+    def record_shipping_method
+      if shipping_class
+        @order.shipping_method = shipping_class.name
+      else
+        @order.shipping_method = 'Standard Shipping'
+      end
     end
 end
