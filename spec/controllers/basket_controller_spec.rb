@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative 'shared_examples/shipping.rb'
 
 describe BasketController do
   let(:website) { FactoryGirl.create(:website, name: 'www', email: 'anon@example.org', domain: 'example.org') }
