@@ -51,7 +51,7 @@ class CheckoutController < ApplicationController
 
     session[:source] = 'checkout'
     @shipping_amount = shipping_amount
-    @shipping_tax_amount = shipping_tax_amount(@shipping_amount)
+    @shipping_tax_amount = shipping_tax_amount
   end
 
   def place_order
@@ -85,7 +85,7 @@ class CheckoutController < ApplicationController
     @order.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
     @order.shipping_method = 'Standard Shipping'
     @order.shipping_amount = shipping_amount
-    @order.shipping_tax_amount = shipping_tax_amount(@order.shipping_amount)
+    @order.shipping_tax_amount = shipping_tax_amount
 
     @order.save!
     Webhook.trigger('order_created', @order)

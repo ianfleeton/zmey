@@ -18,59 +18,20 @@ module Shipping
     # Calculates shipping amount based on the global website shipping amount
     # and whether shipping is applicable to any products in the basket.
     def shipping_amount
-      amount = 0.0
-
-      if basket.apply_shipping?
-        amount = website.shipping_amount
-        amount_by_address = calculate_shipping_from_address(delivery_address)
-        amount = amount_by_address.nil? ? amount : amount_by_address
-      end
-
-      amount + basket.shipping_supplement
+      shipping_calculator.amount
     end
 
-    def shipping_tax_amount(shipping_amount_net)
-      if shipping_amount_net && website.vat_number.present?
-        Product::VAT_RATE * shipping_amount_net
-      else
-        0
-      end
+    def shipping_tax_amount
+      shipping_calculator.tax_amount
     end
 
-    def calculate_shipping_from_address(address)
-      if !address
-        nil
-      elsif !address.country
-        nil
-      elsif !address.country.shipping_zone
-        nil
-      elsif address.country.shipping_zone.shipping_classes.empty?
-        nil
-      else
-        calculate_shipping_from_class(address.country.shipping_zone.shipping_classes.first)
-      end
-    end
-
-    def calculate_shipping_from_class(shipping_class)
-      case shipping_class.table_rate_method
-      when 'basket_total'
-        value = @basket.total(true)
-      when 'weight'
-        value = @basket.weight
-      else
-        raise 'Unknown table rate method'
-      end
-
-      shipping = nil
-
-      unless shipping_class.shipping_table_rows.empty?
-        shipping_class.shipping_table_rows.each do |row|
-          if value >= row.trigger_value
-            shipping = row.amount
-          end
-        end
-      end
-
-      shipping
+    def shipping_calculator
+      @shipping_calculator ||=
+        ShippingCalculator.new(
+          add_tax: website.vat_number.present?,
+          shipping_class: @shipping_class,
+          default_amount: website.shipping_amount,
+          basket: basket
+        )
     end
 end
