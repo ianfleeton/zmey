@@ -62,7 +62,8 @@
             = t('.basket_total')
         td.price
           - basket_total = @basket.total(inc_tax) + shipping_amount.to_f + discount_lines_price_total
-          - basket_total += discount_lines_tax_total if inc_tax
+          - if inc_tax
+            - basket_total += discount_lines_tax_total + shipping_tax_amount.to_f
           = formatted_price basket_total
         - if can_update
           td.empty &nbsp;
