@@ -71,9 +71,7 @@
         tr.vat_amount
           th colspan="4"= t('.tax')
           td.price
-            - vat_total = @basket.vat_total + discount_lines_tax_total
-            - if website.vat_number.present? && shipping_tax_amount
-              - vat_total += shipping_tax_amount
+            - vat_total = @basket.vat_total + discount_lines_tax_total + shipping_tax_amount.to_f
             = formatted_price vat_total
           - if can_update
             td.empty &nbsp;
