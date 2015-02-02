@@ -11,7 +11,7 @@ module Shipping
 
     def set_shipping_class
       @shipping_class =
-        ShippingClass.find_by(session[:shipping_class_id]) ||
+        ShippingClass.find_by(id: session[:shipping_class_id]) ||
         delivery_address.try(:first_shipping_class)
     end
 
