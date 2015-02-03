@@ -80,11 +80,6 @@ class Page < ActiveRecord::Base
     return '/' + slug
   end
 
-  def parent_id=(parent_id)
-    self.position = 1
-    super
-  end
-
   # Returns an array of ancestors with closest ancestor first.
   def ancestors
     p, a = self, []
