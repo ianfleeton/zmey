@@ -98,6 +98,7 @@ en:
       form:
         no_follow: 'NOFOLLOW (search engines should not follow links from this page)'
         no_index: 'NOINDEX (search engines should not index this page)'
+        visible: 'Visible (customers can see this page)'
       index:
         top: 'Top'
     products:

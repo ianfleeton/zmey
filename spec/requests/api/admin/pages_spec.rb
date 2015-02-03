@@ -72,9 +72,10 @@ describe 'Admin pages API' do
       slug = SecureRandom.hex
       title = SecureRandom.hex
       image = FactoryGirl.create(:image)
+      visible = [true, false].sample
       description = 'Description'
-      post '/api/admin/pages', page: {description: description, image_id: image.id, name: name, slug: slug, thumbnail_image_id: image.id, title: title}
-      expect(Page.find_by(slug: slug, image_id: image.id, thumbnail_image_id: image.id, website_id: @website.id)).to be
+      post '/api/admin/pages', page: {description: description, image_id: image.id, name: name, slug: slug, thumbnail_image_id: image.id, title: title, visible: visible}
+      expect(Page.find_by(slug: slug, image_id: image.id, thumbnail_image_id: image.id, visible: visible, website_id: @website.id)).to be
     end
 
     it 'returns 422 with bad params' do

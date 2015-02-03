@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150127134329) do
+ActiveRecord::Schema.define(version: 20150203144224) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -320,6 +320,7 @@ ActiveRecord::Schema.define(version: 20150127134329) do
     t.boolean  "no_index",           limit: 1,          default: false, null: false
     t.text     "extra",              limit: 4294967295
     t.integer  "thumbnail_image_id", limit: 4
+    t.boolean  "visible",            limit: 1,          default: true,  null: false
   end
 
   add_index "pages", ["parent_id"], name: "index_pages_on_parent_id", using: :btree

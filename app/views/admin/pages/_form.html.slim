@@ -25,6 +25,11 @@
       = form.label :parent_id, 'Parent page or navigation'
       = form.collection_select :parent_id, website.pages.sort_by { |p| p.name_with_ancestors }, :id, :name_with_ancestors, {include_blank: '-- No parent --'}, class: 'form-control'
 
+  .form-group
+    .checkbox
+      = form.check_box :visible
+      = t('.visible')
+
   .checkbox
     label
       = form.check_box :no_index

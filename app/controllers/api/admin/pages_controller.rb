@@ -42,6 +42,6 @@ class Api::Admin::PagesController < Api::Admin::AdminController
       :name, :no_follow,
       :no_index, :parent_id, :slug,
       :thumbnail_image_id,
-      :title)
+      :title, :visible)
     end
 end

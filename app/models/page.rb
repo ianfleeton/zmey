@@ -20,6 +20,8 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :parent_id, case_sensitive: false, unless: Proc.new { |page| page.parent_id.nil? }
   validate :parent_belongs_to_same_website
 
+  scope :visible, -> { where(visible: true) }
+
   liquid_methods :image, :name, :path, :url
 
   nilify_blanks only: [:extra]
