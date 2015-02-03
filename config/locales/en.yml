@@ -10,8 +10,6 @@ en:
       models:
         page:
           attributes:
-            image:
-              invalid: 'is invalid'
             parent:
               invalid: 'is invalid'
   add_to_cart: Add to Basket
