@@ -183,7 +183,7 @@ describe 'Admin orders API' do
 
       context 'with order lines' do
         before do
-          @order_line = FactoryGirl.create(:order_line, order: @order, product_rrp: 2.34)
+          @order_line = FactoryGirl.create(:order_line, order: @order, product_price: 1.23, product_rrp: 2.34)
           get api_admin_order_path(@order)
         end
 
@@ -193,6 +193,10 @@ describe 'Admin orders API' do
 
         describe 'first order line' do
           subject { order['order_lines'][0] }
+
+          it 'includes line_total_net' do
+            expect(subject['line_total_net']).to eq @order_line.line_total_net.to_s
+          end
 
           it 'includes product_rrp' do
             expect(subject['product_rrp']).to eq @order_line.product_rrp.to_s
