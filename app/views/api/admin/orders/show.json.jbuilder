@@ -50,6 +50,7 @@ json.order do
     json.product_rrp          order_line.product_rrp
     json.product_price        order_line.product_price
     json.product_weight       order_line.product_weight
+    json.quantity             order_line.quantity
     json.tax_amount           order_line.tax_amount
     json.feature_descriptions order_line.feature_descriptions
     json.shipped              order_line.shipped

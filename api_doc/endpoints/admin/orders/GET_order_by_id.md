@@ -67,6 +67,7 @@ returned.
         "product_rrp": null,
         "product_price": "17.5",
         "product_weight": "1.2",
+        "quantity": "1.0",
         "tax_amount": "0.0",
         "feature_descriptions": "",
         "shipped": false,

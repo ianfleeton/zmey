@@ -197,6 +197,10 @@ describe 'Admin orders API' do
           it 'includes product_rrp' do
             expect(subject['product_rrp']).to eq @order_line.product_rrp.to_s
           end
+
+          it 'includes quantity' do
+            expect(subject['quantity']).to eq @order_line.quantity.to_s
+          end
         end
       end
     end
