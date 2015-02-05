@@ -98,6 +98,22 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def rrp_inc_tax
+    if tax_type == Product::EX_VAT
+      rrp * (Product::VAT_RATE + 1)
+    else
+      rrp
+    end
+  end
+
+  def rrp_ex_tax
+    if tax_type == Product::INC_VAT
+      rrp / (Product::VAT_RATE + 1)
+    else
+      rrp
+    end
+  end
+
   def rrp?
     rrp.present?
   end

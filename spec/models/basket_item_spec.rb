@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe BasketItem do
+RSpec.describe BasketItem, type: :model do
   describe '#line_total(inc_tax)' do
     context 'when inc_tax is true' do
       it 'returns the quantity times the price of the product including tax when buying that quantity' do
@@ -19,6 +19,67 @@ describe BasketItem do
         item = BasketItem.new(quantity: 2)
         item.product = product
         expect(item.line_total(false)).to eq 20
+      end
+    end
+  end
+
+  describe '#savings' do
+    let(:inc_tax) { false }
+    let(:basket_item) { FactoryGirl.build(:basket_item, product: product, quantity: quantity) }
+
+    subject { basket_item.savings(inc_tax) }
+
+    context 'with 1 item, RRP unset' do
+      let(:quantity) { 1 }
+      let(:product) { FactoryGirl.create(:product, rrp: nil, price: 1.0) }
+      it { should eq 0 }
+    end
+
+    context 'with 1 item, RRP set to 1.0 more' do
+      let(:quantity) { 1 }
+      let(:product) { FactoryGirl.create(:product, rrp: 2.0, price: 1.0, tax_type: tax_type) }
+
+      context 'product price ex VAT' do
+        let(:tax_type) { Product::EX_VAT }
+        it { should eq 1.0 }
+      end
+
+      context 'product price inc VAT' do
+        let(:tax_type) { Product::INC_VAT }
+        it { should be_within(0.0001).of(0.8333) }
+      end
+    end
+
+    context 'with 2 items, RRP set to 1.0 more' do
+      let(:quantity) { 2 }
+      let(:product) { FactoryGirl.create(:product, rrp: 2.0, price: 1.0) }
+      it { should eq 2.0 }
+    end
+
+    context 'with 5 items, RRP unset, volume purchase price at 0.50 less' do
+      let(:quantity) { 5 }
+      let(:product) { FactoryGirl.create(:product, rrp: nil, price: 2.0) }
+
+      before do
+        QuantityPrice.create(quantity: 5, price: 1.5, product: product)
+      end
+
+      it { should eq 2.5 }
+    end
+
+    context 'inc tax, 1 product, RRP is 2.0, price is 1.0' do
+      let(:inc_tax) { true} 
+      let(:product) { FactoryGirl.create(:product, rrp: 2.0, price: 1.0, tax_type: tax_type) }
+      let(:quantity) { 1 }
+
+      context 'product price excludes VAT' do
+        let(:tax_type) { Product::EX_VAT }
+        it { should eq 1.0 * (1 + Product::VAT_RATE) }
+      end
+
+      context 'product price includes VAT' do
+        let(:tax_type) { Product::INC_VAT }
+        it { should eq 1.0 }
       end
     end
   end
