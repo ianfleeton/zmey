@@ -65,13 +65,13 @@ class Basket < ActiveRecord::Base
   end
 
   # Returns the sum of basket item savings.
-  def savings
-    basket_items.inject(0) { |s, i| s + s.savings }
+  def savings(inc_tax)
+    basket_items.inject(0) { |s, i| s + i.savings(inc_tax) }
   end
 
   # Returns true if any of the basket items have made savings.
   def savings?
-    savings > 0
+    savings(false) > 0
   end
 
   def weight
