@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203144224) do
+ActiveRecord::Schema.define(version: 20150205130444) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -241,7 +241,7 @@ ActiveRecord::Schema.define(version: 20150203144224) do
 
   create_table "order_lines", force: :cascade do |t|
     t.integer  "order_id",             limit: 4,                              default: 0,   null: false
-    t.integer  "product_id",           limit: 4,                              default: 0,   null: false
+    t.integer  "product_id",           limit: 4
     t.string   "product_sku",          limit: 255,                            default: "",  null: false
     t.string   "product_name",         limit: 255,                            default: "",  null: false
     t.decimal  "product_price",                      precision: 10, scale: 3, default: 0.0, null: false

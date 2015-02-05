@@ -7,6 +7,12 @@ describe Product do
   end
 
   it { should have_many(:order_lines).dependent(:nullify) }
+  it 'really does nullify order lines' do
+    @product = FactoryGirl.create(:product)
+    @order_line = FactoryGirl.create(:order_line, product: @product)
+    @product.destroy
+    expect(@order_line.reload.product_id).to be_nil
+  end
 
   it { should validate_inclusion_of(:age_group).in_array(Product::AGE_GROUPS) }
   it { should validate_inclusion_of(:gender).in_array(Product::GENDERS) }
