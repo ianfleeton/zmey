@@ -220,6 +220,10 @@ Rails.application.routes.draw do
 
   resources :pages, only: [:show]
 
+  # This route is intentionally not implemented so as to allow exceptions to be
+  # raised in production to test exception reporting.
+  get 'error' => 'application#error'
+
   get ':slug' => 'pages#show', as: :slug, constraints: { slug: /[-a-z0-9_\/\.]*/ }
 
   root controller: 'pages', action: 'show', slug: ''
