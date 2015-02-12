@@ -23,6 +23,7 @@ class Api::Admin::CarouselSlidesController < Api::Admin::AdminController
       :active_from,
       :active_until,
       :caption,
+      :html,
       :image_id,
       :link
       )

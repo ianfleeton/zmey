@@ -12,7 +12,8 @@ describe 'Admin carousel slides API' do
         image_id: FactoryGirl.create(:image).id,
         link: SecureRandom.hex,
         active_from: '2015-01-01 00:00:00',
-        active_until: '2015-02-02 23:59:59'  
+        active_until: '2015-02-02 23:59:59',
+        html: '<h2>Sale now on!</h2>'
       }
       post '/api/admin/carousel_slides', carousel_slide: params
       expect(CarouselSlide.find_by(params)).to be

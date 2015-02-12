@@ -16,6 +16,7 @@ Create a new carousel slide.
   will be set to a time in the past.
 * **active_until** — Date and time that the slide is active until. If not specified it
   will be set to a time in the far future.
+* **html** — Additional HTML to be used within the slide.
 
 ## Example
 
@@ -29,6 +30,7 @@ curl https://zmey.co.uk/api/admin/carousel_slides \
   -d "carousel_slide[link]=/black-friday-deals" \
   -d "carousel_slide[active_from]=2015-11-27 00:00:00" \
   -d "carousel_slide[active_until]=2015-11-27 23:59:59"
+  -d "carousel_slide[html]=<h2>Sale now on!</h2>"
 ```
 
 ### Response

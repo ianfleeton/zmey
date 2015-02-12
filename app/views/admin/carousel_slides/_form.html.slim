@@ -17,6 +17,10 @@
     = form.text_field :link, class: 'form-control'
 
   .form-group
+    = form.label :html, 'HTML'
+    = editor(form, :html, :html)
+
+  .form-group
     = form.label :image_id
     = render partial: 'admin/images/image_picker', locals: { form: form, attribute: :image_id }
 
