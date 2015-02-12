@@ -20,6 +20,8 @@ class Api::Admin::CarouselSlidesController < Api::Admin::AdminController
 
     def carousel_slide_params
       params.require(:carousel_slide).permit(
+      :active_from,
+      :active_until,
       :caption,
       :image_id,
       :link

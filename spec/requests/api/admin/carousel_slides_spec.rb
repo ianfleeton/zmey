@@ -7,12 +7,15 @@ describe 'Admin carousel slides API' do
 
   describe 'POST create' do
     it 'inserts a new slide into the website' do
-      caption = SecureRandom.hex
-      image = FactoryGirl.create(:image)
-      link = SecureRandom.hex
-
-      post '/api/admin/carousel_slides', carousel_slide: {caption: caption, image_id: image.id, link: link}
-      expect(CarouselSlide.find_by(caption: caption, image_id: image.id, link: link)).to be
+      params = {
+        caption: SecureRandom.hex,
+        image_id: FactoryGirl.create(:image).id,
+        link: SecureRandom.hex,
+        active_from: '2015-01-01 00:00:00',
+        active_until: '2015-02-02 23:59:59'  
+      }
+      post '/api/admin/carousel_slides', carousel_slide: params
+      expect(CarouselSlide.find_by(params)).to be
     end
 
     it 'returns 422 with bad params' do
