@@ -197,9 +197,13 @@ RSpec.describe CheckoutController, type: :controller do
     let(:address) { FactoryGirl.build(:random_address) }
     let(:billing_address) { nil }
     let(:deliver_here) { nil }
+    let(:session_billing_address_id) { nil }
+    let(:session_delivery_address_id) { nil }
 
     before do
       allow(controller).to receive(:billing_address).and_return(billing_address)
+      session[:billing_address_id] = session_billing_address_id
+      session[:delivery_address_id] = session_delivery_address_id
       post :save_billing, address: address.attributes, deliver_here: deliver_here
     end
 
@@ -217,6 +221,17 @@ RSpec.describe CheckoutController, type: :controller do
         it 'sets the session delivery_address_id to the billing address' do
           expect(session[:delivery_address_id]).to eq billing_address.reload.id
         end
+      end
+    end
+
+    context 'when updating and billing and delivery address are the same' do     
+      let(:billing_address) { FactoryGirl.create(:address) }
+      let(:session_billing_address_id) { billing_address.id }
+      let(:session_delivery_address_id) { billing_address.id }
+
+      it 'makes a copy of the billing address' do
+        expect(session[:billing_address_id]).to be
+        expect(session[:billing_address_id]).to_not eq billing_address.id
       end
     end
 
@@ -301,9 +316,13 @@ RSpec.describe CheckoutController, type: :controller do
   describe 'POST save_delivery' do
     let(:address) { FactoryGirl.build(:random_address) }
     let(:delivery_address) { nil }
+    let(:session_billing_address_id) { nil }
+    let(:session_delivery_address_id) { nil }
 
     before do
       allow(controller).to receive(:delivery_address).and_return(delivery_address)
+      session[:billing_address_id] = session_billing_address_id
+      session[:delivery_address_id] = session_delivery_address_id
       post :save_delivery, address: address.attributes 
     end
 
@@ -313,6 +332,17 @@ RSpec.describe CheckoutController, type: :controller do
       it 'updates the delivery address' do
         expect(delivery_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
           .to eq address.attributes.slice(*ATTRIBUTES_TO_SAVE)
+      end
+    end
+
+    context 'when updating and billing and delivery address are the same' do     
+      let(:delivery_address) { FactoryGirl.create(:address) }
+      let(:session_billing_address_id) { delivery_address.id }
+      let(:session_delivery_address_id) { delivery_address.id }
+
+      it 'makes a copy of the delivery address' do
+        expect(session[:delivery_address_id]).to be
+        expect(session[:delivery_address_id]).to_not eq delivery_address.id
       end
     end
 

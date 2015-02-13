@@ -154,7 +154,7 @@ class CheckoutController < ApplicationController
 
     def save_address(address, address_key, template)
       success =
-        if @address = address
+        if (@address = address) && billing_and_delivery_different?
           @address.update_attributes(address_params)
         else
           @address = Address.new(address_params)
@@ -170,6 +170,10 @@ class CheckoutController < ApplicationController
       else
         render template
       end
+    end
+
+    def billing_and_delivery_different?
+      session[:billing_address_id].nil? || session[:billing_address_id] != session[:delivery_address_id]
     end
 
     def address_params
