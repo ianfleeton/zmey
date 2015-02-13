@@ -23,7 +23,7 @@ module Discounts
     def calculate_discounts
       @discount_lines = Array.new
       Discount.all.each do |discount|
-        if discount.coupon && session_contains_coupon?(discount.coupon)
+        if discount_authorized?(discount)
           if discount.reward_type.to_sym == :free_products
             discount_free_products(discount.product_group.products)
           elsif discount.reward_type.to_sym == :amount_off_order
@@ -35,6 +35,12 @@ module Discounts
           end
         end
       end
+    end
+
+    # Returns <tt>true</tt> if the discount doesn't require a coupon code or if
+    # the customer has supplied the correct coupon code.
+    def discount_authorized?(discount)
+      discount.coupon.blank? || session_contains_coupon?(discount.coupon)
     end
 
     def discount_free_products products
