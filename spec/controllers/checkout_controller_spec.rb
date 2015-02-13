@@ -113,14 +113,6 @@ RSpec.describe CheckoutController, type: :controller do
     it 'sets the address country as United Kingdom' do
       expect(assigns(:address).country).to eq uk
     end
-
-    context 'with authenticated user' do
-      let(:current_user) { FactoryGirl.create(:user) }
-
-      it 'associates address with the user' do
-        expect(assigns(:address).user).to eq current_user
-      end
-    end
   end
 
   shared_examples_for 'a customer details user' do
@@ -140,7 +132,6 @@ RSpec.describe CheckoutController, type: :controller do
 
     context 'with items in the basket' do
       let(:addresses) { [] }
-      let(:current_user) { User.new }
       let(:name) { 'n' }
       let(:phone) { '1' }
       let(:email) { 'x' }
@@ -153,7 +144,6 @@ RSpec.describe CheckoutController, type: :controller do
         session[:email] = email
         session[:billing_address_id] = billing_address_id
         allow_any_instance_of(User).to receive(:addresses).and_return addresses
-        allow(controller).to receive(:current_user).and_return(current_user)
         get :billing
       end
 
@@ -183,6 +173,40 @@ RSpec.describe CheckoutController, type: :controller do
 
         context 'when user has no addresses' do
           it_behaves_like 'an address prefiller'
+        end
+      end
+    end
+  end
+
+  shared_examples_for 'an address/user associator' do |method|
+    let(:billing_address) { nil }
+    let(:delivery_address) { nil }
+
+    before do
+      allow(controller).to receive(:current_user).and_return(current_user)
+      allow(controller).to receive(:billing_address).and_return(billing_address)
+      allow(controller).to receive(:delivery_address).and_return(delivery_address)
+      post method, address: address.attributes
+    end
+
+    context 'when signed in' do
+      let(:current_user) { FactoryGirl.create(:user) }
+
+      context 'with new address' do
+        let(:address) { FactoryGirl.build(:address) }
+
+        it 'associates address with user' do
+          expect(Address.last.user).to eq current_user
+        end
+      end
+
+      context 'with existing address' do
+        let(:address) { FactoryGirl.create(:address) }
+        let(:billing_address) { address }
+        let(:delivery_address) { address }
+
+        it 'associates address with user' do
+          expect(address.reload.user).to eq current_user
         end
       end
     end
@@ -247,6 +271,7 @@ RSpec.describe CheckoutController, type: :controller do
 
     context 'when create/update succeeds' do
       it_behaves_like 'a checkout advancer', :post, :save_billing, { address: FactoryGirl.build(:address).attributes }
+      it_behaves_like 'an address/user associator', :save_billing
     end
 
     context 'when create/update fails' do
@@ -265,7 +290,6 @@ RSpec.describe CheckoutController, type: :controller do
 
     context 'with items in the basket' do
       let(:addresses) { [] }
-      let(:current_user) { User.new }
       let(:name) { 'n' }
       let(:phone) { '1' }
       let(:email) { 'x' }
@@ -278,7 +302,6 @@ RSpec.describe CheckoutController, type: :controller do
         session[:email] = email
         session[:delivery_address_id] = delivery_address_id
         allow_any_instance_of(User).to receive(:addresses).and_return addresses
-        allow(controller).to receive(:current_user).and_return(current_user)
         get :delivery
       end
 
@@ -358,6 +381,7 @@ RSpec.describe CheckoutController, type: :controller do
 
     context 'when create/update succeeds' do
       it_behaves_like 'a checkout advancer', :post, :save_delivery, { address: FactoryGirl.build(:address).attributes }
+      it_behaves_like 'an address/user associator', :save_delivery
     end
 
     context 'when create/update fails' do
