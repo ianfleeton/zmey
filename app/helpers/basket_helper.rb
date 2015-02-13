@@ -4,11 +4,8 @@ module BasketHelper
     @discount_lines.inject(0) { |acc, dl| acc + dl.price_adjustment }
   end
 
+  # Returns the total tax amount from discount lines.
   def discount_lines_tax_total
-    total = 0
-    @discount_lines.each do |dl|
-      total += dl.tax_adjustment
-    end
-    total
+    @discount_lines.inject(0) { |acc, dl| acc + dl.tax_adjustment }
   end
 end
