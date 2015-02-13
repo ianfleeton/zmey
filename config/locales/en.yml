@@ -213,6 +213,8 @@ en:
       when_placed: 'When Placed'
     invoice:
       customer_reference: 'Customer reference:'
+    select_payment_method:
+      place_order_on_account: 'Place Order on Account'
   password: Password
   payments:
     show:

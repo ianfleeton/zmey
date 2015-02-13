@@ -9,6 +9,12 @@ $(function() {
 });
 </script>
 
+<% if website.accept_payment_on_account? -%>
+<%= form_tag(on_account_payments_path) do %>
+  <%= submit_tag t('.place_order_on_account') %>
+<% end %>
+<% end -%>
+
 <% if website.upg_atlas_active? -%>
 <%= render 'upg_atlas' %>
 <% end -%>

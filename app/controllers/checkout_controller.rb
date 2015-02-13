@@ -1,7 +1,6 @@
 class CheckoutController < ApplicationController
   include Shipping
   include Discounts
-  include ResetBasket
 
   layout 'basket_checkout'
 
@@ -92,16 +91,8 @@ class CheckoutController < ApplicationController
     Webhook.trigger('order_created', @order)
 
     session[:order_id] = @order.id
-    if website.only_accept_payment_on_account?
-      @order.status = Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
-      @order.save
-      OrderNotifier.notification(website, @order).deliver_now
-      reset_basket(@order)
-      redirect_to controller: 'orders', action: 'receipt'
-    else
-      OrderNotifier.admin_waiting_for_payment(website, @order).deliver_now
-      redirect_to controller: 'orders', action: 'select_payment_method'
-    end
+    OrderNotifier.admin_waiting_for_payment(website, @order).deliver_now
+    redirect_to controller: 'orders', action: 'select_payment_method'
   end
 
   protected

@@ -165,6 +165,7 @@ Rails.application.routes.draw do
   resources :payments do
     collection do
       post 'cardsave_callback'
+      post 'on_account'
       get 'paypal_auto_return'
       get 'paypal_confirmation'
       get 'sage_pay_failure'

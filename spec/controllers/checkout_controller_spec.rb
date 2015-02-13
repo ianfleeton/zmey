@@ -504,15 +504,6 @@ RSpec.describe CheckoutController, type: :controller do
       post 'place_order'
     end
 
-    context 'when website only accepts payment on account' do
-      let(:only_accept_payment_on_account?) { true }
-
-      it 'resets the basket' do
-        expect(controller).to receive(:reset_basket).and_call_original
-        post 'place_order'
-      end
-    end
-
     context 'without a billing address' do
       let(:billing_address) { nil }
       before { post :place_order }

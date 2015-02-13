@@ -1,6 +1,4 @@
 class PaymentsController < ApplicationController
-  include ResetBasket
-
   skip_before_action :verify_authenticity_token, only: [:cardsave_callback, :paypal_auto_return, :rbs_worldpay_callback]
 
   before_action :admin_required, only: [:index, :show]
@@ -94,6 +92,20 @@ class PaymentsController < ApplicationController
     render layout: false
   end
 
+  # Handles payments being made on account, that is, no payment is actually being
+  # made. This can only happen when the website allows this method of payment.
+  def on_account
+    if (order = Order.find_by(session[:order_id])) && website.accept_payment_on_account?
+      order.status = Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
+      order.save
+      send_notification(order)
+      reset_basket(order)
+      redirect_to controller: 'orders', action: 'receipt'
+    else
+      redirect_to checkout_path
+    end
+  end
+
   def rbs_worldpay_callback
     @payment = Payment.new
     @payment.service_provider = 'WorldPay'
@@ -178,12 +190,27 @@ class PaymentsController < ApplicationController
 
   private
 
+    # Empties the basket for the given order and removes any coupons stored in
+    # the session.
+    #
+    # Many actions using this method will be invoked by a remote payments
+    # system which means that coupons won't be cleared in these cases.
+    def reset_basket(order)
+      order.empty_basket
+      session[:coupons] = nil
+    end
+
   def update_order order
     order.status = Enums::PaymentStatus::PAYMENT_RECEIVED
     order.save
     @payment.order_id = order.id
-    OrderNotifier.notification(website, order).deliver_now
+    send_notification(order)
   end
+
+    # Sends an email notification to the customer and website owner.
+    def send_notification(order)
+      OrderNotifier.notification(website, order).deliver_now
+    end
 
   def clean_up
     if order = Order.find_by(order_number: @payment.cart_id)
