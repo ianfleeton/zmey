@@ -35,7 +35,11 @@ class CheckoutController < ApplicationController
   end
 
   def save_billing
-    save_address(billing_address, :billing_address_id, 'billing')
+    save_address(billing_address, :billing_address_id, 'billing') do |success, address|
+      if success && params[:deliver_here] == '1'
+        session[:delivery_address_id] = address.id
+      end
+    end
   end
 
   def delivery
@@ -158,6 +162,8 @@ class CheckoutController < ApplicationController
             session[address_key] = @address.id
           end
         end
+
+      yield success, address if block_given?
 
       if success
         advance_checkout

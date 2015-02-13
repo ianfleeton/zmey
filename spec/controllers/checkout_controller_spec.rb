@@ -196,10 +196,11 @@ RSpec.describe CheckoutController, type: :controller do
   describe 'POST save_billing' do
     let(:address) { FactoryGirl.build(:random_address) }
     let(:billing_address) { nil }
+    let(:deliver_here) { nil }
 
     before do
       allow(controller).to receive(:billing_address).and_return(billing_address)
-      post :save_billing, address: address.attributes 
+      post :save_billing, address: address.attributes, deliver_here: deliver_here
     end
 
     context 'when billing address found' do
@@ -208,6 +209,14 @@ RSpec.describe CheckoutController, type: :controller do
       it 'updates the billing address' do
         expect(billing_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
           .to eq address.attributes.slice(*ATTRIBUTES_TO_SAVE)
+      end
+
+      context 'when deliver_here checked' do
+        let(:deliver_here) { '1' }
+
+        it 'sets the session delivery_address_id to the billing address' do
+          expect(session[:delivery_address_id]).to eq billing_address.reload.id
+        end
       end
     end
 
