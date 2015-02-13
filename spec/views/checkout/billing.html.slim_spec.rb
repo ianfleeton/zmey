@@ -31,6 +31,10 @@ RSpec.describe 'checkout/billing.html.slim', type: :view do
     expect(rendered).to have_selector "select[name='address[country_id]']"
   end
 
+  it 'has a checkbox to deliver here also' do
+    expect(rendered).to have_selector "input[type='checkbox'][name='deliver_here']"
+  end
+
   it 'has a submit button' do
     expect(rendered).to have_selector "input[type='submit']"
   end

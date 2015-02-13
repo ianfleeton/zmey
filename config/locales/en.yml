@@ -167,6 +167,7 @@ en:
   checkout:
     billing:
       continue: 'Continue'
+      deliver_here: 'Deliver here?'
       heading: 'Billing Address'
       town_city: 'Town / city'
     checkout: 'Checkout'

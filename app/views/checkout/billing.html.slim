@@ -31,4 +31,8 @@ h1= t('.heading')
   = f.label :country_id
   = collection_select :address, :country_id, Country.order(:name), :id, :name
 
+  label for="deliver_here"
+    => check_box_tag :deliver_here
+    = t('.deliver_here')
+
   = submit_tag t('.continue'), class: 'pure-button pure-button-primary'
