@@ -400,8 +400,8 @@ RSpec.describe CheckoutController, type: :controller do
     context 'with items in the basket' do
       let(:billing_address) { FactoryGirl.create(:address) }
       let(:delivery_address) { FactoryGirl.create(:address) }
-      let(:billing_address_id) { billing_address.id }
-      let(:delivery_address_id) { delivery_address.id }
+      let(:billing_address_id) { billing_address.try(:id) }
+      let(:delivery_address_id) { delivery_address.try(:id) }
 
       before do
         session[:billing_address_id] = billing_address_id
@@ -434,110 +434,131 @@ RSpec.describe CheckoutController, type: :controller do
         let(:delivery_address_id) { nil }
         it { should redirect_to checkout_path }
       end
+
+      it_behaves_like 'a discounts calculator', :get, :confirm
+
+      it_behaves_like 'a shipping class setter', :get, :confirm
+
+      it 'deletes a previous unpaid order if one exists' do
+        expect(controller).to receive(:delete_previous_unpaid_order_if_any)
+        get :confirm
+      end
+
+      it 'records preferred delivery date' do
+        date = '28/12/15'
+        settings = double(Order).as_null_object
+        allow(website).to receive(:preferred_delivery_date_settings).and_return(settings)
+        expect_any_instance_of(Order).to receive(:record_preferred_delivery_date).with(settings, date)
+        get :confirm, preferred_delivery_date: date
+      end
+
+      it "records the customer's IP address" do
+        expect(assigns(:order).ip_address).to eq '0.0.0.0'
+      end
+
+      it 'adds the basket to the order' do
+        expect_any_instance_of(Order).to receive(:add_basket).with(@basket)
+        get :confirm
+      end
+
+      it 'records the weight of the products' do
+        expect(assigns(:order).weight).to eq 0.75
+      end
+
+      it 'triggers an order_created Webhook' do
+        expect(Webhook).to receive(:trigger).with('order_created', anything)
+        get :confirm
+      end
+
+      it 'copies the billing address to the order' do
+        expect_any_instance_of(Order).to receive(:copy_billing_address)
+          .with(billing_address).and_call_original
+        get :confirm
+      end
+
+      it 'copies the delivery address to the order' do
+        expect_any_instance_of(Order).to receive(:copy_delivery_address)
+          .with(delivery_address).and_call_original
+        get :confirm
+      end
+
+      context 'without a billing address' do
+        let(:billing_address) { nil }
+        it { should redirect_to checkout_path }
+      end
+
+      context 'without a delivery address' do
+        let(:delivery_address) { nil }
+        it { should redirect_to checkout_path }
+      end
+
+      context 'with a shipping class' do
+        let!(:shipping_class) { FactoryGirl.create(:shipping_class, name: 'Royal Mail') }
+        before do
+          allow(controller).to receive(:shipping_class).and_return(shipping_class)
+          get :confirm
+        end
+        it 'records the shipping class name as the shipping method' do
+          expect(Order.last.shipping_method).to eq 'Royal Mail'
+        end
+      end
+
+      context 'without a shipping class' do
+        before { get :confirm }
+        it 'records "Standard Shipping" as the shipping method' do
+          expect(Order.last.shipping_method).to eq 'Standard Shipping'
+        end
+      end
+
+      it 'prepares payment methods' do
+        expect(controller).to receive(:prepare_payment_methods)
+        get :confirm
+      end
     end
   end
 
-  describe 'POST place_order' do
-    let(:billing_address) { Address.new(email_address: 'anon@example.org', address_line_1: '123 Street', town_city: 'Harrogate', postcode: 'HG1', country: FactoryGirl.create(:country)) }
-    let(:delivery_address) { Address.new(email_address: 'anon@example.org', address_line_1: '123 Street', town_city: 'Harrogate', postcode: 'HG1', country: FactoryGirl.create(:country)) }
-    let(:basket) { FactoryGirl.build(:basket) }
-    let(:t_shirt) { FactoryGirl.create(:product, weight: 0.2) }
-    let(:jeans) { FactoryGirl.create(:product, weight: 0.35) }
-    let(:only_accept_payment_on_account?) { false }
-
-    before do
-      basket.basket_items << FactoryGirl.build(:basket_item, product_id: t_shirt.id, quantity: 2)      
-      basket.basket_items << FactoryGirl.build(:basket_item, product_id: jeans.id, quantity: 1)
-      allow(Basket).to receive(:new).and_return(basket)
-      allow(controller).to receive(:billing_address).and_return(billing_address)
-      allow(controller).to receive(:delivery_address).and_return(delivery_address)
-      allow(website).to receive(:only_accept_payment_on_account?)
-        .and_return(only_accept_payment_on_account?)
-    end
-
-    it_behaves_like 'a discounts calculator', :post, :place_order
-
-    it_behaves_like 'a shipping class setter', :post, :place_order
-
-    it 'deletes a previous unpaid order if one exists' do
-      expect(controller).to receive(:delete_previous_unpaid_order_if_any)
-      post 'place_order'
-    end
-
-    it 'records preferred delivery date' do
-      date = '28/12/15'
-      settings = double(Order).as_null_object
-      allow(website).to receive(:preferred_delivery_date_settings).and_return(settings)
-      expect_any_instance_of(Order).to receive(:record_preferred_delivery_date).with(settings, date)
-      post 'place_order', preferred_delivery_date: date
-    end
-
-    it "records the customer's IP address" do
-      post 'place_order'
-      expect(assigns(:order).ip_address).to eq '0.0.0.0'
-    end
-
-    it 'adds the basket to the order' do
-      expect_any_instance_of(Order).to receive(:add_basket).with(basket)
-      post 'place_order'
-    end
-
-    it 'records the weight of the products' do
-      post 'place_order'
-      expect(assigns(:order).weight).to eq 0.75
-    end
-
-    it 'triggers an order_created Webhook' do
-      expect(Webhook).to receive(:trigger).with('order_created', anything)
-      post 'place_order'
-    end
-
-    it 'copies the billing address to the order' do
-      expect_any_instance_of(Order).to receive(:copy_billing_address)
-        .with(billing_address).and_call_original
-      post 'place_order'
-    end
-
-    it 'copies the delivery address to the order' do
-      expect_any_instance_of(Order).to receive(:copy_delivery_address)
-        .with(delivery_address).and_call_original
-      post 'place_order'
-    end
-
-    context 'without a billing address' do
-      let(:billing_address) { nil }
-      before { post :place_order }
-      it { should redirect_to checkout_path }
-    end
-
-    context 'without a delivery address' do
-      let(:delivery_address) { nil }
-      before { post :place_order }
-      it { should redirect_to checkout_path }
-    end
-
-    context 'with a shipping class' do
-      let!(:shipping_class) { FactoryGirl.create(:shipping_class, name: 'Royal Mail') }
+  describe '#prepare_payment_methods' do
+    context 'when Sage Pay is active' do
       before do
-        allow(controller).to receive(:shipping_class).and_return(shipping_class)
-        post :place_order
+        allow(website).to receive(:sage_pay_active?).and_return(true)
+        allow(website).to receive(:cardsave_active?).and_return(false)
       end
-      it 'records the shipping class name as the shipping method' do
-        expect(Order.last.shipping_method).to eq 'Royal Mail'
-      end
-    end
 
-    context 'without a shipping class' do
-      before { post :place_order }
-      it 'records "Standard Shipping" as the shipping method' do
-        expect(Order.last.shipping_method).to eq 'Standard Shipping'
+      let(:order) { FactoryGirl.create(:order) }
+
+      it 'instantiates a SagePay' do
+        allow(website).to receive(:sage_pay_pre_shared_key).and_return 'secret'
+
+        expect(SagePay).to receive(:new).with(hash_including(
+          pre_shared_key: website.sage_pay_pre_shared_key,
+          vendor_tx_code: order.order_number,
+          amount: order.total,
+          delivery_surname: order.delivery_full_name,
+          delivery_firstnames: order.delivery_full_name,
+          delivery_address: order.delivery_address_line_1,
+          delivery_city: order.delivery_town_city,
+          delivery_post_code: order.delivery_postcode,
+          delivery_country: order.delivery_country.iso_3166_1_alpha_2,
+          success_url: sage_pay_success_payments_url,
+          failure_url: sage_pay_failure_payments_url
+        )).and_return(double(SagePay).as_null_object)
+        controller.prepare_payment_methods(order)
+      end
+
+      it 'assigns @crypt from the SagePay' do
+        allow(SagePay).to receive(:new).and_return(double(SagePay, encrypt: 'crypt'))
+        controller.prepare_payment_methods(order)
+        expect(assigns(:crypt)).to eq 'crypt'
       end
     end
   end
 
   def add_items_to_basket
-    basket = FactoryGirl.create(:basket)
-    FactoryGirl.create(:basket_item, basket_id: basket.id)
-    allow(controller).to receive(:basket).and_return(basket)
+    @basket = FactoryGirl.create(:basket)
+    t_shirt = FactoryGirl.create(:product, weight: 0.2)
+    jeans = FactoryGirl.create(:product, weight: 0.35)
+    FactoryGirl.create(:basket_item, product: t_shirt, quantity: 2, basket_id: @basket.id)
+    FactoryGirl.create(:basket_item, product: jeans, quantity: 1, basket_id: @basket.id)
+    allow(controller).to receive(:basket).and_return(@basket)
   end
 end

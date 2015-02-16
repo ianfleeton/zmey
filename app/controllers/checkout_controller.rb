@@ -51,9 +51,7 @@ class CheckoutController < ApplicationController
 
   def confirm
     session[:source] = 'checkout'
-  end
 
-  def place_order
     delete_previous_unpaid_order_if_any
 
     @order = Order.new
@@ -62,14 +60,14 @@ class CheckoutController < ApplicationController
     @order.copy_delivery_address delivery_address
     @order.copy_billing_address billing_address
 
-    @order.customer_note = @basket.customer_note
+    @order.customer_note = basket.customer_note
 
     @order.record_preferred_delivery_date(
       website.preferred_delivery_date_settings,
       params[:preferred_delivery_date]
     )
 
-    @order.add_basket(@basket)
+    @order.add_basket(basket)
 
     @discount_lines.each do |dl|
       @order.order_lines << OrderLine.new(
@@ -89,7 +87,13 @@ class CheckoutController < ApplicationController
 
     session[:order_id] = @order.id
     OrderNotifier.admin_waiting_for_payment(website, @order).deliver_now
-    redirect_to controller: 'orders', action: 'select_payment_method'
+
+    prepare_payment_methods(@order)
+  end
+
+  def prepare_payment_methods(order)
+    prepare_cardsave if website.cardsave_active?
+    prepare_sage_pay(order) if website.sage_pay_active?
   end
 
   protected
@@ -191,5 +195,66 @@ class CheckoutController < ApplicationController
       else
         @order.shipping_method = 'Standard Shipping'
       end
+    end
+
+    def prepare_cardsave(order)
+      @cardsave_transaction_date_time = cardsave_transaction_date_time
+      @cardsave_hash = cardsave_hash_pre(order)
+    end
+
+    def cardsave_transaction_date_time
+      offset = Time.now.strftime '%z'
+      Time.now.strftime '%Y-%m-%d %H:%M:%S ' + offset[0..2] + ':' + offset[3..4]
+    end
+
+    def cardsave_hash_pre(order)
+      plain="PreSharedKey=" + website.cardsave_pre_shared_key
+      plain=plain + '&MerchantID=' + website.cardsave_merchant_id
+      plain=plain + '&Password=' + website.cardsave_password
+      plain=plain + '&Amount=' + (order.total * 100).to_int.to_s
+      plain=plain + '&CurrencyCode=826'
+      plain=plain + '&OrderID=' + order.order_number
+      plain=plain + '&TransactionType=SALE'
+      plain=plain + '&TransactionDateTime=' + @cardsave_transaction_date_time
+      plain=plain + '&CallbackURL=' + cardsave_callback_payments_url
+      plain=plain + '&OrderDescription=Web purchase';
+      plain=plain + '&CustomerName=' + order.delivery_full_name
+      plain=plain + '&Address1=' + order.delivery_address_line_1
+      plain=plain + '&Address2=' + order.delivery_address_line_2
+      plain=plain + '&Address3='
+      plain=plain + '&Address4='
+      plain=plain + '&City=' + order.delivery_town_city
+      plain=plain + '&State=' + order.delivery_county
+      plain=plain + '&PostCode=' + order.delivery_postcode
+      plain=plain + '&CountryCode=826'
+      plain=plain + "&CV2Mandatory=true"
+      plain=plain + "&Address1Mandatory=true"
+      plain=plain + "&CityMandatory=true"
+      plain=plain + "&PostCodeMandatory=true"
+      plain=plain + "&StateMandatory=true"
+      plain=plain + "&CountryMandatory=true"
+      plain=plain + "&ResultDeliveryMethod=" + 'POST';
+      plain=plain + "&ServerResultURL="
+      plain=plain + "&PaymentFormDisplaysResult=" + 'false';
+
+      require 'digest/sha1'
+      Digest::SHA1.hexdigest(plain)
+    end
+
+    def prepare_sage_pay(order)
+      sage_pay = SagePay.new(
+        pre_shared_key: website.sage_pay_pre_shared_key,
+        vendor_tx_code: order.order_number,
+        amount: order.total,
+        delivery_surname: order.delivery_full_name,
+        delivery_firstnames: order.delivery_full_name,
+        delivery_address: order.delivery_address_line_1,
+        delivery_city: order.delivery_town_city,
+        delivery_post_code: order.delivery_postcode,
+        delivery_country: order.delivery_country ? order.delivery_country.iso_3166_1_alpha_2 : 'GB',
+        success_url: sage_pay_success_payments_url,
+        failure_url: sage_pay_failure_payments_url
+      )
+      @crypt = sage_pay.encrypt
     end
 end

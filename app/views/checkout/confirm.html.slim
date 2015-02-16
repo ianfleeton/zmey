@@ -21,13 +21,12 @@ p= link_to t('.edit_address'), delivery_details_path
 h2= t('.your_basket')
 = render partial: 'basket/basket', object: @basket, locals: {can_update: false, shipping_amount: @shipping_amount, shipping_tax_amount: @shipping_tax_amount, inc_tax: @inc_tax}
 
-- unless @billing_address.new_record?
-  = form_tag(place_order_path, class: 'pure-form') do
-    - if website.terms_and_conditions.present?
-      .terms_and_conditions#checkout_terms_and_conditions
-        = raw textilize(website.terms_and_conditions)
-    - if website.preferred_delivery_date_settings
-      h2= website.preferred_delivery_date_settings.prompt
-      p= select_tag(:preferred_delivery_date, website.preferred_delivery_date_settings.options.html_safe)
-    #place_order
-      = submit_tag t('.place_order'), class: 'pure-button pure-button-primary'
+- if website.terms_and_conditions.present?
+  .terms_and_conditions#checkout_terms_and_conditions
+    = raw textilize(website.terms_and_conditions)
+
+- if website.preferred_delivery_date_settings
+  h2= website.preferred_delivery_date_settings.prompt
+  p= select_tag(:preferred_delivery_date, website.preferred_delivery_date_settings.options.html_safe)
+
+= render 'select_payment_method'

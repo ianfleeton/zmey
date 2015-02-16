@@ -34,51 +34,6 @@ describe OrdersController do
     end
   end
 
-  describe 'GET select_payment_method' do
-    context 'with an order' do
-      before { allow(Order).to receive(:from_session).and_return mock_order.as_null_object }
-
-      context 'when Sage Pay is active' do
-        before do
-          allow(website).to receive(:sage_pay_active?).and_return(true)
-          allow(website).to receive(:cardsave_active?).and_return(false)
-        end
-
-        it 'instantiates a SagePay' do
-          allow(website).to receive(:sage_pay_pre_shared_key).and_return 'secret'
-          allow(mock_order).to receive(:order_number).and_return '123'
-          allow(mock_order).to receive(:total).and_return 15.95
-          allow(mock_order).to receive(:full_name).and_return 'Ian Fleeton'
-          allow(mock_order).to receive(:address_line_1).and_return '123 Street'
-          allow(mock_order).to receive(:town_city).and_return 'Doncaster'
-          allow(mock_order).to receive(:postcode).and_return 'DN1 2ZZ'
-          allow(mock_order).to receive(:country).and_return FactoryGirl.build(:country)
-
-          expect(SagePay).to receive(:new).with(hash_including(
-            pre_shared_key: website.sage_pay_pre_shared_key,
-            vendor_tx_code: mock_order.order_number,
-            amount: mock_order.total,
-            delivery_surname: mock_order.delivery_full_name,
-            delivery_firstnames: mock_order.delivery_full_name,
-            delivery_address: mock_order.delivery_address_line_1,
-            delivery_city: mock_order.delivery_town_city,
-            delivery_post_code: mock_order.delivery_postcode,
-            delivery_country: mock_order.delivery_country.iso_3166_1_alpha_2,
-            success_url: sage_pay_success_payments_url,
-            failure_url: sage_pay_failure_payments_url
-          )).and_return(double(SagePay).as_null_object)
-          get :select_payment_method
-        end
-
-        it 'assigns @crypt from the SagePay' do
-          allow(SagePay).to receive(:new).and_return(double(SagePay, encrypt: 'crypt'))
-          get :select_payment_method
-          expect(assigns(:crypt)).to eq 'crypt'
-        end
-      end
-    end
-  end
-
   describe 'GET invoice' do
     it 'finds the order' do
       expect(Order).to receive(:find_by)

@@ -177,7 +177,6 @@ en:
       delivery_address: 'Delivery Address'
       edit_address: 'Edit Address'
       edit_details: 'Edit Details'
-      place_order: 'Place Order'
       your_basket: 'Your Basket'
       your_details: 'Your Details'
     delivery:
@@ -190,6 +189,8 @@ en:
       full_name: 'Full name'
       heading: 'Your Details'
       phone_number: 'Phone number'
+    select_payment_method:
+      place_order_on_account: 'Place Order on Account'
   components:
     destroy:
       deleted: 'Component deleted.'
@@ -213,8 +214,6 @@ en:
       when_placed: 'When Placed'
     invoice:
       customer_reference: 'Customer reference:'
-    select_payment_method:
-      place_order_on_account: 'Place Order on Account'
   password: Password
   payments:
     show:

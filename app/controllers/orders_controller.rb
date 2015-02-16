@@ -1,17 +1,12 @@
 class OrdersController < ApplicationController
   before_action :find_order, only: [:show, :invoice]
-  before_action :require_order, only: [:select_payment_method, :receipt]
+  before_action :require_order, only: [:receipt]
   before_action :user_required, only: [:index, :show, :invoice]
 
   layout 'basket_checkout', only: [:receipt, :select_payment_method]
 
   def index
     @orders = current_user.orders
-  end
-
-  def select_payment_method
-    prepare_cardsave if website.cardsave_active?
-    prepare_sage_pay if website.sage_pay_active?
   end
 
   def receipt
@@ -63,66 +58,5 @@ class OrdersController < ApplicationController
     if @order.nil?
       redirect_to orders_path, notice: 'Cannot find order.'
     end
-  end
-
-  def prepare_cardsave
-    @cardsave_transaction_date_time = cardsave_transaction_date_time
-    @cardsave_hash = cardsave_hash_pre
-  end
-
-  def cardsave_transaction_date_time
-    offset = Time.now.strftime '%z'
-    Time.now.strftime '%Y-%m-%d %H:%M:%S ' + offset[0..2] + ':' + offset[3..4]
-  end
-
-  def cardsave_hash_pre
-    plain="PreSharedKey=" + website.cardsave_pre_shared_key
-    plain=plain + '&MerchantID=' + website.cardsave_merchant_id
-    plain=plain + '&Password=' + website.cardsave_password
-    plain=plain + '&Amount=' + (@order.total * 100).to_int.to_s
-    plain=plain + '&CurrencyCode=826'
-    plain=plain + '&OrderID=' + @order.order_number
-    plain=plain + '&TransactionType=SALE'
-    plain=plain + '&TransactionDateTime=' + @cardsave_transaction_date_time
-    plain=plain + '&CallbackURL=' + cardsave_callback_payments_url
-    plain=plain + '&OrderDescription=Web purchase';
-    plain=plain + '&CustomerName=' + @order.delivery_full_name
-    plain=plain + '&Address1=' + @order.delivery_address_line_1
-    plain=plain + '&Address2=' + @order.delivery_address_line_2
-    plain=plain + '&Address3='
-    plain=plain + '&Address4='
-    plain=plain + '&City=' + @order.delivery_town_city
-    plain=plain + '&State=' + @order.delivery_county
-    plain=plain + '&PostCode=' + @order.delivery_postcode
-    plain=plain + '&CountryCode=826'
-    plain=plain + "&CV2Mandatory=true"
-    plain=plain + "&Address1Mandatory=true"
-    plain=plain + "&CityMandatory=true"
-    plain=plain + "&PostCodeMandatory=true"
-    plain=plain + "&StateMandatory=true"
-    plain=plain + "&CountryMandatory=true"
-    plain=plain + "&ResultDeliveryMethod=" + 'POST';
-    plain=plain + "&ServerResultURL="
-    plain=plain + "&PaymentFormDisplaysResult=" + 'false';
-
-    require 'digest/sha1'
-    Digest::SHA1.hexdigest(plain)
-  end
-
-  def prepare_sage_pay
-    sage_pay = SagePay.new(
-      pre_shared_key: website.sage_pay_pre_shared_key,
-      vendor_tx_code: @order.order_number,
-      amount: @order.total,
-      delivery_surname: @order.delivery_full_name,
-      delivery_firstnames: @order.delivery_full_name,
-      delivery_address: @order.delivery_address_line_1,
-      delivery_city: @order.delivery_town_city,
-      delivery_post_code: @order.delivery_postcode,
-      delivery_country: @order.delivery_country ? @order.delivery_country.iso_3166_1_alpha_2 : 'GB',
-      success_url: sage_pay_success_payments_url,
-      failure_url: sage_pay_failure_payments_url
-    )
-    @crypt = sage_pay.encrypt
   end
 end

@@ -141,7 +141,6 @@ Rails.application.routes.draw do
   post  'checkout/save_delivery' => 'checkout#save_delivery', as: :save_delivery_details
   patch 'checkout/save_delivery' => 'checkout#save_delivery'
   get   'checkout/confirm'       => 'checkout#confirm',       as: :confirm_checkout
-  post  'checkout/place_order'   => 'checkout#place_order',   as: :place_order
 
   resources :enquiries, only: [:create, :new] do
     collection do
@@ -155,7 +154,6 @@ Rails.application.routes.draw do
   resources :orders, only: [:index, :show] do
     collection do
       get 'receipt'
-      get 'select_payment_method'
     end
     member do
       get 'invoice'

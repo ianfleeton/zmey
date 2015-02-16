@@ -1,14 +1,5 @@
 <h1>Choose How You Would Like to Pay</h1>
 
-<script>
-$(function() {
-  var $form = $('.pay-by form');
-  if($form.length == 1) {
-    $form.hide().after('<p>You are now being redirected...</p>').submit();
-  }
-});
-</script>
-
 <% if website.accept_payment_on_account? -%>
 <%= form_tag(on_account_payments_path) do %>
   <%= submit_tag t('.place_order_on_account') %>

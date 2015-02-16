@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'orders/select_payment_method.html.erb' do
+describe 'checkout/_select_payment_method.html.erb' do
   context 'when WorldPay active' do
     let(:website) { FactoryGirl.create(:website, worldpay_active: true, worldpay_installation_id: '1234', worldpay_payment_response_password: 'secret') }
     let(:order)   { FactoryGirl.create(:order) }
@@ -49,7 +49,7 @@ describe 'orders/select_payment_method.html.erb' do
     it 'has a form to place order on account' do
       render
       expect(rendered).to have_selector "form[action='#{on_account_payments_path}']"
-      expect(rendered).to have_selector "input[type='submit'][value='#{t("orders.select_payment_method.place_order_on_account")}']"
+      expect(rendered).to have_selector "input[type='submit'][value='#{t("checkout.select_payment_method.place_order_on_account")}']"
     end
   end
 end
