@@ -173,7 +173,8 @@ en:
     checkout: 'Checkout'
     confirm:
       billing_address: 'Billing Address'
-      change_address: 'Change address'
+      change_address: 'Change Address'
+      change_date: 'Change Date'
       delivery_address: 'Delivery Address'
       edit_address: 'Edit Address'
       edit_details: 'Edit Details'
@@ -189,6 +190,9 @@ en:
       full_name: 'Full name'
       heading: 'Your Details'
       phone_number: 'Phone number'
+    preferred_delivery_date:
+      continue: 'Continue'
+      heading: 'Preferred Delivery Date'
     select_payment_method:
       place_order_on_account: 'Place Order on Account'
   components:

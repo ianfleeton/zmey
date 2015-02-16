@@ -9,11 +9,15 @@ RSpec.describe CheckoutController, type: :controller do
     let(:has_checkout_details) { true }
     let(:billing_address) { FactoryGirl.create(:address) }
     let(:delivery_address) { FactoryGirl.create(:address) }
+    let(:preferred_delivery_date) { '2015-02-16' }
+    let(:preferred_delivery_date_settings) { nil }
 
     before do
       allow(controller).to receive(:has_checkout_details?).and_return(has_checkout_details)
       allow(controller).to receive(:billing_address).and_return(billing_address)
       allow(controller).to receive(:delivery_address).and_return(delivery_address)
+      allow(website).to receive(:preferred_delivery_date_settings).and_return(preferred_delivery_date_settings)
+      session[:preferred_delivery_date] = preferred_delivery_date
       send(method, action, params)
     end
 
@@ -30,6 +34,19 @@ RSpec.describe CheckoutController, type: :controller do
     context 'without delivery details' do
       let(:delivery_address) { nil }
       it { should redirect_to delivery_details_path }
+    end
+
+    context 'without preferred delivery date' do
+      let(:preferred_delivery_date) { nil }
+
+      context 'when used' do
+        let(:preferred_delivery_date_settings) { PreferredDeliveryDateSettings.new() }
+        it { should redirect_to preferred_delivery_date_path }
+      end
+
+      context 'when not used' do
+        it { should redirect_to confirm_checkout_path }
+      end
     end
 
     context 'with all details' do
@@ -388,6 +405,26 @@ RSpec.describe CheckoutController, type: :controller do
       let(:address) { Address.new }
       it { should render_template 'delivery' }
     end
+  end
+
+  describe 'GET preferred_delivery_date' do
+    before { get :preferred_delivery_date }
+    subject { response }
+    it { should be_success }
+  end
+
+  describe 'POST save_preferred_delivery_date' do
+    let(:preferred_delivery_date) { '2015-02-16' }
+
+    before do
+      post :save_preferred_delivery_date, preferred_delivery_date: preferred_delivery_date
+    end
+
+    it 'records preferred delivery date in the session' do
+      expect(session[:preferred_delivery_date]).to eq preferred_delivery_date
+    end
+
+    it_behaves_like 'a checkout advancer', :post, :save_preferred_delivery_date
   end
 
   describe 'GET confirm' do

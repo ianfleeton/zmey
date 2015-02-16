@@ -27,6 +27,7 @@ h2= t('.your_basket')
 
 - if website.preferred_delivery_date_settings
   h2= website.preferred_delivery_date_settings.prompt
-  p= select_tag(:preferred_delivery_date, website.preferred_delivery_date_settings.options.html_safe)
+  p= session[:preferred_delivery_date]
+  p= link_to t('.change_date'), preferred_delivery_date_path
 
 = render 'select_payment_method'

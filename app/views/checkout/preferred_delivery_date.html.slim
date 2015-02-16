@@ -1,0 +1,7 @@
+h1= t('.heading')
+
+h2= website.preferred_delivery_date_settings.prompt
+
+= form_tag save_preferred_delivery_date_path, class: 'pure-form pure-form-stacked' do
+  p= select_tag(:preferred_delivery_date, website.preferred_delivery_date_settings.options.html_safe)
+  = submit_tag t('.continue'), class: 'pure-button'

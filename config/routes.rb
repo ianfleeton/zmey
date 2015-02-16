@@ -140,6 +140,8 @@ Rails.application.routes.draw do
   get   'checkout/delivery'      => 'checkout#delivery',      as: :delivery_details
   post  'checkout/save_delivery' => 'checkout#save_delivery', as: :save_delivery_details
   patch 'checkout/save_delivery' => 'checkout#save_delivery'
+  get   'checkout/preferred_delivery_date'      => 'checkout#preferred_delivery_date',      as: :preferred_delivery_date
+  post  'checkout/save_preferred_delivery_date' => 'checkout#save_preferred_delivery_date', as: :save_preferred_delivery_date
   get   'checkout/confirm'       => 'checkout#confirm',       as: :confirm_checkout
 
   resources :enquiries, only: [:create, :new] do

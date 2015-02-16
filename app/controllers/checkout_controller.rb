@@ -49,6 +49,14 @@ class CheckoutController < ApplicationController
     save_address(delivery_address, :delivery_address_id, 'delivery')
   end
 
+  def preferred_delivery_date
+  end
+
+  def save_preferred_delivery_date
+    session[:preferred_delivery_date] = params[:preferred_delivery_date]
+    advance_checkout
+  end
+
   def confirm
     session[:source] = 'checkout'
 
@@ -110,7 +118,18 @@ class CheckoutController < ApplicationController
       }.each_pair do |condition, destination|
         redirect_to destination and return unless send(condition)
       end
+
+      if website.preferred_delivery_date_settings
+        if !preferred_delivery_date_valid?
+          redirect_to preferred_delivery_date_path and return
+        end
+      end
+
       redirect_to confirm_checkout_path
+    end
+
+    def preferred_delivery_date_valid?
+      session[:preferred_delivery_date]
     end
 
     def has_checkout_details?
