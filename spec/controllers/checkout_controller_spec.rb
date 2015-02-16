@@ -427,12 +427,12 @@ RSpec.describe CheckoutController, type: :controller do
 
       context 'without a billing address' do
         let(:billing_address_id) { nil }
-        it { should redirect_to billing_details_path }
+        it { should redirect_to checkout_path }
       end
 
       context 'without a delivery address' do
         let(:delivery_address_id) { nil }
-        it { should redirect_to delivery_details_path }
+        it { should redirect_to checkout_path }
       end
     end
   end

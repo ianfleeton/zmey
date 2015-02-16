@@ -4,8 +4,8 @@ class CheckoutController < ApplicationController
 
   layout 'basket_checkout'
 
-  before_action :require_billing_and_delivery_addresses, only: [:place_order]
   before_action :require_basket, only: [:index, :billing, :delivery, :confirm]
+  before_action :require_billing_and_delivery_addresses, only: [:confirm, :place_order]
   before_action :set_shipping_class, only: [:confirm, :place_order]
   before_action :set_shipping_amount, only: [:confirm]
   before_action :remove_invalid_discounts, only: [:confirm]
@@ -50,9 +50,6 @@ class CheckoutController < ApplicationController
   end
 
   def confirm
-    redirect_to billing_details_path and return unless billing_address
-    redirect_to delivery_details_path and return unless delivery_address
-
     session[:source] = 'checkout'
   end
 
