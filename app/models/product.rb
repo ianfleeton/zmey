@@ -29,6 +29,8 @@ class Product < ActiveRecord::Base
   has_many :order_lines, dependent: :nullify
   has_many :product_group_placements, dependent: :delete_all
   has_many :product_groups, through: :product_group_placements
+  has_many :related_product_scores, dependent: :delete_all
+  has_many :related_products, through: :related_product_scores
   has_many :basket_items, dependent: :destroy
 
   liquid_methods :id, :description, :full_detail, :name, :path, :rrp?, :rrp, :shipping_supplement, :sku, :url
