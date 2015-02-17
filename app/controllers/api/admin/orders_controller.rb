@@ -92,8 +92,9 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       :delivery_postcode,
       :delivery_town_city,
       :email_address,
+      :order_number,
+      :processed_at,
       :status,
-      :processed_at
       )
     end
 end

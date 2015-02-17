@@ -1,6 +1,25 @@
 require 'rails_helper'
 
 describe Order do
+  describe 'before_create :create_order_number' do
+    let(:order) { FactoryGirl.build(:order, order_number: order_number) }
+    before { order.save }
+
+    context 'with blank order number' do
+      let(:order_number) { nil }      
+      it 'creates an order number' do
+        expect(order.order_number).to be_present
+      end
+    end
+
+    context 'with existing order number' do
+      let(:order_number) { 'ALREADYSET' }
+      it 'preserves the order number' do
+        expect(order.order_number).to eq order_number
+      end
+    end
+  end
+
   describe '#to_s' do
     it 'returns its order number' do
       o = Order.new(order_number: '123')

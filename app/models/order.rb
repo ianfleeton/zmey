@@ -181,6 +181,8 @@ class Order < ActiveRecord::Base
   #
   # Called +before_create+.
   def create_order_number
+    return if order_number.present?
+
     alpha = %w(0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z)
     # try a short order number first
     # in case of collision, increase length of order number

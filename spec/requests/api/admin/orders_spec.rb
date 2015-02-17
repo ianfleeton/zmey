@@ -232,6 +232,7 @@ describe 'Admin orders API' do
     let(:delivery_postcode)       { SecureRandom.hex }
     let(:delivery_town_city)      { SecureRandom.hex }
     let(:email_address)           { "#{SecureRandom.hex}@example.org" }
+    let(:order_number)            { 'ORDER123456' }
     let(:payment_status)          { 'waiting_for_payment' }
 
     let(:basic_params) {{
@@ -248,6 +249,7 @@ describe 'Admin orders API' do
       delivery_postcode: delivery_postcode,
       delivery_town_city: delivery_town_city,
       email_address: email_address,
+      order_number: order_number,
       status: payment_status
     }}
 

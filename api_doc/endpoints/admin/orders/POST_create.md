@@ -32,6 +32,8 @@ Create a new order.
 * **customer_note** — A note left by the customer such as delivery instructions.
 * **delivery_address_line_2**
 * **delivery_full_name** — Full name of the customer.
+* **order_number** — Order number, which is represented as a string so it can
+  contain letters as well as numbers.
 
 ## Example
 
