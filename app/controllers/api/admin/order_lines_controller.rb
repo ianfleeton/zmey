@@ -10,9 +10,12 @@ class Api::Admin::OrderLinesController < Api::Admin::AdminController
       if @order_line.product.nil?
         @order_line.errors.add(:base, 'Product is invalid')
       else
-        @order_line.product_price = @order_line.calculate_product_price
+        @order_line.product_name = @order_line.product.name unless params[:order_line][:product_name]
+        @order_line.product_price = @order_line.calculate_product_price unless params[:order_line][:product_price]
+        @order_line.product_rrp = @order_line.product.rrp unless params[:order_line][:product_rrp]
         @order_line.product_sku = @order_line.product.sku
-        @order_line.tax_amount = @order_line.calculate_tax_amount
+        @order_line.product_weight = @order_line.product.weight unless params[:order_line][:product_weight]
+        @order_line.tax_amount = @order_line.calculate_tax_amount unless params[:order_line][:tax_amount]
       end
     end
 
@@ -27,8 +30,11 @@ class Api::Admin::OrderLinesController < Api::Admin::AdminController
       params.require(:order_line).permit(
         :order_id,
         :product_id,
+        :product_name,
         :product_price,
+        :product_rrp,
         :product_sku,
+        :product_weight,
         :quantity,
         :tax_amount
       )
