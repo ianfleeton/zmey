@@ -283,6 +283,14 @@ RSpec.describe CheckoutController, type: :controller do
         expect(Address.find_by(address_line_1: address.address_line_1)).to be
       end
 
+      context 'when deliver_here checked' do
+        let(:deliver_here) { '1' }
+
+        it 'sets the session delivery_address_id to the billing address' do
+          expect(session[:delivery_address_id]).to eq Address.last.id
+        end
+      end
+
       it { should set_session(:billing_address_id) }
     end
 

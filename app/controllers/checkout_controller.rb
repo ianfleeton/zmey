@@ -173,7 +173,7 @@ class CheckoutController < ApplicationController
           end
         end
 
-      yield success, address if block_given?
+      yield success, @address if block_given?
 
       if success
         advance_checkout
