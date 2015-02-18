@@ -27,9 +27,10 @@ class Product < ActiveRecord::Base
   belongs_to :image
   belongs_to :nominal_code, inverse_of: :products
   has_many :order_lines, dependent: :nullify
+  has_many :orders, through: :order_lines
   has_many :product_group_placements, dependent: :delete_all
   has_many :product_groups, through: :product_group_placements
-  has_many :related_product_scores, dependent: :delete_all
+  has_many :related_product_scores, -> { order 'score DESC' }, dependent: :delete_all
   has_many :related_products, through: :related_product_scores
   has_many :basket_items, dependent: :destroy
 
@@ -173,7 +174,46 @@ class Product < ActiveRecord::Base
     name
   end
 
+  # Deletes existing related products and generates new related products based
+  # on how frequently other products are purchased with this one, using a simple
+  # item-to-item collaborative filtering method.
+  def generate_related_products
+    related_product_scores.delete_all
+
+    purchase_counts = Hash.new(0)
+
+    orders.uniq.each do |order|
+      order
+        .order_lines
+        .where("product_id != #{id} AND product_id IS NOT NULL")
+        .pluck(:product_id)
+        .uniq
+        .each { |product_id| purchase_counts[product_id] += 1 }
+    end
+
+    scores = purchase_counts.map do |product_id, purchased|
+      [product_id, relatedness(orders.count, purchased)]
+    end.to_h
+
+    scores.each_pair do |related_id, score|
+      RelatedProductScore.create(product_id: id, related_product_id: related_id, score: score)
+    end
+  end
+
   private
+
+    # Returns a relatedness score between 0 and 1.
+    # <tt>orders_count</tt> is the number of orders in which the first product is
+    # present.
+    # <tt>purchased_with_count</tt> is the number of those orders in which the
+    # second product is also present.
+    def relatedness(orders_count, purchased_with_count)
+      raise 'purchased_with_count cannot be larger than orders_count' if purchased_with_count > orders_count
+      raise 'orders_count must be > 0' if orders_count < 1
+      raise 'purchased_with_count must be > 0' if purchased_with_count < 1
+
+      purchased_with_count / (orders_count ** 0.5 * purchased_with_count ** 0.5)
+    end
 
     def set_nil_weight_to_zero
       self.weight ||= 0

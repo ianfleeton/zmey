@@ -21,6 +21,7 @@ describe Product do
   it { should ensure_length_of(:meta_description).is_at_most(255) }
   it { should validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
 
+  it { should have_many(:orders).through(:order_lines) }
   it { should have_many(:related_product_scores).dependent(:delete_all) }
   it { should have_many(:related_products).through(:related_product_scores) }
 
