@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::UnknownController, with: :not_found
   end
 
+  def error
+    raise 'Intentional error'
+  end
+
   def basket
     @basket ||= find_basket
   end
