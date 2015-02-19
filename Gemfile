@@ -23,6 +23,9 @@ gem 'whenever', require: false
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 
+# Look up addresses by postcode
+gem 'postcode_software', '~> 0.0.1'
+
 # Monitor with New Relic
 gem 'newrelic_rpm'
 
