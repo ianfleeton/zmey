@@ -88,12 +88,14 @@
     .panel-body
       .form-group
         label for="product_submit_to_google_true" Submit to Google?
-        label.radio
-          => form.radio_button :submit_to_google, true, class: "radio"
-          | Yes
-        label.radio
-          => form.radio_button :submit_to_google, false, class: "radio"
-          | No
+        .radio
+          label
+            => form.radio_button :submit_to_google, true, class: "radio"
+            | Yes
+        .radio
+          label
+            => form.radio_button :submit_to_google, false, class: "radio"
+            | No
 
       .form-group
         = form.label :google_title
