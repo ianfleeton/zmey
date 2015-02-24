@@ -10,11 +10,10 @@ describe 'Admin products API' do
       before do
         @product1 = FactoryGirl.create(:product)
         @product2 = FactoryGirl.create(:product)
+        get '/api/admin/products'
       end
 
       it 'returns all products' do
-        get '/api/admin/products'
-
         products = JSON.parse(response.body)
 
         expect(products['products'].length).to eq 2
@@ -24,8 +23,11 @@ describe 'Admin products API' do
       end
 
       it 'returns 200 OK' do
-        get '/api/admin/products'
         expect(response.status).to eq 200
+      end
+
+      it 'returns the current time in now' do
+        expect(Time.parse(JSON.parse(response.body)['now'])).to be_instance_of(Time)
       end
     end
 

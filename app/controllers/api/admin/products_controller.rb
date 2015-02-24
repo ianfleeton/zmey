@@ -2,6 +2,7 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   before_action :set_nominal_code, only: [:create]
 
   def index
+    @now = Time.zone.now
     @products = Product.all
 
     if params[:updated_since]

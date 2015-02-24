@@ -18,8 +18,13 @@ curl https://zmey.co.uk/api/admin/products \
 
 ### Response
 
+The `now` key gives the time at which the products were fetched. This time
+can be used in a subsequent call using `updated_since` which guarantees that
+any products added or updated updated since this request will be included.
+
 ```json
 {
+  "now": "2015-02-24T15:49:10.000+00:00",
   "products": [
     {
       "id": 1,
@@ -34,5 +39,5 @@ curl https://zmey.co.uk/api/admin/products \
       "name": "Nails"
     }
   ]
-}  
+}
 ```

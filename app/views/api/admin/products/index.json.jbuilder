@@ -1,3 +1,4 @@
+json.now @now
 json.products(@products) do |product|
   json.id   product.id
   json.href api_admin_product_url(product)
