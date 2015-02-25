@@ -5,6 +5,7 @@ javascript:
     var prevField = hiddenField + '_prev';
     var imagesModal = "#{attribute}_images"
     var imagePicker = "#{attribute}_image_picker"
+    var imageRemove = "#{attribute}_image_remove"
     var imagePreview = "#{attribute}_image_preview"
     var page = 1;
 
@@ -12,6 +13,11 @@ javascript:
       event.preventDefault();
       $('#' + imagesModal).modal('show');
       getImages();
+    });
+
+    $('#' + imageRemove).click(function(event) {
+      event.preventDefault();
+      $('#' + hiddenField).val('');
     });
 
     function getImages() {
@@ -85,4 +91,6 @@ javascript:
     - image_url = Image.find_by(id: form.object.send(attribute)).try(:url)
     - image_url ||= '#'
     img src="#{image_url}"
-  button.btn.btn-default id="#{attribute}_image_picker" Pick
+  .btn-group
+    button.btn.btn-default id="#{attribute}_image_picker" Pick
+    button.btn.btn-default id="#{attribute}_image_remove" Remove
