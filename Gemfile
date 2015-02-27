@@ -3,9 +3,14 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
-gem 'mysql2'
+
+gem 'mysql2', platform: :ruby
+gem 'jdbc-mysql', platform: :jruby
+gem 'activerecord-jdbc-adapter', platform: :jruby
+
 gem 'RedCloth'
-gem 'image_science'
+gem 'image_science', platform: :ruby
+gem 'image_voodoo', platform: :jruby
 gem 'RubyInline'
 gem 'liquid'
 gem 'acts_as_list'
@@ -57,7 +62,7 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'guard-rspec', require: false
 
-  gem 'thin'
+  gem 'thin', platforms: :ruby
 end
 
 # Use ActiveModel has_secure_password
@@ -71,7 +76,7 @@ gem 'rails-html-sanitizer', '~> 1.0'
 
 # Use Capistrano for deployment
 gem 'capistrano', group: :development
-gem 'rvm-capistrano', group: :development
+gem 'rvm-capistrano', group: :development, require: false
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
@@ -83,7 +88,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri_20, :mri_21]
 
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 2.0', platforms: [:mri_20, :mri_21]
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
