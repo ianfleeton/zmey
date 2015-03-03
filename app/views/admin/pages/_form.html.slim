@@ -6,39 +6,22 @@
       - @page.errors.full_messages.each do |msg|
         li= msg
 
-= form_for [:admin, @page] do |form|
+= bootstrap_form_for [:admin, @page] do |form|
 
-  .form-group
-    = form.label :title
-    = form.text_field :title, required: true, class: 'form-control'
+  = form.text_field :title, required: true
 
-  .form-group
-    = form.label :name
-    = form.text_field :name, required: true, class: 'form-control'
+  = form.text_field :name, required: true
 
-  .form-group
-    = form.label :slug, "http://#{request.host}/"
-    = form.text_field :slug, class: 'form-control'
+  = form.text_field :slug, label: "http://#{request.host}/"
 
   - cache pages_cache_key(website)
-    .form-group
-      = form.label :parent_id, 'Parent page or navigation'
-      = form.collection_select :parent_id, website.pages.sort_by { |p| p.name_with_ancestors }, :id, :name_with_ancestors, {include_blank: '-- No parent --'}, class: 'form-control'
+    = form.collection_select :parent_id, website.pages.sort_by { |p| p.name_with_ancestors }, :id, :name_with_ancestors, {include_blank: '-- No parent --', label: 'Parent page or navigation'}
 
-  .form-group
-    .checkbox
-      = form.check_box :visible
-      = t('.visible')
+  = form.check_box :visible, label: t('.visible')
 
-  .checkbox
-    label
-      = form.check_box :no_index
-      = t('.no_index')
+  = form.check_box :no_index, label: t('.no_index')
 
-  .checkbox
-    label
-      = form.check_box :no_follow
-      = t('.no_follow')
+  = form.check_box :no_follow, label: t('.no_follow')
 
   .form-group
     = form.label :image_id
@@ -48,20 +31,15 @@
     = form.label :thumbnail_image_id
     = render partial: 'admin/images/image_picker', locals: { form: form, attribute: :thumbnail_image_id }
 
-  .form-group
-    = form.label :content
-    = editor(form, :content, :html)
+  = editor(form, :content, :html)
 
-  .form-group
-    = form.label :extra
-    = form.text_area :extra, class: 'form-control', rows: 8, readonly: true
+  = form.text_area :extra, rows: 8, readonly: true
 
   .panel.panel-default
     .panel-heading
       h2.panel-title Meta tags
     .panel-body
-      = form.label :description
-      = form.text_field :description, required: true, maxlength: 200, class: 'form-control'
+      = form.text_field :description, required: true, maxlength: 200
 
   = render partial: 'admin/extra_attributes/form_mixin', locals: { object: @page }
 
