@@ -4,6 +4,12 @@ require_relative 'shared_examples/extra_attributes_shared.rb'
 describe Page do
   it { should ensure_length_of(:description).is_at_most(200) }
 
+  context 'uniqueness' do
+    before  { FactoryGirl.create(:page) }
+    it { should validate_uniqueness_of(:slug) }
+    it { should validate_uniqueness_of(:title) }
+  end
+
   it 'allows a dot in the slug' do
     page = FactoryGirl.build(:page)
     page.slug = 'legacy.html'

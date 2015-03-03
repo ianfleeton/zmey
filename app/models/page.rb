@@ -15,8 +15,8 @@ class Page < ActiveRecord::Base
   validates_format_of :slug, with: /\A[-a-z0-9_\/\.]+\Z/,
     message: 'can only contain lowercase letters, numbers, hyphens, dots, underscores and forward slashes',
     allow_blank: true
-  validates_uniqueness_of :slug, scope: :website_id, case_sensitive: false
-  validates_uniqueness_of :title, scope: :website_id, case_sensitive: false
+  validates_uniqueness_of :slug, case_sensitive: false
+  validates_uniqueness_of :title, case_sensitive: false
   validates_uniqueness_of :name, scope: :parent_id, case_sensitive: false, unless: Proc.new { |page| page.parent_id.nil? }
   validate :parent_belongs_to_same_website
 

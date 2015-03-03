@@ -45,5 +45,21 @@ describe Admin::PagesController do
         end
       end
     end
+
+    describe 'PATCH update' do
+      context 'when update fails' do
+        let!(:existing_page) { FactoryGirl.create(:page) }
+        let(:page) { FactoryGirl.create(:page) }
+        before { patch :update, id: page.id, page: {slug: existing_page.slug} }
+
+        it 'responds 200' do
+          expect(response.status).to eq 200
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+    end
   end
 end

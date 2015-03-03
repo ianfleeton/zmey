@@ -27,7 +27,6 @@ class Admin::PagesController < Admin::AdminController
       flash[:notice] = 'Page saved.'
       redirect_to edit_admin_page_path(@page)
     else
-      @page.position = new_position
       render :edit
     end
   end
@@ -61,7 +60,7 @@ class Admin::PagesController < Admin::AdminController
   protected
 
     def set_page
-      @page = Page.find_by(id: params[:id], website_id: website.id)
+      @page = Page.find_by(id: params[:id])
       not_found unless @page
     end
 
