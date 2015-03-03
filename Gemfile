@@ -26,6 +26,7 @@ gem 'whenever', require: false
 
 # Bootstrap for admin area
 gem 'bootstrap-sass', '~> 3.3.3'
+gem 'bootstrap_form'
 
 # Pagination
 gem 'will_paginate'
