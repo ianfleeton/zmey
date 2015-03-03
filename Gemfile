@@ -24,6 +24,10 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'whenever', require: false
 
+# Bootstrap for admin area
+gem 'bootstrap-sass', '~> 3.3.3'
+gem 'bootstrap_form'
+
 # Pagination
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
@@ -57,7 +61,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 
 group :development do
-  gem 'brakeman'
+  gem 'brakeman', '~> 3.0.0'
 
   gem 'spring-commands-rspec'
   gem 'guard-rspec', require: false

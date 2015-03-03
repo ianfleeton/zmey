@@ -1,5 +1,5 @@
 - if @choice.errors.any?
-  .alert.alert-error.fade.in
+  .alert.bg-danger.fade.in
     a.close data-dismiss="alert" href="#" &times;
     h2= "#{pluralize(@choice.errors.count, "error")} prohibited this choice from being saved:"
     ul

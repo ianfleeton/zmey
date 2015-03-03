@@ -1,86 +1,50 @@
 - if @product.errors.any?
-  .alert.alert-error.fade.in
+  .alert.bg-danger.fade.in
     a.close data-dismiss="alert" href="#" &times;
     h2= "#{pluralize(@product.errors.count, "error")} prohibited this product from being saved:"
     ul
       - @product.errors.full_messages.each do |msg|
         li= msg
 
-= form_for [:admin, @product] do |form|
-  .checkbox
-    label
-      => form.check_box :active
-      = t('.active')
+= bootstrap_form_for [:admin, @product] do |form|
+  = form.check_box :active, label: t('.active')
 
-  .form-group
-    = form.label :sku, '<abbr title="Stock-keeping unit / reference number">SKU</abbr>'.html_safe
-    = form.text_field :sku, class: 'form-control'
+  = form.text_field :sku, label: '<abbr title="Stock-keeping unit / reference number">SKU</abbr>'.html_safe
 
-  .form-group
-    = form.label :name
-    = form.text_field :name, required: true, class: 'form-control'
+  = form.text_field :name, required: true
 
-  .form-group
-    = form.label :nominal_code_id
-    = form.collection_select :nominal_code_id, website.nominal_codes, :id, :to_s, {include_blank: '-- No code --'}, class: 'form-control'
+  = form.collection_select :nominal_code_id, website.nominal_codes, :id, :to_s, {include_blank: '-- No code --'}
 
-  .form-group
-    = form.label :price
-    = form.text_field :price, class: 'form-control'
+  = form.text_field :price
 
-  .form-group
-    = form.label :rrp, 'RRP (leave blank if same as price)'
-    = form.text_field :rrp, class: 'form-control'
+  = form.text_field :rrp, label: 'RRP (leave blank if same as price)'
 
-  .checkbox
-    label
-      => form.check_box :allow_fractional_quantity
-      = t('.allow_fractional_quantity')
+  = form.check_box :allow_fractional_quantity, label: t('.allow_fractional_quantity')
 
-  .form-group
-    = form.label :shipping_supplement
-    = form.text_field :shipping_supplement, class: 'form-control'
+  = form.text_field :shipping_supplement
 
-  .form-group
-    = form.label :tax_type
-    = select('product', 'tax_type', tax_type_options, {}, class: 'form-control')
+  = form.select :tax_type, tax_type_options
 
-  .form-group
-    = form.label :weight, 'Weight (kg)'
-    = form.text_field :weight, class: 'form-control'
+  = form.text_field :weight, label: 'Weight (kg)'
 
   .form-group
     = form.label :image_id
     = render partial: 'admin/images/image_picker', locals: { form: form, attribute: :image_id }
 
-  .form-group
-    = form.label :description
-    = editor(form, :description, :html)
+  = editor(form, :description, :html)
 
-  .form-group
-    = form.label :full_detail
-    = editor(form, :full_detail, :html)
+  = editor(form, :full_detail, :html)
 
   label for="product_apply_shipping_true" Apply shipping?
-  .radio
-    label
-      => form.radio_button :apply_shipping, true
-      | Yes
-  .radio
-    label
-      => form.radio_button :apply_shipping, false
-      | No
+  = form.radio_button :apply_shipping, true, label: 'Yes'
+  = form.radio_button :apply_shipping, false, label: 'No'
 
   .panel.panel-default
     .panel-heading
       h2.panel-title Page Information
     div.panel-body
-      .form-group
-        = form.label :page_title
-        = form.text_field :page_title, class: 'form-control'
-      .form-group
-      	= form.label :meta_description
-      	= form.text_field :meta_description, class: 'form-control'
+      = form.text_field :page_title
+      = form.text_field :meta_description
 
   .panel.panel-default
     .panel-heading
@@ -88,59 +52,30 @@
     .panel-body
       .form-group
         label for="product_submit_to_google_true" Submit to Google?
-        .radio
-          label
-            => form.radio_button :submit_to_google, true, class: "radio"
-            | Yes
-        .radio
-          label
-            => form.radio_button :submit_to_google, false, class: "radio"
-            | No
+        = form.radio_button :submit_to_google, true, label: 'Yes'
+        = form.radio_button :submit_to_google, false, label: 'No'
 
-      .form-group
-        = form.label :google_title
-        = form.text_field :google_title, class: 'form-control'
+      = form.text_field :google_title
 
-      .form-group
-        = form.label :google_description
-        = form.text_area :google_description, rows: 8, class: 'form-control'
+      = form.text_area :google_description, rows: 8
 
-      .form-group
-        = form.label :availability
-        = select('product', 'availability', Product::AVAILABILITIES, {}, class: 'form-control')
+      = form.select('availability', Product::AVAILABILITIES, {})
 
-      .form-group
-        = form.label :condition
-        = select('product', 'condition', Product::CONDITIONS, {}, class: 'form-control')
+      = form.select('condition', Product::CONDITIONS, {})
 
-      .form-group
-        = form.label :google_product_category
-        = form.text_field :google_product_category, class: 'form-control'
+      = form.text_field :google_product_category
 
-      .form-group
-        = form.label :product_type
-        = form.text_field :product_type, class: 'form-control'
+      = form.text_field :product_type
 
-      .form-group
-        = form.label :brand
-        = form.text_field :brand, class: 'form-control'
+      = form.text_field :brand
 
-      .form-group
-        = form.label :gtin, '<abbr title="Global Trade Item Number">GTIN</abbr>'.html_safe
-        = form.text_field :gtin, class: 'form-control'
+      = form.text_field :gtin, label: '<abbr title="Global Trade Item Number">GTIN</abbr>'.html_safe
 
+      = form.text_field :mpn, label: '<abbr title="Manufacturer Part Number">MPN</abbr>'.html_safe
 
-      .form-group
-        = form.label :mpn, '<abbr title="Manufacturer Part Number">MPN</abbr>'.html_safe
-        = form.text_field :mpn, class: 'form-control'
+      = form.select('age_group', Product::AGE_GROUPS, {include_blank: true})
 
-      .form-group
-        = form.label :age_group
-        = select('product', 'age_group', Product::AGE_GROUPS, {include_blank: true}, class: 'form-control')
-
-      .form-group
-        = form.label :gender
-        = select('product', 'gender', Product::GENDERS, {include_blank: true}, class: 'form-control')
+      = form.select('gender', Product::GENDERS, {include_blank: true})
 
   = render partial: 'admin/extra_attributes/form_mixin', locals: { object: @product }
 

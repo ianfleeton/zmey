@@ -1,5 +1,5 @@
 - if @country.errors.any?
-  .alert.alert-error.fade.in
+  .alert.bg-danger.fade.in
     a.close data-dismiss="alert" href="#" &times;
     h2= "#{pluralize(@country.errors.count, "error")} prohibited this country from being saved:"
     ul

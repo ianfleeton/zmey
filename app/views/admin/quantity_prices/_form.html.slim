@@ -1,5 +1,5 @@
 - if @quantity_price.errors.any?
-  .alert.alert-error.fade.in
+  .alert.bg-danger.fade.in
     a.close data-dismiss="alert" href="#" &times;
     h2= "#{pluralize(@quantity_price.errors.count, "error")} prohibited this quantity/price rule from being saved:"
     ul

@@ -1,3 +1,6 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 body {
   padding-top: 60px;
   font-family: 'Roboto', sans-serif;
@@ -19,7 +22,7 @@ body {
 }
 
 .modal-picker li {
-  list-style: none;  
+  list-style: none;
 }
 
 .picker-image {
