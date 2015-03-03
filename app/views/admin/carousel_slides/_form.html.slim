@@ -1,5 +1,5 @@
 - if @carousel_slide.errors.any?
-  .alert.alert-error.fade.in
+  .alert.bg-danger.fade.in
     a.close data-dismiss="alert" href="#" &times;
     h2= "#{pluralize(@carousel_slide.errors.count, "error")} prohibited this carousel slide from being saved:"
     ul

@@ -1,5 +1,5 @@
 - if @liquid_template.errors.any?
-  .alert.alert-error.fade-in
+  .alert.bg-danger.fade.in
     a.close data-dismiss="alert" href="#" &times;
     h2= "#{pluralize(@liquid_template.errors.count, "error")} prohibited this Liquid template from being saved:"
     ul

@@ -1,5 +1,5 @@
 - if @feature.errors.any?
-  .alert.alert-error.fade.in
+  .alert.bg-danger.fade.in
     a.close data-dismiss="alert" href="#" &times;
     h2= "#{pluralize(@feature.errors.count, "error")} prohibited this feature from being saved:"
     ul

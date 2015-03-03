@@ -1,5 +1,5 @@
 - if @shipping_class.errors.any?
-  .alert.alert-error.fade.in
+  .alert.bg-danger.fade.in
     a.close data-dismiss="alert" href="#" &times;
     h2= "#{pluralize(@shipping_class.errors.count, "error")} prohibited this shipping class from being saved:"
     ul

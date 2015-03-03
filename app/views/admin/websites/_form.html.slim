@@ -1,5 +1,5 @@
 - if @website_subject.errors.any?
-  .alert.alert-error.fade.in
+  .alert.bg-danger.fade.in
     a.close data-dismiss="alert" href="#" &times;
     h2= "#{pluralize(@website_subject.errors.count, "error")} prohibited this website from being saved:"
     ul
