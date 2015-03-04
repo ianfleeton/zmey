@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212143654) do
+ActiveRecord::Schema.define(version: 20150217134628) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -466,6 +466,16 @@ ActiveRecord::Schema.define(version: 20150212143654) do
   end
 
   add_index "quantity_prices", ["product_id"], name: "index_quantity_prices_on_product_id", using: :btree
+
+  create_table "related_product_scores", force: :cascade do |t|
+    t.integer  "product_id",         limit: 4,                         null: false
+    t.integer  "related_product_id", limit: 4,                         null: false
+    t.decimal  "score",                        precision: 4, scale: 3, null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+  end
+
+  add_index "related_product_scores", ["product_id"], name: "index_related_product_scores_on_product_id", using: :btree
 
   create_table "shipping_classes", force: :cascade do |t|
     t.integer  "shipping_zone_id",  limit: 4,   default: 0,              null: false

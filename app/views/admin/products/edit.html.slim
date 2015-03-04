@@ -71,3 +71,17 @@
         td style="width: 130px;"
           = edit_button [:admin, qp]
           = delete_button [:admin, qp]
+
+    - if @product.related_product_scores.any?
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title Related Products
+        .panel-body
+          table.table
+            tr
+              th Score
+              th Product
+            - @product.related_product_scores.limit(20).each do |rps|
+              tr
+                td= rps.score
+                td= link_to rps.related_product.name, edit_admin_product_path(rps.related_product)
