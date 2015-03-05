@@ -34,11 +34,6 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
     end
   end
 
-  # Returns the default number of orders to include in a collection request.
-  def default_page_size
-    50
-  end
-
   def delete_all
     Order.fast_delete_all
     render nothing: :true, status: 204

@@ -5,3 +5,4 @@ json.products(@products) do |product|
   json.sku  product.sku
   json.name product.name
 end
+json.count @products.total_entries

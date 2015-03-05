@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative 'shared_examples/api_pagination.rb'
 
 describe 'Admin products API' do
   before do
@@ -6,17 +7,33 @@ describe 'Admin products API' do
   end
 
   describe 'GET index' do
-    context 'with products' do
-      before do
-        @product1 = FactoryGirl.create(:product)
-        @product2 = FactoryGirl.create(:product)
-        get '/api/admin/products'
-      end
+    let(:json)              { JSON.parse(response.body) }
+    let(:num_items)         { 1 }
+    let(:page)              { nil }
+    let(:page_size)         { nil }
+    let(:default_page_size) { 3 }
 
+    before do
+      # Reduce default page size for spec execution speed.
+      allow_any_instance_of(Api::Admin::ProductsController)
+        .to receive(:default_page_size)
+        .and_return(default_page_size)
+
+      num_items.times do |x|
+        FactoryGirl.create(
+          :product,
+          updated_at: Date.today - x.days # affects ordering
+        )
+      end
+      @product1 = Product.first
+      get '/api/admin/products', page: page, page_size: page_size
+    end
+
+    context 'with products' do
       it 'returns all products' do
         products = JSON.parse(response.body)
 
-        expect(products['products'].length).to eq 2
+        expect(products['products'].length).to eq 1
         expect(products['products'][0]['id']).to eq @product1.id
         expect(products['products'][0]['sku']).to eq @product1.sku
         expect(products['products'][0]['name']).to eq @product1.name
@@ -29,15 +46,20 @@ describe 'Admin products API' do
       it 'returns the current time in now' do
         expect(Time.parse(JSON.parse(response.body)['now'])).to be_instance_of(Time)
       end
+
+      it 'states total count of products' do
+        expect(JSON.parse(response.body)['count']).to eq 1
+      end
     end
 
     context 'getting products updated since' do
+      let(:num_items) { 0 }
       let!(:recently_updated) { FactoryGirl.create(:product, updated_at: Date.new(2015, 1, 31)) }
       let!(:updated_ages_ago) { FactoryGirl.create(:product, updated_at: Date.new(2013, 3, 14)) }
 
       before { get '/api/admin/products?updated_since=2014-03-20T10:30:11.123Z' }
 
-      subject { JSON.parse(response.body)['products'] }
+      subject { json['products'] }
 
       it 'returns 1 product' do
         expect(subject.length).to eq 1
@@ -48,7 +70,11 @@ describe 'Admin products API' do
       end
     end
 
+    it_behaves_like 'an API paginator', class: Product
+
     context 'with no products' do
+      let(:num_items) { 0 }
+
       it 'returns 200 OK' do
         get '/api/admin/products'
         expect(response.status).to eq 200

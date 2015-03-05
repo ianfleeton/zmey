@@ -2,12 +2,17 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   before_action :set_nominal_code, only: [:create]
 
   def index
+    page      = params[:page] || 1
+    per_page  = params[:page_size] || default_page_size
+
     @now = Time.zone.now
     @products = Product.all
 
     if params[:updated_since]
       @products = @products.where ['updated_at >= ?', Time.parse(params[:updated_since])]
     end
+
+    @products   = @products.paginate(page: page, per_page: per_page)
   end
 
   def show

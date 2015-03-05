@@ -4,6 +4,8 @@ Returns a summary list of all products.
 
 ## Parameters
 
+* **page** — Page number of results. Numbering starts from 1. Default is 1.
+* **page_size** — Number of results per page. Default is 50.
 * **updated_since** — A time in ISO 8601 format. Returns only products that
   have been updated since (on or after) this time.
 
@@ -22,6 +24,9 @@ The `now` key gives the time at which the products were fetched. This time
 can be used in a subsequent call using `updated_since` which guarantees that
 any products added or updated updated since this request will be included.
 
+The response contains a total count of all matching products in the **count**
+attribute.
+
 ```json
 {
   "now": "2015-02-24T15:49:10.000+00:00",
@@ -38,6 +43,7 @@ any products added or updated updated since this request will be included.
       "sku": "NLS28",
       "name": "Nails"
     }
-  ]
+  ],
+  "count": 1
 }
 ```

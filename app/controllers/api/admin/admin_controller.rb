@@ -43,6 +43,11 @@ class Api::Admin::AdminController < ApplicationController
     }[value.try(:downcase)]
   end
 
+  # Returns the default number of items to include in a collection request.
+  def default_page_size
+    50
+  end
+
   private
 
     def remote_connection?

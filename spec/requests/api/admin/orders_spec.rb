@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative 'shared_examples/api_pagination.rb'
 
 describe 'Admin orders API' do
   before do
@@ -6,8 +7,8 @@ describe 'Admin orders API' do
   end
 
   describe 'GET index' do
-    let(:orders)            { JSON.parse(response.body) }
-    let(:num_orders)        { 1 }
+    let(:json)              { JSON.parse(response.body) }
+    let(:num_items)         { 1 }
     let(:order_number)      { nil }
     let(:page)              { nil }
     let(:page_size)         { nil }
@@ -24,7 +25,7 @@ describe 'Admin orders API' do
         .to receive(:default_page_size)
         .and_return(default_page_size)
 
-      num_orders.times do |x|
+      num_items.times do |x|
         FactoryGirl.create(
           :order,
           user_id: FactoryGirl.create(:user).id,
@@ -42,8 +43,8 @@ describe 'Admin orders API' do
     end
 
     it 'returns all orders' do
-      expect(orders['orders'].length).to eq 1
-      order = orders['orders'][0]
+      expect(json['orders'].length).to eq 1
+      order = json['orders'][0]
       expect(order['id']).to eq @order1.id
       expect(order['href']).to eq api_admin_order_url(@order1)
       expect(order['order_number']).to eq @order1.order_number
@@ -69,8 +70,8 @@ describe 'Admin orders API' do
       }}
 
       it 'returns the matching order' do
-        expect(orders['orders'].length).to eq 1
-        expect(orders['orders'][0]['order_number']).to eq @matching_order.order_number
+        expect(json['orders'].length).to eq 1
+        expect(json['orders'][0]['order_number']).to eq @matching_order.order_number
       end
     end
 
@@ -78,7 +79,7 @@ describe 'Admin orders API' do
       let(:status) { 'waiting_for_payment' }
 
       it 'returns 1 order' do
-        expect(orders['orders'].length).to eq 1
+        expect(json['orders'].length).to eq 1
       end
     end
 
@@ -86,7 +87,7 @@ describe 'Admin orders API' do
       let(:status) { 'payment_received' }
 
       it 'returns 0 orders' do
-        expect(orders['orders'].length).to eq 0
+        expect(json['orders'].length).to eq 0
       end
     end
 
@@ -100,8 +101,8 @@ describe 'Admin orders API' do
         let(:processed) { true }
 
         it 'returns processed orders only' do
-          expect(orders['orders'].length).to eq 1
-          expect(orders['orders'][0]['id']).to eq @processed_order.id
+          expect(json['orders'].length).to eq 1
+          expect(json['orders'][0]['id']).to eq @processed_order.id
         end
       end
 
@@ -109,51 +110,23 @@ describe 'Admin orders API' do
         let(:processed) { false }
 
         it 'returns unprocessed orders only' do
-          expect(orders['orders'].length).to eq 1
-          expect(orders['orders'][0]['id']).to eq Order.first.id
+          expect(json['orders'].length).to eq 1
+          expect(json['orders'][0]['id']).to eq Order.first.id
         end
       end
     end
 
-    context 'with more orders than default page size' do
-      let(:num_orders) { default_page_size + 1 }
-
-      it 'returns limited orders' do
-        expect(orders['orders'].length).to eq default_page_size
-      end
-
-      it 'states total count of orders' do
-        expect(orders['count']).to eq num_orders
-      end
-
-      context 'with page_size matching number of orders' do
-        let(:page_size) { num_orders }
-
-        it 'returns all orders' do
-          expect(orders['orders'].length).to eq num_orders
-        end
-      end
-
-      context 'with page set to 2 and page_size set to 1' do
-        let(:page)      { 2 }
-        let(:page_size) { 1 }
-
-        it 'returns the second order only' do
-          expect(orders['orders'].length).to eq 1
-          expect(orders['orders'][0]['id']).to eq Order.second.id
-        end
-      end
-    end
+    it_behaves_like 'an API paginator', class: Order
 
     context 'with no orders' do
-      let(:num_orders) { 0 }
+      let(:num_items) { 0 }
 
       it 'returns 200 OK' do
         expect(response.status).to eq 200
       end
 
       it 'returns an empty set' do
-        expect(orders['orders'].length).to eq 0
+        expect(json['orders'].length).to eq 0
       end
     end
   end
