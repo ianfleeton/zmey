@@ -207,6 +207,7 @@ describe 'Admin orders API' do
     let(:email_address)           { "#{SecureRandom.hex}@example.org" }
     let(:order_number)            { 'ORDER123456' }
     let(:payment_status)          { 'waiting_for_payment' }
+    let(:processed_at)            { '2015-03-05T10:00:00.000+00:00' }
 
     let(:basic_params) {{
       billing_company: billing_company,
@@ -223,6 +224,7 @@ describe 'Admin orders API' do
       delivery_town_city: delivery_town_city,
       email_address: email_address,
       order_number: order_number,
+      processed_at: processed_at,
       status: payment_status
     }}
 

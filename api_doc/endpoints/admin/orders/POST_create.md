@@ -34,6 +34,8 @@ Create a new order.
 * **delivery_full_name** — Full name of the customer.
 * **order_number** — Order number, which is represented as a string so it can
   contain letters as well as numbers.
+* **processed_at** — Time when the order was processed or exported to an
+  external system.
 
 ## Example
 
@@ -50,7 +52,8 @@ curl https://zmey.co.uk/api/admin/orders \
   -d "order[delivery_country_id]=1" \
   -d "order[delivery_postcode]=HG1 9ZZ" \
   -d "order[delivery_town_city]=Harrogate" \
-  -d "order[email_address]=shopper@example.org",
+  -d "order[email_address]=shopper@example.org" \
+  -d "order[processed_at]=2015-03-05T10:00:00.000+00:00" \
   -d "order[status]=payment_received"
 ```
 
