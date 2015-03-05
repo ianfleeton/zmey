@@ -1,0 +1,10 @@
+= page_header t('.heading')
+
+- if @offline_payment_methods.any?
+  table.table.table-bordered
+    thead
+      th= t('.name')
+    tbody
+      - @offline_payment_methods.each do |opm|
+        tr
+          td= opm.name

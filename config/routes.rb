@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :images
     resources :liquid_templates, except: [:show]
     resources :nominal_codes, except: [:show]
+    resources :offline_payment_methods, except: [:show]
 
     resources :orders do
       collection do

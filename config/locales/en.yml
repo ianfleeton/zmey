@@ -78,6 +78,10 @@ en:
         no_nominal_codes: 'No nominal codes have been set up.'
       new:
         heading: 'New Nominal Code'
+    offline_payment_methods:
+      index:
+        heading: 'Offline Payment Methods'
+        name: 'Name'
     orders:
       edit:
         heading: 'Edit Order'
