@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217134628) do
+ActiveRecord::Schema.define(version: 20150305152014) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -239,6 +239,12 @@ ActiveRecord::Schema.define(version: 20150217134628) do
 
   add_index "nominal_codes", ["code"], name: "index_nominal_codes_on_code", using: :btree
   add_index "nominal_codes", ["website_id"], name: "index_nominal_codes_on_website_id", using: :btree
+
+  create_table "offline_payment_methods", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "order_lines", force: :cascade do |t|
     t.integer  "order_id",             limit: 4,                              default: 0,   null: false
