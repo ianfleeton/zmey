@@ -9,14 +9,23 @@ feature 'Create offline payment method' do
 
   let(:amount) { 10.0 }
   let(:order) { FactoryGirl.create(:order) }
-  let!(:order_line) { FactoryGirl.create(:order_line, order: order) }
+  let!(:order_line) { FactoryGirl.create(:order_line, order: order, product_price: 10) }
 
   scenario 'Add full payment to order' do
+    add_payment(amount)
+    expect(order.reload.status).to eq Enums::PaymentStatus::PAYMENT_RECEIVED
+  end
+
+  scenario 'Add partial payment to order' do
+    add_payment(amount / 2)
+    expect(order.reload.status).to eq Enums::PaymentStatus::WAITING_FOR_PAYMENT
+  end
+
+  def add_payment(how_much)
     visit edit_admin_order_path(order)
     click_link 'Add Payment'
     select 'Cheque', from: 'payment_service_provider'
-    fill_in 'Amount', with: amount
+    fill_in 'Amount', with: how_much
     click_button 'Save'
-    expect(order.reload.status).to eq Enums::PaymentStatus::PAYMENT_RECEIVED
   end
 end

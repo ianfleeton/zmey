@@ -42,6 +42,7 @@ class OrderLine < ActiveRecord::Base
   end
 
   def recalculate_order_total
+    order.reload
     order.calculate_total
     order.save
   end
