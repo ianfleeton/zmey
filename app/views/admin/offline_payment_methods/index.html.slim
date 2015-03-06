@@ -10,3 +10,6 @@ p= new_button [:admin, OfflinePaymentMethod]
       - @offline_payment_methods.each do |opm|
         tr
           td= opm.name
+          td
+            .btn-group
+              = delete_button [:admin, opm]

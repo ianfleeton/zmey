@@ -16,6 +16,11 @@ class Admin::OfflinePaymentMethodsController < Admin::AdminController
     end
   end
 
+  def destroy
+    OfflinePaymentMethod.find(params[:id]).destroy
+    redirect_to admin_offline_payment_methods_path
+  end
+
   private
 
     def offline_payment_method_params

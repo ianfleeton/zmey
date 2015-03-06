@@ -59,4 +59,20 @@ RSpec.describe Admin::OfflinePaymentMethodsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    let(:opm) { FactoryGirl.create(:offline_payment_method) }
+
+    before do
+      delete :destroy, id: opm.id
+    end
+
+    it 'destroys the payment method' do
+      expect(OfflinePaymentMethod.find_by(id: opm.id)).to be_nil
+    end
+
+    it 'redirects to index' do
+      expect(response).to redirect_to admin_offline_payment_methods_path
+    end
+  end
 end
