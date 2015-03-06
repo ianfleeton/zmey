@@ -1,5 +1,7 @@
 = page_header t('.heading')
 
+p= new_button [:admin, OfflinePaymentMethod]
+
 - if @offline_payment_methods.any?
   table.table.table-bordered
     thead

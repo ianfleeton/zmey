@@ -79,9 +79,16 @@ en:
       new:
         heading: 'New Nominal Code'
     offline_payment_methods:
+      create:
+        flash:
+          created: 'New offline payment method saved.'
+      form:
+        save: 'Save'
       index:
         heading: 'Offline Payment Methods'
         name: 'Name'
+      new:
+        heading: 'New Offline Payment Method'
     orders:
       edit:
         heading: 'Edit Order'

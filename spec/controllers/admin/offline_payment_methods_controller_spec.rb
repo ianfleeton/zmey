@@ -15,4 +15,48 @@ RSpec.describe Admin::OfflinePaymentMethodsController, type: :controller do
       expect(assigns(:offline_payment_methods)).to include(opm)
     end
   end
+
+  describe 'GET new' do
+    before { get :new }
+
+    it 'assigns a new method as @offline_payment_method' do
+      expect(assigns(:offline_payment_method)).to be_kind_of OfflinePaymentMethod
+    end
+  end
+
+  describe 'POST create' do
+    let(:name) { SecureRandom.hex }
+    let(:valid_params) { {'offline_payment_method' => {'name' => name}} }
+    let(:invalid_params) { {'offline_payment_method' => {'name' => ''}} }
+
+    before { post :create, params }
+
+    context 'with valid params' do
+      let(:params) { valid_params }
+
+      it 'creates a new offline payment method with the given params' do
+        expect(OfflinePaymentMethod.find_by(name: name)).to be
+      end
+
+      it 'sets a flash notice' do
+        expect(flash[:notice]).to eq I18n.t('controllers.admin.offline_payment_methods.create.flash.created')
+      end
+
+      it 'redirects to the offline payment method index' do
+        expect(response).to redirect_to admin_offline_payment_methods_path
+      end
+    end
+
+    context 'with invalid params' do
+      let(:params) { invalid_params }
+
+      it 'assigns @offline_payment_method' do
+        expect(assigns(:offline_payment_method)).to be_kind_of OfflinePaymentMethod
+      end
+
+      it 'renders new' do
+        expect(response).to render_template :new
+      end
+    end
+  end
 end
