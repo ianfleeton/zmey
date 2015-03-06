@@ -112,6 +112,12 @@ en:
         visible: 'Visible (customers can see this page)'
       index:
         top: 'Top'
+    payments:
+      new:
+        choose_method: 'Choose method'
+        heading: 'Add Payment for Order %{order_number}'
+        payment_method: 'Payment method'
+        save: 'Save'
     products:
       form:
         active: 'Show product on website'

@@ -1,0 +1,7 @@
+= page_header t('.heading', order_number: @payment.order.order_number)
+
+= bootstrap_form_for [:admin, @payment] do |f|
+  = f.hidden_field :order_id
+  = f.select :service_provider, OfflinePaymentMethod.order(:name), { prompt: t('.choose_method') }, required: true, label: t('.payment_method')
+  = f.text_field :amount, required: true
+  = f.submit t('.save')

@@ -46,6 +46,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :payments, except: [:show]
+
     resources :products, except: [:show] do
       collection do
         get 'search'
