@@ -23,6 +23,7 @@ Create a new order.
 
 * payment_on_account
 * payment_received
+* quote
 * waiting_for_payment
 
 ### Additional attributes
