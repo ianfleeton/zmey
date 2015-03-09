@@ -95,7 +95,7 @@ class PaymentsController < ApplicationController
   # Handles payments being made on account, that is, no payment is actually being
   # made. This can only happen when the website allows this method of payment.
   def on_account
-    if (order = Order.find_by(session[:order_id])) && website.accept_payment_on_account?
+    if (order = Order.find_by(id: session[:order_id])) && website.accept_payment_on_account?
       order.status = Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
       order.save
       send_notification(order)
