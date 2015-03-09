@@ -44,7 +44,7 @@ table.table.table-bordered
     th colspan="2"= @order.shipping_method
     td &nbsp;
     td.price.shipping-amount= formatted_price(@order.shipping_amount)
-    - unless @w.vat_number.empty?
+    - unless website.vat_number.empty?
       tr
         th colspan="2" VAT:
         td &nbsp;
@@ -53,3 +53,5 @@ table.table.table-bordered
     th colspan="2" Order total
     td &nbsp;
     td.price.total= formatted_price(@order.total)
+
+= render partial: 'payments', locals: { payments: @order.payments } if @order.payments.any?

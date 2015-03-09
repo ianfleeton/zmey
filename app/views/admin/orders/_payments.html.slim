@@ -1,0 +1,18 @@
+h2= t('.heading')
+
+table.table.table-bordered
+  thead
+    tr
+      th When
+      th Amount
+      th Provider
+      th Transaction ID
+      th Message
+  tbody
+    - payments.each do |payment|
+      tr class="#{payment.accepted? ? 'alert-success' : 'alert-danger'}"
+        td= payment.created_at
+        td= payment.amount
+        td= payment.service_provider
+        td= payment.transaction_id
+        td= payment.raw_auth_message

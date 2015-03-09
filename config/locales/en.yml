@@ -103,6 +103,8 @@ en:
         when_placed: 'When Placed'
       new:
         heading: 'New Order'
+      payments:
+        heading: 'Payments'
       show:
         heading: 'Order Details'
     pages:
