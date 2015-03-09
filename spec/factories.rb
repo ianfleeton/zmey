@@ -105,6 +105,10 @@ FactoryGirl.define do
     description 'Nominal Code'
   end
 
+  factory :offline_payment_method do
+    sequence(:name) { |n| "Payment Method #{n}" }
+  end
+
   factory :order do
     email_address           'buyer@example.org'
     billing_address_line_1  '123 Street'

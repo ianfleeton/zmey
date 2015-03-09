@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :images
     resources :liquid_templates, except: [:show]
     resources :nominal_codes, except: [:show]
+    resources :offline_payment_methods, except: [:show]
 
     resources :orders do
       collection do
@@ -44,6 +45,8 @@ Rails.application.routes.draw do
         get 'move_down'
       end
     end
+
+    resources :payments, except: [:show]
 
     resources :products, except: [:show] do
       collection do

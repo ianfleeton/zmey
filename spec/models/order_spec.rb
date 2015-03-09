@@ -6,7 +6,7 @@ describe Order do
     before { order.save }
 
     context 'with blank order number' do
-      let(:order_number) { nil }      
+      let(:order_number) { nil }
       it 'creates an order number' do
         expect(order.order_number).to be_present
       end
@@ -24,6 +24,56 @@ describe Order do
     it 'returns its order number' do
       o = Order.new(order_number: '123')
       expect(o.to_s).to eq '123'
+    end
+  end
+
+  describe '#amount_paid' do
+    it 'returns the sum of accepted payment amounts' do
+      o = FactoryGirl.create(:order)
+      FactoryGirl.create(:payment, order: o, amount:  5, accepted: true)
+      FactoryGirl.create(:payment, order: o, amount: 10, accepted: true)
+      FactoryGirl.create(:payment, order: o, amount:  5, accepted: false)
+      expect(o.amount_paid).to eq 15.0
+    end
+  end
+
+  describe '#outstanding_payment_amount' do
+    it 'returns the amount still left to be paid' do
+      o = FactoryGirl.create(:order)
+      o.total = 50
+      FactoryGirl.create(:payment, order: o, amount:  5, accepted: true)
+      FactoryGirl.create(:payment, order: o, amount: 10, accepted: true)
+      expect(o.outstanding_payment_amount).to eq 35.0
+    end
+  end
+
+  describe '#payment_accepted' do
+    let(:order) { FactoryGirl.create(:order) }
+    let(:payment) { FactoryGirl.build(:payment, order: order, amount: amount, accepted: true) }
+    before do
+      # Stub out payment communicating with order
+      allow(payment).to receive(:notify_order)
+      payment.save
+
+      order.total = 10
+
+      order.payment_accepted(payment)
+    end
+
+    context 'when payment less than needed' do
+      let(:amount) { 5 }
+
+      it 'leaves status WAITING_FOR_PAYMENT' do
+        expect(order.status).to eq Enums::PaymentStatus::WAITING_FOR_PAYMENT
+      end
+    end
+
+    context 'when payment is in full' do
+      let(:amount) { 10 }
+
+      it 'transitions status to PAYMENT_RECEIVED and saves itself' do
+        expect(order.reload.status).to eq Enums::PaymentStatus::PAYMENT_RECEIVED
+      end
     end
   end
 

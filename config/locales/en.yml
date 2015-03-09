@@ -78,6 +78,17 @@ en:
         no_nominal_codes: 'No nominal codes have been set up.'
       new:
         heading: 'New Nominal Code'
+    offline_payment_methods:
+      create:
+        flash:
+          created: 'New offline payment method saved.'
+      form:
+        save: 'Save'
+      index:
+        heading: 'Offline Payment Methods'
+        name: 'Name'
+      new:
+        heading: 'New Offline Payment Method'
     orders:
       edit:
         heading: 'Edit Order'
@@ -92,6 +103,8 @@ en:
         when_placed: 'When Placed'
       new:
         heading: 'New Order'
+      payments:
+        heading: 'Payments'
       show:
         heading: 'Order Details'
     pages:
@@ -101,6 +114,12 @@ en:
         visible: 'Visible (customers can see this page)'
       index:
         top: 'Top'
+    payments:
+      new:
+        choose_method: 'Choose method'
+        heading: 'Add Payment for Order %{order_number}'
+        payment_method: 'Payment method'
+        save: 'Save'
     products:
       form:
         active: 'Show product on website'

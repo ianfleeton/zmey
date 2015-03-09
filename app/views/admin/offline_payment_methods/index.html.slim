@@ -1,0 +1,15 @@
+= page_header t('.heading')
+
+p= new_button [:admin, OfflinePaymentMethod]
+
+- if @offline_payment_methods.any?
+  table.table.table-bordered
+    thead
+      th= t('.name')
+    tbody
+      - @offline_payment_methods.each do |opm|
+        tr
+          td= opm.name
+          td
+            .btn-group
+              = delete_button [:admin, opm]

@@ -97,6 +97,29 @@ class Order < ActiveRecord::Base
     status == Enums::PaymentStatus::PAYMENT_RECEIVED
   end
 
+  # Returns the sum of all accepted payment amounts.
+  def amount_paid
+    accepted_payments.sum(:amount).to_f
+  end
+
+  def accepted_payments
+    payments.where(accepted: true)
+  end
+
+  # Returns the amount still left to be paid.
+  def outstanding_payment_amount
+    total - amount_paid
+  end
+
+  # Transitions the status to PAYMENT_RECEIVED if sufficient payments have
+  # been received.
+  def payment_accepted(payment)
+    if outstanding_payment_amount <= 0
+      self.status = Enums::PaymentStatus::PAYMENT_RECEIVED
+      save
+    end
+  end
+
   # Copies +address+ (an Address) into the +email_address+ and
   # <tt>delivery_*</tt> attributes.
   def copy_delivery_address(address)

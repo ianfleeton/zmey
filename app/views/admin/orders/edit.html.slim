@@ -1,5 +1,7 @@
 = page_header t('.heading')
 
+p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class: 'btn btn-default'
+
 = form_for [:admin, @order] do |f|
 
   table.table.table-bordered
@@ -57,3 +59,4 @@ javascript:
     });
   });
 
+= render partial: 'payments', locals: { payments: @order.payments } if @order.payments.any?
