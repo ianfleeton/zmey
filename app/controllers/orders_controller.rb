@@ -10,8 +10,11 @@ class OrdersController < ApplicationController
   end
 
   def receipt
-    redirect_to controller: 'basket', action: 'index' and return unless (@order.payment_received? or @order.status==Enums::PaymentStatus::PAYMENT_ON_ACCOUNT)
-    @google_ecommerce_tracking = true
+    if can_show_receipt?(order)
+      @google_ecommerce_tracking = true
+    else
+      redirect_to controller: 'basket', action: 'index'
+    end
   end
 
   def show
@@ -58,5 +61,9 @@ class OrdersController < ApplicationController
     if @order.nil?
       redirect_to orders_path, notice: 'Cannot find order.'
     end
+  end
+
+  def can_show_receipt?(order)
+    order.payment_received? || order.status==Enums::PaymentStatus::PAYMENT_ON_ACCOUNT || order.status==Enums::PaymentStatus::QUOTE
   end
 end
