@@ -1,7 +1,10 @@
 def sign_in_as_admin
-  admin = FactoryGirl.create(:admin)
+  sign_in_as(FactoryGirl.create(:admin))
+end
+
+def sign_in_as(user)
   visit '/sessions/new'
-  fill_in 'Email', with: admin.email
-  fill_in 'Password', with: admin.password
+  fill_in 'Email', with: user.email
+  fill_in 'Password', with: user.password
   click_button 'Sign In'
 end
