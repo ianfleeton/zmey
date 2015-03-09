@@ -108,9 +108,9 @@ RSpec.describe CheckoutController, type: :controller do
     context 'with valid details' do
       before { post :save_details, name: 'n', phone: '1', email: 'x' }
 
-      it { should set_session(:name).to('n') }
-      it { should set_session(:phone).to('1') }
-      it { should set_session(:email).to('x') }
+      it { should set_session[:name].to('n') }
+      it { should set_session[:phone].to('1') }
+      it { should set_session[:email].to('x') }
 
       it_behaves_like 'a checkout advancer', :post, :save_details, name: 'n', phone: '1', email: 'x'
     end
@@ -184,7 +184,7 @@ RSpec.describe CheckoutController, type: :controller do
         context 'when user has addresses' do
           let(:addresses) { [Address.new] }
 
-          it { should set_session(:source).to('billing') }
+          it { should set_session[:source].to('billing') }
           it { should redirect_to choose_billing_address_addresses_path }
         end
 
@@ -265,7 +265,7 @@ RSpec.describe CheckoutController, type: :controller do
       end
     end
 
-    context 'when updating and billing and delivery address are the same' do     
+    context 'when updating and billing and delivery address are the same' do
       let(:billing_address) { FactoryGirl.create(:address) }
       let(:session_billing_address_id) { billing_address.id }
       let(:session_delivery_address_id) { billing_address.id }
@@ -291,7 +291,7 @@ RSpec.describe CheckoutController, type: :controller do
         end
       end
 
-      it { should set_session(:billing_address_id) }
+      it { should set_session[:billing_address_id] }
     end
 
     context 'when create/update succeeds' do
@@ -350,7 +350,7 @@ RSpec.describe CheckoutController, type: :controller do
         context 'when user has addresses' do
           let(:addresses) { [Address.new] }
 
-          it { should set_session(:source).to('delivery') }
+          it { should set_session[:source].to('delivery') }
           it { should redirect_to choose_delivery_address_addresses_path }
         end
 
@@ -371,7 +371,7 @@ RSpec.describe CheckoutController, type: :controller do
       allow(controller).to receive(:delivery_address).and_return(delivery_address)
       session[:billing_address_id] = session_billing_address_id
       session[:delivery_address_id] = session_delivery_address_id
-      post :save_delivery, address: address.attributes 
+      post :save_delivery, address: address.attributes
     end
 
     context 'when delivery address found' do
@@ -383,7 +383,7 @@ RSpec.describe CheckoutController, type: :controller do
       end
     end
 
-    context 'when updating and billing and delivery address are the same' do     
+    context 'when updating and billing and delivery address are the same' do
       let(:delivery_address) { FactoryGirl.create(:address) }
       let(:session_billing_address_id) { delivery_address.id }
       let(:session_delivery_address_id) { delivery_address.id }
@@ -401,7 +401,7 @@ RSpec.describe CheckoutController, type: :controller do
         expect(Address.find_by(address_line_1: address.address_line_1)).to be
       end
 
-      it { should set_session(:delivery_address_id) }
+      it { should set_session[:delivery_address_id] }
     end
 
     context 'when create/update succeeds' do

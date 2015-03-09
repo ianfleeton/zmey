@@ -47,12 +47,12 @@ describe AddressesController do
 
       context 'when recognised source in param' do
         let(:source) { 'bad' }
-        it { should set_session(:source).to 'address_book' }
+        it { should set_session[:source].to 'address_book' }
       end
 
       context 'when recognised source in param' do
         let(:source) { 'billing' }
-        it { should set_session(:source).to 'billing' }
+        it { should set_session[:source].to 'billing' }
       end
 
       context 'when not signed in' do
@@ -98,7 +98,7 @@ describe AddressesController do
     end
 
     it { should redirect_to checkout_path }
-    it { should set_session(:billing_address_id).to address.id }
+    it { should set_session[:billing_address_id].to address.id }
     it_behaves_like 'an authenticated action'
   end
 
@@ -112,7 +112,7 @@ describe AddressesController do
     end
 
     it { should redirect_to checkout_path }
-    it { should set_session(:delivery_address_id).to address.id }
+    it { should set_session[:delivery_address_id].to address.id }
     it_behaves_like 'an authenticated action'
   end
 
