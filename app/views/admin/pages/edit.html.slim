@@ -55,7 +55,7 @@ ol.breadcrumb
             });
           .form-group
             .row
-              .col-xs-9                  
+              .col-xs-9
                 label.sr-only Search Products
                 input.form-control#product-search-query type="search" name="query" placeholder="Product to find"
               .col-xs-3
@@ -67,4 +67,4 @@ ol.breadcrumb
                   = form.collection_select :product_id, Product.limit(100), :id, :name_with_sku, {}, class: 'form-control'
               .col-xs-3
                 = submit_tag 'Add Product', class: 'btn btn-default'
-    = delete_button(@page)
+    = delete_button([:admin, @page])

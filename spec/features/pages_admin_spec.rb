@@ -41,4 +41,11 @@ feature 'Pages admin' do
     click_link "Delete #{the_page}"
     expect(Page.find_by(id: the_page.id)).to be_nil
   end
+
+  scenario 'Delete page from the edit screen' do
+    the_page.save
+    visit edit_admin_page_path(the_page)
+    click_link "Delete #{the_page}"
+    expect(Page.find_by(id: the_page.id)).to be_nil
+  end
 end
