@@ -1,0 +1,8 @@
+= bootstrap_form_for([:admin, @post]) do |f|
+  = f.text_field :author
+
+  = f.text_area :content
+
+  = f.email_field :email
+
+  = f.submit

@@ -9,7 +9,7 @@
   <p class="post_details">Posted <%= format_date(p.created_at) %> by <%= h p.author %></p>
 </div>
   <% if admin? -%>
-    <p><%= link_to('Edit Post', action: 'edit_post', post_id: p.id) %></p>
+    <p><%= link_to('Edit Post', edit_admin_post_path(p), data: { 'no-turbolink' => true }) %></p>
     <% unless @topic.posts.first == p -%>
       <%= form_tag action: 'destroy_post', post_id: p.id do %>
         <%= submit_tag 'Delete Post' %>

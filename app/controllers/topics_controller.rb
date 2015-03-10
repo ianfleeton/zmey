@@ -14,7 +14,7 @@ class TopicsController < ApplicationController
       @post.email = website.email
     end
   end
-  
+
   def create_reply
     @topic = Topic.find(params[:post][:topic_id])
 
@@ -40,25 +40,20 @@ class TopicsController < ApplicationController
       end
     end
   end
-  
+
   def create
     @topic = Topic.new
     @topic.topic = params[:topic]
     @topic.forum_id = params[:forum_id]
     @post = Post.new(post_params)
 
-    # check forum
     @forum = Forum.find(params[:forum_id])
-    if @forum.website_id != @w.id
-      flash[:notice] = 'Invalid forum.'
-      redirect_to forums_path and return
-    end
 
     render :new and return unless good_token?
-        
+
     @topic.last_post_at = Time.now
     @topic.save
-    
+
     @post.topic_id = @topic.id
 
     if @post.save
@@ -67,13 +62,13 @@ class TopicsController < ApplicationController
       redirect_to action: 'show', id: @topic
     else
       @topic.destroy
-      
+
       render :new
     end
   end
 
   def show
-    @topic = Topic.find(params[:id], include: :posts)
+    @topic = Topic.eager_load(:posts).find(params[:id])
     @title = @topic.topic + ' - Forum'
     @topic.views += 1
     @topic.save
@@ -82,14 +77,14 @@ class TopicsController < ApplicationController
     @post = Post.new
     @post.topic_id = @topic.id
   end
-  
+
   def destroy
     @topic = Topic.find(params[:id])
     @topic.destroy
     flash[:notice] = "The topic and all its posts have been deleted."
     redirect_to @topic.forum
   end
-  
+
   # destroys a post
   # destroys its topic if the post is the last in the topic
   def destroy_post
@@ -107,7 +102,7 @@ class TopicsController < ApplicationController
       redirect_to action: 'show', id: @topic.id
     end
   end
-  
+
   protected
 
   def update_topic_with_post p, adjust_post_count = 1

@@ -1,13 +1,17 @@
 require 'rails_helper'
 
-describe TopicsController do
+RSpec.describe TopicsController, type: :controller do
+  let(:website) { FactoryGirl.build(:website) }
+
+  before do
+    allow(controller).to receive(:website).and_return(website)
+  end
+
   describe 'GET new' do
     let(:forum)   { FactoryGirl.create(:forum) }
-    let(:website) { FactoryGirl.build(:website) }
     let(:admin)   { false }
 
     before do
-      allow(controller).to receive(:website).and_return(website)
       allow(controller).to receive(:admin?).and_return(admin)
       get :new, forum_id: forum.id
     end
@@ -28,6 +32,14 @@ describe TopicsController do
         expect(assigns(:post).author).to eq website.name
         expect(assigns(:post).email).to eq website.email
       end
+    end
+  end
+
+  describe 'GET show' do
+    it 'sets @topic' do
+      topic = FactoryGirl.create(:topic)
+      get :show, id: topic.id
+      expect(assigns(:topic)).to eq topic
     end
   end
 end

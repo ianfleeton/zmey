@@ -120,6 +120,9 @@ en:
         heading: 'Add Payment for Order %{order_number}'
         payment_method: 'Payment method'
         save: 'Save'
+    posts:
+      edit:
+        heading: 'Edit Post'
     products:
       form:
         active: 'Show product on website'

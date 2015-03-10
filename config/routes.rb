@@ -48,6 +48,8 @@ Rails.application.routes.draw do
 
     resources :payments, except: [:show]
 
+    resources :posts, except: [:show]
+
     resources :products, except: [:show] do
       collection do
         get 'search'

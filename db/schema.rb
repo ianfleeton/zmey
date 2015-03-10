@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305152014) do
+ActiveRecord::Schema.define(version: 20150310101947) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -374,7 +374,7 @@ ActiveRecord::Schema.define(version: 20150305152014) do
   add_index "permutations", ["permutation"], name: "index_permutations_on_permutation", using: :btree
 
   create_table "posts", force: :cascade do |t|
-    t.integer  "topic_id",   limit: 4,     default: 0,  null: false
+    t.integer  "topic_id",   limit: 4,                  null: false
     t.text     "content",    limit: 65535
     t.string   "author",     limit: 255,   default: "", null: false
     t.string   "email",      limit: 255,   default: "", null: false

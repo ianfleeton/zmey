@@ -1,5 +1,5 @@
 class ForumsController < ApplicationController
-  before_action :find_forum, only: [:show, :feed]
+  before_action :set_forum, only: [:show, :feed]
   before_action :admin_required, only: [:new, :edit, :create, :update, :destroy]
 
   def index
@@ -8,13 +8,13 @@ class ForumsController < ApplicationController
 
   def show
     @title = 'Recent Topics'
-    @topics = Topic.find(:all, conditions: {forum_id: @forum.id}, order: 'last_post_at DESC')
+    @topics = @forum.topics.order('last_post_at DESC')
   end
-  
+
   def new
     @forum = Forum.new
   end
-  
+
   def create
     @forum = Forum.new(forum_params)
     @forum.website_id = @w.id
@@ -28,17 +28,16 @@ class ForumsController < ApplicationController
   end
 
   def feed
-    respond_to do |format| 
-      format.xml { render layout: false } 
-    end 
+    respond_to do |format|
+      format.xml { render layout: false }
+    end
   end
 
   protected
-  
-  def find_forum
-    @forum = Forum.find(params[:id])
-    not_found if @forum.website_id != @w.id
-  end
+
+    def set_forum
+      @forum = Forum.find(params[:id])
+    end
 
   def forum_params
     params.require(:forum).permit(:name)

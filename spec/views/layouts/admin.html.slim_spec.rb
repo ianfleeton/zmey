@@ -11,4 +11,9 @@ describe 'layouts/admin.html.slim' do
     render
     expect(rendered).to have_selector "a[href='#{sessions_path}']"
   end
+
+  it 'has a link to forums' do
+    render
+    expect(rendered).to have_slector "a[href='#{forums_path}]"
+  end
 end

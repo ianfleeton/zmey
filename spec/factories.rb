@@ -138,6 +138,13 @@ FactoryGirl.define do
   factory :payment do
   end
 
+  factory :post do
+    association :topic
+    author  'A. Uther'
+    content 'Post content'
+    email   'author@example.org'
+  end
+
   factory :product do
     name 'Product'
     sequence(:sku) { |n| "SKU#{n}" }
@@ -160,6 +167,10 @@ FactoryGirl.define do
   factory :shipping_zone do
     sequence(:name) { |n| "Shipping Zone #{n}" }
     association :website
+  end
+
+  factory :topic do
+    last_post_at Time.now
   end
 
   factory :user do
