@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe OrderLine do
+  it { should validate_numericality_of(:product_price) }
   it { should validate_numericality_of(:quantity).is_greater_than_or_equal_to(1) }
 
   describe '#line_total_net' do
