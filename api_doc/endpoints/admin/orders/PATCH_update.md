@@ -18,5 +18,5 @@ curl -X PATCH https://zmey.co.uk/api/admin/orders/1 \
 
 ### Response
 
-**200 No Content** is returned when the order is updated, otherwise **404 Not Found** is
+**204 No Content** is returned when the order is updated, otherwise **404 Not Found** is
 returned.
