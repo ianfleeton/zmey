@@ -107,4 +107,36 @@ describe 'Admin users API' do
       end
     end
   end
+
+  describe 'PATCH update' do
+    let(:customer_reference) { 'ABUY1234' }
+
+    before do
+      patch api_admin_user_path(user), user: { customer_reference: customer_reference }
+    end
+
+    context 'when user found' do
+      let(:user) { FactoryGirl.create(:user) }
+
+      it 'responds with 204 No Content' do
+        expect(status).to eq 204
+      end
+
+      it 'updates a user' do
+        expect(User.find(user.id).customer_reference).to eq customer_reference
+      end
+    end
+
+    context 'when user not found' do
+      let(:user) do
+        u = FactoryGirl.create(:user)
+        u.id += 1
+        u
+      end
+
+      it 'responds 404 Not Found' do
+        expect(status).to eq 404
+      end
+    end
+  end
 end
