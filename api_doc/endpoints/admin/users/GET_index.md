@@ -2,6 +2,10 @@
 
 Returns a summary list of all users.
 
+## Parameters
+
+* **email** — Filters by email. Returns a maximum of 1 result.
+
 ## Example
 
 ### Request
@@ -29,5 +33,5 @@ curl https://zmey.co.uk/api/admin/users
       "email": "buyer@example.org"
     }
   ]
-}  
+}
 ```

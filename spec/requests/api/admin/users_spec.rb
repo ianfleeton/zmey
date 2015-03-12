@@ -6,19 +6,29 @@ describe 'Admin users API' do
   end
 
   describe 'GET index' do
-    context 'with users' do
-      before do
-        @user1 = FactoryGirl.create(:user, website_id: @website.id)
-        @user2 = FactoryGirl.create(:user)
+    let(:json)              { JSON.parse(response.body) }
+    let(:num_items)         { 1 }
+    let(:email)             { nil }
+
+    # +more_setup+ lambda allows more setup in the outer before block.
+    let(:more_setup)        { nil }
+
+    before do
+      num_items.times do |x|
+        FactoryGirl.create(:user)
       end
 
+      @user1 = User.first
+
+      more_setup.try(:call)
+
+      get '/api/admin/users', email: email
+    end
+
+    context 'with users' do
       it 'returns users for the website' do
-        get '/api/admin/users'
-
-        users = JSON.parse(response.body)
-
-        expect(users['users'].length).to eq 1
-        user = users['users'][0]
+        expect(json['users'].length).to eq 2 # 1 set up + admin
+        user = json['users'][0]
         expect(user['id']).to eq @user1.id
         expect(user['href']).to eq api_admin_user_url(@user1)
         expect(user['name']).to eq @user1.name
@@ -26,21 +36,34 @@ describe 'Admin users API' do
       end
 
       it 'returns 200 OK' do
-        get '/api/admin/users'
         expect(response.status).to eq 200
       end
     end
 
-    context 'with no users' do
+    context 'with email set' do
+      let(:email) { "#{SecureRandom.hex}@example.org" }
+
+      let!(:more_setup) {->{
+        @matching_user = FactoryGirl.create(:user)
+        @matching_user.email = email
+        @matching_user.save
+      }}
+
+      it 'returns the matching email' do
+        expect(json['users'].length).to eq 1
+        expect(json['users'][0]['email']).to eq @matching_user.email
+      end
+    end
+
+    context 'with no matching users' do
+      let(:email) { 'nonexistent@example.org' }
+
       it 'returns 200 OK' do
-        get '/api/admin/users'
         expect(response.status).to eq 200
       end
 
       it 'returns an empty set' do
-        get '/api/admin/users'
-        users = JSON.parse(response.body)
-        expect(users['users'].length).to eq 0
+        expect(json['users'].length).to eq 0
       end
     end
   end
