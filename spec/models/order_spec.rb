@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-describe Order do
+RSpec.describe Order, type: :model do
+  it { should have_many(:order_comments).dependent(:delete_all).inverse_of(:order) }
+
   describe 'before_create :create_order_number' do
     let(:order) { FactoryGirl.build(:order, order_number: order_number) }
     before { order.save }

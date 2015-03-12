@@ -60,3 +60,18 @@ javascript:
   });
 
 = render partial: 'payments', locals: { payments: @order.payments } if @order.payments.any?
+
+h2= t('.comments')
+
+- if @order.order_comments.any?
+  table.table.table-bordered
+    thead
+      th= t('.comment_created_at')
+      th= t('.comment')
+    tbody
+      - @order.order_comments.each do |comment|
+        tr
+          td= comment.created_at
+          td= comment.comment
+- else
+  p= t('.no_comments')

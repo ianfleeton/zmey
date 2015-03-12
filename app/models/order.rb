@@ -66,6 +66,7 @@ class Order < ActiveRecord::Base
   belongs_to :delivery_country, class_name: 'Country'
   belongs_to :basket
   belongs_to :user
+  has_many :order_comments, dependent: :delete_all, inverse_of: :order
   has_many :order_lines, dependent: :delete_all, inverse_of: :order
   has_many :payments, dependent: :delete_all
 

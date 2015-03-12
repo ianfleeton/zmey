@@ -122,6 +122,11 @@ FactoryGirl.define do
     status                  Enums::PaymentStatus::WAITING_FOR_PAYMENT
   end
 
+  factory :order_comment do
+    association :order
+    comment "MyText"
+  end
+
   factory :order_line do
     quantity    1
     association :order

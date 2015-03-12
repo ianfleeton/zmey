@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310101947) do
+ActiveRecord::Schema.define(version: 20150312140152) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -245,6 +245,15 @@ ActiveRecord::Schema.define(version: 20150310101947) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "order_comments", force: :cascade do |t|
+    t.integer  "order_id",   limit: 4,     null: false
+    t.text     "comment",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "order_comments", ["order_id"], name: "index_order_comments_on_order_id", using: :btree
 
   create_table "order_lines", force: :cascade do |t|
     t.integer  "order_id",             limit: 4,                              default: 0,   null: false

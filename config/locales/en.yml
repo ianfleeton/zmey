@@ -91,7 +91,11 @@ en:
         heading: 'New Offline Payment Method'
     orders:
       edit:
+        comment: 'Comment'
+        comment_created_at: 'When'
+        comments: 'Comments'
         heading: 'Edit Order'
+        no_comments: 'No comments have been added to this order yet.'
       index:
         full_name: 'Full Name'
         heading: 'Orders'
