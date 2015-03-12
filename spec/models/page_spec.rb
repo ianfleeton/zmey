@@ -2,7 +2,7 @@ require 'rails_helper'
 require_relative 'shared_examples/extra_attributes_shared.rb'
 
 describe Page do
-  it { should ensure_length_of(:description).is_at_most(200) }
+  it { should validate_length_of(:description).is_at_most(200) }
 
   context 'uniqueness' do
     before  { FactoryGirl.create(:page) }
