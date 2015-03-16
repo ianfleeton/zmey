@@ -27,6 +27,8 @@ json.order do
   json.billing_county           @order.billing_county
   json.billing_postcode         @order.billing_postcode
   json.billing_phone_number     @order.billing_phone_number
+  json.shipment_email_sent_at   @order.shipment_email_sent_at
+  json.shipped_at               @order.shipped_at
   json.shipping_amount          @order.shipping_amount
   json.shipping_tax_amount      @order.shipping_tax_amount
   json.shipping_method          @order.shipping_method

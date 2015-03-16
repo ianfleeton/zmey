@@ -139,7 +139,9 @@ describe 'Admin orders API' do
         @order = FactoryGirl.create(:order,
           billing_company: 'YESL', billing_address_line_3: 'Copley Road',
           delivery_company: 'FBS', delivery_address_line_3: 'Beighton',
-          shipping_tracking_number: 'TRACK123'
+          shipment_email_sent_at: '2014-05-14T16:25:56.000+01:00',
+          shipped_at: '2014-05-14T15:50:12.000+01:00',
+          shipping_tracking_number: 'TRACK123',
         )
       end
 
@@ -153,6 +155,13 @@ describe 'Admin orders API' do
         it "includes #{component} in JSON" do
           get api_admin_order_path(@order)
           expect(order[component]).to eq @order.send(component.to_sym)
+        end
+      end
+
+      ['shipment_email_sent_at', 'shipped_at'].each do |component|
+        it "includes datetime component #{component} in JSON" do
+          get api_admin_order_path(@order)
+          expect(Time.parse(order[component])).to eq @order.send(component.to_sym)
         end
       end
 
@@ -261,11 +270,15 @@ describe 'Admin orders API' do
 
   describe 'PATCH update' do
     let(:processed_at) { '2014-05-14T14:03:56.000+01:00' }
+    let(:shipment_email_sent_at) { '2014-05-14T16:25:56.000+01:00' }
+    let(:shipped_at) { '2014-05-14T15:50:12.000+01:00' }
     let(:shipping_tracking_number) { 'TRACK123' }
 
     before do
       patch api_admin_order_path(order), order: {
         processed_at: processed_at,
+        shipment_email_sent_at: shipment_email_sent_at,
+        shipped_at: shipped_at,
         shipping_tracking_number: shipping_tracking_number,
       }
     end
@@ -280,6 +293,8 @@ describe 'Admin orders API' do
       it 'updates an order' do
         order.reload
         expect(order.processed_at).to eq processed_at
+        expect(order.shipment_email_sent_at).to eq shipment_email_sent_at
+        expect(order.shipped_at).to eq shipped_at
         expect(order.shipping_tracking_number).to eq shipping_tracking_number
       end
     end
