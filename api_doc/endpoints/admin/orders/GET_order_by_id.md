@@ -48,6 +48,7 @@ returned.
     "shipping_amount": "0.0",
     "shipping_tax_amount": "0.0",
     "shipping_method": "Free Shipping",
+    "shipping_tracking_number": "TRACK123",
     "status": "payment_received",
     "total": "17.5",
     "ip_address": "127.0.0.1",

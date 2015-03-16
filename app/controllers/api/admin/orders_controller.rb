@@ -89,6 +89,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       :email_address,
       :order_number,
       :processed_at,
+      :shipping_tracking_number,
       :status,
       )
     end

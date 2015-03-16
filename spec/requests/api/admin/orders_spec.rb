@@ -138,7 +138,8 @@ describe 'Admin orders API' do
       before do
         @order = FactoryGirl.create(:order,
           billing_company: 'YESL', billing_address_line_3: 'Copley Road',
-          delivery_company: 'FBS', delivery_address_line_3: 'Beighton'
+          delivery_company: 'FBS', delivery_address_line_3: 'Beighton',
+          shipping_tracking_number: 'TRACK123'
         )
       end
 
@@ -147,7 +148,8 @@ describe 'Admin orders API' do
         expect(response.status).to eq 200
       end
 
-      ['billing_address_line_3', 'billing_company', 'delivery_address_line_3', 'delivery_company'].each do |component|
+      ['billing_address_line_3', 'billing_company', 'delivery_address_line_3', 'delivery_company',
+        'shipping_tracking_number'].each do |component|
         it "includes #{component} in JSON" do
           get api_admin_order_path(@order)
           expect(order[component]).to eq @order.send(component.to_sym)
@@ -259,9 +261,13 @@ describe 'Admin orders API' do
 
   describe 'PATCH update' do
     let(:processed_at) { '2014-05-14T14:03:56.000+01:00' }
+    let(:shipping_tracking_number) { 'TRACK123' }
 
     before do
-      patch api_admin_order_path(order), order: { processed_at: processed_at }
+      patch api_admin_order_path(order), order: {
+        processed_at: processed_at,
+        shipping_tracking_number: shipping_tracking_number,
+      }
     end
 
     context 'when order found' do
@@ -272,7 +278,9 @@ describe 'Admin orders API' do
       end
 
       it 'updates an order' do
-        expect(Order.find(order.id).processed_at).to eq processed_at
+        order.reload
+        expect(order.processed_at).to eq processed_at
+        expect(order.shipping_tracking_number).to eq shipping_tracking_number
       end
     end
 

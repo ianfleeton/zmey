@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312140152) do
+ActiveRecord::Schema.define(version: 20150316123957) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -312,6 +312,7 @@ ActiveRecord::Schema.define(version: 20150312140152) do
     t.string   "delivery_company",               limit: 255
     t.string   "billing_address_line_3",         limit: 255
     t.string   "delivery_address_line_3",        limit: 255
+    t.string   "shipping_tracking_number",       limit: 255
   end
 
   add_index "orders", ["basket_id"], name: "index_orders_on_basket_id", using: :btree
