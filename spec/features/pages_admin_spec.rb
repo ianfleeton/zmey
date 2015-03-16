@@ -22,6 +22,7 @@ feature 'Pages admin' do
     click_button 'thumbnail_image_id_image_picker'
     click_link "image-#{image.id}"
     click_button 'Create New Page'
+    expect(page).to have_content 'added new page'
     expect(Page.find_by(name: the_page.name, thumbnail_image_id: image.id)).to be
   end
 
