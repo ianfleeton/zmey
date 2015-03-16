@@ -42,6 +42,11 @@
             = form.label :email
             = form.email_field :email, class: 'form-control', required: true
 
+          .checkbox
+            label
+              => form.check_box :send_pending_payment_emails
+              | Send pending payment emails
+
           .form-group
             = form.label :address_line_1
             = form.text_field :address_line_1, class: 'form-control'
@@ -305,7 +310,7 @@
             label
               = form.radio_button :sage_pay_active, true
               | Active
-    
+
           .radio
             label
               = form.radio_button :sage_pay_active, false
@@ -316,7 +321,7 @@
             label
               = form.radio_button :sage_pay_test_mode, false
               | Production mode
-    
+
           .radio
             label
               = form.radio_button :sage_pay_test_mode, true

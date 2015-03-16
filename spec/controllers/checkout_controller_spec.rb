@@ -555,6 +555,31 @@ RSpec.describe CheckoutController, type: :controller do
         end
       end
 
+      context 'pending payments email setting' do
+        before do
+          website.send_pending_payment_emails = send_pending_payment_emails
+          website.save
+        end
+
+        context 'when on' do
+          let(:send_pending_payment_emails) { true }
+
+          it 'sends an email to admin' do
+            expect(OrderNotifier).to receive(:admin_waiting_for_payment).and_call_original
+            get :confirm
+          end
+        end
+
+        context 'when off' do
+          let(:send_pending_payment_emails) { false }
+
+          it 'does not send an email to admin' do
+            expect(OrderNotifier).not_to receive(:admin_waiting_for_payment)
+            get :confirm
+          end
+        end
+      end
+
       it 'prepares payment methods' do
         expect(controller).to receive(:prepare_payment_methods)
         get :confirm

@@ -113,7 +113,7 @@ class Admin::WebsitesController < Admin::AdminController
       :theme,
       :worldpay_active, :worldpay_installation_id,
       :worldpay_payment_response_password, :worldpay_test_mode,
-      :scheme, :shipping_amount,
+      :scheme, :send_pending_payment_emails, :shipping_amount,
       :show_vat_inclusive_prices, :skip_payment, :skype_name,
       :subdomain,
       :terms_and_conditions, :town_city, :twitter_username,

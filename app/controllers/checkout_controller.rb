@@ -94,7 +94,10 @@ class CheckoutController < ApplicationController
     Webhook.trigger('order_created', @order)
 
     session[:order_id] = @order.id
-    OrderNotifier.admin_waiting_for_payment(website, @order).deliver_now
+
+    if website.send_pending_payment_emails?
+      OrderNotifier.admin_waiting_for_payment(website, @order).deliver_now
+    end
 
     prepare_payment_methods(@order)
   end
