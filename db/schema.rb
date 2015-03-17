@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316165301) do
+ActiveRecord::Schema.define(version: 20150317101805) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -426,6 +426,16 @@ ActiveRecord::Schema.define(version: 20150316165301) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "product_images", force: :cascade do |t|
+    t.integer  "product_id", limit: 4, null: false
+    t.integer  "image_id",   limit: 4, null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "product_images", ["image_id"], name: "index_product_images_on_image_id", using: :btree
+  add_index "product_images", ["product_id"], name: "index_product_images_on_product_id", using: :btree
 
   create_table "product_placements", force: :cascade do |t|
     t.integer  "page_id",    limit: 4, default: 0, null: false

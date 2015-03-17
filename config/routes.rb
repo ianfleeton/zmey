@@ -59,6 +59,8 @@ Rails.application.routes.draw do
 
     resources :product_groups, except: [:show]
 
+    resources :product_images, only: [:create, :destroy]
+
     resources :product_placements do
       member do
         post 'move_down'

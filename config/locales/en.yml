@@ -296,6 +296,12 @@ en:
         create:
           flash:
             created: 'Your new API key has been created.'
+      product_images:
+        create:
+          added: 'Image added.'
+          not_added: 'No image added.'
+        destroy:
+          removed: 'Image removed.'
       users:
         create:
           flash:

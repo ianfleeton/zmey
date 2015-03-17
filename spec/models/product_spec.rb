@@ -6,6 +6,9 @@ describe Product do
     @product = Product.new(price: 1.0)
   end
 
+  it { should have_many(:product_images).dependent(:delete_all) }
+  it { should have_many(:images).through(:product_images) }
+
   it { should have_many(:order_lines).dependent(:nullify) }
   it 'really does nullify order lines' do
     @product = FactoryGirl.create(:product)

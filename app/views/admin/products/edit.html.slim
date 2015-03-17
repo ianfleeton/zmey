@@ -8,6 +8,31 @@
   .col-md-6
     .panel.panel-default
       .panel-heading
+        h2.panel-title Images
+      - if @product.product_images.any?
+        table.table
+          thead
+            tr
+              th Image
+              th Name
+              th Actions
+          - @product.product_images.each do |pi|
+            tr
+              td= link_to image_tag(pi.image.url(128)), edit_admin_image_path(pi.image)
+              td= truncate(pi.image.name, 30)
+              td= delete_button [:admin, pi]
+      - else
+        .panel-body
+          = content_tag(:p, 'No images') if @product.images.empty?
+      .panel-body
+        = bootstrap_form_for([:admin, ProductImage.new(product_id: @product.id)], class: 'well') do |form|
+          = form.hidden_field :product_id
+          = form.label :image_id
+          = render partial: 'admin/images/image_picker', locals: { form: form, attribute: :image_id }
+          p= form.submit 'Add Image'
+
+    .panel.panel-default
+      .panel-heading
         h2.panel-title Features
       .panel-body
         p= link_to 'Add Feature', new_admin_feature_path(product_id: @product.id), class: 'btn btn-default'

@@ -24,7 +24,12 @@ class Product < ActiveRecord::Base
   has_many :components, dependent: :destroy
   has_many :features, dependent: :destroy
   has_many :quantity_prices, -> { order 'quantity' }, dependent: :delete_all
+
+  # Images
   belongs_to :image
+  has_many :product_images, dependent: :delete_all
+  has_many :images, through: :product_images
+
   belongs_to :nominal_code, inverse_of: :products
   has_many :order_lines, dependent: :nullify
   has_many :orders, through: :order_lines
@@ -37,6 +42,7 @@ class Product < ActiveRecord::Base
   liquid_methods :id, :description, :full_detail, :name, :path, :rrp?, :rrp, :shipping_supplement, :sku, :url
 
   before_save :set_nil_weight_to_zero
+  after_save :include_main_image_in_images
 
   # Tax types
   NO_TAX = 1
@@ -217,5 +223,13 @@ class Product < ActiveRecord::Base
 
     def set_nil_weight_to_zero
       self.weight ||= 0
+    end
+
+    def include_main_image_in_images
+      if image
+        unless images.include?(image)
+          ProductImage.create(product_id: id, image_id: image.id)
+        end
+      end
     end
 end
