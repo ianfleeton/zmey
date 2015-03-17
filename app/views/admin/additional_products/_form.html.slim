@@ -1,0 +1,13 @@
+= bootstrap_form_for [:admin, @additional_product] do |form|
+
+  = form.hidden_field :product_id
+
+  = form.collection_select :additional_product_id, Product.all, :id, :name_with_sku
+
+  = form.label :selected_by_default_true, 'Selected by default?'
+
+  = form.radio_button :selected_by_default, true, class: 'radio', label: 'Yes'
+
+  = form.radio_button :selected_by_default, false, class: 'radio', label: 'No'
+
+  = form.submit class: 'btn btn-primary'
