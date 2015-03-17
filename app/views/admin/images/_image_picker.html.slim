@@ -46,10 +46,12 @@ javascript:
         $('#' + nextField).click(function() {
           page += 1;
           getImages();
+          setTimeout(function() { $('#' + imagesModal).modal('show') }, 500);
         });
         $('#' + prevField).click(function() {
           page -= 1;
           getImages();
+          setTimeout(function() { $('#' + imagesModal).modal('show') }, 500);
         });
         $('#' + imagesModal + ' .results-body a').click(function() {
           $('#' + hiddenField).val($(this).data('id'));
