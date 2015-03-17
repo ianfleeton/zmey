@@ -19,6 +19,10 @@
 
 # Learn more: http://github.com/javan/whenever
 
+every :minute do
+  runner 'DispatchNotifier.send_emails'
+end
+
 every :hour do
   runner "Basket.old.destroy_all"
 end

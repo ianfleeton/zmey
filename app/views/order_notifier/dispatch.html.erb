@@ -1,0 +1,9 @@
+<h2 style="color:#333;font-weight:normal;"><%= @order.delivery_full_name %></h2>
+
+<p>This is an update for your order at <%= @website.name %></p>
+
+<p><strong>Your order has been dispatched.</strong></p>
+
+<% if @order.shipping_tracking_number.present? -%>
+<p>The tracking number for this shipment is <b><%= @order.shipping_tracking_number %></b></p>
+<% end -%>

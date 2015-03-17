@@ -6,10 +6,18 @@ class OrderNotifier < ActionMailer::Base
   helper :addresses # address formatting
 
   def notification website, order
+    send_to_customer_and_admin(website, order, 'order notification')
+  end
+
+  def dispatch(website, order)
+    send_to_customer_and_admin(website, order, 'order dispatched')
+  end
+
+  def send_to_customer_and_admin(website, order, what)
     recipients = [order.email_address, website.email]
     @website = website
     @order = order
-    mail(to: recipients, subject: website.name + ': order notification ' + order.order_number,
+    mail(to: recipients, subject: "#{website.name}: #{what} #{order.order_number}",
       from: website.email)
   end
 
