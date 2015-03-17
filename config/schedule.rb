@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every :minute do
+every 2.minutes do
   runner 'DispatchNotifier.send_emails'
 end
 
