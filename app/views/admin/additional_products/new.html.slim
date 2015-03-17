@@ -1,5 +1,5 @@
-= page_header 'New Additional Product'
+= page_header t('.heading')
 
-= breadcrumbs({ 'Products' => admin_products_path, @additional_product.product.name => edit_admin_product_path(@additional_product.product) }, 'New Additional Product')
+= breadcrumbs({ t('.products') => admin_products_path, @additional_product.product.name => edit_admin_product_path(@additional_product.product) }, t('.heading'))
 
 = render 'form'
