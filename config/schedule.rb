@@ -20,7 +20,7 @@
 # Learn more: http://github.com/javan/whenever
 
 every 2.minutes do
-  runner 'DispatchNotifier.send_emails'
+  runner 'DispatchNotifier.new.send_emails'
 end
 
 every :hour do
