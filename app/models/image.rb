@@ -51,7 +51,7 @@ class Image < ActiveRecord::Base
 
   def url(size=nil)
     if size.nil?
-      f = filename
+      url_for_filename(filename)
     else
       f = 'sized_' + size.to_s + '.' + extension
       path = File.join(directory_path, f)
@@ -72,7 +72,11 @@ class Image < ActiveRecord::Base
           return IMAGE_MISSING
         end
       end
+      url_for_filename(f)
     end
+  end
+
+  def url_for_filename(f)
     "#{IMAGE_STORAGE_URL}/#{id}/#{f}"
   end
 
