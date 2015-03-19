@@ -61,7 +61,7 @@ class Image < ActiveRecord::Base
     "#{IMAGE_STORAGE_URL}/#{id}/#{f}"
   end
 
-  SIZE_METHODS = [:longest_side].freeze
+  SIZE_METHODS = [:constrained, :height, :longest_side, :maxpect, :square, :width].freeze
 
   def sized_url(size, method)
     unless SIZE_METHODS.include?(method)
@@ -80,7 +80,7 @@ class Image < ActiveRecord::Base
             return IMAGE_MISSING
           end
 
-          send(method, img, size, path)
+          send("size_#{method}", img, size, path)
         end
       rescue
         return IMAGE_MISSING
@@ -97,11 +97,67 @@ class Image < ActiveRecord::Base
     method.to_s + '_' + size.to_s.gsub(", ", 'x').gsub('[', '').gsub(']', '') + '.' + extension
   end
 
+  # Creates an image using the constrained method and writes it to
+  # <tt>path</tt>.
+  def size_constrained(img, size, path)
+    target_aspect_ratio = size[0].to_f / size[1].to_f
+    src_aspect_ratio = img.width.to_f / img.height.to_f
+    if src_aspect_ratio > target_aspect_ratio
+      size_width(img, size[0], path)
+    else
+      size_height(img, size[1], path)
+    end
+  end
+
+  # Creates an image using the height method and writes it to
+  # <tt>path</tt>.
+  def size_height(img, size, path)
+    img.resize(img.width * size / img.height, size) do |thumb|
+      thumb.save path
+    end
+  end
+
   # Creates an image using the longest_side method and writes it to
   # <tt>path</tt>.
-  def longest_side(img, size, path)
+  def size_longest_side(img, size, path)
     img.thumbnail(size) do |thumb|
       thumb.save(path)
+    end
+  end
+
+  # Creates an image using the maxpect method and writes it to
+  # <tt>path</tt>.
+  def size_maxpect(img, size, path)
+    width = size
+    height = size
+    src_ar = img.width.to_f / img.height.to_f
+    thumb_ar = width.to_f / height.to_f
+    tolerance = 0.1
+    if(src_ar * (1+tolerance) < thumb_ar || src_ar / (1+tolerance) > thumb_ar)
+      if(src_ar > thumb_ar)
+        height = (width / src_ar).to_i
+      else
+        width = (height * src_ar).to_i
+      end
+    end
+    img.resize(width, height) do |thumb|
+      thumb.save(path)
+    end
+  end
+
+  # Creates an image using the square method and writes it to
+  # <tt>path</tt>.
+  def size_square(img, size, path)
+    img.cropped_thumbnail(size) do |thumb|
+      thumb.save path
+    end
+  end
+
+  # Creates an image using the width method and writes it to
+  # <tt>path</tt>.
+  def size_width(img, size, path)
+    img.resize(size, img.height * size / img.width) do |thumb|
+      thumb.save path
     end
   end
 
