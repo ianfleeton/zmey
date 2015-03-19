@@ -72,7 +72,7 @@ class CheckoutController < ApplicationController
 
     @order.record_preferred_delivery_date(
       website.preferred_delivery_date_settings,
-      params[:preferred_delivery_date]
+      session[:preferred_delivery_date]
     )
 
     @order.add_basket(basket)
