@@ -49,35 +49,60 @@ class Image < ActiveRecord::Base
     File.join(directory_path, filename)
   end
 
-  def url(size=nil)
+  def url(size=nil, method=:longest_side)
     if size.nil?
       url_for_filename(filename)
     else
-      f = 'sized_' + size.to_s + '.' + extension
-      path = File.join(directory_path, f)
-      # create a new image of the required size if it doesn't exist
-      unless FileTest.exist?(path)
-        begin
-          ImageScience.with_image(original_path) do |img|
-            # protect against crashes
-            if img.height <= 1 || img.width <= 1
-              return IMAGE_MISSING
-            end
-
-            img.thumbnail(size) do |thumb|
-              thumb.save path
-            end
-          end
-        rescue
-          return IMAGE_MISSING
-        end
-      end
-      url_for_filename(f)
+      sized_url(size, method)
     end
   end
 
   def url_for_filename(f)
     "#{IMAGE_STORAGE_URL}/#{id}/#{f}"
+  end
+
+  SIZE_METHODS = [:longest_side].freeze
+
+  def sized_url(size, method)
+    unless SIZE_METHODS.include?(method)
+      raise ArgumentError.new("method must be one of #{SIZE_METHODS}")
+    end
+
+    f = sized_image_filename(size, method)
+
+    path = File.join(directory_path, f)
+    # create a new image of the required size if it doesn't exist
+    unless FileTest.exist?(path)
+      begin
+        ImageScience.with_image(original_path) do |img|
+          # protect against crashes
+          if img.height <= 1 || img.width <= 1
+            return IMAGE_MISSING
+          end
+
+          send(method, img, size, path)
+        end
+      rescue
+        return IMAGE_MISSING
+      end
+    end
+    url_for_filename(f)
+  end
+
+  # Returns a filename to use for a sized image.
+  #
+  #   i = Image.new(filename: 'image.jpg')
+  #   i.sized_image_filename(100, :longest_side) # => "longest_side_100.jpg"
+  def sized_image_filename(size, method)
+    method.to_s + '_' + size.to_s.gsub(", ", 'x').gsub('[', '').gsub(']', '') + '.' + extension
+  end
+
+  # Creates an image using the longest_side method and writes it to
+  # <tt>path</tt>.
+  def longest_side(img, size, path)
+    img.thumbnail(size) do |thumb|
+      thumb.save(path)
+    end
   end
 
   # Returns the orginal file data in Base64 encoding.
