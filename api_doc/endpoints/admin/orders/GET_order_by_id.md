@@ -51,6 +51,7 @@ returned.
     "shipping_tracking_number": "TRACK123",
     "status": "payment_received",
     "total": "17.5",
+    "weight": "2.4",
     "ip_address": "127.0.0.1",
     "processed_at": null,
     "created_at": "2014-04-11T10:00:00.000+01:00",
