@@ -9,7 +9,7 @@ feature 'Edit product admin' do
   scenario 'Remove image from product', js: true do
     product = FactoryGirl.create(:product, image: FactoryGirl.create(:image))
     visit edit_admin_product_path(product)
-    click_button 'image_id_image_remove'
+    click_button 'product_image_id_image_remove'
     click_button 'Save'
     expect(product.reload.image).to be_nil
   end
