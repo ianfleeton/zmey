@@ -5,7 +5,7 @@ class Admin::OrdersController < Admin::AdminController
     if params[:user_id]
       @orders = User.find(params[:user_id]).orders.paginate(page: params[:page], per_page: 50)
     else
-      @orders = Order.all.paginate(page: params[:page], per_page: 250)
+      @orders = Order.order(created_at: :desc).paginate(page: params[:page], per_page: 250)
     end
   end
 

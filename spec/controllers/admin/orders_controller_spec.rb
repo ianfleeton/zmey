@@ -17,7 +17,13 @@ describe Admin::OrdersController do
 
     describe 'GET index' do
       context 'with no user supplied' do
-        pending
+        it 'assigns all orders, most recent first' do
+          order_1 = FactoryGirl.create(:order, created_at: Date.today - 1.day)
+          order_2 = FactoryGirl.create(:order)
+          get :index
+          expect(assigns(:orders).to_a.first).to eq(order_2)
+          expect(assigns(:orders).to_a.last).to eq(order_1)
+        end
       end
 
       context 'with user supplied' do
@@ -93,7 +99,7 @@ describe Admin::OrdersController do
       it 'assigns the order to @order' do
         patch :update, id: order.id
         expect(assigns(:order)).to eq order
-      end      
+      end
 
       it 'redirects to the edit order page' do
         patch :update, id: order.id
