@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :order_comments, except: [:show]
+
     resources :order_lines
 
     resources :pages, except: [:show] do

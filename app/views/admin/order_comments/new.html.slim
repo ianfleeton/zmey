@@ -1,0 +1,6 @@
+= page_header t('.heading', order_number: @order_comment.order.order_number)
+
+= bootstrap_form_for [:admin, @order_comment] do |f|
+  = f.hidden_field :order_id
+  = f.text_area :comment, required: true
+  = f.submit t('.save')

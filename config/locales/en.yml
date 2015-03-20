@@ -120,6 +120,10 @@ en:
         heading: 'Payments'
       show:
         heading: 'Order Details'
+    order_comments:
+      new:
+        heading: 'Add Comment to Order %{order_number}'
+        save: 'Save'
     pages:
       form:
         no_follow: 'NOFOLLOW (search engines should not follow links from this page)'

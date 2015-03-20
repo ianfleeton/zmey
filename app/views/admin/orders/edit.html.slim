@@ -63,6 +63,8 @@ javascript:
 
 h2= t('.comments')
 
+p= link_to t('.add_comment'), new_admin_order_comment_path(order_id: @order.id), class: 'btn btn-default'
+
 - if @order.order_comments.any?
   table.table.table-bordered
     thead
