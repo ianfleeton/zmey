@@ -18,8 +18,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.admin = false
-    @user.website_id = @w.id
 
     if @user.save
       if admin_or_manager?
