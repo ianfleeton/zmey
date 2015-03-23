@@ -95,14 +95,17 @@ describe Admin::OrdersController do
 
     describe 'PATCH update' do
       let(:order) { FactoryGirl.create(:order) }
+      let(:order_params) {{
+        order_number: order.order_number
+      }}
+
+      before { patch :update, id: order.id, order: order_params }
 
       it 'assigns the order to @order' do
-        patch :update, id: order.id
         expect(assigns(:order)).to eq order
       end
 
       it 'redirects to the edit order page' do
-        patch :update, id: order.id
         expect(response).to redirect_to edit_admin_order_path(order)
       end
     end

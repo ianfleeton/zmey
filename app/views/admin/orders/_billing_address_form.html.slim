@@ -1,0 +1,6 @@
+= form.text_field :billing_address_line_1, required: true
+= form.text_field :billing_address_line_2
+= form.text_field :billing_town_city, required: true
+= form.text_field :billing_county
+= form.text_field :billing_postcode, required: true
+= form.select :billing_country_id, countries_options(website), {prompt: 'Choose Country'}, required: true

@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'admin/orders/edit.html.slim', type: :view do
   let(:order) { FactoryGirl.create(:order) }
+  let(:website) { FactoryGirl.create(:website) }
 
   before do
     assign(:order, order)
+    allow(view).to receive(:website).and_return(website)
   end
 
   context 'with payments' do

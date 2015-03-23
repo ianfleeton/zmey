@@ -29,6 +29,7 @@ class Admin::OrdersController < Admin::AdminController
   def edit; end
 
   def update
+    @order.update_attributes(order_params)
     update_order_lines if params[:order_line_quantity]
     redirect_to edit_admin_order_path(@order)
   end
@@ -48,11 +49,15 @@ class Admin::OrdersController < Admin::AdminController
     def order_params
       params.require(:order).permit(
         :billing_address_line_1,
+        :billing_address_line_2,
         :billing_country_id,
+        :billing_county,
         :billing_postcode,
         :billing_town_city,
         :delivery_address_line_1,
+        :delivery_address_line_2,
         :delivery_country_id,
+        :delivery_county,
         :delivery_postcode,
         :delivery_town_city,
         :email_address,
