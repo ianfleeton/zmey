@@ -73,7 +73,7 @@ describe 'Admin users API' do
       let(:manages_website_id) { nil }
 
       before do
-        @user = FactoryGirl.create(:user, website_id: @website.id, manages_website_id: manages_website_id)
+        @user = FactoryGirl.create(:user, manages_website_id: manages_website_id)
       end
 
       it 'returns 200 OK' do

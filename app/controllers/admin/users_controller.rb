@@ -4,7 +4,7 @@ class Admin::UsersController < Admin::AdminController
   skip_before_action :admin_or_manager_required, only: [:destroy]
 
   def index
-    @users = website.users
+    @users = User.order(:name)
   end
 
   def show
@@ -17,7 +17,6 @@ class Admin::UsersController < Admin::AdminController
   def create
     @user = User.new(user_params)
     @user.admin = false
-    @user.website = website
 
     if @user.save
       flash[:notice] = I18n.t('controllers.admin.users.create.flash.created')

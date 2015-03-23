@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317101805) do
+ActiveRecord::Schema.define(version: 20150323093655) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -557,11 +557,8 @@ ActiveRecord::Schema.define(version: 20150317101805) do
     t.integer  "manages_website_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "website_id",            limit: 4,   default: 0,     null: false
     t.string   "customer_reference",    limit: 255, default: "",    null: false
   end
-
-  add_index "users", ["website_id"], name: "index_users_on_website_id", using: :btree
 
   create_table "webhooks", force: :cascade do |t|
     t.integer  "website_id", limit: 4,   null: false

@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  belongs_to :website
   has_many :orders, -> { order 'created_at DESC' }, dependent: :nullify
   has_many :addresses, dependent: :delete_all
   has_many :api_keys, -> { order :name }, dependent: :delete_all
@@ -10,10 +9,7 @@ class User < ActiveRecord::Base
   # associations
   belongs_to :managed_website, foreign_key: :manages_website_id, class_name: 'Website'
 
-  # validation
-  validates_presence_of :website_id
-
-  validates_uniqueness_of :customer_reference, allow_blank: true, scope: :website_id
+  validates_uniqueness_of :customer_reference, allow_blank: true
 
   validates_length_of     :email, within: 3..100
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i

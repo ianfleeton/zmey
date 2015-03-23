@@ -27,13 +27,11 @@ class Admin::AddressesController < Admin::AdminController
   private
 
     def set_address
-      @address = Address.find_by(id: params[:id])
-      not_found and return unless @address.try(:user).try(:website) == website
+      @address = Address.find_by(id: params[:id]) || not_found
     end
 
     def set_user
-      @user = User.find_by(id: params[:user_id], website_id: website.id)
-      not_found unless @user
+      @user = User.find_by(id: params[:user_id]) || not_found
     end
 
     def address_params

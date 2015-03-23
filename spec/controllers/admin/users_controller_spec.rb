@@ -13,12 +13,16 @@ describe Admin::UsersController do
     before { allow(controller).to receive(:admin_or_manager?).and_return(true) }
 
     describe 'GET index' do
-      it_behaves_like 'a website owned objects finder', :user
+      it 'assigns users ordered by name to @users' do
+        u1 = FactoryGirl.create(:user, name: 'User Z')
+        u2 = FactoryGirl.create(:user, name: 'User A')
+        get :index
+        expect(assigns(:users).first).to eq u2
+        expect(assigns(:users).last).to eq u1
+      end
     end
 
     describe 'POST create' do
-      it_behaves_like 'a website association creator', :user
-
       def post_valid
         post 'create', user: {'some' => 'params'}
       end

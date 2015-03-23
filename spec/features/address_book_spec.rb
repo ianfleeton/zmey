@@ -10,7 +10,7 @@ feature 'Address book' do
   end
 
   context 'signed in' do
-    let(:user) { FactoryGirl.create(:user, website_id: website.id) }
+    let(:user) { FactoryGirl.create(:user) }
 
     background do
       visit sign_in_path

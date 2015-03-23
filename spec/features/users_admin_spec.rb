@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Users admin' do
   let(:website) { FactoryGirl.create(:website) }
-  let(:user)    { FactoryGirl.create(:user, website_id: website.id) }
+  let(:user)    { FactoryGirl.create(:user) }
   let(:address) { FactoryGirl.create(:address, user_id: user.id) }
 
   background do
