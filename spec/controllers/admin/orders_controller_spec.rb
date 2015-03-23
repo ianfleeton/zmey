@@ -99,7 +99,20 @@ describe Admin::OrdersController do
         order_number: order.order_number
       }}
 
-      before { patch :update, id: order.id, order: order_params }
+      let(:order_line_product_name) { nil }
+      let(:order_line_product_price) { nil }
+      let(:order_line_product_weight) { nil }
+      let(:order_line_quantity) { nil }
+      let(:order_line_tax_percentage) { nil }
+
+      before do
+        patch :update, id: order.id, order: order_params,
+          order_line_product_name: order_line_product_name,
+          order_line_product_price: order_line_product_price,
+          order_line_product_weight: order_line_product_weight,
+          order_line_quantity: order_line_quantity,
+          order_line_tax_percentage: order_line_tax_percentage
+      end
 
       it 'assigns the order to @order' do
         expect(assigns(:order)).to eq order
@@ -107,6 +120,18 @@ describe Admin::OrdersController do
 
       it 'redirects to the edit order page' do
         expect(response).to redirect_to edit_admin_order_path(order)
+      end
+
+      context 'with new order lines' do
+        let(:order_line_product_name)   { {'-1' => 'A',  '-2' => 'B'} }
+        let(:order_line_product_price)  { {'-1' => '3',  '-2' => '7'} }
+        let(:order_line_product_weight) { {'-1' => '1',  '-2' => '3'} }
+        let(:order_line_quantity)       { {'-1' => '1',  '-2' => '2'} }
+        let(:order_line_tax_percentage) { {'-1' => '15', '-2' => '20'} }
+
+        it 'adds new order lines' do
+          expect(order.reload.order_lines.count).to eq 2
+        end
       end
     end
 
