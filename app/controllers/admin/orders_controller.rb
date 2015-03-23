@@ -104,9 +104,10 @@ class Admin::OrdersController < Admin::AdminController
 
     def update_order_line(id)
       if order_line = OrderLine.find_by(id: id, order_id: @order.id)
-        orig_tax_percentage      = order_line.tax_percentage
-        order_line.quantity      = params[:order_line_quantity][id]
-        order_line.product_name  = params[:order_line_product_name][id]
+        orig_tax_percentage       = order_line.tax_percentage
+        order_line.quantity       = params[:order_line_quantity][id]
+        order_line.product_name   = params[:order_line_product_name][id]
+        order_line.product_weight = params[:order_line_product_weight][id]
 
         # Prevent AR change being recorded unnecessarily.
         if order_line.product_price != params[:order_line_product_price][id].to_f

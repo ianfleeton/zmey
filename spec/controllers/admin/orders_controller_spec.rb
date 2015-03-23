@@ -133,6 +133,23 @@ describe Admin::OrdersController do
           expect(order.reload.order_lines.count).to eq 2
         end
       end
+
+      context 'with existing order lines' do
+        let(:order_line) { FactoryGirl.create(:order_line, order: order, product_weight: 1, quantity: 1) }
+        let(:order_line_product_name)   { { order_line.id => 'New name' } }
+        let(:order_line_product_price)  { { order_line.id => 3.21 } }
+        let(:order_line_product_weight) { { order_line.id => 2 } }
+        let(:order_line_quantity)       { { order_line.id => 3 } }
+        let(:order_line_tax_percentage) { { order_line.id => 20 } }
+
+        it 'updates the order line' do
+          order_line.reload
+          expect(order_line.product_name).to eq 'New name'
+          expect(order_line.product_price).to eq 3.21
+          expect(order_line.product_weight).to eq 2
+          expect(order_line.quantity).to eq 3
+        end
+      end
     end
 
     describe 'GET purge_old_unpaid' do
