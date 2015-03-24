@@ -15,6 +15,7 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
   table.table.table-bordered
     tr
       th.qty Qty
+      th SKU
       th Product name
       th Weight (each)
       th.price Price (each)
@@ -25,6 +26,8 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
       tr
         td
           input name="order_line_quantity[#{line.id}]" value="#{line.quantity}"
+        td
+          input name="order_line_product_sku[#{line.id}]" value="#{line.product_sku}"
         td
           input name="order_line_product_name[#{line.id}]" value="#{line.product_name}"
         td
@@ -39,12 +42,12 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
           = delete_button [:admin, line]
     tbody.additional-lines
     tr
-      td colspan="4"
+      td colspan="5"
         button#add-line Add Line
       th VAT
       td.price.total= formatted_price(@order.tax_total)
     tr
-      td colspan="4"
+      td colspan="5"
       th Total
       td.price.total= formatted_price(@order.total)
 
@@ -57,6 +60,7 @@ javascript:
     $('#add-line').click(function() {
       html = '<tr>' +
         '<td><input name="order_line_quantity[' + id + ']" value="1"></td>' +
+        '<td><input name="order_line_product_sku[' + id + ']"></td>' +
         '<td><input name="order_line_product_name[' + id + ']"></td>' +
         '<td><input name="order_line_product_weight[' + id + ']" value="0.0"></td>' +
         '<td><input name="order_line_product_price[' + id + ']" value="0.0"></td>' +

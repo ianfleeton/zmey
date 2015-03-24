@@ -86,6 +86,7 @@ class Admin::OrdersController < Admin::AdminController
         order: @order,
         product_name: params[:order_line_product_name][key],
         product_price: params[:order_line_product_price][key],
+        product_sku: params[:order_line_product_sku][key],
         product_weight: params[:order_line_product_weight][key],
         quantity: params[:order_line_quantity][key],
       )
@@ -107,6 +108,7 @@ class Admin::OrdersController < Admin::AdminController
         orig_tax_percentage       = order_line.tax_percentage
         order_line.quantity       = params[:order_line_quantity][id]
         order_line.product_name   = params[:order_line_product_name][id]
+        order_line.product_sku    = params[:order_line_product_sku][id]
         order_line.product_weight = params[:order_line_product_weight][id]
 
         # Prevent AR change being recorded unnecessarily.

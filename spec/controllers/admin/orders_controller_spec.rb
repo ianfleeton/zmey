@@ -101,6 +101,7 @@ describe Admin::OrdersController do
 
       let(:order_line_product_name) { nil }
       let(:order_line_product_price) { nil }
+      let(:order_line_product_sku) { nil }
       let(:order_line_product_weight) { nil }
       let(:order_line_quantity) { nil }
       let(:order_line_tax_percentage) { nil }
@@ -109,6 +110,7 @@ describe Admin::OrdersController do
         patch :update, id: order.id, order: order_params,
           order_line_product_name: order_line_product_name,
           order_line_product_price: order_line_product_price,
+          order_line_product_sku: order_line_product_sku,
           order_line_product_weight: order_line_product_weight,
           order_line_quantity: order_line_quantity,
           order_line_tax_percentage: order_line_tax_percentage
@@ -123,8 +125,10 @@ describe Admin::OrdersController do
       end
 
       context 'with new order lines' do
+        let(:sku) { 'SKU' }
         let(:order_line_product_name)   { {'-1' => 'A',  '-2' => 'B'} }
         let(:order_line_product_price)  { {'-1' => '3',  '-2' => '7'} }
+        let(:order_line_product_sku)    { {'-1' => sku,  '-2' => 'Z'} }
         let(:order_line_product_weight) { {'-1' => '1',  '-2' => '3'} }
         let(:order_line_quantity)       { {'-1' => '1',  '-2' => '2'} }
         let(:order_line_tax_percentage) { {'-1' => '15', '-2' => '20'} }
@@ -132,12 +136,18 @@ describe Admin::OrdersController do
         it 'adds new order lines' do
           expect(order.reload.order_lines.count).to eq 2
         end
+
+        it 'records SKUs' do
+          expect(order.reload.order_lines.first.product_sku).to eq sku
+        end
       end
 
       context 'with existing order lines' do
+        let(:sku) { 'SKU' }
         let(:order_line) { FactoryGirl.create(:order_line, order: order, product_weight: 1, quantity: 1) }
         let(:order_line_product_name)   { { order_line.id => 'New name' } }
         let(:order_line_product_price)  { { order_line.id => 3.21 } }
+        let(:order_line_product_sku)    { { order_line.id => sku } }
         let(:order_line_product_weight) { { order_line.id => 2 } }
         let(:order_line_quantity)       { { order_line.id => 3 } }
         let(:order_line_tax_percentage) { { order_line.id => 20 } }
@@ -148,6 +158,11 @@ describe Admin::OrdersController do
           expect(order_line.product_price).to eq 3.21
           expect(order_line.product_weight).to eq 2
           expect(order_line.quantity).to eq 3
+        end
+
+        it 'updates SKUs' do
+          order_line.reload
+          expect(order_line.product_sku).to eq sku
         end
       end
     end
