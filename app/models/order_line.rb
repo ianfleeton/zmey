@@ -7,6 +7,11 @@ class OrderLine < ActiveRecord::Base
 
   before_save :keep_shipped_in_bounds
   after_save :recalculate_order_total
+  after_destroy :recalculate_order_total
+
+  def to_s
+    "#{quantity} × #{product_name}"
+  end
 
   def keep_shipped_in_bounds
     if shipped > quantity

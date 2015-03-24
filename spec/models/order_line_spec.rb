@@ -1,8 +1,15 @@
 require 'rails_helper'
 
-describe OrderLine do
+RSpec.describe OrderLine, type: :model do
   it { should validate_numericality_of(:product_price) }
   it { should validate_numericality_of(:quantity).is_greater_than_or_equal_to(1) }
+
+  describe '#to_s' do
+    it 'returns quantity × product_name' do
+      ol = OrderLine.new(quantity: 2, product_name: 'Widget')
+      expect(ol.to_s).to eq '2.0 × Widget'
+    end
+  end
 
   describe '#line_total_net' do
     it 'returns the product price times the quantity' do

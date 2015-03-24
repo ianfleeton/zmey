@@ -24,4 +24,18 @@ describe Admin::OrderLinesController do
       expect(response).to redirect_to admin_order_path(ol.order)
     end
   end
+
+  describe 'DELETE destroy' do
+    let(:order_line) { FactoryGirl.create(:order_line) }
+
+    before { delete :destroy, id: order_line.id }
+
+    it 'deletes to order line' do
+      expect(OrderLine.find_by(id: order_line.id)).to be_nil
+    end
+
+    it 'redirects to edit order' do
+      expect(response).to redirect_to edit_admin_order_path(order_line.order)
+    end
+  end
 end
