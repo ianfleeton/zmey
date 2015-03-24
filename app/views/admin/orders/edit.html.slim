@@ -4,12 +4,13 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
 
 = bootstrap_form_for [:admin, @order] do |f|
 
-  .col-md-6
-    h2 Billing Address
-    = render partial: 'billing_address_form', locals: { form: f }
-  .col-md-6
-    h2 Delivery Address
-    = render partial: 'delivery_address_form', locals: { form: f }
+  .row
+    .col-md-6
+      h2 Billing Address
+      = render partial: 'billing_address_form', locals: { form: f }
+    .col-md-6
+      h2 Delivery Address
+      = render partial: 'delivery_address_form', locals: { form: f }
 
   h2 Order Contents
   table.table.table-bordered
