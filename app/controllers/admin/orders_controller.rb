@@ -82,15 +82,8 @@ class Admin::OrdersController < Admin::AdminController
 
     # Adds a single new order line to @order.
     def add_order_line(key)
-      order_line = OrderLine.new(
-        order: @order,
-        product_name: params[:order_line_product_name][key],
-        product_price: params[:order_line_product_price][key],
-        product_sku: params[:order_line_product_sku][key],
-        product_weight: params[:order_line_product_weight][key],
-        quantity: params[:order_line_quantity][key],
-      )
-      order_line.tax_amount = tax_amount(order_line, params[:order_line_tax_percentage][key])
+      order_line = OrderLine.new(order: @order)
+      update_order_line(order_line, key)
       order_line.save
     end
 
@@ -100,31 +93,33 @@ class Admin::OrdersController < Admin::AdminController
     end
 
     def update_order_lines
-      params[:order_line_quantity].each_key { |id| update_order_line(id) }
+      params[:order_line_quantity].each_key do |id|
+        if order_line = OrderLine.find_by(id: id, order_id: @order.id)
+          update_order_line(order_line, id)
+        end
+      end
     end
 
-    def update_order_line(id)
-      if order_line = OrderLine.find_by(id: id, order_id: @order.id)
-        orig_tax_percentage       = order_line.tax_percentage
-        order_line.quantity       = params[:order_line_quantity][id]
-        order_line.product_name   = params[:order_line_product_name][id]
-        order_line.product_sku    = params[:order_line_product_sku][id]
-        order_line.product_weight = params[:order_line_product_weight][id]
+    def update_order_line(order_line, id)
+      orig_tax_percentage       = order_line.tax_percentage
+      order_line.quantity       = params[:order_line_quantity][id]
+      order_line.product_name   = params[:order_line_product_name][id]
+      order_line.product_sku    = params[:order_line_product_sku][id]
+      order_line.product_weight = params[:order_line_product_weight][id]
 
-        # Prevent AR change being recorded unnecessarily.
-        if order_line.product_price != params[:order_line_product_price][id].to_f
-          order_line.product_price = params[:order_line_product_price][id].to_f
-        end
-
-        # Use three decimal places and ignore changes to a higher precision.
-        tax_changed = (orig_tax_percentage.round(3) != params[:order_line_tax_percentage][id].to_f.round(3))
-
-        if order_line.changed? || tax_changed
-          order_line.tax_amount = tax_amount(order_line, params[:order_line_tax_percentage][id])
-        end
-
-        order_line.save
+      # Prevent AR change being recorded unnecessarily.
+      if order_line.product_price != params[:order_line_product_price][id].to_f
+        order_line.product_price = params[:order_line_product_price][id].to_f
       end
+
+      # Use three decimal places and ignore changes to a higher precision.
+      tax_changed = (orig_tax_percentage.round(3) != params[:order_line_tax_percentage][id].to_f.round(3))
+
+      if order_line.changed? || tax_changed
+        order_line.tax_amount = tax_amount(order_line, params[:order_line_tax_percentage][id])
+      end
+
+      order_line.save
     end
 
     # Calculates the tax amount for <tt>order_line</tt> when the tax rate is
