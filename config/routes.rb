@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     resources :orders do
       collection do
         get 'purge_old_unpaid'
+        get 'search_products'
       end
     end
 

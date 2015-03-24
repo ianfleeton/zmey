@@ -1,0 +1,4 @@
+.results-body
+  select.form-control
+    - @products.each do |product|
+      option value="#{product.id}" data-price="#{product.price}" data-sku="#{product.sku}" data-name="#{product.name}" data-weight="#{product.weight}"= product.name_with_sku

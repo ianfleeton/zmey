@@ -47,6 +47,11 @@ class Admin::OrdersController < Admin::AdminController
     redirect_to admin_orders_path, notice: 'Order deleted.'
   end
 
+  def search_products
+    @products = Product.admin_search(params[:query])
+    render layout: false
+  end
+
   protected
 
     def order_params

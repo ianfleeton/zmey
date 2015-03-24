@@ -29,6 +29,8 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
           input name="order_line_quantity[#{line.id}]" value="#{line.quantity}"
         td
           input name="order_line_product_sku[#{line.id}]" value="#{line.product_sku}"
+          | &nbsp;
+          span.glyphicon.glyphicon-search.product-search data-id="#{line.id}"
         td
           input name="order_line_product_name[#{line.id}]" value="#{line.product_name}"
         td
@@ -61,7 +63,7 @@ javascript:
     $('#add-line').click(function() {
       html = '<tr>' +
         '<td><input name="order_line_quantity[' + id + ']" value="1"></td>' +
-        '<td><input name="order_line_product_sku[' + id + ']"></td>' +
+        '<td><input name="order_line_product_sku[' + id + ']"> <span class="glyphicon glyphicon-search product-search" data-id="' + id + '"></span></td>' +
         '<td><input name="order_line_product_name[' + id + ']"></td>' +
         '<td><input name="order_line_product_weight[' + id + ']" value="0.0"></td>' +
         '<td><input name="order_line_product_price[' + id + ']" value="0.0"></td>' +
@@ -72,7 +74,53 @@ javascript:
       id -= 1;
       return false;
     });
+
+    var orderLineId = 0;
+
+    $('table').on('click', '.product-search', function() {
+      orderLineId = $(this).data('id');
+      $('#product-search').modal('show');
+    });
+
+    $('#search-products').click(function() {
+      $.get('/admin/orders/search_products', {query: $('#product-search-query').val()}, function(data) {
+        $('#product-search .results-body').replaceWith(data);
+        $('#product-search .results-body select').focus();
+      });
+      return false;
+    });
+
+    $('#select-product').click(function() {
+      var $option = $('#product-search option:selected');
+      $("input[name='order_line_product_name[" + orderLineId + "]']").val($option.data('name'));
+      $("input[name='order_line_product_price[" + orderLineId + "]']").val($option.data('price'));
+      $("input[name='order_line_product_sku[" + orderLineId + "]']").val($option.data('sku'));
+      $("input[name='order_line_product_weight[" + orderLineId + "]']").val($option.data('weight'));
+      $('#product-search').modal('hide');
+    });
   });
+
+.modal.fade.modal-picker id="product-search" role="dialog" aria-labelledby="Product Search" aria-hidden="true"
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+        h4.modal-title Product Search
+      .modal-body
+        .form-group
+          .row
+            .col-xs-9
+              label.sr-only Search Products
+              input.form-control#product-search-query type="search" name="query" placeholder="Product to find"
+            .col-xs-3
+              button.btn.btn-default#search-products Search
+        .form-group
+          .row
+            .col-xs-9
+              span.results-body
+            .col-xs-3
+              button.btn.btn-default#select-product Select
 
 = render partial: 'payments', locals: { payments: @order.payments } if @order.payments.any?
 
