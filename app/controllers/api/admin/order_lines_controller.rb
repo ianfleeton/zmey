@@ -24,6 +24,15 @@ class Api::Admin::OrderLinesController < Api::Admin::AdminController
     end
   end
 
+  def destroy
+    if @order_line = OrderLine.find_by(id: params[:id])
+      @order_line.destroy
+      render nothing: true, status: 204
+    else
+      render nothing: true, status: 404
+    end
+  end
+
   private
 
     def order_line_params

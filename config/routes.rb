@@ -101,7 +101,7 @@ Rails.application.routes.draw do
 
       resources :nominal_codes, only: [:show]
 
-      resources :order_lines, only: [:create, :show]
+      resources :order_lines, only: [:create, :destroy, :show]
 
       resources :orders, only: [:create, :index, :show, :update]
       delete 'orders', to: 'orders#delete_all'

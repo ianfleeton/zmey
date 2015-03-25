@@ -15,7 +15,7 @@ describe 'Admin order lines API' do
 
     # Optional attributes
     let(:product_name)   { nil }
-    let(:product_price)  { nil }    
+    let(:product_price)  { nil }
     let(:product_rrp)    { nil }
     let(:product_weight) { nil }
     let(:tax_amount)     { nil }
@@ -83,6 +83,32 @@ describe 'Admin order lines API' do
           expect(order_line.product_weight).to eq product_weight
           expect(order_line.tax_amount).to eq tax_amount
         end
+      end
+    end
+  end
+
+  describe 'DELETE destroy' do
+    let(:order_line) { FactoryGirl.create(:order_line) }
+
+    before { delete '/api/admin/order_lines/' + id.to_s }
+
+    context 'when order line exists' do
+      let(:id) { order_line.id }
+
+      it 'returns 204' do
+        expect(response.status).to eq 204
+      end
+
+      it 'deletes the order line' do
+        expect(OrderLine.find_by(id: order_line.id)).to be_nil
+      end
+    end
+
+    context 'when order line does not exist' do
+      let(:id) { order_line.id + 1 }
+
+      it 'returns 404' do
+        expect(response.status).to eq 404
       end
     end
   end
