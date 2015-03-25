@@ -7,7 +7,7 @@ Returns detailed information for an image, including its raw image data.
 ### Request
 
 ```
-curl https://zmey.co.uk/api/admin/image/1 \
+curl https://zmey.co.uk/api/admin/images/1 \
   -u 22cbbfeaef6085872dbe6c0e978fa098:
 ```
 
