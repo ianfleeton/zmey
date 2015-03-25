@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
+  context 'uniqueness' do
+    before { FactoryGirl.create(:order) }
+    it { should validate_uniqueness_of :order_number }
+  end
+
   it { should have_many(:order_comments).dependent(:delete_all).inverse_of(:order) }
 
   describe 'before_create :create_order_number' do

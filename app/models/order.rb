@@ -57,6 +57,7 @@ class Order < ActiveRecord::Base
   validates_presence_of :email_address
   validates_presence_of :billing_address_line_1,  :billing_town_city,  :billing_postcode,  :billing_country_id
   validates_presence_of :delivery_address_line_1, :delivery_town_city, :delivery_postcode, :delivery_country_id
+  validates_uniqueness_of :order_number
 
   before_save :calculate_total
   before_create :create_order_number
