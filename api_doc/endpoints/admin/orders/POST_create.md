@@ -29,9 +29,13 @@ Create a new order.
 ### Additional attributes
 
 * **billing_address_line_2**
+* **billing_address_line_3**
+* **billing_county**
 * **billing_full_name** — Full name of the customer.
 * **customer_note** — A note left by the customer such as delivery instructions.
 * **delivery_address_line_2**
+* **delivery_address_line_3**
+* **delivery_county**
 * **delivery_full_name** — Full name of the customer.
 * **order_number** — Order number, which is represented as a string so it can
   contain letters as well as numbers.

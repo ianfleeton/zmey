@@ -207,12 +207,14 @@ describe 'Admin orders API' do
     let(:billing_address_line_1)  { SecureRandom.hex }
     let(:billing_address_line_3)  { SecureRandom.hex }
     let(:billing_country_id)      { country.id }
+    let(:billing_county)          { SecureRandom.hex }
     let(:billing_postcode)        { SecureRandom.hex }
     let(:billing_town_city)       { SecureRandom.hex }
     let(:delivery_company)        { SecureRandom.hex }
     let(:delivery_address_line_1) { SecureRandom.hex }
     let(:delivery_address_line_3) { SecureRandom.hex }
     let(:delivery_country_id)     { country.id }
+    let(:delivery_county)         { SecureRandom.hex }
     let(:delivery_postcode)       { SecureRandom.hex }
     let(:delivery_town_city)      { SecureRandom.hex }
     let(:email_address)           { "#{SecureRandom.hex}@example.org" }
@@ -225,12 +227,14 @@ describe 'Admin orders API' do
       billing_address_line_1: billing_address_line_1,
       billing_address_line_3: billing_address_line_3,
       billing_country_id: billing_country_id,
+      billing_county: billing_county,
       billing_postcode: billing_postcode,
       billing_town_city: billing_town_city,
       delivery_company: delivery_company,
       delivery_address_line_1: delivery_address_line_1,
       delivery_address_line_3: delivery_address_line_3,
       delivery_country_id: delivery_country_id,
+      delivery_county: delivery_county,
       delivery_postcode: delivery_postcode,
       delivery_town_city: delivery_town_city,
       email_address: email_address,
