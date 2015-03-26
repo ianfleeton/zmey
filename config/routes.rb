@@ -23,6 +23,13 @@ Rails.application.routes.draw do
     resources :extra_attributes, except: [:show]
     resources :features, except: [:show]
     resources :images
+
+    resources :import do
+      collection do
+        post 'csv'
+      end
+    end
+
     resources :liquid_templates, except: [:show]
     resources :nominal_codes, except: [:show]
     resources :offline_payment_methods, except: [:show]

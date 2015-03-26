@@ -1,0 +1,11 @@
+= page_header t('.heading')
+
+= form_tag csv_admin_import_index_path, multipart: true do
+  .form-group
+    label for="class_name"= t('.class_name')
+    select#class_name.form-control name="class_name"
+      option Product
+  .form-group
+    = file_field_tag :csv
+  .file-actions
+    = submit_tag t('.import'), class: 'btn btn-primary'

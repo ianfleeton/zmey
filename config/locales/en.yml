@@ -77,6 +77,11 @@ en:
       index:
         attribute_name: 'Attribute name'
         class_name: 'Class name'
+    import:
+      index:
+        class_name: 'What kind of data do you want to import?'
+        heading: 'Import Data from a CSV File'
+        import: 'Import'
     nominal_codes:
       edit:
         heading: 'Edit Nominal Code'
@@ -300,6 +305,10 @@ en:
         create:
           flash:
             created: 'Your new API key has been created.'
+      import:
+        csv:
+          import_in_progress: 'Import is running in the background.'
+          nothing_uploaded: 'Nothing was uploaded.'
       product_images:
         create:
           added: 'Image added.'
