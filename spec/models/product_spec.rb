@@ -137,5 +137,12 @@ describe Product do
     end
   end
 
+  describe '.importable_attributes' do
+    subject { Product.importable_attributes }
+    ['image_name', 'image_names'].each do |additional_attr|
+      it { should include(additional_attr) }
+    end
+  end
+
   it_behaves_like 'an object with extra attributes'
 end

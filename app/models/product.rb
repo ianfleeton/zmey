@@ -224,6 +224,10 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def self.importable_attributes
+    attribute_names + ['image_name', 'image_names']
+  end
+
   private
 
     # Returns a relatedness score between 0 and 1.
