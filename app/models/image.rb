@@ -61,7 +61,7 @@ class Image < ActiveRecord::Base
     "#{IMAGE_STORAGE_URL}/#{id}/#{f}"
   end
 
-  SIZE_METHODS = [:constrained, :height, :longest_side, :maxpect, :square, :width].freeze
+  SIZE_METHODS = [:constrained, :cropped, :height, :longest_side, :maxpect, :square, :width].freeze
 
   def sized_url(size, method)
     unless SIZE_METHODS.include?(method)
