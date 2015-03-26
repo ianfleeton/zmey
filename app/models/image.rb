@@ -109,6 +109,30 @@ class Image < ActiveRecord::Base
     end
   end
 
+  # Creates an image using the cropped method and writes it to
+  # <tt>path</tt>.
+  def size_cropped(img, size, path)
+    width = size[0]
+    height = size[1]
+
+    src_ar = img.width.to_f / img.height.to_f
+    thumb_ar = width.to_f / height.to_f
+
+    if(src_ar > thumb_ar)
+      new_width = (img.height.to_f * thumb_ar).to_i
+      shave = ((img.width - new_width).to_f / 2.0).to_i
+      img.with_crop(shave, 0, img.width - shave, img.height) do |cropped|
+        size_maxpect(cropped, size, path)
+      end
+    else
+      new_height = (img.width.to_f / thumb_ar).to_i
+      shave = ((img.height - new_height).to_f / 2.0).to_i
+      img.with_crop(0, shave, img.width, img.height - shave) do |cropped|
+        size_maxpect(cropped, size, path)
+      end
+    end
+  end
+
   # Creates an image using the height method and writes it to
   # <tt>path</tt>.
   def size_height(img, size, path)
