@@ -13,7 +13,7 @@
 
   = form.text_field :name, required: true
 
-  = form.collection_select :nominal_code_id, website.nominal_codes, :id, :to_s, {include_blank: '-- No code --'}
+  = form.collection_select :nominal_code_id, NominalCode.all, :id, :to_s, {include_blank: '-- No code --'}
 
   = form.text_field :price
 

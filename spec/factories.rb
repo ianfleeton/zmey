@@ -100,7 +100,6 @@ FactoryGirl.define do
   end
 
   factory :nominal_code do
-    association :website
     sequence(:code) { |n| n.to_s.rjust(4, '0') }
     description 'Nominal Code'
   end

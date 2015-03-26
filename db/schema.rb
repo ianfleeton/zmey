@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150323093655) do
+ActiveRecord::Schema.define(version: 20150326153446) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -230,7 +230,6 @@ ActiveRecord::Schema.define(version: 20150323093655) do
   add_index "liquid_templates", ["name"], name: "index_liquid_templates_on_name", using: :btree
 
   create_table "nominal_codes", force: :cascade do |t|
-    t.integer  "website_id",  limit: 4,   null: false
     t.string   "code",        limit: 255, null: false
     t.string   "description", limit: 255, null: false
     t.datetime "created_at",              null: false
@@ -238,7 +237,6 @@ ActiveRecord::Schema.define(version: 20150323093655) do
   end
 
   add_index "nominal_codes", ["code"], name: "index_nominal_codes_on_code", using: :btree
-  add_index "nominal_codes", ["website_id"], name: "index_nominal_codes_on_website_id", using: :btree
 
   create_table "offline_payment_methods", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false

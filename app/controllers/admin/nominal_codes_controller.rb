@@ -2,7 +2,7 @@ class Admin::NominalCodesController < Admin::AdminController
   before_action :set_nominal_code, only: [:edit, :destroy, :update]
 
   def index
-    @nominal_codes = website.nominal_codes
+    @nominal_codes = NominalCode.all
   end
 
   def new
@@ -11,7 +11,6 @@ class Admin::NominalCodesController < Admin::AdminController
 
   def create
     @nominal_code = NominalCode.new(nominal_code_params)
-    @nominal_code.website = website
 
     if @nominal_code.save
       flash[:notice] = 'Nominal code added.'
@@ -42,7 +41,7 @@ class Admin::NominalCodesController < Admin::AdminController
   private
 
     def set_nominal_code
-      @nominal_code = NominalCode.find_by(id: params[:id], website_id: website.id)
+      @nominal_code = NominalCode.find_by(id: params[:id])
       redirect_to admin_nominal_codes_path and return unless @nominal_code
     end
 

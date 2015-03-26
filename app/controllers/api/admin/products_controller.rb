@@ -49,7 +49,7 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
 
     def set_nominal_code
       if params['product']['nominal_code']
-        @nominal_code = NominalCode.find_by(code: params['product']['nominal_code'], website_id: website.id)
+        @nominal_code = NominalCode.find_by(code: params['product']['nominal_code'])
         params['product'].delete('nominal_code')
       else
         @nominal_code = nil

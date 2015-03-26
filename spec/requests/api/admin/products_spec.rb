@@ -139,7 +139,7 @@ describe 'Admin products API' do
     end
 
     it 'associates product with nominal code' do
-      nominal_code = FactoryGirl.create(:nominal_code, website_id: @website.id)
+      nominal_code = FactoryGirl.create(:nominal_code)
       params = basic_params.merge(nominal_code: nominal_code.code)
       post '/api/admin/products', product: params
       expect(Product.last.nominal_code).to eq nominal_code
