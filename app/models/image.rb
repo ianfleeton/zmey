@@ -128,8 +128,13 @@ class Image < ActiveRecord::Base
   # Creates an image using the maxpect method and writes it to
   # <tt>path</tt>.
   def size_maxpect(img, size, path)
-    width = size
-    height = size
+    if size.kind_of? Array
+      width = size[0]
+      height = size[1]
+    else
+      width = height = size
+    end
+
     src_ar = img.width.to_f / img.height.to_f
     thumb_ar = width.to_f / height.to_f
     tolerance = 0.1
