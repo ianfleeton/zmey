@@ -58,6 +58,24 @@ class Product < ActiveRecord::Base
     name + ' [' + sku + ']'
   end
 
+  # Set image by using the image's name.
+  def image_name=(name)
+    self.image = Image.find_by(name: name)
+  end
+
+  # Set images by using the image names.
+  # Provide the names as either an array or as a string delimited with the
+  # pipe character.
+  #   product.image_names = ['front.jpg', 'back.jpg']
+  #   product.image_names = 'front.jpg|back.jpg'
+  def image_names=(names)
+    self.images = []
+    names = names.split('|') if names.kind_of?(String)
+    names.each do |name|
+      self.images <<= Image.find_by(name: name)
+    end
+  end
+
   # the price of a single product when quantity q is purchased as entered
   # by the merchant -- tax is not considered
   def price_at_quantity(q)

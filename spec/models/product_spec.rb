@@ -51,6 +51,40 @@ describe Product do
     end
   end
 
+  describe '#image_name=' do
+    it 'associates image with named image' do
+      image = FactoryGirl.create(:image, name: 'product.jpg')
+      product = Product.new
+      product.image_name = 'product.jpg'
+      expect(product.image).to eq image
+    end
+  end
+
+  describe '#image_names=' do
+    let!(:image1) { FactoryGirl.create(:image, name: 'front.jpg') }
+    let!(:image2) { FactoryGirl.create(:image, name: 'back.jpg') }
+    let(:product) { Product.new }
+
+    it 'associates multiple named images from a pipe separated string' do
+      product.image_names = 'front.jpg|back.jpg'
+      expect(product.images).to include(image1)
+      expect(product.images).to include(image2)
+    end
+
+    it 'associates multiple named images from an array' do
+      product.image_names = ['front.jpg', 'back.jpg']
+      expect(product.images).to include(image1)
+      expect(product.images).to include(image2)
+    end
+
+    it 'removes existing images' do
+      product.image_names = image1.name
+      product.image_names = image2.name
+      expect(product.images).to include(image2)
+      expect(product.images).not_to include(image1)
+    end
+  end
+
   describe "tax" do
     it "should be added and tax amount calculated when price is ex-VAT" do
       @product.tax_type = Product::EX_VAT
