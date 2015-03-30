@@ -30,7 +30,10 @@ class Product < ActiveRecord::Base
   has_many :product_images, dependent: :delete_all
   has_many :images, through: :product_images
 
-  belongs_to :nominal_code, inverse_of: :products
+  # Nominal codes for Sage 50
+  belongs_to :purchase_nominal_code, class_name: 'NominalCode', inverse_of: :purchase_products
+  belongs_to :sales_nominal_code, class_name: 'NominalCode', inverse_of: :sales_products
+
   has_many :order_lines, dependent: :nullify
   has_many :orders, through: :order_lines
   has_many :product_group_placements, dependent: :delete_all

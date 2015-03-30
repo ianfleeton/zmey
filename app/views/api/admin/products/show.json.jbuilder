@@ -10,11 +10,18 @@ json.product do
       json.href api_admin_image_url(@product.image)
     end
   end
-  if @product.nominal_code
-    json.nominal_code do
-      json.id   @product.nominal_code.id
-      json.code @product.nominal_code.code
-      json.href api_admin_nominal_code_url(@product.nominal_code)
+  if @product.purchase_nominal_code
+    json.purchase_nominal_code do
+      json.id   @product.purchase_nominal_code.id
+      json.code @product.purchase_nominal_code.code
+      json.href api_admin_nominal_code_url(@product.purchase_nominal_code)
+    end
+  end
+  if @product.sales_nominal_code
+    json.sales_nominal_code do
+      json.id   @product.sales_nominal_code.id
+      json.code @product.sales_nominal_code.code
+      json.href api_admin_nominal_code_url(@product.sales_nominal_code)
     end
   end
   json.description        @product.description

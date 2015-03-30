@@ -6,6 +6,8 @@ describe Product do
     @product = Product.new(price: 1.0)
   end
 
+  it { should belong_to(:purchase_nominal_code).class_name('NominalCode') }
+  it { should belong_to(:sales_nominal_code).class_name('NominalCode') }
   it { should have_many(:product_images).dependent(:delete_all) }
   it { should have_many(:images).through(:product_images) }
 

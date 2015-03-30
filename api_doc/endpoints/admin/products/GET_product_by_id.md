@@ -31,7 +31,7 @@ defined extra attributes for products, such as `length` in the example below.
       "id": 1,
       "href": "https://zmey.co.uk/api/admin/images/1"
     },
-    "nominal_code": {
+    "purchase_nominal_code": {
       "id": 1,
       "code": "4000",
       "href": "https://zmey.co.uk/api/admin/nominal_codes/1"

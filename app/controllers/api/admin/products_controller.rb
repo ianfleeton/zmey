@@ -1,5 +1,5 @@
 class Api::Admin::ProductsController < Api::Admin::AdminController
-  before_action :set_nominal_code, only: [:create]
+  before_action :set_nominal_codes, only: [:create]
 
   def index
     page      = params[:page] || 1
@@ -22,7 +22,8 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
 
   def create
     @product = Product.new(product_params)
-    @product.nominal_code = @nominal_code
+    @product.purchase_nominal_code = @purchase_nominal_code
+    @product.sales_nominal_code = @sales_nominal_code
 
     unless @product.save
       render json: @product.errors.full_messages, status: :unprocessable_entity
@@ -47,12 +48,14 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
       :page_title, :price, :rrp, :sku, :tax_type, :weight)
     end
 
-    def set_nominal_code
-      if params['product']['nominal_code']
-        @nominal_code = NominalCode.find_by(code: params['product']['nominal_code'])
-        params['product'].delete('nominal_code')
-      else
-        @nominal_code = nil
+    def set_nominal_codes
+      @purchase_nominal_code = get_nominal_code('purchase_nominal_code')
+      @sales_nominal_code = get_nominal_code('sales_nominal_code')
+    end
+
+    def get_nominal_code(key)
+      if params['product'][key]
+        NominalCode.find_by(code: params['product'].delete(key))
       end
     end
 end

@@ -138,11 +138,16 @@ describe 'Admin products API' do
       expect(Product.find_by(basic_params)).to be
     end
 
-    it 'associates product with nominal code' do
-      nominal_code = FactoryGirl.create(:nominal_code)
-      params = basic_params.merge(nominal_code: nominal_code.code)
+    it 'associates product with nominal codes' do
+      purchase_nominal_code = FactoryGirl.create(:nominal_code)
+      sales_nominal_code = FactoryGirl.create(:nominal_code)
+      params = basic_params.merge(
+        purchase_nominal_code: purchase_nominal_code.code,
+        sales_nominal_code: sales_nominal_code.code
+      )
       post '/api/admin/products', product: params
-      expect(Product.last.nominal_code).to eq nominal_code
+      expect(Product.last.purchase_nominal_code).to eq purchase_nominal_code
+      expect(Product.last.sales_nominal_code).to eq sales_nominal_code
     end
 
     it 'returns 422 if product cannot be created' do

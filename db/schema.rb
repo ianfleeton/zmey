@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326153446) do
+ActiveRecord::Schema.define(version: 20150330124923) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -475,13 +475,15 @@ ActiveRecord::Schema.define(version: 20150326153446) do
     t.boolean  "active",                    limit: 1,                                   default: true,       null: false
     t.string   "gender",                    limit: 255,                                 default: "",         null: false
     t.string   "age_group",                 limit: 255,                                 default: "",         null: false
-    t.integer  "nominal_code_id",           limit: 4
     t.text     "google_description",        limit: 65535
     t.boolean  "allow_fractional_quantity", limit: 1,                                   default: false,      null: false
     t.text     "extra",                     limit: 4294967295
+    t.integer  "purchase_nominal_code_id",  limit: 4
+    t.integer  "sales_nominal_code_id",     limit: 4
   end
 
-  add_index "products", ["nominal_code_id"], name: "index_products_on_nominal_code_id", using: :btree
+  add_index "products", ["purchase_nominal_code_id"], name: "index_products_on_purchase_nominal_code_id", using: :btree
+  add_index "products", ["sales_nominal_code_id"], name: "index_products_on_sales_nominal_code_id", using: :btree
 
   create_table "quantity_prices", force: :cascade do |t|
     t.integer  "product_id", limit: 4
