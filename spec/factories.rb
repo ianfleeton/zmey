@@ -62,7 +62,7 @@ FactoryGirl.define do
 
   factory :country do
     sequence(:name) { |n| "Country #{n}" }
-    sequence(:iso_3166_1_alpha_2) { |n| n.to_s(36).rjust(2, '0') }
+    sequence(:iso_3166_1_alpha_2) { |n| (n % 1296).to_s(36).rjust(2, '0') }
   end
 
   factory :discount do
