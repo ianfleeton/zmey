@@ -81,5 +81,20 @@ module Discounts
 
       it { should be_kind_of Array }
     end
+
+    describe '#filter_mutually_exclusive_discounts' do
+      let(:c) { Calculator.new([Discount.new], ['COUPON'], Basket.new) }
+
+      it 'removes mutually exclusive discounts, keeping the most favorable to the customer' do
+        d1 = DiscountLine.new(price_adjustment: -10)
+        d2 = DiscountLine.new(price_adjustment: -20, mutually_exclusive_with: [:percentage_off_order, :amount_off_order].to_set)
+        d3 = DiscountLine.new(price_adjustment: -30, mutually_exclusive_with: [:amount_off_order, :free_products].to_set)
+        d4 = DiscountLine.new(price_adjustment: -40, mutually_exclusive_with: [:percentage_off_order].to_set)
+        d5 = DiscountLine.new(price_adjustment: -50, mutually_exclusive_with: [:amount_off_order].to_set)
+        c.discount_lines = [d1, d2, d3, d4, d5]
+        c.filter_mutually_exclusive_discounts
+        expect(c.discount_lines).to eq [d1, d4, d5]
+      end
+    end
   end
 end
