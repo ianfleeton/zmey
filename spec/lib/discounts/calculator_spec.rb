@@ -48,20 +48,27 @@ module Discounts
     end
 
     describe '#calculate' do
+      let(:auth_discount) { Discount.new(coupon: 'COUPON') }
+      let(:unused_discount) { Discount.new(coupon: 'UNUSED') }
+      let(:discounts) { [auth_discount, unused_discount] }
+      let(:c) { Calculator.new(discounts, ['COUPON'], Basket.new) }
+
       class FakeCalculator
         def calculate; end
       end
+      let(:fake_calculator) { FakeCalculator.new }
 
       it 'calculates each authorized discount' do
-        auth_discount = Discount.new(coupon: 'COUPON')
-        unused_discount = Discount.new(coupon: 'UNUSED')
-        c = Calculator.new([auth_discount, unused_discount], ['COUPON'], Basket.new)
-
-        fake_calculator = FakeCalculator.new
         expect(c).to receive(:calculator_for).with(auth_discount).and_return(fake_calculator)
         expect(c).not_to receive(:calculator_for).with(unused_discount)
         expect(fake_calculator).to receive(:calculate)
 
+        c.calculate
+      end
+
+      it 'filters mutually exclusive discounts' do
+        allow(c).to receive(:calculator_for).and_return(fake_calculator)
+        expect(c).to receive(:filter_mutually_exclusive_discounts)
         c.calculate
       end
     end

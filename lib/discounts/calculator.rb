@@ -24,6 +24,7 @@ module Discounts
       discounts.each do |discount|
         calculator_for(discount).calculate if authorized?(discount)
       end
+      filter_mutually_exclusive_discounts
     end
 
     # Returns a calculator instance for the discount.
