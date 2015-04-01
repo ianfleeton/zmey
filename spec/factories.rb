@@ -67,6 +67,7 @@ FactoryGirl.define do
 
   factory :discount do
     name 'Discount'
+    reward_type 'percentage_off_order'
   end
 
   factory :enquiry do

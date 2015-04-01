@@ -13,6 +13,11 @@ class BasketItem < ActiveRecord::Base
     quantity * (inc_tax ? product_price_inc_tax : product_price_ex_tax)
   end
 
+  # Returns the total amount of tax for this line.
+  def tax_amount
+    line_total(true) - line_total(false)
+  end
+
   # Returns the sum of RRP and volume purchasing savings. Other discounts are
   # not considered.
   #

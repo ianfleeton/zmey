@@ -5,7 +5,7 @@ feature 'Discounts' do
   let(:product) { FactoryGirl.create(:product) }
 
   before do
-    d = Discount.create!(name: 'Discount', coupon: 'DISCOUNT')
+    d = Discount.create!(name: 'Discount', coupon: 'DISCOUNT', reward_type: 'percentage_off_order')
   end
 
   scenario 'Apply and remove discount' do
@@ -19,7 +19,7 @@ feature 'Discounts' do
   end
 
   scenario 'Invalid coupons removed from session' do
-    invalid = Discount.create!(name: 'Invalid', coupon: 'INVALID')
+    invalid = Discount.create!(name: 'Invalid', coupon: 'INVALID', reward_type: 'percentage_off')
     visit product_path(product)
     click_button I18n.t('add_to_cart')
     fill_in 'coupon_code', with: 'INVALID'

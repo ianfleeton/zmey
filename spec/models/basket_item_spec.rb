@@ -23,6 +23,14 @@ RSpec.describe BasketItem, type: :model do
     end
   end
 
+  describe '#tax_amount' do
+    it 'returns the total amount of tax' do
+      product = FactoryGirl.create(:product, tax_type: Product::EX_VAT, price: 1)
+      basket_item = BasketItem.new(product: product, quantity: 3)
+      expect(basket_item.tax_amount).to be_within(0.0001).of(1 * 3 * Product::VAT_RATE)
+    end
+  end
+
   describe '#savings' do
     let(:inc_tax) { false }
     let(:basket_item) { FactoryGirl.build(:basket_item, product: product, quantity: quantity) }
@@ -68,7 +76,7 @@ RSpec.describe BasketItem, type: :model do
     end
 
     context 'inc tax, 1 product, RRP is 2.0, price is 1.0' do
-      let(:inc_tax) { true} 
+      let(:inc_tax) { true }
       let(:product) { FactoryGirl.create(:product, rrp: 2.0, price: 1.0, tax_type: tax_type) }
       let(:quantity) { 1 }
 

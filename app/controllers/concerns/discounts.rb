@@ -21,76 +21,8 @@ module Discounts
     end
 
     def calculate_discounts
-      @discount_lines = Array.new
-      Discount.all.each do |discount|
-        if discount_authorized?(discount)
-          if discount.reward_type.to_sym == :free_products
-            discount_free_products(discount.product_group.products)
-          elsif discount.reward_type.to_sym == :amount_off_order
-            calculate_amount_off_order(discount)
-          elsif discount.reward_type.to_sym == :percentage_off_order
-            calculate_percentage_off_order(discount)
-          elsif discount.reward_type.to_sym == :percentage_off
-            calculate_percentage_off(discount)
-          end
-        end
-      end
-    end
-
-    # Returns <tt>true</tt> if the discount doesn't require a coupon code or if
-    # the customer has supplied the correct coupon code.
-    def discount_authorized?(discount)
-      discount.coupon.blank? || session_contains_coupon?(discount.coupon)
-    end
-
-    def discount_free_products products
-      products.each do |product|
-        @basket.basket_items.each do |basket_item|
-          if product.id == basket_item.product_id
-            discount_line = DiscountLine.new
-            discount_line.name = 'Free ' + product.name
-            discount_line.price_adjustment = -product.price_ex_tax
-            discount_line.tax_adjustment = -product.tax_amount
-            @discount_lines << discount_line
-            break
-          end
-        end
-      end
-    end
-
-    def calculate_amount_off_order(discount)
-      effective_total = EffectiveTotal.new(discount, @basket)
-
-      if effective_total.ex_tax >= discount.threshold && effective_total.ex_tax > 0
-        discount_line = DiscountLine.new
-        discount_line.name = discount.name
-        discount_line.price_adjustment = -discount.reward_amount / effective_total.tax_rate
-        discount_line.tax_adjustment = - discount.reward_amount - discount_line.price_adjustment
-        @discount_lines << discount_line
-      end
-    end
-
-    def calculate_percentage_off_order(discount)
-      effective_total = EffectiveTotal.new(discount, @basket)
-
-      if effective_total.ex_tax >= discount.threshold && effective_total.ex_tax > 0
-        discount_line = DiscountLine.new
-        discount_line.name = discount.name
-        discount_line.price_adjustment = -(discount.reward_amount / 100.0) * effective_total.ex_tax
-        discount_line.tax_adjustment = -(discount.reward_amount / 100.0) * effective_total.tax_amount
-        @discount_lines << discount_line
-      end
-    end
-
-    def calculate_percentage_off(discount)
-      @basket.basket_items.each do |basket_item|
-        if discount.product_group.nil? || discount.product_group.products.include?(basket_item.product)
-          discount_line = DiscountLine.new
-          discount_line.name = "#{discount.name} - #{basket_item.product.name}"
-          discount_line.price_adjustment = -(discount.reward_amount / 100.0) * basket_item.product.price_ex_tax
-          discount_line.tax_adjustment = -(discount.reward_amount / 100.0) * basket_item.product.tax_amount
-          @discount_lines << discount_line
-        end
-      end
+      calculator = Calculator.new(Discount.all, session[:coupons], @basket)
+      calculator.calculate
+      @discount_lines = calculator.discount_lines
     end
 end

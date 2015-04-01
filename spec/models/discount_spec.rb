@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-describe Discount do
+RSpec.describe Discount, type: :model do
+  it { should validate_inclusion_of(:reward_type).in_array(Discount::REWARD_TYPES) }
+
   describe '#to_s' do
     it 'returns its name' do
       discount = Discount.new(name: '20% Off')

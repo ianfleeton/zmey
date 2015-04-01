@@ -1,6 +1,9 @@
 class Discount < ActiveRecord::Base
   belongs_to :product_group
 
+  REWARD_TYPES = ['amount_off_order', 'free_products', 'percentage_off', 'percentage_off_order']
+  validates_inclusion_of :reward_type, in: REWARD_TYPES
+
   validates :name, presence: true
 
   before_save :uppercase_coupon_code
