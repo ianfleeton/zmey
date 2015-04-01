@@ -12,7 +12,7 @@ module Discounts
       end
 
       def apply_discount(effective_total)
-        discount_line = DiscountLine.new
+        discount_line = DiscountLine.new(mutually_exclusive_with: [:percentage_off_order].to_set)
         discount_line.name = discount.name
         discount_line.price_adjustment = -(discount.reward_amount / 100.0) * effective_total.ex_tax
         discount_line.tax_adjustment = -(discount.reward_amount / 100.0) * effective_total.tax_amount
