@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative 'shared_examples/discounts.rb'
 require_relative 'shared_examples/shipping.rb'
 
 RSpec.describe CheckoutController, type: :controller do
