@@ -34,7 +34,7 @@ javascript:
           items.push('</div></li>');
         }
         $.each(data.images, function(key, image) {
-          var i = '<li class="picker-image"><a href="#" data-id="' + image.id + '" id="image-' + image.id + '"><img src="' + image.url + '" title="' + image.name + '"></a></li>';
+          var i = '<li class="picker-image"><a href="#" data-id="' + image.id + '" id="image-' + image.id + '"><img src="/up/images/' + image.id + '/constrained.192x144.jpg" title="' + image.name + '"></a></li>';
           items.push(i);
         });
         $('#' + imagesModal + ' .results-body').replaceWith(
