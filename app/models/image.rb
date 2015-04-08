@@ -49,6 +49,11 @@ class Image < ActiveRecord::Base
     File.join(directory_path, filename)
   end
 
+  # Returns the full local path to the image with filename <tt>f</tt>.
+  def path_for_filename(f)
+    File.join(directory_path, f)
+  end
+
   def url(size=nil, method=:longest_side)
     if size.nil?
       url_for_filename(filename)
@@ -64,6 +69,22 @@ class Image < ActiveRecord::Base
   SIZE_METHODS = [:constrained, :cropped, :height, :longest_side, :maxpect, :square, :width].freeze
 
   def sized_url(size, method)
+    if sized = sized_filename(size, method)
+      url_for_filename(sized)
+    else
+      "/#{IMAGE_MISSING}"
+    end
+  end
+
+  def sized_path(size, method)
+    if sized = sized_filename(size, method)
+      path_for_filename(sized)
+    else
+      Image.image_missing_path
+    end
+  end
+
+  def sized_filename(size, method)
     unless SIZE_METHODS.include?(method)
       raise ArgumentError.new("method must be one of #{SIZE_METHODS}")
     end
@@ -77,24 +98,58 @@ class Image < ActiveRecord::Base
         ImageScience.with_image(original_path) do |img|
           # protect against crashes
           if img.height <= 1 || img.width <= 1
-            return IMAGE_MISSING
+            return nil
           end
 
           send("size_#{method}", img, size, path)
         end
       rescue
-        return IMAGE_MISSING
+        return nil
       end
     end
-    url_for_filename(f)
+    f
   end
 
   # Returns a filename to use for a sized image.
   #
   #   i = Image.new(filename: 'image.jpg')
-  #   i.sized_image_filename(100, :longest_side) # => "longest_side_100.jpg"
+  #   i.sized_image_filename(100, :longest_side) # => "longest_side.100.jpg"
   def sized_image_filename(size, method)
-    method.to_s + '_' + size.to_s.gsub(", ", 'x').gsub('[', '').gsub(']', '') + '.' + extension
+    method.to_s + '.' + size.to_s.gsub(", ", 'x').gsub('[', '').gsub(']', '') + '.' + extension
+  end
+
+  # Returns the sized path for image <tt>id</tt>. The method and size is parsed
+  # from the <tt>filename</tt>.
+  #
+  # Returns the path of the <tt>IMAGE_MISSING</tt> file if the image does not
+  # exist.
+  def self.sized_path(id, filename)
+    if (image = Image.find_by(id: id)) && (properties = parse_filename(filename))
+      image.sized_path(properties[:size], properties[:method])
+    else
+      image_missing_path
+    end
+  end
+
+  # Returns a hash describing the sizing method and size of the sized image.
+  # <tt>nil</tt> is returned if the <tt>filename</tt> is invalid.
+  #
+  #   Image.parse_filename('longest_side.100.jpg')
+  #   # => {method: :longest_side, size: 100}
+  #
+  #   Image.parse_filename('cropped.640x480.jpg')
+  #   # => {method: :cropped, size: [640,480]}
+  def self.parse_filename(filename)
+    if match = filename.match(/([a-z_]+)\.(\d+)\.[a-z]+/)
+      { method: match[1].to_sym, size: match[2].to_i }
+    elsif match = filename.match(/([a-z_]+)\.(\d+)x(\d+)\.[a-z]+/)
+      { method: match[1].to_sym, size: [match[2].to_i, match[3].to_i] }
+    end
+  end
+
+  # Returns the path of the missing image file.
+  def self.image_missing_path
+    File.join(Rails.root.to_s, 'public', 'images', IMAGE_MISSING)
   end
 
   # Creates an image using the constrained method and writes it to

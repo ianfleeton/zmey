@@ -170,6 +170,8 @@ Rails.application.routes.draw do
 
   resources :forums
 
+  get 'up/images/:id/:filename' => 'images#sized_image', constraints: { filename: /[^\/]+/ }
+
   resources :orders, only: [:index, :show] do
     collection do
       get 'receipt'
