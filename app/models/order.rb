@@ -225,7 +225,7 @@ class Order < ActiveRecord::Base
   # * <tt>date</tt> is a string representation of a date which is expected to
   #   match the format in the settings.
   def record_preferred_delivery_date(settings, date)
-    return unless date
+    return unless date && settings
 
     self.preferred_delivery_date = Date.strptime(date, settings.date_format)
     self.preferred_delivery_date_prompt = settings.prompt

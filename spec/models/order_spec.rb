@@ -153,6 +153,13 @@ RSpec.describe Order, type: :model do
     it 'records the format' do
       expect(order.preferred_delivery_date_format).to eq date_format
     end
+
+    context 'with nil settings' do
+      let(:settings) { nil }
+      it 'returns nil' do
+        expect(order).to be_nil
+      end
+    end
   end
 
   describe '#add_basket' do
