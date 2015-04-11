@@ -56,6 +56,16 @@ wkhtmltopdf's dependencies can be installed on Ubuntu with:
 
   bin/rspec
 
+==== Selenium headless Firefox in Ubuntu
+
+  # Install with:
+  sudo apt-get update
+  sudo apt-get install firefox xvfb
+
+  # Run with:
+  sudo Xvfb :99 -ac
+  export DISPLAY=:99.0
+
 === REST API documentation
 
 Zmey can be accessed remotely using its REST API:
