@@ -37,6 +37,30 @@ describe Admin::OrdersController do
           expect(assigns(:orders).to_a).to eq u.orders.to_a
         end
       end
+
+      [:billing_company, :billing_full_name, :billing_postcode, :delivery_postcode, :email_address].each do |key|
+        context "with #{key} supplied" do
+          it "finds all orders with partially matching #{key}" do
+            o1 = FactoryGirl.create(:order, key => 'Ian')
+            o2 = FactoryGirl.create(:order, key => 'Brian')
+            o3 = FactoryGirl.create(:order, key => 'Alice')
+            get :index, key => 'ian'
+            expect(assigns(:orders)).to include(o1)
+            expect(assigns(:orders)).to include(o2)
+            expect(assigns(:orders)).not_to include(o3)
+          end
+        end
+      end
+
+      context 'with order_number supplied' do
+        it 'finds order with matching order_number' do
+          o1 = FactoryGirl.create(:order, order_number: 'ORDER-1')
+          o2 = FactoryGirl.create(:order, order_number: 'ORDER-2')
+          get :index, order_number: 'ORDER-1'
+          expect(assigns(:orders)).to include(o1)
+          expect(assigns(:orders)).not_to include(o2)
+        end
+      end
     end
 
     describe 'GET new' do

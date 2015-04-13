@@ -5,7 +5,7 @@ class Admin::OrdersController < Admin::AdminController
     if params[:user_id]
       @orders = User.find(params[:user_id]).orders.paginate(page: params[:page], per_page: 50)
     else
-      @orders = Order.order(created_at: :desc).paginate(page: params[:page], per_page: 250)
+      @orders = Order.order(created_at: :desc).where(search_conditions).paginate(page: params[:page], per_page: 250)
     end
   end
 
@@ -131,5 +131,36 @@ class Admin::OrdersController < Admin::AdminController
     # <tt>percentage</tt>%.
     def tax_amount(order_line, percentage)
       percentage.to_f / 100.0 * order_line.line_total_net
+    end
+
+    # Returns an array of search conditions for filtering orders based on
+    # params.
+    def search_conditions
+      conditions = ['1']
+
+      partial_match_search_keys.each do |key|
+        if params[key].present?
+          conditions[0] += " AND #{key} LIKE ?"
+          conditions << "%#{params[key]}%"
+        end
+      end
+
+      if params[:order_number].present?
+        conditions[0] += ' AND order_number = ?'
+        conditions << params[:order_number]
+      end
+
+      conditions
+    end
+
+    # Returns an array of keys that can be used for partial match searching.
+    def partial_match_search_keys
+      [
+        :billing_company,
+        :billing_full_name,
+        :billing_postcode,
+        :delivery_postcode,
+        :email_address
+      ]
     end
 end

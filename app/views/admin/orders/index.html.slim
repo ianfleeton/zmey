@@ -1,6 +1,8 @@
 = page_header t('.heading')
 
-p= new_button [:admin, Order]
+p
+  => new_button [:admin, Order]
+  button#search-orders.btn.btn-default type="button" data-toggle="modal" data-target="#search-modal"= t('.search')
 
 - if @orders.empty?
   p= t('.no_orders')
@@ -35,3 +37,19 @@ p= new_button [:admin, Order]
             .btn-group
               = edit_button [:admin, o]
               = delete_button [:admin, o]
+
+#search-modal.modal.fade  tabindex="-1" role="dialog" aria-labelledby="#{t('.search_orders')}" aria-hidden="true"
+  .modal-dialog
+    = bootstrap_form_tag(method: :get) do |f|
+      .modal-content
+        .modal-header
+          button.close type="button" data-dismiss="modal" aria-label="#{t('.close')}"
+            span aria-hidden="true" &times;
+          h4.modal-title= t('.search_orders')
+        .modal-body
+          = f.text_field :order_number, value: params[:order_number]
+          - [:billing_company, :billing_full_name, :billing_postcode, :delivery_postcode, :email_address].each do |field|
+            = f.text_field field, value: params[field]
+        .modal-footer
+          button.btn.btn-default type="button" data-dismiss="modal"= t('.close')
+          input.btn.btn-primary type="submit" value="#{t('.apply_search')}"
