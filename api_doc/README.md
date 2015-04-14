@@ -84,6 +84,7 @@ A successful retrieval will return JSON similar to the example:
 ### Order Lines
 
 * [`POST` api/admin/order_lines](endpoints/admin/order_lines/POST_create.md)
+* [`DELETE` api/admin/order_lines/:id](endpoints/admin/order_lines/DELETE_destroy.md)
 
 ### Pages
 
