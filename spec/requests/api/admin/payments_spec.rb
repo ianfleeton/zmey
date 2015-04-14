@@ -80,4 +80,67 @@ describe 'Admin payments API' do
       end
     end
   end
+
+  describe 'POST create' do
+    let(:order) { FactoryGirl.create(:order) }
+
+    let(:order_id)    { order.id }
+
+    # Optional attributes
+    let(:raw_auth_message) { nil }
+
+    before do
+      post '/api/admin/payments', payment: {
+        order_id: order_id,
+        accepted: accepted,
+        amount: amount,
+        raw_auth_message: raw_auth_message,
+        service_provider: service_provider,
+      }
+    end
+
+    context 'with invalid order' do
+      let(:accepted) { true }
+      let(:amount) { 1.0 }
+      let(:service_provider) { 'BACS' }
+      let(:order_id) { order.id + 1 }
+
+      it 'responds 422' do
+        expect(response.status).to eq 422
+      end
+
+      it 'includes an error message in JSON' do
+        expect(JSON.parse(response.body)).to eq ['Order does not exist.']
+      end
+    end
+
+    context 'with valid attributes' do
+      let(:accepted) { [true, false].sample }
+      let(:amount) { 123.45 }
+      let(:raw_auth_message) { 'Detailed tx info' }
+      let(:service_provider) { 'BACS' }
+      let(:payment) { order.reload.payments.first }
+
+      it 'creates a payment with supplied attributes' do
+        expect(payment).to be
+        expect(payment.accepted).to eq accepted
+        expect(payment.amount).to eq amount.to_s
+        expect(payment.raw_auth_message).to eq raw_auth_message
+        expect(payment.service_provider).to eq service_provider
+      end
+
+      it 'responds 200' do
+        expect(response.status).to eq 200
+      end
+
+      context 'JSON response' do
+        subject { JSON.parse(response.body) }
+
+        it 'includes the id and href of the newly created resource' do
+          expect(subject['payment']['id']).to eq payment.id
+          expect(subject['payment']['href']).to eq api_admin_payment_url(payment)
+        end
+      end
+    end
+  end
 end

@@ -96,6 +96,7 @@ A successful retrieval will return JSON similar to the example:
 
 * [`GET` api/admin/payments](endpoints/admin/payments/GET_index.md)
 * [`GET` api/admin/payments/:id](endpoints/admin/payments/GET_payment_by_id.md)
+* [`POST` api/admin/payments](endpoints/admin/payments/POST_create.md)
 
 ### Products
 
