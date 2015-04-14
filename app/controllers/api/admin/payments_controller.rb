@@ -18,6 +18,15 @@ class Api::Admin::PaymentsController < Api::Admin::AdminController
     end
   end
 
+  def destroy
+    if @payment = Payment.find_by(id: params[:id])
+      @payment.destroy
+      render nothing: true, status: 204
+    else
+      render nothing: true, status: 404
+    end
+  end
+
   private
 
     def payment_params

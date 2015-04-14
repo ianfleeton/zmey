@@ -143,4 +143,30 @@ describe 'Admin payments API' do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    let(:payment) { FactoryGirl.create(:payment) }
+
+    before { delete '/api/admin/payments/' + id.to_s }
+
+    context 'when payment exists' do
+      let(:id) { payment.id }
+
+      it 'returns 204' do
+        expect(response.status).to eq 204
+      end
+
+      it 'deletes the payment' do
+        expect(Payment.find_by(id: payment.id)).to be_nil
+      end
+    end
+
+    context 'when payment does not exist' do
+      let(:id) { payment.id + 1 }
+
+      it 'returns 404' do
+        expect(response.status).to eq 404
+      end
+    end
+  end
 end
