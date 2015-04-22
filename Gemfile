@@ -18,6 +18,7 @@ gem 'acts_as_tree'
 gem 'exception_notification'
 gem 'nilify_blanks'
 gem 'slim'
+gem 'render_anywhere'
 
 # Run jobs in the background
 gem 'daemons'

@@ -30,10 +30,7 @@ class OrdersController < ApplicationController
     redirect_to orders_path and return unless @order.fully_shipped?
     respond_to do |format|
       format.pdf do
-        html = render_to_string('invoice', formats: [:html], layout: 'invoice')
-        File.open('tmp/invoice.html', 'w') {|f| f.write(html) }
-        `#{WebKitHTMLToPDF.binary} tmp/invoice.html tmp/invoice.pdf`
-        send_file('tmp/invoice.pdf')
+        send_invoice_pdf(@order)
       end
       format.html do
         render layout: 'invoice'
@@ -66,5 +63,11 @@ class OrdersController < ApplicationController
 
   def can_show_receipt?(order)
     order.payment_received? || order.status==Enums::PaymentStatus::PAYMENT_ON_ACCOUNT || order.status==Enums::PaymentStatus::QUOTE
+  end
+
+  def send_invoice_pdf(order)
+    invoice = PDF::Invoice.new(order)
+    invoice.generate
+    send_file(invoice.filename)
   end
 end

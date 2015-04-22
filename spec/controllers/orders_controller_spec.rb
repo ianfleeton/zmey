@@ -91,5 +91,22 @@ describe OrdersController do
         end
       end
     end
+
+    context 'format is pdf' do
+      let(:order) { FactoryGirl.create(:order) }
+      before do
+        allow(controller).to receive(:logged_in?).and_return(true)
+        allow(controller).to receive(:can_access_order?).and_return(true)
+        allow_any_instance_of(Order).to receive(:fully_shipped?).and_return(true)
+      end
+
+      it 'generates and sends an invoice PDF' do
+        invoice = double(PDF::Invoice)
+        expect(PDF::Invoice).to receive(:new).and_return(invoice)
+        expect(invoice).to receive(:generate)
+        expect(invoice).to receive(:filename).and_return File.join(['spec', 'fixtures', 'pdf', 'fake.pdf'])
+        get :invoice, id: order.id, format: :pdf
+      end
+    end
   end
 end
