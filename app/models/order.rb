@@ -27,8 +27,18 @@
 # +shipping_amount+::
 #   Shipping amount excluding tax.
 #
+# +shipped_at+::
+#   When the order contents were shipped.
+#
+# +shipment_email_sent_at+::
+#   When the shipment email was sent to the customer.
+#
 # +shipping_method+::
 #   String describing the shipping method chosen for the order.
+#
+# +shipping_tracking_number+::
+#   A tracking number or code used to track the progress of the shipment with
+#   the courier.
 #
 # +status+::
 #   Status of payment for the order. One of <tt>Enums::PaymentStatus::VALUES</tt>.
