@@ -15,7 +15,9 @@ h1= t('.heading')
       - @orders.each do |o|
         tr
           td= link_to o.order_number, order_path(o)
-          td= link_to t('.invoice'), invoice_order_path(o), data: { no_turbolink: true }
+          td
+            - if o.fully_shipped?
+              = link_to t('.invoice'), invoice_order_path(o), data: { no_turbolink: true }
           td= formatted_price(o.total)
           td= o.created_at
           td= payment_status(o)

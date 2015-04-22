@@ -27,6 +27,7 @@ class OrdersController < ApplicationController
 
   def invoice
     redirect_to new_session_path and return unless can_access_order?
+    redirect_to orders_path and return unless @order.fully_shipped?
     respond_to do |format|
       format.pdf do
         html = render_to_string('invoice', formats: [:html], layout: 'invoice')

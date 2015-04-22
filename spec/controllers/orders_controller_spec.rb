@@ -67,9 +67,20 @@ describe OrdersController do
             allow(controller).to receive(:can_access_order?).and_return(true)
           end
 
-          it 'renders the layouts/invoice template' do
-            get :invoice, id: '1'
-            expect(response).to render_template 'layouts/invoice'
+          context 'when the order is fully shipped' do
+            before { allow(order).to receive(:fully_shipped?).and_return(true) }
+            it 'renders the layouts/invoice template' do
+              get :invoice, id: '1'
+              expect(response).to render_template 'layouts/invoice'
+            end
+          end
+
+          context 'when the order is not fully shipped' do
+            before { allow(order).to receive(:fully_shipped?).and_return(false) }
+            it 'redirects to the orders page' do
+              get :invoice, id: '1'
+              expect(response).to redirect_to(orders_path)
+            end
           end
         end
 
