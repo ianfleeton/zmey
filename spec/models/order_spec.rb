@@ -199,6 +199,20 @@ RSpec.describe Order, type: :model do
     end
   end
 
+  describe '#fully_shipped?' do
+    subject { FactoryGirl.build(:order, shipped_at: shipped_at).fully_shipped? }
+
+    context 'when shipped_at is nil' do
+      let(:shipped_at) { nil }
+      it { should eq false }
+    end
+
+    context 'when shipped_at is set' do
+      let(:shipped_at) { Date.today }
+      it { should eq true }
+    end
+  end
+
   describe '#to_webhook_payload' do
     before { FactoryGirl.create(:website) }
 

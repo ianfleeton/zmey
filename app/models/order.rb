@@ -271,6 +271,11 @@ class Order < ActiveRecord::Base
     end
   end
 
+  # Returns +true+ if all order contents have been shipped, otherwise +false+.
+  def fully_shipped?
+    !!shipped_at
+  end
+
   def to_webhook_payload(event)
     {
       order: {
