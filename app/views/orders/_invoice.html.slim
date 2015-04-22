@@ -60,22 +60,22 @@
         td.box width="50%"
           b Invoice Address:
           br
-          = order.delivery_full_name.upcase
+          = order.billing_full_name.upcase
           br
-          = order.delivery_address_line_1.upcase
+          = order.billing_address_line_1.upcase
           br
-          = order.delivery_address_line_2.try(:upcase)
+          = order.billing_address_line_2.try(:upcase)
           br
-          = order.delivery_town_city.upcase
+          = order.billing_town_city.upcase
           br
-          = order.delivery_county.try(:upcase)
+          = order.billing_county.try(:upcase)
           br
-          = order.delivery_postcode.upcase
+          = order.billing_postcode.upcase
           br
-          = order.delivery_country.name.upcase
+          = order.billing_country.name.upcase
           br
           b Phone:
-          = order.delivery_phone_number
+          = order.billing_phone_number
           br
           b Email:
           = order.email_address
