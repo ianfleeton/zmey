@@ -27,6 +27,10 @@ module PDF
     end
 
     class RenderingController < ApplicationController
+      def initialize
+        super
+        set_resolver
+      end
       attr_accessor :order
     end
 
