@@ -16,7 +16,7 @@ class ShippingCalculator
   end
 
   def tax_amount
-    if @options[:add_tax]
+    if @options[:add_tax] && (@options[:shipping_class].nil? || @options[:shipping_class].charge_tax?)
       Product::VAT_RATE * amount.to_f
     else
       0

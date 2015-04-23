@@ -10,7 +10,7 @@ RSpec.describe ShippingCalculator do
     basket: basket,
     default_amount: default_amount,
     shipping_class: shipping_class,
-    add_tax: true    
+    add_tax: true
   }}
 
   before do
@@ -44,17 +44,37 @@ RSpec.describe ShippingCalculator do
 
   describe '#tax_amount' do
     let(:calculator) { ShippingCalculator.new(options) }
+    let(:shipping_class) { FactoryGirl.create(:shipping_class, charge_tax: charge_tax) }
     subject { calculator.tax_amount }
 
-    context 'when add_tax true' do
-      let(:add_tax) { true }
-      it { should eq 0 }
+    context 'when shipping class charges tax' do
+      let(:charge_tax) { true }
+
+      context 'when add_tax true' do
+        let(:add_tax) { true }
+        it { should eq 0 }
+      end
+
+      context 'when add_tax false' do
+        let(:add_tax) { false }
+        before { allow(calculator).to receive(:amount).and_return(4) }
+        it { should eq 0.8 }
+      end
     end
 
-    context 'when add_tax false' do
-      let(:add_tax) { false }
-      before { allow(calculator).to receive(:amount).and_return(4) }
-      it { should eq 0.8 }
+    context 'when shipping class does not charge tax' do
+      let(:charge_tax) { false }
+
+      context 'when add_tax true' do
+        let(:add_tax) { true }
+        it { should eq 0 }
+      end
+
+      context 'when add_tax false' do
+        let(:add_tax) { false }
+        before { allow(calculator).to receive(:amount).and_return(4) }
+        it { should eq 0 }
+      end
     end
   end
 end
