@@ -75,10 +75,12 @@
         table.table
           tr
             th Product
+            th Qty
             th Actions
           - @product.additional_products.each do |additional_product|
             tr
               td= additional_product.additional_product.name
+              td= additional_product.quantity
               td style="width: 130px;"
                 = edit_button [:admin, additional_product]
                 = delete_button [:admin, additional_product]

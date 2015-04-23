@@ -48,11 +48,11 @@ describe Admin::AdditionalProductsController do
   end
 
   describe 'POST create' do
-    it 'creates a new AdditionalProduct with the supplies params' do
-      params = { 'additional_product_id' => '1', 'product_id' => '2', 'selected_by_default' => true }
-      expect(AdditionalProduct).to receive(:new).with(params)
-        .and_call_original
+    it 'creates a new AdditionalProduct with the supplied params' do
+      product = FactoryGirl.create(:product)
+      params = { 'additional_product_id' => product.id, 'product_id' => product.id, 'quantity' => '1', 'selected_by_default' => true }
       post 'create', additional_product: params
+      expect(AdditionalProduct.find_by(params)).to be
     end
   end
 

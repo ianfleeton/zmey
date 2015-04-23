@@ -58,6 +58,6 @@ class Admin::AdditionalProductsController < Admin::AdminController
     end
 
     def additional_product_params
-      params.require(:additional_product).permit(:additional_product_id, :product_id, :selected_by_default)
+      params.require(:additional_product).permit(:additional_product_id, :product_id, :quantity, :selected_by_default)
     end
 end

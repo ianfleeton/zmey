@@ -4,6 +4,8 @@
 
   = form.collection_select :additional_product_id, Product.all, :id, :name_with_sku
 
+  = form.text_field :quantity
+
   = form.label :selected_by_default_true, t('.selected_by_default')
 
   = form.radio_button :selected_by_default, true, class: 'radio', label: 'Yes'
