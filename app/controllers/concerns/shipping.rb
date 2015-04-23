@@ -11,10 +11,24 @@ module Shipping
       @delivery_address ||= Address.find_by(id: session[:delivery_address_id])
     end
 
+    # Sets @shipping_class to the first valid shipping class, starting with the
     def set_shipping_class
-      @shipping_class =
-        ShippingClass.find_by(id: session[:shipping_class_id]) ||
-        delivery_address.try(:first_shipping_class)
+      @shipping_class = ShippingClass.find_by(id: session[:shipping_class_id])
+
+      @shipping_class = select_cheapest_shipping_class unless @shipping_class.try(:valid_for_basket?, basket)
+    end
+
+    # Returns the cheapest valid shipping class for the customer's delivery
+    # address, or <tt>nil</tt> if there aren't any.
+    def select_cheapest_shipping_class
+      @shipping_class = candidate_shipping_classes
+        .select { |sc| sc.valid_for_basket?(basket) }
+        .sort { |a, b| a.amount_for_basket(basket) <=> b.amount_for_basket(basket) }
+        .first
+    end
+
+    def candidate_shipping_classes
+      delivery_address.try(:shipping_classes) || []
     end
 
     def set_shipping_amount

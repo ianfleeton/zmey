@@ -10,14 +10,7 @@ class ShippingClass < ActiveRecord::Base
   validates_inclusion_of :table_rate_method, in: TABLE_RATE_METHODS
 
   def amount_for_basket(basket)
-    case table_rate_method
-    when 'basket_total'
-      value = basket.total(true)
-    when 'weight'
-      value = basket.weight
-    else
-      raise 'Unknown table rate method'
-    end
+    value = get_value(basket)
 
     shipping = nil
 
@@ -30,6 +23,25 @@ class ShippingClass < ActiveRecord::Base
     end
 
     shipping
+  end
+
+  def valid_for_basket?(basket)
+    if invalid_over_highest_trigger?
+      return get_value(basket) <= shipping_table_rows.last.trigger_value
+    else
+      true
+    end
+  end
+
+  def get_value(basket)
+    case table_rate_method
+    when 'basket_total'
+      value = basket.total(true)
+    when 'weight'
+      value = basket.weight
+    else
+      raise 'Unknown table rate method'
+    end
   end
 
   def to_s
