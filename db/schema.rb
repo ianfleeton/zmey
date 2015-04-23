@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423160409) do
+ActiveRecord::Schema.define(version: 20150423173657) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -507,12 +507,13 @@ ActiveRecord::Schema.define(version: 20150423160409) do
   add_index "related_product_scores", ["product_id"], name: "index_related_product_scores_on_product_id", using: :btree
 
   create_table "shipping_classes", force: :cascade do |t|
-    t.integer  "shipping_zone_id",  limit: 4,   default: 0,              null: false
-    t.string   "name",              limit: 255, default: "",             null: false
+    t.integer  "shipping_zone_id",             limit: 4,   default: 0,              null: false
+    t.string   "name",                         limit: 255, default: "",             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "table_rate_method", limit: 255, default: "basket_total", null: false
-    t.boolean  "charge_tax",        limit: 1,   default: true,           null: false
+    t.string   "table_rate_method",            limit: 255, default: "basket_total", null: false
+    t.boolean  "charge_tax",                   limit: 1,   default: true,           null: false
+    t.boolean  "invalid_over_highest_trigger", limit: 1,   default: false,          null: false
   end
 
   add_index "shipping_classes", ["shipping_zone_id"], name: "index_shipping_classes_on_shipping_zone_id", using: :btree

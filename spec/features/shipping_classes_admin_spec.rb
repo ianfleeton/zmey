@@ -21,8 +21,17 @@ feature 'Shipping classes admin' do
     else
       uncheck 'Charge tax'
     end
+    if invalid_over_highest_trigger = [true, false].sample
+      check 'Invalid over highest trigger'
+    else
+      uncheck 'Invalid over highest trigger'
+    end
     click_button 'Create Shipping class'
-    expect(ShippingClass.find_by(name: shipping_class.name, charge_tax: charge_tax)).to be
+    expect(ShippingClass.find_by(
+      name: shipping_class.name,
+      charge_tax: charge_tax,
+      invalid_over_highest_trigger: invalid_over_highest_trigger
+    )).to be
   end
 
   scenario 'Edit shipping class' do

@@ -40,7 +40,12 @@ class Admin::ShippingClassesController < Admin::AdminController
     end
 
     def shipping_class_params
-      params.require(:shipping_class).permit(:charge_tax, :name, :shipping_zone_id,
-      :table_rate_method)
+      params.require(:shipping_class).permit(
+        :charge_tax,
+        :invalid_over_highest_trigger,
+        :name,
+        :shipping_zone_id,
+        :table_rate_method
+      )
     end
 end
