@@ -26,5 +26,10 @@
       = form.label :table_rate_method
       = select('shipping_class', 'table_rate_method', table_rate_method_options, {}, class: 'form-control')
 
+    .checkbox
+      label
+        => form.check_box :charge_tax
+        | Charge tax
+
     .form-group
       = form.submit class: 'btn btn-primary'

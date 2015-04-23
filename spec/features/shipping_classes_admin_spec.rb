@@ -16,8 +16,13 @@ feature 'Shipping classes admin' do
     visit admin_shipping_classes_path
     click_link 'New'
     fill_in 'Name', with: shipping_class.name
+    if charge_tax = [true, false].sample
+      check 'Charge tax'
+    else
+      uncheck 'Charge tax'
+    end
     click_button 'Create Shipping class'
-    expect(ShippingClass.find_by(name: shipping_class.name)).to be
+    expect(ShippingClass.find_by(name: shipping_class.name, charge_tax: charge_tax)).to be
   end
 
   scenario 'Edit shipping class' do
