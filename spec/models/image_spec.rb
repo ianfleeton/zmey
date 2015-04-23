@@ -77,4 +77,14 @@ RSpec.describe Image, type: :model do
       it { should eq({method: :cropped, size: [640, 480]}) }
     end
   end
+
+  describe '#destroy' do
+    it 'removes product_image relationships' do
+      i = FactoryGirl.create(:image)
+      p = FactoryGirl.create(:product)
+      pi = ProductImage.create!(product: p, image: i)
+      i.destroy
+      expect(ProductImage.find_by(pi.id)).to be_nil
+    end
+  end
 end

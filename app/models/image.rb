@@ -5,6 +5,7 @@ class Image < ActiveRecord::Base
   has_many :carousel_slides, dependent: :restrict_with_exception
   has_many :pages, dependent: :nullify
   has_many :products, dependent: :nullify
+  has_many :product_images, dependent: :delete_all
   has_many :thumbnail_pages, foreign_key: 'thumbnail_image_id', class_name: 'Page', dependent: :nullify
 
   before_save   :determine_filename
