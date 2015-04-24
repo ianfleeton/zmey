@@ -47,6 +47,37 @@ describe ShippingClass do
     end
   end
 
+  describe '#valid_for_size?' do
+    let(:allow_oversize) { true }
+    let(:basket) { Basket.new }
+    let(:shipping_class) { ShippingClass.new(allow_oversize: allow_oversize) }
+    subject { shipping_class.valid_for_size?(basket) }
+
+    before do
+      allow(basket).to receive(:oversize?).and_return(oversize?)
+    end
+
+    context 'shipping class allows oversize' do
+      let(:allow_oversize) { true }
+      context 'basket is oversize' do
+        let(:oversize?) { true }
+        it { should eq true }
+      end
+    end
+
+    context 'shipping class disallows oversize' do
+      let(:allow_oversize) { false }
+      context 'basket is oversize' do
+        let(:oversize?) { true }
+        it { should eq false }
+      end
+      context 'basket is normal size' do
+        let(:oversize?) { false }
+        it { should eq true }
+      end
+    end
+  end
+
   describe '#to_s' do
     it 'returns its name' do
       expect(ShippingClass.new(name: 'First Class').to_s).to eq 'First Class'

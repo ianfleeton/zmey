@@ -26,6 +26,14 @@ class ShippingClass < ActiveRecord::Base
   end
 
   def valid_for_basket?(basket)
+    valid_for_value?(basket) && valid_for_size?(basket)
+  end
+
+  def valid_for_size?(basket)
+    allow_oversize? || !basket.oversize?
+  end
+
+  def valid_for_value?(basket)
     if invalid_over_highest_trigger?
       return get_value(basket) <= shipping_table_rows.last.trigger_value
     else
