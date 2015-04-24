@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423173657) do
+ActiveRecord::Schema.define(version: 20150424124842) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -481,6 +481,7 @@ ActiveRecord::Schema.define(version: 20150423173657) do
     t.text     "extra",                     limit: 4294967295
     t.integer  "purchase_nominal_code_id",  limit: 4
     t.integer  "sales_nominal_code_id",     limit: 4
+    t.boolean  "oversize",                  limit: 1,                                   default: false,      null: false
   end
 
   add_index "products", ["purchase_nominal_code_id"], name: "index_products_on_purchase_nominal_code_id", using: :btree

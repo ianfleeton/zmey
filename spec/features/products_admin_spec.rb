@@ -15,6 +15,7 @@ feature 'Products admin' do
       allow_fractional_quantity: [true, false].sample,
       gender: 'unisex',
       name:   SecureRandom.hex,
+      oversize: [true, false].sample,
       sku:    SecureRandom.hex
     )
     visit admin_products_path
@@ -25,9 +26,8 @@ feature 'Products admin' do
     fill_in 'Name',   with: product.name
     fill_in 'SKU',    with: product.sku
 
-    if product.allow_fractional_quantity?
-      check I18n.t('admin.products.form.allow_fractional_quantity')
-    end
+    check_or_uncheck I18n.t('admin.products.form.allow_fractional_quantity'), product.allow_fractional_quantity?
+    check_or_uncheck I18n.t('admin.products.form.oversize'), product.oversize?
 
     click_button 'Save'
 
@@ -36,7 +36,12 @@ feature 'Products admin' do
       allow_fractional_quantity: product.allow_fractional_quantity,
       gender:    product.gender,
       name:      product.name,
+      oversize:  product.oversize,
       sku:       product.sku
     )).to be
+  end
+
+  def check_or_uncheck(what, value)
+    value ? check(what) : uncheck(what)
   end
 end

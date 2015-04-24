@@ -25,6 +25,8 @@
 
   = form.text_field :shipping_supplement
 
+  = form.check_box :oversize, label: t('.oversize')
+
   = form.select :tax_type, tax_type_options
 
   = form.text_field :weight, label: 'Weight (kg)'
