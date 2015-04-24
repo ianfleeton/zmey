@@ -202,4 +202,23 @@ RSpec.describe BasketItem, type: :model do
       expect(item.immutable_quantity?).to be_truthy
     end
   end
+
+  describe '#oversize?' do
+    subject { BasketItem.new(product: product).oversize? }
+
+    context 'with oversize product' do
+      let(:product) { FactoryGirl.create(:product, oversize: true) }
+      it { should eq true }
+    end
+
+    context 'with normal size product' do
+      let(:product) { FactoryGirl.create(:product, oversize: false) }
+      it { should eq false }
+    end
+
+    context 'with no product' do
+      let(:product) { nil }
+      it { should be_falsey }
+    end
+  end
 end

@@ -41,6 +41,23 @@ describe Basket do
     end
   end
 
+  describe '#oversize?' do
+    let(:basket) { Basket.new }
+    let(:basket_item) { double(BasketItem, :oversize? => oversize) }
+    before do
+      allow(basket).to receive(:basket_items).and_return([basket_item])
+    end
+    subject { basket.oversize? }
+    context 'with oversize items' do
+      let(:oversize) { true }
+      it { should eq true }
+    end
+    context 'with no oversize items' do
+      let(:oversize) { false }
+      it { should eq false }
+    end
+  end
+
   describe '#weight' do
     it 'returns the sum of the weight of all basket items' do
       item1 = double(BasketItem, weight: 5)

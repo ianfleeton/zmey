@@ -74,6 +74,11 @@ class Basket < ActiveRecord::Base
     savings(false) > 0
   end
 
+  # Returns true if any of the basket items are oversize.
+  def oversize?
+    basket_items.any? {|i| i.oversize?}
+  end
+
   def weight
     basket_items.inject(0) { |w, i| w + i.weight }
   end

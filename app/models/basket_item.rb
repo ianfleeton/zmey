@@ -9,6 +9,8 @@ class BasketItem < ActiveRecord::Base
   before_save :adjust_quantity
   before_update :preserve_immutable_quantity
 
+  delegate :oversize?, to: :product, allow_nil: true
+
   def line_total(inc_tax)
     quantity * (inc_tax ? product_price_inc_tax : product_price_ex_tax)
   end
