@@ -18,12 +18,6 @@ class Address < ActiveRecord::Base
     shipping_zone.try(:shipping_classes) || []
   end
 
-  # Returns the first shipping class available for this address, or
-  # <tt>nil</tt> if there isn't one.
-  def first_shipping_class
-    shipping_classes.first
-  end
-
   def to_s
     label
   end

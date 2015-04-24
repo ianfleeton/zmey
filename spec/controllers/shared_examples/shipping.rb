@@ -19,13 +19,13 @@ shared_examples_for 'a shipping class setter' do |method, action|
   context 'when shipping_class_id not in the session' do
     let(:session_shipping_class_id) { nil }
 
-    it 'sets @shipping_class from the delivery address\'s first shipping class' do
-      delivery_address_shipping_class = FactoryGirl.create(:shipping_class)
-      allow(shipping_delivery_address)
-        .to receive(:first_shipping_class)
-        .and_return(delivery_address_shipping_class)
+    it 'sets @shipping_class to the cheapest shipping class valid for the delivery address' do
+      sc1 = double(ShippingClass, :valid_for_basket? => false, amount_for_basket: 5)
+      sc2 = double(ShippingClass, :valid_for_basket? => true, amount_for_basket: 15)
+      sc3 = double(ShippingClass, :valid_for_basket? => true, amount_for_basket: 10)
+      allow(shipping_delivery_address).to receive(:shipping_classes).and_return [sc1, sc2, sc3]
       send(method, action)
-      expect(assigns(:shipping_class)).to eq delivery_address_shipping_class
+      expect(assigns(:shipping_class)).to eq sc3
     end
   end
 end

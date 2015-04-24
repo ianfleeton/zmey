@@ -11,7 +11,8 @@ module Shipping
       @delivery_address ||= Address.find_by(id: session[:delivery_address_id])
     end
 
-    # Sets @shipping_class to the first valid shipping class, starting with the
+    # Sets @shipping_class to the customer's chosen shipping class, if present
+    # and valid, otherwise the cheapest valid shipping class.
     def set_shipping_class
       @shipping_class = ShippingClass.find_by(id: session[:shipping_class_id])
 

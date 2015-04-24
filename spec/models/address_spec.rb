@@ -47,22 +47,6 @@ describe Address do
     end
   end
 
-  describe '#first_shipping_class' do
-    context 'with shipping class' do
-      before { setup_address_with_shipping_classes }
-
-      it 'returns the first shipping class' do
-        expect(@address.first_shipping_class).to eq @shipping_class
-      end
-    end
-
-    context 'without shipping class' do
-      it 'returns nil' do
-        expect(Address.new.first_shipping_class).to be_nil
-      end
-    end
-  end
-
   def setup_address_with_shipping_classes
     @shipping_zone = FactoryGirl.create(:shipping_zone)
     @shipping_class = FactoryGirl.create(:shipping_class, shipping_zone: @shipping_zone)
