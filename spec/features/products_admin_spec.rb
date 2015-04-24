@@ -40,8 +40,4 @@ feature 'Products admin' do
       sku:       product.sku
     )).to be
   end
-
-  def check_or_uncheck(what, value)
-    value ? check(what) : uncheck(what)
-  end
 end

@@ -16,21 +16,18 @@ feature 'Shipping classes admin' do
     visit admin_shipping_classes_path
     click_link 'New'
     fill_in 'Name', with: shipping_class.name
-    if charge_tax = [true, false].sample
-      check 'Charge tax'
-    else
-      uncheck 'Charge tax'
-    end
-    if invalid_over_highest_trigger = [true, false].sample
-      check 'Invalid over highest trigger'
-    else
-      uncheck 'Invalid over highest trigger'
-    end
+    charge_tax = [true, false].sample
+    check_or_uncheck 'Charge tax', charge_tax
+    invalid_over_highest_trigger = [true, false].sample
+    check_or_uncheck 'Invalid over highest trigger', invalid_over_highest_trigger
+    allow_oversize = [true, false].sample
+    check_or_uncheck 'Allow oversize', allow_oversize
     click_button 'Create Shipping class'
     expect(ShippingClass.find_by(
       name: shipping_class.name,
       charge_tax: charge_tax,
-      invalid_over_highest_trigger: invalid_over_highest_trigger
+      invalid_over_highest_trigger: invalid_over_highest_trigger,
+      allow_oversize: allow_oversize
     )).to be
   end
 

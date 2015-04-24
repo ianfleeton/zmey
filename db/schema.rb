@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424124842) do
+ActiveRecord::Schema.define(version: 20150424143152) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -515,6 +515,7 @@ ActiveRecord::Schema.define(version: 20150424124842) do
     t.string   "table_rate_method",            limit: 255, default: "basket_total", null: false
     t.boolean  "charge_tax",                   limit: 1,   default: true,           null: false
     t.boolean  "invalid_over_highest_trigger", limit: 1,   default: false,          null: false
+    t.boolean  "allow_oversize",               limit: 1,   default: true,           null: false
   end
 
   add_index "shipping_classes", ["shipping_zone_id"], name: "index_shipping_classes_on_shipping_zone_id", using: :btree

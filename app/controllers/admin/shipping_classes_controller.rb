@@ -41,6 +41,7 @@ class Admin::ShippingClassesController < Admin::AdminController
 
     def shipping_class_params
       params.require(:shipping_class).permit(
+        :allow_oversize,
         :charge_tax,
         :invalid_over_highest_trigger,
         :name,

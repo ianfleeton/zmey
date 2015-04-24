@@ -8,3 +8,9 @@ def sign_in_as(user)
   fill_in 'Password', with: user.password
   click_button 'Sign In'
 end
+
+# Checks <tt>check_box</tt> when <tt>value</tt> is <tt>true</tt>, otherwise
+# unchecks it.
+def check_or_uncheck(check_box, value)
+  value ? check(check_box) : uncheck(check_box)
+end
