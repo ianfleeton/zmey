@@ -259,7 +259,8 @@ en:
   orders:
     index:
       heading: 'Orders'
-      invoice: 'Invoice (PDF)'
+      invoice_html: 'View invoice'
+      invoice_pdf: 'Download invoice (PDF)'
       no_orders: 'There are no orders for you.'
       order_number: 'Order Number'
       order_total: 'Order Total'

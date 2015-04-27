@@ -10,9 +10,15 @@ RSpec.describe 'orders/index.html.slim', type: :view do
 
     context 'when orders fully shipped' do
       before { allow(order).to receive(:fully_shipped?).and_return(true) }
-      it 'links to invoice' do
+
+      it 'links to HTML invoice' do
         render
         expect(rendered).to have_selector("a[href='#{invoice_order_path(order)}']")
+      end
+
+      it 'links to PDF invoice' do
+        render
+        expect(rendered).to have_selector("a[href='#{invoice_order_path(order, format: :pdf)}']")
       end
     end
 
