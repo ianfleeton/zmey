@@ -39,6 +39,7 @@ Create a new order.
 * **delivery_full_name** — Full name of the customer.
 * **order_number** — Order number, which is represented as a string so it can
   contain letters as well as numbers.
+* **po_number** — Customer's purchase order (PO) number.
 * **processed_at** — Time when the order was processed or exported to an
   external system.
 

@@ -90,6 +90,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       :delivery_town_city,
       :email_address,
       :order_number,
+      :po_number,
       :processed_at,
       :shipment_email_sent_at,
       :shipped_at,

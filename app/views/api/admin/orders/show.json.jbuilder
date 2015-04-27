@@ -2,6 +2,7 @@ json.order do
   json.id @order.id
   json.href api_admin_order_url(@order)
   json.order_number @order.order_number
+  json.po_number @order.po_number
   if @order.user
     json.user do
       json.id   @order.user.id

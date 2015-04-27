@@ -4,6 +4,7 @@ Update an existing order.
 
 ## Attributes
 
+* **po_number** — Customer's purchase order (PO) number.
 * **processed_at** — When the order was externally processed.
 * **shipment_email_sent_at** — When the shipment notification email was sent
   to the customer.

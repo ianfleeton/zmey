@@ -19,6 +19,9 @@
 # +order_number+::
 #   Unique order reference. May contain alphanumeric characters and hyphens.
 #
+# +po_number+::
+#   A purchase order (PO) number provided by the customer.
+#
 # +processed_at+::
 #   When the order was processed. This can be used to help integrate with
 #   external systems such as accounts or stock control software. This is not

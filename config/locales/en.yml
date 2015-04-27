@@ -110,6 +110,7 @@ en:
         comments: 'Comments'
         heading: 'Edit Order'
         no_comments: 'No comments have been added to this order yet.'
+        po_number: 'PO number'
       index:
         apply_search: 'Apply Search'
         close: 'Close'

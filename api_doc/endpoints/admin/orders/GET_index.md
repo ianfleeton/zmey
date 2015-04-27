@@ -42,6 +42,7 @@ attribute.
       "id": 1,
       "href": "https://zmey.co.uk/api/admin/orders/1",
       "order_number": "20140411-AX0W",
+      "po_number": "PO1234",
       "user": {
         "id": 1,
         "href": "https://zmey.co.uk/api/admin/users/1"

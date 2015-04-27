@@ -119,8 +119,10 @@ describe Admin::OrdersController do
 
     describe 'PATCH update' do
       let(:order) { FactoryGirl.create(:order) }
+      let(:po_number) { 'PO123' }
       let(:order_params) {{
-        order_number: order.order_number
+        order_number: order.order_number,
+        po_number: po_number
       }}
 
       let(:order_line_product_name) { nil }
@@ -146,6 +148,10 @@ describe Admin::OrdersController do
 
       it 'redirects to the edit order page' do
         expect(response).to redirect_to edit_admin_order_path(order)
+      end
+
+      it 'updates order details' do
+        expect(order.reload.po_number).to eq po_number
       end
 
       context 'with new order lines' do

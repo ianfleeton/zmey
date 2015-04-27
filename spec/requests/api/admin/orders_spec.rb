@@ -139,6 +139,7 @@ describe 'Admin orders API' do
         @order = FactoryGirl.create(:order,
           billing_company: 'YESL', billing_address_line_3: 'Copley Road',
           delivery_company: 'FBS', delivery_address_line_3: 'Beighton',
+          po_number: 'PO123',
           shipment_email_sent_at: '2014-05-14T16:25:56.000+01:00',
           shipped_at: '2014-05-14T15:50:12.000+01:00',
           shipping_tracking_number: 'TRACK123',
@@ -151,6 +152,7 @@ describe 'Admin orders API' do
       end
 
       ['billing_address_line_3', 'billing_company', 'delivery_address_line_3', 'delivery_company',
+        'po_number',
         'shipping_tracking_number', 'weight'].each do |component|
         it "includes #{component} in JSON" do
           get api_admin_order_path(@order)
@@ -220,6 +222,7 @@ describe 'Admin orders API' do
     let(:email_address)           { "#{SecureRandom.hex}@example.org" }
     let(:order_number)            { 'ORDER123456' }
     let(:payment_status)          { 'waiting_for_payment' }
+    let(:po_number)               { 'PO123' }
     let(:processed_at)            { '2015-03-05T10:00:00.000+00:00' }
 
     let(:basic_params) {{
@@ -239,6 +242,7 @@ describe 'Admin orders API' do
       delivery_town_city: delivery_town_city,
       email_address: email_address,
       order_number: order_number,
+      po_number: po_number,
       processed_at: processed_at,
       status: payment_status
     }}

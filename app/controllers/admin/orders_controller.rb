@@ -69,6 +69,7 @@ class Admin::OrdersController < Admin::AdminController
         :delivery_postcode,
         :delivery_town_city,
         :email_address,
+        :po_number,
       )
     end
 
