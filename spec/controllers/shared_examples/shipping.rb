@@ -20,9 +20,9 @@ shared_examples_for 'a shipping class setter' do |method, action|
     let(:session_shipping_class_id) { nil }
 
     it 'sets @shipping_class to the cheapest shipping class valid for the delivery address' do
-      sc1 = double(ShippingClass, :valid_for_basket? => false, amount_for_basket: 5)
-      sc2 = double(ShippingClass, :valid_for_basket? => true, amount_for_basket: 15)
-      sc3 = double(ShippingClass, :valid_for_basket? => true, amount_for_basket: 10)
+      sc1 = double(ShippingClass, :valid_for_basket? => false, amount_for_basket: 5, name: 'sc1')
+      sc2 = double(ShippingClass, :valid_for_basket? => true, amount_for_basket: 15, name: 'sc2')
+      sc3 = double(ShippingClass, :valid_for_basket? => true, amount_for_basket: 10, name: 'sc3')
       allow(shipping_delivery_address).to receive(:shipping_classes).and_return [sc1, sc2, sc3]
       send(method, action)
       expect(assigns(:shipping_class)).to eq sc3
