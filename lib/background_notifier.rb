@@ -14,15 +14,15 @@ class BackgroundNotifier
     # SomeNotifier.notification(...).deliver_now
   end
 
-  # Records that the email has been sent.
+  # Override to record that the email has been sent.
   def record_sent(object)
     # It is a good idea to skip validation because we don't want to spam the
     # customer if there are any validation problems.
     # object.update_attribute(:my_email_sent_at, Time.zone.now)
   end
 
-  # Returns a list of objects that are requiring a notification to be sent to
-  # the customer.
+  # Override to return a list of objects that are requiring a notification to
+  # be sent to the customer.
   def pending_objects
     # Object.where('some_status IS NOT NULL AND my_email_sent_at IS NULL')
     []
