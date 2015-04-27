@@ -39,6 +39,15 @@ wkhtmltopdf's dependencies can be installed on Ubuntu with:
 
   apt-get install libqt4-gui libqt4-network libqt4-webkit libxrender-dev xorg
 
+==== Installing wkhtmltopdf on Ubuntu 14.04 and later
+
+Download the .deb from http://wkhtmltopdf.org/downloads.html and install with:
+
+  sudo apt-get install xfonts-75dpi
+  sudo dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
+
+Replace the package filename as applicable.
+
 === Database creation
 
   mysql -e 'create database zmey_test; create database zmey_development;'
