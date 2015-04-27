@@ -17,7 +17,7 @@
 
   .form-group
     = form.label :shipping_zone_id
-    = form.collection_select :shipping_zone_id, @w.shipping_zones, :id, :name, {include_blank: '-- No shipping zone --'}
+    = form.collection_select :shipping_zone_id, ShippingZone.order(:name), :id, :name, {include_blank: '-- No shipping zone --'}
 
   br
   = form.submit class: 'btn btn-primary'

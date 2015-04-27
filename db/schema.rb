@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424143152) do
+ActiveRecord::Schema.define(version: 20150427085859) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -531,7 +531,6 @@ ActiveRecord::Schema.define(version: 20150424143152) do
   add_index "shipping_table_rows", ["shipping_class_id"], name: "index_shipping_table_rows_on_shipping_class_id", using: :btree
 
   create_table "shipping_zones", force: :cascade do |t|
-    t.integer  "website_id", limit: 4,   default: 0,  null: false
     t.string   "name",       limit: 255, default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"

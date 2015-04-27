@@ -6,12 +6,7 @@
       - @shipping_class.errors.full_messages.each do |msg|
         li= msg
 
-- if website.shipping_zones.empty?
-  .hero-unit
-    h1 Let's create a shipping zone
-    p You haven't created any shipping zones yet. You will need at least one shipping zone before you can create a shipping class.
-    p= link_to 'New Shipping Zone', new_admin_shipping_zone_path, class: 'btn btn-primary btn-large'
-- else
+- if ShippingZone.any?
   = form_for [:admin, @shipping_class] do |form|
 
     .form-group
@@ -20,7 +15,7 @@
 
     .form-group
       = form.label :shipping_zone_id
-      = form.collection_select :shipping_zone_id, website.shipping_zones, :id, :name, {}, class: 'form-control'
+      = form.collection_select :shipping_zone_id, ShippingZone.order(:name), :id, :name, {}, class: 'form-control'
 
     .form-group
       = form.label :table_rate_method
@@ -43,3 +38,8 @@
 
     .form-group
       = form.submit class: 'btn btn-primary'
+- else
+  .hero-unit
+    h1 Let's create a shipping zone
+    p You haven't created any shipping zones yet. You will need at least one shipping zone before you can create a shipping class.
+    p= link_to 'New Shipping Zone', new_admin_shipping_zone_path, class: 'btn btn-primary btn-large'

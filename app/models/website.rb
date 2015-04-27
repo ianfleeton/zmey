@@ -25,9 +25,6 @@ class Website < ActiveRecord::Base
   has_many :pages, -> { order 'name' }, dependent: :destroy
   has_many :forums, dependent: :destroy
   has_many :enquiries, -> { order 'created_at DESC' }, dependent: :destroy
-  has_many :shipping_zones, -> { order 'shipping_zones.name' }, dependent: :destroy
-  has_many :shipping_classes, through: :shipping_zones
-  has_many :shipping_table_rows, -> { order 'trigger_value' }, through: :shipping_classes
   has_many :webhooks, dependent: :delete_all
   belongs_to :blog, class_name: 'Forum'
   belongs_to :country

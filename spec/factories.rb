@@ -176,7 +176,6 @@ FactoryGirl.define do
 
   factory :shipping_zone do
     sequence(:name) { |n| "Shipping Zone #{n}" }
-    association :website
   end
 
   factory :topic do

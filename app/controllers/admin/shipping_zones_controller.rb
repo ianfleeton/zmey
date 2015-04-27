@@ -2,7 +2,7 @@ class Admin::ShippingZonesController < Admin::AdminController
   before_action :find_shipping_zone, only: [:edit, :update, :destroy]
 
   def index
-    @shipping_zones = website.shipping_zones
+    @shipping_zones = ShippingZone.order(:name)
   end
 
   def new
@@ -11,7 +11,6 @@ class Admin::ShippingZonesController < Admin::AdminController
 
   def create
     @shipping_zone = ShippingZone.new(shipping_zone_params)
-    @shipping_zone.website_id = website.id
 
     if @shipping_zone.save
       redirect_to admin_shipping_zones_path, notice: 'Saved.'
@@ -36,7 +35,7 @@ class Admin::ShippingZonesController < Admin::AdminController
   protected
 
   def find_shipping_zone
-    @shipping_zone = ShippingZone.find_by(id: params[:id], website_id: website.id)
+    @shipping_zone = ShippingZone.find_by(id: params[:id])
   end
 
   def shipping_zone_params

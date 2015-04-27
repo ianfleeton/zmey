@@ -2,7 +2,7 @@ class Admin::ShippingClassesController < Admin::AdminController
   before_action :set_shipping_class, only: [:edit, :update, :destroy]
 
   def index
-    @shipping_classes = website.shipping_classes
+    @shipping_classes = ShippingClass.order(:name)
   end
 
   def new
