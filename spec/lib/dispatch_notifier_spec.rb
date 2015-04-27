@@ -3,35 +3,13 @@ require 'rails_helper'
 RSpec.describe DispatchNotifier do
   let(:dn) { DispatchNotifier.new }
 
-  describe '#send_emails' do
-    let(:order) { double(Order) }
-
-    context 'for each pending_order' do
-      before { allow(dn).to receive(:pending_orders).and_return([order]) }
-
-      it 'calls send_email for each pending_order' do
-        allow(dn).to receive(:record_sent)
-
-        expect(dn).to receive(:send_email).with(order)
-        dn.send_emails
-      end
-
-      it 'calls record_sent for each pending_order' do
-        allow(dn).to receive(:send_email)
-
-        expect(dn).to receive(:record_sent).with(order)
-        dn.send_emails
-      end
-    end
-  end
-
-  describe '#pending_orders' do
+  describe '#pending_objects' do
     let(:pending) { FactoryGirl.create(:order, shipped_at: Date.today, shipment_email_sent_at: nil) }
     let(:already_sent) { FactoryGirl.create(:order, shipped_at: Date.today, shipment_email_sent_at: Date.today) }
     let(:unshipped) { FactoryGirl.create(:order, shipped_at: nil) }
 
     it 'returns only orders pending dispatch notifications' do
-      orders = dn.pending_orders
+      orders = dn.pending_objects
       expect(orders).to include(pending)
       expect(orders).not_to include(already_sent)
       expect(orders).not_to include(unshipped)

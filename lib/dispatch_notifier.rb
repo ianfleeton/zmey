@@ -1,12 +1,4 @@
-class DispatchNotifier
-  # Sends outstanding dispatch notification emails to customers.
-  def send_emails
-    pending_orders.each do |order|
-      send_email(order)
-      record_sent(order)
-    end
-  end
-
+class DispatchNotifier < BackgroundNotifier
   # Sends a dispatch notification email to the customer of the <tt>order</tt>.
   def send_email(order)
     OrderNotifier.dispatch(Website.first, order).deliver_now
@@ -22,7 +14,7 @@ class DispatchNotifier
 
   # Returns a list of orders that are requiring a dispatch notification to be
   # sent to the customer.
-  def pending_orders
+  def pending_objects
     Order.where('shipped_at IS NOT NULL AND shipment_email_sent_at IS NULL')
   end
 end
