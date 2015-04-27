@@ -21,6 +21,7 @@
 
 every 2.minutes do
   runner 'DispatchNotifier.new.send_emails'
+  runner 'InvoiceNotifier.new.send_emails'
 end
 
 every :hour do
