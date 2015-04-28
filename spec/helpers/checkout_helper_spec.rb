@@ -6,7 +6,7 @@ RSpec.describe CheckoutHelper, type: :helper do
 
     subject { upg_atlas_callbackdata(order) }
 
-    it { should include 'amount|#amount' }
+    it { should include 'transactionamount|#transactionamount' }
     it { should include 'ordernumber|ORDER-1234' }
     it { should include 'cardholderaddr1|#cardholderaddr1' }
     it { should include 'cardholderaddr2|#cardholderaddr2' }

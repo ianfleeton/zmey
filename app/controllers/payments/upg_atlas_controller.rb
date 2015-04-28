@@ -4,7 +4,7 @@ class Payments::UpgAtlasController < PaymentsController
   def callback
     @payment = Payment.new(
       service_provider: 'UPG Atlas',
-      amount: params[:amount],
+      amount: params[:transactionamount],
       cart_id: params[:ordernumber],
       email: params[:cardholdersemail],
       installation_id: website.upg_atlas_sh_reference,

@@ -7,7 +7,7 @@ RSpec.describe Payments::UpgAtlasController, type: :controller do
 
   describe 'POST callback' do
     let(:default_params) {{
-      amount: '10.00',
+      transactionamount: '10.00',
       cardholdersname: 'Alice',
       cardholdersemail: 'alice@example.org',
       cardholderstelephonenumber: '01234 567890',

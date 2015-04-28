@@ -3,7 +3,7 @@ module CheckoutHelper
   # Atlas callback.
   def upg_atlas_callbackdata(order)
     [
-      'amount', '#amount',
+      'transactionamount', '#transactionamount',
       'ordernumber', order.order_number,
       'cardholderaddr1', '#cardholderaddr1',
       'cardholderaddr2', '#cardholderaddr2',
