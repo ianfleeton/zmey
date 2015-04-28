@@ -111,5 +111,15 @@ RSpec.describe Payments::UpgAtlasController, type: :controller do
         expect(payment.transaction_status).to be_falsey
       end
     end
+
+    context 'test transaction' do
+      let(:params) {{
+        transactiontype: 'test'
+      }.merge(default_params)}
+
+      it 'sets test mode to true' do
+        expect(payment.test_mode).to eq true
+      end
+    end
   end
 end

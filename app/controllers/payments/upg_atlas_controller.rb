@@ -10,7 +10,7 @@ class Payments::UpgAtlasController < PaymentsController
       installation_id: website.upg_atlas_sh_reference,
       name: params[:cardholdersname],
       telephone: params[:cardholderstelephonenumber],
-      test_mode: false,
+      test_mode: params[:transactiontype] == 'test',
       transaction_time: params[:transactiontime],
     )
 
