@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Payments::UpgAtlasController, type: :controller do
-  it { should route(:post, '/payments/upg_atlas/callback').to(action: :callback) }
+  it { should route(:get, '/payments/upg_atlas/callback').to(action: :callback) }
 
   before { FactoryGirl.create(:website, upg_atlas_sh_reference: 'SH1234') }
 
-  describe 'POST callback' do
+  describe 'GET callback' do
     let(:default_params) {{
       transactionamount: '10.00',
       cardholdersname: 'Alice',
@@ -21,7 +21,7 @@ RSpec.describe Payments::UpgAtlasController, type: :controller do
 
     before do
       pre.try(:call)
-      post :callback, params
+      get :callback, params
     end
 
     it 'responds with status 200 OK' do
