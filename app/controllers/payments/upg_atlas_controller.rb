@@ -11,7 +11,7 @@ class Payments::UpgAtlasController < PaymentsController
       installation_id: website.upg_atlas_sh_reference,
       name: params[:cardholdersname],
       telephone: params[:cardholderstelephonenumber],
-      test_mode: params[:transactiontype] == 'test',
+      test_mode: test_mode?,
       transaction_time: params[:transactiontime],
     )
 
@@ -24,4 +24,10 @@ class Payments::UpgAtlasController < PaymentsController
     @payment.save
     render html: 'success'
   end
+
+  private
+
+    def test_mode?
+      params[:transactiontype] == 'test' || params[:sh_reason] == 'testing'
+    end
 end
