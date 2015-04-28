@@ -4,6 +4,7 @@ module CheckoutHelper
   def upg_atlas_callbackdata(order)
     [
       'transactionamount', '#transactionamount',
+      'transactioncurrency', '#transactioncurrency',
       'ordernumber', order.order_number,
       'cardholderaddr1', '#cardholderaddr1',
       'cardholderaddr2', '#cardholderaddr2',

@@ -6,6 +6,7 @@ class Payments::UpgAtlasController < PaymentsController
       service_provider: 'UPG Atlas',
       amount: params[:transactionamount],
       cart_id: params[:ordernumber],
+      currency: params[:transactioncurrency],
       email: params[:cardholdersemail],
       installation_id: website.upg_atlas_sh_reference,
       name: params[:cardholdersname],

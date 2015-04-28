@@ -8,6 +8,7 @@ RSpec.describe Payments::UpgAtlasController, type: :controller do
   describe 'GET callback' do
     let(:default_params) {{
       transactionamount: '10.00',
+      transactioncurrency: 'GBP',
       cardholdersname: 'Alice',
       cardholdersemail: 'alice@example.org',
       cardholderstelephonenumber: '01234 567890',
@@ -38,6 +39,10 @@ RSpec.describe Payments::UpgAtlasController, type: :controller do
 
     it 'records the amount' do
       expect(payment.amount).to eq '10.00'
+    end
+
+    it 'records the currency' do
+      expect(payment.currency).to eq 'GBP'
     end
 
     it 'records the UPG account reference' do
