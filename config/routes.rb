@@ -194,7 +194,7 @@ Rails.application.routes.draw do
   end
 
   namespace :payments do
-    post 'upg_atlas/callback' => 'upg_atlas#callback'
+    post 'upg_atlas/callback' => 'upg_atlas#callback', as: :upg_atlas_callback
   end
 
   resources :permutations

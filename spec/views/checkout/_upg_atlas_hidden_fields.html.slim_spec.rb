@@ -19,9 +19,11 @@ RSpec.describe 'checkout/_upg_atlas_hidden_fields.html.slim' do
     billing_country: FactoryGirl.create(:country, name: 'United Kingdom'),
     billing_phone_number: '01234 567890'
   ) }
+  let(:callbackdata) { 'amount|#amount|ordernumber|ORDER-1234|cardholdersname|#cardholdersname|cardholdersemail|#cardholdersemail' }
 
   before do
     allow(view).to receive(:website).and_return(website)
+    allow(view).to receive(:upg_atlas_callbackdata).and_return(callbackdata)
     assign(:order, order)
     render
   end
@@ -31,6 +33,8 @@ RSpec.describe 'checkout/_upg_atlas_hidden_fields.html.slim' do
     it { should have_selector "input[type='hidden'][name='checkcode'][value='#{website.upg_atlas_check_code}']" }
     it { should have_selector "input[type='hidden'][name='filename'][value='SH12345/payment.html']" }
     it { should have_selector "input[type='hidden'][name='shreference'][value='SH12345']" }
+    it { should have_selector "input[type='hidden'][name='callbackurl'][value='#{payments_upg_atlas_callback_url(protocol: :https)}']" }
+    it { should have_selector "input[type='hidden'][name='callbackdata'][value='#{callbackdata}']" }
     it { should have_selector "input[type='hidden'][name='cardholdersname'][value='#{order.billing_full_name}']" }
     it { should have_selector "input[type='hidden'][name='cardholdersemail'][value='#{order.email_address}']" }
     it { should have_selector "input[type='hidden'][name='cardholderaddr1'][value='#{order.billing_address_line_1}']" }
