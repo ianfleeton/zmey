@@ -193,6 +193,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :payments do
+    post 'upg_atlas/callback' => 'upg_atlas#callback'
+  end
+
   resources :permutations
 
   resources :product_group_placements
