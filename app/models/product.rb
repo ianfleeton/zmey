@@ -192,6 +192,11 @@ class Product < ActiveRecord::Base
     q.limit(100)
   end
 
+  # Returns the title appropriate for Google Products Feed.
+  def title_for_google
+    google_title.present? ? google_title : name
+  end
+
   # Returns the description appropriate for Google Products Feed.
   def description_for_google
     google_description.present? ? google_description : description

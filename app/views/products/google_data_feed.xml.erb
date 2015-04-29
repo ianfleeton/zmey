@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<rss version="2.0" 
-xmlns:g="http://base.google.com/ns/1.0" 
+<rss version="2.0"
+xmlns:g="http://base.google.com/ns/1.0"
 xmlns:c="http://base.google.com/cns/1.0">
 <channel>
   <title><%= website.name %></title>
@@ -8,7 +8,7 @@ xmlns:c="http://base.google.com/cns/1.0">
   <description><%= website.name %> product data feed</description>
 <% @products.each do |p| -%>
   <item>
-    <title><%= p.google_title.blank? ? p.name : p.google_title %></title>
+    <title><%= p.title_for_google %></title>
     <link>http://<%= website.domain %><%= url_for p %></link>
     <g:description><%= strip_tags p.description_for_google %></g:description>
     <g:price><%= formatted_gbp_price p.price_with_tax(1, !website.vat_number.empty?) %></g:price>

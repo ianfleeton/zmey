@@ -131,6 +131,20 @@ describe Product do
     end
   end
 
+  describe '#title_for_google' do
+    subject { Product.new(name: 'Original Name', google_title: google_title).title_for_google }
+
+    context 'when google_title blank' do
+      let(:google_title) { nil }
+      it { should eq 'Original Name' }
+    end
+
+    context 'when google_title set' do
+      let(:google_title) { 'Google Name' }
+      it { should eq 'Google Name' }
+    end
+  end
+
   describe 'before_save' do
     it 'sets nil weight to zero' do
       product = FactoryGirl.build(:product, weight: nil)
