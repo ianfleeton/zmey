@@ -105,6 +105,7 @@ en:
         heading: 'New Offline Payment Method'
     orders:
       edit:
+        add_payment: 'Add Payment'
         comment: 'Comment'
         comment_created_at: 'When'
         comments: 'Comments'
