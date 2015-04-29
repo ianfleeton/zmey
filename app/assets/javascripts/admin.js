@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap-sprockets
 //= require ace/ace
 //= require ace/worker-html
 //= require ace/theme-vibrant_ink
