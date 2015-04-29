@@ -14,6 +14,14 @@ RSpec.describe 'admin/orders/edit.html.slim', type: :view do
     expect(rendered).to have_selector 'input[name="order[po_number]"]'
   end
 
+  context 'when locked' do
+    before { allow(order).to receive(:locked?).and_return(true) }
+    it 'displays a warning' do
+      render
+      expect(rendered).to have_content I18n.t('admin.orders.edit.locked_warning')
+    end
+  end
+
   context 'with payments' do
     before do
       FactoryGirl.create(:payment, order: order)

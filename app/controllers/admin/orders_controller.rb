@@ -29,10 +29,12 @@ class Admin::OrdersController < Admin::AdminController
   def edit; end
 
   def update
-    @order.update_attributes(order_params)
-    if params[:order_line_quantity]
-      add_order_lines
-      update_order_lines
+    unless @order.locked?
+      @order.update_attributes(order_params)
+      if params[:order_line_quantity]
+        add_order_lines
+        update_order_lines
+      end
     end
     redirect_to edit_admin_order_path(@order)
   end

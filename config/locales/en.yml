@@ -110,6 +110,7 @@ en:
         comment_created_at: 'When'
         comments: 'Comments'
         heading: 'Edit Order'
+        locked_warning: 'This order is now locked and many details cannot be changed.'
         no_comments: 'No comments have been added to this order yet.'
         po_number: 'PO number'
       index:

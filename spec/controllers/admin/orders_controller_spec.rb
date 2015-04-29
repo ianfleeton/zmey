@@ -124,6 +124,7 @@ describe Admin::OrdersController do
         order_number: order.order_number,
         po_number: po_number
       }}
+      let(:pre) { nil }
 
       let(:order_line_product_name) { nil }
       let(:order_line_product_price) { nil }
@@ -133,6 +134,7 @@ describe Admin::OrdersController do
       let(:order_line_tax_percentage) { nil }
 
       before do
+        pre.try(:call)
         patch :update, id: order.id, order: order_params,
           order_line_product_name: order_line_product_name,
           order_line_product_price: order_line_product_price,
@@ -154,6 +156,18 @@ describe Admin::OrdersController do
         expect(order.reload.po_number).to eq po_number
       end
 
+      def lock_order
+        allow_any_instance_of(Order).to receive(:locked?).and_return(true)
+      end
+
+      context 'when order locked' do
+        let(:pre) { -> { lock_order } }
+
+        it 'does not update order details' do
+          expect(order.reload.po_number).to be_nil
+        end
+      end
+
       context 'with new order lines' do
         let(:sku) { 'SKU' }
         let(:order_line_product_name)   { {'-1' => 'A',  '-2' => 'B'} }
@@ -169,6 +183,13 @@ describe Admin::OrdersController do
 
         it 'records SKUs' do
           expect(order.reload.order_lines.first.product_sku).to eq sku
+        end
+
+        context 'when order locked' do
+          let(:pre) { -> { lock_order } }
+          it 'does not add new lines' do
+            expect(order.reload.order_lines.count).to eq 0
+          end
         end
       end
 
@@ -193,6 +214,14 @@ describe Admin::OrdersController do
         it 'updates SKUs' do
           order_line.reload
           expect(order_line.product_sku).to eq sku
+        end
+
+        context 'when order locked' do
+          let(:pre) { -> { lock_order } }
+          it 'does not update the order line' do
+            order_line.reload
+            expect(order_line.product_name).not_to eq 'New name'
+          end
         end
       end
     end

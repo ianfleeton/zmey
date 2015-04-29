@@ -112,6 +112,11 @@ class Order < ActiveRecord::Base
     status == Enums::PaymentStatus::PAYMENT_RECEIVED
   end
 
+  # An order is locked when payment is received. When an order is locked its
+  # contents should not be updated. Shipments and comments can still be
+  # added.
+  alias_method :locked?, :payment_received?
+
   # Returns the sum of all accepted payment amounts.
   def amount_paid
     accepted_payments.sum(:amount).to_f
