@@ -45,7 +45,9 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
       :google_description,
       :image_id,
       :meta_description, :name,
-      :page_title, :price, :rrp, :sku, :tax_type, :weight)
+      :page_title, :price, :rrp, :sku,
+      :submit_to_google,
+      :tax_type, :weight)
     end
 
     def set_nominal_codes

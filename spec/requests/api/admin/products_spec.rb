@@ -120,6 +120,7 @@ describe 'Admin products API' do
     let(:price)    { 2.34 }
     let(:rrp)      { 3.45 }
     let(:sku)      { SecureRandom.hex }
+    let(:submit_to_google) { [true, false].sample }
     let(:tax_type) { Product::INC_VAT }
     let(:weight)   { 1.234 }
     let(:basic_params) {{
@@ -129,6 +130,7 @@ describe 'Admin products API' do
       price: price,
       rrp: rrp,
       sku: sku,
+      submit_to_google: submit_to_google,
       tax_type: tax_type,
       weight: weight
     }}

@@ -23,6 +23,7 @@ Create a new product.
 * **price** — Price of the product with decimal to separate pounds and pence,
 for example, 10.99.
 * **rrp** — Recommended retail price.
+* **submit_to_google** — Whether or not the product should be submitted to Google in the product feed.
 * **tax_type** — Tax type of the product (see table below).
 * **weight** — Weight of the product (decimal).
 
