@@ -46,6 +46,12 @@ html
                 li= link_to 'Shipping Zones', admin_shipping_zones_path
                 li= link_to 'Webhooks', admin_webhooks_path
                 li= link_to 'Website Settings', edit_admin_website_path(website)
+            li.dropdown
+              a.dropdown-toggle href="#" data-toggle="dropdown"
+                = t('.extras')
+                b.caret
+              ul.dropdown-menu
+                li= link_to t('.import'), admin_import_index_path
           ul.nav.navbar-nav.navbar-right
             li= link_to '<span class="glyphicon glyphicon-log-out"></span>'.html_safe, sessions_path, method: 'post', title: t('.sign_out')
     .container-fluid

@@ -255,6 +255,8 @@ en:
   forgot_your_password: Forgotten your password?
   layouts:
     admin:
+      extras: 'Extras'
+      import: 'Import'
       sign_out: 'Sign Out'
   login: Sign In
   logout: Logout
