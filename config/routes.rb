@@ -69,6 +69,8 @@ Rails.application.routes.draw do
 
     resources :product_groups, except: [:show]
 
+    resources :product_group_placements, only: [:create, :destroy]
+
     resources :product_images, only: [:create, :destroy]
 
     resources :product_placements do
@@ -198,8 +200,6 @@ Rails.application.routes.draw do
   end
 
   resources :permutations
-
-  resources :product_group_placements
 
   resources :products, only: [:show] do
     collection do

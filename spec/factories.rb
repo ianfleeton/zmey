@@ -159,6 +159,11 @@ FactoryGirl.define do
     name 'Product Group'
   end
 
+  factory :product_group_placement do
+    association :product_group
+    association :product
+  end
+
   factory :product_image do
     association :product
     association :image
