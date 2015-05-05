@@ -38,6 +38,11 @@ class PreferredDeliveryDateSettings < ActiveRecord::Base
     opts
   end
 
+  # Returns <tt>true</tt> if <tt>date</tt> is included in <tt>#dates</tt>.
+  def valid_date?(date)
+    dates.include?(date)
+  end
+
   def dates
     return week_commencing_dates unless rfc2822_week_commencing_day.nil?
 
@@ -46,7 +51,7 @@ class PreferredDeliveryDateSettings < ActiveRecord::Base
 
     while found_dates.length < number_of_dates_to_show
       considered_date = considered_date.tomorrow
-      if valid_date? considered_date
+      if possible_date?(considered_date)
         found_dates << considered_date
       end
     end
@@ -67,7 +72,7 @@ class PreferredDeliveryDateSettings < ActiveRecord::Base
     considered_date = Date.today
     initial_days_skipped = 0
     while true
-      if valid_date? considered_date
+      if possible_date?(considered_date)
         return considered_date if initial_days_skipped == number_of_initial_days_to_skip
         initial_days_skipped += 1
       end
@@ -82,7 +87,7 @@ class PreferredDeliveryDateSettings < ActiveRecord::Base
     date
   end
 
-  def valid_date? date
+  def possible_date?(date)
     return false if skip_saturdays and date.wday == 6
     return false if skip_sundays and date.wday == 0
     return false if skip_bank_holidays and bank_holiday? date

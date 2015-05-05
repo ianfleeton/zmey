@@ -70,10 +70,14 @@ class CheckoutController < ApplicationController
 
     @order.customer_note = basket.customer_note
 
-    @order.record_preferred_delivery_date(
-      website.preferred_delivery_date_settings,
-      session[:preferred_delivery_date]
-    )
+    begin
+      @order.record_preferred_delivery_date(
+        website.preferred_delivery_date_settings,
+        session[:preferred_delivery_date]
+      )
+    rescue
+      redirect_to preferred_delivery_date_path and return
+    end
 
     @order.add_basket(basket)
 

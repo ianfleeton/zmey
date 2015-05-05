@@ -493,10 +493,19 @@ RSpec.describe CheckoutController, type: :controller do
       it 'records preferred delivery date' do
         date = '28/12/15'
         session[:preferred_delivery_date] = date
-        settings = double(Order).as_null_object
+        settings = double(PreferredDeliveryDateSettings).as_null_object
         allow(website).to receive(:preferred_delivery_date_settings).and_return(settings)
         expect_any_instance_of(Order).to receive(:record_preferred_delivery_date).with(settings, date)
         get :confirm
+      end
+
+      it 'redirects to preferred_delivery_date with an invalid date' do
+        date = '28-12-15'
+        session[:preferred_delivery_date] = date
+        settings = PreferredDeliveryDateSettings.new
+        allow(website).to receive(:preferred_delivery_date_settings).and_return(settings)
+        get :confirm
+        expect(response).to redirect_to preferred_delivery_date_path
       end
 
       it "records the customer's IP address" do

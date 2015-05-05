@@ -139,25 +139,42 @@ RSpec.describe Order, type: :model do
     let(:date_str) { '13/08/15' }
     let(:date) { Date.new(2015, 8, 13) }
     let(:settings) { PreferredDeliveryDateSettings.new(date_format: date_format, prompt: prompt) }
+    let(:valid_date?) { nil }
 
     subject(:order) { Order.new.record_preferred_delivery_date(settings, date_str) }
 
-    it 'records the date, parsing with the format given in settings' do
-      expect(order.preferred_delivery_date).to eq date
+    before do
+      allow(settings).to receive(:valid_date?).and_return(valid_date?) if settings
     end
 
-    it 'records the prompt' do
-      expect(order.preferred_delivery_date_prompt).to eq prompt
-    end
+    context 'when date is valid according to settings' do
+      let(:valid_date?) { true }
 
-    it 'records the format' do
-      expect(order.preferred_delivery_date_format).to eq date_format
+      it 'records the date, parsing with the format given in settings' do
+        expect(order.preferred_delivery_date).to eq date
+      end
+
+      it 'records the prompt' do
+        expect(order.preferred_delivery_date_prompt).to eq prompt
+      end
+
+      it 'records the format' do
+        expect(order.preferred_delivery_date_format).to eq date_format
+      end
     end
 
     context 'with nil settings' do
       let(:settings) { nil }
       it 'returns nil' do
         expect(order).to be_nil
+      end
+    end
+
+    context 'when date is not valid according to settings' do
+      let(:valid_date?) { false }
+
+      it 'raises an ArgumentError' do
+        expect { order }.to raise_error ArgumentError
       end
     end
   end

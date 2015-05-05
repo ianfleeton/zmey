@@ -245,7 +245,11 @@ class Order < ActiveRecord::Base
   def record_preferred_delivery_date(settings, date)
     return unless date && settings
 
-    self.preferred_delivery_date = Date.strptime(date, settings.date_format)
+    date = Date.strptime(date, settings.date_format)
+
+    raise(ArgumentError, 'date is not valid in accordance with settings') unless settings.valid_date?(date)
+
+    self.preferred_delivery_date = date
     self.preferred_delivery_date_prompt = settings.prompt
     self.preferred_delivery_date_format = settings.date_format
     self
