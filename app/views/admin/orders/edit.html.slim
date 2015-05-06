@@ -9,8 +9,23 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
 = bootstrap_form_for [:admin, @order] do |f|
 
   .row
-    .col-md-3
+    .col-md-6
       = f.text_field :po_number, label: t('.po_number')
+    .col-md-6
+      - if @order.fully_shipped?
+        h2= t('.fully_shipped')
+        table.table.table-bordered
+          thead
+            tr
+              th= t('.shipped_at')
+              th= t('.shipping_tracking_code')
+          tbody
+            tr
+              td.shipped-at= @order.shipped_at
+              td.shipping-tracking-number= @order.shipping_tracking_number
+      - else
+        h2= t('.not_fully_shipped')
+        = link_to t('.add_shipment'), new_admin_shipment_path(order_id: @order.id), class: 'btn btn-default'
 
   .row
     .col-md-6

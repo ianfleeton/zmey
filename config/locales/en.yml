@@ -106,13 +106,18 @@ en:
     orders:
       edit:
         add_payment: 'Add Payment'
+        add_shipment: 'Add Shipment'
         comment: 'Comment'
         comment_created_at: 'When'
         comments: 'Comments'
+        fully_shipped: 'This order is fully shipped'
         heading: 'Edit Order'
         locked_warning: 'This order is now locked and many details cannot be changed.'
         no_comments: 'No comments have been added to this order yet.'
+        not_fully_shipped: 'This order is not yet fully shipped'
         po_number: 'PO number'
+        shipped_at: 'Shipped at'
+        shipping_tracking_number: 'Tracking number'
       index:
         apply_search: 'Apply Search'
         close: 'Close'
@@ -158,6 +163,9 @@ en:
         allow_fractional_quantity: 'Allow fractional quantity to be ordered'
         oversize: 'Oversize'
         save: 'Save'
+    shipments:
+      new:
+        heading: 'Add Shipment'
     users:
       edit:
         heading: 'Edit User Account Details'

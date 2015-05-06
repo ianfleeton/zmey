@@ -81,6 +81,7 @@ Rails.application.routes.draw do
     end
 
     resources :quantity_prices, except: [:show]
+    resources :shipments, only: [:new]
     resources :shipping_classes, except: [:show]
     resources :shipping_zones, except: [:show]
 

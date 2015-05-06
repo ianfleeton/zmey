@@ -1,0 +1,6 @@
+= page_header t('.heading')
+
+= bootstrap_form_for [:admin, @order] do |f|
+  = f.hidden_field :shipped_at, value: Time.zone.now
+  = f.text_field :shipping_tracking_number
+  = f.submit

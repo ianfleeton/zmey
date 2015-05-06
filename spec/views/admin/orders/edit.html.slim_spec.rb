@@ -22,6 +22,36 @@ RSpec.describe 'admin/orders/edit.html.slim', type: :view do
     end
   end
 
+  context 'when fully shipped' do
+    let(:now) { Time.zone.now }
+
+    before do
+      allow(order).to receive(:fully_shipped?).and_return(true)
+      allow(order).to receive(:shipped_at).and_return(now)
+      allow(order).to receive(:shipping_tracking_number).and_return('TRACK-123')
+      render
+    end
+
+    it 'displays the shipped_at time' do
+      expect(rendered).to have_selector('.shipped-at')
+    end
+
+    it 'displays the shipping_tracking_number' do
+      expect(rendered).to have_selector('.shipping-tracking-number')
+    end
+  end
+
+  context 'when not fully shipped' do
+    before do
+      allow(order).to receive(:fully_shipped?).and_return(false)
+    end
+
+    it 'links to new shipment' do
+      render
+      expect(rendered).to have_selector "a[href='#{new_admin_shipment_path(order_id: order.id)}']"
+    end
+  end
+
   context 'with payments' do
     before do
       FactoryGirl.create(:payment, order: order)

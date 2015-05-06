@@ -72,6 +72,8 @@ class Admin::OrdersController < Admin::AdminController
         :delivery_town_city,
         :email_address,
         :po_number,
+        :shipped_at,
+        :shipping_tracking_number,
       )
     end
 
