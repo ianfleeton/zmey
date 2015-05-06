@@ -14,6 +14,7 @@ feature 'Websites admin' do
 
     name = SecureRandom.hex
     theme = 'awesome_responsive_theme'
+    staging_password = 'staging'
 
     fill_in 'Name', with: name
     fill_in 'Email', with: 'merchant@example.com'
@@ -29,8 +30,10 @@ feature 'Websites admin' do
 
     fill_in 'Theme', with: theme
 
+    fill_in 'Staging password', with: staging_password
+
     click_button 'Create New Website'
-    expect(Website.find_by(name: name, theme: theme)).to be
+    expect(Website.find_by(name: name, staging_password: 'staging', theme: theme)).to be
   end
 
   scenario 'Delete website' do

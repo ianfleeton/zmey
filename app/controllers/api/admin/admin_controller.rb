@@ -1,6 +1,6 @@
 class Api::Admin::AdminController < ApplicationController
   protect_from_forgery with: :null_session
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token, :protect_staging_website
   before_action :set_website_for_api
 
   def set_website_for_api

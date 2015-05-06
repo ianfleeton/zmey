@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :website, :logged_in?, :admin?, :admin_or_manager?, :manager?
 
-  before_action :set_time_zone, :website, :initialize_page_defaults, :current_user,
+  before_action :set_time_zone, :website, :protect_staging_website,
+    :initialize_page_defaults, :current_user,
     :set_locale, :protect_private_website, :initialize_tax_display,
     :set_resolver, :basket
 
@@ -109,6 +110,12 @@ class ApplicationController < ActionController::Base
       redirect_to sign_in_path
     end
   end
+
+    def protect_staging_website
+      if website.staging_password.present?
+        request_http_basic_authentication unless authenticate_with_http_basic { |_u, p| p == website.staging_password }
+      end
+    end
 
   def initialize_tax_display
     @inc_tax = false
