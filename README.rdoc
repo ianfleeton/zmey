@@ -48,6 +48,16 @@ Download the .deb from http://wkhtmltopdf.org/downloads.html and install with:
 
 Replace the package filename as applicable.
 
+The binary is installed at /usr/local/bin/wkhtmltopdf but is used by Whenever
+in a background task so it will need to be included in cron's PATH. Edit cron
+jobs with:
+
+  crontab -e
+
+Then check that /usr/local/bin is in the path, for example:
+
+  PATH=/usr/local/bin:/usr/bin:/bin
+
 === Database creation
 
   mysql -e 'create database zmey_test; create database zmey_development;'
