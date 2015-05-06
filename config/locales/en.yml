@@ -272,8 +272,6 @@ en:
   orders:
     index:
       heading: 'Orders'
-      invoice_html: 'View invoice'
-      invoice_pdf: 'Download invoice (PDF)'
       no_orders: 'There are no orders for you.'
       order_number: 'Order Number'
       order_total: 'Order Total'
@@ -281,6 +279,9 @@ en:
       when_placed: 'When Placed'
     invoice:
       customer_reference: 'Customer reference:'
+    invoice_links:
+      invoice_html: 'View invoice'
+      invoice_pdf: 'Download invoice (PDF)'
   password: Password
   payments:
     show:
