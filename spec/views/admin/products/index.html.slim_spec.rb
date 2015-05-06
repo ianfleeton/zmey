@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe '/admin/products/index.html.slim' do
+RSpec.describe 'admin/products/index.html.slim', type: :view do
   include ProductsHelper
 
   before(:each) do
@@ -13,5 +13,10 @@ describe '/admin/products/index.html.slim' do
 
   it "renders a list of products" do
     render
+  end
+
+  it 'links to export product CSV' do
+    render
+    expect(rendered).to have_selector "a[href='#{csv_admin_export_index_path(class_name: 'Product')}']"
   end
 end

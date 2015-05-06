@@ -29,6 +29,11 @@ Rails.application.routes.draw do
         post 'csv'
       end
     end
+    resources :export do
+      collection do
+        get 'csv/:class_name', action: 'csv', as: :csv
+      end
+    end
 
     resources :liquid_templates, except: [:show]
     resources :nominal_codes, except: [:show]

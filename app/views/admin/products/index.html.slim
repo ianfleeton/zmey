@@ -1,6 +1,8 @@
 = page_header 'Products'
 
-p= new_button [:admin, Product]
+p
+  => new_button [:admin, Product]
+  = link_to t('.export'), csv_admin_export_index_path(class_name: 'Product'), class: 'btn btn-default'
 
 - if @products.empty?
   p No products

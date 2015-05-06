@@ -163,6 +163,8 @@ en:
         allow_fractional_quantity: 'Allow fractional quantity to be ordered'
         oversize: 'Oversize'
         save: 'Save'
+      index:
+        export: 'Export'
     shipments:
       new:
         heading: 'Add Shipment'
