@@ -170,8 +170,14 @@ describe Admin::OrdersController do
       context 'when order locked' do
         let(:pre) { -> { lock_order } }
 
-        it 'does not update order details' do
+        it 'does not update many order details' do
           expect(order.reload.po_number).to be_nil
+        end
+
+        it 'does update some details' do
+          order.reload
+          expect(order.shipped_at).to be_within(1.second).of(shipped_at)
+          expect(order.shipping_tracking_number).to eq shipping_tracking_number
         end
       end
 

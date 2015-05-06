@@ -35,6 +35,8 @@ class Admin::OrdersController < Admin::AdminController
         add_order_lines
         update_order_lines
       end
+    else
+      @order.update_attributes(locked_order_params)
     end
     redirect_to edit_admin_order_path(@order)
   end
@@ -72,6 +74,13 @@ class Admin::OrdersController < Admin::AdminController
         :delivery_town_city,
         :email_address,
         :po_number,
+        :shipped_at,
+        :shipping_tracking_number,
+      )
+    end
+
+    def locked_order_params
+      params.require(:order).permit(
         :shipped_at,
         :shipping_tracking_number,
       )
