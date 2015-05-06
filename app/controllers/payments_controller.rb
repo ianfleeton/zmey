@@ -236,16 +236,11 @@ class PaymentsController < ApplicationController
       txn_id: '',
       payment_date: '',
       raw_auth_message: '',
-      payment_status: ''
+      payment_status: '',
+      charset: 'utf-8',
     }
 
-    require 'net/https'
-    uri = URI('https://www.paypal.com/cgi-bin/webscr')
-    data = "cmd=_notify-synch&tx=#{transaction_token}&at=#{identity_token}"
-    con = Net::HTTP.new(uri.host, uri.port)
-    con.use_ssl = true
-    r = con.post(uri.path, data)
-    data = r.body
+    data = pdt_notification_sync_response_body(transaction_token, identity_token)
     Rails.logger.info data
 
     response[:raw_auth_message] = data
@@ -257,7 +252,18 @@ class PaymentsController < ApplicationController
       response[key] = CGI::unescape(value || '') if response.has_key? key
     end
 
-    response
+    charset = response[:charset]
+    Hash[response.map { |k,v| [k,v.force_encoding(charset).encode('utf-8')] }]
+  end
+
+  def pdt_notification_sync_response_body(transaction_token, identity_token)
+    require 'net/https'
+    uri = URI('https://www.paypal.com/cgi-bin/webscr')
+    data = "cmd=_notify-synch&tx=#{transaction_token}&at=#{identity_token}"
+    con = Net::HTTP.new(uri.host, uri.port)
+    con.use_ssl = true
+    r = con.post(uri.path, data)
+    r.body
   end
 
   def cardsave_hash_post
