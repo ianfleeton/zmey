@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506131728) do
+ActiveRecord::Schema.define(version: 20150507123510) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -109,6 +109,8 @@ ActiveRecord::Schema.define(version: 20150506131728) do
     t.datetime "updated_at"
     t.integer  "shipping_zone_id",   limit: 4
   end
+
+  add_index "countries", ["name"], name: "index_countries_on_name", unique: true, using: :btree
 
   create_table "custom_views", force: :cascade do |t|
     t.integer  "website_id", limit: 4,     null: false

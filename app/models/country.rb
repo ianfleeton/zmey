@@ -1,5 +1,5 @@
 class Country < ActiveRecord::Base
-  validates_presence_of :name
+  validates :name, presence: true, uniqueness: true
   validates_length_of :iso_3166_1_alpha_2, is: 2
   validates_uniqueness_of :iso_3166_1_alpha_2
 

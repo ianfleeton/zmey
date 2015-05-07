@@ -6,6 +6,7 @@ describe Country do
   end
 
   it { should validate_uniqueness_of(:iso_3166_1_alpha_2) }
+  it { should validate_uniqueness_of(:name) }
 
   describe '.populate!' do
     it 'should create a number of countries' do
