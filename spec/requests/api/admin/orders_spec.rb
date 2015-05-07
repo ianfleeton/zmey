@@ -256,6 +256,20 @@ describe 'Admin orders API' do
       post '/api/admin/orders', order: {email_address: 'is not enough'}
       expect(status).to eq 422
     end
+
+    it 'accepts billing_country_name in place of billing_country_id' do
+      basic_params.merge!(billing_country_name: country.name)
+      basic_params.delete(:billing_country_id)
+      post '/api/admin/orders', order: basic_params
+      expect(Order.last.billing_country).to eq country
+    end
+
+    it 'accepts delivery_country_name in place of delivery_country_id' do
+      basic_params.merge!(delivery_country_name: country.name)
+      basic_params.delete(:delivery_country_id)
+      post '/api/admin/orders', order: basic_params
+      expect(Order.last.delivery_country).to eq country
+    end
   end
 
   describe 'DELETE delete_all' do

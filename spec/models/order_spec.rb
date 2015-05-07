@@ -242,4 +242,22 @@ RSpec.describe Order, type: :model do
       end
     end
   end
+
+  describe '#billing_country_name=' do
+    it 'sets billing_country to the named country' do
+      country = FactoryGirl.create(:country)
+      order = Order.new
+      order.billing_country_name = country.name
+      expect(order.billing_country).to eq country
+    end
+  end
+
+  describe '#delivery_country_name=' do
+    it 'sets delivery_country to the named country' do
+      country = FactoryGirl.create(:country)
+      order = Order.new
+      order.delivery_country_name = country.name
+      expect(order.delivery_country).to eq country
+    end
+  end
 end

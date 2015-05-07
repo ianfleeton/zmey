@@ -7,11 +7,11 @@ Create a new order.
 ### Required attributes
 
 * **billing_address_line_1**
-* **billing_country_id**
+* **billing_country_id** or **billing_country_name**
 * **billing_postcode**
 * **billing_town_city**
 * **delivery_address_line_1**
-* **delivery_country_id**
+* **delivery_country_id** or **delivery_country_name**
 * **delivery_postcode**
 * **delivery_town_city**
 * **email_address** — Customer's email address.

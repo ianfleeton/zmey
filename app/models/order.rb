@@ -307,6 +307,16 @@ class Order < ActiveRecord::Base
     Order.delete_all
   end
 
+  # Convenience setter.
+  def billing_country_name=(name)
+    self.billing_country = Country.find_by(name: name) || billing_country
+  end
+
+  # Convenience setter.
+  def delivery_country_name=(name)
+    self.delivery_country = Country.find_by(name: name) || delivery_country
+  end
+
   private
 
   def copy_address(address_type, address)
