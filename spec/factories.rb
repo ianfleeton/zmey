@@ -137,7 +137,6 @@ FactoryGirl.define do
     sequence(:title) { |n| "Page Title #{n}" }
     sequence(:slug)  { |n| "page-#{n}" }
     description 'Meta description...'
-    association :website
   end
 
   factory :payment do

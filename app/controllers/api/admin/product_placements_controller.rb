@@ -1,7 +1,7 @@
 class Api::Admin::ProductPlacementsController < Api::Admin::AdminController
   def create
     @product_placement = ProductPlacement.new(product_placement_params)
-    if Product.exists?(id: params[:product_placement][:product_id]) && Page.exists?(id: params[:product_placement][:page_id], website_id: website.id)
+    if Product.exists?(id: params[:product_placement][:product_id]) && Page.exists?(id: params[:product_placement][:page_id])
       unless @product_placement.save
         render json: @product_placement.errors, status: :unprocessable_entity
       end

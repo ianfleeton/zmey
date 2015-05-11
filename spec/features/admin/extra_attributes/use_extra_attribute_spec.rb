@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Use extra attribute' do
   let!(:website) { FactoryGirl.create(:website) }
-  let(:page_subject) { FactoryGirl.create(:page, website: website) }
+  let(:page_subject) { FactoryGirl.create(:page) }
   let(:product) { FactoryGirl.create(:product) }
 
   background do

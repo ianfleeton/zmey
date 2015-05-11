@@ -2,7 +2,7 @@ class Api::Admin::PagesController < Api::Admin::AdminController
   before_action :set_page, only: [:show]
 
   def index
-    @pages = website.pages
+    @pages = Page.all
   end
 
   def show
@@ -10,7 +10,6 @@ class Api::Admin::PagesController < Api::Admin::AdminController
 
   def create
     @page = Page.new(page_params)
-    @page.website = website
 
     if params[:image_id].present? && !Image.exists?(id: params[:image_id], website_id: website.id)
       @page.errors.add(:base, 'Image does not exist.')
@@ -26,14 +25,14 @@ class Api::Admin::PagesController < Api::Admin::AdminController
   end
 
   def delete_all
-    website.pages.destroy_all
+    Page.destroy_all
     render nothing: :true, status: 204
   end
 
   private
 
     def set_page
-      @page = Page.find_by(id: params[:id], website_id: website.id)
+      @page = Page.find_by(id: params[:id])
       render nothing: true, status: 404 unless @page
     end
 

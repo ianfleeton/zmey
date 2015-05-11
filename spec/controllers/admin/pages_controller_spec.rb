@@ -11,11 +11,11 @@ describe Admin::PagesController do
     before { allow(controller).to receive(:admin_or_manager?).and_return(true) }
 
     describe 'GET index' do
-      let(:parent)     { FactoryGirl.create(:page, website_id: website.id) }
+      let(:parent)     { FactoryGirl.create(:page) }
 
       context 'with parent_id' do
-        let(:child)      { FactoryGirl.create(:page, website_id: website.id) }
-        let(:grandchild) { FactoryGirl.create(:page, website_id: website.id) }
+        let(:child)      { FactoryGirl.create(:page) }
+        let(:grandchild) { FactoryGirl.create(:page) }
 
         before do
           child.children  << grandchild
@@ -59,6 +59,14 @@ describe Admin::PagesController do
         it 'renders :edit' do
           expect(response).to render_template :edit
         end
+      end
+    end
+
+    describe 'POST create' do
+      it 'creates a new page' do
+        slug = SecureRandom.hex
+        post :create, page: { slug: slug, title: 'T', name: 'N', description: 'D' }
+        expect(Page.find_by(slug: slug)).to be
       end
     end
   end

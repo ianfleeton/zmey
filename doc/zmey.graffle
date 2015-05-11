@@ -14,7 +14,7 @@
 	<key>BackgroundGraphic</key>
 	<dict>
 		<key>Bounds</key>
-		<string>{{0, 0}, {1677.8699340820312, 782.8900146484375}}</string>
+		<string>{{0, 0}, {1677.5999622344971, 782.79998779296875}}</string>
 		<key>Class</key>
 		<string>SolidGraphic</string>
 		<key>ID</key>
@@ -1356,37 +1356,6 @@ selected_by_default}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{285, 218.83301}, {90, 36}}</string>
-			<key>Class</key>
-			<string>ShapedGraphic</string>
-			<key>ID</key>
-			<integer>157</integer>
-			<key>Magnets</key>
-			<array>
-				<string>{0, 1}</string>
-				<string>{0, -1}</string>
-				<string>{1, 0}</string>
-				<string>{-1, 0}</string>
-			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
-			<key>Style</key>
-			<dict/>
-			<key>Text</key>
-			<dict>
-				<key>Text</key>
-				<string>{\rtf1\ansi\ansicpg1252\cocoartf1347\cocoasubrtf570
-\cocoascreenfonts1{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
-
-\f0\b\fs18 \cf0 Website}</string>
-				<key>VerticalPad</key>
-				<integer>0</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>Bounds</key>
 			<string>{{838.93496704101562, 699.83600000000001}, {99, 48.333302000000003}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
@@ -1671,7 +1640,7 @@ selected_by_default}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{742.0432456211563, 531.17522001993859}, {14, 21}}</string>
+			<string>{{742.04324562115642, 531.17522001993859}, {14, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1748,8 +1717,8 @@ selected_by_default}</string>
 			<integer>146</integer>
 			<key>Points</key>
 			<array>
-				<string>{687.65222316406255, 501.31215454868163}</string>
-				<string>{747.8717813834694, 552.5108642578125}</string>
+				<string>{687.65222316406266, 501.31215454868163}</string>
+				<string>{747.87178138346962, 552.5108642578125}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -2137,8 +2106,8 @@ product_group_id}</string>
 			<integer>131</integer>
 			<key>Points</key>
 			<array>
-				<string>{909.22641840087886, 330.92577238083965}</string>
-				<string>{926.50709525878904, 326.17943294277063}</string>
+				<string>{909.22641840087886, 330.92190436825189}</string>
+				<string>{926.50709525878904, 326.17473972184195}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -2372,8 +2341,8 @@ hear_about}</string>
 			<integer>124</integer>
 			<key>Points</key>
 			<array>
-				<string>{890.42443653595126, 177.17336705810547}</string>
-				<string>{898.95845275306635, 153.024899}</string>
+				<string>{890.42380539630494, 177.17336705810547}</string>
+				<string>{898.95773501651331, 153.024899}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -2883,8 +2852,8 @@ hear_about}</string>
 			<integer>115</integer>
 			<key>Points</key>
 			<array>
-				<string>{747.22641840087886, 299.95411001763887}</string>
-				<string>{647.62011015426026, 234.50999000000002}</string>
+				<string>{747.22641840087886, 299.95411001763875}</string>
+				<string>{647.62011015426037, 234.50998999999996}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -3303,8 +3272,8 @@ last_post_at}</string>
 			<integer>102</integer>
 			<key>Points</key>
 			<array>
-				<string>{414.19900999999999, 577.88327759615777}</string>
-				<string>{394.14998999999995, 578.69287333583156}</string>
+				<string>{414.19900999999999, 577.88327760803429}</string>
+				<string>{394.14998999999995, 578.69287335177842}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -3652,7 +3621,7 @@ checked}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{925.40068365844047, 452.78505191713333}, {26, 21}}</string>
+			<string>{{925.40068365857667, 452.78505191599839}, {26, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3719,7 +3688,7 @@ checked}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{978.5221941953896, 518.6971517277284}, {14, 21}}</string>
+			<string>{{978.52219419577409, 518.6971517276146}, {14, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3786,7 +3755,7 @@ checked}</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{921.48423012723981, 493.01282991161554}, {48, 21}}</string>
+			<string>{{921.48423012742865, 493.0128299108614}, {48, 21}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3856,8 +3825,8 @@ checked}</string>
 			<integer>90</integer>
 			<key>Points</key>
 			<array>
-				<string>{981.74206778721782, 550}</string>
-				<string>{909.22641840087886, 457.02569307343435}</string>
+				<string>{981.7420677875956, 550}</string>
+				<string>{909.22641840087886, 457.02569307192607}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -4115,8 +4084,8 @@ name}</string>
 			<integer>82</integer>
 			<key>Points</key>
 			<array>
-				<string>{575.20520167968755, 457.98772856536408}</string>
-				<string>{517.40884000000005, 462.58980948206226}</string>
+				<string>{575.20520167968755, 457.9877285653626}</string>
+				<string>{517.40884000000005, 462.58980948205925}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -4556,8 +4525,8 @@ accepted}</string>
 			<integer>70</integer>
 			<key>Points</key>
 			<array>
-				<string>{1283.249205136719, 337.925694638626}</string>
-				<string>{1229.6014709472656, 337.6593031348965}</string>
+				<string>{1283.249205136719, 338.18210618860883}</string>
+				<string>{1229.6014709472656, 338.10859586487749}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -5056,41 +5025,6 @@ parent}</string>
 		</dict>
 		<dict>
 			<key>Class</key>
-			<string>LineGraphic</string>
-			<key>Head</key>
-			<dict>
-				<key>ID</key>
-				<integer>53</integer>
-			</dict>
-			<key>ID</key>
-			<integer>56</integer>
-			<key>Points</key>
-			<array>
-				<string>{375.49999997939256, 236.83301963120471}</string>
-				<string>{410.54159399414061, 236.83301963120471}</string>
-			</array>
-			<key>Style</key>
-			<dict>
-				<key>stroke</key>
-				<dict>
-					<key>HeadArrow</key>
-					<string>0</string>
-					<key>Legacy</key>
-					<true/>
-					<key>LineType</key>
-					<integer>1</integer>
-					<key>TailArrow</key>
-					<string>FilledDiamond</string>
-				</dict>
-			</dict>
-			<key>Tail</key>
-			<dict>
-				<key>ID</key>
-				<integer>157</integer>
-			</dict>
-		</dict>
-		<dict>
-			<key>Class</key>
 			<string>TableGroup</string>
 			<key>Graphics</key>
 			<array>
@@ -5203,8 +5137,8 @@ visible}</string>
 			<integer>52</integer>
 			<key>Points</key>
 			<array>
-				<string>{633.23585998183341, 300.01044376281737}</string>
-				<string>{632.85323504988366, 332.51088714599609}</string>
+				<string>{633.2358599812768, 300.01044376281737}</string>
+				<string>{632.85323504823066, 332.51088714599609}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -5238,8 +5172,8 @@ visible}</string>
 			<integer>51</integer>
 			<key>Points</key>
 			<array>
-				<string>{747.22641840087886, 324.2062017102441}</string>
-				<string>{678.43011306640631, 299.60331341461909}</string>
+				<string>{747.22641840087886, 324.20620170563444}</string>
+				<string>{678.43011306640631, 299.60331340609429}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -5365,8 +5299,8 @@ filename}</string>
 			<integer>46</integer>
 			<key>Points</key>
 			<array>
-				<string>{747.22641840087886, 394.47130357294441}</string>
-				<string>{687.65222316406266, 424.84527064470558}</string>
+				<string>{747.22641840087886, 394.47130342411037}</string>
+				<string>{687.65222316406266, 424.84527038640658}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -5829,7 +5763,7 @@ upg_atlas_filename}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2015-04-27 15:48:19 +0000</string>
+	<string>2015-05-11 13:19:32 +0000</string>
 	<key>Modifier</key>
 	<string>Ian Fleeton</string>
 	<key>NotesVisible</key>
@@ -5860,7 +5794,7 @@ upg_atlas_filename}</string>
 		<key>NSPaperSize</key>
 		<array>
 			<string>size</string>
-			<string>{595.28997802734375, 841.8900146484375}</string>
+			<string>{595.19998741149902, 841.79998779296875}</string>
 		</array>
 		<key>NSPrintReverseOrientation</key>
 		<array>
@@ -5924,7 +5858,7 @@ upg_atlas_filename}</string>
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{554, 95}, {1123, 586}}</string>
+		<string>{{85.5, 73.5}, {1123, 586}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>

@@ -6,12 +6,6 @@ en:
     attributes:
       address:
         label: 'Label to use in dropdown menu'
-    errors:
-      models:
-        page:
-          attributes:
-            parent:
-              invalid: 'is invalid'
   add_to_cart: Add to Basket
   addresses:
     choose_address:

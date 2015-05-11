@@ -8,9 +8,8 @@ class Page < ActiveRecord::Base
   has_many :products, through: :product_placements
   belongs_to :image
   belongs_to :thumbnail_image, class_name: 'Image'
-  belongs_to :website
 
-  validates_presence_of :title, :name, :website_id
+  validates_presence_of :title, :name
   validates :description, presence: true, length: { maximum: 200 }
   validates_format_of :slug, with: /\A[-a-z0-9_\/\.]+\Z/,
     message: 'can only contain lowercase letters, numbers, hyphens, dots, underscores and forward slashes',
@@ -18,7 +17,6 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :slug, case_sensitive: false
   validates_uniqueness_of :title, case_sensitive: false
   validates_uniqueness_of :name, scope: :parent_id, case_sensitive: false, unless: Proc.new { |page| page.parent_id.nil? }
-  validate :parent_belongs_to_same_website
 
   scope :visible, -> { where(visible: true) }
 
@@ -46,7 +44,7 @@ class Page < ActiveRecord::Base
       description: 'change me',
       content: 'Welcome to ' + website.name,
       parent_id: nav_page.id
-    ) {|hp| hp.website_id = website.id}
+    )
   end
 
   def self.create_navigation website, slug
@@ -55,12 +53,12 @@ class Page < ActiveRecord::Base
       name: slug.titleize + ' Navigation',
       slug: slug,
       description: slug
-    ) {|hp| hp.website_id = website.id}
+    )
   end
 
   def self.navs website_id
     navs = Array.new
-    nav_roots = Page.where(website_id: website_id, parent_id: nil).order('position')
+    nav_roots = Page.where(parent_id: nil).order('position')
     nav_roots.each do |nr|
       nav = Navigation.new
       nav.id_attribute = nr.slug.gsub('-', '_') + '_nav'
@@ -71,7 +69,7 @@ class Page < ActiveRecord::Base
   end
 
   def url
-    website.url + '/' + slug
+    Website.first.url + '/' + slug
   end
 
   def to_s
@@ -89,13 +87,5 @@ class Page < ActiveRecord::Base
       a << (p)
     end
     a
-  end
-
-  # Custom validations
-
-  def parent_belongs_to_same_website
-    if parent && parent.website != website
-      errors.add(:parent, I18n.t('activerecord.errors.models.page.attributes.parent.invalid'))
-    end
   end
 end

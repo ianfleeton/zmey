@@ -14,8 +14,8 @@
 
   = form.text_field :slug, label: "http://#{request.host}/"
 
-  - cache pages_cache_key(website)
-    = form.collection_select :parent_id, website.pages.sort_by { |p| p.name_with_ancestors }, :id, :name_with_ancestors, {include_blank: '-- No parent --', label: 'Parent page or navigation'}
+  - cache pages_cache_key
+    = form.collection_select :parent_id, Page.all.sort_by { |p| p.name_with_ancestors }, :id, :name_with_ancestors, {include_blank: '-- No parent --', label: 'Parent page or navigation'}
 
   = form.check_box :visible, label: t('.visible')
 

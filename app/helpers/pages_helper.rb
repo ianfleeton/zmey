@@ -31,11 +31,11 @@ module PagesHelper
     page.ancestors.reverse.map {|p| link_to(p.name, p.path)}
   end
 
-  # Returns a cache key for the collection of all pages in +website+.
-  def pages_cache_key(website)
+  # Returns a cache key for the collection of all pages.
+  def pages_cache_key
     [
-      website.pages.count,
-      Page.where(website_id: website.id).order('updated_at DESC').first
+      Page.count,
+      Page.order('updated_at DESC').first
     ]
   end
 end

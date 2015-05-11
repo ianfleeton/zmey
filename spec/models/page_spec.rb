@@ -28,5 +28,13 @@ describe Page do
     expect(page.extra).to be_nil
   end
 
+  describe '#url' do
+    it 'returns a full URL using the first website setting URL' do
+      website = FactoryGirl.create(:website)
+      page = FactoryGirl.build(:page, slug: 'slug')
+      expect(page.url).to include('slug')
+    end
+  end
+
   it_behaves_like 'an object with extra attributes'
 end

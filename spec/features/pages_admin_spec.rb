@@ -9,7 +9,7 @@ feature 'Pages admin' do
     sign_in_as_admin
   end
 
-  let(:the_page) { FactoryGirl.build(:page, website: website) }
+  let(:the_page) { FactoryGirl.build(:page) }
 
   scenario 'Create page', js: true do
     image = FactoryGirl.create(:image)

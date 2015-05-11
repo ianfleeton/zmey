@@ -7,7 +7,7 @@ describe 'Admin product placements API' do
 
   describe 'POST create' do
     it 'inserts a new product placement' do
-      page = FactoryGirl.create(:page, website_id: @website.id)
+      page = FactoryGirl.create(:page)
       product = FactoryGirl.create(:product)
       post '/api/admin/product_placements', product_placement: {page_id: page.id, product_id: product.id}
       expect(ProductPlacement.find_by(page_id: page.id, product_id: product.id)).to be
@@ -17,7 +17,7 @@ describe 'Admin product placements API' do
   describe 'DELETE delete_all' do
     it 'deletes all product placements' do
       product = FactoryGirl.create(:product)
-      page = FactoryGirl.create(:page, website_id: @website.id)
+      page = FactoryGirl.create(:page)
       placement = ProductPlacement.create!(page: page, product: product)
 
       delete '/api/admin/product_placements'

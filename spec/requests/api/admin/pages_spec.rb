@@ -8,12 +8,11 @@ describe 'Admin pages API' do
   describe 'GET index' do
     context 'with pages' do
       before do
-        @page1 = FactoryGirl.create(:page, website_id: @website.id)
-        @page2 = FactoryGirl.create(:page, parent_id: @page1.id, website_id: @website.id)
-        @page3 = FactoryGirl.create(:page)
+        @page1 = FactoryGirl.create(:page)
+        @page2 = FactoryGirl.create(:page, parent_id: @page1.id)
       end
 
-      it 'returns pages for the website' do
+      it 'returns all pages' do
         get '/api/admin/pages'
 
         pages = JSON.parse(response.body)
@@ -49,7 +48,7 @@ describe 'Admin pages API' do
   describe 'GET show' do
     context 'when page found' do
       before do
-        @page = FactoryGirl.create(:page, website_id: @website.id)
+        @page = FactoryGirl.create(:page)
       end
 
       it 'returns 200 OK' do
@@ -67,7 +66,7 @@ describe 'Admin pages API' do
   end
 
   describe 'POST create' do
-    it 'inserts a new page into the website' do
+    it 'inserts a new page' do
       name = SecureRandom.hex
       slug = SecureRandom.hex
       title = SecureRandom.hex
@@ -75,7 +74,7 @@ describe 'Admin pages API' do
       visible = [true, false].sample
       description = 'Description'
       post '/api/admin/pages', page: {description: description, image_id: image.id, name: name, slug: slug, thumbnail_image_id: image.id, title: title, visible: visible}
-      expect(Page.find_by(slug: slug, image_id: image.id, thumbnail_image_id: image.id, visible: visible, website_id: @website.id)).to be
+      expect(Page.find_by(slug: slug, image_id: image.id, thumbnail_image_id: image.id, visible: visible)).to be
     end
 
     it 'returns 422 with bad params' do
@@ -85,19 +84,16 @@ describe 'Admin pages API' do
   end
 
   describe 'DELETE delete_all' do
-    it 'deletes all pages in the website' do
-      page_1 = FactoryGirl.create(:page, website_id: @website.id)
-      page_2 = FactoryGirl.create(:page, website_id: @website.id, parent_id: page_1.id)
-      page_3 = FactoryGirl.create(:page)
+    it 'deletes all pages' do
+      page_1 = FactoryGirl.create(:page)
+      page_2 = FactoryGirl.create(:page, parent_id: page_1.id)
       page_1.save!
       page_2.save!
-      page_3.save!
 
       delete '/api/admin/pages'
 
       expect(Page.find_by(id: page_1.id)).not_to be
       expect(Page.find_by(id: page_2.id)).not_to be
-      expect(Page.find_by(id: page_3.id)).to be
     end
 
     it 'responds with 204 No Content' do

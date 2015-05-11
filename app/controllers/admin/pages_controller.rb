@@ -3,8 +3,8 @@ class Admin::PagesController < Admin::AdminController
 
   def index
     @title = 'Pages'
-    @parent = params[:parent_id] ? Page.find_by(id: params[:parent_id], website_id: website.id) : nil
-    @pages = Page.select(:id, :name, :parent_id, :position, :slug, :title).where(website_id: website, parent_id: @parent.try(:id)).order(:position)
+    @parent = params[:parent_id] ? Page.find_by(id: params[:parent_id]) : nil
+    @pages = Page.select(:id, :name, :parent_id, :position, :slug, :title).where(parent_id: @parent.try(:id)).order(:position)
   end
 
   def edit
@@ -37,7 +37,6 @@ class Admin::PagesController < Admin::AdminController
 
   def create
     @page = Page.new(page_params)
-    @page.website = website
 
     if @page.save
       flash[:notice] = "Successfully added new page."

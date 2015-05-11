@@ -9,8 +9,7 @@ describe BasketController do
   end
 
   describe 'GET index' do
-    let(:our_page)   { FactoryGirl.create(:page, website_id: website.id) }
-    let(:other_page) { FactoryGirl.create(:page) }
+    let(:page)   { FactoryGirl.create(:page) }
 
     it_behaves_like 'a shipping class setter', :get, :index
     it_behaves_like 'a shipping amount setter', :get, :index
@@ -19,15 +18,15 @@ describe BasketController do
       before { get :index, page_id: page_id }
 
       context 'with valid params[:page_id]' do
-        let(:page_id) { our_page.id }
+        let(:page_id) { page.id }
 
         it 'sets @page' do
-          expect(assigns(:page)).to eq our_page
+          expect(assigns(:page)).to eq page
         end
       end
 
       context 'with invalid params[:page_id]' do
-        let(:page_id) { other_page.id }
+        let(:page_id) { page.id + 1 }
 
         it 'sets @page' do
           expect(assigns(:page)).to be_nil
