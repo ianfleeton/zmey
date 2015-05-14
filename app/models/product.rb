@@ -61,9 +61,19 @@ class Product < ActiveRecord::Base
     name + ' [' + sku + ']'
   end
 
+  # Returns the name of the main image, or <tt>nil</tt> if unset.
+  def image_name
+    image.try(:name)
+  end
+
   # Set image by using the image's name.
   def image_name=(name)
     self.image = Image.find_by(name: name)
+  end
+
+  # Returns the names of all images delimieted with the pipe character.
+  def image_names
+    images.map {|i| i.name}.join('|')
   end
 
   # Set images by using the image names.

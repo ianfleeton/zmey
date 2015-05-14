@@ -53,12 +53,39 @@ describe Product do
     end
   end
 
+  describe '#image_name' do
+    it 'returns the name of the main image' do
+      image = FactoryGirl.create(:image, name: 'product.jpg')
+      product = Product.new(image: image)
+      expect(product.image_name).to eq 'product.jpg'
+    end
+
+    it 'returns nil if main image unset' do
+      product = Product.new
+      expect(product.image_name).to be_nil
+    end
+  end
+
   describe '#image_name=' do
     it 'associates image with named image' do
       image = FactoryGirl.create(:image, name: 'product.jpg')
       product = Product.new
       product.image_name = 'product.jpg'
       expect(product.image).to eq image
+    end
+  end
+
+  describe '#image_names' do
+    let!(:image1) { FactoryGirl.create(:image, name: 'front.jpg') }
+    let!(:image2) { FactoryGirl.create(:image, name: 'back.jpg') }
+    let(:product) { Product.new }
+
+    before do
+      product.images << [image1, image2]
+    end
+
+    it 'returns image names delimited with the pipe character' do
+      expect(product.image_names).to eq 'front.jpg|back.jpg'
     end
   end
 
