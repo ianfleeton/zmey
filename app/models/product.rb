@@ -262,6 +262,10 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def self.import_id
+    'sku'
+  end
+
   def self.exportable_attributes
     importable_attributes
   end
