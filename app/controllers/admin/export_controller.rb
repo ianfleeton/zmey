@@ -13,6 +13,7 @@ class Admin::ExportController < Admin::AdminController
     csv_string = exporter.generate
 
     Mime::Type.register "text/csv", :csv
+    expires_now
     send_data csv_string, type: :csv, filename: exporter.filename
   end
 end
