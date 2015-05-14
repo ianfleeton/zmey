@@ -6,8 +6,6 @@ set :application, app
 raise 'Set the ZMEY_REPOSITORY environment variable before deploying' unless ENV['ZMEY_REPOSITORY']
 set :repo_url, ENV['ZMEY_REPOSITORY']
 
-set :whenever_command, 'bundle exec whenever'
-
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :branch, ENV['ZMEY_BRANCH'] || 'master'
