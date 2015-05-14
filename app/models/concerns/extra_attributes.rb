@@ -6,6 +6,11 @@ module ExtraAttributes
     def extra_attributes
       ExtraAttribute.where(class_name: self)
     end
+
+    # Returns the names of all <tt>ExtraAttributes</tt> defined for this class.
+    def extra_attribute_names
+      extra_attributes.map { |x| x.attribute_name }
+    end
   end
 
   # Returns a hash of extra attribute names and their values.

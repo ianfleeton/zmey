@@ -269,7 +269,8 @@ class Product < ActiveRecord::Base
   def self.importable_attributes
     attribute_names -
       ['purchase_nominal_code_id', 'sales_nominal_code_id'] +
-      ['image_name', 'image_names', 'purchase_nominal_code', 'sales_nominal_code']
+      ['image_name', 'image_names', 'purchase_nominal_code', 'sales_nominal_code'] +
+      extra_attribute_names
   end
 
   private

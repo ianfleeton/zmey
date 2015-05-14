@@ -100,4 +100,22 @@ shared_examples_for 'an object with extra attributes' do
       expect(object.extra_json[attribute_name]).to eq value
     end
   end
+
+  context 'import and export' do
+    before do
+      ExtraAttribute.create!(attribute_name: 'custom_property', class_name: described_class)
+    end
+
+    describe '#importable_attributes' do
+      it 'includes extra attributes' do
+        expect(described_class.importable_attributes).to include 'custom_property'
+      end
+    end
+
+    describe '#exportable_attributes' do
+      it 'includes extra attributes' do
+        expect(described_class.importable_attributes).to include 'custom_property'
+      end
+    end
+  end
 end
