@@ -19,7 +19,7 @@ class Importer
     @current_row += 1
     attributes = row.to_hash.slice(*importable_attributes)
 
-    if object = @klass.find_by(id: row['id'])
+    if object = find_object(row)
       if !object.update_attributes(attributes)
         @errors << "[#{@current_row}] Failed to updated: #{row}"
       end
@@ -38,6 +38,14 @@ class Importer
 
   def importable_attributes
     @attrs ||= @klass.respond_to?(:importable_attributes) ? @klass.importable_attributes : @klass.attribute_names
+  end
+
+  def find_object(row)
+    @klass.find_by(import_id => row[import_id])
+  end
+
+  def import_id
+    @import_id ||= @klass.respond_to?(:import_id) ? @klass.import_id : 'id'
   end
 
   private
