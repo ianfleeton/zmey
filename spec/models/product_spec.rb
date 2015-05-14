@@ -87,6 +87,35 @@ describe Product do
     end
   end
 
+  shared_examples_for 'a nominal code setter' do |code_type|
+    let(:getter) { "#{code_type}_nominal_code".to_sym }
+    let(:setter) { "#{code_type}_nominal_code=".to_sym }
+    before do
+      @product.send(setter, new_code)
+    end
+    context 'when param is a NominalCode' do
+      let(:new_code) { FactoryGirl.create(:nominal_code, code: '1234') }
+      it 'sets to the nominal code' do
+        expect(@product.send(getter)).to eq new_code
+      end
+    end
+    context 'when param is a string' do
+      let(:nominal_code) { FactoryGirl.create(:nominal_code, code: '1234') }
+      let(:new_code) { "#{nominal_code.code} Desription of code" }
+      it 'sets to the nominal code whose code matches the first part of the string' do
+        expect(@product.send(getter)).to eq nominal_code
+      end
+    end
+  end
+
+  describe '#purchase_nominal_code=' do
+    it_behaves_like 'a nominal code setter', :purchase
+  end
+
+  describe '#sales_nominal_code=' do
+    it_behaves_like 'a nominal code setter', :sales
+  end
+
   describe "tax" do
     it "should be added and tax amount calculated when price is ex-VAT" do
       @product.tax_type = Product::EX_VAT

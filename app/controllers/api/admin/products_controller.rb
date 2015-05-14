@@ -1,6 +1,4 @@
 class Api::Admin::ProductsController < Api::Admin::AdminController
-  before_action :set_nominal_codes, only: [:create]
-
   def index
     page      = params[:page] || 1
     per_page  = params[:page_size] || default_page_size
@@ -22,8 +20,6 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
 
   def create
     @product = Product.new(product_params)
-    @product.purchase_nominal_code = @purchase_nominal_code
-    @product.sales_nominal_code = @sales_nominal_code
 
     unless @product.save
       render json: @product.errors.full_messages, status: :unprocessable_entity
@@ -45,19 +41,12 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
       :google_description,
       :image_id,
       :meta_description, :name,
-      :page_title, :price, :rrp, :sku,
+      :page_title, :price,
+      :purchase_nominal_code,
+      :rrp,
+      :sales_nominal_code,
+      :sku,
       :submit_to_google,
       :tax_type, :weight)
-    end
-
-    def set_nominal_codes
-      @purchase_nominal_code = get_nominal_code('purchase_nominal_code')
-      @sales_nominal_code = get_nominal_code('sales_nominal_code')
-    end
-
-    def get_nominal_code(key)
-      if params['product'][key]
-        NominalCode.find_by(code: params['product'].delete(key))
-      end
     end
 end

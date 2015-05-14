@@ -79,6 +79,26 @@ class Product < ActiveRecord::Base
     end
   end
 
+  # Sets purchase nominal code from either a NominalCode or a string
+  # starting with the code.
+  def purchase_nominal_code=(code)
+    if code.kind_of?(String)
+      self.purchase_nominal_code = NominalCode.find_by(code: code.split.first)
+    else
+      super
+    end
+  end
+
+  # Sets sales nominal code from either a NominalCode or a string
+  # starting with the code.
+  def sales_nominal_code=(code)
+    if code.kind_of?(String)
+      self.sales_nominal_code = NominalCode.find_by(code: code.split.first)
+    else
+      super
+    end
+  end
+
   # the price of a single product when quantity q is purchased as entered
   # by the merchant -- tax is not considered
   def price_at_quantity(q)
