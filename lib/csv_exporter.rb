@@ -23,7 +23,7 @@ class CSVExporter
   end
 
   def attribute_names
-    @attribute_names ||= @object.respond_to?(:exportable_attribute_names) ? @object.exportable_attribute_names : @object.attribute_names
+    @attribute_names ||= @klass.respond_to?(:exportable_attributes) ? @klass.exportable_attributes : @klass.attribute_names
   end
 
   def filename

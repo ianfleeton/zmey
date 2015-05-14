@@ -211,8 +211,11 @@ describe Product do
 
   describe '.importable_attributes' do
     subject { Product.importable_attributes }
-    ['image_name', 'image_names'].each do |additional_attr|
+    ['image_name', 'image_names', 'purchase_nominal_code', 'sales_nominal_code'].each do |additional_attr|
       it { should include(additional_attr) }
+    end
+    ['purchase_nominal_code_id', 'sales_nominal_code_id'].each do |excluded_attr|
+      it { should_not include(excluded_attr) }
     end
   end
 

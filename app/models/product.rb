@@ -262,8 +262,14 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def self.exportable_attributes
+    importable_attributes
+  end
+
   def self.importable_attributes
-    attribute_names + ['image_name', 'image_names']
+    attribute_names -
+      ['purchase_nominal_code_id', 'sales_nominal_code_id'] +
+      ['image_name', 'image_names', 'purchase_nominal_code', 'sales_nominal_code']
   end
 
   private
