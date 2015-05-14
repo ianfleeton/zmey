@@ -1,7 +1,8 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'zmey'
+app = 'zmey'
+set :application, app
 raise 'Set the ZMEY_REPOSITORY environment variable before deploying' unless ENV['ZMEY_REPOSITORY']
 set :repo_url, ENV['ZMEY_REPOSITORY']
 
@@ -12,7 +13,7 @@ set :whenever_command, 'bundle exec whenever'
 set :branch, ENV['ZMEY_BRANCH'] || 'master'
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/home/admin/railsapps/#{application}"
+set :deploy_to, "/home/admin/railsapps/#{app}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
