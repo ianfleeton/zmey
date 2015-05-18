@@ -88,4 +88,12 @@ class Page < ActiveRecord::Base
     end
     a
   end
+
+  def self.exportable_attributes
+    importable_attributes
+  end
+
+  def self.importable_attributes
+    attribute_names + extra_attribute_names
+  end
 end
