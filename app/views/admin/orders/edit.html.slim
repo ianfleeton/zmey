@@ -34,6 +34,14 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
     .col-md-6
       h2 Delivery Address
       = render partial: 'delivery_address_form', locals: { form: f }
+      .row
+        .col-lg-6
+          = f.text_field :shipping_method
+        .col-lg-3
+          = f.text_field :shipping_amount
+        .col-lg-3
+          = f.text_field :shipping_tax_amount
+
 
   h2 Order Contents
   table.table.table-bordered
