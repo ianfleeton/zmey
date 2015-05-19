@@ -72,12 +72,16 @@ describe Admin::OrdersController do
     end
 
     describe 'POST create' do
-      let(:email) { SecureRandom.hex }
-      let(:order) { FactoryGirl.build(:order, email_address: email) }
+      let(:params) {{
+        billing_company: 'Billing Company',
+        delivery_company: 'Delivery Company',
+        email_address: 'shopper@example.org',
+      }}
+      let(:order) { FactoryGirl.build(:order, params) }
 
       it 'creates an order' do
         post :create, order: order.attributes
-        expect(Order.find_by(email_address: email)).to be
+        expect(Order.find_by(params)).to be
       end
 
       it 'sets the order status to WAITING_FOR_PAYMENT' do
