@@ -7,8 +7,15 @@
         li= msg
 
 = bootstrap_form_for [:admin, @order] do |f|
-  = f.email_field :email_address, required: true
-  = render partial: 'billing_address_form', locals: { form: f }
-  = render partial: 'delivery_address_form', locals: { form: f }
+  .row
+    .col-md-6
+      = f.email_field :email_address, required: true
+  .row
+    .col-md-6
+      h2 Billing Details
+      = render partial: 'billing_address_form', locals: { form: f }
+    .col-md-6
+      h2 Delivery Details
+      = render partial: 'delivery_address_form', locals: { form: f }
   .form_group
     = admin_submit_button(f)

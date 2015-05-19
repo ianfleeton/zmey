@@ -74,7 +74,11 @@ describe Admin::OrdersController do
     describe 'POST create' do
       let(:params) {{
         billing_company: 'Billing Company',
+        billing_full_name: 'A Buyer',
+        billing_phone_number: '01234 567890',
         delivery_company: 'Delivery Company',
+        delivery_full_name: 'A Recipient',
+        delivery_phone_number: '01234 567890',
         email_address: 'shopper@example.org',
       }}
       let(:order) { FactoryGirl.build(:order, params) }
