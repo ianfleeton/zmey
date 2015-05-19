@@ -187,6 +187,16 @@ describe Product do
     end
   end
 
+  describe '.admin_search' do
+    it 'finds products by SKU' do
+      x = FactoryGirl.create(:product, sku: 'X')
+      y = FactoryGirl.create(:product, sku: 'Y')
+      products = Product.admin_search('X')
+      expect(products).to include(x)
+      expect(products).not_to include(y)
+    end
+  end
+
   describe '#title_for_google' do
     subject { Product.new(name: 'Original Name', google_title: google_title).title_for_google }
 

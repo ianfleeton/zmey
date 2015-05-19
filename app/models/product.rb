@@ -218,7 +218,7 @@ class Product < ActiveRecord::Base
   def self.admin_search(query)
     words = query.split(' ')
     q = Product
-    words.each { |word| q = q.where(['name LIKE ?', "%#{word}%"]) }
+    words.each { |word| q = q.where(['name LIKE ? OR sku = ?', "%#{word}%", word]) }
     q.limit(100)
   end
 
