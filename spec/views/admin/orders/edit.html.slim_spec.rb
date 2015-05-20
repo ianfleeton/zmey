@@ -14,6 +14,11 @@ RSpec.describe 'admin/orders/edit.html.slim', type: :view do
     expect(rendered).to have_selector 'input[name="order[po_number]"]'
   end
 
+  it 'has an input field for email address' do
+    render
+    expect(rendered).to have_selector 'input[name="order[email_address]"]'
+  end
+
   context 'when locked' do
     before { allow(order).to receive(:locked?).and_return(true) }
     it 'displays a warning' do
