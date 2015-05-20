@@ -1,6 +1,9 @@
 = page_header 'Pages'
 
-p= new_button [:admin, Page]
+p
+  = new_button [:admin, Page]
+  - if @parent
+    =< edit_button [:admin, @parent]
 
 ol.breadcrumb
   li= link_to_if(@parent, t('.top'), admin_pages_path)
