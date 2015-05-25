@@ -101,9 +101,7 @@ class Basket < ActiveRecord::Base
   end
 
   def vat_total
-    total = 0.0
-    basket_items.each {|i| total += i.product.tax_amount(i.quantity) * i.quantity}
-    total
+    basket_items.inject(0) {|t, i| t + i.tax_amount}
   end
 
   def apply_shipping?

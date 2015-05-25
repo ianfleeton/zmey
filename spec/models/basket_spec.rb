@@ -88,6 +88,17 @@ describe Basket do
     end
   end
 
+  describe '#vat_total' do
+    let(:basket) { Basket.new }
+
+    it 'returns the total VAT for all items in the basket' do
+      allow(basket).to receive(:basket_items).and_return(
+        [double(BasketItem, tax_amount: 1), double(BasketItem, tax_amount: 3)]
+      )
+      expect(basket.vat_total).to eq 4
+    end
+  end
+
   describe '#deep_clone' do
     it 'returns a copy of the basket' do
       b = Basket.new
