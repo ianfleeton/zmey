@@ -1,0 +1,18 @@
+= page_header 'New Shipping Rule'
+
+= breadcrumbs({\
+    'Shipping Classes' => admin_shipping_classes_path,\
+    @shipping_table_row.shipping_class.name =>\ edit_admin_shipping_class_path(@shipping_table_row.shipping_class)\
+  }, 'New Shipping Rule')
+
+- if @shipping_table_row.errors.any?
+  .alert.alert-error.fade.in
+    a.close data-dismiss="alert" href="#" &times;
+    h2= "#{pluralize(@shipping_table_row.errors.count, "error")} prohibited this shipping table row from being saved:"
+    ul
+      - @shipping_table_row.errors.full_messages.each do |msg|
+      li= msg
+
+= form_for @shipping_table_row do |form|
+  = render partial: 'form', object: form
+  p= submit_tag 'Save', class: 'btn btn-primary'

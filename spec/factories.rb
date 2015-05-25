@@ -178,6 +178,11 @@ FactoryGirl.define do
     association :shipping_zone
   end
 
+  factory :shipping_table_row do
+    sequence(:trigger_value)
+    association :shipping_class
+  end
+
   factory :shipping_zone do
     sequence(:name) { |n| "Shipping Zone #{n}" }
   end

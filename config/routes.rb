@@ -88,6 +88,7 @@ Rails.application.routes.draw do
     resources :quantity_prices, except: [:show]
     resources :shipments, only: [:new]
     resources :shipping_classes, except: [:show]
+    resources :shipping_table_rows
     resources :shipping_zones, except: [:show]
 
     resources :users do
@@ -218,8 +219,6 @@ Rails.application.routes.draw do
   end
   get  'sign-in'              => 'sessions#new',         as: :sign_in
   post 'switch_user/:user_id' => 'sessions#switch_user', as: :switch_user
-
-  resources :shipping_table_rows
 
   get 'sitemap.xml' => 'pages#sitemap', as: 'sitemap', format: 'xml'
 

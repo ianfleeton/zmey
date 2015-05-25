@@ -1,7 +1,5 @@
-class ShippingTableRowsController < ApplicationController
-  layout 'admin'
-  before_action :admin_or_manager_required
-  before_action :find_shipping_table_row, only: [:edit, :update, :destroy]
+class Admin::ShippingTableRowsController < Admin::AdminController
+  before_action :set_shipping_table_row, only: [:edit, :update, :destroy]
 
   def new
     @shipping_table_row = ShippingTableRow.new
@@ -25,13 +23,13 @@ class ShippingTableRowsController < ApplicationController
     redirect_to edit_admin_shipping_class_path(@shipping_table_row.shipping_class)
   end
 
-  protected
+  private
 
-  def find_shipping_table_row
-    @shipping_table_row = ShippingTableRow.find_by(id: params[:id])
-  end
+    def set_shipping_table_row
+      @shipping_table_row = ShippingTableRow.find_by(id: params[:id])
+    end
 
-  def shipping_table_row_params
-    params.require(:shipping_table_row).permit(:amount, :shipping_class_id, :trigger_value)
-  end
+    def shipping_table_row_params
+      params.require(:shipping_table_row).permit(:amount, :shipping_class_id, :trigger_value)
+    end
 end
