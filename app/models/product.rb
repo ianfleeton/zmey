@@ -56,6 +56,9 @@ class Product < ActiveRecord::Base
   validates_inclusion_of :tax_type, in: TAX_TYPES
 
   VAT_RATE = 0.2
+  def self.vat_rate
+    VAT_RATE
+  end
 
   def name_with_sku
     name + ' [' + sku + ']'
@@ -121,31 +124,17 @@ class Product < ActiveRecord::Base
 
   # the amount of tax for a single product when quantity q is purchased
   def tax_amount(q=1)
-    if tax_type == Product::EX_VAT
-      price_at_quantity(q) * Product::VAT_RATE
-    elsif tax_type == Product::INC_VAT
-      price_at_quantity(q) - price_ex_tax(q)
-    else
-      0
-    end
+    price_inc_tax(q) - price_ex_tax(q)
   end
 
   # the price exclusive of tax for a single product when quantity q is purchased
   def price_ex_tax(q=1)
-    if tax_type == Product::INC_VAT
-      price_at_quantity(q) / (Product::VAT_RATE + 1)
-    else
-      price_at_quantity(q)
-    end
+    Taxer.new(price_at_quantity(q), tax_type).ex_tax
   end
 
   # the price inclusive of tax for a single product when quantity q is purchased
   def price_inc_tax(q=1)
-    if tax_type == Product::EX_VAT
-      price_at_quantity(q) + tax_amount(q)
-    else
-      price_at_quantity(q)
-    end
+    Taxer.new(price_at_quantity(q), tax_type).inc_tax
   end
 
   # the price for a single product when quantity q is purchased with tax included
@@ -159,19 +148,11 @@ class Product < ActiveRecord::Base
   end
 
   def rrp_inc_tax
-    if tax_type == Product::EX_VAT
-      rrp * (Product::VAT_RATE + 1)
-    else
-      rrp
-    end
+    Taxer.new(rrp, tax_type).inc_tax
   end
 
   def rrp_ex_tax
-    if tax_type == Product::INC_VAT
-      rrp / (Product::VAT_RATE + 1)
-    else
-      rrp
-    end
+    Taxer.new(rrp, tax_type).ex_tax
   end
 
   def rrp?

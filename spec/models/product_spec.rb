@@ -166,6 +166,26 @@ describe Product do
     end
   end
 
+  describe '#rrp_inc_tax' do
+    it 'uses Taxer#inc_tax' do
+      @product.rrp = 123
+      @product.tax_type = Product::INC_VAT
+      allow(Taxer).to receive(:new).with(123, Product::INC_VAT)
+        .and_return(double(Taxer, inc_tax: 45))
+      expect(@product.rrp_inc_tax).to eq 45
+    end
+  end
+
+  describe '#rrp_ex_tax' do
+    it 'uses Taxer#ex_tax' do
+      @product.rrp = 456
+      @product.tax_type = Product::EX_VAT
+      allow(Taxer).to receive(:new).with(456, Product::EX_VAT)
+        .and_return(double(Taxer, ex_tax: 78))
+      expect(@product.rrp_ex_tax).to eq 78
+    end
+  end
+
   describe '#reduced?' do
     it 'returns false if rrp is blank' do
       expect(@product.reduced?).to be_falsey
