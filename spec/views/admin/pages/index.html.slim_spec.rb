@@ -1,8 +1,6 @@
 require 'rails_helper'
 
-
-
-describe 'admin/pages/index.html.slim' do
+RSpec.describe 'admin/pages/index.html.slim', type: :view do
   let(:parent) { FactoryGirl.create(:page) }
 
   before do
