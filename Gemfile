@@ -92,7 +92,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.1.0'
+  gem 'rspec-rails', '~> 3.2.0'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri_20, :mri_21]
