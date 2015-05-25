@@ -19,9 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 2.minutes do
-  runner 'DispatchNotifier.new.send_emails'
-  runner 'InvoiceNotifier.new.send_emails'
+every 5.minutes do
+  runner 'SendEmailsJob.perform_later'
 end
 
 every :hour do
