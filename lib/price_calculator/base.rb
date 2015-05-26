@@ -2,6 +2,7 @@ module PriceCalculator
   # Provides a default implementation of a price calculator that simply returns
   # the product's price. Subclass this to provide more complex calculations.
   class Base
+    attr_reader :basket_item
     attr_reader :product
 
     delegate :tax_type, to: :product
