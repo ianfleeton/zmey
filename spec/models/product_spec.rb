@@ -143,6 +143,11 @@ describe Product do
     it_behaves_like 'a nominal code setter', :sales
   end
 
+  describe '#price_calculator' do
+    subject { @product.price_calculator(BasketItem.new) }
+    it { should be_kind_of(PriceCalculator::Base) }
+  end
+
   describe "tax" do
     it "should be added and tax amount calculated when price is ex-VAT" do
       @product.tax_type = Product::EX_VAT

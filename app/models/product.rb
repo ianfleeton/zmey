@@ -112,6 +112,12 @@ class Product < ActiveRecord::Base
     end
   end
 
+  # Returns a <tt>PriceCalculator</tt> to work out the price of this product
+  # in a basket.
+  def price_calculator(basket_item)
+    @price_calculator ||= price_calculator_class.new(self, basket_item)
+  end
+
   # the price of a single product when quantity q is purchased as entered
   # by the merchant -- tax is not considered
   def price_at_quantity(q)
@@ -283,5 +289,9 @@ class Product < ActiveRecord::Base
           ProductImage.create(product_id: id, image_id: image.id)
         end
       end
+    end
+
+    def price_calculator_class
+      PriceCalculator::Base
     end
 end
