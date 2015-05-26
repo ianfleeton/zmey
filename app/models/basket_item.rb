@@ -42,16 +42,18 @@ class BasketItem < ActiveRecord::Base
     (rrp * quantity) - line_total(inc_tax)
   end
 
-  # Returns the price of a single product with tax when purchased at
-  # the current quantity.
+  # Returns the price of a single product with tax.
   def product_price_inc_tax
-    product.price_inc_tax(quantity)
+    price_calculator.inc_tax
   end
 
-  # Returns the price of a single product without tax when purchased at
-  # the current quantity.
+  # Returns the price of a single product without tax.
   def product_price_ex_tax
-    product.price_ex_tax(quantity)
+    price_calculator.ex_tax
+  end
+
+  def price_calculator
+    product.price_calculator(self)
   end
 
   def self.describe_feature_selections fs

@@ -5,8 +5,8 @@ RSpec.describe BasketItem, type: :model do
     context 'when inc_tax is true' do
       it 'returns the quantity times the price of the product including tax when buying that quantity' do
         product = FactoryGirl.build(:product)
-        allow(product).to receive(:price_inc_tax).with(2).and_return(12)
         item = BasketItem.new(quantity: 2)
+        allow(item).to receive(:product_price_inc_tax).and_return(12)
         item.product = product
         expect(item.line_total(true)).to eq 24
       end
@@ -15,8 +15,8 @@ RSpec.describe BasketItem, type: :model do
     context 'when inc_tax is false' do
       it 'returns the quantity times the price of the product excluding tax when buying that quantity' do
         product = FactoryGirl.build(:product)
-        allow(product).to receive(:price_ex_tax).with(2).and_return(10)
         item = BasketItem.new(quantity: 2)
+        allow(item).to receive(:product_price_ex_tax).and_return(10)
         item.product = product
         expect(item.line_total(false)).to eq 20
       end
@@ -69,6 +69,8 @@ RSpec.describe BasketItem, type: :model do
       let(:product) { FactoryGirl.create(:product, rrp: nil, price: 2.0) }
 
       before do
+        # Make sure we're using QuantityBased price calculations.
+        expect(product).to receive(:price_calculator_class).and_return(PriceCalculator::QuantityBased)
         QuantityPrice.create(quantity: 5, price: 1.5, product: product)
       end
 
@@ -89,6 +91,34 @@ RSpec.describe BasketItem, type: :model do
         let(:tax_type) { Product::INC_VAT }
         it { should eq 1.0 }
       end
+    end
+  end
+
+  describe '#price_calculator' do
+    it 'gets a price calculator from the product' do
+      product = Product.new
+      calculator = double(PriceCalculator::Base)
+      basket_item = BasketItem.new(product: product)
+      allow(product).to receive(:price_calculator).with(basket_item).and_return(calculator)
+      expect(basket_item.price_calculator).to eq calculator
+    end
+  end
+
+  describe '#product_price_inc_tax' do
+    it 'gets a price inc tax from the calculator' do
+      basket_item = BasketItem.new
+      calculator = double(PriceCalculator::Base, inc_tax: 123)
+      allow(basket_item).to receive(:price_calculator).and_return calculator
+      expect(basket_item.product_price_inc_tax).to eq 123
+    end
+  end
+
+  describe '#product_price_ex_tax' do
+    it 'gets a price ex tax from the calculator' do
+      basket_item = BasketItem.new
+      calculator = double(PriceCalculator::Base, ex_tax: 123)
+      allow(basket_item).to receive(:price_calculator).and_return calculator
+      expect(basket_item.product_price_ex_tax).to eq 123
     end
   end
 
