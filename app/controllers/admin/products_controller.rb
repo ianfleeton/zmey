@@ -81,8 +81,12 @@ class Admin::ProductsController < Admin::AdminController
         :google_product_category, :google_title, :image_id,
         :meta_description, :mpn, :name,
         :oversize,
-        :page_title, :purchase_nominal_code_id,
-        :price, :product_type, :rrp,
+        :page_title,
+        :price,
+        :pricing_method,
+        :product_type,
+        :purchase_nominal_code_id,
+        :rrp,
         :sales_nominal_code_id,
         :shipping_supplement, :sku, :submit_to_google, :tax_type, :weight)
     end

@@ -6,10 +6,14 @@ class Taxer
   end
 
   def inc_tax
-    @tax_type == Product::EX_VAT ? @price * (1 + Product.vat_rate) : @price
+    if @price
+      @tax_type == Product::EX_VAT ? @price * (1 + Product.vat_rate) : @price
+    end
   end
 
   def ex_tax
-    @tax_type == Product::INC_VAT ? @price / (1 + Product.vat_rate) : @price
+    if @price
+      @tax_type == Product::INC_VAT ? @price / (1 + Product.vat_rate) : @price
+    end
   end
 end

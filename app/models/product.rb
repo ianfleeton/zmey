@@ -8,6 +8,12 @@ class Product < ActiveRecord::Base
   validates :meta_description, length: { maximum: 255 }
   validates :price, numericality: { greater_than_or_equal_to: 0 }
 
+  PRICE_CALCULATORS = {
+    'basic' => PriceCalculator::Base,
+    'quantity_based' => PriceCalculator::QuantityBased,
+  }
+  validates_inclusion_of :pricing_method, in: PRICE_CALCULATORS.keys
+
   # Google feed attributes
   AGE_GROUPS = %w(adult kids)
   validates_inclusion_of :age_group, in: AGE_GROUPS, allow_blank: true
@@ -110,6 +116,12 @@ class Product < ActiveRecord::Base
     else
       super
     end
+  end
+
+  # Returns a <tt>PriceCalculator</tt> to work out the price of this product
+  # in a basket.
+  def price_calculator(params)
+    @price_calculator ||= price_calculator_class.new(params.merge(product: self))
   end
 
   # the price of a single product when quantity q is purchased as entered
@@ -283,5 +295,9 @@ class Product < ActiveRecord::Base
           ProductImage.create(product_id: id, image_id: image.id)
         end
       end
+    end
+
+    def price_calculator_class
+      PriceCalculator::Base
     end
 end

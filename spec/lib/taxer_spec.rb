@@ -21,6 +21,12 @@ RSpec.describe Taxer do
       let(:tax_type) { Product::NO_TAX }
       it { should eq 10 }
     end
+
+    context 'price is nil' do
+      let(:tax_type) { Product::EX_VAT }
+      let(:price) { nil }
+      it { should eq nil }
+    end
   end
 
   describe '#ex_tax' do
@@ -40,6 +46,12 @@ RSpec.describe Taxer do
     context 'tax_type is Product::NO_TAX' do
       let(:tax_type) { Product::NO_TAX }
       it { should eq 12 }
+    end
+
+    context 'price is nil' do
+      let(:tax_type) { Product::INC_VAT }
+      let(:price) { nil }
+      it { should eq nil }
     end
   end
 end

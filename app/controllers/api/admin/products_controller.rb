@@ -42,6 +42,7 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
       :image_id,
       :meta_description, :name,
       :page_title, :price,
+      :pricing_method,
       :purchase_nominal_code,
       :rrp,
       :sales_nominal_code,

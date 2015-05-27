@@ -45,15 +45,19 @@ describe Admin::ProductsController do
   end
 
   describe "POST create" do
-    let(:valid_params) { { 'product' => { 'name' => 'Product Name' } } }
+    let(:product_params) {{
+      'name' => 'Product Name',
+      'pricing_method' => 'quantity_based',
+      'sku' => 'sku',
+    }}
+    let(:valid_params) { { 'product' => product_params } }
 
     context "when logged in as admin" do
       before { logged_in_as_admin }
 
       it "assigns a newly created product as @product" do
-        allow(Product).to receive(:new).with(valid_params['product']).and_return(mock_product(:website_id= => website.id, save: true))
         post :create, valid_params
-        expect(assigns[:product]).to equal(mock_product)
+        expect(Product.exists?(product_params)).to be_truthy
       end
 
       describe "with valid params" do
