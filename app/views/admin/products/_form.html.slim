@@ -19,6 +19,8 @@
 
   = form.text_field :price
 
+  = form.collection_select :pricing_method, Product::PRICE_CALCULATORS, :first, :first
+
   = form.text_field :rrp, label: 'RRP (leave blank if same as price)'
 
   = form.check_box :allow_fractional_quantity, label: t('.allow_fractional_quantity')

@@ -128,6 +128,7 @@ describe 'Admin products API' do
       extra: extra,
       name: name,
       price: price,
+      pricing_method: 'quantity_based',
       rrp: rrp,
       sku: sku,
       submit_to_google: submit_to_google,

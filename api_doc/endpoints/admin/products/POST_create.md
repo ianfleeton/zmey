@@ -22,6 +22,7 @@ Create a new product.
 * **page_title** — Title of the HTML document for the product's main page.
 * **price** — Price of the product with decimal to separate pounds and pence,
 for example, 10.99.
+* **pricing_method** — Determines which pricing method to use (see table below).
 * **rrp** — Recommended retail price.
 * **submit_to_google** — Whether or not the product should be submitted to Google in the product feed.
 * **tax_type** — Tax type of the product (see table below).
@@ -34,6 +35,13 @@ for example, 10.99.
 |1       |This product is not taxable|
 |2       |Taxable — price given includes VAT|
 |3       |Taxable — price given excludes VAT|
+
+#### Pricing methods
+
+|pricing_method|Description|
+|--------------|-----------|
+|basic         |The product price is used|
+|quantity_based|Quantity price table is used (e.g., volume discounts)|
 
 ## Example
 
