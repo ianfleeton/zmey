@@ -1,7 +1,7 @@
 require 'rails_helper'
 require_relative 'shared_examples/extra_attributes_shared.rb'
 
-describe Product do
+RSpec.describe Product, type: :model do
   before(:each) do
     @product = Product.new(price: 1.0)
   end
@@ -18,6 +18,8 @@ describe Product do
     @product.destroy
     expect(@order_line.reload.product_id).to be_nil
   end
+
+  it { should validate_inclusion_of(:pricing_method).in_array(Product::PRICE_CALCULATORS.keys) }
 
   it { should validate_inclusion_of(:age_group).in_array(Product::AGE_GROUPS) }
   it { should validate_inclusion_of(:gender).in_array(Product::GENDERS) }

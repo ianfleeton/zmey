@@ -8,6 +8,12 @@ class Product < ActiveRecord::Base
   validates :meta_description, length: { maximum: 255 }
   validates :price, numericality: { greater_than_or_equal_to: 0 }
 
+  PRICE_CALCULATORS = {
+    'basic' => PriceCalculator::Base,
+    'quantity_based' => PriceCalculator::QuantityBased,
+  }
+  validates_inclusion_of :pricing_method, in: PRICE_CALCULATORS.keys
+
   # Google feed attributes
   AGE_GROUPS = %w(adult kids)
   validates_inclusion_of :age_group, in: AGE_GROUPS, allow_blank: true
