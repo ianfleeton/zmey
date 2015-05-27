@@ -53,7 +53,7 @@ class BasketItem < ActiveRecord::Base
   end
 
   def price_calculator
-    product.price_calculator(self)
+    product.price_calculator(basket_item: self, quantity: quantity)
   end
 
   def self.describe_feature_selections fs

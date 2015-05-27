@@ -96,10 +96,11 @@ RSpec.describe BasketItem, type: :model do
 
   describe '#price_calculator' do
     it 'gets a price calculator from the product' do
+      quantity = 3
       product = Product.new
       calculator = double(PriceCalculator::Base)
-      basket_item = BasketItem.new(product: product)
-      allow(product).to receive(:price_calculator).with(basket_item).and_return(calculator)
+      basket_item = BasketItem.new(product: product, quantity: quantity)
+      allow(product).to receive(:price_calculator).with(hash_including(basket_item: basket_item, quantity: quantity)).and_return(calculator)
       expect(basket_item.price_calculator).to eq calculator
     end
   end

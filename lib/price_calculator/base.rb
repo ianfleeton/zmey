@@ -4,14 +4,15 @@ module PriceCalculator
   class Base
     attr_reader :basket_item
     attr_reader :product
+    attr_reader :quantity
 
     delegate :tax_type, to: :product
     delegate :ex_tax,   to: :taxer
     delegate :inc_tax,  to: :taxer
     delegate :with_tax, to: :taxer
 
-    def initialize(product, basket_item)
-      @product, @basket_item = product, basket_item
+    def initialize(product:, quantity: 1, basket_item: nil)
+      @product, @basket_item, @quantity = product, basket_item, quantity
     end
 
     # Returns the price of a single product. That is, it is not multiplied

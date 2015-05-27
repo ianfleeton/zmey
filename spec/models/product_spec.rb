@@ -144,7 +144,7 @@ describe Product do
   end
 
   describe '#price_calculator' do
-    subject { @product.price_calculator(BasketItem.new) }
+    subject { @product.price_calculator({}) }
     it { should be_kind_of(PriceCalculator::Base) }
   end
 

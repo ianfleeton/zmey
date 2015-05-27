@@ -3,7 +3,7 @@ module PriceCalculator
     delegate :price_at_quantity, to: :product
 
     def price
-      price_at_quantity(basket_item.quantity)
+      price_at_quantity(quantity)
     end
   end
 end
