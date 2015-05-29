@@ -298,6 +298,6 @@ class Product < ActiveRecord::Base
     end
 
     def price_calculator_class
-      PriceCalculator::Base
+      PRICE_CALCULATORS[pricing_method]
     end
 end
