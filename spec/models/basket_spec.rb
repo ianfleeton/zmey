@@ -88,6 +88,19 @@ describe Basket do
     end
   end
 
+  describe '#contains?' do
+    it 'returns true when product or product_id is in basket' do
+      p1 = FactoryGirl.create(:product)
+      p2 = FactoryGirl.create(:product)
+      basket = FactoryGirl.create(:basket)
+      basket.basket_items << BasketItem.new(product: p1)
+      expect(basket.contains?(p1)).to eq true
+      expect(basket.contains?(p1.id)).to eq true
+      expect(basket.contains?(p2)).to eq false
+      expect(basket.contains?(p2.id)).to eq false
+    end
+  end
+
   describe '#vat_total' do
     let(:basket) { Basket.new }
 

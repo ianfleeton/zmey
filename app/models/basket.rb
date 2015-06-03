@@ -94,6 +94,12 @@ class Basket < ActiveRecord::Base
     basket_items.none?
   end
 
+  # Returns +true+ if the basket contains <tt>product</tt>.
+  def contains?(product)
+    product_id = product.instance_of?(Product) ? product.id : product
+    basket_items.exists?(product_id: product_id)
+  end
+
   # Returns the total quantity of items in the basket. Items that can have
   # fractional quantities are counted as 1 per line.
   def total_quantity
