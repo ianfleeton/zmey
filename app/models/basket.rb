@@ -96,8 +96,19 @@ class Basket < ActiveRecord::Base
 
   # Returns +true+ if the basket contains <tt>product</tt>.
   def contains?(product)
-    product_id = product.instance_of?(Product) ? product.id : product
+    product_id = to_product_id(product)
     basket_items.exists?(product_id: product_id)
+  end
+
+  # Returns any basket items that contain <tt>product</tt>.
+  def items_containing(product)
+    product_id = to_product_id(product)
+    basket_items.where(product_id: product_id)
+  end
+
+  # Returns the first basket item containing <tt>product</tt>.
+  def item_containing(product)
+    items_containing(product).first
   end
 
   # Returns the total quantity of items in the basket. Items that can have
@@ -138,4 +149,10 @@ class Basket < ActiveRecord::Base
     basket_items.each {|i| b.basket_items << i.dup}
     b
   end
+
+  private
+
+    def to_product_id(product)
+      product.instance_of?(Product) ? product.id : product
+    end
 end

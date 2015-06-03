@@ -101,6 +101,23 @@ describe Basket do
     end
   end
 
+  describe '#items_containing' do
+    it 'returns basket items that contain product or product_id' do
+      p1 = FactoryGirl.create(:product)
+      p2 = FactoryGirl.create(:product)
+      basket = FactoryGirl.create(:basket)
+      i1 = BasketItem.create!(product: p1, basket: basket)
+      i2 = BasketItem.create!(product: p2, basket: basket)
+      i3 = BasketItem.create!(product: p1, basket: basket)
+      expect(basket.items_containing(p1)).to include(i1)
+      expect(basket.items_containing(p1.id)).to include(i1)
+      expect(basket.items_containing(p1)).to include(i3)
+      expect(basket.items_containing(p1.id)).to include(i3)
+      expect(basket.items_containing(p1)).not_to include(i2)
+      expect(basket.items_containing(p1.id)).not_to include(i2)
+    end
+  end
+
   describe '#vat_total' do
     let(:basket) { Basket.new }
 
