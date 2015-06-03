@@ -67,7 +67,7 @@ class BasketController < ApplicationController
   def update
     update_quantities if params[:update_quantities]
     remove_item if params[:remove_item]
-    redirect_to checkout_path and return if params[:checkout]
+    redirect_to checkout_path and return if checking_out?
     flash[:notice] = 'Basket updated.'
     redirect_to basket_path
   end
@@ -238,5 +238,9 @@ class BasketController < ApplicationController
     def update_shipping_class
       shipping_class = ShippingClass.find_by(id: params[:shipping_class_id])
       session[:shipping_class_id] = shipping_class.id if shipping_class
+    end
+
+    def checking_out?
+      params[:checkout] || params['checkout.x']
     end
 end

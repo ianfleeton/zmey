@@ -65,6 +65,12 @@ describe BasketController do
 
       it { should redirect_to checkout_path }
     end
+
+    context 'with checkout.x param set (in case of <button>)' do
+      before { post :update, 'checkout.x': '10' }
+
+      it { should redirect_to checkout_path }
+    end
   end
 
   describe 'POST save_and_email' do
