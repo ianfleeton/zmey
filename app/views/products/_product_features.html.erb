@@ -13,6 +13,13 @@
         <option value="<%= choice.id %>"><%= choice.name %></option>
         <% end %>
       </select>
+    <% when Feature::RADIO_BUTTONS %>
+      <% feature.choices.each do |choice| %>
+      <label>
+        <%= radio_button_tag "feature[#{feature.id}]", choice.id  %>
+        <%= choice.name %>
+      </label>
+      <% end %>
     <% end %>
   </p>
   <% end -%>
