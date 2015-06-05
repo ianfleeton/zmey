@@ -70,21 +70,18 @@ describe Basket do
 
   describe '#empty?' do
     let(:basket) { Basket.new }
+    subject { basket.empty? }
 
     context 'when the basket has some items' do
       before do
         basket.basket_items << BasketItem.new
       end
 
-      it 'returns false' do
-        expect(basket.empty?).to be_falsey
-      end
+      it { should be_falsey }
     end
 
     context 'when the basket has no items' do
-      it 'returns true' do
-        expect(basket.empty?).to be_truthy
-      end
+      it { should be_truthy }
     end
   end
 
