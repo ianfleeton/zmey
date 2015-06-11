@@ -17,8 +17,8 @@ Things you may want to cover:
 
 === Ruby version
 
-Zmey should run fine on Ruby 2.0 or above. It is currently in use on MRI
-Ruby 2.1.5.
+Zmey should run fine on Ruby 2.1 or above. It is currently in use on MRI
+Ruby 2.2.2.
 
 === System dependencies
 
