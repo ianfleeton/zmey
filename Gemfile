@@ -95,7 +95,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.2.0'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mir_21, :mri_22]
+  gem 'byebug', platforms: [:mri_21, :mri_22]
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0', platforms: [:mri_21, :mri_22]
