@@ -37,6 +37,7 @@ json.order do
   json.status                   Enums::PaymentStatus.new(@order.status).to_api
   json.total                    @order.total
   json.weight                   @order.weight
+  json.customer_note            @order.customer_note
   json.ip_address               @order.ip_address
   json.processed_at             @order.processed_at
   json.created_at               @order.created_at

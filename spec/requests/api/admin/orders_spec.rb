@@ -138,6 +138,7 @@ describe 'Admin orders API' do
       before do
         @order = FactoryGirl.create(:order,
           billing_company: 'YESL', billing_address_line_3: 'Copley Road',
+          customer_note: 'Please gift wrap my order',
           delivery_company: 'FBS', delivery_address_line_3: 'Beighton',
           po_number: 'PO123',
           shipment_email_sent_at: '2014-05-14T16:25:56.000+01:00',
@@ -151,7 +152,9 @@ describe 'Admin orders API' do
         expect(response.status).to eq 200
       end
 
-      ['billing_address_line_3', 'billing_company', 'delivery_address_line_3', 'delivery_company',
+      ['billing_address_line_3', 'billing_company',
+        'customer_note',
+        'delivery_address_line_3', 'delivery_company',
         'po_number',
         'shipping_tracking_number', 'weight'].each do |component|
         it "includes #{component} in JSON" do
