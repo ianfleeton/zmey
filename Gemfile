@@ -36,9 +36,6 @@ gem 'bootstrap-will_paginate'
 # Look up addresses by postcode
 gem 'postcode_software', '~> 0.0.1'
 
-# Monitor with New Relic
-gem 'newrelic_rpm'
-
 # Ajax.org Cloud9 Editor (Ace) for the Rails 3.1+ asset pipeline
 gem 'ace-rails-ap'
 
@@ -78,6 +75,11 @@ gem 'rails-html-sanitizer', '~> 1.0'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
+
+group :production do
+  # Monitor with New Relic
+  gem 'newrelic_rpm'
+end
 
 # Use Capistrano for deployment
 group :development do
