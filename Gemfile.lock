@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:capistrano/rvm.git
+  remote: https://github.com/capistrano/rvm.git
   revision: 9cfef39cf0022839dca6b5b330dfefeb5fc363e7
   specs:
     capistrano-rvm (0.1.2)
@@ -139,6 +139,7 @@ GEM
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     fastercsv (1.5.5)
+    ffi (1.9.8)
     ffi (1.9.8-java)
     formatador (0.2.5)
     globalid (0.3.5)
