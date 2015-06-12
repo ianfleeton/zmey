@@ -254,7 +254,12 @@ describe 'Admin orders API' do
 
     it 'inserts a new order into the website' do
       post '/api/admin/orders', order: basic_params
-      expect(Order.find_by(basic_params.merge(status: Enums::PaymentStatus::WAITING_FOR_PAYMENT))).to be
+      expect(Order.find_by(
+        basic_params.merge(
+          processed_at: '2015-03-05 10:00:00',
+          status: Enums::PaymentStatus::WAITING_FOR_PAYMENT
+        )
+      )).to be
     end
 
     it 'returns 422 if order cannot be created' do
