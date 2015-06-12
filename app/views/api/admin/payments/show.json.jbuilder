@@ -22,8 +22,10 @@ json.payment do
   json.raw_auth_message   @payment.raw_auth_message
   json.created_at         @payment.created_at
   json.updated_at         @payment.updated_at
-  json.order do
-    json.id   @payment.order.id
-    json.href api_admin_order_url(@payment.order)
+  if @payment.order
+    json.order do
+      json.id   @payment.order.id
+      json.href api_admin_order_url(@payment.order)
+    end
   end
 end
