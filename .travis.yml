@@ -6,6 +6,11 @@ env:
 install:
   - sudo apt-get update
   - sudo apt-get install libfreeimage3 libfreeimage-dev
+  # wkhtmltopdf
+  - sudo apt-get install libqt4-gui libqt4-network libqt4-webkit libxrender-dev xorg
+  - sudo apt-get install xfonts-75dpi
+  - wget 'http://downloads.sourceforge.net/wkhtmltopdf/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb'
+  - sudo dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
   - bundle install --jobs=3 --retry=3 --deployment --without production
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
