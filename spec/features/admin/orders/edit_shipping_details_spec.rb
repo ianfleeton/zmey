@@ -20,4 +20,12 @@ feature 'Edit shipping details' do
     expect(order.shipping_tax_amount).to eq 1.6
     expect(order.total).to eq 9.6
   end
+
+  scenario 'Edit delivery instructions' do
+    visit edit_admin_order_path(order)
+    fill_in 'Delivery instructions', with: 'Leave in shed'
+    click_button 'Save'
+    order.reload
+    expect(order.delivery_instructions).to eq 'Leave in shed'
+  end
 end

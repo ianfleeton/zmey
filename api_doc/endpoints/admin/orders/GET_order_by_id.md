@@ -36,6 +36,7 @@ returned.
     "delivery_county": "South Yorkshire",
     "delivery_postcode": "DN99 9ZZ",
     "delivery_phone_number": "01234 567890",
+    "delivery_instructions": "Leave parcel in shed",
     "billing_full_name": "A. Shopper",
     "billing_company": "Your e Solutions Ltd",
     "billing_address_line_1": "123 Street",

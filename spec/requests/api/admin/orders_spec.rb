@@ -220,6 +220,7 @@ describe 'Admin orders API' do
     let(:delivery_address_line_3) { SecureRandom.hex }
     let(:delivery_country_id)     { country.id }
     let(:delivery_county)         { SecureRandom.hex }
+    let(:delivery_instructions)   { SecureRandom.hex }
     let(:delivery_postcode)       { SecureRandom.hex }
     let(:delivery_town_city)      { SecureRandom.hex }
     let(:email_address)           { "#{SecureRandom.hex}@example.org" }
@@ -241,6 +242,7 @@ describe 'Admin orders API' do
       delivery_address_line_3: delivery_address_line_3,
       delivery_country_id: delivery_country_id,
       delivery_county: delivery_county,
+      delivery_instructions: delivery_instructions,
       delivery_postcode: delivery_postcode,
       delivery_town_city: delivery_town_city,
       email_address: email_address,

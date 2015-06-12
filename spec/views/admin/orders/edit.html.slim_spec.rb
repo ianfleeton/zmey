@@ -19,6 +19,11 @@ RSpec.describe 'admin/orders/edit.html.slim', type: :view do
     expect(rendered).to have_selector 'input[name="order[email_address]"]'
   end
 
+  it 'has an textarea for delivery instructions' do
+    render
+    expect(rendered).to have_selector 'textarea[name="order[delivery_instructions]"]'
+  end
+
   context 'when locked' do
     before { allow(order).to receive(:locked?).and_return(true) }
     it 'displays a warning' do

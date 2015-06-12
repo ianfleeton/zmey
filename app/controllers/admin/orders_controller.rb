@@ -75,6 +75,7 @@ class Admin::OrdersController < Admin::AdminController
         :delivery_country_id,
         :delivery_county,
         :delivery_full_name,
+        :delivery_instructions,
         :delivery_phone_number,
         :delivery_postcode,
         :delivery_town_city,

@@ -32,11 +32,12 @@ Create a new order.
 * **billing_address_line_3**
 * **billing_county**
 * **billing_full_name** — Full name of the customer.
-* **customer_note** — A note left by the customer such as delivery instructions.
+* **customer_note** — A note left by the customer.
 * **delivery_address_line_2**
 * **delivery_address_line_3**
 * **delivery_county**
 * **delivery_full_name** — Full name of the customer.
+* **delivery_instructions** — Delivery instructions left by the customer.
 * **order_number** — Order number, which is represented as a string so it can
   contain letters as well as numbers.
 * **po_number** — Customer's purchase order (PO) number.

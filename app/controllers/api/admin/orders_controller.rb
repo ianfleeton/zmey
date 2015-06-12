@@ -88,6 +88,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       :delivery_country_name,
       :delivery_county,
       :delivery_full_name,
+      :delivery_instructions,
       :delivery_postcode,
       :delivery_town_city,
       :email_address,
