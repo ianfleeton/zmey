@@ -1,3 +1,7 @@
+<% if @google_ecommerce_tracking -%>
+<%= render(partial: 'google_ecommerce_tracking') %>
+<% end -%>
+
 <% if @order.payment_received? -%>
 <h1>Receipt</h1>
 <% else -%>

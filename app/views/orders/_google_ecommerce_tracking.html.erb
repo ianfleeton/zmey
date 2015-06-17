@@ -1,3 +1,4 @@
+<script>
 <% tax_total = website.vat_number.empty? ? '' : @order.tax_total -%>
 
     _gaq.push(['_addTrans',
@@ -26,3 +27,4 @@
 <% end -%>
 
     _gaq.push(['_trackTrans']);
+</script>
