@@ -39,7 +39,7 @@ RSpec.describe Admin::OfflinePaymentMethodsController, type: :controller do
       end
 
       it 'sets a flash notice' do
-        expect(flash[:notice]).to eq I18n.t('controllers.admin.offline_payment_methods.create.flash.created')
+        expect(flash[:notice]).to eq I18n.t('controllers.admin.offline_payment_methods.create.created')
       end
 
       it 'redirects to the offline payment method index' do

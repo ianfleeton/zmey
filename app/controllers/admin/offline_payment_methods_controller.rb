@@ -10,7 +10,7 @@ class Admin::OfflinePaymentMethodsController < Admin::AdminController
   def create
     @offline_payment_method = OfflinePaymentMethod.new(offline_payment_method_params)
     if @offline_payment_method.save
-      redirect_to admin_offline_payment_methods_path, notice: I18n.t('controllers.admin.offline_payment_methods.create.flash.created')
+      redirect_to admin_offline_payment_methods_path, notice: I18n.t('controllers.admin.offline_payment_methods.create.created')
     else
       render :new
     end

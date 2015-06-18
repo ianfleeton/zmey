@@ -325,6 +325,9 @@ en:
         csv:
           import_in_progress: 'Import is running in the background.'
           nothing_uploaded: 'Nothing was uploaded.'
+      offline_payment_methods:
+        create:
+          created: 'New offline payment method has been created.'
       product_images:
         create:
           added: 'Image added.'
