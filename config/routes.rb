@@ -44,6 +44,10 @@ Rails.application.routes.draw do
         get 'purge_old_unpaid'
         get 'search_products'
       end
+
+      member do
+        get 'record_sales_conversion'
+      end
     end
 
     resources :order_comments, except: [:show]

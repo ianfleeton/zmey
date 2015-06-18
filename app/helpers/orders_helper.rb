@@ -14,7 +14,7 @@ module OrdersHelper
   end
 
   def record_sales_conversion(order)
-    render(partial: 'google_ecommerce_tracking', locals: { order: order })
+    render(partial: 'orders/google_ecommerce_tracking', locals: { order: order })
     order.record_sales_conversion!
   end
 end

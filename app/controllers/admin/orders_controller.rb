@@ -1,5 +1,5 @@
 class Admin::OrdersController < Admin::AdminController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :record_sales_conversion]
 
   def index
     if params[:user_id]
@@ -54,6 +54,9 @@ class Admin::OrdersController < Admin::AdminController
   def search_products
     @products = Product.admin_search(params[:query])
     render layout: false
+  end
+
+  def record_sales_conversion
   end
 
   protected

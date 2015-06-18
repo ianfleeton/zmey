@@ -113,6 +113,7 @@ en:
         shipped_at: 'Shipped at'
         shipping_tracking_number: 'Tracking number'
       index:
+        analytics: 'Analytics?'
         apply_search: 'Apply Search'
         close: 'Close'
         full_name: 'Full Name'
@@ -388,4 +389,3 @@ en:
         table_rate_method_options:
           basket_total: 'Basket total including VAT'
           weight: 'Weight'
-

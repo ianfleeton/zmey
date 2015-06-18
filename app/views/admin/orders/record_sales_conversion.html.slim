@@ -1,0 +1,10 @@
+- record_sales_conversion(@order) if @order.should_record_sales_conversion?
+
+h1#ready-to-close Please wait&hellip;
+
+javascript:
+  $(function() {
+    setTimeout(function() {
+      $('#ready-to-close').html('The sales conversion for this order should now be recorded.');
+    }, 5000);
+  });

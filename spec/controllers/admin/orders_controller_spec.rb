@@ -284,5 +284,14 @@ describe Admin::OrdersController do
         post 'destroy', id: '1'
       end
     end
+
+    describe 'GET record_sales_conversion' do
+      let(:order) { FactoryGirl.create(:order) }
+
+      it 'assigns the order to @order' do
+        get :record_sales_conversion, id: order.id
+        expect(assigns(:order)).to eq order
+      end
+    end
   end
 end
