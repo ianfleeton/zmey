@@ -4,6 +4,7 @@ RSpec.describe 'orders/_google_ecommerce_tracking.html.erb', type: :view do
   let(:order) { FactoryGirl.create(:order) }
 
   before do
+    FactoryGirl.create(:order_line, order: order)
     allow(view).to receive(:website).and_return(FactoryGirl.build(:website))
   end
 

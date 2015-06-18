@@ -1,30 +1,41 @@
 <script>
 <% tax_total = website.vat_number.empty? ? '' : order.tax_total -%>
+ga('require', 'ecommerce');
 
-    _gaq.push(['_addTrans',
-      '<%= order.order_number %>',
-      '<%= website.name %>',
-      '<%= order.total %>',
-      '<%= tax_total %>',
-      '<%= order.shipping_amount %>',
-      '<%= order.delivery_town_city %>',
-      '<%= order.delivery_county %>',
-      '<%= order.delivery_country.name %>'
-    ]);
+ga('ecommerce:addTransaction', {
+  // Transaction ID. Required.
+  'id': '<%= order.order_number %>',
+  // Affiliation or store name.
+  'affiliation': '<%= website.name %>',
+  // Grand Total.
+  'revenue': '<%= order.total %>',
+  // Shipping.
+  'shipping': '<%= order.shipping_amount %>',
+  // Tax.
+  'tax': '<%= tax_total %>'
+});
+
 <%
 order.order_lines.each do |line|
-  category_or_variation = line.feature_descriptions.empty? ? '' : line.feature_descriptions
+  category_or_variation = line.feature_descriptions.present? ? line.feature_descriptions : ''
 -%>
 
-    _gaq.push(['_addItem',
-      '<%= order.order_number %>',
-      '<%= line.product_sku %>',
-      '<%= line.product_name %>',
-      '<%= category_or_variation %>',
-      '<%= line.product_price %>',
-      '<%= line.quantity %>'
-    ]);
+  ga('ecommerce:addItem', {
+    // Transaction ID. Required.
+    'id': '<%= order.order_number %>',
+    // Product name. Required.
+    'name': '<%= line.product_name.gsub("'", %q(\\\')) %>',
+    // SKU/code.
+    'sku': '<%= line.product_sku %>',
+    // Category or variation.
+    'category': '<%= category_or_variation %>',
+    // Unit price.
+    'price': '<%= line.product_price_inc_tax %>',
+    // Quantity.
+    'quantity': '<%= line.quantity %>'
+  });
+
 <% end -%>
 
-    _gaq.push(['_trackTrans']);
+ga('ecommerce:send');
 </script>
