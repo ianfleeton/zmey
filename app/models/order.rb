@@ -317,6 +317,18 @@ class Order < ActiveRecord::Base
     self.delivery_country = Country.find_by(name: name) || delivery_country
   end
 
+  # Returns <tt>true</tt> if a sales conversion should be recorded for this
+  # order.
+  def should_record_sales_conversion?
+    payment_received? && !sales_conversion_recorded_at
+  end
+
+  # Sets <tt>sales_conversion_recorded_at</tt> to now and saves the order.
+  def record_sales_conversion!
+    self.sales_conversion_recorded_at = Time.zone.now
+    save
+  end
+
   private
 
   def copy_address(address_type, address)

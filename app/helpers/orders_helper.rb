@@ -12,4 +12,9 @@ module OrdersHelper
   def sage_pay_form_url(test_mode)
     "https://#{test_mode ? 'test' : 'live'}.sagepay.com/gateway/service/vspform-register.vsp"
   end
+
+  def record_sales_conversion(order)
+    render(partial: 'google_ecommerce_tracking', locals: { order: order })
+    order.record_sales_conversion!
+  end
 end

@@ -10,11 +10,7 @@ class OrdersController < ApplicationController
   end
 
   def receipt
-    if can_show_receipt?(@order)
-      @google_ecommerce_tracking = true
-    else
-      redirect_to controller: 'basket', action: 'index'
-    end
+    redirect_to controller: 'basket', action: 'index' unless can_show_receipt?(@order)
   end
 
   def show

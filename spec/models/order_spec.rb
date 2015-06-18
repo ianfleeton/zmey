@@ -260,4 +260,46 @@ RSpec.describe Order, type: :model do
       expect(order.delivery_country).to eq country
     end
   end
+
+  describe '#should_record_sales_conversion?' do
+    let(:order) { Order.new(
+      sales_conversion_recorded_at: sales_conversion_recorded_at
+    ) }
+    let(:payment_received?) { true }
+    let(:sales_conversion_recorded_at) { nil }
+
+    subject { order.should_record_sales_conversion? }
+
+    before do
+      allow(order).to receive(:payment_received?).and_return(payment_received?)
+    end
+
+    context 'when conversion already recorded' do
+      let(:sales_conversion_recorded_at) { Date.today }
+      it { should eq false }
+    end
+
+    context 'when payment not received' do
+      let(:payment_received?) { false }
+      it { should eq false }
+    end
+
+    context 'when conversion not recorded and payment received' do
+      it { should eq true }
+    end
+  end
+
+  describe '#record_sales_conversion!' do
+    let(:order) { FactoryGirl.build(:order) }
+
+    it 'updates sales_conversion_recorded_at' do
+      order.record_sales_conversion!
+      expect(order.sales_conversion_recorded_at).to be
+    end
+
+    it 'saves the order' do
+      order.record_sales_conversion!
+      expect(order.persisted?).to eq true
+    end
+  end
 end

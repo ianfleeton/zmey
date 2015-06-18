@@ -1,6 +1,4 @@
-<% if @google_ecommerce_tracking -%>
-<%= render(partial: 'google_ecommerce_tracking') %>
-<% end -%>
+<% record_sales_conversion(@order) if @order.should_record_sales_conversion? -%>
 
 <% if @order.payment_received? -%>
 <h1>Receipt</h1>
