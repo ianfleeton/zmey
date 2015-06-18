@@ -18,6 +18,20 @@ RSpec.describe OrderLine, type: :model do
     end
   end
 
+  describe '#product_tax_amount' do
+    it 'returns the line tax amount / quantity' do
+      ol = OrderLine.new(product_price: 7, quantity: 3, tax_amount: 4.2)
+      expect(ol.product_tax_amount).to eq 1.4
+    end
+  end
+
+  describe '#product_price_inc_tax' do
+    it 'returns the product price including tax' do
+      ol = OrderLine.new(product_price: 7, quantity: 1, tax_amount: 1.4)
+      expect(ol.product_price_inc_tax).to eq 8.4
+    end
+  end
+
   describe '#tax_percentage' do
     it 'returns 0 when the line total is 0' do
       o = OrderLine.new(product_price: 0, quantity: 2)

@@ -25,6 +25,16 @@ class OrderLine < ActiveRecord::Base
     product_price * quantity
   end
 
+  # Returns the tax amount for a single product.
+  def product_tax_amount
+    tax_amount / quantity
+  end
+
+  # Returns the price of a single product with tax applied.
+  def product_price_inc_tax
+    product_price + product_tax_amount
+  end
+
   # Combined weight of the products in this order line.
   def weight
     product_weight * quantity
