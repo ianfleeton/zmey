@@ -37,6 +37,20 @@ describe 'checkout/_select_payment_method.html.erb' do
     end
   end
 
+  context 'when PayPal is active' do
+    let(:website) { FactoryGirl.create(:website, paypal_active: true) }
+    let(:order)   { FactoryGirl.create(:order) }
+
+    before do
+      allow(view).to receive(:website).and_return(website)
+      assign(:order, order)
+    end
+
+    it 'renders' do
+      render
+    end
+  end
+
   context 'when website accepts payment on account' do
     let(:website) { FactoryGirl.create(:website, accept_payment_on_account: true) }
     let(:order)   { FactoryGirl.create(:order) }

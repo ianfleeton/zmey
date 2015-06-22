@@ -194,8 +194,6 @@ Rails.application.routes.draw do
     collection do
       post 'cardsave_callback'
       post 'on_account'
-      get 'paypal_auto_return'
-      get 'paypal_confirmation'
       get 'sage_pay_failure'
       get 'sage_pay_success'
       post 'rbs_worldpay_callback'
@@ -203,6 +201,8 @@ Rails.application.routes.draw do
   end
 
   namespace :payments do
+    get 'paypal/auto_return' => 'paypal#auto_return', as: :paypal_auto_return
+    get 'paypal/confirmation' => 'paypal#confirmation', as: :paypal_confirmation
     get 'upg_atlas/callback' => 'upg_atlas#callback', as: :upg_atlas_callback
   end
 
