@@ -21,8 +21,13 @@
   You do not need to have a PayPal account to pay by PayPal.<br>
   You can pay using your debit or credit card with PayPal.
 </p>
+<% if website.paypal_test_mode? -%>
+<form name="_xclick" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+<% else -%>
 <form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-  <input type="hidden" name="return" value="<%= paypal_auto_return_payments_url %>">
+<% end -%>
+  <input type="hidden" name="return" value="<%= payments_paypal_auto_return_url %>">
+  <input type="hidden" name="notify_url" value="<%= payments_paypal_ipn_listener_url %>">
   <input type="hidden" name="cmd" value="_xclick">
   <input type="hidden" name="business" value="<%= website.paypal_email_address %>">
   <input type="hidden" name="currency_code" value="GBP">

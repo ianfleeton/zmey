@@ -359,6 +359,17 @@
               = form.radio_button :paypal_active, false
               | No
 
+          label Mode
+          .radio
+            label
+              = form.radio_button :paypal_test_mode, false
+              | Production mode
+
+          .radio
+            label
+              = form.radio_button :paypal_test_mode, true
+              | Test mode (sandbox)
+
           = form.label :paypal_email_address, 'PayPal email address'
           = form.email_field :paypal_email_address, class: 'form-control'
 

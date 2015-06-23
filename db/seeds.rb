@@ -10,6 +10,7 @@ Order.fast_delete_all
 CarouselSlide.destroy_all
 Page.destroy_all
 Product.destroy_all
+User.destroy_all
 Website.destroy_all
 
 website = Website.create!(
@@ -20,7 +21,7 @@ website = Website.create!(
   subdomain: 'local'
 )
 
-website.populate_countries!
+Country.populate!
 Page.bootstrap(website)
 
 home_page = Page.find_by(name: 'Home')
@@ -40,19 +41,17 @@ admin = User.create!(
   email: 'merchant@example.com',
   name: 'Alice Adams',
   password: 'secret',
-  website: website
 )
 
 bob = User.create!(
   email: 'bob@example.com',
   name: 'Bob Brown',
   password: 'letmein',
-  website: website
 )
 
 bob_home = Address.create!(
   address_line_1: '1 Somerset Road',
-  country: website.countries.first,
+  country: Country.first,
   email_address: 'bob@example.org',
   full_name: 'Bob Brown',
   postcode: 'L0N D0N',
