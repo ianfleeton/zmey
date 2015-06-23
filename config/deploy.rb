@@ -22,6 +22,11 @@ set :ssh_options, {
   forward_agent: true
 }
 
+# Passenger
+# Thanks to http://blog.manzhikov.com/new-passenger-restart-in-5-version
+set :rvm_map_bins, fetch(:rvm_map_bins, []).push('rvmsudo')
+set :passenger_restart_command, 'rvmsudo passenger-config restart-app'
+
 # Default value for :scm is :git
 # set :scm, :git
 
