@@ -4,10 +4,7 @@ class Payments::PaypalController < PaymentsController
     @payment = Payment.new
     @payment.service_provider = 'PayPal'
     @payment.installation_id = website.paypal_email_address
-    @payment.cart_id = response[:item_name]
-    @payment.description = 'Web purchase'
-    @payment.amount = response[:mc_gross]
-    @payment.currency = response[:mc_currency]
+    copy_paypal_details(payment: @payment, details: response)
     @payment.test_mode = false
     @payment.name = response[:address_name]
     @payment.address = "#{response[:address_street]}\n#{response[:address_city]}\n#{response[:address_state]}"
@@ -15,7 +12,6 @@ class Payments::PaypalController < PaymentsController
     @payment.country = response[:address_country_code]
     @payment.telephone = response[:contact_phone]
     @payment.fax = ''
-    @payment.email = response[:payer_email]
     @payment.transaction_id = response[:txn_id]
     @payment.transaction_status = ('SUCCESS' == response[:status])
     @payment.transaction_time = response[:payment_date]
@@ -37,6 +33,23 @@ class Payments::PaypalController < PaymentsController
   end
 
   def confirmation
+  end
+
+  # Listens for PayPal IPN messages and records payments for valid messages.
+  def ipn_listener
+    if ipn_valid?(params)
+      @payment = Payment.new(service_provider: 'PayPal (IPN)')
+      @payment.installation_id = params[:business]
+      copy_paypal_details(payment: @payment, details: params)
+      @payment.accepted = params[:payment_status] == 'Completed'
+      @payment.save
+
+      if @payment.accepted?
+        clean_up
+        @payment.save
+      end
+    end
+    render nothing: true
   end
 
   private
@@ -80,11 +93,39 @@ class Payments::PaypalController < PaymentsController
 
     def pdt_notification_sync_response_body(transaction_token, identity_token)
       require 'net/https'
-      uri = URI('https://www.paypal.com/cgi-bin/webscr')
+      uri = URI(paypal_endpoint)
       data = "cmd=_notify-synch&tx=#{transaction_token}&at=#{identity_token}"
       con = Net::HTTP.new(uri.host, uri.port)
       con.use_ssl = true
       r = con.post(uri.path, data)
       r.body
+    end
+
+    # Returns <tt>true</tt> if the provided IPN message is valid.
+    def ipn_valid?(message)
+      require 'net/https'
+      uri = URI(paypal_endpoint)
+      data = 'cmd=_notify-validate&' + message.map{|k,v| "#{k}=#{CGI.escape(v)}"}.join('&')
+      con = Net::HTTP.new(uri.host, uri.port)
+      con.use_ssl = true
+      r = con.post(uri.path, data)
+      r.body.include?('VERIFIED')
+    end
+
+    # Returns a production or sandbox PayPal https endpoint.
+    def paypal_endpoint
+      if website.paypal_test_mode?
+        'https://www.sandbox.paypal.com/cgi-bin/webscr'
+      else
+        'https://www.paypal.com/cgi-bin/webscr'
+      end
+    end
+
+    def copy_paypal_details(payment:, details:)
+      payment.amount = details[:mc_gross]
+      payment.cart_id = details[:item_name]
+      payment.currency = details[:mc_currency]
+      payment.description = 'Web purchase'
+      payment.email = details[:payer_email]
     end
 end

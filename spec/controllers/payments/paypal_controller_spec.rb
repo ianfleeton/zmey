@@ -48,6 +48,108 @@ RSpec.describe Payments::PaypalController, type: :controller do
     end
   end
 
+  describe 'POST ipn_listener' do
+    let(:params) {{
+      'mc_gross' => '1.00',
+      'protection_eligibility' => 'Eligible',
+      'address_status' => 'confirmed',
+      'payer_id' => 'VQH62EAKETNVN',
+      'tax' => '0.00',
+      'address_street' => '1 Main Terrace',
+      'payment_date' => '06:45:01 Jun 23, 2015 PDT',
+      'payment_status' => payment_status,
+      'charset' => 'windows-1252',
+      'address_zip' => 'W12 4LQ',
+      'first_name' => 'test',
+      'mc_fee' => '0.23',
+      'address_country_code' => 'GB',
+      'address_name' => 'test buyer',
+      'notify_version' => '3.8',
+      'custom' => '',
+      'payer_status' => 'verified',
+      'business' => 'merchant@example.com',
+      'address_country' => 'United Kingdom',
+      'address_city' => 'Wolverhampton',
+      'quantity' => '1',
+      'verify_sign' => 'AnzPAvrf087BDaBIrtu.ICczwZ-gAY4..NHL19pjDaSY-bxUkRlJgK9H',
+      'payer_email' => 'buyer@example.org',
+      'txn_id' => '0TH37164C80937821',
+      'payment_type' => 'instant',
+      'last_name' => 'buyer',
+      'address_state' => 'West Midlands',
+      'receiver_email' => 'merchant@example.com',
+      'payment_fee' => '',
+      'receiver_id' => 'ETGX6AQ7GRB3L',
+      'txn_type' => 'web_accept',
+      'item_name' => '20150623-8ST0',
+      'mc_currency' => 'GBP',
+      'item_number' => '',
+      'residence_country' => 'GB',
+      'test_ipn' => '1',
+      'handling_amount' => '0.00',
+      'transaction_subject' => '',
+      'payment_gross' => '',
+      'shipping' => '0.00',
+      'ipn_track_id' => '21f2b2c41857e',
+    }}
+    let(:ipn_valid?) { nil }
+    let(:payment_status) { nil }
+
+    before do
+      allow(controller).to receive(:ipn_valid?).and_return(ipn_valid?)
+    end
+
+    it 'checks validity of the IPN message' do
+      expect(controller).to receive(:ipn_valid?).with(hash_including(params))
+      post :ipn_listener, params
+    end
+
+    context 'when IPN valid' do
+      let(:ipn_valid?) { true }
+      it 'records a payment' do
+        post :ipn_listener, params
+        payment = Payment.last
+        expect(payment.amount).to eq '1.00'
+        expect(payment.cart_id).to eq '20150623-8ST0'
+        expect(payment.currency).to eq 'GBP'
+        expect(payment.description).to eq 'Web purchase'
+        expect(payment.email).to eq 'buyer@example.org'
+        expect(payment.installation_id).to eq 'merchant@example.com'
+        expect(payment.service_provider).to eq 'PayPal (IPN)'
+      end
+
+      context 'when payment_status is Completed' do
+        let(:payment_status) { 'Completed' }
+
+        it 'records the payment as accepted' do
+          post :ipn_listener, params
+          payment = Payment.last
+          expect(payment.accepted?).to eq true
+        end
+
+        it 'calls #clean_up' do
+          expect(controller).to receive(:clean_up)
+          post :ipn_listener, params
+        end
+      end
+
+      context 'when payment status is not Completed' do
+        let(:payment_status) { 'Pending' }
+
+        it 'records the payment as not accepted' do
+          post :ipn_listener, params
+          payment = Payment.last
+          expect(payment.accepted?).to eq false
+        end
+
+        it 'does not call #clean_up' do
+          expect(controller).not_to receive(:clean_up)
+          post :ipn_listener, params
+        end
+      end
+    end
+  end
+
   describe '#pdt_notification_sync' do
     let(:body) {
       "
