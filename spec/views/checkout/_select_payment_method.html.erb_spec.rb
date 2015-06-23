@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'checkout/_select_payment_method.html.erb' do
+RSpec.describe 'checkout/_select_payment_method.html.erb', type: :view do
   context 'when WorldPay active' do
     let(:website) { FactoryGirl.create(:website, worldpay_active: true, worldpay_installation_id: '1234', worldpay_payment_response_password: 'secret') }
     let(:order)   { FactoryGirl.create(:order) }
@@ -46,8 +46,9 @@ describe 'checkout/_select_payment_method.html.erb' do
       assign(:order, order)
     end
 
-    it 'renders' do
+    it 'has a hidden notify_url field set to the IPN listener' do
       render
+      expect(rendered).to have_selector "input[type=hidden][name=notify_url][value='#{payments_paypal_ipn_listener_url}']"
     end
   end
 

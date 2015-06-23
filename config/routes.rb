@@ -203,6 +203,7 @@ Rails.application.routes.draw do
   namespace :payments do
     get 'paypal/auto_return' => 'paypal#auto_return', as: :paypal_auto_return
     get 'paypal/confirmation' => 'paypal#confirmation', as: :paypal_confirmation
+    post 'paypal/ipn_listener' => 'paypal#ipn_listener', as: :paypal_ipn_listener
     get 'upg_atlas/callback' => 'upg_atlas#callback', as: :upg_atlas_callback
   end
 
