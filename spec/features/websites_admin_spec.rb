@@ -43,6 +43,19 @@ feature 'Websites admin' do
     expect(Website.find_by(id: website_to_delete.id)).to be_nil
   end
 
+  scenario 'Edit PayPal settings' do
+    visit edit_admin_website_path(website)
+
+    test_mode = [true, false].sample
+
+    choose "website_paypal_test_mode_#{test_mode}"
+    click_button 'Save'
+
+    expect(Website.find_by(
+      paypal_test_mode: test_mode,
+    )).to be
+  end
+
   scenario 'Edit Sage Pay settings' do
     visit edit_admin_website_path(website)
 
