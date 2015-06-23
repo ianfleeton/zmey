@@ -28,6 +28,22 @@ describe Page do
     expect(page.extra).to be_nil
   end
 
+  it 'prevents parent referencing self' do
+    page = FactoryGirl.create(:page)
+    page.parent = page
+    page.save
+    expect(page.errors[:parent_id]).to include 'cannot be self'
+  end
+
+  it 'prevents parent from referencing a child' do
+    page = FactoryGirl.create(:page)
+    child = FactoryGirl.create(:page)
+    page.children << child
+    page.parent = child
+    page.save
+    expect(page.errors[:parent_id]).to include 'cannot be a child'
+  end
+
   describe '#url' do
     it 'returns a full URL using the first website setting URL' do
       website = FactoryGirl.create(:website)

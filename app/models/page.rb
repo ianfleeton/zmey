@@ -2,6 +2,8 @@ class Page < ActiveRecord::Base
   include ExtraAttributes
 
   acts_as_tree order: :position, dependent: :nullify
+  validate :parent_cannot_be_self
+  validate :parent_cannot_be_a_child
   acts_as_list scope: :parent_id
 
   has_many :product_placements, -> { order('position') }, dependent: :delete_all
@@ -95,5 +97,19 @@ class Page < ActiveRecord::Base
 
   def self.importable_attributes
     attribute_names + extra_attribute_names
+  end
+
+  # Custom validations.
+
+  def parent_cannot_be_self
+    if parent == self
+      errors.add(:parent_id, 'cannot be self')
+    end
+  end
+
+  def parent_cannot_be_a_child
+    if descendants.include?(parent)
+      errors.add(:parent_id, 'cannot be a child')
+    end
   end
 end
