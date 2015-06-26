@@ -1,16 +1,24 @@
 module ApplicationHelper
+  # Renders HTML for the flash notice.
   def flash_notice
-    notice = ''
+    notice = flash_notice_content
+    if notice.present?
+      content_tag('div', h(notice), {id: "flash_notice"})
+    end
+  end
+
+  # Returns a string containing the content of the flash notice. If there is
+  # no notice then an empty string is returned.
+  def flash_notice_content
+    content = ''
     if flash[:now]
-      notice = flash[:now]
+      content = flash[:now]
       flash[:now] = nil
     end
     if flash[:notice]
-      notice += ' ' + flash[:notice]
+      content += ' ' + flash[:notice]
     end
-    unless notice.empty?
-      content_tag('div', h(notice), {id: "flash_notice"})
-    end
+    content
   end
 
   def body_id
@@ -32,15 +40,15 @@ module ApplicationHelper
   def clear
     content_tag('p', '&nbsp;'.html_safe, {class: 'clear'})
   end
-  
+
   def a_tick
     '<span class="tick">✔</span>'.html_safe
   end
-  
+
   def a_cross
     '<span class="cross">✘</span>'.html_safe
   end
-  
+
   def tick_cross yes, show_cross=true
     if yes
       a_tick
@@ -48,7 +56,7 @@ module ApplicationHelper
       a_cross
     end
   end
-  
+
   def tick yes
     tick_cross yes, false
   end
