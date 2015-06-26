@@ -93,6 +93,11 @@ describe BasketController do
       post :save_and_email, email_address: email_address
     end
 
+    it 'sets a flash notice' do
+      post :save_and_email, email_address: email_address
+      expect(flash[:notice]).to eq I18n.t('controllers.basket.save_and_email.email_sent', email_address: email_address)
+    end
+
     it 'redirects to the basket' do
       post :save_and_email, email_address: email_address
       expect(response).to redirect_to(basket_path)
