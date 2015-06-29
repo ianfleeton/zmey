@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'checkout/_upg_atlas_hidden_fields.html.slim' do
+RSpec.describe 'checkout/_upg_atlas_hidden_fields.html.slim', type: :view do
   let(:website) { FactoryGirl.build(
     :website,
     upg_atlas_check_code: 'CHECKCODE',
@@ -20,10 +20,12 @@ RSpec.describe 'checkout/_upg_atlas_hidden_fields.html.slim' do
     billing_phone_number: '01234 567890'
   ) }
   let(:callbackdata) { 'amount|#amount|ordernumber|ORDER-1234|cardholdersname|#cardholdersname|cardholdersemail|#cardholdersemail' }
+  let(:secuitems) { '[pd1|sku1|Product 1: size medium|10.00|2|20.00]' }
 
   before do
     allow(view).to receive(:website).and_return(website)
     allow(view).to receive(:upg_atlas_callbackdata).and_return(callbackdata)
+    allow(view).to receive(:upg_atlas_secuitems).and_return(secuitems)
     assign(:order, order)
     render
   end
