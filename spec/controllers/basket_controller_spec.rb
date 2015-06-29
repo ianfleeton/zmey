@@ -42,9 +42,18 @@ describe BasketController do
       end
     end
 
-    it 'redirects to the basket' do
-      post :add_update_multiple
-      expect(response).to redirect_to(basket_path)
+    context 'when xhr' do
+      it 'responds 200 OK' do
+        xhr :post, :add_update_multiple
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when not xhr' do
+      it 'redirects to the basket' do
+        post :add_update_multiple
+        expect(response).to redirect_to(basket_path)
+      end
     end
   end
 

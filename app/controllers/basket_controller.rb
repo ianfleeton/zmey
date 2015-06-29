@@ -61,7 +61,11 @@ class BasketController < ApplicationController
     if params[:qty].kind_of?(Hash)
       @basket.set_product_quantities(params[:qty])
     end
-    redirect_to basket_path
+    if request.xhr?
+      head :ok
+    else
+      redirect_to basket_path
+    end
   end
 
   def update
