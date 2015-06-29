@@ -10,6 +10,9 @@ class Website < ActiveRecord::Base
   validates_inclusion_of :scheme, in: %w{http https}
   validates :subdomain, presence: true, uniqueness: true, format: /\A[a-z0-9]+[-a-z0-9]*\Z/i
 
+  # UPG Atlas validations
+  validates :upg_atlas_secuphrase, length: { in: 6..9, allow_blank: true }
+
   # WorldPay validations
   validates_inclusion_of :worldpay_active, in: [true, false]
   validates_inclusion_of :worldpay_test_mode, in: [true, false]
