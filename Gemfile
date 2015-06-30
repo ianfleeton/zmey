@@ -36,6 +36,9 @@ gem 'bootstrap-will_paginate'
 # Look up addresses by postcode
 gem 'postcode_software', '~> 0.0.1'
 
+# Simpler HTTP requests
+gem 'curb'
+
 # Ajax.org Cloud9 Editor (Ace) for the Rails 3.1+ asset pipeline
 gem 'ace-rails-ap'
 
