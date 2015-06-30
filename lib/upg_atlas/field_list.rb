@@ -1,11 +1,12 @@
 module UpgAtlas
   class FieldList
-    def initialize(order:, checkcode:, shreference:, callbackurl:, filename:)
+    def initialize(order:, checkcode:, shreference:, callbackurl:, filename:, secuphrase:)
       @order = order
       @checkcode = checkcode
       @shreference = shreference
       @callbackurl = callbackurl
       @filename = filename
+      @secuphrase = secuphrase
     end
 
     # Returns an array of hidden field name/value pairs for use in the UPG
@@ -14,6 +15,7 @@ module UpgAtlas
       [
         ['checkcode', @checkcode],
         ['secuitems', secuitems],
+        ['secuphrase', @secuphrase],
         ['filename', "#{@shreference}/#{@filename}"],
         ['shippingcharge', 0],
         ['shreference', @shreference],

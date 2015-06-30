@@ -6,7 +6,8 @@ module UpgAtlas
     let(:shreference) { 'SHREF' }
     let(:callbackurl) { 'https://callback.url' }
     let(:filename) { 'payment.html' }
-    let(:field_list) { FieldList.new(order: order, checkcode: checkcode, shreference: shreference, callbackurl: callbackurl, filename: filename) }
+    let(:secuphrase) { 'secret' }
+    let(:field_list) { FieldList.new(order: order, checkcode: checkcode, shreference: shreference, callbackurl: callbackurl, filename: filename, secuphrase: secuphrase) }
 
     describe '#fields' do
       subject { field_list.fields }
@@ -46,6 +47,7 @@ module UpgAtlas
       it { should include ['cardholdercountry', order.billing_country.name] }
       it { should include ['cardholdertelephonenumber', order.billing_phone_number] }
       it { should include ['secuitems', secuitems] }
+      it { should include ['secuphrase', secuphrase] }
     end
 
     describe '#callbackdata' do
