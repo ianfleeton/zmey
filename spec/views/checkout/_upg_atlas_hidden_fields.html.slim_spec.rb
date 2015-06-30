@@ -7,44 +7,15 @@ RSpec.describe 'checkout/_upg_atlas_hidden_fields.html.slim', type: :view do
     upg_atlas_filename: 'payment.html',
     upg_atlas_sh_reference: 'SH12345'
   ) }
-  let(:order) { FactoryGirl.build(
-    :order,
-    billing_full_name: 'A Shopper',
-    email_address: 'shopper@example.org',
-    billing_address_line_1: '123 Street',
-    billing_address_line_2: 'Locality',
-    billing_town_city: 'City',
-    billing_county: 'County',
-    billing_postcode: 'POST CODE',
-    billing_country: FactoryGirl.create(:country, name: 'United Kingdom'),
-    billing_phone_number: '01234 567890'
-  ) }
-  let(:callbackdata) { 'amount|#amount|ordernumber|ORDER-1234|cardholdersname|#cardholdersname|cardholdersemail|#cardholdersemail' }
-  let(:secuitems) { '[pd1|sku1|Product 1: size medium|10.00|2|20.00]' }
+  let(:order) { FactoryGirl.create(:order) }
 
   before do
     allow(view).to receive(:website).and_return(website)
-    allow(view).to receive(:upg_atlas_callbackdata).and_return(callbackdata)
-    allow(view).to receive(:upg_atlas_secuitems).and_return(secuitems)
     assign(:order, order)
     render
   end
 
-  context 'rendered' do
-    subject { rendered }
-    it { should have_selector "input[type='hidden'][name='checkcode'][value='#{website.upg_atlas_check_code}']" }
-    it { should have_selector "input[type='hidden'][name='filename'][value='SH12345/payment.html']" }
-    it { should have_selector "input[type='hidden'][name='shreference'][value='SH12345']" }
-    it { should have_selector "input[type='hidden'][name='callbackurl'][value='#{payments_upg_atlas_callback_url(protocol: :https)}']" }
-    it { should have_selector "input[type='hidden'][name='callbackdata'][value='#{callbackdata}']" }
-    it { should have_selector "input[type='hidden'][name='cardholdersname'][value='#{order.billing_full_name}']" }
-    it { should have_selector "input[type='hidden'][name='cardholdersemail'][value='#{order.email_address}']" }
-    it { should have_selector "input[type='hidden'][name='cardholderaddr1'][value='#{order.billing_address_line_1}']" }
-    it { should have_selector "input[type='hidden'][name='cardholderaddr2'][value='#{order.billing_address_line_2}']" }
-    it { should have_selector "input[type='hidden'][name='cardholdercity'][value='#{order.billing_town_city}']" }
-    it { should have_selector "input[type='hidden'][name='cardholderstate'][value='#{order.billing_county}']" }
-    it { should have_selector "input[type='hidden'][name='cardholderpostcode'][value='#{order.billing_postcode}']" }
-    it { should have_selector "input[type='hidden'][name='cardholdercountry'][value='#{order.billing_country.name}']" }
-    it { should have_selector "input[type='hidden'][name='cardholdertelephonenumber'][value='#{order.billing_phone_number}']" }
+  it 'renders' do
+    render
   end
 end
