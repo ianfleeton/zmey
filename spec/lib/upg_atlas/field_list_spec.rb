@@ -7,6 +7,7 @@ module UpgAtlas
     let(:callbackurl) { 'https://callback.url' }
     let(:filename) { 'payment.html' }
     let(:secuphrase) { 'secret' }
+    let(:secustring) { '9c84f49209fe9cdcb3efbac2dd2c23c8' }
     let(:field_list) { FieldList.new(order: order, checkcode: checkcode, shreference: shreference, callbackurl: callbackurl, filename: filename, secuphrase: secuphrase) }
 
     describe '#fields' do
@@ -30,6 +31,7 @@ module UpgAtlas
       before do
         allow(field_list).to receive(:callbackdata).and_return(callbackdata)
         allow(field_list).to receive(:secuitems).and_return(secuitems)
+        allow(field_list).to receive(:secustring).and_return(secustring)
       end
 
       it { should include ['checkcode', checkcode] }
@@ -48,6 +50,7 @@ module UpgAtlas
       it { should include ['cardholdertelephonenumber', order.billing_phone_number] }
       it { should include ['secuitems', secuitems] }
       it { should include ['secuphrase', secuphrase] }
+      it { should include ['secuString', secustring] }
     end
 
     describe '#callbackdata' do
