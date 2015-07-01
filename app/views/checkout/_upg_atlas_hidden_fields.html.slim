@@ -1,1 +1,3 @@
-= upg_atlas_hidden_fields(order: @order, callbackurl: payments_upg_atlas_callback_url(protocol: :https), checkcode: website.upg_atlas_check_code, shreference: website.upg_atlas_sh_reference, filename: website.upg_atlas_filename, secuphrase: website.upg_atlas_secuphrase)
+- fields = upg_atlas_hidden_fields(order: @order, callbackurl: payments_upg_atlas_callback_url(protocol: :https), checkcode: website.upg_atlas_check_code, shreference: website.upg_atlas_sh_reference, filename: website.upg_atlas_filename, secuphrase: website.upg_atlas_secuphrase)
+- fields.each do |field|
+  input type="hidden" name="#{field[0]}" value="#{field[1]}"
