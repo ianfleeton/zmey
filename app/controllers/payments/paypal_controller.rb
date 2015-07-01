@@ -1,4 +1,6 @@
 class Payments::PaypalController < PaymentsController
+  skip_before_action :verify_authenticity_token, :protect_staging_website, only: [:auto_return, :ipn_listener]
+
   def auto_return
     response = pdt_notification_sync(params[:tx], website.paypal_identity_token)
     @payment = Payment.new

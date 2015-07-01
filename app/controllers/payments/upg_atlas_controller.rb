@@ -1,5 +1,5 @@
 class Payments::UpgAtlasController < PaymentsController
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token, :protect_staging_website
 
   def callback
     @payment = Payment.new(
