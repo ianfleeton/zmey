@@ -5,6 +5,7 @@ RSpec.describe 'checkout/_upg_atlas.html.slim' do
   let(:order) { FactoryGirl.build(:order) }
 
   before do
+    allow_any_instance_of(UpgAtlas::FieldList).to receive(:secustring).and_return('encrypted')
     allow(view).to receive(:website).and_return(website)
     assign(:order, order)
     render
