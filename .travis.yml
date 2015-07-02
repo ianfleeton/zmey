@@ -11,7 +11,7 @@ install:
   - sudo apt-get install xfonts-75dpi
   - wget 'http://downloads.sourceforge.net/wkhtmltopdf/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb'
   - sudo dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
-  - bundle install --jobs=3 --retry=3 --deployment --without production
+  - bundle install --jobs=1 --retry=3 --deployment --without production
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
