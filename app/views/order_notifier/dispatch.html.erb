@@ -4,6 +4,6 @@
 
 <p><strong>Your order has been dispatched.</strong></p>
 
-<% if @order.shipping_tracking_number.present? -%>
-<p>The tracking number for this shipment is <b><%= @order.shipping_tracking_number %></b></p>
+<% if @shipment.tracking_number.present? -%>
+<p>The tracking number for this shipment is <b><%= @shipment.tracking_number %></b></p>
 <% end -%>
