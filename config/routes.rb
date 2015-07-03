@@ -137,6 +137,8 @@ Rails.application.routes.draw do
       resources :products, only: [:create, :index, :show]
       delete 'products', to: 'products#delete_all'
 
+      resources :shipments, only: [:create, :show]
+
       resources :users, only: [:show, :index, :update]
     end
   end
