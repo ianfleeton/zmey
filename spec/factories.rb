@@ -173,6 +173,10 @@ FactoryGirl.define do
     association :product
   end
 
+  factory :shipment do
+    association :order
+  end
+
   factory :shipping_class do
     sequence(:name) { |n| "Shipping Class #{1}" }
     association :shipping_zone

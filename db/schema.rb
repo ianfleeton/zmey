@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629145814) do
+ActiveRecord::Schema.define(version: 20150703095806) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
     t.integer  "additional_product_id", limit: 4,                 null: false
-    t.boolean  "selected_by_default",   limit: 1, default: false, null: false
+    t.boolean  "selected_by_default",             default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "quantity",              limit: 4, default: 1,     null: false
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "feature_descriptions", limit: 65535
-    t.boolean  "immutable_quantity",   limit: 1,                              default: false, null: false
+    t.boolean  "immutable_quantity",                                          default: false, null: false
   end
 
   create_table "baskets", force: :cascade do |t|
@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.string   "locale",     limit: 255
     t.string   "format",     limit: 255
     t.string   "handler",    limit: 255
-    t.boolean  "partial",    limit: 1
+    t.boolean  "partial"
     t.text     "template",   limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "reward_amount",                        precision: 10, scale: 3, default: 0.0,  null: false
-    t.boolean  "exclude_reduced_products", limit: 1,                            default: true, null: false
+    t.boolean  "exclude_reduced_products",                                      default: true, null: false
     t.decimal  "threshold",                            precision: 10, scale: 3, default: 0.0,  null: false
     t.datetime "valid_from"
     t.datetime "valid_to"
@@ -187,7 +187,7 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.integer  "feature_id",     limit: 4,     default: 0,     null: false
     t.integer  "choice_id",      limit: 4
     t.text     "customer_text",  limit: 65535
-    t.boolean  "checked",        limit: 1,     default: false, null: false
+    t.boolean  "checked",                      default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -200,7 +200,7 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "ui_type",      limit: 4,   default: 0,    null: false
-    t.boolean  "required",     limit: 1,   default: true, null: false
+    t.boolean  "required",                 default: true, null: false
     t.integer  "component_id", limit: 4
   end
 
@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 20150629145814) do
   create_table "forums", force: :cascade do |t|
     t.string  "name",       limit: 255, default: "",    null: false
     t.integer "website_id", limit: 4,   default: 0,     null: false
-    t.boolean "locked",     limit: 1,   default: false, null: false
+    t.boolean "locked",                 default: false, null: false
   end
 
   add_index "forums", ["website_id"], name: "index_forums_on_website_id", using: :btree
@@ -339,11 +339,12 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.integer  "parent_id",          limit: 4
     t.integer  "position",           limit: 4,          default: 0
     t.integer  "image_id",           limit: 4
-    t.boolean  "no_follow",          limit: 1,          default: false, null: false
-    t.boolean  "no_index",           limit: 1,          default: false, null: false
+    t.boolean  "no_follow",                             default: false, null: false
+    t.boolean  "no_index",                              default: false, null: false
     t.text     "extra",              limit: 4294967295
     t.integer  "thumbnail_image_id", limit: 4
-    t.boolean  "visible",            limit: 1,          default: true,  null: false
+    t.boolean  "visible",                               default: true,  null: false
+    t.integer  "size_image_id",      limit: 4
   end
 
   add_index "pages", ["parent_id"], name: "index_pages_on_parent_id", using: :btree
@@ -358,7 +359,7 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.string   "description",        limit: 255
     t.string   "amount",             limit: 255
     t.string   "currency",           limit: 255
-    t.boolean  "test_mode",          limit: 1
+    t.boolean  "test_mode"
     t.string   "name",               limit: 255
     t.string   "address",            limit: 255
     t.string   "postcode",           limit: 255
@@ -370,7 +371,7 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.string   "transaction_status", limit: 255
     t.string   "transaction_time",   limit: 255
     t.text     "raw_auth_message",   limit: 65535
-    t.boolean  "accepted",           limit: 1
+    t.boolean  "accepted"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -378,7 +379,7 @@ ActiveRecord::Schema.define(version: 20150629145814) do
   create_table "permutations", force: :cascade do |t|
     t.integer  "component_id",    limit: 4,                                          null: false
     t.string   "permutation",     limit: 255,                                        null: false
-    t.boolean  "valid_selection", limit: 1,                                          null: false
+    t.boolean  "valid_selection",                                                    null: false
     t.decimal  "price",                       precision: 10, scale: 3, default: 0.0, null: false
     t.decimal  "weight",                      precision: 10, scale: 3, default: 0.0, null: false
     t.datetime "created_at"
@@ -407,9 +408,9 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.string   "rfc2822_week_commencing_day",    limit: 255
     t.integer  "number_of_initial_days_to_skip", limit: 4,   default: 1,                         null: false
     t.string   "skip_after_time_of_day",         limit: 255
-    t.boolean  "skip_bank_holidays",             limit: 1,   default: true,                      null: false
-    t.boolean  "skip_saturdays",                 limit: 1,   default: true,                      null: false
-    t.boolean  "skip_sundays",                   limit: 1,   default: true,                      null: false
+    t.boolean  "skip_bank_holidays",                         default: true,                      null: false
+    t.boolean  "skip_saturdays",                             default: true,                      null: false
+    t.boolean  "skip_sundays",                               default: true,                      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -457,10 +458,10 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.decimal  "price",                                        precision: 10, scale: 3, default: 0.0,        null: false
     t.integer  "image_id",                  limit: 4
     t.text     "description",               limit: 65535
-    t.boolean  "in_stock",                  limit: 1,                                   default: true,       null: false
+    t.boolean  "in_stock",                                                              default: true,       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "apply_shipping",            limit: 1,                                   default: true,       null: false
+    t.boolean  "apply_shipping",                                                        default: true,       null: false
     t.text     "full_detail",               limit: 65535
     t.integer  "tax_type",                  limit: 4,                                   default: 1,          null: false
     t.decimal  "shipping_supplement",                          precision: 10, scale: 3, default: 0.0,        null: false
@@ -475,17 +476,17 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.string   "availability",              limit: 255,                                 default: "in stock", null: false
     t.string   "gtin",                      limit: 255,                                 default: "",         null: false
     t.string   "mpn",                       limit: 255,                                 default: "",         null: false
-    t.boolean  "submit_to_google",          limit: 1,                                   default: true,       null: false
+    t.boolean  "submit_to_google",                                                      default: true,       null: false
     t.decimal  "rrp",                                          precision: 10, scale: 3
-    t.boolean  "active",                    limit: 1,                                   default: true,       null: false
+    t.boolean  "active",                                                                default: true,       null: false
     t.string   "gender",                    limit: 255,                                 default: "",         null: false
     t.string   "age_group",                 limit: 255,                                 default: "",         null: false
     t.text     "google_description",        limit: 65535
-    t.boolean  "allow_fractional_quantity", limit: 1,                                   default: false,      null: false
+    t.boolean  "allow_fractional_quantity",                                             default: false,      null: false
     t.text     "extra",                     limit: 4294967295
     t.integer  "purchase_nominal_code_id",  limit: 4
     t.integer  "sales_nominal_code_id",     limit: 4
-    t.boolean  "oversize",                  limit: 1,                                   default: false,      null: false
+    t.boolean  "oversize",                                                              default: false,      null: false
     t.string   "pricing_method",            limit: 255,                                 default: "basic",    null: false
   end
 
@@ -512,15 +513,31 @@ ActiveRecord::Schema.define(version: 20150629145814) do
 
   add_index "related_product_scores", ["product_id"], name: "index_related_product_scores_on_product_id", using: :btree
 
+  create_table "shipments", force: :cascade do |t|
+    t.integer  "order_id",          limit: 4,                                              null: false
+    t.string   "courier_name",      limit: 255
+    t.string   "tracking_number",   limit: 255
+    t.string   "tracking_url",      limit: 255
+    t.string   "picked_by",         limit: 255
+    t.integer  "number_of_parcels", limit: 4,                              default: 1,     null: false
+    t.decimal  "total_weight",                    precision: 10, scale: 3, default: 0.0,   null: false
+    t.datetime "shipped_at"
+    t.boolean  "partial",                                                  default: false, null: false
+    t.datetime "email_sent_at"
+    t.text     "comment",           limit: 65535
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
+  end
+
   create_table "shipping_classes", force: :cascade do |t|
     t.integer  "shipping_zone_id",             limit: 4,   default: 0,              null: false
     t.string   "name",                         limit: 255, default: "",             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "table_rate_method",            limit: 255, default: "basket_total", null: false
-    t.boolean  "charge_tax",                   limit: 1,   default: true,           null: false
-    t.boolean  "invalid_over_highest_trigger", limit: 1,   default: false,          null: false
-    t.boolean  "allow_oversize",               limit: 1,   default: true,           null: false
+    t.boolean  "charge_tax",                               default: true,           null: false
+    t.boolean  "invalid_over_highest_trigger",             default: false,          null: false
+    t.boolean  "allow_oversize",                           default: true,           null: false
   end
 
   add_index "shipping_classes", ["shipping_zone_id"], name: "index_shipping_classes_on_shipping_zone_id", using: :btree
@@ -539,6 +556,19 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.string   "name",       limit: 255, default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "sidebar_items", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "image_id",   limit: 4
+    t.text     "html",       limit: 65535
+    t.string   "url",        limit: 255
+    t.integer  "page_id",    limit: 4
+    t.string   "location",   limit: 255,   default: "Right", null: false
+    t.integer  "position",   limit: 4,     default: 1,       null: false
+    t.boolean  "no_follow",                default: false,   null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
   create_table "topics", force: :cascade do |t|
@@ -562,7 +592,7 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.string   "encrypted_password",    limit: 255
     t.string   "salt",                  limit: 255
     t.string   "forgot_password_token", limit: 255, default: "",    null: false
-    t.boolean  "admin",                 limit: 1,   default: false, null: false
+    t.boolean  "admin",                             default: false, null: false
     t.integer  "manages_website_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -588,34 +618,34 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.string   "name",                               limit: 255,                            default: "",     null: false
     t.string   "email",                              limit: 255,                            default: "",     null: false
     t.text     "css_url",                            limit: 65535
-    t.boolean  "use_default_css",                    limit: 1,                              default: false,  null: false
-    t.boolean  "worldpay_active",                    limit: 1,                              default: false,  null: false
+    t.boolean  "use_default_css",                                                           default: false,  null: false
+    t.boolean  "worldpay_active",                                                           default: false,  null: false
     t.string   "worldpay_installation_id",           limit: 255,                            default: "",     null: false
     t.string   "worldpay_payment_response_password", limit: 255,                            default: "",     null: false
-    t.boolean  "worldpay_test_mode",                 limit: 1,                              default: false,  null: false
-    t.boolean  "can_users_create_accounts",          limit: 1,                              default: true,   null: false
-    t.boolean  "skip_payment",                       limit: 1,                              default: false,  null: false
+    t.boolean  "worldpay_test_mode",                                                        default: false,  null: false
+    t.boolean  "can_users_create_accounts",                                                 default: true,   null: false
+    t.boolean  "skip_payment",                                                              default: false,  null: false
     t.integer  "blog_id",                            limit: 4
     t.decimal  "shipping_amount",                                  precision: 10, scale: 3, default: 0.0,    null: false
-    t.boolean  "private",                            limit: 1,                              default: false,  null: false
-    t.boolean  "accept_payment_on_account",          limit: 1,                              default: false,  null: false
+    t.boolean  "private",                                                                   default: false,  null: false
+    t.boolean  "accept_payment_on_account",                                                 default: false,  null: false
     t.string   "vat_number",                         limit: 255,                            default: "",     null: false
-    t.boolean  "show_vat_inclusive_prices",          limit: 1,                              default: false,  null: false
+    t.boolean  "show_vat_inclusive_prices",                                                 default: false,  null: false
     t.text     "terms_and_conditions",               limit: 65535
     t.string   "default_locale",                     limit: 255,                            default: "en",   null: false
     t.integer  "page_image_size",                    limit: 4,                              default: 400
     t.integer  "page_thumbnail_size",                limit: 4,                              default: 200
     t.integer  "product_image_size",                 limit: 4,                              default: 400
     t.integer  "product_thumbnail_size",             limit: 4,                              default: 200
-    t.boolean  "render_blog_before_content",         limit: 1,                              default: true,   null: false
+    t.boolean  "render_blog_before_content",                                                default: true,   null: false
     t.string   "google_ftp_username",                limit: 255,                            default: "",     null: false
     t.string   "google_ftp_password",                limit: 255,                            default: "",     null: false
     t.text     "invoice_details",                    limit: 65535
     t.string   "google_domain_name",                 limit: 255,                            default: "",     null: false
-    t.boolean  "paypal_active",                      limit: 1,                              default: false,  null: false
+    t.boolean  "paypal_active",                                                             default: false,  null: false
     t.string   "paypal_email_address",               limit: 255,                            default: "",     null: false
     t.string   "paypal_identity_token",              limit: 255,                            default: "",     null: false
-    t.boolean  "cardsave_active",                    limit: 1,                              default: false,  null: false
+    t.boolean  "cardsave_active",                                                           default: false,  null: false
     t.string   "cardsave_merchant_id",               limit: 255,                            default: "",     null: false
     t.string   "cardsave_password",                  limit: 255,                            default: "",     null: false
     t.string   "cardsave_pre_shared_key",            limit: 255,                            default: "",     null: false
@@ -629,28 +659,28 @@ ActiveRecord::Schema.define(version: 20150629145814) do
     t.string   "fax_number",                         limit: 255,                            default: "",     null: false
     t.string   "twitter_username",                   limit: 255,                            default: "",     null: false
     t.string   "skype_name",                         limit: 255,                            default: "",     null: false
-    t.boolean  "sage_pay_active",                    limit: 1,                              default: false,  null: false
+    t.boolean  "sage_pay_active",                                                           default: false,  null: false
     t.string   "sage_pay_vendor",                    limit: 255,                            default: "",     null: false
     t.string   "sage_pay_pre_shared_key",            limit: 255,                            default: "",     null: false
-    t.boolean  "sage_pay_test_mode",                 limit: 1,                              default: false,  null: false
+    t.boolean  "sage_pay_test_mode",                                                        default: false,  null: false
     t.integer  "custom_view_cache_count",            limit: 4,                              default: 0,      null: false
     t.string   "custom_view_resolver",               limit: 255
     t.string   "scheme",                             limit: 255,                            default: "http", null: false
     t.integer  "port",                               limit: 4,                              default: 80,     null: false
-    t.boolean  "upg_atlas_active",                   limit: 1,                              default: false,  null: false
+    t.boolean  "upg_atlas_active",                                                          default: false,  null: false
     t.string   "upg_atlas_sh_reference",             limit: 255,                            default: "",     null: false
     t.string   "upg_atlas_check_code",               limit: 255,                            default: "",     null: false
     t.string   "upg_atlas_filename",                 limit: 255,                            default: "",     null: false
-    t.boolean  "smtp_active",                        limit: 1,                              default: false,  null: false
+    t.boolean  "smtp_active",                                                               default: false,  null: false
     t.string   "smtp_host",                          limit: 255,                            default: "",     null: false
     t.string   "smtp_username",                      limit: 255,                            default: "",     null: false
     t.string   "smtp_password",                      limit: 255,                            default: "",     null: false
     t.integer  "smtp_port",                          limit: 4,                              default: 25,     null: false
     t.string   "mandrill_subaccount",                limit: 255,                            default: "",     null: false
     t.string   "theme",                              limit: 255
-    t.boolean  "send_pending_payment_emails",        limit: 1,                              default: true,   null: false
+    t.boolean  "send_pending_payment_emails",                                               default: true,   null: false
     t.string   "staging_password",                   limit: 255
-    t.boolean  "paypal_test_mode",                   limit: 1,                              default: false,  null: false
+    t.boolean  "paypal_test_mode",                                                          default: false,  null: false
     t.string   "upg_atlas_secuphrase",               limit: 255
   end
 
