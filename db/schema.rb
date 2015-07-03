@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150703095806) do
+ActiveRecord::Schema.define(version: 20150703115239) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -528,6 +528,10 @@ ActiveRecord::Schema.define(version: 20150703095806) do
     t.datetime "created_at",                                                               null: false
     t.datetime "updated_at",                                                               null: false
   end
+
+  add_index "shipments", ["email_sent_at"], name: "index_shipments_on_email_sent_at", using: :btree
+  add_index "shipments", ["order_id"], name: "index_shipments_on_order_id", using: :btree
+  add_index "shipments", ["shipped_at"], name: "index_shipments_on_shipped_at", using: :btree
 
   create_table "shipping_classes", force: :cascade do |t|
     t.integer  "shipping_zone_id",             limit: 4,   default: 0,              null: false
