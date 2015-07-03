@@ -6,24 +6,25 @@ class OrderNotifier < ActionMailer::Base
   helper :addresses # address formatting
 
   def notification website, order
-    send_to_customer_and_admin(website, order, 'order notification')
+    send_to_customer_and_admin(website: website, order: order, what: 'order notification')
   end
 
-  def dispatch(website, order)
-    send_to_customer_and_admin(website, order, 'order dispatched')
+  def dispatch(website, shipment)
+    send_to_customer_and_admin(website: website, order: shipment.order, shipment: shipment, what: 'order dispatched')
   end
 
   def invoice(website, order)
     invoice = PDF::Invoice.new(order)
     invoice.generate
     attachments[invoice_filename(order)] = File.read(invoice.filename)
-    send_to_customer_and_admin(website, order, 'your invoice')
+    send_to_customer_and_admin(website: website, order: order, what: 'your invoice')
   end
 
-  def send_to_customer_and_admin(website, order, what)
+  def send_to_customer_and_admin(website:, order:, shipment: nil, what:)
     recipients = [order.email_address, website.email]
     @website = website
     @order = order
+    @shipment = shipment
     mail(to: recipients, subject: "#{website.name}: #{what} #{order.order_number}",
       from: website.email)
   end
