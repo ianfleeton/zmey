@@ -32,13 +32,11 @@ RSpec.describe 'admin/orders/edit.html.slim', type: :view do
     end
   end
 
-  context 'when fully shipped' do
+  context 'with shipments' do
     let(:now) { Time.zone.now }
+    let!(:shipment) { FactoryGirl.create(:shipment, order: order) }
 
     before do
-      allow(order).to receive(:fully_shipped?).and_return(true)
-      allow(order).to receive(:shipped_at).and_return(now)
-      allow(order).to receive(:shipping_tracking_number).and_return('TRACK-123')
       render
     end
 

@@ -218,16 +218,32 @@ RSpec.describe Order, type: :model do
   end
 
   describe '#fully_shipped?' do
-    subject { FactoryGirl.build(:order, shipped_at: shipped_at).fully_shipped? }
+    let(:order) { FactoryGirl.create(:order) }
+    let!(:shipment) { FactoryGirl.create(:shipment, order: order, shipped_at: shipped_at, partial: partial)}
+    subject { order.fully_shipped? }
 
-    context 'when shipped_at is nil' do
-      let(:shipped_at) { nil }
-      it { should eq false }
+    context 'partial shipment' do
+      let(:partial) { true }
+      context 'shipped' do
+        let(:shipped_at) { Time.zone.now }
+        it { should eq false }
+      end
+      context 'unshipped' do
+        let(:shipped_at) { nil }
+        it { should eq false }
+      end
     end
 
-    context 'when shipped_at is set' do
-      let(:shipped_at) { Date.today }
-      it { should eq true }
+    context 'full shipment' do
+      let(:partial) { false }
+      context 'shipped' do
+        let(:shipped_at) { Time.zone.now }
+        it { should eq true }
+      end
+      context 'unshipped' do
+        let(:shipped_at) { nil }
+        it { should eq false }
+      end
     end
   end
 

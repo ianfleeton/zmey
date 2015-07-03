@@ -1,24 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/shipments/new.html.slim' do
-  let(:order) { FactoryGirl.create(:order) }
+  let(:shipment) { FactoryGirl.create(:shipment) }
 
   before do
-    assign(:order, order)
+    assign(:shipment, shipment)
   end
 
-  it 'renders a form for the @order' do
+  it 'renders a form for the @shipment' do
     render
-    expect(rendered).to have_selector "form[action='#{admin_order_path(order)}'][method='post']"
+    expect(rendered).to have_selector "form[action='#{admin_shipment_path(shipment)}'][method='post']"
   end
 
-  it 'has a hidden field for the shipped_at time' do
-    render
-    expect(rendered).to have_selector 'input[name="order[shipped_at]"][type="hidden"]'
-  end
+  context 'form fields' do
+    before { render }
+    subject { rendered }
 
-  it 'has a text field for the shipping_tracking_number' do
-    render
-    expect(rendered).to have_selector 'input[name="order[shipping_tracking_number]"][type="text"]'
+    [
+      'textarea[name="shipment[comment]"]',
+      'input[name="shipment[courier_name]"][type="text"]',
+      'input[name="shipment[number_of_parcels]"][type="number"]',
+      'input[name="shipment[order_id]"][type="hidden"]',
+      'input[name="shipment[partial]"][type="checkbox"]',
+      'input[name="shipment[picked_by]"][type="text"]',
+      'input[name="shipment[shipped_at]"][type="hidden"]',
+      'input[name="shipment[total_weight]"][type="text"]',
+      'input[name="shipment[tracking_number]"][type="text"]',
+      'input[name="shipment[tracking_url]"][type="url"]',
+    ].each { |sel| it { should have_selector sel } }
   end
 end

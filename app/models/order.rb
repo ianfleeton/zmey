@@ -289,7 +289,7 @@ class Order < ActiveRecord::Base
 
   # Returns +true+ if all order contents have been shipped, otherwise +false+.
   def fully_shipped?
-    !!shipped_at
+    shipments.where(partial: false).where('shipped_at IS NOT NULL').any?
   end
 
   def to_webhook_payload(event)
