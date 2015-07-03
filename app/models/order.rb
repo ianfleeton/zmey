@@ -56,6 +56,9 @@
 #   Describe each line of the order. Each OrderLine can include purchase of a
 #   product or may be a discount adjustment.
 #
+# +shipments+::
+#   Shipments containing items in this order.
+#
 # +payments+::
 #   Payments, successful or otherwise, that have been recorded for this order.
 #   A complete order can have zero, one or many payments.
@@ -83,6 +86,7 @@ class Order < ActiveRecord::Base
   has_many :order_comments, dependent: :delete_all, inverse_of: :order
   has_many :order_lines, dependent: :delete_all, inverse_of: :order
   has_many :payments, dependent: :delete_all
+  has_many :shipments, dependent: :delete_all, inverse_of: :order
 
   validates_inclusion_of :status, in: Enums::PaymentStatus::VALUES
 

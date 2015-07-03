@@ -7,6 +7,7 @@ RSpec.describe Order, type: :model do
   end
 
   it { should have_many(:order_comments).dependent(:delete_all).inverse_of(:order) }
+  it { should have_many(:shipments).dependent(:delete_all).inverse_of(:order) }
 
   describe 'before_create :create_order_number' do
     let(:order) { FactoryGirl.build(:order, order_number: order_number) }
