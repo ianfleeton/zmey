@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150703115239) do
+ActiveRecord::Schema.define(version: 20150707131654) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -686,6 +686,8 @@ ActiveRecord::Schema.define(version: 20150703115239) do
     t.string   "staging_password",                   limit: 255
     t.boolean  "paypal_test_mode",                                                          default: false,  null: false
     t.string   "upg_atlas_secuphrase",               limit: 255
+    t.boolean  "shopping_suspended",                                                        default: false,  null: false
+    t.string   "shopping_suspended_message",         limit: 255
   end
 
 end

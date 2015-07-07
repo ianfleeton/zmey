@@ -1,5 +1,6 @@
 require 'rails_helper'
 require_relative 'shared_examples/shipping.rb'
+require_relative 'shared_examples/shopping_suspended.rb'
 
 describe BasketController do
   let(:website) { FactoryGirl.create(:website, name: 'www', email: 'anon@example.org', domain: 'example.org') }
@@ -7,6 +8,8 @@ describe BasketController do
   before do
     allow(controller).to receive(:website).and_return(website)
   end
+
+  it_behaves_like 'a suspended shop bouncer'
 
   describe 'GET index' do
     let(:page)   { FactoryGirl.create(:page) }

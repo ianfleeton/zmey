@@ -1,6 +1,7 @@
 class CheckoutController < ApplicationController
   include Shipping
   include Discounts
+  include SuspendedShopping
 
   layout 'basket_checkout'
 

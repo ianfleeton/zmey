@@ -1,10 +1,13 @@
 require 'rails_helper'
 require_relative 'shared_examples/discounts.rb'
 require_relative 'shared_examples/shipping.rb'
+require_relative 'shared_examples/shopping_suspended.rb'
 
 RSpec.describe CheckoutController, type: :controller do
   let(:website) { FactoryGirl.create(:website) }
   before { allow(controller).to receive(:website).and_return(website) }
+
+  it_behaves_like 'a suspended shop bouncer'
 
   shared_examples_for 'a checkout advancer' do |method, action, params=nil|
     let(:has_checkout_details) { true }

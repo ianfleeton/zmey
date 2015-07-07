@@ -11,5 +11,6 @@
         - if website.can_users_create_accounts?
           = nav_link_to I18n.t('register'), controller: 'users', action: 'new'
           = nav_link_to I18n.t('login'), sign_in_path
-      = nav_link_to I18n.t('view_cart'), basket_path
-      = nav_link_to t('checkout.checkout'), checkout_path
+      - unless website.shopping_suspended?
+        = nav_link_to I18n.t('view_cart'), basket_path
+        = nav_link_to t('checkout.checkout'), checkout_path

@@ -15,6 +15,8 @@ feature 'Websites admin' do
     name = SecureRandom.hex
     theme = 'awesome_responsive_theme'
     staging_password = 'staging'
+    shopping_suspended = [true, false].sample
+    shopping_suspended_message = 'Suspended because of REASON'
 
     fill_in 'Name', with: name
     fill_in 'Email', with: 'merchant@example.com'
@@ -32,8 +34,22 @@ feature 'Websites admin' do
 
     fill_in 'Staging password', with: staging_password
 
+    if shopping_suspended
+      check 'website_shopping_suspended'
+    else
+      uncheck 'website_shopping_suspended'
+    end
+
+    fill_in 'Shopping suspended message', with: shopping_suspended_message
+
     click_button 'Create New Website'
-    expect(Website.find_by(name: name, staging_password: 'staging', theme: theme)).to be
+    expect(Website.find_by(
+      name: name,
+      staging_password: 'staging',
+      shopping_suspended: shopping_suspended,
+      shopping_suspended_message: shopping_suspended_message,
+      theme: theme)
+    ).to be
   end
 
   scenario 'Delete website' do

@@ -48,6 +48,15 @@
 
           .checkbox
             label
+              => form.check_box :shopping_suspended
+              | Shopping suspended
+
+          .form-group
+            = form.label :shopping_suspended_message
+            = form.text_field :shopping_suspended_message, class: 'form-control'
+
+          .checkbox
+            label
               => form.check_box :send_pending_payment_emails
               | Send pending payment emails
 
