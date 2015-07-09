@@ -13,7 +13,6 @@ module ApplicationHelper
     content = ''
     if flash[:now]
       content = flash[:now]
-      flash[:now] = nil
     end
     if flash[:notice]
       content += ' ' + flash[:notice]
