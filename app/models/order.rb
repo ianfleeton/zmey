@@ -267,9 +267,14 @@ class Order < ActiveRecord::Base
   #
   # Keeping the basket with the order allows the basket to be cleaned up later
   # during payment callbacks which do not have user session information.
+  #
+  # The customer note and delivery instructions are also copied from the
+  # basket to the order.
   def add_basket(basket)
     add_basket_items(basket.basket_items)
     self.basket = basket
+    self.customer_note = basket.customer_note
+    self.delivery_instructions = basket.delivery_instructions
   end
 
   # Creates an <tt>OrderLine<tt> for each <tt>BasketItem</tt> in

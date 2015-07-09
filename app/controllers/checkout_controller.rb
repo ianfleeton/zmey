@@ -69,8 +69,6 @@ class CheckoutController < ApplicationController
     @order.copy_delivery_address delivery_address
     @order.copy_billing_address billing_address
 
-    @order.customer_note = basket.customer_note
-
     begin
       @order.record_preferred_delivery_date(
         website.preferred_delivery_date_settings,

@@ -181,8 +181,10 @@ RSpec.describe Order, type: :model do
   end
 
   describe '#add_basket' do
+    let(:customer_note) { 'customer note' }
+    let(:delivery_instructions) { 'delivery instructions' }
     let(:order) { Order.new }
-    let(:basket) { Basket.new }
+    let(:basket) { Basket.new(customer_note: customer_note, delivery_instructions: delivery_instructions) }
 
     it 'adds basket items' do
       expect(order).to receive(:add_basket_items).with(basket.basket_items)
@@ -193,6 +195,16 @@ RSpec.describe Order, type: :model do
       basket.save!
       order.add_basket(basket)
       expect(order.basket).to eq basket
+    end
+
+    it 'copies the customer_note' do
+      order.add_basket(basket)
+      expect(order.customer_note).to eq customer_note
+    end
+
+    it 'copies the delivery_instructions' do
+      order.add_basket(basket)
+      expect(order.delivery_instructions).to eq delivery_instructions
     end
   end
 
