@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707131654) do
+ActiveRecord::Schema.define(version: 20150709102426) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -66,8 +66,9 @@ ActiveRecord::Schema.define(version: 20150707131654) do
   create_table "baskets", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "customer_note", limit: 65535
-    t.string   "token",         limit: 255,   null: false
+    t.text     "customer_note",         limit: 65535
+    t.string   "token",                 limit: 255,   null: false
+    t.text     "delivery_instructions", limit: 65535
   end
 
   add_index "baskets", ["token"], name: "index_baskets_on_token", unique: true, using: :btree
