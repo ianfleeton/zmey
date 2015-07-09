@@ -5,9 +5,12 @@
 # === Attributes
 #
 # +customer_note+::
-#   A note that may be left by the customer, for example, additional delivery
-#   instructions. The +customer_note+ field may be used in different ways based
-#   on the merchant's needs.
+#   A note that may be left by the customer. The +customer_note+ field may be
+#   used in different ways based on the merchant's needs.
+#
+# +delivery_instructions+::
+#   A note left by the customer or administrator specifically for delivery
+#   instructions.
 #
 # +email_address+::
 #   Email address as entered by the customer. Email addresses are required for
