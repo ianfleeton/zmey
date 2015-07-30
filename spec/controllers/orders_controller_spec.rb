@@ -34,8 +34,6 @@ describe OrdersController do
     end
   end
 
-  it { should route(:post, '/orders/receipt').to(action: :receipt) }
-
   describe 'GET invoice' do
     it 'finds the order' do
       expect(Order).to receive(:find_by)
