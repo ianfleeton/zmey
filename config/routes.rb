@@ -190,6 +190,7 @@ Rails.application.routes.draw do
   resources :orders, only: [:index, :show] do
     collection do
       get 'receipt'
+      post 'receipt'
     end
     member do
       get 'invoice'
