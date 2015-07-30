@@ -5,7 +5,7 @@ class Payments::YorkshirePaymentsController < PaymentsController
     @payment = Payment.new(
       service_provider: 'Yorkshire Payments',
       amount: params[:amountReceived] || '0',
-      cart_id: params[:orderRef],
+      cart_id: params[:transactionUnique],
       currency: params[:currencyCode],
       installation_id: website.yorkshire_payments_merchant_id,
       test_mode: test_mode?,

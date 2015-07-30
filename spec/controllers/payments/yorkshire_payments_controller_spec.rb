@@ -9,7 +9,7 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
   describe 'POST callback' do
     let(:default_params) {{
       currencyCode: '826',
-      orderRef: 'ORDER-1234',
+      transactionUnique: 'ORDER-1234',
       transactionID: '12345678',
       cardTypeCode: '',
       cartType: '',
