@@ -1,3 +1,3 @@
-- fields = yorkshire_payments_hidden_fields(order: @order, callback_url: payments_yorkshire_payments_callback_url(protocol: :https), redirect_url: receipt_orders_url(protocol: :https), merchant_id: website.yorkshire_payments_merchant_id, pre_shared_key: website.yorkshire_payments_pre_shared_key)
+- fields = yorkshire_payments_hidden_fields(order: @order, callback_url: payments_yorkshire_payments_callback_url(protocol: :https), redirect_url: payments_yorkshire_payments_redirect_url(protocol: :https), merchant_id: website.yorkshire_payments_merchant_id, pre_shared_key: website.yorkshire_payments_pre_shared_key)
 - fields.each do |field|
   input type="hidden" name="#{field[0]}" value="#{field[1]}"

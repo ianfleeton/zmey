@@ -115,4 +115,26 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
       end
     end
   end
+
+  it { should route(:post, '/payments/yorkshire_payments/redirect').to(action: :redirect) }
+
+  describe 'POST redirect' do
+    let(:default_params) {{
+      currencyCode: '826',
+      transactionUnique: 'ORDER-1234',
+      transactionID: '12345678',
+      cardTypeCode: '',
+      cartType: '',
+      responseCode: '0',
+    }}
+    let(:params) { default_params }
+
+    before do
+      post :redirect, params
+    end
+
+    it 'redirects the customer to the receipt page' do
+      expect(response).to redirect_to receipt_orders_path
+    end
+  end
 end

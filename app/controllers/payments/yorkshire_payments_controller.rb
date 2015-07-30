@@ -21,6 +21,10 @@ class Payments::YorkshirePaymentsController < PaymentsController
     render html: 'success'
   end
 
+  def redirect
+    redirect_to receipt_orders_path
+  end
+
   private
 
     def test_mode?
