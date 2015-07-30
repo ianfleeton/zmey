@@ -75,7 +75,7 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
 
     context 'successful transaction' do
       let(:params) {{
-        amountReceived: '10.00',
+        amountReceived: '1000',
         avscv2ResponseCode: '',
         responseCode: '0',
       }.merge(default_params)}

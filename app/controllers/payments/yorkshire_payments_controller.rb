@@ -4,7 +4,7 @@ class Payments::YorkshirePaymentsController < PaymentsController
   def callback
     @payment = Payment.new(
       service_provider: 'Yorkshire Payments',
-      amount: params[:amountReceived] || '0',
+      amount: amount_received,
       cart_id: params[:transactionUnique],
       currency: params[:currencyCode],
       installation_id: website.yorkshire_payments_merchant_id,
@@ -26,6 +26,14 @@ class Payments::YorkshirePaymentsController < PaymentsController
   end
 
   private
+
+    def amount_received
+      if params[:amountReceived].present?
+        '%.2f' % (params[:amountReceived].to_i / 100.0)
+      else
+        '0'
+      end
+    end
 
     def test_mode?
       ['101380', '101381'].include?(website.yorkshire_payments_merchant_id)
