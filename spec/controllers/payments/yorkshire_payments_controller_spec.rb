@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
-  it { should route(:get, '/payments/yorkshire_payments/callback').to(action: :callback) }
+  it { should route(:post, '/payments/yorkshire_payments/callback').to(action: :callback) }
 
   let(:merchant_id) { '000000' }
   before { FactoryGirl.create(:website, yorkshire_payments_merchant_id: merchant_id) }
 
-  describe 'GET callback' do
+  describe 'POST callback' do
     let(:default_params) {{
       currencyCode: '826',
       orderRef: 'ORDER-1234',
@@ -22,7 +22,7 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
 
     before do
       pre.try(:call)
-      get :callback, params
+      post :callback, params
     end
 
     it 'records the amount as 0' do
