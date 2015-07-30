@@ -52,6 +52,21 @@ RSpec.describe 'checkout/_select_payment_method.html.erb', type: :view do
     end
   end
 
+  context 'when Yorkshire Payments is active' do
+    let(:website) { FactoryGirl.create(:website, yorkshire_payments_active: true) }
+    let(:order)   { FactoryGirl.create(:order) }
+
+    before do
+      allow(view).to receive(:website).and_return(website)
+      assign(:order, order)
+      render
+    end
+
+    it 'renders the Yorkshire Payments partial' do
+      expect(response).to render_template('_yorkshire_payments')
+    end
+  end
+
   context 'when website accepts payment on account' do
     let(:website) { FactoryGirl.create(:website, accept_payment_on_account: true) }
     let(:order)   { FactoryGirl.create(:order) }

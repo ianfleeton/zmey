@@ -94,6 +94,23 @@ feature 'Websites admin' do
     )).to be
   end
 
+  scenario 'Edit Yorkshire Payments settings' do
+    visit edit_admin_website_path(website)
+
+    active = [true, false].sample
+
+    choose "website_yorkshire_payments_active_#{active}"
+    fill_in 'website_yorkshire_payments_merchant_id', with: '123456'
+    fill_in 'website_yorkshire_payments_pre_shared_key', with: 'secret'
+    click_button 'Save'
+
+    expect(Website.find_by(
+      yorkshire_payments_active: active,
+      yorkshire_payments_merchant_id: '123456',
+      yorkshire_payments_pre_shared_key: 'secret',
+    )).to be
+  end
+
   scenario 'Edit SMTP settings' do
     visit edit_admin_website_path(website)
 

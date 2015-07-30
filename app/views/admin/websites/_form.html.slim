@@ -254,7 +254,7 @@
     = form.text_area :invoice_details, rows: 6, class: 'form-control'
 
   .row
-    .col-md-4
+    .col-md-3
       .panel.panel-default
         .panel-heading
           h2.panel-title Cardsave
@@ -279,7 +279,7 @@
           = form.label :cardsave_pre_shared_key, 'Pre-shared key'
           = form.text_field :cardsave_pre_shared_key, class: 'form-control'
 
-    .col-md-4
+    .col-md-3
       .panel.panel-default
         .panel-heading
           h2.panel-title WorldPay
@@ -313,7 +313,7 @@
           = form.label :worldpay_payment_response_password, 'Payment response password'
           = form.text_field :worldpay_payment_response_password, class: 'form-control'
 
-    .col-md-4
+    .col-md-3
       .panel.panel-default
         .panel-heading
           h2.panel-title Sage Pay
@@ -345,6 +345,28 @@
 
           = form.label :sage_pay_pre_shared_key, 'Pre-shared key'
           = form.text_field :sage_pay_pre_shared_key, class: 'form-control'
+
+    .col-md-3
+      .panel.panel-default
+        .panel-heading
+          h2.panel-title Yorkshire Payments
+        .panel-body
+          label Active?
+          .radio
+            label
+              = form.radio_button :yorkshire_payments_active, true
+              | Active
+
+          .radio
+            label
+              = form.radio_button :yorkshire_payments_active, false
+              | Inactive
+
+          = form.label :yorkshire_payments_merchant_id, 'Merchant ID'
+          = form.text_field :yorkshire_payments_merchant_id, class: 'form-control'
+
+          = form.label :yorkshire_payments_pre_shared_key, 'Pre-shared key'
+          = form.text_field :yorkshire_payments_pre_shared_key, class: 'form-control'
 
   .row
     .col-md-6

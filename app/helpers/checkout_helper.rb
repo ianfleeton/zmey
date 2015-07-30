@@ -25,4 +25,17 @@ module CheckoutHelper
     )
     field_list.fields
   end
+
+  # Returns an array of hidden field name/value pairs for use in the Yorkshire
+  # Payments payment form.
+  def yorkshire_payments_hidden_fields(order:, merchant_id:, callback_url:, redirect_url:, pre_shared_key:)
+    field_list = YorkshirePayments::FieldList.new(
+      order: order,
+      merchant_id: merchant_id,
+      callback_url: callback_url,
+      redirect_url: redirect_url,
+      pre_shared_key: pre_shared_key,
+    )
+    field_list.fields
+  end
 end

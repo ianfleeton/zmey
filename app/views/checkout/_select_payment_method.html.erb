@@ -18,6 +18,10 @@
 <%= render 'paypal' %>
 <% end -%>
 
+<% if website.yorkshire_payments_active? -%>
+<%= render 'yorkshire_payments' %>
+<% end -%>
+
 <% if website.cardsave_active? -%>
 <div class="pay-by" id="pay_by_cardsave">
 <h2>Pay by Credit/Debit Card</h2>

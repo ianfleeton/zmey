@@ -124,6 +124,10 @@ class Admin::WebsitesController < Admin::AdminController
       :upg_atlas_active, :upg_atlas_check_code,
       :upg_atlas_filename, :upg_atlas_secuphrase, :upg_atlas_sh_reference,
       :use_default_css,
-      :vat_number)
+      :vat_number,
+      :yorkshire_payments_active,
+      :yorkshire_payments_merchant_id,
+      :yorkshire_payments_pre_shared_key,
+      )
   end
 end
