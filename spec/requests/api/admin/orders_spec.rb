@@ -91,6 +91,14 @@ describe 'Admin orders API' do
       end
     end
 
+    context 'with status filtered to payment_received|waiting_for_payment' do
+      let(:status) { 'payment_received|waiting_for_payment' }
+
+      it 'returns 1 order' do
+        expect(json['orders'].length).to eq 1
+      end
+    end
+
     context 'with processed set' do
       let!(:more_setup) {->{
         @processed_order = FactoryGirl.create(:order,

@@ -55,7 +55,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       not_conditions = {}
       conditions[:order_number] = order_number if order_number
       if params[:status]
-        conditions[:status] = PaymentStatus(params[:status])
+        conditions[:status] = params[:status].split('|').map {|s| PaymentStatus(s) }
       end
 
       if processed == false

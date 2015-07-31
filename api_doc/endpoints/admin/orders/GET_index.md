@@ -9,8 +9,9 @@ Returns a summary list of all orders.
 * **page_size** — Number of results per page. Default is 50.
 * **processed** — Boolean filter to only include processed (when true) or
   unprocessed (when false) orders.
-* **status** — Filters the orders by payment status. Can be one of:
-  waiting_for_payment, payment_received, or payment_on_account.
+* **status** — Filters the orders by payment status. Can be one or more of:
+  waiting_for_payment, payment_received, payment_on_account or quote. Separate
+  multiple statuses with a pipe character (|).
 
 ## Example
 
