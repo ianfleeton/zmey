@@ -206,6 +206,25 @@ describe 'Admin orders API' do
           end
         end
       end
+
+      context 'with order comments' do
+        before do
+          @order_comment = FactoryGirl.create(:order_comment, order: @order, comment: 'Comment')
+          get api_admin_order_path(@order)
+        end
+
+        it 'has 1 order comment' do
+          expect(order['order_comments'].length).to eq 1
+        end
+
+        describe 'first order comment' do
+          subject { order['order_comments'][0] }
+
+          it 'includes the comment' do
+            expect(subject['comment']).to eq @order_comment.comment
+          end
+        end
+      end
     end
 
     context 'when no order' do

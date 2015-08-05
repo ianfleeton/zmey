@@ -72,4 +72,11 @@ json.order do
     json.accepted         payment.accepted
     json.service_provider payment.service_provider
   end
+  json.order_comments(@order.order_comments) do |order_comment|
+    json.id                   order_comment.id
+    json.href                 api_admin_order_comment_url(order_comment)
+    json.comment              order_comment.comment
+    json.created_at           order_comment.created_at
+    json.updated_at           order_comment.updated_at
+  end
 end

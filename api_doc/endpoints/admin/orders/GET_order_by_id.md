@@ -88,6 +88,15 @@ returned.
         "accepted": true,
         "service_provider": "WorldPay"
       }
+    ],
+    "order_comments": [
+      {
+        "id": 1,
+        "href": "https://zmey.co.uk/api/admin/order_comments/1",
+        "comment": "Customer has requested a partial refund for damaged goods.",
+        "created_at": "2014-04-12T10:00:00.000+01:00",
+        "created_at": "2014-04-12T10:00:00.000+01:00"
+      }
     ]
   }
 }

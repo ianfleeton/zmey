@@ -121,6 +121,8 @@ Rails.application.routes.draw do
 
       resources :nominal_codes, only: [:show]
 
+      resources :order_comments, only: [:show]
+
       resources :order_lines, only: [:create, :destroy, :show]
 
       resources :orders, only: [:create, :index, :show, :update]
