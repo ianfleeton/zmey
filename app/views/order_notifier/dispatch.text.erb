@@ -1,0 +1,9 @@
+<%= @order.delivery_full_name %>
+
+This is an update for your order at <%= @website.name %>
+
+Your order has been dispatched.
+
+<% if @shipment.tracking_number.present? -%>
+The tracking number for this shipment is <%= @shipment.tracking_number %>
+<% end -%>
