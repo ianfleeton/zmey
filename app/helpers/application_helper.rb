@@ -111,6 +111,11 @@ module ApplicationHelper
     end
   end
 
+  # Converts newlines to <br> HTML tags. Text is HTML sanitised.
+  def nl2br(text)
+    h(text).gsub("\n", '<br>')
+  end
+
   # Returns <tt>true</tt> if the current page is the home page.
   def home_page?
     '/' == request.path
