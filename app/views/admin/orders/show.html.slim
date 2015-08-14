@@ -32,9 +32,9 @@ table.table.table-bordered
     tr
       td
         = line.product_name
-        - unless line.feature_descriptions.blank?
+        - if line.feature_descriptions.present?
           br
-          small= line.feature_descriptions
+          small= raw nl2br(line.feature_descriptions)
       td.qty= line.quantity
       td.shipped= form_for [:admin, line] do |f|
         = f.text_field :shipped
