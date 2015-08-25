@@ -11,6 +11,14 @@ module YorkshirePayments
             ['b', "B\n"]
           ]
         end
+
+        it 'handles empty values' do
+          s = Signature.new('cardTypeCode=&cartType=', '')
+          expect(s.fields).to eq [
+            ['cardTypeCode', ''],
+            ['cartType', '']
+          ]
+        end
       end
     end
 

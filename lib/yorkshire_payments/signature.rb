@@ -7,7 +7,7 @@ module YorkshirePayments
                   fields
                     .split('&')
                     .map {|f| f.split('=') }
-                    .map {|a,b| [a, CGI.unescape(b)]}
+                    .map {|a,b| [a, CGI.unescape(b.to_s)]}
                 else
                   fields
                 end
