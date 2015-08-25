@@ -1,7 +1,16 @@
 module YorkshirePayments
   class Signature
+    attr_reader :fields
+
     def initialize(fields, pre_shared_key)
-      @fields = fields
+      @fields = if fields.instance_of?(String)
+                  fields
+                    .split('&')
+                    .map {|f| f.split('=') }
+                    .map {|a,b| [a, CGI.unescape(b)]}
+                else
+                  fields
+                end
       @pre_shared_key = pre_shared_key
     end
 

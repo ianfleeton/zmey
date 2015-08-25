@@ -2,6 +2,18 @@ require 'rails_helper'
 
 module YorkshirePayments
   RSpec.describe Signature do
+    describe '#initialize' do
+      context 'with string input' do
+        it 'converts fields from raw POST body' do
+          s = Signature.new('a=A&b=B%0A', '')
+          expect(s.fields).to eq [
+            ['a', 'A'],
+            ['b', "B\n"]
+          ]
+        end
+      end
+    end
+
     describe '#sign' do
       it 'returns a signature' do
         s = Signature.new(fields_without_signature, pre_shared_key)
