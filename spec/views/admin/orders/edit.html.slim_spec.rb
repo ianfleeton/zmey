@@ -32,6 +32,18 @@ RSpec.describe 'admin/orders/edit.html.slim', type: :view do
     end
   end
 
+  context 'when processed' do
+    before { allow(order).to receive(:processed_at?).and_return(true) }
+    it 'displays a warning' do
+      render
+      expect(rendered).to have_content I18n.t('admin.orders.edit.processed_warning')
+    end
+    it 'displays a link to mark as unprocessed' do
+      render
+      expect(rendered).to have_css "a[href='#{mark_unprocessed_admin_order_path(order)}']"
+    end
+  end
+
   context 'with shipments' do
     let(:now) { Time.zone.now }
     let!(:shipment) { FactoryGirl.create(:shipment, order: order) }

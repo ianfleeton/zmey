@@ -1,5 +1,5 @@
 class Admin::OrdersController < Admin::AdminController
-  before_action :set_order, only: [:show, :edit, :update, :destroy, :record_sales_conversion]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :mark_unprocessed, :record_sales_conversion]
 
   def index
     if params[:user_id]
@@ -54,6 +54,12 @@ class Admin::OrdersController < Admin::AdminController
   def search_products
     @products = Product.admin_search(params[:query])
     render layout: false
+  end
+
+  def mark_unprocessed
+    @order.processed_at = nil
+    @order.save
+    redirect_to edit_admin_order_path(@order), notice: I18n.t('controllers.admin.orders.mark_unprocessed.marked')
   end
 
   def record_sales_conversion

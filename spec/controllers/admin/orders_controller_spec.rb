@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared_examples_for_controllers'
 
-describe Admin::OrdersController do
+RSpec.describe Admin::OrdersController, type: :controller do
   let(:website) { FactoryGirl.create(:website) }
 
   def mock_order(stubs={})
@@ -282,6 +282,24 @@ describe Admin::OrdersController do
 
       def post_destroy
         post 'destroy', id: '1'
+      end
+    end
+
+    describe 'POST mark_unprocessed' do
+      let(:order) { FactoryGirl.create(:order, processed_at: Time.zone.now) }
+
+      before { post 'mark_unprocessed', id: order.id }
+
+      it 'sets the order processed_at to nil' do
+        expect(order.reload.processed_at).to be_nil
+      end
+
+      it 'sets a flash notice' do
+        expect(flash[:notice]).to eq I18n.t('controllers.admin.orders.mark_unprocessed.marked')
+      end
+
+      it 'redirects to #edit' do
+        expect(response).to redirect_to edit_admin_order_path(order)
       end
     end
 

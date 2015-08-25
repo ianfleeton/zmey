@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       end
 
       member do
+        post 'mark_unprocessed'
         get 'record_sales_conversion'
       end
     end

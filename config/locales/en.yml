@@ -107,9 +107,11 @@ en:
         fully_shipped: 'This order is fully shipped'
         heading: 'Edit Order'
         locked_warning: 'This order is now locked and many details cannot be changed.'
+        mark_unprocessed: 'Mark Unprocessed'
         no_comments: 'No comments have been added to this order yet.'
         not_fully_shipped: 'This order is not yet fully shipped'
         po_number: 'PO number'
+        processed_warning: 'This order has been marked as processed by an external system.'
         shipped_at: 'Shipped at'
         shipping_tracking_number: 'Tracking number'
       index:
@@ -326,6 +328,9 @@ en:
         csv:
           import_in_progress: 'Import is running in the background.'
           nothing_uploaded: 'Nothing was uploaded.'
+      orders:
+        mark_unprocessed:
+          marked: 'This order has been marked as unprocessed.'
       offline_payment_methods:
         create:
           created: 'New offline payment method has been created.'
