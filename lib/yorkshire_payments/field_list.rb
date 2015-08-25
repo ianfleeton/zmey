@@ -17,7 +17,7 @@ module YorkshirePayments
     end
 
     def signature
-      Digest::SHA512.hexdigest(base_fields_query + @pre_shared_key)
+      Signature.new(base_fields, @pre_shared_key).sign
     end
 
     private
@@ -32,10 +32,6 @@ module YorkshirePayments
           ['redirectURL', @redirect_url],
           ['transactionUnique', @order.order_number],
         ]
-      end
-
-      def base_fields_query
-        base_fields.map {|k,v| "#{k}=#{CGI.escape(v)}"}.join('&')
       end
 
       def amount
