@@ -12,7 +12,9 @@ class Payments::YorkshirePaymentsController < PaymentsController
       transaction_id: params[:transactionID],
     )
 
-    if params[:responseCode] == '0'
+    s = YorkshirePayments::Signature.new(request.raw_post, website.yorkshire_payments_pre_shared_key)
+
+    if params[:responseCode] == '0' && s.verify
       @payment.accepted = @payment.transaction_status = true
       clean_up
     end

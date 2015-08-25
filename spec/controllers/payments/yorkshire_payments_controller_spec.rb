@@ -20,8 +20,11 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
 
     let(:payment) { Payment.last }
 
+    let(:valid_signature?) { true }
+
     before do
       pre.try(:call)
+      allow_any_instance_of(YorkshirePayments::Signature).to receive(:verify).and_return(valid_signature?)
       post :callback, params
     end
 
@@ -84,18 +87,37 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
         expect(payment.amount).to eq '10.00'
       end
 
-      it 'creates an accepted payment' do
-        expect(payment.accepted?).to eq true
+      context 'with valid signature' do
+        it 'creates an accepted payment' do
+          expect(payment.accepted?).to eq true
+        end
+
+        it 'records a successful transaction status' do
+          expect(payment.transaction_status).to be_truthy
+        end
+
+        context '#clean_up' do
+          let(:pre) { -> { expect(controller).to receive(:clean_up) } }
+          it 'assigns @payment and calls #clean_up' do
+            expect(assigns(:payment)).to be_instance_of(Payment)
+          end
+        end
       end
 
-      it 'records a successful transaction status' do
-        expect(payment.transaction_status).to be_truthy
-      end
+      context 'with invalid signature' do
+        let(:valid_signature?) { false }
+        it 'does not accept the payment' do
+          expect(payment.accepted?).to eq false
+        end
 
-      context '#clean_up' do
-        let(:pre) { -> { expect(controller).to receive(:clean_up) } }
-        it 'assigns @payment and calls #clean_up' do
-          expect(assigns(:payment)).to be_instance_of(Payment)
+        it 'does not record a scucessful transaction status' do
+          expect(payment.transaction_status).to be_falsey
+        end
+
+        context '#clean_up' do
+          let(:pre) { -> { expect(controller).not_to receive(:clean_up) } }
+          it 'does not call #clean_up' do
+          end
         end
       end
     end
