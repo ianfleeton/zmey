@@ -15,7 +15,7 @@ class Admin::ProductGroupsController < Admin::AdminController
 
   def create
     @product_group = ProductGroup.new(product_group_params)
-    @product_group.website_id = @w.id
+    @product_group.website_id = website.id
 
     if @product_group.save
       flash[:notice] = "Successfully added new product group."
@@ -51,6 +51,6 @@ class Admin::ProductGroupsController < Admin::AdminController
     end
 
     def product_group_params
-      params.require(:product_group).permit(:name)
+      params.require(:product_group).permit(:location, :name)
     end
 end

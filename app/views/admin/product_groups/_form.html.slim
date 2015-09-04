@@ -13,4 +13,8 @@
     = form.text_field :name, class: 'form-control'
 
   .form-group
+    = form.label :location, required: true
+    = form.text_field :location, class: 'form-control'
+
+  .form-group
     = form.submit class: 'btn btn-primary'
