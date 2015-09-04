@@ -18,11 +18,13 @@ Create a new product.
 * **google_description** — An alternative description to use in Google feeds to meet editorial guidelines.
 * **image_id** — ID of the main product image.
 * **meta_description** — A description meta tag for the product's main page. Maximum length is 255 characters.
-* **purchase_nominal_code** and **sales_nominal_code** — A nominal (account) code for use in external accounts software packages. The code must match an existing nominal code in the system.
 * **page_title** — Title of the HTML document for the product's main page.
 * **price** — Price of the product with decimal to separate pounds and pence,
 for example, 10.99.
 * **pricing_method** — Determines which pricing method to use (see table below).
+* **product_group** — The name of the sole product group that this product
+belongs to.
+* **purchase_nominal_code** and **sales_nominal_code** — A nominal (account) code for use in external accounts software packages. The code must match an existing nominal code in the system.
 * **rrp** — Recommended retail price.
 * **submit_to_google** — Whether or not the product should be submitted to Google in the product feed.
 * **tax_type** — Tax type of the product (see table below).
@@ -51,7 +53,8 @@ for example, 10.99.
 curl https://zmey.co.uk/api/admin/products \
   -u 22cbbfeaef6085872dbe6c0e978fa098: \
   -d product[sku]=CB01 \
-  -d "product[name]=Cool Beans"
+  -d "product[name]=Cool Beans" \
+  -d "product[product_group]=Special Offers"
 ```
 
 ### Response

@@ -153,6 +153,15 @@ describe 'Admin products API' do
       expect(Product.last.sales_nominal_code).to eq sales_nominal_code
     end
 
+    it 'associates product with a sole product group' do
+      group = FactoryGirl.create(:product_group, name: 'Special Offers')
+      params = basic_params.merge(
+        product_group: 'Special Offers'
+      )
+      post '/api/admin/products', product: params
+      expect(Product.last.product_groups.first).to eq group
+    end
+
     it 'returns 422 if product cannot be created' do
       post '/api/admin/products', product: {name: 'is not enough'}
       expect(status).to eq 422

@@ -21,7 +21,9 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   def create
     @product = Product.new(product_params)
 
-    unless @product.save
+    if @product.save
+      assign_product_group
+    else
       render json: @product.errors.full_messages, status: :unprocessable_entity
     end
   end
@@ -32,6 +34,12 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   end
 
   private
+
+    def assign_product_group
+      if group_name = params[:product][:product_group]
+        @product.product_group = group_name
+      end
+    end
 
     def product_params
       params.require(:product).permit(
