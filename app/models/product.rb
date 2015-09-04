@@ -118,6 +118,21 @@ class Product < ActiveRecord::Base
     end
   end
 
+  # Assigns this product to the sole product group <tt>group</tt>, which can be
+  # an instance of <tt>ProductGroup</tt> or the name of a
+  # <tt>ProductGroup</tt>.
+  #
+  # All other associated product groups are removed.
+  def product_group=(group)
+    product_group_placements.delete_all
+    if group.kind_of?(String)
+      group = ProductGroup.find_by(name: group)
+    end
+    if group
+      ProductGroupPlacement.create(product: self, product_group: group)
+    end
+  end
+
   # Returns a <tt>PriceCalculator</tt> to work out the price of this product
   # in a basket.
   def price_calculator(params)

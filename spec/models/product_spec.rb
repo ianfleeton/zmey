@@ -145,6 +145,41 @@ RSpec.describe Product, type: :model do
     it_behaves_like 'a nominal code setter', :sales
   end
 
+  describe '#product_group=' do
+    let(:product) { FactoryGirl.create(:product) }
+    let(:product_group) { FactoryGirl.create(:product_group, name: 'PGNAME') }
+    let(:old_group) { FactoryGirl.create(:product_group, name: 'OLD') }
+
+    before do
+      ProductGroupPlacement.create!(product: product, product_group: old_group)
+      product.product_group = param
+    end
+
+    context 'when given a ProductGroup' do
+      let(:param) { product_group }
+
+      it 'assigns that product group' do
+        expect(product.product_groups.first).to eq product_group
+      end
+
+      it 'removes other product groups' do
+        expect(product.product_groups.length).to eq 1
+      end
+    end
+
+    context 'when given the name of a product group' do
+      let(:param) { product_group.name }
+
+      it 'assigns that product group' do
+        expect(product.product_groups.first).to eq product_group
+      end
+
+      it 'removes other product groups' do
+        expect(product.product_groups.length).to eq 1
+      end
+    end
+  end
+
   describe '#price_calculator' do
     subject { @product.price_calculator({}) }
     it { should be_kind_of(PriceCalculator::Base) }
