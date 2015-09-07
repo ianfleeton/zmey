@@ -109,6 +109,7 @@ A successful retrieval will return JSON similar to the example:
 
 ### Product groups
 
+* [`GET` api/admin/product_groups](endpoints/admin/product_groups/GET_index.md)
 * [`GET` api/admin/product_groups/:id](endpoints/admin/product_groups/GET_product_group_by_id.md)
 
 ### Product placements

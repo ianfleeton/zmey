@@ -155,7 +155,7 @@ FactoryGirl.define do
   end
 
   factory :product_group do
-    name 'Product Group'
+    sequence(:name) { |n| "Product Group #{n}" }
   end
 
   factory :product_group_placement do
