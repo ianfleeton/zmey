@@ -36,6 +36,12 @@ defined extra attributes for products, such as `length` in the example below.
       "code": "4000",
       "href": "https://zmey.co.uk/api/admin/nominal_codes/1"
     },
+    "product_groups": [
+      {
+        "id": 2,
+        "href": "https://zmey.co.uk/api/admin/product_groups/2"
+      }
+    ],
     "description": "Shiny shiny designed in California",
     "in_stock": true,
     "google_description": "",

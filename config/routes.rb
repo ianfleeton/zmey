@@ -134,6 +134,8 @@ Rails.application.routes.draw do
 
       resources :payments, except: [:update]
 
+      resources :product_groups, only: [:show]
+
       resources :product_placements, only: [:create]
       delete 'product_placements', to: 'product_placements#delete_all'
 

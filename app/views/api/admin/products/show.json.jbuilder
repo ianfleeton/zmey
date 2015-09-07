@@ -24,6 +24,10 @@ json.product do
       json.href api_admin_nominal_code_url(@product.sales_nominal_code)
     end
   end
+  json.product_groups(@product.product_groups) do |g|
+    json.id g.id
+    json.href api_admin_product_group_url(g)
+  end
   json.description        @product.description
   json.in_stock           @product.in_stock
   json.google_description @product.google_description

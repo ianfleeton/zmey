@@ -104,6 +104,14 @@ describe 'Admin products API' do
         get api_admin_product_path(product)
         expect(JSON.parse(response.body)['product']['length']).to eq '1500'
       end
+
+      it 'includes product groups' do
+        group = FactoryGirl.create(:product_group)
+        product.product_groups << group
+        product.save
+        get api_admin_product_path(product)
+        expect(JSON.parse(response.body)['product']['product_groups'][0]['href']).to eq api_admin_product_group_url(group)
+      end
     end
 
     context 'when no product' do
