@@ -11,7 +11,7 @@
 #   A descriptive name for the product group.
 class ProductGroup < ActiveRecord::Base
   validates_presence_of :name
-  validates_uniqueness_of :name, scope: :website_id
+  validates_uniqueness_of :name
 
   has_many :product_group_placements, dependent: :delete_all
   has_many :products, through: :product_group_placements

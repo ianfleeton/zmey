@@ -29,7 +29,7 @@ feature 'Product groups admin' do
   end
 
   scenario 'Edit product group' do
-    product_group = FactoryGirl.create(:product_group, website_id: website.id)
+    product_group = FactoryGirl.create(:product_group)
     new_name = SecureRandom.hex
 
     visit admin_product_groups_path
@@ -41,7 +41,7 @@ feature 'Product groups admin' do
   end
 
   scenario 'Delete product group' do
-    product_group = FactoryGirl.create(:product_group, website_id: website.id)
+    product_group = FactoryGirl.create(:product_group)
     visit admin_product_groups_path
     click_link "Delete #{product_group}"
     expect(ProductGroup.find_by(id: product_group.id)).to be_nil

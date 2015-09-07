@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904144046) do
+ActiveRecord::Schema.define(version: 20150907093814) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -426,7 +426,6 @@ ActiveRecord::Schema.define(version: 20150904144046) do
   end
 
   create_table "product_groups", force: :cascade do |t|
-    t.integer  "website_id", limit: 4
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"

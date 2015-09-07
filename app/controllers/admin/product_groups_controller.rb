@@ -3,7 +3,7 @@ class Admin::ProductGroupsController < Admin::AdminController
 
   def index
     @title = 'Product Groups'
-    @product_groups = @w.product_groups
+    @product_groups = ProductGroup.order(:name)
   end
 
   def show
@@ -15,7 +15,6 @@ class Admin::ProductGroupsController < Admin::AdminController
 
   def create
     @product_group = ProductGroup.new(product_group_params)
-    @product_group.website_id = website.id
 
     if @product_group.save
       flash[:notice] = "Successfully added new product group."
@@ -46,7 +45,7 @@ class Admin::ProductGroupsController < Admin::AdminController
   private
 
     def set_product_group
-      @product_group = ProductGroup.find_by(id: params[:id], website_id: website.id)
+      @product_group = ProductGroup.find_by(id: params[:id])
       not_found unless @product_group
     end
 

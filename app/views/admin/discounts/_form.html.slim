@@ -45,7 +45,7 @@
 
   .form-group
     = form.label :product_group_id
-    = form.collection_select :product_group_id, website.product_groups, :id, :name, {include_blank: '-- Not applicable --'}, class: 'form-control'
+    = form.collection_select :product_group_id, ProductGroup.order(:name), :id, :name, {include_blank: '-- Not applicable --'}, class: 'form-control'
 
   .form-group
     = form.submit class: 'btn btn-primary'
