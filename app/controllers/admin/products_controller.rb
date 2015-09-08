@@ -10,6 +10,7 @@ class Admin::ProductsController < Admin::AdminController
   end
 
   def edit
+    @product_group_placement = ProductGroupPlacement.new(product: @product)
   end
 
   def create

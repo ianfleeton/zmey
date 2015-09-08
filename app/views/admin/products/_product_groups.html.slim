@@ -1,0 +1,25 @@
+.panel.panel-default
+  .panel-heading
+    h2.panel-title Product Groups
+  - if @product.product_groups.any?
+    table.table
+      thead
+        tr
+          th Product Group
+          th Location
+          th Actions
+      - @product.product_groups.each do |group|
+        tr
+          td= link_to group, edit_admin_product_group_path(group)
+          td= group.location
+          td= delete_button [:admin, group]
+  - else
+    .panel-body
+      = content_tag(:p, 'No groups')
+  .panel-body
+    = bootstrap_form_for([:admin, @product_group_placement], class: 'well') do |form|
+      = form.hidden_field :product_id
+      .form-group
+        = form.collection_select(:product_group_id, ProductGroup.order('name'), :id, :name, {}, class: 'form-control')
+      .form-group
+        = submit_tag 'Add to Group', class: 'btn btn-default'

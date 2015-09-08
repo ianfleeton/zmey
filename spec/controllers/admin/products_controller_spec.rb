@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared_examples_for_controllers'
 
-describe Admin::ProductsController do
+RSpec.describe Admin::ProductsController, type: :controller do
   let(:website) { FactoryGirl.build(:website) }
 
   def mock_product(stubs={})
@@ -34,12 +34,18 @@ describe Admin::ProductsController do
 
   describe "GET edit" do
     context "when logged in as admin" do
-      before { logged_in_as_admin }
-
-      it "assigns the requested product as @product" do
+      before do
+        logged_in_as_admin
         find_requested_product
         get :edit, id: '37'
+      end
+
+      it "assigns the requested product as @product" do
         expect(assigns[:product]).to equal(mock_product)
+      end
+
+      it 'assigns a new instance of ProductGroupPlacement' do
+        expect(assigns[:product_group_placement]).to be_instance_of(ProductGroupPlacement)
       end
     end
   end

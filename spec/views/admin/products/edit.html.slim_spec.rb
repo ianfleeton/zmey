@@ -13,4 +13,9 @@ describe '/admin/products/edit.html.slim' do
 
     expect(rendered).to have_selector("form[action='#{admin_product_path(@product)}'][method='post']")
   end
+
+  it 'renders the product_groups partial' do
+    render
+    expect(response).to render_template('_product_groups')
+  end
 end
