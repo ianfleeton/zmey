@@ -252,4 +252,17 @@ RSpec.describe BasketItem, type: :model do
       it { should be_falsey }
     end
   end
+
+  describe '#deep_clone' do
+    it 'returns a copy of the basket item with feature selections' do
+      bi = FactoryGirl.create(:basket_item, quantity: 123)
+      bi.feature_selections << FeatureSelection.create(customer_text: 'deep clone selection')
+      bi2 = bi.deep_clone
+      expect(bi2).not_to eq bi
+      expect(bi2.quantity).to eq 123
+      expect(bi2.feature_selections.count).to eq 1
+      expect(bi2.feature_selections.first.customer_text).to eq 'deep clone selection'
+      expect(bi2.feature_selections.first).not_to eq bi.feature_selections.first
+    end
+  end
 end

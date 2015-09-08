@@ -146,7 +146,7 @@ class Basket < ActiveRecord::Base
     b = dup
     b.generate_token
     b.save
-    basket_items.each {|i| b.basket_items << i.dup}
+    basket_items.each {|i| b.basket_items << i.deep_clone}
     b
   end
 

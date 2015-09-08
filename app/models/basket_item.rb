@@ -4,7 +4,7 @@ class BasketItem < ActiveRecord::Base
 
   belongs_to :basket, inverse_of: :basket_items, touch: true
   belongs_to :product
-  has_many :feature_selections, -> { order 'id' }, dependent: :delete_all
+  has_many :feature_selections, -> { order 'id' }, dependent: :delete_all, inverse_of: :basket_item
   before_save :update_features
   before_save :adjust_quantity
   before_update :preserve_immutable_quantity
@@ -101,5 +101,13 @@ class BasketItem < ActiveRecord::Base
     if immutable_quantity? && quantity_changed?
       self.quantity = quantity_was
     end
+  end
+
+  # Returns a copy of this basket item and its feature selections.
+  def deep_clone
+    bi = dup
+    bi.save
+    feature_selections.each {|fs| bi.feature_selections << fs.dup}
+    bi
   end
 end
