@@ -20,4 +20,13 @@ RSpec.describe 'admin/product_groups/edit.html.slim', type: :view do
       render
     end
   end
+
+  context 'with products placed in group' do
+    let!(:product) { FactoryGirl.create(:product) }
+    let!(:placed) { ProductGroupPlacement.create!(product: product, product_group: product_group) }
+
+    it 'renders' do
+      render
+    end
+  end
 end
