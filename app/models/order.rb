@@ -93,12 +93,6 @@ class Order < ActiveRecord::Base
 
   validates_inclusion_of :status, in: Enums::PaymentStatus::VALUES
 
-  # Returns the order from the customer's session, or +nil+ if it does not
-  # exist.
-  def self.from_session session
-    session[:order_id] ? find_by(id: session[:order_id]) : nil
-  end
-
   # Deletes all orders that have not received payment and are older than +age+.
   def self.purge_old_unpaid(age = 1.month)
     self.destroy_all(["created_at < ? and status = ?", Time.now - age, PaymentStatus::WAITING_FOR_PAYMENT])

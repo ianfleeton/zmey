@@ -42,7 +42,7 @@ class OrdersController < ApplicationController
 
   # get valid order from current session or send user back to their basket
   def require_order
-    @order = Order.from_session session
+    @order = Order.find_by(id: session[:order_id])
     if @order.nil?
       redirect_to({controller: 'basket', action: 'index'},
         notice: "We couldn't find an order for you.")
