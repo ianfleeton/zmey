@@ -1,17 +1,20 @@
 require 'rails_helper'
 
-describe '/admin/products/edit.html.slim' do
+RSpec.describe '/admin/products/edit.html.slim', type: :view do
   include ProductsHelper
 
+  let(:product) { FactoryGirl.create(:product) }
+
   before(:each) do
-    assigns[:product] = @product = FactoryGirl.create(:product)
+    assign(:product, product)
+    assign(:product_group_placement, ProductGroupPlacement.new)
     allow(view).to receive(:website).and_return(FactoryGirl.build(:website))
   end
 
   it "renders the edit product form" do
     render
 
-    expect(rendered).to have_selector("form[action='#{admin_product_path(@product)}'][method='post']")
+    expect(rendered).to have_selector("form[action='#{admin_product_path(product)}'][method='post']")
   end
 
   it 'renders the product_groups partial' do
