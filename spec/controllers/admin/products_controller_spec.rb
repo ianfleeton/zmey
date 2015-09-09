@@ -34,14 +34,14 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
   describe "GET edit" do
     context "when logged in as admin" do
+      let(:product) { FactoryGirl.create(:product) }
       before do
         logged_in_as_admin
-        find_requested_product
-        get :edit, id: '37'
+        get :edit, id: product.id
       end
 
       it "assigns the requested product as @product" do
-        expect(assigns[:product]).to equal(mock_product)
+        expect(assigns(:product)).to eq(product)
       end
 
       it 'assigns a new instance of ProductGroupPlacement' do
