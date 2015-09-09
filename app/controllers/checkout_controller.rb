@@ -61,9 +61,7 @@ class CheckoutController < ApplicationController
   def confirm
     session[:source] = 'checkout'
 
-    delete_previous_unpaid_order_if_any
-
-    @order = Order.new
+    @order = Order.new_or_recycled(session[:order_id])
     @order.user_id = @current_user.id if logged_in?
     @order.ip_address = request.remote_ip
     @order.copy_delivery_address delivery_address
@@ -194,12 +192,6 @@ class CheckoutController < ApplicationController
 
     def address_params
       params.require(:address).permit(AddressesController::ADDRESS_PARAMS_WHITELIST)
-    end
-
-    def delete_previous_unpaid_order_if_any
-      if session[:order_id] && @order = Order.find_by(id: session[:order_id])
-        @order.destroy if @order.status == Enums::PaymentStatus::WAITING_FOR_PAYMENT
-      end
     end
 
     # Get valid billing and delivery addresses or send user back to checkout.

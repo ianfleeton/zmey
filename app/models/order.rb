@@ -98,6 +98,18 @@ class Order < ActiveRecord::Base
     self.destroy_all(["created_at < ? and status = ?", Time.now - age, PaymentStatus::WAITING_FOR_PAYMENT])
   end
 
+  # Returns a new order or recycles a previous order specified by +id+ if that
+  # order is eligible for recycling, that is, it exists and is in the waiting
+  # for payment state.
+  def self.new_or_recycled(id)
+    if (order = find_by(id: id)) && order.status == Enums::PaymentStatus::WAITING_FOR_PAYMENT
+      order.order_lines.delete_all
+      order
+    else
+      new
+    end
+  end
+
   # String representation of the order. Returns the order number.
   def to_s
     order_number
