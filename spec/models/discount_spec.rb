@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Discount, type: :model do
+  it { should validate_numericality_of(:reward_amount).is_less_than_or_equal_to(9999999.999).is_greater_than_or_equal_to(0) }
   it { should validate_inclusion_of(:reward_type).in_array(Discount::REWARD_TYPES) }
 
   describe '#to_s' do
