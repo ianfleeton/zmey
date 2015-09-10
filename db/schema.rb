@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910085409) do
+ActiveRecord::Schema.define(version: 20150910094002) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -278,20 +278,20 @@ ActiveRecord::Schema.define(version: 20150910085409) do
 
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id",                        limit: 4
-    t.string   "order_number",                   limit: 255,                            default: "",  null: false
-    t.string   "email_address",                  limit: 255,                            default: "",  null: false
-    t.string   "delivery_full_name",             limit: 255,                            default: "",  null: false
-    t.string   "delivery_address_line_1",        limit: 255,                            default: "",  null: false
+    t.string   "order_number",                   limit: 255,                            default: "",   null: false
+    t.string   "email_address",                  limit: 255,                            default: "",   null: false
+    t.string   "delivery_full_name",             limit: 255,                            default: "",   null: false
+    t.string   "delivery_address_line_1",        limit: 255,                            default: "",   null: false
     t.string   "delivery_address_line_2",        limit: 255
-    t.string   "delivery_town_city",             limit: 255,                            default: "",  null: false
+    t.string   "delivery_town_city",             limit: 255,                            default: "",   null: false
     t.string   "delivery_county",                limit: 255
-    t.string   "delivery_postcode",              limit: 255,                            default: "",  null: false
-    t.integer  "delivery_country_id",            limit: 4,                                            null: false
+    t.string   "delivery_postcode",              limit: 255,                            default: "",   null: false
+    t.integer  "delivery_country_id",            limit: 4,                                             null: false
     t.string   "delivery_phone_number",          limit: 255
-    t.decimal  "shipping_amount",                              precision: 10, scale: 3, default: 0.0, null: false
-    t.string   "shipping_method",                limit: 255,                            default: "",  null: false
-    t.integer  "status",                         limit: 4,                              default: 0,   null: false
-    t.decimal  "total",                                        precision: 10, scale: 3, default: 0.0, null: false
+    t.decimal  "shipping_amount",                              precision: 10, scale: 3, default: 0.0,  null: false
+    t.string   "shipping_method",                limit: 255,                            default: "",   null: false
+    t.integer  "status",                         limit: 4,                              default: 0,    null: false
+    t.decimal  "total",                                        precision: 10, scale: 3, default: 0.0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "basket_id",                      limit: 4
@@ -299,16 +299,16 @@ ActiveRecord::Schema.define(version: 20150910085409) do
     t.string   "preferred_delivery_date_prompt", limit: 255
     t.string   "preferred_delivery_date_format", limit: 255
     t.string   "ip_address",                     limit: 255
-    t.decimal  "shipping_tax_amount",                          precision: 10, scale: 3, default: 0.0, null: false
+    t.decimal  "shipping_tax_amount",                          precision: 10, scale: 3, default: 0.0,  null: false
     t.text     "customer_note",                  limit: 65535
     t.datetime "processed_at"
-    t.string   "billing_full_name",              limit: 255,                            default: "",  null: false
-    t.string   "billing_address_line_1",         limit: 255,                            default: "",  null: false
+    t.string   "billing_full_name",              limit: 255,                            default: "",   null: false
+    t.string   "billing_address_line_1",         limit: 255,                            default: "",   null: false
     t.string   "billing_address_line_2",         limit: 255
-    t.string   "billing_town_city",              limit: 255,                            default: "",  null: false
+    t.string   "billing_town_city",              limit: 255,                            default: "",   null: false
     t.string   "billing_county",                 limit: 255
-    t.string   "billing_postcode",               limit: 255,                            default: "",  null: false
-    t.integer  "billing_country_id",             limit: 4,                                            null: false
+    t.string   "billing_postcode",               limit: 255,                            default: "",   null: false
+    t.integer  "billing_country_id",             limit: 4,                                             null: false
     t.string   "billing_phone_number",           limit: 255
     t.string   "billing_company",                limit: 255
     t.string   "delivery_company",               limit: 255
@@ -321,6 +321,7 @@ ActiveRecord::Schema.define(version: 20150910085409) do
     t.string   "po_number",                      limit: 255
     t.text     "delivery_instructions",          limit: 65535
     t.datetime "sales_conversion_recorded_at"
+    t.boolean  "requires_delivery_address",                                             default: true, null: false
   end
 
   add_index "orders", ["basket_id"], name: "index_orders_on_basket_id", using: :btree

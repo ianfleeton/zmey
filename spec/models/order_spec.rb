@@ -9,6 +9,22 @@ RSpec.describe Order, type: :model do
   it { should have_many(:order_comments).dependent(:delete_all).inverse_of(:order) }
   it { should have_many(:shipments).dependent(:delete_all).inverse_of(:order) }
 
+  context 'if requires delivery address' do
+    before { subject.requires_delivery_address = true }
+    it { should validate_presence_of(:delivery_address_line_1) }
+    it { should validate_presence_of(:delivery_town_city) }
+    it { should validate_presence_of(:delivery_postcode) }
+    it { should validate_presence_of(:delivery_country_id) }
+  end
+
+  context 'if does not require delivery address' do
+    before { subject.requires_delivery_address = false }
+    it { should_not validate_presence_of(:delivery_address_line_1) }
+    it { should_not validate_presence_of(:delivery_town_city) }
+    it { should_not validate_presence_of(:delivery_postcode) }
+    it { should_not validate_presence_of(:delivery_country_id) }
+  end
+
   describe 'before_create :create_order_number' do
     let(:order) { FactoryGirl.build(:order, order_number: order_number) }
     before { order.save }
