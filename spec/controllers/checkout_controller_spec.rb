@@ -488,7 +488,7 @@ RSpec.describe CheckoutController, type: :controller do
 
       it_behaves_like 'a shipping class setter', :get, :confirm
 
-      it 'deletes a previous unpaid order if one exists' do
+      it 'recycles a previous unpaid order if one exists' do
         session[:order_id] = 123
         expect(Order).to receive(:new_or_recycled).with(123).and_call_original
         get :confirm
