@@ -4,6 +4,7 @@ class Discount < ActiveRecord::Base
   validates_numericality_of :reward_amount, greater_than_or_equal_to: 0, less_than_or_equal_to: 9999999.999
   REWARD_TYPES = ['amount_off_order', 'free_products', 'percentage_off', 'percentage_off_order']
   validates_inclusion_of :reward_type, in: REWARD_TYPES
+  validates_numericality_of :threshold, greater_than_or_equal_to: 0, less_than_or_equal_to: 9999999.999
 
   validates :name, presence: true
 
