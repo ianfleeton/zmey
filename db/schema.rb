@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907093814) do
+ActiveRecord::Schema.define(version: 20150910085409) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -543,6 +543,7 @@ ActiveRecord::Schema.define(version: 20150907093814) do
     t.boolean  "charge_tax",                               default: true,           null: false
     t.boolean  "invalid_over_highest_trigger",             default: false,          null: false
     t.boolean  "allow_oversize",                           default: true,           null: false
+    t.boolean  "requires_delivery_address",                default: true,           null: false
   end
 
   add_index "shipping_classes", ["shipping_zone_id"], name: "index_shipping_classes_on_shipping_zone_id", using: :btree

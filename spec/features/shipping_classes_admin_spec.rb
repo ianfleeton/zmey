@@ -22,12 +22,15 @@ feature 'Shipping classes admin' do
     check_or_uncheck 'Invalid over highest trigger', invalid_over_highest_trigger
     allow_oversize = [true, false].sample
     check_or_uncheck 'Allow oversize', allow_oversize
+    requires_delivery_address = [true, false].sample
+    check_or_uncheck 'Requires delivery address', requires_delivery_address
     click_button 'Create Shipping class'
     expect(ShippingClass.find_by(
       name: shipping_class.name,
       charge_tax: charge_tax,
       invalid_over_highest_trigger: invalid_over_highest_trigger,
-      allow_oversize: allow_oversize
+      allow_oversize: allow_oversize,
+      requires_delivery_address: requires_delivery_address,
     )).to be
   end
 

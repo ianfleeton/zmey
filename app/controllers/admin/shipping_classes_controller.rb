@@ -45,6 +45,7 @@ class Admin::ShippingClassesController < Admin::AdminController
         :charge_tax,
         :invalid_over_highest_trigger,
         :name,
+        :requires_delivery_address,
         :shipping_zone_id,
         :table_rate_method
       )

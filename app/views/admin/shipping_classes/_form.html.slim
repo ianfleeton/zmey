@@ -36,6 +36,11 @@
         => form.check_box :allow_oversize
         | Allow oversize
 
+    .checkbox
+      label
+        => form.check_box :requires_delivery_address
+        | Requires delivery address
+
     .form-group
       = form.submit class: 'btn btn-primary'
 - else
