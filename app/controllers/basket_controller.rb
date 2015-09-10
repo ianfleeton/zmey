@@ -9,10 +9,10 @@ class BasketController < ApplicationController
   before_action :set_shipping_class, only: [:index]
   before_action :set_shipping_amount, only: [:index]
 
-  before_action :remove_invalid_discounts, only: [:index, :place_order]
+  before_action :remove_invalid_discounts, only: [:index]
   before_action :calculate_discounts, only: [:index]
 
-  before_action :update_customer_note, only: [:update, :checkout, :place_order]
+  before_action :update_customer_note, only: [:update, :checkout]
 
   # Main basket page.
   #
