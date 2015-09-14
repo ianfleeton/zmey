@@ -153,15 +153,15 @@ class Order < ActiveRecord::Base
     end
   end
 
-  # Copies +address+ (an Address) into the +email_address+ and
-  # <tt>delivery_*</tt> attributes.
+  # Copies +address+ (an Address) into the <tt>delivery_*</tt> attributes.
   def copy_delivery_address(address)
-    self.email_address = address.email_address
     copy_address(:delivery, address)
   end
 
-  # Copies +address+ (an Address) into the <tt>billing_*</tt> attributes.
+  # Copies +address+ (an Address) into the +email_address+ and
+  # <tt>billing_*</tt> attributes.
   def copy_billing_address(address)
+    self.email_address = address.email_address
     copy_address(:billing, address)
   end
 

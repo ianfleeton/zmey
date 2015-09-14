@@ -64,7 +64,8 @@ class CheckoutController < ApplicationController
     @order = Order.new_or_recycled(session[:order_id])
     @order.user_id = @current_user.id if logged_in?
     @order.ip_address = request.remote_ip
-    @order.copy_delivery_address delivery_address
+    @order.requires_delivery_address = delivery_address_required?
+    @order.copy_delivery_address(delivery_address) if delivery_address
     @order.copy_billing_address billing_address
 
     begin
@@ -108,6 +109,16 @@ class CheckoutController < ApplicationController
     prepare_sage_pay(order) if website.sage_pay_active?
   end
 
+  # Returns <tt>true</tt> if there is no shipping class, or if the selected
+  # shipping class doesn't require a delivery address.
+  def delivery_address_required?
+    !(shipping_class && !shipping_class.requires_delivery_address?)
+  end
+
+  def delivery_address_valid?
+    delivery_address || !delivery_address_required?
+  end
+
   protected
 
     def require_basket
@@ -116,9 +127,9 @@ class CheckoutController < ApplicationController
 
     def advance_checkout
       {
-        :has_checkout_details? => checkout_details_path,
-        :billing_address       => billing_details_path,
-        :delivery_address      => delivery_details_path
+        :has_checkout_details?   => checkout_details_path,
+        :billing_address         => billing_details_path,
+        :delivery_address_valid? => delivery_details_path
       }.each_pair do |condition, destination|
         redirect_to destination and return unless send(condition)
       end
@@ -196,7 +207,7 @@ class CheckoutController < ApplicationController
 
     # Get valid billing and delivery addresses or send user back to checkout.
     def require_billing_and_delivery_addresses
-      redirect_to checkout_path unless billing_address && delivery_address
+      redirect_to checkout_path unless billing_address && delivery_address_valid?
     end
 
     # Records shipping amount, tax and method into the order.

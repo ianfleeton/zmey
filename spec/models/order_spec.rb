@@ -156,7 +156,6 @@ RSpec.describe Order, type: :model do
     end
 
     from_to = {
-      email_address:  :email_address,
       full_name:      :delivery_full_name,
       company:        :delivery_company,
       address_line_1: :delivery_address_line_1,
@@ -181,6 +180,7 @@ RSpec.describe Order, type: :model do
     end
 
     from_to = {
+      email_address:  :email_address,
       full_name:      :billing_full_name,
       company:        :billing_company,
       address_line_1: :billing_address_line_1,

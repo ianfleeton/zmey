@@ -12,14 +12,14 @@ RSpec.describe CheckoutController, type: :controller do
   shared_examples_for 'a checkout advancer' do |method, action, params=nil|
     let(:has_checkout_details) { true }
     let(:billing_address) { FactoryGirl.create(:address) }
-    let(:delivery_address) { FactoryGirl.create(:address) }
+    let(:delivery_address_valid?) { true }
     let(:preferred_delivery_date) { '2015-02-16' }
     let(:preferred_delivery_date_settings) { nil }
 
     before do
       allow(controller).to receive(:has_checkout_details?).and_return(has_checkout_details)
       allow(controller).to receive(:billing_address).and_return(billing_address)
-      allow(controller).to receive(:delivery_address).and_return(delivery_address)
+      allow(controller).to receive(:delivery_address_valid?).and_return(delivery_address_valid?)
       allow(website).to receive(:preferred_delivery_date_settings).and_return(preferred_delivery_date_settings)
       session[:preferred_delivery_date] = preferred_delivery_date
       send(method, action, params)
@@ -36,7 +36,7 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'without delivery details' do
-      let(:delivery_address) { nil }
+      let(:delivery_address_valid?) { false }
       it { should redirect_to delivery_details_path }
     end
 
@@ -451,11 +451,13 @@ RSpec.describe CheckoutController, type: :controller do
       let(:delivery_address) { FactoryGirl.create(:address) }
       let(:billing_address_id) { billing_address.try(:id) }
       let(:delivery_address_id) { delivery_address.try(:id) }
+      let(:delivery_address_required?) { true }
 
       before do
         session[:billing_address_id] = billing_address_id
         session[:delivery_address_id] = delivery_address_id
         add_items_to_basket
+        allow(controller).to receive(:delivery_address_required?).and_return(delivery_address_required?)
         get 'confirm'
       end
 
@@ -481,7 +483,13 @@ RSpec.describe CheckoutController, type: :controller do
 
       context 'without a delivery address' do
         let(:delivery_address_id) { nil }
-        it { should redirect_to checkout_path }
+        context 'but not required' do
+          let(:delivery_address_required?) { false }
+          it { should respond_with(200) }
+        end
+        context 'but one is required' do
+          it { should redirect_to checkout_path }
+        end
       end
 
       it_behaves_like 'a discounts calculator', :get, :confirm
@@ -635,6 +643,25 @@ RSpec.describe CheckoutController, type: :controller do
         controller.prepare_payment_methods(order)
         expect(assigns(:crypt)).to eq 'crypt'
       end
+    end
+  end
+
+  describe '#delivery_address_required?' do
+    subject { controller.delivery_address_required? }
+    before do
+      allow(controller).to receive(:shipping_class).and_return(shipping_class)
+    end
+    context 'shipping class is nil' do
+      let(:shipping_class) { nil }
+      it { should be_truthy }
+    end
+    context 'shipping class requires delivery address' do
+      let(:shipping_class) { FactoryGirl.build(:shipping_class, requires_delivery_address: true) }
+      it { should be_truthy }
+    end
+    context 'shipping class does not require delivery address' do
+      let(:shipping_class) { FactoryGirl.build(:shipping_class, requires_delivery_address: false) }
+      it { should be_falsey }
     end
   end
 

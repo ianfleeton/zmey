@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910094002) do
+ActiveRecord::Schema.define(version: 20150914080513) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -286,7 +286,7 @@ ActiveRecord::Schema.define(version: 20150910094002) do
     t.string   "delivery_town_city",             limit: 255,                            default: "",   null: false
     t.string   "delivery_county",                limit: 255
     t.string   "delivery_postcode",              limit: 255,                            default: "",   null: false
-    t.integer  "delivery_country_id",            limit: 4,                                             null: false
+    t.integer  "delivery_country_id",            limit: 4
     t.string   "delivery_phone_number",          limit: 255
     t.decimal  "shipping_amount",                              precision: 10, scale: 3, default: 0.0,  null: false
     t.string   "shipping_method",                limit: 255,                            default: "",   null: false
