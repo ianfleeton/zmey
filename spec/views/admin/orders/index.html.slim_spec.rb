@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'admin/orders/index.html.slim', type: :view do
   context 'with orders' do
-    let!(:order) { FactoryGirl.create(:order) }
+    let!(:order) { FactoryGirl.create(:order, billing_full_name: 'BILLING FN') }
 
     before do
       assign(:orders, Order.paginate({page: 1}))
@@ -11,6 +11,11 @@ RSpec.describe 'admin/orders/index.html.slim', type: :view do
     it 'renders invoice links' do
       render
       expect(view).to render_template(partial: 'orders/invoice_links', locals: { order: order })
+    end
+
+    it 'displays the billing full name' do
+      render
+      expect(rendered).to have_content 'BILLING FN'
     end
 
     context 'when sales conversion should be recorded, but has not  yet been' do

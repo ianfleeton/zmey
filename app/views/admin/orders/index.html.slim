@@ -26,7 +26,7 @@ p
           td= render partial: 'orders/invoice_links', locals: { order: o }
           td.numeric= formatted_price(o.total)
           td= o.created_at
-          td= o.delivery_full_name
+          td= o.billing_full_name
           td= payment_status(o)
           td
             - if o.sales_conversion_recorded_at
