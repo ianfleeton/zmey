@@ -27,18 +27,34 @@ RSpec.describe Order, type: :model do
 
   describe 'before_create :create_order_number' do
     let(:order) { FactoryGirl.build(:order, order_number: order_number) }
-    before { order.save }
 
     context 'with blank order number' do
       let(:order_number) { nil }
       it 'creates an order number' do
+        order.save
         expect(order.order_number).to be_present
+      end
+
+      it 'requests an order number generator for itself' do
+        expect(OrderNumberGenerator).to receive(:get_generator).with(order).and_call_original
+        order.create_order_number
+      end
+
+      it 'sets its order number from the generator' do
+        allow(OrderNumberGenerator)
+          .to receive(:get_generator)
+          .and_return(double(OrderNumberGenerator::Base,
+            generate: 'ORDER1234'
+          ))
+        order.create_order_number
+        expect(order.order_number).to eq 'ORDER1234'
       end
     end
 
     context 'with existing order number' do
       let(:order_number) { 'ALREADYSET' }
       it 'preserves the order number' do
+        order.save
         expect(order.order_number).to eq order_number
       end
     end
