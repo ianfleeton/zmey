@@ -92,7 +92,7 @@ describe BasketController do
       basket = double(Basket)
       allow(controller).to receive(:basket).and_return basket
       expect(basket).to receive(:deep_clone)
-        .and_return(double(Basket, token: 'token'))
+        .and_return(Basket.new(token: 'token'))
       post :save_and_email, email_address: email_address
     end
 
