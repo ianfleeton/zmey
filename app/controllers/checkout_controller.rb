@@ -6,8 +6,8 @@ class CheckoutController < ApplicationController
   layout 'basket_checkout'
 
   before_action :require_basket, only: [:index, :billing, :delivery, :confirm]
+  before_action :set_shipping_class, only: [:index, :billing, :delivery, :confirm]
   before_action :require_billing_and_delivery_addresses, only: [:confirm]
-  before_action :set_shipping_class, only: [:confirm]
   before_action :set_shipping_amount, only: [:confirm]
   before_action :remove_invalid_discounts, only: [:confirm]
   before_action :calculate_discounts, only: [:confirm]
