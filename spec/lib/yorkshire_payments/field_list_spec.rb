@@ -11,7 +11,7 @@ module YorkshirePayments
     describe '#fields' do
       subject { field_list.fields }
 
-      let(:order) { FactoryGirl.build(:order, order_number: order_number, total: 123.45) }
+      let(:order) { FactoryGirl.build(:order, order_number: order_number, total: 123.45, billing_full_name: 'A Shopper', billing_address_line_1: '123 Street', billing_town_city: 'Doncaster', billing_county: 'South Yorkshire', billing_postcode: 'POST CODE', billing_phone_number: '01234 567890', email_address: 'ashopper@example.org') }
       let(:order_number) { 'ORDER-1234' }
       let(:signature) { 'SHA512' }
 
@@ -23,6 +23,11 @@ module YorkshirePayments
       it { should include ['callbackURL', callback_url] }
       it { should include ['countryCode', '826'] }
       it { should include ['currencyCode', '826'] }
+      it { should include ['customerAddress', "123 Street\nDoncaster\nSouth Yorkshire"] }
+      it { should include ['customerEmail', 'ashopper@example.org'] }
+      it { should include ['customerName', 'A Shopper'] }
+      it { should include ['customerPhone', '01234 567890'] }
+      it { should include ['customerPostCode', 'POST CODE'] }
       it { should include ['merchantID', merchant_id] }
       it { should include ['redirectURL', redirect_url] }
       it { should include ['transactionUnique', order_number] }

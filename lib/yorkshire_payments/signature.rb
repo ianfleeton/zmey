@@ -40,7 +40,7 @@ module YorkshirePayments
         # normalised.
         fields
           .sort {|a,b| a[0] <=> b[0]}
-          .map  {|a| "#{a[0]}=#{CGI.escape(a[1])}"}
+          .map  {|a| "#{a[0]}=#{CGI.escape(a[1].to_s)}"}
           .join('&')
           .gsub(/%0D%0A|%0A%0D|%0A|%0D/, '%0A') + @pre_shared_key
       end
