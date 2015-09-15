@@ -29,6 +29,7 @@ class Website < ActiveRecord::Base
   has_many :webhooks, dependent: :delete_all
   belongs_to :blog, class_name: 'Forum'
   belongs_to :country
+  belongs_to :default_shipping_class, class_name: 'ShippingClass'
 
   def only_accept_payment_on_account?
     accept_payment_on_account and !(worldpay_active)

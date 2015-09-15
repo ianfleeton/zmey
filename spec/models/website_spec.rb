@@ -64,6 +64,8 @@ describe Website do
     end
   end
 
+  it { should belong_to(:default_shipping_class).class_name('ShippingClass') }
+
   it "should only accept payment on account when payment on account is accepted and no other payment methods are" do
     @website.accept_payment_on_account = true
     @website.worldpay_active = false

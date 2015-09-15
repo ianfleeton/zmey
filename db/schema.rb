@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915125520) do
+ActiveRecord::Schema.define(version: 20150915140358) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -346,7 +346,6 @@ ActiveRecord::Schema.define(version: 20150915125520) do
     t.text     "extra",              limit: 4294967295
     t.integer  "thumbnail_image_id", limit: 4
     t.boolean  "visible",                               default: true,  null: false
-    t.integer  "size_image_id",      limit: 4
   end
 
   add_index "pages", ["parent_id"], name: "index_pages_on_parent_id", using: :btree
@@ -566,19 +565,6 @@ ActiveRecord::Schema.define(version: 20150915125520) do
     t.integer  "default_shipping_class_id", limit: 4
   end
 
-  create_table "sidebar_items", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.integer  "image_id",   limit: 4
-    t.text     "html",       limit: 65535
-    t.string   "url",        limit: 255
-    t.integer  "page_id",    limit: 4
-    t.string   "location",   limit: 255,   default: "Right", null: false
-    t.integer  "position",   limit: 4,     default: 1,       null: false
-    t.boolean  "no_follow",                default: false,   null: false
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-  end
-
   create_table "topics", force: :cascade do |t|
     t.string   "topic",            limit: 255, default: "", null: false
     t.integer  "forum_id",         limit: 4,   default: 0,  null: false
@@ -695,6 +681,7 @@ ActiveRecord::Schema.define(version: 20150915125520) do
     t.boolean  "yorkshire_payments_active",                                                 default: false,  null: false
     t.string   "yorkshire_payments_merchant_id",     limit: 255,                            default: "",     null: false
     t.string   "yorkshire_payments_pre_shared_key",  limit: 255,                            default: "",     null: false
+    t.integer  "default_shipping_class_id",          limit: 4
   end
 
 end

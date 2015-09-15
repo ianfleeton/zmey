@@ -17,7 +17,15 @@ module Shipping
     def set_shipping_class
       @shipping_class = ShippingClass.find_by(id: session[:shipping_class_id])
 
-      @shipping_class = delivery_address.try(:default_shipping_class) || select_cheapest_shipping_class unless @shipping_class.try(:valid_for_basket?, basket)
+      valid = @shipping_class.try(:valid_for_basket?, basket)
+
+      if !valid
+        @shipping_class = delivery_address.try(:default_shipping_class)
+        if !(@shipping_class || delivery_address)
+          @shipping_class = website.default_shipping_class
+        end
+        @shipping_class ||= select_cheapest_shipping_class
+      end
     end
 
     # Returns the cheapest valid shipping class for the customer's delivery

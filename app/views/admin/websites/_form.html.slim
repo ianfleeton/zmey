@@ -245,6 +245,9 @@
         | No
 
   .form-group
+    = form.label :default_shipping_class_id
+    = form.collection_select :default_shipping_class_id, ShippingClass.order(:name), :id, :name, { include_blank: 'None' }, class: 'form-control'
+  .form-group
   	= form.label :shipping_amount, 'Shipping amount'
   	| &pound;
     = form.text_field :shipping_amount, class: 'form-control'
