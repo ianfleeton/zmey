@@ -6,10 +6,10 @@
 
 h2 Countries
 - if @shipping_zone.countries.empty?
-  p There are no countries in this shipping zone.
+  p= t('.no_countries')
 - else
-  p The following countries are in this shipping zone:
+  p= t('.countries_in_this_zone')
 
   ul
     - @shipping_zone.countries.each do |country|
-      li= country.name
+      li= link_to country.name, edit_admin_country_path(country)

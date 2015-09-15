@@ -165,6 +165,10 @@ en:
     shipments:
       new:
         heading: 'Add Shipment'
+    shipping_zones:
+      edit:
+        countries_in_this_zone: 'The following countries are in this shipping zone:'
+        no_countries: 'There are no countries in this shipping zone.'
     users:
       edit:
         heading: 'Edit User Account Details'
