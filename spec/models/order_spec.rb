@@ -60,6 +60,28 @@ RSpec.describe Order, type: :model do
     end
   end
 
+  describe 'before_save :associate_with_user' do
+    let(:user_id) { nil }
+    let(:order) { FactoryGirl.build(:order, email_address: 'c2@example.org', user_id: user_id) }
+
+    subject { order.user_id }
+    context 'with no matching user' do
+      before { order.save }
+      it { should be_nil }
+    end
+    context 'with matching user' do
+      let!(:user) { FactoryGirl.create(:user, email: 'c2@example.org') }
+      before { order.save }
+      context 'with user_id already set' do
+        let(:user_id) { 123 }
+        it { should eq 123 }
+      end
+      context 'with user_id not set yet' do
+        it { should eq user.id }
+      end
+    end
+  end
+
   describe '.new_or_recycled' do
     subject { Order.new_or_recycled(id) }
 

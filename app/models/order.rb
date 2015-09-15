@@ -79,7 +79,7 @@ class Order < ActiveRecord::Base
   validates_presence_of :delivery_address_line_1, :delivery_town_city, :delivery_postcode, :delivery_country_id, if: -> { requires_delivery_address? }
   validates_uniqueness_of :order_number
 
-  before_save :calculate_total
+  before_save :calculate_total, :associate_with_user
   before_create :create_order_number
 
   # Associations
@@ -336,6 +336,12 @@ class Order < ActiveRecord::Base
   def record_sales_conversion!
     self.sales_conversion_recorded_at = Time.zone.now
     save
+  end
+
+  # Associates this order with a user having a matching email address if a user
+  # is not already assigned.
+  def associate_with_user
+    self.user_id ||= User.find_by(email: email_address).try(:id)
   end
 
   private
