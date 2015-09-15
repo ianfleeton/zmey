@@ -12,11 +12,12 @@ module Shipping
     end
 
     # Sets @shipping_class to the customer's chosen shipping class, if present
-    # and valid, otherwise the cheapest valid shipping class.
+    # and valid, otherwise the default (if available) or cheapest valid shipping
+    # class.
     def set_shipping_class
       @shipping_class = ShippingClass.find_by(id: session[:shipping_class_id])
 
-      @shipping_class = select_cheapest_shipping_class unless @shipping_class.try(:valid_for_basket?, basket)
+      @shipping_class = delivery_address.try(:default_shipping_class) || select_cheapest_shipping_class unless @shipping_class.try(:valid_for_basket?, basket)
     end
 
     # Returns the cheapest valid shipping class for the customer's delivery
