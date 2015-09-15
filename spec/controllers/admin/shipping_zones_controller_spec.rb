@@ -19,14 +19,18 @@ RSpec.describe Admin::ShippingZonesController, type: :controller do
   end
 
   describe 'POST create' do
+    let(:shipping_class) { FactoryGirl.create(:shipping_class) }
+    let(:params) { {name: 'UK Mainland', default_shipping_class_id: shipping_class.id} }
+
     context 'when successful' do
       it 'creates a new ShippingZone' do
-        expect{post_create}.to change{ShippingZone.count}.by 1
+        post_create
+        expect(ShippingZone.find_by(params)).to be
       end
     end
 
     def post_create
-      post :create, shipping_zone: {name: 'UK Mainland'}
+      post :create, shipping_zone: params
     end
   end
 

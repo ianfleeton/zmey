@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-describe ShippingClass do
+RSpec.describe ShippingClass, type: :model do
+  it { should have_many(:shipping_zones).with_foreign_key('default_shipping_class_id') }
+
   describe '#amount_for_basket' do
     let(:shipping_class) { FactoryGirl.create(:shipping_class, table_rate_method: table_rate_method) }
     let(:total) { 0 }

@@ -1,5 +1,5 @@
 class Admin::ShippingZonesController < Admin::AdminController
-  before_action :find_shipping_zone, only: [:edit, :update, :destroy]
+  before_action :set_shipping_zone, only: [:edit, :update, :destroy]
 
   def index
     @shipping_zones = ShippingZone.order(:name)
@@ -34,11 +34,11 @@ class Admin::ShippingZonesController < Admin::AdminController
 
   protected
 
-  def find_shipping_zone
-    @shipping_zone = ShippingZone.find_by(id: params[:id])
-  end
+    def set_shipping_zone
+      @shipping_zone = ShippingZone.find_by(id: params[:id])
+    end
 
-  def shipping_zone_params
-    params.require(:shipping_zone).permit(:name)
-  end
+    def shipping_zone_params
+      params.require(:shipping_zone).permit(:default_shipping_class_id, :name)
+    end
 end

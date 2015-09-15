@@ -6,11 +6,8 @@
       - @shipping_zone.errors.full_messages.each do |msg|
         li= msg
 
-= form_for [:admin, @shipping_zone] do |form|
+= bootstrap_form_for [:admin, @shipping_zone] do |form|
 
-  .form-group
-    = form.label :name
-    = form.text_field :name, required: true, class: 'form-control'
-
-  .form-group
-    = form.submit class: 'btn btn-primary'
+  = form.text_field :name, required: true, class: 'form-control'
+  = form.collection_select :default_shipping_class_id, @shipping_zone.shipping_classes, :id, :name, include_blank: 'None'
+  = form.submit class: 'btn btn-primary'

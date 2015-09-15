@@ -18,6 +18,12 @@ class Address < ActiveRecord::Base
     shipping_zone.try(:shipping_classes) || []
   end
 
+  # Returns the default shipping class defined by this address's zone, or
+  # <tt>nil</tt> if there is no zone or the zone has no default.
+  def default_shipping_class
+    shipping_zone.try(:default_shipping_class)
+  end
+
   def to_s
     label
   end

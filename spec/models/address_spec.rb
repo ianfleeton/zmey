@@ -47,6 +47,35 @@ describe Address do
     end
   end
 
+  describe '#default_shipping_class' do
+    context 'with shipping zone' do
+      before { setup_address_with_shipping_classes }
+
+      context 'shipping zone has no default class' do
+        it 'returns nil' do
+          expect(@address.default_shipping_class).to be_nil
+        end
+      end
+
+      context 'shipping_zone has a default class' do
+        before do
+          @shipping_zone.default_shipping_class = @shipping_class
+          @shipping_zone.save
+        end
+
+        it 'returns the default class' do
+          expect(@address.default_shipping_class).to eq @shipping_class
+        end
+      end
+    end
+
+    context 'without shipping zone' do
+      it 'returns nil' do
+        expect(Address.new.default_shipping_class).to be_nil
+      end
+    end
+  end
+
   def setup_address_with_shipping_classes
     @shipping_zone = FactoryGirl.create(:shipping_zone)
     @shipping_class = FactoryGirl.create(:shipping_class, shipping_zone: @shipping_zone)
