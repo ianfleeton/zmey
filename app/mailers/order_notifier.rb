@@ -21,20 +21,20 @@ class OrderNotifier < ActionMailer::Base
   end
 
   def send_to_customer_and_admin(website:, order:, shipment: nil, what:)
-    recipients = [order.email_address, website.email]
+    recipients = [order.email_address, website.email_address]
     @website = website
     @order = order
     @shipment = shipment
     mail(to: recipients, subject: "#{website.name}: #{what} #{order.order_number}",
-      from: website.email)
+      from: website.email_address)
   end
 
   def admin_waiting_for_payment(website, order)
-    recipients = [website.email]
+    recipients = [website.email_address]
     @website = website
     @order = order
     mail(to: recipients, subject: website.name + ': waiting for payment ' + order.order_number,
-      from: website.email)
+      from: website.email_address)
     render 'notification'
   end
 

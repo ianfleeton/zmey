@@ -4,6 +4,6 @@ class BasketMailer < ActionMailer::Base
   def saved_basket(website, email_address, basket)
     @website = website
     @basket  = basket
-    mail(to: email_address, from: website.email)
+    mail(to: email_address, from: website.email_address)
   end
 end

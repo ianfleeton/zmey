@@ -129,6 +129,20 @@ describe Website do
     end
   end
 
+  describe '#email_address' do
+    let(:email) { 'merchant@example.com' }
+    let(:website) { Website.new(email: email, name: name) }
+    subject { website.email_address }
+    context 'name is "Merchant"' do
+      let(:name) { 'Merchant' }
+      it { should eq 'Merchant <merchant@example.com>' }
+    end
+    context 'name is "9" Nail Shop"' do
+      let(:name) { '9" Nail Shop' }
+      it { should eq '"9\\" Nail Shop" <merchant@example.com>' }
+    end
+  end
+
   describe '#to_s' do
     it 'returns subdomain' do
       expect(Website.new(subdomain: 'xyzzy').to_s).to eq 'xyzzy'

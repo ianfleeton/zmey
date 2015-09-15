@@ -54,6 +54,15 @@ class Website < ActiveRecord::Base
     "#{scheme}://#{domain}" + ((port == 80) ? '' : ":#{port}")
   end
 
+  # Returns an email address including the display name taken from the website's
+  # name.
+  def email_address
+    require 'mail'
+    address = Mail::Address.new email
+    address.display_name = name.dup
+    address.format
+  end
+
   def to_s
     subdomain
   end
