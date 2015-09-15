@@ -21,4 +21,12 @@ RSpec.describe 'admin/shipping_zones/edit.html.slim', type: :view do
       expect(rendered).to have_css "a[href='#{edit_admin_country_path(country)}']"
     end
   end
+
+  context 'with classes in this zone' do
+    let!(:shipping_class) { FactoryGirl.create(:shipping_class, shipping_zone: shipping_zone) }
+    it 'links to edit the class' do
+      render
+      expect(rendered).to have_css "a[href='#{edit_admin_shipping_class_path(shipping_class)}']"
+    end
+  end
 end

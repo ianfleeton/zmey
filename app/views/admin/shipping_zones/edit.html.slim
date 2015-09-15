@@ -13,3 +13,9 @@ h2 Countries
   ul
     - @shipping_zone.countries.each do |country|
       li= link_to country.name, edit_admin_country_path(country)
+
+h2= t('.shipping_classes')
+-if @shipping_zone.shipping_classes.any?
+  ul
+    - @shipping_zone.shipping_classes.each do |sc|
+      li= link_to sc, edit_admin_shipping_class_path(sc)

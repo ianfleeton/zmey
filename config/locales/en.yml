@@ -169,6 +169,7 @@ en:
       edit:
         countries_in_this_zone: 'The following countries are in this shipping zone:'
         no_countries: 'There are no countries in this shipping zone.'
+        shipping_classes: 'Shipping Classes'
     users:
       edit:
         heading: 'Edit User Account Details'
