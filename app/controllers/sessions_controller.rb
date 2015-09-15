@@ -48,6 +48,7 @@ class SessionsController < ApplicationController
 
     def set_user
       reset_session
+      session[:basket_id] = basket.id
       session[:user] = @current_user.id
       if admin_or_manager?
         redirect_to admin_path
@@ -56,4 +57,3 @@ class SessionsController < ApplicationController
       end
     end
 end
-

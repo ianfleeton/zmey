@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SessionsController do
+RSpec.describe SessionsController, type: :controller do
   let(:website) { FactoryGirl.build(:website) }
   let(:customer) { FactoryGirl.create(:user, admin: false) }
 
@@ -17,6 +17,13 @@ describe SessionsController do
     context 'when the user authenticates as a customer' do
       before do
         allow(User).to receive(:authenticate).and_return(customer)
+      end
+
+      it 'preserves their basket' do
+        basket = Basket.create!
+        session[:basket_id] = basket.id
+        post :create
+        expect(session[:basket_id]).to eq basket.id
       end
 
       it "redirects to the customer's account page" do
