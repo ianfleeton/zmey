@@ -1,13 +1,10 @@
 class BasketController < ApplicationController
-  include Shipping
   include Discounts
   include SuspendedShopping
 
   layout 'basket_checkout'
 
   before_action :update_shipping_class, only: [:update]
-  before_action :set_shipping_class, only: [:add_update_multiple, :index]
-  before_action :set_shipping_amount, only: [:add_update_multiple, :index]
 
   before_action :remove_invalid_discounts, only: [:index]
   before_action :calculate_discounts, only: [:index]

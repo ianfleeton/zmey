@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include Shipping
   helper :all # include all helpers, all the time
 
   protect_from_forgery
@@ -8,7 +9,8 @@ class ApplicationController < ActionController::Base
   before_action :set_time_zone, :website, :protect_staging_website,
     :initialize_page_defaults, :current_user,
     :set_locale, :protect_private_website, :initialize_tax_display,
-    :set_resolver, :basket
+    :set_resolver,
+    :basket, :set_shipping_class, :set_shipping_amount
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_error

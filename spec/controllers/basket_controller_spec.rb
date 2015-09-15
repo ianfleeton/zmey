@@ -2,7 +2,7 @@ require 'rails_helper'
 require_relative 'shared_examples/shipping.rb'
 require_relative 'shared_examples/shopping_suspended.rb'
 
-describe BasketController do
+RSpec.describe BasketController, type: :controller do
   let(:website) { FactoryGirl.create(:website, name: 'www', email: 'anon@example.org', domain: 'example.org') }
 
   before do
@@ -89,7 +89,7 @@ describe BasketController do
     let(:email_address) { 'shopper@example.org' }
 
     it 'clones the basket and its contents' do
-      basket = double(Basket)
+      basket = double(Basket, apply_shipping?: false, shipping_supplement: 0)
       allow(controller).to receive(:basket).and_return basket
       expect(basket).to receive(:deep_clone)
         .and_return(Basket.new(token: 'token'))
