@@ -2,6 +2,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
   include Enums::Conversions
 
   before_action :set_order, only: [:show, :update]
+  before_action :convert_order_status, only: [:create, :update]
 
   def index
     page      = params[:page] || 1
@@ -13,10 +14,6 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
   end
 
   def create
-    if params[:order][:status]
-      params[:order][:status] = PaymentStatus(params[:order][:status]).to_i
-    end
-
     @order = Order.new(order_params)
 
     unless @order.save
@@ -65,6 +62,12 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       end
 
       Order.where(conditions).where.not(not_conditions)
+    end
+
+    def convert_order_status
+      if params[:order][:status]
+        params[:order][:status] = PaymentStatus(params[:order][:status]).to_i
+      end
     end
 
     def order_params

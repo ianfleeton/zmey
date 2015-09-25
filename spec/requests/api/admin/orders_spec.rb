@@ -334,14 +334,18 @@ describe 'Admin orders API' do
     let(:shipment_email_sent_at) { '2014-05-14T16:25:56.000+01:00' }
     let(:shipped_at) { '2014-05-14T15:50:12.000+01:00' }
     let(:shipping_tracking_number) { 'TRACK123' }
+    let(:payment_status) { 'payment_received' }
+
+    let(:basic_params) {{
+      processed_at: processed_at,
+      shipment_email_sent_at: shipment_email_sent_at,
+      shipped_at: shipped_at,
+      shipping_tracking_number: shipping_tracking_number,
+      status: payment_status
+    }}
 
     before do
-      patch api_admin_order_path(order), order: {
-        processed_at: processed_at,
-        shipment_email_sent_at: shipment_email_sent_at,
-        shipped_at: shipped_at,
-        shipping_tracking_number: shipping_tracking_number,
-      }
+      patch api_admin_order_path(order), order: basic_params
     end
 
     context 'when order found' do
@@ -353,10 +357,14 @@ describe 'Admin orders API' do
 
       it 'updates an order' do
         order.reload
-        expect(order.processed_at).to eq processed_at
-        expect(order.shipment_email_sent_at).to eq shipment_email_sent_at
-        expect(order.shipped_at).to eq shipped_at
-        expect(order.shipping_tracking_number).to eq shipping_tracking_number
+        expect(Order.find_by(
+          basic_params.merge(
+            processed_at: '2014-05-14 13:03:56',
+            shipment_email_sent_at: '2014-05-14 15:25:56',
+            shipped_at: '2014-05-14 14:50:12',
+            status: Enums::PaymentStatus::PAYMENT_RECEIVED
+          )
+        )).to eq order
       end
     end
 
