@@ -81,6 +81,6 @@ Rails.application.configure do
     email: {
       email_prefix: "[Zmey Error Report] ",
       sender_address: %{"Zmey" <noreply@yesl.co.uk>},
-      exception_recipients: %w{ianfleeton@gmail.com}
+      exception_recipients: [ENV['ZMEY_EXCEPTION_RECIPIENT']]
     }
 end
