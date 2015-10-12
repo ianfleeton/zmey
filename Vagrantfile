@@ -136,6 +136,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Install FreeImage (ImageScience dependency).
   config.vm.provision :shell, inline: %q{apt-get -y install libfreeimage3 libfreeimage-dev}
 
+  # Install other build dependencies.
+  config.vm.provision :shell, inline: %q{apt-get -y install libcurl4-openssl-dev libgmp-dev}
+
   # Install MySQL.
   config.vm.provision :shell, inline: %q{debconf-set-selections <<< 'mysql-server-5.6 mysql-server/root_password password secret'}
   config.vm.provision :shell, inline: %q{debconf-set-selections <<< 'mysql-server-5.6 mysql-server/root_password_again password secret'}
