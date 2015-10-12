@@ -149,6 +149,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Install rvm and ruby.
   config.vm.provision :shell, privileged: false, path: 'install-rvm-ruby.sh'
 
+  # Install NodeJS.
+  config.vm.provision :shell, inline: %q{curl -sL https://deb.nodesource.com/setup | sudo bash -}
+  config.vm.provision :shell, inline: %q{apt-get -y install nodejs}
+
   # Bundle install our gems.
   config.vm.provision :shell, privileged: false, inline: %q{cd /vagrant && bundle install}
   # Copy in sample database config.
