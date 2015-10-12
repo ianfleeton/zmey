@@ -291,6 +291,10 @@ describe 'Admin orders API' do
       )).to be
     end
 
+    it 'ignores a blank status' do
+      post '/api/admin/orders', order: basic_params.merge(status: '')
+    end
+
     it 'returns 422 if order cannot be created' do
       post '/api/admin/orders', order: {email_address: 'is not enough'}
       expect(status).to eq 422

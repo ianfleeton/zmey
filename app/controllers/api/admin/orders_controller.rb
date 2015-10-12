@@ -65,7 +65,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
     end
 
     def convert_order_status
-      if params[:order][:status]
+      if params[:order][:status].present?
         params[:order][:status] = PaymentStatus(params[:order][:status]).to_i
       end
     end
