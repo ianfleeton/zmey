@@ -285,6 +285,24 @@ RSpec.describe Admin::OrdersController, type: :controller do
       end
     end
 
+    describe 'POST mark_processed' do
+      let(:order) { FactoryGirl.create(:order, processed_at: nil) }
+
+      before { post 'mark_processed', id: order.id }
+
+      it 'sets the order processed_at to current time' do
+        expect(order.reload.processed_at).to be
+      end
+
+      it 'sets a flash notice' do
+        expect(flash[:notice]).to eq I18n.t('controllers.admin.orders.mark_processed.marked')
+      end
+
+      it 'redirects to #edit' do
+        expect(response).to redirect_to edit_admin_order_path(order)
+      end
+    end
+
     describe 'POST mark_unprocessed' do
       let(:order) { FactoryGirl.create(:order, processed_at: Time.zone.now) }
 

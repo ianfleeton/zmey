@@ -107,6 +107,7 @@ en:
         fully_shipped: 'This order is fully shipped'
         heading: 'Edit Order'
         locked_warning: 'This order is now locked and many details cannot be changed.'
+        mark_processed: 'Mark Processed'
         mark_unprocessed: 'Mark Unprocessed'
         no_comments: 'No comments have been added to this order yet.'
         not_fully_shipped: 'This order is not yet fully shipped'
@@ -334,6 +335,8 @@ en:
           import_in_progress: 'Import is running in the background.'
           nothing_uploaded: 'Nothing was uploaded.'
       orders:
+        mark_processed:
+          marked: 'This order has been marked as processed.'
         mark_unprocessed:
           marked: 'This order has been marked as unprocessed.'
       offline_payment_methods:

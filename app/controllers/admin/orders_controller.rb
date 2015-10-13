@@ -1,5 +1,5 @@
 class Admin::OrdersController < Admin::AdminController
-  before_action :set_order, only: [:show, :edit, :update, :destroy, :mark_unprocessed, :record_sales_conversion]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :mark_processed, :mark_unprocessed, :record_sales_conversion]
 
   def index
     if params[:user_id]
@@ -56,9 +56,13 @@ class Admin::OrdersController < Admin::AdminController
     render layout: false
   end
 
+  def mark_processed
+    order_processed!(Time.zone.now)
+    redirect_to edit_admin_order_path(@order), notice: I18n.t('controllers.admin.orders.mark_processed.marked')
+  end
+
   def mark_unprocessed
-    @order.processed_at = nil
-    @order.save
+    order_processed!(nil)
     redirect_to edit_admin_order_path(@order), notice: I18n.t('controllers.admin.orders.mark_unprocessed.marked')
   end
 
@@ -195,5 +199,10 @@ class Admin::OrdersController < Admin::AdminController
         :delivery_postcode,
         :email_address
       ]
+    end
+
+    def order_processed!(time)
+      @order.processed_at = time
+      @order.save
     end
 end
