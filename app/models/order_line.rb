@@ -62,4 +62,11 @@ class OrderLine < ActiveRecord::Base
     order.calculate_total
     order.save
   end
+
+  # Returns the quantity in a type suitable for display. If there is a product
+  # and it allows a fractional quantity then it's a decimal, otherwise it's an
+  # integer.
+  def display_quantity
+    product.try(:allow_fractional_quantity?) ? quantity : quantity.to_i
+  end
 end

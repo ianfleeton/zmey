@@ -43,4 +43,37 @@ RSpec.describe OrderLine, type: :model do
       expect(o.tax_percentage).to eq 20.0
     end
   end
+
+  describe '#display_quantity' do
+    let(:order_line) { OrderLine.new(product: product, quantity: quantity) }
+
+    context 'with product allowing fractional quantity' do
+      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: true) }
+      let(:quantity) { 2.5 }
+
+      it 'returns a decimal' do
+        expect(order_line.display_quantity).to eq 2.5
+      end
+    end
+
+    context 'with product disallowing fractional quantity' do
+      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: false) }
+      let(:quantity) { 2 }
+
+      it 'returns an integer' do
+        expect(order_line.display_quantity).to eq 2
+        expect(order_line.display_quantity.kind_of?(Integer)).to be_truthy
+      end
+    end
+
+    context 'with no product' do
+      let(:product) { nil }
+      let(:quantity) { 2 }
+
+      it 'returns an integer' do
+        expect(order_line.display_quantity).to eq 2
+        expect(order_line.display_quantity.kind_of?(Integer)).to be_truthy
+      end
+    end
+  end
 end
