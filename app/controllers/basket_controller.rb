@@ -70,8 +70,12 @@ class BasketController < ApplicationController
     update_quantities if params[:update_quantities]
     remove_item if params[:remove_item]
     redirect_to checkout_path and return if checking_out?
-    flash[:notice] = 'Basket updated.'
-    redirect_to basket_path
+    if request.xhr?
+      head :ok
+    else
+      flash[:notice] = 'Basket updated.'
+      redirect_to basket_path
+    end
   end
 
   def purge_old

@@ -83,6 +83,12 @@ RSpec.describe BasketController, type: :controller do
 
       it { should redirect_to checkout_path }
     end
+
+    context 'xhr request' do
+      before { xhr :post, :update }
+
+      it { should respond_with(200) }
+    end
   end
 
   describe 'POST save_and_email' do
