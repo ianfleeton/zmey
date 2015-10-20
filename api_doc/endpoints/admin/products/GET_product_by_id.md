@@ -27,6 +27,7 @@ defined extra attributes for products, such as `length` in the example below.
     "sku": "SKU-1",
     "name": "iDevice",
     "price": "299.0",
+    "weight": "0.65",
     "image": {
       "id": 1,
       "href": "https://zmey.co.uk/api/admin/images/1"

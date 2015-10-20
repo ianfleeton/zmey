@@ -4,6 +4,7 @@ json.product do
   json.sku    @product.sku
   json.name   @product.name
   json.price  @product.price
+  json.weight @product.weight
   if @product.image
     json.image do
       json.id   @product.image.id

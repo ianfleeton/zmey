@@ -90,11 +90,18 @@ describe 'Admin products API' do
 
   describe 'GET show' do
     context 'when product found' do
-      let(:product) { FactoryGirl.create(:product) }
+      let(:weight) { 1.23 }
+      let(:product) { FactoryGirl.create(:product, weight: weight) }
 
       it 'returns 200 OK' do
         get api_admin_product_path(product)
         expect(response.status).to eq 200
+      end
+
+      it 'includes basic attributes' do
+        get api_admin_product_path(product)
+        product_obj = JSON.parse(response.body)['product']
+        expect(product_obj['weight']).to eq weight.to_s
       end
 
       it 'includes extra attributes' do
