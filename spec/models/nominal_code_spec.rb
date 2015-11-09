@@ -6,6 +6,6 @@ RSpec.describe NominalCode, type: :model do
 
   context 'uniqueness' do
     before { FactoryGirl.create(:nominal_code) }
-    it { should validate_uniqueness_of(:code) }
+    it { should validate_uniqueness_of(:code).case_insensitive }
   end
 end

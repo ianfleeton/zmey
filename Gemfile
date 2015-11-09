@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5.rc2'
 # Use mysql as the database for Active Record
 gem 'mysql2', platform: :ruby
 gem 'jdbc-mysql', platform: :jruby
@@ -116,7 +116,7 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'database_cleaner'
 end

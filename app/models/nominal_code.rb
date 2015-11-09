@@ -1,5 +1,5 @@
 class NominalCode < ActiveRecord::Base
-  validates_uniqueness_of :code
+  validates_uniqueness_of :code, case_sensitive: false
   validates_presence_of :code, :description
 
   has_many :purchase_products, class_name: 'Product', foreign_key: 'purchase_nominal_code_id', dependent: :nullify
