@@ -97,7 +97,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.2.0'
+  gem 'rspec-rails', '~> 3.3.0'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri_21, :mri_22]
@@ -115,7 +115,7 @@ end
 group :test do
   gem 'capybara'
   gem 'launchy'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 2.47.0'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'database_cleaner'
