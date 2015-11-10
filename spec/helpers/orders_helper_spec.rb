@@ -23,8 +23,8 @@ RSpec.describe OrdersHelper, type: :helper do
     end
 
     it 'renders the Google Analytics sales conversion code' do
+      expect(view).to receive(:render).with(hash_including(partial: 'orders/google_ecommerce_tracking'), anything).and_call_original
       record_sales_conversion(order)
-      expect(view).to render_template 'orders/_google_ecommerce_tracking'
     end
 
     it 'tells the order to record sales conversion' do
