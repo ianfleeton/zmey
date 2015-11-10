@@ -6,8 +6,8 @@ describe Page do
 
   context 'uniqueness' do
     before  { FactoryGirl.create(:page) }
-    it { should validate_uniqueness_of(:slug) }
-    it { should validate_uniqueness_of(:title) }
+    it { should validate_uniqueness_of(:slug).case_insensitive }
+    it { should validate_uniqueness_of(:title).case_insensitive }
   end
 
   it 'allows a dot in the slug' do
