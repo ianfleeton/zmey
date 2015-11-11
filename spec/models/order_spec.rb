@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
   context 'uniqueness' do
-    before { FactoryGirl.create(:order) }
+    before { FactoryGirl.create(:order, order_number: 'AB123') }
     it { should validate_uniqueness_of :order_number }
   end
 
