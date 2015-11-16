@@ -71,7 +71,7 @@ class BasketController < ApplicationController
     remove_item if params[:remove_item]
     redirect_to checkout_path and return if checking_out?
     if request.xhr?
-      head :ok
+      head 204
     else
       flash[:notice] = 'Basket updated.'
       redirect_to basket_path

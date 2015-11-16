@@ -87,7 +87,7 @@ RSpec.describe BasketController, type: :controller do
     context 'xhr request' do
       before { xhr :post, :update }
 
-      it { should respond_with(200) }
+      it { should respond_with(204) }
     end
   end
 
