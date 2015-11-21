@@ -51,7 +51,7 @@ FactoryGirl.define do
   end
 
   factory :choice do
-    name 'Green'
+    sequence(:name) { |n| "Choice #{n}" }
     association :feature
   end
 

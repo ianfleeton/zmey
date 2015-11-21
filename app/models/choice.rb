@@ -16,6 +16,10 @@ class Choice < ActiveRecord::Base
   def create_permutations
     return unless feature.component
 
+    # Don't update if we're already included.
+    my_perm_string = "_#{id}_"
+    return if feature.component.permutations.any? { |p| p.permutation.include?(my_perm_string) }
+
     if feature.component.features.count == 1
       # just add the permutation
       Permutation.create!(component_id: feature.component.id, valid_selection: true, permutation: "_#{id}_")
@@ -25,7 +29,7 @@ class Choice < ActiveRecord::Base
     if feature.choices.count == 1
       # append ID to existing permutations
       feature.component.permutations.each do |permutation|
-        permutation.permutation += "_#{id}_"
+        permutation.permutation += my_perm_string
         permutation.save
       end
       return
