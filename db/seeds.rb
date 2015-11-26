@@ -13,15 +13,16 @@ Product.destroy_all
 User.destroy_all
 Website.destroy_all
 
+Country.populate!
+
 website = Website.create!(
-  country_id: 1, # FIXME as I am a circular dependency :-(
+  country: Country.find_by(name: 'United Kingdom'),
   domain: 'www.localhost',
   email: 'merchant@example.com',
   name: 'Shop',
   subdomain: 'local'
 )
 
-Country.populate!
 Page.bootstrap(website)
 
 home_page = Page.find_by(name: 'Home')
