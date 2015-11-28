@@ -14,6 +14,15 @@ RSpec.describe ApplicationController, type: :controller do
     end
   end
 
+  describe '#website' do
+    subject { controller.website }
+
+    context 'with no website in database' do
+      it { should be_instance_of(Website) }
+      it { should be_new_record }
+    end
+  end
+
   describe '#logged_in?' do
     it 'returns true when current_user is persisted' do
       allow(controller).to receive(:current_user)

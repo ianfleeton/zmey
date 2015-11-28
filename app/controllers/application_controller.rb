@@ -79,12 +79,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_website
-    @w = Website.first
-    if @w
-      return @w
-    else
-      not_found
-    end
+    @w = Website.first || Website.new
   end
 
   def not_found
