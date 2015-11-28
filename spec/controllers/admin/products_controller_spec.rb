@@ -2,14 +2,8 @@ require 'rails_helper'
 require 'shared_examples_for_controllers'
 
 RSpec.describe Admin::ProductsController, type: :controller do
-  let(:website) { FactoryGirl.build(:website) }
-
   def mock_product(stubs={})
     @mock_product ||= double(Product, stubs)
-  end
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
   end
 
   describe "GET index" do
@@ -68,7 +62,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
       describe "with valid params" do
         before do
-          allow(Product).to receive(:new).with(valid_params['product']).and_return(mock_product(:website_id= => website.id, save: true))
+          allow(Product).to receive(:new).with(valid_params['product']).and_return(mock_product(save: true))
         end
 
         it "redirects to the new product page" do
@@ -79,11 +73,11 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
       describe "with invalid params" do
         before do
-          allow(Product).to receive(:new).with({'these' => 'params'}).and_return(mock_product(:website_id= => website.id, save: false))
+          allow(Product).to receive(:new).with({'these' => 'params'}).and_return(mock_product(save: false))
         end
 
         it "re-renders the 'new' template" do
-          allow(Product).to receive(:new).and_return(mock_product(:website_id= => website.id, :save => false))
+          allow(Product).to receive(:new).and_return(mock_product(:save => false))
           post :create, valid_params
           expect(response).to render_template('new')
         end

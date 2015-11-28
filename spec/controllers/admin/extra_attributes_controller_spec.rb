@@ -1,12 +1,6 @@
 require 'rails_helper'
 
-describe Admin::ExtraAttributesController do
-  let(:website) { FactoryGirl.build(:website) }
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
-  end
-
+RSpec.describe Admin::ExtraAttributesController, type: :controller do
   context 'as admin' do
     before do
       logged_in_as_admin

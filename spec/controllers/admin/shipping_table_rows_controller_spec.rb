@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::ShippingTableRowsController, type: :controller do
-  let(:website) { FactoryGirl.build(:website) }
-
   before do
-    allow(controller).to receive(:website).and_return(website)
     allow(controller).to receive(:admin?).and_return(true)
   end
 

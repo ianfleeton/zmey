@@ -1,15 +1,10 @@
 require 'rails_helper'
 
-describe OrdersController do
-  let(:website) { FactoryGirl.build(:website) }
+RSpec.describe OrdersController, type: :controller do
   let(:current_user) { FactoryGirl.create(:user) }
 
   def mock_order(stubs={})
     @mock_order ||= double(Order, stubs)
-  end
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
   end
 
   describe 'GET index' do

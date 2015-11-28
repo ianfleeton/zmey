@@ -1,12 +1,6 @@
 require 'rails_helper'
 
-describe Admin::PagesController do
-  let(:website) { FactoryGirl.create(:website) }
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
-  end
-
+RSpec.describe Admin::PagesController, type: :controller do
   context 'when admin or manager' do
     before { allow(controller).to receive(:admin_or_manager?).and_return(true) }
 

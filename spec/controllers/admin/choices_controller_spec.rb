@@ -1,12 +1,6 @@
 require 'rails_helper'
 
-describe Admin::ChoicesController do
-  let(:website) { FactoryGirl.build(:website) }
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
-  end
-
+RSpec.describe Admin::ChoicesController, type: :controller do
   describe 'GET new' do
     context 'when logged in as an administrator' do
       before do

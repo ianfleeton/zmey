@@ -1,13 +1,7 @@
 require 'rails_helper'
 require 'shared_examples_for_controllers'
 
-describe Admin::CarouselSlidesController do
-  let(:website) { FactoryGirl.build(:website) }
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
-  end
-
+RSpec.describe Admin::CarouselSlidesController, type: :controller do
   def mock_carousel_slide(stubs={})
     @mock_carousel_slide ||= double(CarouselSlide, stubs)
   end
@@ -50,14 +44,14 @@ describe Admin::CarouselSlidesController do
       let(:valid_params) {{ 'carousel_slide' => { 'caption' => 'A Caption' } }}
 
       it 'assigns a newly created but unsaved carousel slide as @carousel_slide' do
-        expect(CarouselSlide).to receive(:new).and_return(mock_carousel_slide(:website= => website, save: false))
+        expect(CarouselSlide).to receive(:new).and_return(mock_carousel_slide(save: false))
         post :create, carousel_slide: {these: 'params'}
         expect(assigns(:carousel_slide)).to equal(mock_carousel_slide)
       end
 
       describe 'when save succeeds' do
         before do
-          allow(CarouselSlide).to receive(:new).and_return(mock_carousel_slide(:website= => website, save: true))
+          allow(CarouselSlide).to receive(:new).and_return(mock_carousel_slide(save: true))
         end
 
         it 'redirects to the carousel slides list' do
@@ -68,7 +62,7 @@ describe Admin::CarouselSlidesController do
 
       describe 'when save fails' do
         before do
-          allow(CarouselSlide).to receive(:new).and_return(mock_carousel_slide(:website= => website, save: false))
+          allow(CarouselSlide).to receive(:new).and_return(mock_carousel_slide(save: false))
         end
 
         it "re-renders the 'new' template" do

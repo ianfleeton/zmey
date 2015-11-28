@@ -1,13 +1,8 @@
 require 'rails_helper'
 require 'shared_examples_for_controllers'
 
-describe Admin::UsersController do
-  let(:website) { FactoryGirl.build(:website) }
+RSpec.describe Admin::UsersController, type: :controller do
   let(:user)    { FactoryGirl.create(:user) }
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
-  end
 
   context 'when admin or manager' do
     before { allow(controller).to receive(:admin_or_manager?).and_return(true) }

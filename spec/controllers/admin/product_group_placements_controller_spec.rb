@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::ProductGroupPlacementsController, type: :controller do
-  let(:website) { FactoryGirl.build(:website) }
-
   before do
-    allow(controller).to receive(:website).and_return(website)
     logged_in_as_admin
   end
 

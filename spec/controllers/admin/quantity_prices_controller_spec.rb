@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe Admin::QuantityPricesController do
+RSpec.describe Admin::QuantityPricesController, type: :controller do
 end

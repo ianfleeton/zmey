@@ -1,10 +1,7 @@
 require 'rails_helper'
 
-describe Admin::AdminController do
-  let(:website) { FactoryGirl.build(:website) }
-
+RSpec.describe Admin::AdminController, type: :controller do
   before do
-    allow(controller).to receive(:website).and_return(website)
     logged_in_as_admin
   end
 

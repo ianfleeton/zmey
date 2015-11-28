@@ -1,11 +1,8 @@
 require 'rails_helper'
 require 'shared_examples_for_controllers'
 
-describe Admin::ImagesController do
-  let(:website) { FactoryGirl.build(:website) }
-
+RSpec.describe Admin::ImagesController, type: :controller do
   before do
-    allow(controller).to receive(:website).and_return(website)
     logged_in_as_admin
   end
 

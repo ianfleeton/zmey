@@ -1,12 +1,6 @@
 require 'rails_helper'
 
-describe Admin::ProductPlacementsController do
-  let(:website) { FactoryGirl.build(:website) }
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
-  end
-
+RSpec.describe Admin::ProductPlacementsController, type: :controller do
   describe 'POST create' do
     context 'when logged in as admin' do
       before { logged_in_as_admin }

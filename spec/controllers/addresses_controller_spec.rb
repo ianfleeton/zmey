@@ -1,14 +1,8 @@
 require 'rails_helper'
 
-describe AddressesController do
-  let(:website) { FactoryGirl.build(:website) }
-
+RSpec.describe AddressesController, type: :controller do
   def mock_address(stubs={})
     @mock_address ||= double(Address, stubs)
-  end
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
   end
 
   shared_examples_for 'an address book' do |method, action|

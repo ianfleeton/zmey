@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Admin::NominalCodesController, type: :controller do
   before do
-    FactoryGirl.create(:website)
     logged_in_as_admin
   end
 

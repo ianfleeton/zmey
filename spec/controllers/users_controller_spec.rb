@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  before { FactoryGirl.create(:website) }
-
   describe 'POST create' do
     let(:admin) { false }
     let(:user_params) {{

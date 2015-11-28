@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe Admin::DiscountsController do
+RSpec.describe Admin::DiscountsController, type: :controller do
 end

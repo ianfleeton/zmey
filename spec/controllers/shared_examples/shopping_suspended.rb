@@ -1,7 +1,7 @@
 shared_examples_for 'a suspended shop bouncer' do
   describe 'before_actions' do
     let(:website) {
-      FactoryGirl.create(:website,
+      Website.new(
         shopping_suspended: shopping_suspended,
         shopping_suspended_message: shopping_suspended_message
       )

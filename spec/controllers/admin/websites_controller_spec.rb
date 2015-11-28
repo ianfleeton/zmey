@@ -1,12 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Admin::WebsitesController, type: :controller do
-  let(:website) { FactoryGirl.build(:website) }
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
-  end
-
   def mock_website(stubs={})
     @mock_website ||= double(Website, stubs)
   end

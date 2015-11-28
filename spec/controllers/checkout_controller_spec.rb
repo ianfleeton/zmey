@@ -4,7 +4,7 @@ require_relative 'shared_examples/shipping.rb'
 require_relative 'shared_examples/shopping_suspended.rb'
 
 RSpec.describe CheckoutController, type: :controller do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { Website.new }
   before { allow(controller).to receive(:website).and_return(website) }
 
   it_behaves_like 'a suspended shop bouncer'
@@ -440,6 +440,7 @@ RSpec.describe CheckoutController, type: :controller do
   end
 
   describe 'GET confirm' do
+    let(:website) { Website.new(email: 'merchant@example.com') }
     context 'with empty basket' do
       before { get :confirm }
 
@@ -458,30 +459,36 @@ RSpec.describe CheckoutController, type: :controller do
         session[:delivery_address_id] = delivery_address_id
         add_items_to_basket
         allow(controller).to receive(:delivery_address_required?).and_return(delivery_address_required?)
-        get 'confirm'
       end
 
       it_behaves_like 'a shipping class setter', :get, :confirm
       it_behaves_like 'a shipping amount setter', :get, :confirm
       it_behaves_like 'a discounts calculator', :get, :confirm
 
-      it { should render_with_layout 'basket_checkout' }
-      it { should use_before_action :remove_invalid_discounts }
+      context 'action' do
+        before { get :confirm }
+        it { should render_with_layout 'basket_checkout' }
+        it { should use_before_action :remove_invalid_discounts }
+      end
 
       it 'assigns billing address to @billing_address' do
+        get :confirm
         expect(assigns(:billing_address)).to eq billing_address
       end
 
       it 'assigns delivery address to @delivery_address' do
+        get :confirm
         expect(assigns(:delivery_address)).to eq delivery_address
       end
 
       context 'without a billing address' do
+        before { get :confirm }
         let(:billing_address_id) { nil }
         it { should redirect_to checkout_path }
       end
 
       context 'without a delivery address' do
+        before { get :confirm }
         let(:delivery_address_id) { nil }
         context 'but not required' do
           let(:delivery_address_required?) { false }
@@ -521,6 +528,7 @@ RSpec.describe CheckoutController, type: :controller do
       end
 
       it "records the customer's IP address" do
+        get :confirm
         expect(assigns(:order).ip_address).to eq '0.0.0.0'
       end
 
@@ -530,6 +538,7 @@ RSpec.describe CheckoutController, type: :controller do
       end
 
       it 'records the weight of the products' do
+        get :confirm
         expect(assigns(:order).weight).to eq 0.75
       end
 
@@ -550,14 +559,16 @@ RSpec.describe CheckoutController, type: :controller do
         get :confirm
       end
 
-      context 'without a billing address' do
-        let(:billing_address) { nil }
-        it { should redirect_to checkout_path }
-      end
-
-      context 'without a delivery address' do
-        let(:delivery_address) { nil }
-        it { should redirect_to checkout_path }
+      context 'without address' do
+        before { get :confirm }
+        context 'billing' do
+          let(:billing_address) { nil }
+          it { should redirect_to checkout_path }
+        end
+        context 'delivery' do
+          let(:delivery_address) { nil }
+          it { should redirect_to checkout_path }
+        end
       end
 
       context 'with a shipping class' do

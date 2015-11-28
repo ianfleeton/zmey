@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe Admin::LiquidTemplatesController do
+RSpec.describe Admin::LiquidTemplatesController, type: :controller do
 end

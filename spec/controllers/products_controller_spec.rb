@@ -1,15 +1,9 @@
 require 'rails_helper'
 require 'shared_examples_for_controllers'
 
-describe ProductsController do
-  let(:website) { FactoryGirl.build(:website) }
-
+RSpec.describe ProductsController, type: :controller do
   def mock_product(stubs={})
     @mock_product ||= double(Product, stubs)
-  end
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
   end
 
   describe "GET show" do

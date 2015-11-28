@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Admin::ProductImagesController do
-  before { FactoryGirl.create(:website) }
-
   describe 'POST create' do
     let!(:product) { FactoryGirl.create(:product) }
     let(:image) { FactoryGirl.create(:image) }

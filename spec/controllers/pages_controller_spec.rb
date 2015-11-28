@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe PagesController do
+RSpec.describe PagesController, type: :controller do
   describe 'GET show' do
     let(:website) { FactoryGirl.create(:website) }
     let(:slug)    { 'slug' }

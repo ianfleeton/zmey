@@ -1,13 +1,9 @@
 require 'rails_helper'
 require 'shared_examples_for_controllers'
 
-describe Admin::CountriesController do
-  let(:website) { FactoryGirl.create(:website) }
-
+RSpec.describe Admin::CountriesController, type: :controller do
   before do
-    Website.delete_all
     logged_in_as_admin
-    allow(controller).to receive(:website).and_return(website)
   end
 
   describe 'GET index' do

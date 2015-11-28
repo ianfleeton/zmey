@@ -2,14 +2,8 @@ require 'rails_helper'
 require 'shared_examples_for_controllers'
 
 RSpec.describe Admin::OrdersController, type: :controller do
-  let(:website) { FactoryGirl.create(:website) }
-
   def mock_order(stubs={})
     @mock_order ||= double(Order, stubs)
-  end
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
   end
 
   context 'when admin or manager' do

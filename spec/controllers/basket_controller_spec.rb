@@ -3,7 +3,7 @@ require_relative 'shared_examples/shipping.rb'
 require_relative 'shared_examples/shopping_suspended.rb'
 
 RSpec.describe BasketController, type: :controller do
-  let(:website) { FactoryGirl.create(:website, name: 'www', email: 'anon@example.org', domain: 'example.org') }
+  let(:website) { Website.new }
 
   before do
     allow(controller).to receive(:website).and_return(website)
@@ -92,6 +92,7 @@ RSpec.describe BasketController, type: :controller do
   end
 
   describe 'POST save_and_email' do
+    let(:website) { FactoryGirl.create(:website, name: 'www', email: 'anon@example.org', domain: 'example.org') }
     let(:email_address) { 'shopper@example.org' }
 
     it 'clones the basket and its contents' do

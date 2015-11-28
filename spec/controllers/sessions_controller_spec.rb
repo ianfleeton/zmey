@@ -1,12 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
-  let(:website) { FactoryGirl.build(:website) }
   let(:customer) { FactoryGirl.create(:user, admin: false) }
-
-  before do
-    allow(controller).to receive(:website).and_return(website)
-  end
 
   describe 'POST #create' do
     it 'authenticates the user' do

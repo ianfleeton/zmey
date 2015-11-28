@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ImagesController, type: :controller do
-  before { FactoryGirl.create(:website) }
-
   describe 'GET sized_image' do
     let(:image)    { FactoryGirl.create(:image) }
     let(:id)       { image.id }
