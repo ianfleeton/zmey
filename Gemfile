@@ -68,6 +68,9 @@ group :development do
   gem 'guard-rspec', require: false
 
   gem 'thin', platforms: :ruby
+
+  # Run specs in parallel
+  gem 'parallel_tests', group: :development
 end
 
 # Use ActiveModel has_secure_password

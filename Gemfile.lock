@@ -206,6 +206,9 @@ GEM
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    parallel (1.6.1)
+    parallel_tests (2.1.1)
+      parallel
     postcode_software (0.0.1)
       nokogiri (~> 1.6)
     pry (0.10.3)
@@ -390,6 +393,7 @@ DEPENDENCIES
   mysql2
   newrelic_rpm
   nilify_blanks
+  parallel_tests
   postcode_software (~> 0.0.1)
   rails (= 4.2.5)
   rails-html-sanitizer (~> 1.0)
