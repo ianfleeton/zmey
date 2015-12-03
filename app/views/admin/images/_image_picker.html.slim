@@ -91,7 +91,7 @@ javascript:
   = form.hidden_field(attribute)
   .image-preview id="#{object}_#{attribute}_image_preview"
     - image_url = Image.find_by(id: form.object.send(attribute)).try(:url)
-    - image_url ||= '#'
+    - image_url ||= '/images/image-missing.png'
     img src="#{image_url}"
   p
     .btn-group
