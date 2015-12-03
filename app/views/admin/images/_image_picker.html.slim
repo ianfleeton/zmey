@@ -19,6 +19,7 @@ javascript:
     $('#' + imageRemove).click(function(event) {
       event.preventDefault();
       $('#' + hiddenField).val('');
+      $('#' + imagePreview + ' img').attr('src', '/images/image-missing.png');
     });
 
     function getImages() {
