@@ -6,4 +6,27 @@ RSpec.describe ProductImage, type: :model do
 
   it { should belong_to(:image) }
   it { should belong_to(:product) }
+
+  describe 'after create' do
+    let(:product) { FactoryGirl.create(:product, image: original_image) }
+    let(:image) { FactoryGirl.create(:image) }
+    let(:original_image) { nil }
+
+    before do
+      ProductImage.create!(product: product, image: image)
+    end
+
+    context 'product has no image' do
+      it 'sets itself as main product image' do
+        expect(product.image).to eq image
+      end
+    end
+
+    context 'product has image already' do
+      let(:original_image) { FactoryGirl.create(:image) }
+      it 'leaves original image in place' do
+        expect(product.image).to eq original_image
+      end
+    end
+  end
 end
