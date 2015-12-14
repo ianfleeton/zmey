@@ -122,9 +122,7 @@ class Basket < ActiveRecord::Base
   end
 
   def apply_shipping?
-    apply = false
-    basket_items.each {|i| apply = true if i.product.apply_shipping?}
-    apply
+    basket_items.any? {|i| i.apply_shipping?}
   end
 
   def shipping_supplement
