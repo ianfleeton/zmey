@@ -1,7 +1,3 @@
 #content
-  - if !@blog.nil? && @w.render_blog_before_content?
-    = render partial: 'forums/blog_sidebar', object: @blog
   = flash_notice
   = yield
-  - if !@blog.nil? && !@w.render_blog_before_content?
-    = render partial: 'forums/blog_sidebar', object: @blog

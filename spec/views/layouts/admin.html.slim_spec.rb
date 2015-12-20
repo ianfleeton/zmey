@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'layouts/admin.html.slim' do
+RSpec.describe 'layouts/admin.html.slim', type: :view do
   let(:website) { FactoryGirl.create(:website) }
 
   before do
@@ -10,10 +10,5 @@ describe 'layouts/admin.html.slim' do
   it 'has a link to sign out' do
     render
     expect(rendered).to have_selector "a[href='#{sessions_path}']"
-  end
-
-  it 'has a link to forums' do
-    render
-    expect(rendered).to have_selector "a[href='#{forums_path}']"
   end
 end

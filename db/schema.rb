@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915140358) do
+ActiveRecord::Schema.define(version: 20151220093537) do
 
   create_table "additional_products", force: :cascade do |t|
     t.integer  "product_id",            limit: 4,                 null: false
@@ -208,14 +208,6 @@ ActiveRecord::Schema.define(version: 20150915140358) do
   add_index "features", ["component_id"], name: "index_features_on_component_id", using: :btree
   add_index "features", ["product_id"], name: "index_features_on_product_id", using: :btree
 
-  create_table "forums", force: :cascade do |t|
-    t.string  "name",       limit: 255, default: "",    null: false
-    t.integer "website_id", limit: 4,   default: 0,     null: false
-    t.boolean "locked",                 default: false, null: false
-  end
-
-  add_index "forums", ["website_id"], name: "index_forums_on_website_id", using: :btree
-
   create_table "images", force: :cascade do |t|
     t.string   "name",       limit: 255, default: "", null: false
     t.string   "filename",   limit: 255, default: "", null: false
@@ -390,17 +382,6 @@ ActiveRecord::Schema.define(version: 20150915140358) do
   add_index "permutations", ["component_id"], name: "index_permutations_on_component_id", using: :btree
   add_index "permutations", ["permutation"], name: "index_permutations_on_permutation", using: :btree
 
-  create_table "posts", force: :cascade do |t|
-    t.integer  "topic_id",   limit: 4,                  null: false
-    t.text     "content",    limit: 65535
-    t.string   "author",     limit: 255,   default: "", null: false
-    t.string   "email",      limit: 255,   default: "", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "posts", ["topic_id"], name: "index_posts_on_topic_id", using: :btree
-
   create_table "preferred_delivery_date_settings", force: :cascade do |t|
     t.integer  "website_id",                     limit: 4,   default: 0,                         null: false
     t.string   "prompt",                         limit: 255, default: "Preferred delivery date", null: false
@@ -565,21 +546,6 @@ ActiveRecord::Schema.define(version: 20150915140358) do
     t.integer  "default_shipping_class_id", limit: 4
   end
 
-  create_table "topics", force: :cascade do |t|
-    t.string   "topic",            limit: 255, default: "", null: false
-    t.integer  "forum_id",         limit: 4,   default: 0,  null: false
-    t.integer  "posts_count",      limit: 4,   default: 0,  null: false
-    t.integer  "views",            limit: 4,   default: 0,  null: false
-    t.integer  "last_post_id",     limit: 4,   default: 0,  null: false
-    t.string   "last_post_author", limit: 255, default: "", null: false
-    t.datetime "last_post_at",                              null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "topics", ["forum_id"], name: "index_topics_on_forum_id", using: :btree
-  add_index "topics", ["last_post_at"], name: "index_topics_on_last_post_at", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                 limit: 255, default: "",    null: false
     t.string   "name",                  limit: 255, default: "",    null: false
@@ -619,7 +585,6 @@ ActiveRecord::Schema.define(version: 20150915140358) do
     t.boolean  "worldpay_test_mode",                                                        default: false,  null: false
     t.boolean  "can_users_create_accounts",                                                 default: true,   null: false
     t.boolean  "skip_payment",                                                              default: false,  null: false
-    t.integer  "blog_id",                            limit: 4
     t.decimal  "shipping_amount",                                  precision: 10, scale: 3, default: 0.0,    null: false
     t.boolean  "private",                                                                   default: false,  null: false
     t.boolean  "accept_payment_on_account",                                                 default: false,  null: false
@@ -631,7 +596,6 @@ ActiveRecord::Schema.define(version: 20150915140358) do
     t.integer  "page_thumbnail_size",                limit: 4,                              default: 200
     t.integer  "product_image_size",                 limit: 4,                              default: 400
     t.integer  "product_thumbnail_size",             limit: 4,                              default: 200
-    t.boolean  "render_blog_before_content",                                                default: true,   null: false
     t.string   "google_ftp_username",                limit: 255,                            default: "",     null: false
     t.string   "google_ftp_password",                limit: 255,                            default: "",     null: false
     t.text     "invoice_details",                    limit: 65535

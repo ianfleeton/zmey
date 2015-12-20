@@ -21,8 +21,6 @@ class Admin::WebsitesController < Admin::AdminController
     if @website_subject.save
       Page.bootstrap @website_subject
 
-      create_latest_news
-
       flash[:notice] = "Successfully added new website."
       redirect_to action: 'index'
     else
@@ -60,42 +58,9 @@ class Admin::WebsitesController < Admin::AdminController
     @website_subject = Website.find(params[:id])
   end
 
-  def create_latest_news
-    # create latest news forum and link it as the website's blog
-    latest_news = Forum.new
-    latest_news.name = 'Latest News'
-    latest_news.website_id = @website_subject.id
-    latest_news.locked = true
-    latest_news.save
-    @website_subject.blog_id = latest_news.id
-    @website_subject.save
-
-    # create a vapid placeholder topic to introduce the new website
-    topic = Topic.new
-    topic.topic = 'New Website Launched'
-    topic.posts_count = 1
-    topic.forum_id = latest_news.id
-    topic.views = 1
-    topic.last_post_at = Time.now
-    topic.save
-
-    post = Post.new
-    post.topic_id = topic.id
-    post.content = 'The new website for ' + @website_subject.name +
-      ' is now complete. We hope you find it useful and easy to use.'
-    post.email = @website_subject.email
-    post.author = @website_subject.name
-    post.save
-
-    topic.last_post_id = post.id
-    topic.last_post_author = post.author
-    topic.last_post_at = post.created_at
-    topic.save
-  end
-
   def website_params
     params.require(:website).permit(:address_line_1, :address_line_2,
-      :blog_id, :can_users_create_accounts, :cardsave_active,
+      :can_users_create_accounts, :cardsave_active,
       :cardsave_merchant_id, :cardsave_password, :cardsave_pre_shared_key,
       :country_id, :county,
       :css_url, :default_locale, :default_shipping_class_id, :domain, :email, :fax_number,

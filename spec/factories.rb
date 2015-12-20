@@ -88,10 +88,6 @@ FactoryGirl.define do
     ui_type Feature::TEXT_FIELD
   end
 
-  factory :forum do
-    sequence(:name) { |n| "Forum #{n}" }
-  end
-
   factory :image do
     sequence(:name) { |n| "Image #{n}" }
   end
@@ -142,13 +138,6 @@ FactoryGirl.define do
   factory :payment do
   end
 
-  factory :post do
-    association :topic
-    author  'A. Uther'
-    content 'Post content'
-    email   'author@example.org'
-  end
-
   factory :product do
     name 'Product'
     sequence(:sku) { |n| "SKU#{n}" }
@@ -189,10 +178,6 @@ FactoryGirl.define do
 
   factory :shipping_zone do
     sequence(:name) { |n| "Shipping Zone #{n}" }
-  end
-
-  factory :topic do
-    last_post_at Time.now
   end
 
   factory :user do

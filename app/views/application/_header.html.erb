@@ -13,9 +13,6 @@
   <![endif]-->
   <%= javascript_include_tag('application', 'data-turbolinks-track' => true) %>
   <%= csrf_meta_tags %>
-<% if @w.blog_id -%>
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/forums/feed/<%= @w.blog_id_before_type_cast %>" />
-<% end -%>
 <%= render("shared/google_analytics_code") %>
 </head>
 <body id="<%= body_id %>" class="<%= body_class %><%= " admin-bar" if admin_or_manager? %>">

@@ -112,10 +112,6 @@
         = form.text_field :default_locale, class: 'form-control'
 
       .form-group
-        = form.label :blog_id
-        = form.collection_select :blog_id, Forum.where(website_id: @website_subject.id).order('name'), :id, :name, {include_blank: '-- No blog --'}, class: 'form-control'
-
-      .form-group
         p.form-control-static Can users create accounts?
         .radio
           label

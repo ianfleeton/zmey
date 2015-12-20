@@ -6,7 +6,6 @@ class Website < ActiveRecord::Base
   validates_presence_of :name
   validates_numericality_of :port, greater_than: 0, less_than: 65536, only_integer: true
   validates_inclusion_of :private, in: [true, false]
-  validates_inclusion_of :render_blog_before_content, in: [true, false]
   validates_inclusion_of :scheme, in: %w{http https}
   validates :subdomain, presence: true, uniqueness: true, format: /\A[a-z0-9]+[-a-z0-9]*\Z/i
 
@@ -24,10 +23,8 @@ class Website < ActiveRecord::Base
 
   has_one :preferred_delivery_date_settings, dependent: :delete
   has_many :custom_views, dependent: :delete_all
-  has_many :forums, dependent: :destroy
   has_many :enquiries, -> { order 'created_at DESC' }, dependent: :destroy
   has_many :webhooks, dependent: :delete_all
-  belongs_to :blog, class_name: 'Forum'
   belongs_to :country
   belongs_to :default_shipping_class, class_name: 'ShippingClass'
 

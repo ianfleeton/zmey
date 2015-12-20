@@ -69,8 +69,6 @@ Rails.application.routes.draw do
 
     resources :payments, except: [:show]
 
-    resources :posts, except: [:show]
-
     resources :products, except: [:show] do
       collection do
         get 'search'
@@ -189,8 +187,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :forums
-
   get 'up/images/:id/:filename' => 'images#sized_image', constraints: { filename: /[^\/]+/ }
 
   resources :orders, only: [:index, :show] do
@@ -238,18 +234,6 @@ Rails.application.routes.draw do
   get 'sitemap.xml' => 'pages#sitemap', as: 'sitemap', format: 'xml'
 
   get 'terms' => 'pages#terms', as: :terms
-
-  get 'topics/new/:forum_id' => 'topics#new', as: 'new_topic'
-  get 'topics/show/:id' => 'topics#show', as: 'topic'
-
-  resources :topics do
-    collection do
-      post 'create_reply'
-      get 'current_time'
-      post 'destroy_post'
-      get 'edit_post'
-    end
-  end
 
   resources :users, except: [:index, :destroy] do
     collection do
