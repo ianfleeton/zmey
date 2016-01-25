@@ -157,14 +157,19 @@ RSpec.describe Order, type: :model do
   end
 
   describe '#payment_accepted' do
-    let(:order) { FactoryGirl.create(:order) }
+    let(:initial_status) { Enums::PaymentStatus::WAITING_FOR_PAYMENT }
+    let(:order_total) { 10 }
+    let(:order) { FactoryGirl.create(:order, status: initial_status) }
     let(:payment) { FactoryGirl.build(:payment, order: order, amount: amount, accepted: true) }
     before do
       # Stub out payment communicating with order
       allow(payment).to receive(:notify_order)
+      # Prevent recalculation of order total since we have no line items in this
+      # spec
+      allow(order).to receive(:calculate_total)
       payment.save
 
-      order.total = 10
+      order.total = order_total
 
       order.payment_accepted(payment)
     end
@@ -182,6 +187,26 @@ RSpec.describe Order, type: :model do
 
       it 'transitions status to PAYMENT_RECEIVED and saves itself' do
         expect(order.reload.status).to eq Enums::PaymentStatus::PAYMENT_RECEIVED
+      end
+    end
+
+    context 'payment is negative' do
+      let(:amount) { -5 }
+
+      context 'initial status is PAYMENT_RECEIVED' do
+        let(:initial_status) { Enums::PaymentStatus::PAYMENT_RECEIVED }
+
+        it 'transitions status to WAITING_FOR_PAYMENT and saves itself' do
+          expect(order.reload.status).to eq Enums::PaymentStatus::WAITING_FOR_PAYMENT
+        end
+
+        context 'but no payment amount outstanding' do
+          let(:order_total) { -5 }
+
+          it 'leaves the order status untouched' do
+            expect(order.reload.status).to eq Enums::PaymentStatus::PAYMENT_RECEIVED
+          end
+        end
       end
     end
   end

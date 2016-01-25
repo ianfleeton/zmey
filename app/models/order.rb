@@ -147,9 +147,15 @@ class Order < ActiveRecord::Base
 
   # Transitions the status to PAYMENT_RECEIVED if sufficient payments have
   # been received.
+  #
+  # Transitions the status to WAITING_FOR_PAYMENT if the payment is negative
+  # and there is still an outstanding payment amount.
   def payment_accepted(payment)
     if outstanding_payment_amount <= 0
       self.status = Enums::PaymentStatus::PAYMENT_RECEIVED
+      save
+    elsif payment.amount.to_f < 0
+      self.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
       save
     end
   end
