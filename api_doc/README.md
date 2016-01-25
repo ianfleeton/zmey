@@ -111,6 +111,7 @@ A successful retrieval will return JSON similar to the example:
 
 * [`GET` api/admin/product_groups](endpoints/admin/product_groups/GET_index.md)
 * [`GET` api/admin/product_groups/:id](endpoints/admin/product_groups/GET_product_group_by_id.md)
+* [`DELETE` api/admin/product_groups](endpoints/admin/product_groups/DELETE_delete_all.md)
 
 ### Product placements
 

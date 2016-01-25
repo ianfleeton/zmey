@@ -78,4 +78,23 @@ RSpec.describe 'Admin product groups API', type: :request do
       end
     end
   end
+
+  describe 'DELETE delete_all' do
+    it 'deletes all products groups and product group associations' do
+      product = FactoryGirl.create(:product)
+      group = FactoryGirl.create(:product_group)
+      ProductGroupPlacement.create!(product: product, product_group: group)
+
+      delete '/api/admin/product_groups'
+
+      expect(ProductGroup.count).to eq 0
+      expect(ProductGroupPlacement.count).to eq 0
+    end
+
+    it 'responds with 204 No Content' do
+      delete '/api/admin/product_groups'
+
+      expect(status).to eq 204
+    end
+  end
 end
