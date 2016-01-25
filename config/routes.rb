@@ -133,7 +133,7 @@ Rails.application.routes.draw do
 
       resources :payments, except: [:update]
 
-      resources :product_groups, only: [:index, :show]
+      resources :product_groups, only: [:index, :show, :create]
       delete 'product_groups', to: 'product_groups#delete_all'
 
       resources :product_placements, only: [:create]
