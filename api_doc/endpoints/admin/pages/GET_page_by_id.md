@@ -28,7 +28,7 @@ returned.
     "slug": "about",
     "title": "About Your e Solutions Ltd",
     "name": "About",
-    "description": "Meta decription...",
+    "description": "Meta description...",
     "content": "<p>About our company...</p>",
     "position": 1,
     "image": {
