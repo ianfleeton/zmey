@@ -118,7 +118,7 @@ end
 group :test do
   gem 'capybara'
   gem 'launchy'
-  gem 'selenium-webdriver', '~> 2.47.0'
+  gem 'selenium-webdriver', '~> 2.47'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'database_cleaner'
