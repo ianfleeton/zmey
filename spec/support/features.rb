@@ -14,3 +14,9 @@ end
 def check_or_uncheck(check_box, value)
   value ? check(check_box) : uncheck(check_box)
 end
+
+# Hides the fixed navigation bar which can obscure elements beneath it when
+# scrolled into view by Selenium.
+def hide_navbar
+  execute_script('$("nav.navbar").hide();')
+end

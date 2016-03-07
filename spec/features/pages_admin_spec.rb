@@ -19,6 +19,7 @@ feature 'Pages admin' do
     fill_in 'Name', with: the_page.name
     fill_in 'Title', with: the_page.title
     fill_in 'Description', with: the_page.description
+    hide_navbar
     click_button 'page_thumbnail_image_id_image_picker'
     click_link "image-#{image.id}"
     click_button 'Create New Page'

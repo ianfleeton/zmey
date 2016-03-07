@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.6.rc1'
 # Use mysql as the database for Active Record
 gem 'mysql2', platform: :ruby
 gem 'jdbc-mysql', platform: :jruby
@@ -100,7 +100,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.3.0'
+  gem 'rspec-rails', '~> 3.4.1'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri_21, :mri_22]
