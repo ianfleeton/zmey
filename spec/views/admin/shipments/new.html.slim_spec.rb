@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/shipments/new.html.slim' do
-  let(:shipment) { FactoryGirl.create(:shipment) }
+  let(:shipment) { Shipment.new }
 
   before do
     assign(:shipment, shipment)
@@ -9,7 +9,7 @@ RSpec.describe 'admin/shipments/new.html.slim' do
 
   it 'renders a form for the @shipment' do
     render
-    expect(rendered).to have_selector "form[action='#{admin_shipment_path(shipment)}'][method='post']"
+    expect(rendered).to have_selector "form[action='#{admin_shipments_path}'][method='post']"
   end
 
   context 'form fields' do
