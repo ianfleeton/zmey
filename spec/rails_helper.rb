@@ -73,6 +73,14 @@ load "#{Rails.root}/config/routes.rb"
 
 FactoryGirl.reload
 
+Capybara.register_driver :selenium do |app|
+  # Setting elementScrollBehavior to 1 causes a targeted offscreen element to be
+  # scrolled into the bottom-most area of the screen (rather than top-most which
+  # is obscured by the fixed navigation bar in the admin area).
+  capabilities = Selenium::WebDriver::Remote::Capabilities.firefox('elementScrollBehavior' => 1)
+  Capybara::Selenium::Driver.new(app, desired_capabilities: capabilities)
+end
+
 def logged_in_as_admin
   allow(controller).to receive(:admin?).and_return(true)
 end
