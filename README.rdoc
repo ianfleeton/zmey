@@ -2,18 +2,24 @@
 
 {<img src="https://travis-ci.org/ianfleeton/zmey.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/ianfleeton/zmey]
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Zmey is a template for building e-commerce websites. Fork it, keep what you do
+need and delete what you don't. It's pre-release quality and has not yet been
+given a version number.
 
-Things you may want to cover:
+=== Configuration
 
-* Configuration
+Most configuration is kept in the one and only website object stored in the
+database.
 
-* Services (job queues, cache servers, search engines, etc.)
+=== Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+Background tasks are handled by Delayed Job.
 
-* ...
+=== Deployment instructions
+
+Deployment is handled by Capistrano. To deploy to production run the following:
+
+  bundle exec cap production deploy
 
 === Ruby version
 
@@ -72,6 +78,9 @@ Then check that /usr/local/bin is in the path, for example:
   bundle exec rake db:seed
 
 === How to run the test suite
+
+You will need geckodriver to run the JavaScript tests with selenium-webdriver.
+This can be downloaded from https://github.com/mozilla/geckodriver/releases
 
   bin/rspec
 
