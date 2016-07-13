@@ -23,7 +23,7 @@ RSpec.describe 'checkout/billing.html.slim', type: :view do
 
   HIDDEN_PARAMS.each do |k, v|
     it "has a hidden field for #{k} with value #{v}" do
-      expect(rendered).to have_selector "input[type='hidden'][name='address[#{k}]'][value='#{v}']"
+      expect(rendered).to have_selector "input[type='hidden'][name='address[#{k}]'][value='#{v}']", visible: false
     end
   end
 
