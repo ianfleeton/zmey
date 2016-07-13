@@ -15,7 +15,8 @@ install:
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
-  - bundle exec rake
+  # bundle exec rake pending Firefox 47.0.1 and geckodriver
+  - bundle exec rspec -t ~js
 before_script:
   - mysql -e 'create database zmey_test;'
   - cp config/database.travis.yml config/database.yml
