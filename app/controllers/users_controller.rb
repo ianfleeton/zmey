@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :find_user, except: [:new, :create, :forgot_password, :forgot_password_send]
-  before_action :admin_or_manager_or_same_user_required, only: [:show, :edit]
+  before_action :admin_or_manager_or_same_user_required, only: [:show, :edit, :update]
   before_action :can_users_create_accounts, only: [:new, :create]
 
   skip_before_action :protect_private_website, only: [
