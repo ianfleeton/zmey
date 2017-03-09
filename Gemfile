@@ -12,7 +12,7 @@ gem 'RedCloth'
 gem 'image_science', platform: :ruby
 gem 'image_voodoo', platform: :jruby
 gem 'RubyInline'
-gem 'liquid'
+gem 'liquid', '~> 3.0'
 gem 'acts_as_list'
 gem 'acts_as_tree'
 gem 'exception_notification'
