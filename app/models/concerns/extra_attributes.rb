@@ -33,7 +33,7 @@ module ExtraAttributes
   end
 
   # Clear memoized values.
-  def reload
+  def reload(options = nil)
     @extra_json = nil
     super
   end
