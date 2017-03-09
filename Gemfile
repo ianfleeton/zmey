@@ -4,13 +4,10 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6.rc1'
 # Use mysql as the database for Active Record
-gem 'mysql2', platform: :ruby
-gem 'jdbc-mysql', platform: :jruby
-gem 'activerecord-jdbc-adapter', platform: :jruby
+gem 'mysql2'
 
 gem 'RedCloth'
-gem 'image_science', platform: :ruby
-gem 'image_voodoo', platform: :jruby
+gem 'image_science'
 gem 'RubyInline'
 gem 'liquid', '~> 3.0'
 gem 'acts_as_list'
@@ -96,7 +93,7 @@ group :development do
   gem 'capistrano3-delayed-job', '~> 1.0'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0', platforms: [:mri_21, :mri_22]
+  gem 'web-console', '~> 2.0'
 end
 
 # Use debugger
@@ -106,7 +103,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5.2'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri_21, :mri_22]
+  gem 'byebug'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
