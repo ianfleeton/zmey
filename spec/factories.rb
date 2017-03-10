@@ -96,11 +96,6 @@ FactoryGirl.define do
     sequence(:name) { |n| "Template #{n}" }
   end
 
-  factory :nominal_code do
-    sequence(:code) { |n| n.to_s.rjust(4, '0') }
-    description 'Nominal Code'
-  end
-
   factory :offline_payment_method do
     sequence(:name) { |n| "Payment Method #{n}" }
   end

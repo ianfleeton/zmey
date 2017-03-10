@@ -156,18 +156,6 @@ describe 'Admin products API' do
       expect(Product.find_by(basic_params)).to be
     end
 
-    it 'associates product with nominal codes' do
-      purchase_nominal_code = FactoryGirl.create(:nominal_code)
-      sales_nominal_code = FactoryGirl.create(:nominal_code)
-      params = basic_params.merge(
-        purchase_nominal_code: purchase_nominal_code.code,
-        sales_nominal_code: sales_nominal_code.code
-      )
-      post '/api/admin/products', params: { product: params }
-      expect(Product.last.purchase_nominal_code).to eq purchase_nominal_code
-      expect(Product.last.sales_nominal_code).to eq sales_nominal_code
-    end
-
     it 'associates product with a sole product group' do
       group = FactoryGirl.create(:product_group, name: 'Special Offers')
       params = basic_params.merge(

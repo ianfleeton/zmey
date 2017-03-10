@@ -51,9 +51,7 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
       :meta_description, :name,
       :page_title, :price,
       :pricing_method,
-      :purchase_nominal_code,
       :rrp,
-      :sales_nominal_code,
       :sku,
       :submit_to_google,
       :tax_type, :weight)

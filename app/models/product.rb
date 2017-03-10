@@ -36,10 +36,6 @@ class Product < ActiveRecord::Base
   has_many :product_images, dependent: :delete_all
   has_many :images, through: :product_images
 
-  # Nominal codes for Sage 50
-  belongs_to :purchase_nominal_code, class_name: 'NominalCode', inverse_of: :purchase_products
-  belongs_to :sales_nominal_code, class_name: 'NominalCode', inverse_of: :sales_products
-
   has_many :order_lines, dependent: :nullify
   has_many :orders, through: :order_lines
   has_many :product_group_placements, dependent: :delete_all
@@ -95,26 +91,6 @@ class Product < ActiveRecord::Base
     names = names.split('|') if names.kind_of?(String)
     names.each do |name|
       self.images <<= Image.find_by(name: name)
-    end
-  end
-
-  # Sets purchase nominal code from either a NominalCode or a string
-  # starting with the code.
-  def purchase_nominal_code=(code)
-    if code.kind_of?(String)
-      self.purchase_nominal_code = NominalCode.find_by(code: code.split.first)
-    else
-      super
-    end
-  end
-
-  # Sets sales nominal code from either a NominalCode or a string
-  # starting with the code.
-  def sales_nominal_code=(code)
-    if code.kind_of?(String)
-      self.sales_nominal_code = NominalCode.find_by(code: code.split.first)
-    else
-      super
     end
   end
 
@@ -279,10 +255,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.importable_attributes
-    attribute_names -
-      ['purchase_nominal_code_id', 'sales_nominal_code_id'] +
-      ['image_name', 'image_names', 'purchase_nominal_code', 'sales_nominal_code'] +
-      extra_attribute_names
+    attribute_names + ['image_name', 'image_names'] + extra_attribute_names
   end
 
   private

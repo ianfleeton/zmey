@@ -76,16 +76,6 @@ en:
         class_name: 'What kind of data do you want to import?'
         heading: 'Import Data from a CSV File'
         import: 'Import'
-    nominal_codes:
-      edit:
-        heading: 'Edit Nominal Code'
-      index:
-        code: 'Code'
-        description: 'Description'
-        heading: 'Nominal Codes'
-        no_nominal_codes: 'No nominal codes have been set up.'
-      new:
-        heading: 'New Nominal Code'
     offline_payment_methods:
       create:
         flash:

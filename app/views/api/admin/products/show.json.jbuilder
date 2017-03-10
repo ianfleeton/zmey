@@ -11,20 +11,6 @@ json.product do
       json.href api_admin_image_url(@product.image)
     end
   end
-  if @product.purchase_nominal_code
-    json.purchase_nominal_code do
-      json.id   @product.purchase_nominal_code.id
-      json.code @product.purchase_nominal_code.code
-      json.href api_admin_nominal_code_url(@product.purchase_nominal_code)
-    end
-  end
-  if @product.sales_nominal_code
-    json.sales_nominal_code do
-      json.id   @product.sales_nominal_code.id
-      json.code @product.sales_nominal_code.code
-      json.href api_admin_nominal_code_url(@product.sales_nominal_code)
-    end
-  end
   json.product_groups(@product.product_groups) do |g|
     json.id g.id
     json.href api_admin_product_group_url(g)

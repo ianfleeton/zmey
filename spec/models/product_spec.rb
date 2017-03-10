@@ -6,8 +6,6 @@ RSpec.describe Product, type: :model do
     @product = Product.new(price: 1.0)
   end
 
-  it { should belong_to(:purchase_nominal_code).class_name('NominalCode') }
-  it { should belong_to(:sales_nominal_code).class_name('NominalCode') }
   it { should have_many(:product_images).dependent(:delete_all) }
   it { should have_many(:images).through(:product_images) }
 
@@ -114,35 +112,6 @@ RSpec.describe Product, type: :model do
       expect(product.images).to include(image2)
       expect(product.images).not_to include(image1)
     end
-  end
-
-  shared_examples_for 'a nominal code setter' do |code_type|
-    let(:getter) { "#{code_type}_nominal_code".to_sym }
-    let(:setter) { "#{code_type}_nominal_code=".to_sym }
-    before do
-      @product.send(setter, new_code)
-    end
-    context 'when param is a NominalCode' do
-      let(:new_code) { FactoryGirl.create(:nominal_code, code: '1234') }
-      it 'sets to the nominal code' do
-        expect(@product.send(getter)).to eq new_code
-      end
-    end
-    context 'when param is a string' do
-      let(:nominal_code) { FactoryGirl.create(:nominal_code, code: '1234') }
-      let(:new_code) { "#{nominal_code.code} Desription of code" }
-      it 'sets to the nominal code whose code matches the first part of the string' do
-        expect(@product.send(getter)).to eq nominal_code
-      end
-    end
-  end
-
-  describe '#purchase_nominal_code=' do
-    it_behaves_like 'a nominal code setter', :purchase
-  end
-
-  describe '#sales_nominal_code=' do
-    it_behaves_like 'a nominal code setter', :sales
   end
 
   describe '#product_group=' do
@@ -283,11 +252,8 @@ RSpec.describe Product, type: :model do
 
   describe '.importable_attributes' do
     subject { Product.importable_attributes }
-    ['image_name', 'image_names', 'purchase_nominal_code', 'sales_nominal_code'].each do |additional_attr|
+    ['image_name', 'image_names'].each do |additional_attr|
       it { should include(additional_attr) }
-    end
-    ['purchase_nominal_code_id', 'sales_nominal_code_id'].each do |excluded_attr|
-      it { should_not include(excluded_attr) }
     end
   end
 

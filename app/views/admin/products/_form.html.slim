@@ -13,10 +13,6 @@
 
   = form.text_field :name, required: true
 
-  = form.collection_select :sales_nominal_code_id, NominalCode.all, :id, :to_s, {include_blank: '-- No code --'}
-
-  = form.collection_select :purchase_nominal_code_id, NominalCode.all, :id, :to_s, {include_blank: '-- No code --'}
-
   = form.text_field :price
 
   = form.collection_select :pricing_method, Product::PRICE_CALCULATORS, :first, :first

@@ -36,7 +36,6 @@ Rails.application.routes.draw do
     end
 
     resources :liquid_templates, except: [:show]
-    resources :nominal_codes, except: [:show]
     resources :offline_payment_methods, except: [:show]
 
     resources :orders do
@@ -118,8 +117,6 @@ Rails.application.routes.draw do
 
       resources :liquid_templates, only: [:create, :show]
       delete 'liquid_templates', to: 'liquid_templates#delete_all'
-
-      resources :nominal_codes, only: [:show]
 
       resources :order_comments, only: [:show]
 
