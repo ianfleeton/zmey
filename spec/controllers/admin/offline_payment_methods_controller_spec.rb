@@ -5,28 +5,12 @@ RSpec.describe Admin::OfflinePaymentMethodsController, type: :controller do
     logged_in_as_admin
   end
 
-  describe 'GET index' do
-    it 'assigns all methods to @offline_payment_methods' do
-      opm = FactoryGirl.create(:offline_payment_method)
-      get :index
-      expect(assigns(:offline_payment_methods)).to include(opm)
-    end
-  end
-
-  describe 'GET new' do
-    before { get :new }
-
-    it 'assigns a new method as @offline_payment_method' do
-      expect(assigns(:offline_payment_method)).to be_kind_of OfflinePaymentMethod
-    end
-  end
-
   describe 'POST create' do
     let(:name) { SecureRandom.hex }
     let(:valid_params) { {'offline_payment_method' => {'name' => name}} }
     let(:invalid_params) { {'offline_payment_method' => {'name' => ''}} }
 
-    before { post :create, params }
+    before { post :create, params: params }
 
     context 'with valid params' do
       let(:params) { valid_params }
@@ -43,25 +27,13 @@ RSpec.describe Admin::OfflinePaymentMethodsController, type: :controller do
         expect(response).to redirect_to admin_offline_payment_methods_path
       end
     end
-
-    context 'with invalid params' do
-      let(:params) { invalid_params }
-
-      it 'assigns @offline_payment_method' do
-        expect(assigns(:offline_payment_method)).to be_kind_of OfflinePaymentMethod
-      end
-
-      it 'renders new' do
-        expect(response).to render_template :new
-      end
-    end
   end
 
   describe 'DELETE destroy' do
     let(:opm) { FactoryGirl.create(:offline_payment_method) }
 
     before do
-      delete :destroy, id: opm.id
+      delete :destroy, params: { id: opm.id }
     end
 
     it 'destroys the payment method' do

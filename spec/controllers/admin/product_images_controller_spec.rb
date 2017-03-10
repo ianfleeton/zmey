@@ -8,7 +8,7 @@ RSpec.describe Admin::ProductImagesController do
 
     before do
       logged_in_as_admin
-      post :create, product_image: { product_id: product.id, image_id: image_id }
+      post :create, params: { product_image: { product_id: product.id, image_id: image_id } }
     end
 
     context 'when image found' do
@@ -37,7 +37,7 @@ RSpec.describe Admin::ProductImagesController do
       product.images << image
       product.image = main_image
       product.save
-      delete :destroy, id: ProductImage.find_by(image_id: image.id).id
+      delete :destroy, params: { id: ProductImage.find_by(image_id: image.id).id }
     end
 
     context 'when image found' do

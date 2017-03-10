@@ -31,7 +31,7 @@ class Admin::OrdersController < Admin::AdminController
   def update
     unless @order.locked?
       @order.update_attributes(order_params)
-      if params[:order_line_quantity]
+      if params[:order_line_quantity].present?
         add_order_lines
         update_order_lines
       end
@@ -135,7 +135,7 @@ class Admin::OrdersController < Admin::AdminController
     end
 
     def update_order_lines
-      params[:order_line_quantity].each_key do |id|
+      params[:order_line_quantity].each_pair do |id, _on|
         if order_line = OrderLine.find_by(id: id, order_id: @order.id)
           update_order_line(order_line, id)
         end

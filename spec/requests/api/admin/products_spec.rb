@@ -26,7 +26,7 @@ describe 'Admin products API' do
         )
       end
       @product1 = Product.first
-      get '/api/admin/products', page: page, page_size: page_size
+      get '/api/admin/products', params: { page: page, page_size: page_size }
     end
 
     context 'with products' do
@@ -152,7 +152,7 @@ describe 'Admin products API' do
     }}
 
     it 'inserts a new product' do
-      post '/api/admin/products', product: basic_params
+      post '/api/admin/products', params: { product: basic_params }
       expect(Product.find_by(basic_params)).to be
     end
 
@@ -163,7 +163,7 @@ describe 'Admin products API' do
         purchase_nominal_code: purchase_nominal_code.code,
         sales_nominal_code: sales_nominal_code.code
       )
-      post '/api/admin/products', product: params
+      post '/api/admin/products', params: { product: params }
       expect(Product.last.purchase_nominal_code).to eq purchase_nominal_code
       expect(Product.last.sales_nominal_code).to eq sales_nominal_code
     end
@@ -173,12 +173,12 @@ describe 'Admin products API' do
       params = basic_params.merge(
         product_group: 'Special Offers'
       )
-      post '/api/admin/products', product: params
+      post '/api/admin/products', params: { product: params }
       expect(Product.last.product_groups.first).to eq group
     end
 
     it 'returns 422 if product cannot be created' do
-      post '/api/admin/products', product: {name: 'is not enough'}
+      post '/api/admin/products', params: { product: { name: 'is not enough' } }
       expect(status).to eq 422
     end
   end

@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shared_examples_for_controllers'
 
 RSpec.describe Admin::CarouselSlidesController, type: :controller do
   def mock_carousel_slide(stubs={})
@@ -9,45 +8,8 @@ RSpec.describe Admin::CarouselSlidesController, type: :controller do
   context 'when logged in as admin' do
     before { logged_in_as_admin }
 
-    describe 'GET index' do
-      it 'assigns all slides to @carousel_slides' do
-        c1 = FactoryGirl.create(:carousel_slide)
-        c2 = FactoryGirl.create(:carousel_slide)
-        get :index
-        expect(assigns(:carousel_slides)).to include(c1)
-        expect(assigns(:carousel_slides)).to include(c2)
-      end
-    end
-
-    describe 'GET new' do
-      it 'assigns a new carousel slide to @carousel_slide' do
-        expect(CarouselSlide).to receive(:new).and_return(mock_carousel_slide)
-        get :new
-        expect(assigns(:carousel_slide)).to eq mock_carousel_slide
-      end
-
-      it "sets the slide's active until date into the far future" do
-        get :new
-        expect(assigns(:carousel_slide).active_until).to be > DateTime.now + 4.years
-      end
-    end
-
-    describe 'GET edit' do
-      it 'assigns the requested carousel slide to @carousel_slide' do
-        find_requested_carousel_slide
-        get :edit, id: '37'
-        expect(assigns(:carousel_slide)).to eq mock_carousel_slide
-      end
-    end
-
     describe 'POST create' do
       let(:valid_params) {{ 'carousel_slide' => { 'caption' => 'A Caption' } }}
-
-      it 'assigns a newly created but unsaved carousel slide as @carousel_slide' do
-        expect(CarouselSlide).to receive(:new).and_return(mock_carousel_slide(save: false))
-        post :create, carousel_slide: {these: 'params'}
-        expect(assigns(:carousel_slide)).to equal(mock_carousel_slide)
-      end
 
       describe 'when save succeeds' do
         before do
@@ -55,19 +17,8 @@ RSpec.describe Admin::CarouselSlidesController, type: :controller do
         end
 
         it 'redirects to the carousel slides list' do
-          post :create, valid_params
+          post :create, params: valid_params
           expect(response).to redirect_to(admin_carousel_slides_path)
-        end
-      end
-
-      describe 'when save fails' do
-        before do
-          allow(CarouselSlide).to receive(:new).and_return(mock_carousel_slide(save: false))
-        end
-
-        it "re-renders the 'new' template" do
-          post :create, valid_params
-          expect(response).to render_template('new')
         end
       end
     end
@@ -77,8 +28,8 @@ RSpec.describe Admin::CarouselSlidesController, type: :controller do
 
       it 'updates the requested carousel slide' do
         find_requested_carousel_slide
-        expect(mock_carousel_slide).to receive(:update_attributes).with(valid_params['carousel_slide'])
-        put :update, valid_params
+        expect(mock_carousel_slide).to receive(:update_attributes)
+        put :update, params: valid_params
       end
 
       describe 'when update succeeds' do
@@ -86,28 +37,9 @@ RSpec.describe Admin::CarouselSlidesController, type: :controller do
           allow(CarouselSlide).to receive(:find_by).and_return(mock_carousel_slide(update_attributes: true))
         end
 
-        it 'assigns the requested carousel_slide as @carousel_slide' do
-          put :update, valid_params
-          expect(assigns(:carousel_slide)).to eq mock_carousel_slide
-        end
-
         it 'redirects to the carousel slides list' do
-          put :update, valid_params
+          put :update, params: valid_params
           expect(response).to redirect_to(admin_carousel_slides_path)
-        end
-      end
-
-      describe 'when update fails' do
-        it 'assigns the carousel slide as @carousel_slide' do
-          allow(CarouselSlide).to receive(:find_by).and_return(mock_carousel_slide(update_attributes: false))
-          put :update, valid_params
-          expect(assigns(:carousel_slide)).to eq mock_carousel_slide
-        end
-
-        it "re-renders the 'edit' template" do
-          allow(CarouselSlide).to receive(:find_by).and_return(mock_carousel_slide(update_attributes: false))
-          put :update, valid_params
-          expect(response).to render_template('edit')
         end
       end
     end
@@ -116,12 +48,12 @@ RSpec.describe Admin::CarouselSlidesController, type: :controller do
       it 'destroys the requested carousel slide' do
         find_requested_carousel_slide
         expect(mock_carousel_slide).to receive(:destroy)
-        delete :destroy, id: '37'
+        delete :destroy, params: { id: '37' }
       end
 
       it 'redirects to the carousel slides list' do
         allow(CarouselSlide).to receive(:find_by).and_return(mock_carousel_slide(destroy: true))
-        delete :destroy, id: '1'
+        delete :destroy, params: { id: '1' }
         expect(response).to redirect_to(admin_carousel_slides_path)
       end
     end
@@ -132,34 +64,34 @@ RSpec.describe Admin::CarouselSlidesController, type: :controller do
 
       describe 'GET move_up' do
         it 'moves the carousel slide up the list' do
-          get :move_up, id: last.id
+          get :move_up, params: { id: last.id }
           expect(last.reload.position).to eq 1
         end
 
         it 'sets flash notice' do
-          get :move_up, id: last.id
+          get :move_up, params: { id: last.id }
           expect_moved_notice
         end
 
         it 'redirects to index' do
-          get :move_up, id: last.id
+          get :move_up, params: { id: last.id }
           expect(response).to redirect_to(admin_carousel_slides_path)
         end
       end
 
       describe 'GET move_down' do
         it 'moves the carousel slide down the list' do
-          get :move_down, id: first.id
+          get :move_down, params: { id: first.id }
           expect(first.reload.position).to eq 2
         end
 
         it 'sets flash notice' do
-          get :move_down, id: first.id
+          get :move_down, params: { id: first.id }
           expect_moved_notice
         end
 
         it 'redirects to index' do
-          get :move_down, id: first.id
+          get :move_down, params: { id: first.id }
           expect(response).to redirect_to(admin_carousel_slides_path)
         end
       end

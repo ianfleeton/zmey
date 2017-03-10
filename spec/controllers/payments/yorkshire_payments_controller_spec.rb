@@ -25,7 +25,7 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
     before do
       pre.try(:call)
       allow_any_instance_of(YorkshirePayments::Signature).to receive(:verify).and_return(valid_signature?)
-      post :callback, params
+      post :callback, params: params
     end
 
     it 'records the amount as 0' do
@@ -95,13 +95,6 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
         it 'records a successful transaction status' do
           expect(payment.transaction_status).to be_truthy
         end
-
-        context '#clean_up' do
-          let(:pre) { -> { expect(controller).to receive(:clean_up) } }
-          it 'assigns @payment and calls #clean_up' do
-            expect(assigns(:payment)).to be_instance_of(Payment)
-          end
-        end
       end
 
       context 'with invalid signature' do
@@ -152,7 +145,7 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
     let(:params) { default_params }
 
     before do
-      post :redirect, params
+      post :redirect, params: params
     end
 
     it 'redirects the customer to the receipt page' do

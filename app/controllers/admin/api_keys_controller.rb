@@ -26,10 +26,10 @@ class Admin::ApiKeysController < Admin::AdminController
       if @api_key
         render formats: :json
       else
-        render nothing: true, status: :not_found unless @api_key
+        head :not_found unless @api_key
       end
     else
-      render nothing: true, status: :unauthorized
+      head :unauthorized
     end
   end
 

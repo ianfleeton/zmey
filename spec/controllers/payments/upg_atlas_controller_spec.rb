@@ -22,7 +22,7 @@ RSpec.describe Payments::UpgAtlasController, type: :controller do
 
     before do
       pre.try(:call)
-      get :callback, params
+      get :callback, params: params
     end
 
     it 'responds with status 200 OK' do
@@ -91,13 +91,6 @@ RSpec.describe Payments::UpgAtlasController, type: :controller do
 
       it 'records the transaction number' do
         expect(payment.transaction_id).to eq '12345678'
-      end
-
-      context '#clean_up' do
-        let(:pre) { -> { expect(controller).to receive(:clean_up) } }
-        it 'assigns @payment and calls #clean_up' do
-          expect(assigns(:payment)).to be_instance_of(Payment)
-        end
       end
     end
 

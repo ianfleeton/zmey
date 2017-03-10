@@ -15,9 +15,4 @@ RSpec.describe 'checkout/_upg_atlas.html.slim' do
     subject { rendered }
     it { should have_selector "form[action='https://www.secure-server-hosting.com/secutran/secuitems.php'][method='post']" }
   end
-
-  context 'view' do
-    subject { view }
-    it { should render_template 'checkout/_upg_atlas_hidden_fields'}
-  end
 end

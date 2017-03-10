@@ -21,15 +21,17 @@ describe 'Admin order lines API' do
     let(:tax_amount)     { nil }
 
     before do
-      post '/api/admin/order_lines', order_line: {
-        order_id: order_id,
-        product_id: product_id,
-        product_name: product_name,
-        product_price: product_price,
-        product_rrp: product_rrp,
-        product_weight: product_weight,
-        quantity: quantity,
-        tax_amount: tax_amount
+      post '/api/admin/order_lines', params: {
+        order_line: {
+          order_id: order_id,
+          product_id: product_id,
+          product_name: product_name,
+          product_price: product_price,
+          product_rrp: product_rrp,
+          product_weight: product_weight,
+          quantity: quantity,
+          tax_amount: tax_amount
+        }
       }
     end
 

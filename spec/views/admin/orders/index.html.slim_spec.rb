@@ -8,11 +8,6 @@ RSpec.describe 'admin/orders/index.html.slim', type: :view do
       assign(:orders, Order.paginate({page: 1}))
     end
 
-    it 'renders invoice links' do
-      render
-      expect(view).to render_template(partial: 'orders/invoice_links', locals: { order: order })
-    end
-
     it 'displays the billing full name' do
       render
       expect(rendered).to have_content 'BILLING FN'

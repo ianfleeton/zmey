@@ -48,7 +48,7 @@ RSpec.describe SessionsController, type: :controller do
 
     context 'with redirect_to set' do
       it 'redirects to the given uri' do
-        post 'destroy', redirect_to: '/'
+        post 'destroy', params: { redirect_to: '/' }
         expect(response).to redirect_to('/')
       end
     end

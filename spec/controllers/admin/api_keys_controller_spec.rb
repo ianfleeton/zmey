@@ -5,23 +5,6 @@ RSpec.describe Admin::ApiKeysController, type: :controller do
     logged_in_as_admin
   end
 
-  describe 'GET index' do
-    it 'assigns keys belonging to the current user' do
-      user = FactoryGirl.create(:user)
-      api_key = FactoryGirl.create(:api_key, user_id: user.id)
-      allow(controller).to receive(:current_user).and_return(user)
-      get :index
-      expect(assigns(:api_keys)).to match_array [api_key]
-    end
-  end
-
-  describe 'GET new' do
-    it 'assigns a new ApiKey to @api_key' do
-      get :new
-      expect(assigns(:api_key)).to be_instance_of ApiKey
-    end
-  end
-
   describe 'POST create' do
     let(:name) { SecureRandom.hex }
     let(:valid_params) { {'api_key' => {'name' => name}} }
@@ -30,7 +13,7 @@ RSpec.describe Admin::ApiKeysController, type: :controller do
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)
-      post :create, params
+      post :create, params: params
     end
 
     context 'with valid params' do
@@ -40,24 +23,12 @@ RSpec.describe Admin::ApiKeysController, type: :controller do
         expect(ApiKey.find_by(user_id: current_user.id, name: name)).to be
       end
 
-      it 'assigns @api_key' do
-        expect(assigns(:api_key)).to eq ApiKey.find_by(name: name)
-      end
-
       it 'sets a flash notice' do
         expect(flash[:notice]).to eq I18n.t('controllers.admin.api_keys.create.flash.created')
       end
 
       it 'redirects to the API key index' do
         expect(response).to redirect_to admin_api_keys_path
-      end
-    end
-
-    context 'with invalid params' do
-      let(:params) { invalid_params }
-
-      it 'renders new' do
-        expect(response).to render_template :new
       end
     end
   end
@@ -69,7 +40,7 @@ RSpec.describe Admin::ApiKeysController, type: :controller do
     before do
       api_key
       allow(controller).to receive(:authenticate_with_http_basic).and_return user
-      get :retrieve, 'name' => key_name
+      get :retrieve, params: { 'name' => key_name }
     end
 
     context 'with successful authentication' do
@@ -80,10 +51,6 @@ RSpec.describe Admin::ApiKeysController, type: :controller do
 
         it 'succeeds' do
           expect(response).to be_success
-        end
-
-        it 'assigns the key to @api_key' do
-          expect(assigns(:api_key)).to eq api_key
         end
       end
 

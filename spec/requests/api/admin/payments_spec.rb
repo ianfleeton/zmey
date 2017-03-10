@@ -90,12 +90,14 @@ describe 'Admin payments API' do
     let(:raw_auth_message) { nil }
 
     before do
-      post '/api/admin/payments', payment: {
-        order_id: order_id,
-        accepted: accepted,
-        amount: amount,
-        raw_auth_message: raw_auth_message,
-        service_provider: service_provider,
+      post '/api/admin/payments', params: {
+        payment: {
+          order_id: order_id,
+          accepted: accepted,
+          amount: amount,
+          raw_auth_message: raw_auth_message,
+          service_provider: service_provider
+        }
       }
     end
 

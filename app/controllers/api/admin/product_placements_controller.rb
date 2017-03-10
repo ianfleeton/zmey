@@ -13,7 +13,7 @@ class Api::Admin::ProductPlacementsController < Api::Admin::AdminController
 
   def delete_all
     ProductPlacement.delete_all
-    render nothing: :true, status: 204
+    head 204
   end
 
   private

@@ -13,7 +13,7 @@ class Api::Admin::CarouselSlidesController < Api::Admin::AdminController
 
   def delete_all
     CarouselSlide.destroy_all
-    render nothing: :true, status: 204
+    head 204
   end
 
   private

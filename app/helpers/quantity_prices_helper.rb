@@ -1,6 +1,6 @@
 module QuantityPricesHelper
   def quantity_prices_table(product)
-    rules = product.quantity_prices
+    rules = product.quantity_prices.to_ary
     return if rules.empty?
     first = '1'
     first += "&#8211;#{rules.first.quantity - 1}" unless rules.first.quantity == 2

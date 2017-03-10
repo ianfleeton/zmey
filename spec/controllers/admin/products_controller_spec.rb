@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shared_examples_for_controllers'
 
 RSpec.describe Admin::ProductsController, type: :controller do
   def mock_product(stubs={})
@@ -7,41 +6,15 @@ RSpec.describe Admin::ProductsController, type: :controller do
   end
 
   describe "GET index" do
-    context "when logged in as admin" do
-      before { logged_in_as_admin }
-
-      pending
-    end
   end
 
   describe "GET new" do
     context "when logged in as admin" do
       before { logged_in_as_admin }
-
-      it "assigns a new product as @product" do
-        allow(Product).to receive(:new).and_return(mock_product)
-        get :new
-        expect(assigns[:product]).to equal(mock_product)
-      end
     end
   end
 
   describe "GET edit" do
-    context "when logged in as admin" do
-      let(:product) { FactoryGirl.create(:product) }
-      before do
-        logged_in_as_admin
-        get :edit, id: product.id
-      end
-
-      it "assigns the requested product as @product" do
-        expect(assigns(:product)).to eq(product)
-      end
-
-      it 'assigns a new instance of ProductGroupPlacement' do
-        expect(assigns[:product_group_placement]).to be_instance_of(ProductGroupPlacement)
-      end
-    end
   end
 
   describe "POST create" do
@@ -55,31 +28,19 @@ RSpec.describe Admin::ProductsController, type: :controller do
     context "when logged in as admin" do
       before { logged_in_as_admin }
 
-      it "assigns a newly created product as @product" do
-        post :create, valid_params
+      it 'creates a new product with the given params' do
+        post :create, params: valid_params
         expect(Product.exists?(product_params)).to be_truthy
       end
 
       describe "with valid params" do
         before do
-          allow(Product).to receive(:new).with(valid_params['product']).and_return(mock_product(save: true))
+          allow(Product).to receive(:new).and_return(mock_product(save: true))
         end
 
         it "redirects to the new product page" do
-          post :create, valid_params
+          post :create, params: valid_params
           expect(response).to redirect_to(new_admin_product_path)
-        end
-      end
-
-      describe "with invalid params" do
-        before do
-          allow(Product).to receive(:new).with({'these' => 'params'}).and_return(mock_product(save: false))
-        end
-
-        it "re-renders the 'new' template" do
-          allow(Product).to receive(:new).and_return(mock_product(:save => false))
-          post :create, valid_params
-          expect(response).to render_template('new')
         end
       end
     end
@@ -94,22 +55,15 @@ RSpec.describe Admin::ProductsController, type: :controller do
       describe "with valid params" do
         it "updates the requested product" do
           find_requested_product
-          expect(mock_product).to receive(:update_attributes).with(valid_params['product'])
+          expect(mock_product).to receive(:update_attributes)
           allow(mock_product).to receive(:update_extra)
-          put :update, valid_params
-        end
-
-        it "assigns the requested product as @product" do
-          allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: true))
-          allow(mock_product).to receive(:update_extra)
-          put :update, valid_params
-          expect(assigns(:product)).to equal(mock_product)
+          put :update, params: valid_params
         end
 
         it "redirects to the edit product page again" do
           allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: true))
           allow(mock_product).to receive(:update_extra)
-          put :update, valid_params
+          put :update, params: valid_params
           expect(response).to redirect_to(edit_admin_product_path(mock_product))
         end
       end
@@ -117,23 +71,9 @@ RSpec.describe Admin::ProductsController, type: :controller do
       describe "with invalid params" do
         it "updates the requested product" do
           find_requested_product
-          expect(mock_product).to receive(:update_attributes).with(valid_params['product'])
+          expect(mock_product).to receive(:update_attributes)
           allow(mock_product).to receive(:update_extra)
-          put :update, valid_params
-        end
-
-        it "assigns the product as @product" do
-          allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: false))
-          allow(mock_product).to receive(:update_extra)
-          put :update, valid_params
-          expect(assigns(:product)).to equal(mock_product)
-        end
-
-        it "re-renders the 'edit' template" do
-          allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: false))
-          allow(mock_product).to receive(:update_extra)
-          put :update, valid_params
-          expect(response).to render_template('edit')
+          put :update, params: valid_params
         end
       end
     end
@@ -146,12 +86,12 @@ RSpec.describe Admin::ProductsController, type: :controller do
       it "destroys the requested product" do
         find_requested_product
         expect(mock_product).to receive(:destroy)
-        delete :destroy, id: '37'
+        delete :destroy, params: { id: '37' }
       end
 
       it "redirects to the products list" do
         allow(Product).to receive(:find_by).and_return(mock_product(destroy: true))
-        delete :destroy, id: '1'
+        delete :destroy, params: { id: '1' }
         expect(response).to redirect_to(admin_products_path)
       end
     end

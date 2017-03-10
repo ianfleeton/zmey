@@ -15,7 +15,7 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
 
   def show
     @product = Product.find_by(id: params[:id])
-    render nothing: true, status: 404 unless @product
+    head 404 unless @product
   end
 
   def create
@@ -30,7 +30,7 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
 
   def delete_all
     Product.destroy_all
-    render nothing: :true, status: 204
+    head 204
   end
 
   private

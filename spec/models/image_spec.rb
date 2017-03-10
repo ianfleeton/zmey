@@ -84,7 +84,7 @@ RSpec.describe Image, type: :model do
       p = FactoryGirl.create(:product)
       pi = ProductImage.create!(product: p, image: i)
       i.destroy
-      expect(ProductImage.find_by(pi.id)).to be_nil
+      expect(ProductImage.find_by(id: pi.id)).to be_nil
     end
   end
 end

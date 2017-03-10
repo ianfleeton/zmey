@@ -5,20 +5,6 @@ RSpec.describe AddressesController, type: :controller do
     @mock_address ||= double(Address, stubs)
   end
 
-  shared_examples_for 'an address book' do |method, action|
-    let(:current_user) { FactoryGirl.create(:user) }
-
-    before do
-      FactoryGirl.create(:address, user_id: current_user.id)
-      allow(controller).to receive(:current_user).and_return(current_user)
-    end
-
-    it "assigns the current user's addresses to @addresses" do
-      send(method, action)
-      expect(assigns(:addresses)).to eq current_user.reload.addresses
-    end
-  end
-
   shared_examples_for 'an authenticated action' do
     context 'when not signed in' do
       let(:logged_in) { false }
@@ -32,10 +18,8 @@ RSpec.describe AddressesController, type: :controller do
 
     before { allow(controller).to receive(:logged_in?).and_return(logged_in) }
 
-    it_behaves_like 'an address book', :get, :index
-
     context do
-      before { get :index, source: source }
+      before { get :index, params: { source: source } }
 
       it_behaves_like 'an authenticated action'
 
@@ -61,8 +45,6 @@ RSpec.describe AddressesController, type: :controller do
 
     before { allow(controller).to receive(:logged_in?).and_return(logged_in) }
 
-    it_behaves_like 'an address book', :get, :choose_billing_address
-
     context do
       before { get :choose_billing_address }
       it_behaves_like 'an authenticated action'
@@ -73,8 +55,6 @@ RSpec.describe AddressesController, type: :controller do
     let(:logged_in) { true }
 
     before { allow(controller).to receive(:logged_in?).and_return(logged_in) }
-
-    it_behaves_like 'an address book', :get, :choose_delivery_address
 
     context do
       before { get :choose_delivery_address }
@@ -88,7 +68,7 @@ RSpec.describe AddressesController, type: :controller do
 
     before do
       allow(controller).to receive(:logged_in?).and_return(logged_in)
-      post :select_for_billing, id: address.id
+      post :select_for_billing, params: { id: address.id }
     end
 
     it { should redirect_to checkout_path }
@@ -102,7 +82,7 @@ RSpec.describe AddressesController, type: :controller do
 
     before do
       allow(controller).to receive(:logged_in?).and_return(logged_in)
-      post :select_for_delivery, id: address.id
+      post :select_for_delivery, params: { id: address.id }
     end
 
     it { should redirect_to checkout_path }
@@ -119,10 +99,6 @@ RSpec.describe AddressesController, type: :controller do
       get :new
     end
 
-    it 'assigns a new Address to @address' do
-      expect(assigns(:address)).to eq mock_address
-    end
-
     it_behaves_like 'an authenticated action'
   end
 
@@ -131,7 +107,7 @@ RSpec.describe AddressesController, type: :controller do
 
     before do
       allow(controller).to receive(:logged_in?).and_return(logged_in)
-      get :edit, id: '1'
+      get :edit, params: { id: '1' }
     end
 
     context 'when address not found' do

@@ -5,22 +5,6 @@ RSpec.describe Admin::OrderCommentsController, type: :controller do
     logged_in_as_admin
   end
 
-  describe 'GET new' do
-    let(:order) { FactoryGirl.create(:order) }
-
-    before do
-      get :new, order_id: order.id
-    end
-
-    it 'creates a new OrderComment as @order_comment' do
-      expect(assigns(:order_comment)).to be_kind_of OrderComment
-    end
-
-    it "sets the comment's order_id" do
-      expect(assigns(:order_comment).order_id).to eq order.id
-    end
-  end
-
   describe 'POST create' do
     let(:order) { FactoryGirl.create(:order) }
 
@@ -35,24 +19,8 @@ RSpec.describe Admin::OrderCommentsController, type: :controller do
       end
     end
 
-    context 'when fail' do
-      before do
-        allow_any_instance_of(OrderComment).to receive(:save).and_return(false)
-      end
-
-      it 'renders new' do
-        post_create
-        expect(response).to render_template 'new'
-      end
-
-      it 'assigns @order_comment' do
-        post_create
-        expect(assigns(:order_comment)).to be_instance_of(OrderComment)
-      end
-    end
-
     def post_create
-      post :create, order_comment: {comment: 'Comment', order_id: order.id}
+      post :create, params: { order_comment: { comment: 'Comment', order_id: order.id } }
     end
   end
 end

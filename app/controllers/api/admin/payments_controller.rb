@@ -5,7 +5,7 @@ class Api::Admin::PaymentsController < Api::Admin::AdminController
 
   def show
     @payment = Payment.find_by(id: params[:id])
-    render nothing: true, status: 404 unless @payment
+    head 404 unless @payment
   end
 
   def create
@@ -21,9 +21,9 @@ class Api::Admin::PaymentsController < Api::Admin::AdminController
   def destroy
     if @payment = Payment.find_by(id: params[:id])
       @payment.destroy
-      render nothing: true, status: 204
+      head 204
     else
-      render nothing: true, status: 404
+      head 404
     end
   end
 

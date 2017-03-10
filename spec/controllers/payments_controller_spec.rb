@@ -8,30 +8,6 @@ RSpec.describe PaymentsController, type: :controller do
     allow(controller).to receive(:website).and_return(website)
   end
 
-  describe 'GET index' do
-    context 'when logged in as admin' do
-      before { logged_in_as_admin }
-
-      it 'uses the admin layout' do
-        get :index
-        expect(response).to render_template('layouts/admin')
-      end
-    end
-  end
-
-  describe 'GET show' do
-    let(:payment) { FactoryGirl.create(:payment) }
-
-    context 'when logged in as admin' do
-      before { logged_in_as_admin }
-
-      it 'uses the admin layout' do
-        get :show, id: payment.id
-        expect(response).to render_template('layouts/admin')
-      end
-    end
-  end
-
   CALLBACK_PARAMS = {
     Address1:            'a1',
     Address2:            'a2',
@@ -59,7 +35,7 @@ RSpec.describe PaymentsController, type: :controller do
     let(:params) { CALLBACK_PARAMS }
 
     it 'creates a new payment' do
-      expect{post :cardsave_callback, params}.to change{Payment.count}.by(1)
+      expect{post :cardsave_callback, params: params}.to change{Payment.count}.by(1)
     end
   end
 
@@ -71,7 +47,7 @@ RSpec.describe PaymentsController, type: :controller do
       website.cardsave_merchant_id = 'plugh'
       website.cardsave_password = 'plover'
 
-      post :cardsave_callback, params
+      post :cardsave_callback, params: params
     end
 
     it 'interpolates cardsave settings and callback params in order' do
@@ -91,12 +67,7 @@ RSpec.describe PaymentsController, type: :controller do
       }
 
       it 'creates a new payment' do
-        expect{post :rbs_worldpay_callback, params}.to change{Payment.count}.by(1)
-      end
-
-      it 'sets a message' do
-        post :rbs_worldpay_callback, params
-        expect(assigns(:message)).to eq 'Payment received'
+        expect{post :rbs_worldpay_callback, params: params}.to change{Payment.count}.by(1)
       end
 
       context 'with matching order' do
@@ -104,7 +75,7 @@ RSpec.describe PaymentsController, type: :controller do
         let(:cartId) { order.order_number }
 
         it 'sets the order status to payment received' do
-          post :rbs_worldpay_callback, params
+          post :rbs_worldpay_callback, params: params
           expect(order.reload.status).to eq Enums::PaymentStatus::PAYMENT_RECEIVED
         end
       end

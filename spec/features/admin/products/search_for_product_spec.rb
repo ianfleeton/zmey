@@ -20,6 +20,7 @@ feature 'Search for product' do
   end
 
   def and_i_search_for query
+    save_and_open_page
     fill_in 'query', with: query
     click_button 'Search'
   end

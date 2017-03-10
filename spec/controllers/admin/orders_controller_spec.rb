@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shared_examples_for_controllers'
 
 RSpec.describe Admin::OrdersController, type: :controller do
   def mock_order(stubs={})
@@ -8,62 +7,6 @@ RSpec.describe Admin::OrdersController, type: :controller do
 
   context 'when admin or manager' do
     before { allow(controller).to receive(:admin_or_manager?).and_return(true) }
-
-    describe 'GET index' do
-      context 'with no user supplied' do
-        it 'assigns all orders, most recent first' do
-          order_1 = FactoryGirl.create(:order, created_at: Date.today - 1.day)
-          order_2 = FactoryGirl.create(:order)
-          get :index
-          expect(assigns(:orders).to_a.first).to eq(order_2)
-          expect(assigns(:orders).to_a.last).to eq(order_1)
-        end
-      end
-
-      context 'with user supplied' do
-        it 'assigns all orders for the supplied user to @orders' do
-          u = User.create!(email: 'user@example.org', name: 'Alice', password: 'secret')
-          country = FactoryGirl.create(:country)
-          FactoryGirl.create(:order, user_id: u.id)
-          FactoryGirl.create(:order, user_id: u.id, created_at: Date.today - 1.day)
-          expect(u.orders.count).to eq 2
-          get 'index', user_id: u.id
-          expect(assigns(:orders).to_a).to eq u.orders.to_a
-        end
-      end
-
-      [:billing_company, :billing_full_name, :billing_postcode, :delivery_postcode, :email_address].each do |key|
-        context "with #{key} supplied" do
-          it "finds all orders with partially matching #{key}" do
-            o1 = FactoryGirl.create(:order, key => 'Ian')
-            o2 = FactoryGirl.create(:order, key => 'Brian')
-            o3 = FactoryGirl.create(:order, key => 'Alice')
-            get :index, key => 'ian'
-            expect(assigns(:orders)).to include(o1)
-            expect(assigns(:orders)).to include(o2)
-            expect(assigns(:orders)).not_to include(o3)
-          end
-        end
-      end
-
-      context 'with order_number supplied' do
-        it 'finds order with matching order_number' do
-          o1 = FactoryGirl.create(:order, order_number: 'ORDER-1')
-          o2 = FactoryGirl.create(:order, order_number: 'ORDER-2')
-          get :index, order_number: 'ORDER-1'
-          expect(assigns(:orders)).to include(o1)
-          expect(assigns(:orders)).not_to include(o2)
-        end
-      end
-    end
-
-    describe 'GET new' do
-      it 'assigns a new Order to @order' do
-        get :new
-        expect(assigns(:order)).to be_instance_of(Order)
-        expect(assigns(:order).new_record?).to be_truthy
-      end
-    end
 
     describe 'POST create' do
       let(:params) {{
@@ -78,12 +21,12 @@ RSpec.describe Admin::OrdersController, type: :controller do
       let(:order) { FactoryGirl.build(:order, params) }
 
       it 'creates an order' do
-        post :create, order: order.attributes
+        post :create, params: { order: order.attributes }
         expect(Order.find_by(params)).to be
       end
 
       it 'sets the order status to WAITING_FOR_PAYMENT' do
-        post :create, order: order.attributes
+        post :create, params: { order: order.attributes }
         expect(Order.last.status).to eq Enums::PaymentStatus::WAITING_FOR_PAYMENT
       end
 
@@ -93,29 +36,9 @@ RSpec.describe Admin::OrdersController, type: :controller do
         end
 
         it 'redirects to the admin orders page' do
-          post :create, order: order.attributes
+          post :create, params: { order: order.attributes }
           expect(response).to redirect_to admin_orders_path
         end
-      end
-
-      context 'when save succeeds' do
-        before do
-          allow_any_instance_of(Order).to receive(:save).and_return(false)
-        end
-
-        it 'renders new' do
-          post :create, order: order.attributes
-          expect(response).to render_template 'new'
-        end
-      end
-    end
-
-    describe 'GET edit' do
-      let(:order) { FactoryGirl.create(:order) }
-
-      it 'assigns the order to @order' do
-        get :edit, id: order.id
-        expect(assigns(:order)).to eq order
       end
     end
 
@@ -141,17 +64,16 @@ RSpec.describe Admin::OrdersController, type: :controller do
 
       before do
         pre.try(:call)
-        patch :update, id: order.id, order: order_params,
+        patch :update, params: {
+          id: order.id,
+          order: order_params,
           order_line_product_name: order_line_product_name,
           order_line_product_price: order_line_product_price,
           order_line_product_sku: order_line_product_sku,
           order_line_product_weight: order_line_product_weight,
           order_line_quantity: order_line_quantity,
           order_line_tax_percentage: order_line_tax_percentage
-      end
-
-      it 'assigns the order to @order' do
-        expect(assigns(:order)).to eq order
+        }
       end
 
       it 'redirects to the edit order page' do
@@ -275,14 +197,14 @@ RSpec.describe Admin::OrdersController, type: :controller do
       end
 
       def post_destroy
-        post 'destroy', id: '1'
+        post 'destroy', params: { id: '1' }
       end
     end
 
     describe 'POST mark_processed' do
       let(:order) { FactoryGirl.create(:order, processed_at: nil) }
 
-      before { post 'mark_processed', id: order.id }
+      before { post 'mark_processed', params: { id: order.id } }
 
       it 'sets the order processed_at to current time' do
         expect(order.reload.processed_at).to be
@@ -300,7 +222,7 @@ RSpec.describe Admin::OrdersController, type: :controller do
     describe 'POST mark_unprocessed' do
       let(:order) { FactoryGirl.create(:order, processed_at: Time.zone.now) }
 
-      before { post 'mark_unprocessed', id: order.id }
+      before { post 'mark_unprocessed', params: { id: order.id } }
 
       it 'sets the order processed_at to nil' do
         expect(order.reload.processed_at).to be_nil
@@ -312,15 +234,6 @@ RSpec.describe Admin::OrdersController, type: :controller do
 
       it 'redirects to #edit' do
         expect(response).to redirect_to edit_admin_order_path(order)
-      end
-    end
-
-    describe 'GET record_sales_conversion' do
-      let(:order) { FactoryGirl.create(:order) }
-
-      it 'assigns the order to @order' do
-        get :record_sales_conversion, id: order.id
-        expect(assigns(:order)).to eq order
       end
     end
   end

@@ -51,7 +51,7 @@ class Payments::PaypalController < PaymentsController
         @payment.save
       end
     end
-    render nothing: true
+    head :ok
   end
 
   private

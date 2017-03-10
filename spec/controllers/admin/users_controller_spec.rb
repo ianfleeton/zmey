@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shared_examples_for_controllers'
 
 RSpec.describe Admin::UsersController, type: :controller do
   let(:user)    { FactoryGirl.create(:user) }
@@ -7,19 +6,9 @@ RSpec.describe Admin::UsersController, type: :controller do
   context 'when admin or manager' do
     before { allow(controller).to receive(:admin_or_manager?).and_return(true) }
 
-    describe 'GET index' do
-      it 'assigns users ordered by name to @users' do
-        u1 = FactoryGirl.create(:user, name: 'User Z')
-        u2 = FactoryGirl.create(:user, name: 'User A')
-        get :index
-        expect(assigns(:users).first).to eq u2
-        expect(assigns(:users).last).to eq u1
-      end
-    end
-
     describe 'POST create' do
       def post_valid
-        post 'create', user: {'some' => 'params'}
+        post 'create', params: { user: { 'some' => 'params' } }
       end
 
       context 'when create succeeds' do
@@ -39,18 +28,12 @@ RSpec.describe Admin::UsersController, type: :controller do
 
     describe 'PATCH update' do
       def patch_valid
-        patch 'update', id: '1', user: {'some' => 'params'}
+        patch 'update', params: { id: '1', user: { 'some' => 'params' } }
       end
 
       it 'finds the user' do
         expect(User).to receive(:find).with('1').and_return(user)
         patch_valid
-      end
-
-      it 'sets @user' do
-        allow(User).to receive(:find).with('1').and_return(user)
-        patch_valid
-        expect(assigns(:user)).to eq user
       end
 
       context 'when the user is found' do

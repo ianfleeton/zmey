@@ -83,12 +83,12 @@ RSpec.describe 'Admin product groups API', type: :request do
     it 'inserts a new product group into the website' do
       name     = SecureRandom.hex
       location = SecureRandom.hex
-      post '/api/admin/product_groups', product_group: {name: name, location: location}
+      post '/api/admin/product_groups', params: { product_group: {name: name, location: location } }
       expect(ProductGroup.find_by(name: name, location: location)).to be
     end
 
     it 'returns 422 with bad params' do
-      post '/api/admin/product_groups', product_group: {name: ''}
+      post '/api/admin/product_groups', params: { product_group: { name: '' } }
       expect(response.status).to eq 422
     end
   end

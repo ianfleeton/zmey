@@ -24,7 +24,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     def post_create
-      post :create, user: user_params
+      post :create, params: { user: user_params }
     end
   end
 end

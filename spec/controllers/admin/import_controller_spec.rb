@@ -7,7 +7,7 @@ RSpec.describe Admin::ImportController, type: :controller do
 
   describe 'POST csv' do
     before do
-      post :csv, csv: csv, class_name: 'Product'
+      post :csv, params: { csv: csv, class_name: 'Product' }
     end
 
     context 'with CSV file of new products' do

@@ -20,14 +20,16 @@ RSpec.describe 'Admin shipments API', type: :request do
     let(:tracking_url) { 'http://trackyourorder.url/123' }
 
     before do
-      post '/api/admin/shipments', shipment: {
-        courier_name: courier_name,
-        order_id: order_id,
-        partial: [true, false].sample,
-        picked_by: picked_by,
-        total_weight: total_weight,
-        tracking_number: tracking_number,
-        tracking_url: tracking_url,
+      post '/api/admin/shipments', params: {
+        shipment: {
+          courier_name: courier_name,
+          order_id: order_id,
+          partial: [true, false].sample,
+          picked_by: picked_by,
+          total_weight: total_weight,
+          tracking_number: tracking_number,
+          tracking_url: tracking_url,
+        }
       }
     end
 

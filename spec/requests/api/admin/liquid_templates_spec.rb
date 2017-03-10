@@ -10,12 +10,14 @@ describe 'Admin Liquid templates API' do
       markup = SecureRandom.hex
       name   = SecureRandom.hex
       title  = SecureRandom.hex
-      post '/api/admin/liquid_templates', liquid_template: {markup: markup, name: name, title: title}
+      post '/api/admin/liquid_templates', params: {
+        liquid_template: { markup: markup, name: name, title: title }
+      }
       expect(LiquidTemplate.find_by(markup: markup, name: name, title: title)).to be
     end
 
     it 'returns 422 with bad params' do
-      post '/api/admin/liquid_templates', liquid_template: {name: ''}
+      post '/api/admin/liquid_templates', params: { liquid_template: { name: '' } }
       expect(response.status).to eq 422
     end
   end

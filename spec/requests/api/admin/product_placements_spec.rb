@@ -9,7 +9,7 @@ describe 'Admin product placements API' do
     it 'inserts a new product placement' do
       page = FactoryGirl.create(:page)
       product = FactoryGirl.create(:product)
-      post '/api/admin/product_placements', product_placement: {page_id: page.id, product_id: product.id}
+      post '/api/admin/product_placements', params: { product_placement: {page_id: page.id, product_id: product.id} }
       expect(ProductPlacement.find_by(page_id: page.id, product_id: product.id)).to be
     end
   end

@@ -9,7 +9,7 @@ RSpec.describe Admin::ProductGroupPlacementsController, type: :controller do
     let(:product_group) { FactoryGirl.create(:product_group) }
 
     before do
-      post :create, product_group_placement: { product_group_id: product_group.id }
+      post :create, params: { product_group_placement: { product_group_id: product_group.id } }
     end
 
     it "redirects to the placement's product group edit page" do
@@ -21,7 +21,7 @@ RSpec.describe Admin::ProductGroupPlacementsController, type: :controller do
     let(:product_group_placement) { FactoryGirl.create(:product_group_placement) }
 
     before do
-      delete :destroy, id: product_group_placement.id
+      delete :destroy, params: { id: product_group_placement.id }
     end
 
     it "redirects to the placement's product group edit page" do

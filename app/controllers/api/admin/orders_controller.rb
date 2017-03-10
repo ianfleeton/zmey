@@ -25,7 +25,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
     @order.update_attributes(order_params)
 
     if @order.save
-      render nothing: true, status: 204
+      head 204
     else
       render json: @order.errors.full_messages, status: :unprocessable_entity
     end
@@ -33,14 +33,14 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
 
   def delete_all
     Order.fast_delete_all
-    render nothing: :true, status: 204
+    head 204
   end
 
   private
 
     def set_order
       @order = Order.find_by(id: params[:id])
-      render nothing: true, status: 404 unless @order
+      head 404 unless @order
     end
 
     # Returns a query for the index action using filters in +params+.

@@ -26,14 +26,14 @@ class Api::Admin::PagesController < Api::Admin::AdminController
 
   def delete_all
     Page.destroy_all
-    render nothing: :true, status: 204
+    head 204
   end
 
   private
 
     def set_page
       @page = Page.find_by(id: params[:id])
-      render nothing: true, status: 404 unless @page
+      head 404 unless @page
     end
 
     def page_params

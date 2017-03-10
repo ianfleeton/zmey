@@ -22,7 +22,7 @@ describe 'Admin users API' do
 
       more_setup.try(:call)
 
-      get '/api/admin/users', email: email
+      get '/api/admin/users', params: { email: email }
     end
 
     context 'with users' do
@@ -112,7 +112,7 @@ describe 'Admin users API' do
     let(:customer_reference) { 'ABUY1234' }
 
     before do
-      patch api_admin_user_path(user), user: { customer_reference: customer_reference }
+      patch api_admin_user_path(user), params: { user: { customer_reference: customer_reference } }
     end
 
     context 'when user found' do

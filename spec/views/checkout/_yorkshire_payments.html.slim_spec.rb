@@ -14,9 +14,4 @@ RSpec.describe 'checkout/_yorkshire_payments.html.slim', type: :view do
     subject { rendered }
     it { should have_selector "form[action='https://gateway.yorkshirepayments.com/paymentform/'][method='post']" }
   end
-
-  context 'view' do
-    subject { view }
-    it { should render_template 'checkout/_yorkshire_payments_hidden_fields'}
-  end
 end

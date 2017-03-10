@@ -34,7 +34,7 @@ RSpec.describe Admin::WebsitesController, type: :controller do
         allow(Page).to receive(:bootstrap)
         allow(controller).to receive(:create_latest_news)
 
-        post 'create', website: valid_params
+        post 'create', params: { website: valid_params }
 
         expect(Website.find_by(valid_params)).to be
       end

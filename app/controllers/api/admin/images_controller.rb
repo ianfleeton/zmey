@@ -5,7 +5,7 @@ class Api::Admin::ImagesController < Api::Admin::AdminController
 
   def show
     @image = Image.find_by(id: params[:id])
-    render nothing: true, status: 404 unless @image
+    head 404 unless @image
   end
 
   def create
@@ -22,7 +22,7 @@ class Api::Admin::ImagesController < Api::Admin::AdminController
   def delete_all
     begin
       Image.fast_delete_all
-      render nothing: :true, status: 204
+      head 204
     rescue ActiveRecord::DeleteRestrictionError => e
       render json: {'error' => e.to_s}, status: 400
     end

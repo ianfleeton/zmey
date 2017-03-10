@@ -4,7 +4,7 @@ RSpec.describe 'admin/products/index.html.slim', type: :view do
   include ProductsHelper
 
   before(:each) do
-    assigns[:products] = @products = [
+    @products = [
       FactoryGirl.create(:product),
       FactoryGirl.create(:product)
     ]

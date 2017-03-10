@@ -36,10 +36,11 @@ describe 'Admin orders API' do
 
       more_setup.try(:call)
 
-      get '/api/admin/orders',
+      get '/api/admin/orders', params: {
         order_number: order_number,
         page: page, page_size: page_size,
         processed: processed, status: status
+      }
     end
 
     it 'returns all orders' do
@@ -282,7 +283,7 @@ describe 'Admin orders API' do
     }}
 
     it 'inserts a new order into the website' do
-      post '/api/admin/orders', order: basic_params
+      post '/api/admin/orders', params: { order: basic_params }
       expect(Order.find_by(
         basic_params.merge(
           processed_at: '2015-03-05 10:00:00',
@@ -292,25 +293,25 @@ describe 'Admin orders API' do
     end
 
     it 'ignores a blank status' do
-      post '/api/admin/orders', order: basic_params.merge(status: '')
+      post '/api/admin/orders', params: { order: basic_params.merge(status: '') }
     end
 
     it 'returns 422 if order cannot be created' do
-      post '/api/admin/orders', order: {email_address: 'is not enough'}
+      post '/api/admin/orders', params: { order: {email_address: 'is not enough'} }
       expect(status).to eq 422
     end
 
     it 'accepts billing_country_name in place of billing_country_id' do
       basic_params.merge!(billing_country_name: country.name)
       basic_params.delete(:billing_country_id)
-      post '/api/admin/orders', order: basic_params
+      post '/api/admin/orders', params: { order: basic_params }
       expect(Order.last.billing_country).to eq country
     end
 
     it 'accepts delivery_country_name in place of delivery_country_id' do
       basic_params.merge!(delivery_country_name: country.name)
       basic_params.delete(:delivery_country_id)
-      post '/api/admin/orders', order: basic_params
+      post '/api/admin/orders', params: { order: basic_params }
       expect(Order.last.delivery_country).to eq country
     end
   end
@@ -349,7 +350,7 @@ describe 'Admin orders API' do
     }}
 
     before do
-      patch api_admin_order_path(order), order: basic_params
+      patch api_admin_order_path(order), params: { order: basic_params }
     end
 
     context 'when order found' do

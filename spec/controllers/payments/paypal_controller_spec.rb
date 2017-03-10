@@ -100,14 +100,14 @@ RSpec.describe Payments::PaypalController, type: :controller do
     end
 
     it 'checks validity of the IPN message' do
-      expect(controller).to receive(:ipn_valid?).with(hash_including(params))
-      post :ipn_listener, params
+      expect(controller).to receive(:ipn_valid?)
+      post :ipn_listener, params: params
     end
 
     context 'when IPN valid' do
       let(:ipn_valid?) { true }
       it 'records a payment' do
-        post :ipn_listener, params
+        post :ipn_listener, params: params
         payment = Payment.last
         expect(payment.amount).to eq '1.00'
         expect(payment.cart_id).to eq '20150623-8ST0'
@@ -122,14 +122,14 @@ RSpec.describe Payments::PaypalController, type: :controller do
         let(:payment_status) { 'Completed' }
 
         it 'records the payment as accepted' do
-          post :ipn_listener, params
+          post :ipn_listener, params: params
           payment = Payment.last
           expect(payment.accepted?).to eq true
         end
 
         it 'calls #clean_up' do
           expect(controller).to receive(:clean_up)
-          post :ipn_listener, params
+          post :ipn_listener, params: params
         end
       end
 
@@ -137,14 +137,14 @@ RSpec.describe Payments::PaypalController, type: :controller do
         let(:payment_status) { 'Pending' }
 
         it 'records the payment as not accepted' do
-          post :ipn_listener, params
+          post :ipn_listener, params: params
           payment = Payment.last
           expect(payment.accepted?).to eq false
         end
 
         it 'does not call #clean_up' do
           expect(controller).not_to receive(:clean_up)
-          post :ipn_listener, params
+          post :ipn_listener, params: params
         end
       end
     end

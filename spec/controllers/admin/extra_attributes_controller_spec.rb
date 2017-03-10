@@ -6,25 +6,10 @@ RSpec.describe Admin::ExtraAttributesController, type: :controller do
       logged_in_as_admin
     end
 
-    describe 'GET index' do
-      it 'assigns all extra attributes to @extra_attributes' do
-        a = FactoryGirl.create(:extra_attribute)
-        get :index
-        expect(assigns(:extra_attributes)).to include(a)
-      end
-    end
-
-    describe 'GET new' do
-      it 'assigns a new ExtraAttribute to @extra_attribute' do
-        get :new
-        expect(assigns(:extra_attribute)).to be_instance_of ExtraAttribute
-      end
-    end
-
     describe 'POST create' do
       context 'when successful' do
         it 'creates a new ExtraAttribute' do
-          expect{post_create}.to change{ExtraAttribute.count}.by 1
+          expect { post_create }.to change { ExtraAttribute.count }.by 1
         end
 
         it 'redirects to index' do
@@ -33,32 +18,8 @@ RSpec.describe Admin::ExtraAttributesController, type: :controller do
         end
       end
 
-      context 'when fail' do
-        before do
-          allow_any_instance_of(ExtraAttribute).to receive(:save).and_return(false)
-        end
-
-        it 'renders new' do
-          post_create
-          expect(response).to render_template 'new'
-        end
-
-        it 'assigns @extra_attribute' do
-          post_create
-          expect(assigns(:extra_attribute)).to be_instance_of(ExtraAttribute)
-        end
-      end
-
       def post_create
-        post :create, extra_attribute: {attribute_name: 'a', class_name: 'Page'}
-      end
-    end
-
-    describe 'GET edit' do
-      it 'finds and assigns @extra_attribute' do
-        a = FactoryGirl.create(:extra_attribute)
-        get :edit, id: a.id
-        expect(assigns(:extra_attribute)).to eq a
+        post :create, params: { extra_attribute: { attribute_name: 'a', class_name: 'Page' } }
       end
     end
 
@@ -81,24 +42,8 @@ RSpec.describe Admin::ExtraAttributesController, type: :controller do
         end
       end
 
-      context 'when fail' do
-        before do
-          allow_any_instance_of(ExtraAttribute).to receive(:update_attributes).and_return(false)
-        end
-
-        it 'renders edit' do
-          patch_update
-          expect(response).to render_template 'edit'
-        end
-
-        it 'assigns @extra_attribute' do
-          patch_update
-          expect(assigns(:extra_attribute)).to be_instance_of(ExtraAttribute)
-        end
-      end
-
       def patch_update
-        patch :update, id: extra_attribute.id, extra_attribute: {attribute_name: new_attribute_name, class_name: new_class_name}
+        patch :update, params: { id: extra_attribute.id, extra_attribute: { attribute_name: new_attribute_name, class_name: new_class_name } }
       end
     end
 
@@ -106,7 +51,7 @@ RSpec.describe Admin::ExtraAttributesController, type: :controller do
       let(:a) { FactoryGirl.create(:extra_attribute) }
 
       before do
-        delete :destroy, id: a.id
+        delete :destroy, params: { id: a.id }
       end
 
       it 'destroys the attribute' do

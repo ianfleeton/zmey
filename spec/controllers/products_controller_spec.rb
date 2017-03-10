@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shared_examples_for_controllers'
 
 RSpec.describe ProductsController, type: :controller do
   def mock_product(stubs={})
@@ -7,19 +6,6 @@ RSpec.describe ProductsController, type: :controller do
   end
 
   describe "GET show" do
-    context 'when product active' do
-      before do
-        find_requested_product(
-          :active? => true, page_title: '', name: '', meta_description: ''
-        )
-      end
-
-      it "assigns the requested product as @product" do
-        get :show, id: '37'
-        expect(assigns[:product]).to equal(mock_product)
-      end
-    end
-
     context 'when product inactive' do
       before do
         find_requested_product(
@@ -31,14 +17,14 @@ RSpec.describe ProductsController, type: :controller do
         before { logged_in_as_admin }
 
         it 'succeeds' do
-          get :show, id: '37'
+          get :show, params: { id: '37' }
           expect(response).to be_successful
         end
       end
 
       context 'as visitor' do
         it '404s' do
-          get :show, id: '37'
+          get :show, params: { id: '37' }
           expect(response.status).to eq 404
         end
       end

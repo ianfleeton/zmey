@@ -1,6 +1,4 @@
 require 'rails_helper'
-require_relative 'shared_examples/discounts.rb'
-require_relative 'shared_examples/shipping.rb'
 require_relative 'shared_examples/shopping_suspended.rb'
 
 RSpec.describe CheckoutController, type: :controller do
@@ -9,7 +7,7 @@ RSpec.describe CheckoutController, type: :controller do
 
   it_behaves_like 'a suspended shop bouncer'
 
-  shared_examples_for 'a checkout advancer' do |method, action, params=nil|
+  shared_examples_for 'a checkout advancer' do |method, action, params={}|
     let(:has_checkout_details) { true }
     let(:billing_address) { FactoryGirl.create(:address) }
     let(:delivery_address_valid?) { true }
@@ -22,7 +20,7 @@ RSpec.describe CheckoutController, type: :controller do
       allow(controller).to receive(:delivery_address_valid?).and_return(delivery_address_valid?)
       allow(website).to receive(:preferred_delivery_date_settings).and_return(preferred_delivery_date_settings)
       session[:preferred_delivery_date] = preferred_delivery_date
-      send(method, action, params)
+      send(method, action, params: params)
     end
 
     context 'without name, phone and email set in session' do
@@ -84,8 +82,6 @@ RSpec.describe CheckoutController, type: :controller do
       get :details
     end
 
-    it { should render_with_layout 'basket_checkout' }
-
     context 'when logged in' do
       let(:current_user) { FactoryGirl.create(:user, name: SecureRandom.hex) }
 
@@ -110,29 +106,15 @@ RSpec.describe CheckoutController, type: :controller do
 
   describe 'POST save_details' do
     context 'with valid details' do
-      before { post :save_details, name: 'n', phone: '1', email: 'x' }
+      before do
+        post :save_details, params: { name: 'n', phone: '1', email: 'x' }
+      end
 
       it { should set_session[:name].to('n') }
       it { should set_session[:phone].to('1') }
       it { should set_session[:email].to('x') }
 
       it_behaves_like 'a checkout advancer', :post, :save_details, name: 'n', phone: '1', email: 'x'
-    end
-  end
-
-  shared_examples_for 'an address prefiller' do
-    it 'assigns @address' do
-      expect(assigns(:address)).to be_instance_of Address
-    end
-
-    it 'prefills some of the address from session details' do
-      expect(assigns(:address).full_name).to eq 'n'
-      expect(assigns(:address).phone_number).to eq '1'
-      expect(assigns(:address).email_address).to eq 'x'
-    end
-
-    it 'sets the address country as United Kingdom' do
-      expect(assigns(:address).country).to eq uk
     end
   end
 
@@ -175,11 +157,6 @@ RSpec.describe CheckoutController, type: :controller do
         let(:billing_address_id) { billing_address.id }
 
         it { should respond_with(200) }
-        it { should render_with_layout 'basket_checkout' }
-
-        it 'assigns @address to the billing address' do
-          expect(assigns(:address)).to eq billing_address
-        end
       end
 
       context 'with no existing billing address' do
@@ -190,10 +167,6 @@ RSpec.describe CheckoutController, type: :controller do
 
           it { should set_session[:source].to('billing') }
           it { should redirect_to choose_billing_address_addresses_path }
-        end
-
-        context 'when user has no addresses' do
-          it_behaves_like 'an address prefiller'
         end
       end
     end
@@ -207,7 +180,7 @@ RSpec.describe CheckoutController, type: :controller do
       allow(controller).to receive(:current_user).and_return(current_user)
       allow(controller).to receive(:billing_address).and_return(billing_address)
       allow(controller).to receive(:delivery_address).and_return(delivery_address)
-      post method, address: address.attributes
+      post method, params: { address: address.attributes }
     end
 
     context 'when signed in' do
@@ -249,7 +222,7 @@ RSpec.describe CheckoutController, type: :controller do
       allow(controller).to receive(:billing_address).and_return(billing_address)
       session[:billing_address_id] = session_billing_address_id
       session[:delivery_address_id] = session_delivery_address_id
-      post :save_billing, address: address.attributes, deliver_here: deliver_here
+      post :save_billing, params: { address: address.attributes, deliver_here: deliver_here }
     end
 
     context 'when billing address found' do
@@ -302,11 +275,6 @@ RSpec.describe CheckoutController, type: :controller do
       it_behaves_like 'a checkout advancer', :post, :save_billing, { address: FactoryGirl.build(:address).attributes }
       it_behaves_like 'an address/user associator', :save_billing
     end
-
-    context 'when create/update fails' do
-      let(:address) { Address.new }
-      it { should render_template 'billing' }
-    end
   end
 
   describe 'GET delivery' do
@@ -341,11 +309,6 @@ RSpec.describe CheckoutController, type: :controller do
         let(:delivery_address_id) { delivery_address.id }
 
         it { should respond_with(200) }
-        it { should render_with_layout 'basket_checkout' }
-
-        it 'assigns @address to the delivery address' do
-          expect(assigns(:address)).to eq delivery_address
-        end
       end
 
       context 'with no existing delivery address' do
@@ -356,10 +319,6 @@ RSpec.describe CheckoutController, type: :controller do
 
           it { should set_session[:source].to('delivery') }
           it { should redirect_to choose_delivery_address_addresses_path }
-        end
-
-        context 'when user has no addresses' do
-          it_behaves_like 'an address prefiller'
         end
       end
     end
@@ -375,7 +334,7 @@ RSpec.describe CheckoutController, type: :controller do
       allow(controller).to receive(:delivery_address).and_return(delivery_address)
       session[:billing_address_id] = session_billing_address_id
       session[:delivery_address_id] = session_delivery_address_id
-      post :save_delivery, address: address.attributes
+      post :save_delivery, params: { address: address.attributes }
     end
 
     context 'when delivery address found' do
@@ -412,11 +371,6 @@ RSpec.describe CheckoutController, type: :controller do
       it_behaves_like 'a checkout advancer', :post, :save_delivery, { address: FactoryGirl.build(:address).attributes }
       it_behaves_like 'an address/user associator', :save_delivery
     end
-
-    context 'when create/update fails' do
-      let(:address) { Address.new }
-      it { should render_template 'delivery' }
-    end
   end
 
   describe 'GET preferred_delivery_date' do
@@ -429,7 +383,7 @@ RSpec.describe CheckoutController, type: :controller do
     let(:preferred_delivery_date) { '2015-02-16' }
 
     before do
-      post :save_preferred_delivery_date, preferred_delivery_date: preferred_delivery_date
+      post :save_preferred_delivery_date, params: { preferred_delivery_date: preferred_delivery_date }
     end
 
     it 'records preferred delivery date in the session' do
@@ -461,24 +415,9 @@ RSpec.describe CheckoutController, type: :controller do
         allow(controller).to receive(:delivery_address_required?).and_return(delivery_address_required?)
       end
 
-      it_behaves_like 'a shipping class setter', :get, :confirm
-      it_behaves_like 'a shipping amount setter', :get, :confirm
-      it_behaves_like 'a discounts calculator', :get, :confirm
-
       context 'action' do
         before { get :confirm }
-        it { should render_with_layout 'basket_checkout' }
         it { should use_before_action :remove_invalid_discounts }
-      end
-
-      it 'assigns billing address to @billing_address' do
-        get :confirm
-        expect(assigns(:billing_address)).to eq billing_address
-      end
-
-      it 'assigns delivery address to @delivery_address' do
-        get :confirm
-        expect(assigns(:delivery_address)).to eq delivery_address
       end
 
       context 'without a billing address' do
@@ -498,10 +437,6 @@ RSpec.describe CheckoutController, type: :controller do
           it { should redirect_to checkout_path }
         end
       end
-
-      it_behaves_like 'a discounts calculator', :get, :confirm
-
-      it_behaves_like 'a shipping class setter', :get, :confirm
 
       it 'recycles a previous unpaid order if one exists' do
         session[:order_id] = 123
@@ -527,19 +462,9 @@ RSpec.describe CheckoutController, type: :controller do
         expect(response).to redirect_to preferred_delivery_date_path
       end
 
-      it "records the customer's IP address" do
-        get :confirm
-        expect(assigns(:order).ip_address).to eq '0.0.0.0'
-      end
-
       it 'adds the basket to the order' do
         expect_any_instance_of(Order).to receive(:add_basket).with(@basket)
         get :confirm
-      end
-
-      it 'records the weight of the products' do
-        get :confirm
-        expect(assigns(:order).weight).to eq 0.75
       end
 
       it 'triggers an order_created Webhook' do
@@ -647,12 +572,6 @@ RSpec.describe CheckoutController, type: :controller do
           failure_url: sage_pay_failure_payments_url
         )).and_return(double(SagePay).as_null_object)
         controller.prepare_payment_methods(order)
-      end
-
-      it 'assigns @crypt from the SagePay' do
-        allow(SagePay).to receive(:new).and_return(double(SagePay, encrypt: 'crypt'))
-        controller.prepare_payment_methods(order)
-        expect(assigns(:crypt)).to eq 'crypt'
       end
     end
   end

@@ -15,12 +15,12 @@ describe 'Admin carousel slides API' do
         active_until: '2015-02-02 23:59:59',
         html: '<h2>Sale now on!</h2>'
       }
-      post '/api/admin/carousel_slides', carousel_slide: params
+      post '/api/admin/carousel_slides', params: { carousel_slide: params }
       expect(CarouselSlide.find_by(params)).to be
     end
 
     it 'returns 422 with bad params' do
-      post '/api/admin/carousel_slides', carousel_slide: {caption: ''}
+      post '/api/admin/carousel_slides', params: { carousel_slide: {caption: ''} }
       expect(response.status).to eq 422
     end
   end

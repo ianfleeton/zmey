@@ -12,7 +12,7 @@ class Api::Admin::UsersController < Api::Admin::AdminController
     @user.update_attributes(user_params)
 
     if @user.save
-      render nothing: true, status: 204
+      head 204
     else
       render json: @user.errors.full_messages, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class Api::Admin::UsersController < Api::Admin::AdminController
 
     def set_user
       @user = User.find_by(id: params[:id])
-      render nothing: true, status: 404 unless @user
+      head 404 unless @user
     end
 
     def index_query
