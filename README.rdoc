@@ -66,8 +66,7 @@ Then check that /usr/local/bin is in the path, for example:
 
 === Database creation
 
-  mysql -e 'create database zmey_test; create database zmey_development;'
-  cp config/database.sample.yml config/database.yml
+  bin/rails db:create
   cp config/secrets.sample.yml config/secrets.yml
   # edit config/database.yml and config/secrets.yml as necessary
 

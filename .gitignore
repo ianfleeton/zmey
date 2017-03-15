@@ -24,7 +24,6 @@
 /fonts/MuseoSans_500.ttf
 
 # Ignore sensitive files.
-database.yml
 newrelic.yml
 secrets.yml
 
