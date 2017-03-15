@@ -21,7 +21,9 @@ class ExtraAttribute < ActiveRecord::Base
       setter = false
     end
 
-    exists = exists?(attribute_name: attribute_name, class_name: class_name)
+    exists = exists?(
+      attribute_name: attribute_name, class_name: class_name.to_s
+    )
 
     {
       exists: exists,
