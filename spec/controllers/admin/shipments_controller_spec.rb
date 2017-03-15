@@ -12,7 +12,7 @@ RSpec.describe Admin::ShipmentsController, type: :controller do
       partial: [true, false].sample,
       picked_by: 'Jo Picker',
       number_of_parcels: 2,
-      shipped_at: Time.zone.now,
+      shipped_at: '2017-03-15 20:56:17 UTC',
       total_weight: 1.234,
       tracking_number: '123',
       tracking_url: 'http://trackyourorder.url/123',
