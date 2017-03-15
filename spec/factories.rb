@@ -131,6 +131,7 @@ FactoryGirl.define do
   end
 
   factory :payment do
+    amount 0
   end
 
   factory :product do

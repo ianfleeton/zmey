@@ -60,6 +60,7 @@ RSpec.describe PaymentsController, type: :controller do
       let(:cartId) { 'NO SUCH CART' }
       let(:params) {
         {
+          amount: '12.34',
           callbackPW: '',
           cartId: cartId,
           transStatus: 'Y',
