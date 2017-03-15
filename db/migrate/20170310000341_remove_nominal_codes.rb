@@ -1,6 +1,6 @@
 class RemoveNominalCodes < ActiveRecord::Migration[5.1]
   def change
-    create_table "additional_products", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "additional_products", id: :integer, force: :cascade do |t|
       t.integer "product_id", null: false
       t.integer "additional_product_id", null: false
       t.boolean "selected_by_default", default: false, null: false
@@ -10,7 +10,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["product_id"], name: "index_additional_products_on_product_id"
     end
 
-    create_table "addresses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "addresses", id: :integer, force: :cascade do |t|
       t.integer "user_id"
       t.string "full_name", default: "", null: false
       t.string "address_line_1", default: "", null: false
@@ -28,7 +28,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.string "address_line_3"
     end
 
-    create_table "api_keys", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "api_keys", id: :integer, force: :cascade do |t|
       t.string "name", null: false
       t.string "key", null: false
       t.integer "user_id", null: false
@@ -38,7 +38,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["user_id"], name: "index_api_keys_on_user_id"
     end
 
-    create_table "basket_items", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "basket_items", id: :integer, force: :cascade do |t|
       t.integer "basket_id", null: false
       t.integer "product_id", null: false
       t.decimal "quantity", precision: 10, scale: 3, default: "1.0", null: false
@@ -48,7 +48,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.boolean "immutable_quantity", default: false, null: false
     end
 
-    create_table "baskets", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "baskets", id: :integer, force: :cascade do |t|
       t.datetime "created_at"
       t.datetime "updated_at"
       t.text "customer_note"
@@ -57,7 +57,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["token"], name: "index_baskets_on_token", unique: true
     end
 
-    create_table "carousel_slides", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "carousel_slides", id: :integer, force: :cascade do |t|
       t.integer "position", null: false
       t.integer "image_id", null: false
       t.string "caption", null: false
@@ -69,7 +69,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.text "html"
     end
 
-    create_table "choices", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "choices", id: :integer, force: :cascade do |t|
       t.integer "feature_id", default: 0, null: false
       t.string "name"
       t.datetime "created_at"
@@ -77,7 +77,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["feature_id"], name: "index_choices_on_feature_id"
     end
 
-    create_table "components", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "components", id: :integer, force: :cascade do |t|
       t.string "name", null: false
       t.integer "product_id", null: false
       t.datetime "created_at"
@@ -85,7 +85,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["product_id"], name: "index_components_on_product_id"
     end
 
-    create_table "countries", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "countries", id: :integer, force: :cascade do |t|
       t.string "name", default: "", null: false
       t.string "iso_3166_1_alpha_2", default: "", null: false
       t.datetime "created_at"
@@ -94,7 +94,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["name"], name: "index_countries_on_name", unique: true
     end
 
-    create_table "custom_views", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "custom_views", id: :integer, force: :cascade do |t|
       t.integer "website_id", null: false
       t.string "path"
       t.string "locale"
@@ -107,7 +107,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["website_id", "path"], name: "index_custom_views_on_website_id_and_path"
     end
 
-    create_table "delayed_jobs", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "delayed_jobs", id: :integer, force: :cascade do |t|
       t.integer "priority", default: 0, null: false
       t.integer "attempts", default: 0, null: false
       t.text "handler", null: false
@@ -122,7 +122,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["priority", "run_at"], name: "delayed_jobs_priority"
     end
 
-    create_table "discounts", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "discounts", id: :integer, force: :cascade do |t|
       t.string "name", default: "", null: false
       t.string "coupon", default: "", null: false
       t.string "reward_type", default: "", null: false
@@ -136,7 +136,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.datetime "valid_to"
     end
 
-    create_table "enquiries", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "enquiries", id: :integer, force: :cascade do |t|
       t.string "name", default: "", null: false
       t.string "organisation", default: "", null: false
       t.text "address"
@@ -154,14 +154,14 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["website_id"], name: "index_enquiries_on_website_id"
     end
 
-    create_table "extra_attributes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "extra_attributes", id: :integer, force: :cascade do |t|
       t.string "class_name"
       t.string "attribute_name"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
     end
 
-    create_table "feature_selections", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "feature_selections", id: :integer, force: :cascade do |t|
       t.integer "basket_item_id", default: 0, null: false
       t.integer "feature_id", default: 0, null: false
       t.integer "choice_id"
@@ -172,7 +172,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["basket_item_id"], name: "index_feature_selections_on_basket_item_id"
     end
 
-    create_table "features", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "features", id: :integer, force: :cascade do |t|
       t.integer "product_id"
       t.string "name", default: "", null: false
       t.datetime "created_at"
@@ -184,14 +184,14 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["product_id"], name: "index_features_on_product_id"
     end
 
-    create_table "images", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "images", id: :integer, force: :cascade do |t|
       t.string "name", default: "", null: false
       t.string "filename", default: "", null: false
       t.datetime "created_at"
       t.datetime "updated_at"
     end
 
-    create_table "liquid_templates", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "liquid_templates", id: :integer, force: :cascade do |t|
       t.string "name", null: false
       t.text "markup"
       t.datetime "created_at"
@@ -200,13 +200,13 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["name"], name: "index_liquid_templates_on_name"
     end
 
-    create_table "offline_payment_methods", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "offline_payment_methods", id: :integer, force: :cascade do |t|
       t.string "name", null: false
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
     end
 
-    create_table "order_comments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "order_comments", id: :integer, force: :cascade do |t|
       t.integer "order_id", null: false
       t.text "comment"
       t.datetime "created_at", null: false
@@ -214,7 +214,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["order_id"], name: "index_order_comments_on_order_id"
     end
 
-    create_table "order_lines", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "order_lines", id: :integer, force: :cascade do |t|
       t.integer "order_id", default: 0, null: false
       t.integer "product_id"
       t.string "product_sku", default: "", null: false
@@ -232,7 +232,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["product_id"], name: "index_order_lines_on_product_id"
     end
 
-    create_table "orders", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "orders", id: :integer, force: :cascade do |t|
       t.integer "user_id"
       t.string "order_number", default: "", null: false
       t.string "email_address", default: "", null: false
@@ -285,20 +285,20 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["user_id"], name: "index_orders_on_user_id"
     end
 
-    create_table "pages", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "pages", id: :integer, force: :cascade do |t|
       t.string "title", default: "", null: false
       t.string "slug", default: "", null: false
       t.datetime "created_at"
       t.datetime "updated_at"
       t.string "name", default: "", null: false
       t.string "description", default: "", null: false
-      t.text "content", limit: 4294967295
+      t.text "content", limit: 1073741823
       t.integer "parent_id"
       t.integer "position", default: 0
       t.integer "image_id"
       t.boolean "no_follow", default: false, null: false
       t.boolean "no_index", default: false, null: false
-      t.text "extra", limit: 4294967295
+      t.text "extra", limit: 1073741823
       t.integer "thumbnail_image_id"
       t.boolean "visible", default: true, null: false
       t.index ["parent_id"], name: "index_pages_on_parent_id"
@@ -306,7 +306,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["thumbnail_image_id"], name: "index_pages_on_thumbnail_image_id"
     end
 
-    create_table "payments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "payments", id: :integer, force: :cascade do |t|
       t.integer "order_id"
       t.string "service_provider"
       t.string "installation_id"
@@ -331,7 +331,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.datetime "updated_at"
     end
 
-    create_table "permutations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "permutations", id: :integer, force: :cascade do |t|
       t.integer "component_id", null: false
       t.string "permutation", null: false
       t.boolean "valid_selection", null: false
@@ -343,7 +343,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["permutation"], name: "index_permutations_on_permutation"
     end
 
-    create_table "preferred_delivery_date_settings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "preferred_delivery_date_settings", id: :integer, force: :cascade do |t|
       t.integer "website_id", default: 0, null: false
       t.string "prompt", default: "Preferred delivery date", null: false
       t.string "date_format", default: "%a %d %b"
@@ -359,21 +359,21 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["website_id"], name: "index_preferred_delivery_date_settings_on_website_id"
     end
 
-    create_table "product_group_placements", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "product_group_placements", id: :integer, force: :cascade do |t|
       t.integer "product_id", default: 0, null: false
       t.integer "product_group_id", default: 0, null: false
       t.datetime "created_at"
       t.datetime "updated_at"
     end
 
-    create_table "product_groups", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "product_groups", id: :integer, force: :cascade do |t|
       t.string "name"
       t.datetime "created_at"
       t.datetime "updated_at"
       t.string "location", default: "", null: false
     end
 
-    create_table "product_images", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "product_images", id: :integer, force: :cascade do |t|
       t.integer "product_id", null: false
       t.integer "image_id", null: false
       t.datetime "created_at", null: false
@@ -382,7 +382,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["product_id"], name: "index_product_images_on_product_id"
     end
 
-    create_table "product_placements", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "product_placements", id: :integer, force: :cascade do |t|
       t.integer "page_id", default: 0, null: false
       t.integer "product_id", default: 0, null: false
       t.integer "position", default: 0, null: false
@@ -392,7 +392,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["product_id"], name: "index_product_placements_on_product_id"
     end
 
-    create_table "products", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "products", id: :integer, force: :cascade do |t|
       t.string "sku", default: "", null: false
       t.string "name", default: "", null: false
       t.decimal "price", precision: 10, scale: 3, default: "0.0", null: false
@@ -423,12 +423,12 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.string "age_group", default: "", null: false
       t.text "google_description"
       t.boolean "allow_fractional_quantity", default: false, null: false
-      t.text "extra", limit: 4294967295
+      t.text "extra", limit: 1073741823
       t.boolean "oversize", default: false, null: false
       t.string "pricing_method", default: "basic", null: false
     end
 
-    create_table "quantity_prices", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "quantity_prices", id: :integer, force: :cascade do |t|
       t.integer "product_id"
       t.integer "quantity", default: 0, null: false
       t.decimal "price", precision: 10, scale: 3, default: "0.0", null: false
@@ -437,7 +437,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["product_id"], name: "index_quantity_prices_on_product_id"
     end
 
-    create_table "related_product_scores", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "related_product_scores", id: :integer, force: :cascade do |t|
       t.integer "product_id", null: false
       t.integer "related_product_id", null: false
       t.decimal "score", precision: 4, scale: 3, null: false
@@ -446,7 +446,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["product_id"], name: "index_related_product_scores_on_product_id"
     end
 
-    create_table "shipments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "shipments", id: :integer, force: :cascade do |t|
       t.integer "order_id", null: false
       t.string "courier_name"
       t.string "tracking_number"
@@ -465,7 +465,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["shipped_at"], name: "index_shipments_on_shipped_at"
     end
 
-    create_table "shipping_classes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "shipping_classes", id: :integer, force: :cascade do |t|
       t.integer "shipping_zone_id", default: 0, null: false
       t.string "name", default: "", null: false
       t.datetime "created_at"
@@ -478,7 +478,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["shipping_zone_id"], name: "index_shipping_classes_on_shipping_zone_id"
     end
 
-    create_table "shipping_table_rows", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "shipping_table_rows", id: :integer, force: :cascade do |t|
       t.integer "shipping_class_id", default: 0, null: false
       t.decimal "trigger_value", precision: 10, scale: 3, default: "0.0", null: false
       t.decimal "amount", precision: 10, scale: 3, default: "0.0", null: false
@@ -487,14 +487,14 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["shipping_class_id"], name: "index_shipping_table_rows_on_shipping_class_id"
     end
 
-    create_table "shipping_zones", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "shipping_zones", id: :integer, force: :cascade do |t|
       t.string "name", default: "", null: false
       t.datetime "created_at"
       t.datetime "updated_at"
       t.integer "default_shipping_class_id"
     end
 
-    create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "users", id: :integer, force: :cascade do |t|
       t.string "email", default: "", null: false
       t.string "name", default: "", null: false
       t.string "encrypted_password"
@@ -507,7 +507,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.string "customer_reference", default: "", null: false
     end
 
-    create_table "webhooks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "webhooks", id: :integer, force: :cascade do |t|
       t.integer "website_id", null: false
       t.string "event", null: false
       t.string "url", null: false
@@ -516,7 +516,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["website_id", "event"], name: "index_webhooks_on_website_id_and_event"
     end
 
-    create_table "websites", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    create_table "websites", id: :integer, force: :cascade do |t|
       t.string "subdomain", default: "", null: false
       t.string "domain", default: "", null: false
       t.datetime "created_at"
