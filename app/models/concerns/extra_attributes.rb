@@ -4,7 +4,7 @@ module ExtraAttributes
   module ClassMethods
     # Returns <tt>ExtraAttributes</tt> defined for this class.
     def extra_attributes
-      ExtraAttribute.where(class_name: self)
+      ExtraAttribute.where(class_name: self.to_s)
     end
 
     # Returns the names of all <tt>ExtraAttributes</tt> defined for this class.
@@ -89,7 +89,7 @@ module ExtraAttributes
     #
     # Returns a truthy value if the attribute exists.
     def set_extra_attribute(attribute_name, value)
-      if ExtraAttribute.exists?(attribute_name: attribute_name, class_name: self.class)
+      if ExtraAttribute.exists?(attribute_name: attribute_name, class_name: self.class.to_s)
         extra_json[attribute_name] = value
         self.extra = extra_json.to_json
       end
