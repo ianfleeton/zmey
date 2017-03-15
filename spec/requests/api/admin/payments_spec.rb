@@ -126,7 +126,7 @@ describe 'Admin payments API' do
       it 'creates a payment with supplied attributes' do
         expect(payment).to be
         expect(payment.accepted).to eq accepted
-        expect(payment.amount).to eq amount.to_s
+        expect(payment.amount).to eq amount
         expect(payment.raw_auth_message).to eq raw_auth_message
         expect(payment.service_provider).to eq service_provider
       end

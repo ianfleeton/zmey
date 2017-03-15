@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310000341) do
+ActiveRecord::Schema.define(version: 20170315202355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -327,7 +327,6 @@ ActiveRecord::Schema.define(version: 20170310000341) do
     t.string "installation_id"
     t.string "cart_id"
     t.string "description"
-    t.string "amount"
     t.string "currency"
     t.boolean "test_mode"
     t.string "name"
@@ -344,6 +343,7 @@ ActiveRecord::Schema.define(version: 20170310000341) do
     t.boolean "accepted"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal "amount", precision: 10, scale: 2, null: false
   end
 
   create_table "permutations", id: :serial, force: :cascade do |t|

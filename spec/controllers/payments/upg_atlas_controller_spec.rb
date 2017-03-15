@@ -38,7 +38,7 @@ RSpec.describe Payments::UpgAtlasController, type: :controller do
     end
 
     it 'records the amount' do
-      expect(payment.amount).to eq '10.00'
+      expect(payment.amount).to eq 10.0
     end
 
     it 'records the currency' do

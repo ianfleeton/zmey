@@ -173,7 +173,7 @@ class Admin::OrdersController < Admin::AdminController
     # Returns an array of search conditions for filtering orders based on
     # params.
     def search_conditions
-      conditions = ['1']
+      conditions = ['1 = 1']
 
       partial_match_search_keys.each do |key|
         if params[key].present?

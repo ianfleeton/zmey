@@ -29,7 +29,7 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
     end
 
     it 'records the amount as 0' do
-      expect(payment.amount).to eq '0'
+      expect(payment.amount).to eq 0
     end
 
     it 'responds with status 200 OK' do
@@ -84,7 +84,7 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
       }.merge(default_params)}
 
       it 'records the amount' do
-        expect(payment.amount).to eq '10.00'
+        expect(payment.amount).to eq 10.0
       end
 
       context 'with valid signature' do

@@ -109,7 +109,7 @@ RSpec.describe Payments::PaypalController, type: :controller do
       it 'records a payment' do
         post :ipn_listener, params: params
         payment = Payment.last
-        expect(payment.amount).to eq '1.00'
+        expect(payment.amount).to eq 1.0
         expect(payment.cart_id).to eq '20150623-8ST0'
         expect(payment.currency).to eq 'GBP'
         expect(payment.description).to eq 'Web purchase'
