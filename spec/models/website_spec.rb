@@ -28,8 +28,6 @@ describe Website do
   it { should validate_presence_of :subdomain }
   it { should validate_inclusion_of(:custom_view_resolver).in_array(%w{CustomView::DatabaseResolver CustomView::ThemeResolver}) }
 
-  it { should validate_length_of(:upg_atlas_secuphrase).is_at_least(6).is_at_most(9) }
-
   describe "validations" do
     it "should be valid with valid attributes" do
       expect(@website).to be_valid

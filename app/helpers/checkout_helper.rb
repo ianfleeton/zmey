@@ -12,20 +12,6 @@ module CheckoutHelper
     "<form action=\"#{url}\" name=\"_xclick\" method=\"post\">".html_safe + capture(&block) + '</form>'.html_safe
   end
 
-  # Returns an array of hidden field name/value pairs for use in the UPG
-  # Atlas payment form.
-  def upg_atlas_hidden_fields(order:, checkcode:, shreference:, callbackurl:, filename:, secuphrase:)
-    field_list = UpgAtlas::FieldList.new(
-      order: order,
-      checkcode: checkcode,
-      shreference: shreference,
-      callbackurl: callbackurl,
-      filename: filename,
-      secuphrase: secuphrase,
-    )
-    field_list.fields
-  end
-
   # Returns an array of hidden field name/value pairs for use in the Yorkshire
   # Payments payment form.
   def yorkshire_payments_hidden_fields(order:, merchant_id:, callback_url:, redirect_url:, pre_shared_key:)

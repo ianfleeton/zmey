@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170315202355) do
+ActiveRecord::Schema.define(version: 20170323215921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -587,10 +587,6 @@ ActiveRecord::Schema.define(version: 20170315202355) do
     t.string "custom_view_resolver"
     t.string "scheme", default: "http", null: false
     t.integer "port", default: 80, null: false
-    t.boolean "upg_atlas_active", default: false, null: false
-    t.string "upg_atlas_sh_reference", default: "", null: false
-    t.string "upg_atlas_check_code", default: "", null: false
-    t.string "upg_atlas_filename", default: "", null: false
     t.boolean "smtp_active", default: false, null: false
     t.string "smtp_host", default: "", null: false
     t.string "smtp_username", default: "", null: false
@@ -601,7 +597,6 @@ ActiveRecord::Schema.define(version: 20170315202355) do
     t.boolean "send_pending_payment_emails", default: true, null: false
     t.string "staging_password"
     t.boolean "paypal_test_mode", default: false, null: false
-    t.string "upg_atlas_secuphrase"
     t.boolean "shopping_suspended", default: false, null: false
     t.string "shopping_suspended_message"
     t.boolean "yorkshire_payments_active", default: false, null: false

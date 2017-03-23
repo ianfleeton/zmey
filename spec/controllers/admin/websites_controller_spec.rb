@@ -25,7 +25,6 @@ RSpec.describe Admin::WebsitesController, type: :controller do
         'email' => 'merchant@example.com',
         'name' => 'foo',
         'subdomain' => 'shop',
-        'upg_atlas_secuphrase' => 'SECRET',
       }}
 
       before { logged_in_as_admin }
