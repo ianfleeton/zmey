@@ -8,8 +8,8 @@ class Page < ActiveRecord::Base
 
   has_many :product_placements, -> { order('position') }, dependent: :delete_all
   has_many :products, through: :product_placements
-  belongs_to :image
-  belongs_to :thumbnail_image, class_name: 'Image'
+  belongs_to :image, optional: true
+  belongs_to :thumbnail_image, class_name: 'Image', optional: true
 
   validates_presence_of :title, :name
   validates :description, presence: true, length: { maximum: 200 }

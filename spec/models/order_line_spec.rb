@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe OrderLine, type: :model do
-  it { pending; should validate_numericality_of(:quantity).is_greater_than_or_equal_to(1) }
+  it { should validate_numericality_of(:quantity).is_greater_than_or_equal_to(1) }
 
   describe '#to_s' do
     it 'returns quantity × product_name' do

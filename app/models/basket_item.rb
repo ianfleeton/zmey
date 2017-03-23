@@ -1,6 +1,5 @@
 class BasketItem < ActiveRecord::Base
   validates_numericality_of :quantity, greater_than: 0
-  validates_presence_of :basket_id
 
   belongs_to :basket, inverse_of: :basket_items, touch: true
   belongs_to :product

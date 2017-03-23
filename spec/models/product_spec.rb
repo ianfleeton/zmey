@@ -24,7 +24,7 @@ RSpec.describe Product, type: :model do
   it { should validate_inclusion_of(:tax_type).in_array(Product::TAX_TYPES) }
 
   it { should validate_length_of(:meta_description).is_at_most(255) }
-  it { pending; should validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
+  it { should validate_numericality_of(:price).is_greater_than_or_equal_to(0) }
 
   it { should have_many(:orders).through(:order_lines) }
   it { should have_many(:related_product_scores).dependent(:delete_all) }

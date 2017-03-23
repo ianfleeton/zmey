@@ -85,9 +85,9 @@ describe Website do
     params = {name: 'Alice', telephone: '123', email: 'alice@example.org', enquiry: 'Hello'}
 
     enquiries = []
-    enquiries << Enquiry.create!(params)
-    enquiries << Enquiry.create!(params)
-    enquiries << Enquiry.create!(params)
+    enquiries << Enquiry.new(params)
+    enquiries << Enquiry.new(params)
+    enquiries << Enquiry.new(params)
 
     [ 1.hour.ago, 5.minutes.ago, 1.minute.ago ].each_with_index do |time, index|
       enquiry = enquiries[index]

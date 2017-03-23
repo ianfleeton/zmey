@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
 
   # associations
-  belongs_to :managed_website, foreign_key: :manages_website_id, class_name: 'Website'
+  belongs_to :managed_website, foreign_key: :manages_website_id, class_name: 'Website', optional: true
 
   validates_uniqueness_of :customer_reference, allow_blank: true
 

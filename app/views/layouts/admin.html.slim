@@ -10,7 +10,7 @@ html
     link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400italic,300,700,400"
     = stylesheet_link_tag 'admin'
   body
-    nav.navbar.navbar-default.navbar-fixed-top role="navigation"
+    nav.navbar.navbar-default.navbar-fixed-top role="navigation" style="#{'position:static;' if Rails.env.test?}"
       .container-fluid
         .navbar-header
           button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse"

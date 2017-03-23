@@ -1,6 +1,6 @@
 class OrderLine < ActiveRecord::Base
   belongs_to :order, touch: true, inverse_of: :order_lines
-  belongs_to :product
+  belongs_to :product, optional: true
 
   validates_numericality_of :quantity, greater_than_or_equal_to: 1
 

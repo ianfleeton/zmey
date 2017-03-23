@@ -1,7 +1,8 @@
 class FeatureSelection < ActiveRecord::Base
   belongs_to :feature
   belongs_to :basket_item, inverse_of: :feature_selections
-  belongs_to :choice
+  belongs_to :choice, optional: true
+
   def description
     d = feature.name + ': '
     case feature.ui_type

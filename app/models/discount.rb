@@ -1,5 +1,5 @@
 class Discount < ActiveRecord::Base
-  belongs_to :product_group
+  belongs_to :product_group, optional: true
 
   validates_numericality_of :reward_amount, greater_than_or_equal_to: 0, less_than_or_equal_to: 9999999.999
   REWARD_TYPES = ['amount_off_order', 'free_products', 'percentage_off', 'percentage_off_order']

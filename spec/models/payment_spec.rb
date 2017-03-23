@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Payment, type: :model do
+  describe 'associations' do
+    it { should belong_to(:order) }
+  end
+
   describe 'after_save' do
     let(:order) { FactoryGirl.create(:order) }
     let(:payment) { FactoryGirl.build(:payment, accepted: accepted, order: order) }

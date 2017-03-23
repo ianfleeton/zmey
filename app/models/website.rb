@@ -26,7 +26,7 @@ class Website < ActiveRecord::Base
   has_many :enquiries, -> { order 'created_at DESC' }, dependent: :destroy
   has_many :webhooks, dependent: :delete_all
   belongs_to :country
-  belongs_to :default_shipping_class, class_name: 'ShippingClass'
+  belongs_to :default_shipping_class, class_name: 'ShippingClass', optional: true
 
   def only_accept_payment_on_account?
     accept_payment_on_account and !(worldpay_active)

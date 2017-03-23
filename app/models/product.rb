@@ -32,7 +32,7 @@ class Product < ActiveRecord::Base
   has_many :quantity_prices, -> { order 'quantity' }, dependent: :delete_all
 
   # Images
-  belongs_to :image
+  belongs_to :image, optional: true
   has_many :product_images, dependent: :delete_all
   has_many :images, through: :product_images
 

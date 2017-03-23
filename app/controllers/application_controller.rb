@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
+
   include Shipping
   helper :all # include all helpers, all the time
-
-  protect_from_forgery
 
   helper_method :website, :logged_in?, :admin?, :admin_or_manager?, :manager?
 

@@ -7,7 +7,7 @@ RSpec.describe CheckoutController, type: :controller do
 
   it_behaves_like 'a suspended shop bouncer'
 
-  shared_examples_for 'a checkout advancer' do |method, action, params={}|
+  shared_examples_for 'a checkout advancer' do |method, action|
     let(:has_checkout_details) { true }
     let(:billing_address) { FactoryGirl.create(:address) }
     let(:delivery_address_valid?) { true }
@@ -66,6 +66,7 @@ RSpec.describe CheckoutController, type: :controller do
     context 'with items in the basket' do
       before { add_items_to_basket }
 
+      let(:params) { {} }
       it_behaves_like 'a checkout advancer', :get, :index
     end
   end
@@ -114,7 +115,8 @@ RSpec.describe CheckoutController, type: :controller do
       it { should set_session[:phone].to('1') }
       it { should set_session[:email].to('x') }
 
-      it_behaves_like 'a checkout advancer', :post, :save_details, name: 'n', phone: '1', email: 'x'
+      let(:params) { { name: 'n', phone: '1', email: 'x' } }
+      it_behaves_like 'a checkout advancer', :post, :save_details
     end
   end
 
@@ -272,7 +274,8 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when create/update succeeds' do
-      it_behaves_like 'a checkout advancer', :post, :save_billing, { address: FactoryGirl.build(:address).attributes }
+      let(:params) { { address: FactoryGirl.build(:address).attributes } }
+      it_behaves_like 'a checkout advancer', :post, :save_billing
       it_behaves_like 'an address/user associator', :save_billing
     end
   end
@@ -368,7 +371,8 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when create/update succeeds' do
-      it_behaves_like 'a checkout advancer', :post, :save_delivery, { address: FactoryGirl.build(:address).attributes }
+      let(:params) { { address: FactoryGirl.build(:address).attributes } }
+      it_behaves_like 'a checkout advancer', :post, :save_delivery
       it_behaves_like 'an address/user associator', :save_delivery
     end
   end
@@ -390,6 +394,7 @@ RSpec.describe CheckoutController, type: :controller do
       expect(session[:preferred_delivery_date]).to eq preferred_delivery_date
     end
 
+    let(:params) { {} }
     it_behaves_like 'a checkout advancer', :post, :save_preferred_delivery_date
   end
 

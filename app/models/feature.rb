@@ -8,7 +8,7 @@ class Feature < ActiveRecord::Base
   has_many :basket_items, through: :feature_selections, dependent: :destroy
   has_many :choices, dependent: :destroy
   belongs_to :product
-  belongs_to :component
+  belongs_to :component, optional: true
 
   UI_TYPES = [
     TEXT_FIELD = 1,
