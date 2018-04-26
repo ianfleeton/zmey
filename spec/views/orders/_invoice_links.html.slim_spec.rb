@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'orders/_invoice_links.html.slim', type: :view do
-  let(:order) { FactoryGirl.create(:order) }
+  let(:order) { FactoryBot.create(:order) }
 
   before do
     allow(view).to receive(:order).and_return(order)

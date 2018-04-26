@@ -38,7 +38,7 @@ RSpec.describe Admin::ComponentsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    let(:component) { FactoryGirl.create(:component) }
+    let(:component) { FactoryBot.create(:component) }
 
     before do
       allow(controller).to receive(:admin?).and_return(true)

@@ -16,7 +16,7 @@ RSpec.describe OrdersHelper, type: :helper do
   end
 
   describe '#record_sales_conversion' do
-    let(:order) { FactoryGirl.create(:order) }
+    let(:order) { FactoryBot.create(:order) }
 
     before do
       allow(view).to receive(:website).and_return(Website.new)

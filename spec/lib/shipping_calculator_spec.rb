@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ShippingCalculator do
   let(:apply_shipping?) { false }
-  let(:basket) { FactoryGirl.create(:basket) }
+  let(:basket) { FactoryBot.create(:basket) }
   let(:default_amount) { 12.34 }
   let(:shipping_class) { nil }
   let(:amount_for_basket) { 23.45 }
@@ -32,7 +32,7 @@ RSpec.describe ShippingCalculator do
       let(:apply_shipping?) { true }
 
       context 'with shipping class' do
-        let(:shipping_class) { FactoryGirl.create(:shipping_class) }
+        let(:shipping_class) { FactoryBot.create(:shipping_class) }
         it { should eq amount_for_basket }
       end
 
@@ -44,7 +44,7 @@ RSpec.describe ShippingCalculator do
 
   describe '#tax_amount' do
     let(:calculator) { ShippingCalculator.new(options) }
-    let(:shipping_class) { FactoryGirl.create(:shipping_class, charge_tax: charge_tax) }
+    let(:shipping_class) { FactoryBot.create(:shipping_class, charge_tax: charge_tax) }
     subject { calculator.tax_amount }
 
     context 'when shipping class charges tax' do

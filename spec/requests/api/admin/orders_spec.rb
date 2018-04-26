@@ -26,9 +26,9 @@ describe 'Admin orders API' do
         .and_return(default_page_size)
 
       num_items.times do |x|
-        FactoryGirl.create(
+        FactoryBot.create(
           :order,
-          user_id: FactoryGirl.create(:user).id,
+          user_id: FactoryBot.create(:user).id,
           created_at: Date.today - x.days # affects ordering
         )
       end
@@ -65,7 +65,7 @@ describe 'Admin orders API' do
       let(:order_number) { SecureRandom.hex }
 
       let!(:more_setup) {->{
-        @matching_order = FactoryGirl.create(:order)
+        @matching_order = FactoryBot.create(:order)
         @matching_order.order_number = order_number
         @matching_order.save
       }}
@@ -102,7 +102,7 @@ describe 'Admin orders API' do
 
     context 'with processed set' do
       let!(:more_setup) {->{
-        @processed_order = FactoryGirl.create(:order,
+        @processed_order = FactoryBot.create(:order,
           processed_at: Date.today - 1.day)
       }}
 
@@ -145,7 +145,7 @@ describe 'Admin orders API' do
 
     context 'when order found' do
       before do
-        @order = FactoryGirl.create(:order,
+        @order = FactoryBot.create(:order,
           billing_company: 'YESL', billing_address_line_3: 'Copley Road',
           customer_note: 'Please gift wrap my order',
           delivery_company: 'FBS', delivery_address_line_3: 'Beighton',
@@ -183,7 +183,7 @@ describe 'Admin orders API' do
 
       context 'with order lines' do
         before do
-          @order_line = FactoryGirl.create(:order_line, order: @order, product_price: 1.23, product_rrp: 2.34)
+          @order_line = FactoryBot.create(:order_line, order: @order, product_price: 1.23, product_rrp: 2.34)
           get api_admin_order_path(@order)
         end
 
@@ -210,7 +210,7 @@ describe 'Admin orders API' do
 
       context 'with order comments' do
         before do
-          @order_comment = FactoryGirl.create(:order_comment, order: @order, comment: 'Comment')
+          @order_comment = FactoryBot.create(:order_comment, order: @order, comment: 'Comment')
           get api_admin_order_path(@order)
         end
 
@@ -237,7 +237,7 @@ describe 'Admin orders API' do
   end
 
   describe 'POST create' do
-    let(:country) { FactoryGirl.create(:country) }
+    let(:country) { FactoryBot.create(:country) }
     let(:billing_company)         { SecureRandom.hex }
     let(:billing_address_line_1)  { SecureRandom.hex }
     let(:billing_address_line_3)  { SecureRandom.hex }
@@ -318,8 +318,8 @@ describe 'Admin orders API' do
 
   describe 'DELETE delete_all' do
     it 'deletes all orders in the website' do
-      order_1 = FactoryGirl.create(:order)
-      order_2 = FactoryGirl.create(:order)
+      order_1 = FactoryBot.create(:order)
+      order_2 = FactoryBot.create(:order)
 
       delete '/api/admin/orders'
 
@@ -354,7 +354,7 @@ describe 'Admin orders API' do
     end
 
     context 'when order found' do
-      let(:order) { FactoryGirl.create(:order) }
+      let(:order) { FactoryBot.create(:order) }
 
       it 'responds with 204 No Content' do
         expect(status).to eq 204
@@ -375,7 +375,7 @@ describe 'Admin orders API' do
 
     context 'when order not found' do
       let(:order) do
-        o = FactoryGirl.create(:order)
+        o = FactoryBot.create(:order)
         o.id += 1
         o
       end

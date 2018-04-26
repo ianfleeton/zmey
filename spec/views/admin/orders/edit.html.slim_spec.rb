@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/orders/edit.html.slim', type: :view do
-  let(:order) { FactoryGirl.create(:order) }
-  let(:website) { FactoryGirl.create(:website) }
+  let(:order) { FactoryBot.create(:order) }
+  let(:website) { FactoryBot.create(:website) }
 
   before do
     assign(:order, order)
@@ -54,7 +54,7 @@ RSpec.describe 'admin/orders/edit.html.slim', type: :view do
 
   context 'with shipments' do
     let(:now) { Time.zone.now }
-    let!(:shipment) { FactoryGirl.create(:shipment, order: order) }
+    let!(:shipment) { FactoryBot.create(:shipment, order: order) }
 
     before do
       render
@@ -89,7 +89,7 @@ RSpec.describe 'admin/orders/edit.html.slim', type: :view do
 
   context 'with comments' do
     before do
-      FactoryGirl.create(:order_comment, order: order, comment: 'Refund requested')
+      FactoryBot.create(:order_comment, order: order, comment: 'Refund requested')
     end
 
     it 'lists comments' do

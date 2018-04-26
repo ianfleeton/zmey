@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'admin/orders/index.html.slim', type: :view do
   context 'with orders' do
-    let!(:order) { FactoryGirl.create(:order, billing_full_name: 'BILLING FN') }
+    let!(:order) { FactoryBot.create(:order, billing_full_name: 'BILLING FN') }
 
     before do
       assign(:orders, Order.paginate({page: 1}))

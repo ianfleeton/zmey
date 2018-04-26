@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Discounts' do
-  let!(:website) { FactoryGirl.create(:website) }
-  let(:product) { FactoryGirl.create(:product) }
+  let!(:website) { FactoryBot.create(:website) }
+  let(:product) { FactoryBot.create(:product) }
 
   before do
     d = Discount.create!(name: 'Discount', coupon: 'DISCOUNT', reward_type: 'percentage_off_order')

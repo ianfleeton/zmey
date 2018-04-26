@@ -6,7 +6,7 @@ RSpec.describe Admin::OrderCommentsController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:order) { FactoryGirl.create(:order) }
+    let(:order) { FactoryBot.create(:order) }
 
     context 'when successful' do
       it 'creates a new OrderComment' do

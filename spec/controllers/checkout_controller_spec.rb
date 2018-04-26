@@ -9,7 +9,7 @@ RSpec.describe CheckoutController, type: :controller do
 
   shared_examples_for 'a checkout advancer' do |method, action|
     let(:has_checkout_details) { true }
-    let(:billing_address) { FactoryGirl.create(:address) }
+    let(:billing_address) { FactoryBot.create(:address) }
     let(:delivery_address_valid?) { true }
     let(:preferred_delivery_date) { '2015-02-16' }
     let(:preferred_delivery_date_settings) { nil }
@@ -84,7 +84,7 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when logged in' do
-      let(:current_user) { FactoryGirl.create(:user, name: SecureRandom.hex) }
+      let(:current_user) { FactoryBot.create(:user, name: SecureRandom.hex) }
 
       context 'when details blank' do
         it 'populates name and email from user account' do
@@ -140,7 +140,7 @@ RSpec.describe CheckoutController, type: :controller do
       let(:name) { 'n' }
       let(:phone) { '1' }
       let(:email) { 'x' }
-      let!(:uk) { FactoryGirl.create(:country, name: 'United Kingdom') }
+      let!(:uk) { FactoryBot.create(:country, name: 'United Kingdom') }
 
       before do
         add_items_to_basket
@@ -155,7 +155,7 @@ RSpec.describe CheckoutController, type: :controller do
       it_behaves_like 'a customer details user'
 
       context 'with existing billing address' do
-        let(:billing_address) { FactoryGirl.create(:address) }
+        let(:billing_address) { FactoryBot.create(:address) }
         let(:billing_address_id) { billing_address.id }
 
         it { should respond_with(200) }
@@ -186,10 +186,10 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when signed in' do
-      let(:current_user) { FactoryGirl.create(:user) }
+      let(:current_user) { FactoryBot.create(:user) }
 
       context 'with new address' do
-        let(:address) { FactoryGirl.build(:address) }
+        let(:address) { FactoryBot.build(:address) }
 
         it 'associates address with user' do
           expect(Address.last.user).to eq current_user
@@ -197,7 +197,7 @@ RSpec.describe CheckoutController, type: :controller do
       end
 
       context 'with existing address' do
-        let(:address) { FactoryGirl.create(:address) }
+        let(:address) { FactoryBot.create(:address) }
         let(:billing_address) { address }
         let(:delivery_address) { address }
 
@@ -214,7 +214,7 @@ RSpec.describe CheckoutController, type: :controller do
   ]
 
   describe 'POST save_billing' do
-    let(:address) { FactoryGirl.build(:random_address) }
+    let(:address) { FactoryBot.build(:random_address) }
     let(:billing_address) { nil }
     let(:deliver_here) { nil }
     let(:session_billing_address_id) { nil }
@@ -228,7 +228,7 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when billing address found' do
-      let(:billing_address) { FactoryGirl.create(:address) }
+      let(:billing_address) { FactoryBot.create(:address) }
 
       it 'updates the billing address' do
         expect(billing_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
@@ -245,7 +245,7 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when updating and billing and delivery address are the same' do
-      let(:billing_address) { FactoryGirl.create(:address) }
+      let(:billing_address) { FactoryBot.create(:address) }
       let(:session_billing_address_id) { billing_address.id }
       let(:session_delivery_address_id) { billing_address.id }
 
@@ -274,7 +274,7 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when create/update succeeds' do
-      let(:params) { { address: FactoryGirl.build(:address).attributes } }
+      let(:params) { { address: FactoryBot.build(:address).attributes } }
       it_behaves_like 'a checkout advancer', :post, :save_billing
       it_behaves_like 'an address/user associator', :save_billing
     end
@@ -293,7 +293,7 @@ RSpec.describe CheckoutController, type: :controller do
       let(:name) { 'n' }
       let(:phone) { '1' }
       let(:email) { 'x' }
-      let!(:uk) { FactoryGirl.create(:country, name: 'United Kingdom') }
+      let!(:uk) { FactoryBot.create(:country, name: 'United Kingdom') }
 
       before do
         add_items_to_basket
@@ -308,7 +308,7 @@ RSpec.describe CheckoutController, type: :controller do
       it_behaves_like 'a customer details user'
 
       context 'with existing delivery address' do
-        let(:delivery_address) { FactoryGirl.create(:address) }
+        let(:delivery_address) { FactoryBot.create(:address) }
         let(:delivery_address_id) { delivery_address.id }
 
         it { should respond_with(200) }
@@ -328,7 +328,7 @@ RSpec.describe CheckoutController, type: :controller do
   end
 
   describe 'POST save_delivery' do
-    let(:address) { FactoryGirl.build(:random_address) }
+    let(:address) { FactoryBot.build(:random_address) }
     let(:delivery_address) { nil }
     let(:session_billing_address_id) { nil }
     let(:session_delivery_address_id) { nil }
@@ -341,7 +341,7 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when delivery address found' do
-      let(:delivery_address) { FactoryGirl.create(:address) }
+      let(:delivery_address) { FactoryBot.create(:address) }
 
       it 'updates the delivery address' do
         expect(delivery_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
@@ -350,7 +350,7 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when updating and billing and delivery address are the same' do
-      let(:delivery_address) { FactoryGirl.create(:address) }
+      let(:delivery_address) { FactoryBot.create(:address) }
       let(:session_billing_address_id) { delivery_address.id }
       let(:session_delivery_address_id) { delivery_address.id }
 
@@ -371,7 +371,7 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'when create/update succeeds' do
-      let(:params) { { address: FactoryGirl.build(:address).attributes } }
+      let(:params) { { address: FactoryBot.build(:address).attributes } }
       it_behaves_like 'a checkout advancer', :post, :save_delivery
       it_behaves_like 'an address/user associator', :save_delivery
     end
@@ -407,8 +407,8 @@ RSpec.describe CheckoutController, type: :controller do
     end
 
     context 'with items in the basket' do
-      let(:billing_address) { FactoryGirl.create(:address) }
-      let(:delivery_address) { FactoryGirl.create(:address) }
+      let(:billing_address) { FactoryBot.create(:address) }
+      let(:delivery_address) { FactoryBot.create(:address) }
       let(:billing_address_id) { billing_address.try(:id) }
       let(:delivery_address_id) { delivery_address.try(:id) }
       let(:delivery_address_required?) { true }
@@ -502,7 +502,7 @@ RSpec.describe CheckoutController, type: :controller do
       end
 
       context 'with a shipping class' do
-        let!(:shipping_class) { FactoryGirl.create(:shipping_class, name: 'Royal Mail') }
+        let!(:shipping_class) { FactoryBot.create(:shipping_class, name: 'Royal Mail') }
         before do
           allow(controller).to receive(:shipping_class).and_return(shipping_class)
           get :confirm
@@ -558,7 +558,7 @@ RSpec.describe CheckoutController, type: :controller do
         allow(website).to receive(:cardsave_active?).and_return(false)
       end
 
-      let(:order) { FactoryGirl.create(:order) }
+      let(:order) { FactoryBot.create(:order) }
 
       it 'instantiates a SagePay' do
         allow(website).to receive(:sage_pay_pre_shared_key).and_return 'secret'
@@ -591,21 +591,21 @@ RSpec.describe CheckoutController, type: :controller do
       it { should be_truthy }
     end
     context 'shipping class requires delivery address' do
-      let(:shipping_class) { FactoryGirl.build(:shipping_class, requires_delivery_address: true) }
+      let(:shipping_class) { FactoryBot.build(:shipping_class, requires_delivery_address: true) }
       it { should be_truthy }
     end
     context 'shipping class does not require delivery address' do
-      let(:shipping_class) { FactoryGirl.build(:shipping_class, requires_delivery_address: false) }
+      let(:shipping_class) { FactoryBot.build(:shipping_class, requires_delivery_address: false) }
       it { should be_falsey }
     end
   end
 
   def add_items_to_basket
-    @basket = FactoryGirl.create(:basket)
-    t_shirt = FactoryGirl.create(:product, weight: 0.2)
-    jeans = FactoryGirl.create(:product, weight: 0.35)
-    FactoryGirl.create(:basket_item, product: t_shirt, quantity: 2, basket_id: @basket.id)
-    FactoryGirl.create(:basket_item, product: jeans, quantity: 1, basket_id: @basket.id)
+    @basket = FactoryBot.create(:basket)
+    t_shirt = FactoryBot.create(:product, weight: 0.2)
+    jeans = FactoryBot.create(:product, weight: 0.35)
+    FactoryBot.create(:basket_item, product: t_shirt, quantity: 2, basket_id: @basket.id)
+    FactoryBot.create(:basket_item, product: jeans, quantity: 1, basket_id: @basket.id)
     allow(controller).to receive(:basket).and_return(@basket)
   end
 end

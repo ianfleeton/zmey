@@ -7,7 +7,7 @@ RSpec.describe Admin::OrderLinesController, type: :controller do
 
   describe 'PATCH update' do
     it 'updates an order line' do
-      ol = FactoryGirl.create(:order_line)
+      ol = FactoryBot.create(:order_line)
       new_quantity = rand(100) + 1
       patch :update, params: {
         id: ol.id, order_line: {
@@ -18,14 +18,14 @@ RSpec.describe Admin::OrderLinesController, type: :controller do
     end
 
     it 'redirects to the admin show order page' do
-      ol = FactoryGirl.create(:order_line)
+      ol = FactoryBot.create(:order_line)
       patch :update, params: { id: ol.id, order_line: ol.attributes }
       expect(response).to redirect_to admin_order_path(ol.order)
     end
   end
 
   describe 'DELETE destroy' do
-    let(:order_line) { FactoryGirl.create(:order_line) }
+    let(:order_line) { FactoryBot.create(:order_line) }
 
     before { delete :destroy, params: { id: order_line.id } }
 

@@ -11,8 +11,8 @@ RSpec.describe Product, type: :model do
 
   it { should have_many(:order_lines).dependent(:nullify) }
   it 'really does nullify order lines' do
-    @product = FactoryGirl.create(:product)
-    @order_line = FactoryGirl.create(:order_line, product: @product)
+    @product = FactoryBot.create(:product)
+    @order_line = FactoryBot.create(:order_line, product: @product)
     @product.destroy
     expect(@order_line.reload.product_id).to be_nil
   end
@@ -32,12 +32,12 @@ RSpec.describe Product, type: :model do
 
   describe 'image validations' do
     it 'allows an image to be absent' do
-      product = FactoryGirl.build(:product, image_id: nil)
+      product = FactoryBot.build(:product, image_id: nil)
       expect(product.valid?).to be_truthy
     end
 
     it 'validates that given image exists' do
-      product = FactoryGirl.build(:product)
+      product = FactoryBot.build(:product)
       Image.destroy_all
       product.image_id = 1
       product.valid?
@@ -55,7 +55,7 @@ RSpec.describe Product, type: :model do
 
   describe '#image_name' do
     it 'returns the name of the main image' do
-      image = FactoryGirl.create(:image, name: 'product.jpg')
+      image = FactoryBot.create(:image, name: 'product.jpg')
       product = Product.new(image: image)
       expect(product.image_name).to eq 'product.jpg'
     end
@@ -68,7 +68,7 @@ RSpec.describe Product, type: :model do
 
   describe '#image_name=' do
     it 'associates image with named image' do
-      image = FactoryGirl.create(:image, name: 'product.jpg')
+      image = FactoryBot.create(:image, name: 'product.jpg')
       product = Product.new
       product.image_name = 'product.jpg'
       expect(product.image).to eq image
@@ -76,8 +76,8 @@ RSpec.describe Product, type: :model do
   end
 
   describe '#image_names' do
-    let!(:image1) { FactoryGirl.create(:image, name: 'front.jpg') }
-    let!(:image2) { FactoryGirl.create(:image, name: 'back.jpg') }
+    let!(:image1) { FactoryBot.create(:image, name: 'front.jpg') }
+    let!(:image2) { FactoryBot.create(:image, name: 'back.jpg') }
     let(:product) { Product.new }
 
     before do
@@ -90,8 +90,8 @@ RSpec.describe Product, type: :model do
   end
 
   describe '#image_names=' do
-    let!(:image1) { FactoryGirl.create(:image, name: 'front.jpg') }
-    let!(:image2) { FactoryGirl.create(:image, name: 'back.jpg') }
+    let!(:image1) { FactoryBot.create(:image, name: 'front.jpg') }
+    let!(:image2) { FactoryBot.create(:image, name: 'back.jpg') }
     let(:product) { Product.new }
 
     it 'associates multiple named images from a pipe separated string' do
@@ -115,9 +115,9 @@ RSpec.describe Product, type: :model do
   end
 
   describe '#product_group=' do
-    let(:product) { FactoryGirl.create(:product) }
-    let(:product_group) { FactoryGirl.create(:product_group, name: 'PGNAME') }
-    let(:old_group) { FactoryGirl.create(:product_group, name: 'OLD') }
+    let(:product) { FactoryBot.create(:product) }
+    let(:product_group) { FactoryBot.create(:product_group, name: 'PGNAME') }
+    let(:old_group) { FactoryBot.create(:product_group, name: 'OLD') }
 
     before do
       ProductGroupPlacement.create!(product: product, product_group: old_group)
@@ -220,8 +220,8 @@ RSpec.describe Product, type: :model do
 
   describe '.admin_search' do
     it 'finds products by SKU' do
-      x = FactoryGirl.create(:product, sku: 'X')
-      y = FactoryGirl.create(:product, sku: 'Y')
+      x = FactoryBot.create(:product, sku: 'X')
+      y = FactoryBot.create(:product, sku: 'Y')
       products = Product.admin_search('X')
       expect(products).to include(x)
       expect(products).not_to include(y)
@@ -244,7 +244,7 @@ RSpec.describe Product, type: :model do
 
   describe 'before_save' do
     it 'sets nil weight to zero' do
-      product = FactoryGirl.build(:product, weight: nil)
+      product = FactoryBot.build(:product, weight: nil)
       product.save
       expect(product.weight).to eq 0
     end

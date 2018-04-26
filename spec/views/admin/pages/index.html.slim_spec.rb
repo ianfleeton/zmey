@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/pages/index.html.slim', type: :view do
-  let(:parent) { FactoryGirl.create(:page) }
+  let(:parent) { FactoryBot.create(:page) }
 
   before do
     assign(:pages, [])

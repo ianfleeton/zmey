@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'checkout/preferred_delivery_date.html.slim', type: :view do
-  let(:website) { FactoryGirl.create(:website, preferred_delivery_date_settings: PreferredDeliveryDateSettings.new) }
+  let(:website) { FactoryBot.create(:website, preferred_delivery_date_settings: PreferredDeliveryDateSettings.new) }
 
   before do
     allow(view).to receive(:website).and_return(website)

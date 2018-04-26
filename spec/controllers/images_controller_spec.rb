@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ImagesController, type: :controller do
   describe 'GET sized_image' do
-    let(:image)    { FactoryGirl.create(:image) }
+    let(:image)    { FactoryBot.create(:image) }
     let(:id)       { image.id }
     let(:filename) { 'longest_side.100.jpg' }
 

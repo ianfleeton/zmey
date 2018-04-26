@@ -64,7 +64,7 @@ RSpec.describe AddressesController, type: :controller do
 
   describe 'POST select_for_billing' do
     let(:logged_in) { true }
-    let(:address) { FactoryGirl.create(:address) }
+    let(:address) { FactoryBot.create(:address) }
 
     before do
       allow(controller).to receive(:logged_in?).and_return(logged_in)
@@ -78,7 +78,7 @@ RSpec.describe AddressesController, type: :controller do
 
   describe 'POST select_for_delivery' do
     let(:logged_in) { true }
-    let(:address) { FactoryGirl.create(:address) }
+    let(:address) { FactoryBot.create(:address) }
 
     before do
       allow(controller).to receive(:logged_in?).and_return(logged_in)

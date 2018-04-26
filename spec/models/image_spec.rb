@@ -28,7 +28,7 @@ RSpec.describe Image, type: :model do
   end
 
   describe '.sized_path' do
-    let(:image) { FactoryGirl.create(:image) }
+    let(:image) { FactoryBot.create(:image) }
     let(:filename) { 'image.jpg' }
 
     subject { Image.sized_path(id, filename) }
@@ -80,8 +80,8 @@ RSpec.describe Image, type: :model do
 
   describe '#destroy' do
     it 'removes product_image relationships' do
-      i = FactoryGirl.create(:image)
-      p = FactoryGirl.create(:product)
+      i = FactoryBot.create(:image)
+      p = FactoryBot.create(:product)
       pi = ProductImage.create!(product: p, image: i)
       i.destroy
       expect(ProductImage.find_by(id: pi.id)).to be_nil

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::UsersController, type: :controller do
-  let(:user)    { FactoryGirl.create(:user) }
+  let(:user)    { FactoryBot.create(:user) }
 
   context 'when admin or manager' do
     before { allow(controller).to receive(:admin_or_manager?).and_return(true) }

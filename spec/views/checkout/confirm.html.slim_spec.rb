@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'checkout/confirm.html.slim', type: :view do
-  let(:billing_address) { FactoryGirl.create(:address) }
-  let(:delivery_address) { FactoryGirl.create(:address) }
+  let(:billing_address) { FactoryBot.create(:address) }
+  let(:delivery_address) { FactoryBot.create(:address) }
   let(:preferred_delivery_date_settings) { nil }
-  let(:website) { FactoryGirl.create(:website, preferred_delivery_date_settings: preferred_delivery_date_settings) }
+  let(:website) { FactoryBot.create(:website, preferred_delivery_date_settings: preferred_delivery_date_settings) }
   let(:name) { SecureRandom.hex }
   let(:email) { SecureRandom.hex }
   let(:phone) { SecureRandom.hex }

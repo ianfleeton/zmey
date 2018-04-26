@@ -2,7 +2,7 @@ shared_examples 'an extra attributes form' do |class_name|
   let(:attribute_name) { SecureRandom.hex }
 
   before do
-    FactoryGirl.create(:extra_attribute, class_name: class_name, attribute_name: attribute_name)
+    FactoryBot.create(:extra_attribute, class_name: class_name, attribute_name: attribute_name)
   end
 
   it 'renders text fields for extra attributes' do

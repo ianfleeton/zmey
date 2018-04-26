@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 feature 'Forgot password' do
-  let(:existing_user) { FactoryGirl.create(:user, email: 'exists@example.org') }
+  let(:existing_user) { FactoryBot.create(:user, email: 'exists@example.org') }
 
   background do
-    FactoryGirl.create(:website)
+    FactoryBot.create(:website)
   end
 
   scenario 'Forget and reset password' do

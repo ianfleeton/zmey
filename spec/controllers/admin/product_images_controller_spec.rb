@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Admin::ProductImagesController do
   describe 'POST create' do
-    let!(:product) { FactoryGirl.create(:product) }
-    let(:image) { FactoryGirl.create(:image) }
+    let!(:product) { FactoryBot.create(:product) }
+    let(:image) { FactoryBot.create(:image) }
     let(:image_id) { image.id }
 
     before do
@@ -27,8 +27,8 @@ RSpec.describe Admin::ProductImagesController do
   end
 
   describe 'DELETE destroy' do
-    let!(:product) { FactoryGirl.create(:product) }
-    let(:image) { FactoryGirl.create(:image) }
+    let!(:product) { FactoryBot.create(:product) }
+    let(:image) { FactoryBot.create(:image) }
     let(:image_id) { image.id }
     let(:main_image) { image }
 
@@ -52,7 +52,7 @@ RSpec.describe Admin::ProductImagesController do
       end
 
       context 'when not main image' do
-        let(:main_image) { FactoryGirl.create(:image) }
+        let(:main_image) { FactoryBot.create(:image) }
 
         it 'leaves product main image intact' do
           expect(product.reload.image).to eq main_image

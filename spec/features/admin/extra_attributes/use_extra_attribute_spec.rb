@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Use extra attribute' do
-  let!(:website) { FactoryGirl.create(:website) }
-  let(:page_subject) { FactoryGirl.create(:page) }
-  let(:product) { FactoryGirl.create(:product) }
+  let!(:website) { FactoryBot.create(:website) }
+  let(:page_subject) { FactoryBot.create(:page) }
+  let(:product) { FactoryBot.create(:product) }
 
   background do
     sign_in_as_admin

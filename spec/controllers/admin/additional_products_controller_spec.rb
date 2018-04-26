@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Admin::AdditionalProductsController do
-  let(:website) { FactoryGirl.build(:website) }
+  let(:website) { FactoryBot.build(:website) }
 
   def mock_additional_product(stubs={})
     @mock_additional_product ||= double(AdditionalProduct, stubs)
@@ -29,7 +29,7 @@ describe Admin::AdditionalProductsController do
 
   describe 'POST create' do
     it 'creates a new AdditionalProduct with the supplied params' do
-      product = FactoryGirl.create(:product)
+      product = FactoryBot.create(:product)
       params = { 'additional_product_id' => product.id, 'product_id' => product.id, 'quantity' => '1', 'selected_by_default' => true }
       post 'create', params: { additional_product: params }
       expect(AdditionalProduct.find_by(params)).to be

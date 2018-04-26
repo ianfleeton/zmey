@@ -19,7 +19,7 @@ describe 'admin/api_keys/index.html.slim' do
   end
 
   context 'with some @api_keys' do
-    let(:api_key)  { FactoryGirl.create(:api_key) }
+    let(:api_key)  { FactoryBot.create(:api_key) }
     let(:api_keys) { [api_key] }
 
     it 'displays the API key and its name' do

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'admin/orders/new.html.slim' do
   let(:order) { Order.new }
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   before do
     assign(:order, order)

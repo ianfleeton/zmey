@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PaymentsController, type: :controller do
   let(:accept_payment_on_account) { false }
-  let(:website) { FactoryGirl.build(:website, accept_payment_on_account: accept_payment_on_account) }
+  let(:website) { FactoryBot.build(:website, accept_payment_on_account: accept_payment_on_account) }
 
   before do
     allow(controller).to receive(:website).and_return(website)
@@ -72,7 +72,7 @@ RSpec.describe PaymentsController, type: :controller do
       end
 
       context 'with matching order' do
-        let(:order)  { FactoryGirl.create(:order) }
+        let(:order)  { FactoryBot.create(:order) }
         let(:cartId) { order.order_number }
 
         it 'sets the order status to payment received' do
@@ -84,7 +84,7 @@ RSpec.describe PaymentsController, type: :controller do
   end
 
   describe 'on_account' do
-    let(:order) { FactoryGirl.create(:order) }
+    let(:order) { FactoryBot.create(:order) }
 
     before do
       session[:order_id] = order_id

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Payments::PaypalController, type: :controller do
-  let(:website) { FactoryGirl.build(:website) }
+  let(:website) { FactoryBot.build(:website) }
 
   before do
     allow(controller).to receive(:website).and_return(website)

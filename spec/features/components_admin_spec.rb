@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Components admin' do
-  let(:website) { FactoryGirl.create(:website) }
-  let(:product) { FactoryGirl.create(:product) }
-  let(:component) { FactoryGirl.build(:component, product: product) }
+  let(:website) { FactoryBot.create(:website) }
+  let(:product) { FactoryBot.create(:product) }
+  let(:component) { FactoryBot.build(:component, product: product) }
 
   background do
     Website.delete_all

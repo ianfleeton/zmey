@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'payments/index.html.erb' do
-  let(:alice) { FactoryGirl.create(:payment, name: 'Alice', amount: '123') }
-  let(:bob)   { FactoryGirl.create(:payment, name: 'Bob', amount: '456') }
+  let(:alice) { FactoryBot.create(:payment, name: 'Alice', amount: '123') }
+  let(:bob)   { FactoryBot.create(:payment, name: 'Bob', amount: '456') }
 
   it 'displays each payment' do
     assign(:payments, [alice, bob])
@@ -19,7 +19,7 @@ describe 'payments/index.html.erb' do
 
   context 'with associated orders' do
     it 'links to the orders' do
-      order = FactoryGirl.create(:order)
+      order = FactoryBot.create(:order)
       allow(alice).to receive(:order).and_return(order)
       assign(:payments, [alice])
       render

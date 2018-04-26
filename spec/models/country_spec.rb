@@ -17,16 +17,16 @@ describe Country do
 
   describe '.shipping' do
     it 'returns only countries with a shipping zone assigned' do
-      zone = FactoryGirl.create(:shipping_zone)
-      c1 = FactoryGirl.create(:country, shipping_zone: zone)
-      c2 = FactoryGirl.create(:country)
+      zone = FactoryBot.create(:shipping_zone)
+      c1 = FactoryBot.create(:country, shipping_zone: zone)
+      c2 = FactoryBot.create(:country)
       expect(Country.shipping).to include(c1)
       expect(Country.shipping).not_to include(c2)
     end
 
     context 'when none with shipping zone' do
       it 'returns all countries' do
-        c1 = FactoryGirl.create(:country)
+        c1 = FactoryBot.create(:country)
         expect(Country.shipping).to include(c1)
       end
     end

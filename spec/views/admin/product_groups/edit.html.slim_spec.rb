@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/product_groups/edit.html.slim', type: :view do
-  let(:product_group) { FactoryGirl.create(:product_group) }
+  let(:product_group) { FactoryBot.create(:product_group) }
   let(:product_group_placement) { ProductGroupPlacement.new }
 
   before do
@@ -14,7 +14,7 @@ RSpec.describe 'admin/product_groups/edit.html.slim', type: :view do
   end
 
   context 'with products' do
-    let!(:product) { FactoryGirl.create(:product) }
+    let!(:product) { FactoryBot.create(:product) }
 
     it 'renders' do
       render
@@ -22,7 +22,7 @@ RSpec.describe 'admin/product_groups/edit.html.slim', type: :view do
   end
 
   context 'with products placed in group' do
-    let!(:product) { FactoryGirl.create(:product) }
+    let!(:product) { FactoryBot.create(:product) }
     let!(:placed) { ProductGroupPlacement.create!(product: product, product_group: product_group) }
 
     it 'renders' do

@@ -5,8 +5,8 @@ RSpec.describe 'admin/products/index.html.slim', type: :view do
 
   before(:each) do
     @products = [
-      FactoryGirl.create(:product),
-      FactoryGirl.create(:product)
+      FactoryBot.create(:product),
+      FactoryBot.create(:product)
     ]
     allow(@products).to receive(:total_pages).and_return(0)
   end

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Features administration' do
-  let(:website) { FactoryGirl.create(:website) }
-  let(:product) { FactoryGirl.create(:product) }
-  let(:feature) { FactoryGirl.build(:feature, product: product) }
+  let(:website) { FactoryBot.create(:website) }
+  let(:product) { FactoryBot.create(:product) }
+  let(:feature) { FactoryBot.build(:feature, product: product) }
 
   background do
     Website.delete_all

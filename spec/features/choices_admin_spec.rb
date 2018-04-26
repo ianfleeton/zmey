@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 feature 'Choices admin' do
-  let(:website) { FactoryGirl.create(:website) }
-  let(:product) { FactoryGirl.create(:product) }
-  let(:feature) { FactoryGirl.create(:feature, product: product) }
-  let(:choice) { FactoryGirl.create(:choice, feature: feature) }
+  let(:website) { FactoryBot.create(:website) }
+  let(:product) { FactoryBot.create(:product) }
+  let(:feature) { FactoryBot.create(:feature, product: product) }
+  let(:choice) { FactoryBot.create(:choice, feature: feature) }
 
   background do
     Website.delete_all

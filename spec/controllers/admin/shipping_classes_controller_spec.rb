@@ -6,7 +6,7 @@ RSpec.describe Admin::ShippingClassesController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:shipping_zone) { FactoryGirl.create(:shipping_zone) }
+    let(:shipping_zone) { FactoryBot.create(:shipping_zone) }
     let(:params) {{
       name: 'Collection',
       requires_delivery_address: false,

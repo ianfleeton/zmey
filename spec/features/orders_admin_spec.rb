@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Orders admin' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   background do
     Website.delete_all
@@ -9,8 +9,8 @@ feature 'Orders admin' do
     sign_in_as_admin
   end
 
-  let(:order)      { FactoryGirl.create(:order) }
-  let(:order_line) { FactoryGirl.create(:order_line, order_id: order.id) }
+  let(:order)      { FactoryBot.create(:order) }
+  let(:order_line) { FactoryBot.create(:order_line, order_id: order.id) }
 
   scenario 'Create order' do
     visit admin_orders_path

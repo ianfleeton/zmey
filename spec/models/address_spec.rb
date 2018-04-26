@@ -77,10 +77,10 @@ describe Address do
   end
 
   def setup_address_with_shipping_classes
-    @shipping_zone = FactoryGirl.create(:shipping_zone)
-    @shipping_class = FactoryGirl.create(:shipping_class, shipping_zone: @shipping_zone)
-    @country = FactoryGirl.create(:country, shipping_zone: @shipping_zone)
-    @address = FactoryGirl.create(:address, country: @country)
+    @shipping_zone = FactoryBot.create(:shipping_zone)
+    @shipping_class = FactoryBot.create(:shipping_class, shipping_zone: @shipping_zone)
+    @country = FactoryBot.create(:country, shipping_zone: @shipping_zone)
+    @address = FactoryBot.create(:address, country: @country)
   end
 
   describe '#to_s' do

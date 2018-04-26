@@ -8,8 +8,8 @@ RSpec.describe 'Admin product groups API', type: :request do
   describe 'GET index' do
     context 'with product groups' do
       before do
-        @group1 = FactoryGirl.create(:product_group)
-        @group2 = FactoryGirl.create(:product_group)
+        @group1 = FactoryBot.create(:product_group)
+        @group2 = FactoryBot.create(:product_group)
       end
 
       it 'returns all groups' do
@@ -46,7 +46,7 @@ RSpec.describe 'Admin product groups API', type: :request do
 
   describe 'GET show' do
     context 'when product group found' do
-      let(:product_group) { FactoryGirl.create(:product_group) }
+      let(:product_group) { FactoryBot.create(:product_group) }
 
       it 'returns 200 OK' do
         get api_admin_product_group_path(product_group)
@@ -63,7 +63,7 @@ RSpec.describe 'Admin product groups API', type: :request do
       end
 
       it 'includes products' do
-        product = FactoryGirl.create(:product)
+        product = FactoryBot.create(:product)
         product_group.products << product
         product_group.save
         get api_admin_product_group_path(product_group)
@@ -95,8 +95,8 @@ RSpec.describe 'Admin product groups API', type: :request do
 
   describe 'DELETE delete_all' do
     it 'deletes all products groups and product group associations' do
-      product = FactoryGirl.create(:product)
-      group = FactoryGirl.create(:product_group)
+      product = FactoryBot.create(:product)
+      group = FactoryBot.create(:product_group)
       ProductGroupPlacement.create!(product: product, product_group: group)
 
       delete '/api/admin/product_groups'

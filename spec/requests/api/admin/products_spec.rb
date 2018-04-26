@@ -20,7 +20,7 @@ describe 'Admin products API' do
         .and_return(default_page_size)
 
       num_items.times do |x|
-        FactoryGirl.create(
+        FactoryBot.create(
           :product,
           updated_at: Date.today - x.days # affects ordering
         )
@@ -54,8 +54,8 @@ describe 'Admin products API' do
 
     context 'getting products updated since' do
       let(:num_items) { 0 }
-      let!(:recently_updated) { FactoryGirl.create(:product, updated_at: Date.new(2015, 1, 31)) }
-      let!(:updated_ages_ago) { FactoryGirl.create(:product, updated_at: Date.new(2013, 3, 14)) }
+      let!(:recently_updated) { FactoryBot.create(:product, updated_at: Date.new(2015, 1, 31)) }
+      let!(:updated_ages_ago) { FactoryBot.create(:product, updated_at: Date.new(2013, 3, 14)) }
 
       before { get '/api/admin/products?updated_since=2014-03-20T10:30:11.123Z' }
 
@@ -91,7 +91,7 @@ describe 'Admin products API' do
   describe 'GET show' do
     context 'when product found' do
       let(:weight) { 1.23 }
-      let(:product) { FactoryGirl.create(:product, weight: weight) }
+      let(:product) { FactoryBot.create(:product, weight: weight) }
 
       it 'returns 200 OK' do
         get api_admin_product_path(product)
@@ -113,7 +113,7 @@ describe 'Admin products API' do
       end
 
       it 'includes product groups' do
-        group = FactoryGirl.create(:product_group)
+        group = FactoryBot.create(:product_group)
         product.product_groups << group
         product.save
         get api_admin_product_path(product)
@@ -157,7 +157,7 @@ describe 'Admin products API' do
     end
 
     it 'associates product with a sole product group' do
-      group = FactoryGirl.create(:product_group, name: 'Special Offers')
+      group = FactoryBot.create(:product_group, name: 'Special Offers')
       params = basic_params.merge(
         product_group: 'Special Offers'
       )
@@ -173,8 +173,8 @@ describe 'Admin products API' do
 
   describe 'DELETE delete_all' do
     it 'deletes all products' do
-      product_1 = FactoryGirl.create(:product)
-      product_2 = FactoryGirl.create(:product)
+      product_1 = FactoryBot.create(:product)
+      product_2 = FactoryBot.create(:product)
 
       delete '/api/admin/products'
 

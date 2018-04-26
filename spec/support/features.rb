@@ -1,5 +1,5 @@
 def sign_in_as_admin
-  sign_in_as(FactoryGirl.create(:admin))
+  sign_in_as(FactoryBot.create(:admin))
 end
 
 def sign_in_as(user)

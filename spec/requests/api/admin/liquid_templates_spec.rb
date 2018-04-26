@@ -24,7 +24,7 @@ describe 'Admin Liquid templates API' do
 
   describe 'DELETE delete_all' do
     it 'deletes all Liquid templates' do
-      template = FactoryGirl.create(:liquid_template)
+      template = FactoryBot.create(:liquid_template)
 
       delete '/api/admin/liquid_templates'
 

@@ -11,7 +11,7 @@ module YorkshirePayments
     describe '#fields' do
       subject { field_list.fields }
 
-      let(:order) { FactoryGirl.build(:order, order_number: order_number, total: 123.45, billing_full_name: 'A Shopper', billing_address_line_1: '123 Street', billing_town_city: 'Doncaster', billing_county: 'South Yorkshire', billing_postcode: 'POST CODE', billing_phone_number: '01234 567890', email_address: 'ashopper@example.org') }
+      let(:order) { FactoryBot.build(:order, order_number: order_number, total: 123.45, billing_full_name: 'A Shopper', billing_address_line_1: '123 Street', billing_town_city: 'Doncaster', billing_county: 'South Yorkshire', billing_postcode: 'POST CODE', billing_phone_number: '01234 567890', email_address: 'ashopper@example.org') }
       let(:order_number) { 'ORDER-1234' }
       let(:signature) { 'SHA512' }
 
@@ -44,7 +44,7 @@ module YorkshirePayments
     end
 
     describe '#signature' do
-      let(:order) { FactoryGirl.build(:order, order_number: 'ORDER-1234', total: 123.45) }
+      let(:order) { FactoryBot.build(:order, order_number: 'ORDER-1234', total: 123.45) }
       subject { field_list.signature }
       it 'should be 128 hex chars long' do
         expect(subject.length).to eq 128

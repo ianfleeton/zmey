@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'checkout/_yorkshire_payments.html.slim', type: :view do
-  let(:website) { FactoryGirl.build(:website) }
-  let(:order) { FactoryGirl.build(:order) }
+  let(:website) { FactoryBot.build(:website) }
+  let(:order) { FactoryBot.build(:order) }
 
   before do
     allow(view).to receive(:website).and_return(website)

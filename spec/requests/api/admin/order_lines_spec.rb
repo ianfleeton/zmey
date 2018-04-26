@@ -6,8 +6,8 @@ describe 'Admin order lines API' do
   end
 
   describe 'POST create' do
-    let(:order) { FactoryGirl.create(:order) }
-    let(:product) { FactoryGirl.create(:product, price: 12.0, rrp: 13.0, weight: 1.23, tax_type: Product::INC_VAT) }
+    let(:order) { FactoryBot.create(:order) }
+    let(:product) { FactoryBot.create(:product, price: 12.0, rrp: 13.0, weight: 1.23, tax_type: Product::INC_VAT) }
 
     let(:order_id)    { order.id }
     let(:product_id)  { nil }
@@ -90,7 +90,7 @@ describe 'Admin order lines API' do
   end
 
   describe 'DELETE destroy' do
-    let(:order_line) { FactoryGirl.create(:order_line) }
+    let(:order_line) { FactoryBot.create(:order_line) }
 
     before { delete '/api/admin/order_lines/' + id.to_s }
 

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 feature 'Search for product' do
-  let!(:product) { FactoryGirl.create(:product, name: 'Organic Cotton Romper') }
+  let!(:product) { FactoryBot.create(:product, name: 'Organic Cotton Romper') }
 
   background do
-    FactoryGirl.create(:website)
+    FactoryBot.create(:website)
     sign_in_as_admin
   end
 

@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'orders/receipt.html.erb', type: :view do
-  let(:order) { FactoryGirl.create(:order) }
-  let(:website) { FactoryGirl.build(:website) }
+  let(:order) { FactoryBot.create(:order) }
+  let(:website) { FactoryBot.build(:website) }
 
   before do
-    FactoryGirl.create(:order_line, order_id: order.id)
+    FactoryBot.create(:order_line, order_id: order.id)
     order.reload
     assign(:order, order)
 

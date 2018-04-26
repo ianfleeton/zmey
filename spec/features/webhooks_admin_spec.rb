@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Webhooks admin' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   background do
     Website.delete_all
@@ -20,7 +20,7 @@ feature 'Webhooks admin' do
 
   scenario 'Edit a webhook' do
     url = "http://#{SecureRandom.hex}"
-    webhook = FactoryGirl.create(:webhook, website_id: website.id)
+    webhook = FactoryBot.create(:webhook, website_id: website.id)
     visit admin_webhooks_path
     click_link "Edit #{webhook}"
     fill_in 'URL', with: url

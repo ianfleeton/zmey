@@ -32,9 +32,9 @@ RSpec.describe 'checkout/delivery.html.slim', type: :view do
   end
 
   it 'only lists shipping countries' do
-    zone = FactoryGirl.create(:shipping_zone)
-    ship_to = FactoryGirl.create(:country, shipping_zone: zone)
-    no_ship = FactoryGirl.create(:country)
+    zone = FactoryBot.create(:shipping_zone)
+    ship_to = FactoryBot.create(:country, shipping_zone: zone)
+    no_ship = FactoryBot.create(:country)
     render
     expect(rendered).to have_selector "select[name='address[country_id]'] option[value='#{ship_to.id}']"
     expect(rendered).not_to have_selector "select[name='address[country_id]'] option[value='#{no_ship.id}']"

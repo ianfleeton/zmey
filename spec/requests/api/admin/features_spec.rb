@@ -6,7 +6,7 @@ describe 'Admin features API' do
   end
 
   describe 'POST create' do
-    let(:product) { FactoryGirl.create(:product) }
+    let(:product) { FactoryBot.create(:product) }
     let(:params) {{
       feature: {
         name: SecureRandom.hex,

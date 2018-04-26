@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
   context 'uniqueness' do
-    before { FactoryGirl.create(:order, order_number: 'AB123') }
+    before { FactoryBot.create(:order, order_number: 'AB123') }
     it { should validate_uniqueness_of :order_number }
   end
 
@@ -26,7 +26,7 @@ RSpec.describe Order, type: :model do
   end
 
   describe 'before_create :create_order_number' do
-    let(:order) { FactoryGirl.build(:order, order_number: order_number) }
+    let(:order) { FactoryBot.build(:order, order_number: order_number) }
 
     context 'with blank order number' do
       let(:order_number) { nil }
@@ -62,7 +62,7 @@ RSpec.describe Order, type: :model do
 
   describe 'before_save :associate_with_user' do
     let(:user_id) { nil }
-    let(:order) { FactoryGirl.build(:order, email_address: 'c2@example.org', user_id: user_id) }
+    let(:order) { FactoryBot.build(:order, email_address: 'c2@example.org', user_id: user_id) }
 
     subject { order.user_id }
     context 'with no matching user' do
@@ -70,7 +70,7 @@ RSpec.describe Order, type: :model do
       it { should be_nil }
     end
     context 'with matching user' do
-      let!(:user) { FactoryGirl.create(:user, email: 'c2@example.org') }
+      let!(:user) { FactoryBot.create(:user, email: 'c2@example.org') }
       before { order.save }
       context 'with user_id already set' do
         let(:user_id) { 123 }
@@ -94,7 +94,7 @@ RSpec.describe Order, type: :model do
     end
 
     context 'when order exists' do
-      let(:order) { FactoryGirl.create(:order, status: status) }
+      let(:order) { FactoryBot.create(:order, status: status) }
       let(:id) { order.id }
 
       context 'when status is waiting for payment' do
@@ -103,7 +103,7 @@ RSpec.describe Order, type: :model do
 
         context 'with order lines' do
           before do
-            FactoryGirl.create(:order_line, order: order)
+            FactoryBot.create(:order_line, order: order)
           end
           it 'deletes order lines' do
             expect(subject.order_lines.count).to eq 0
@@ -138,20 +138,20 @@ RSpec.describe Order, type: :model do
 
   describe '#amount_paid' do
     it 'returns the sum of accepted payment amounts' do
-      o = FactoryGirl.create(:order)
-      FactoryGirl.create(:payment, order: o, amount:  5, accepted: true)
-      FactoryGirl.create(:payment, order: o, amount: 10, accepted: true)
-      FactoryGirl.create(:payment, order: o, amount:  5, accepted: false)
+      o = FactoryBot.create(:order)
+      FactoryBot.create(:payment, order: o, amount:  5, accepted: true)
+      FactoryBot.create(:payment, order: o, amount: 10, accepted: true)
+      FactoryBot.create(:payment, order: o, amount:  5, accepted: false)
       expect(o.amount_paid).to eq 15.0
     end
   end
 
   describe '#outstanding_payment_amount' do
     it 'returns the amount still left to be paid' do
-      o = FactoryGirl.create(:order)
+      o = FactoryBot.create(:order)
       o.total = 50
-      FactoryGirl.create(:payment, order: o, amount:  5, accepted: true)
-      FactoryGirl.create(:payment, order: o, amount: 10, accepted: true)
+      FactoryBot.create(:payment, order: o, amount:  5, accepted: true)
+      FactoryBot.create(:payment, order: o, amount: 10, accepted: true)
       expect(o.outstanding_payment_amount).to eq 35.0
     end
   end
@@ -159,8 +159,8 @@ RSpec.describe Order, type: :model do
   describe '#payment_accepted' do
     let(:initial_status) { Enums::PaymentStatus::WAITING_FOR_PAYMENT }
     let(:order_total) { 10 }
-    let(:order) { FactoryGirl.create(:order, status: initial_status) }
-    let(:payment) { FactoryGirl.build(:payment, order: order, amount: amount, accepted: true) }
+    let(:order) { FactoryBot.create(:order, status: initial_status) }
+    let(:payment) { FactoryBot.build(:payment, order: order, amount: amount, accepted: true) }
     before do
       # Stub out payment communicating with order
       allow(payment).to receive(:notify_order)
@@ -213,7 +213,7 @@ RSpec.describe Order, type: :model do
 
   describe '#copy_delivery_address' do
     before do
-      @address = FactoryGirl.build(:random_address)
+      @address = FactoryBot.build(:random_address)
       @order = Order.new
       @order.copy_delivery_address(@address)
     end
@@ -237,7 +237,7 @@ RSpec.describe Order, type: :model do
 
   describe '#copy_billing_address' do
     before do
-      @address = FactoryGirl.build(:random_address)
+      @address = FactoryBot.build(:random_address)
       @order = Order.new
       @order.copy_billing_address(@address)
     end
@@ -335,14 +335,14 @@ RSpec.describe Order, type: :model do
   end
 
   describe '#add_basket_items' do
-    let(:basket) { FactoryGirl.create(:basket) }
-    let(:product) { FactoryGirl.create(:product, rrp: 2.34) }
-    let(:first_item) { FactoryGirl.build(:basket_item, product: product) }
+    let(:basket) { FactoryBot.create(:basket) }
+    let(:product) { FactoryBot.create(:product, rrp: 2.34) }
+    let(:first_item) { FactoryBot.build(:basket_item, product: product) }
     let(:order) { Order.new }
 
     before do
       basket.basket_items << first_item
-      basket.basket_items << FactoryGirl.build(:basket_item)
+      basket.basket_items << FactoryBot.build(:basket_item)
       order.add_basket_items(basket.basket_items)
     end
 
@@ -356,8 +356,8 @@ RSpec.describe Order, type: :model do
   end
 
   describe '#fully_shipped?' do
-    let(:order) { FactoryGirl.create(:order) }
-    let!(:shipment) { FactoryGirl.create(:shipment, order: order, shipped_at: shipped_at, partial: partial)}
+    let(:order) { FactoryBot.create(:order) }
+    let!(:shipment) { FactoryBot.create(:shipment, order: order, shipped_at: shipped_at, partial: partial)}
     subject { order.fully_shipped? }
 
     context 'partial shipment' do
@@ -386,11 +386,11 @@ RSpec.describe Order, type: :model do
   end
 
   describe '#to_webhook_payload' do
-    before { FactoryGirl.create(:website) }
+    before { FactoryBot.create(:website) }
 
     context 'when event="order_created"' do
       let(:event) { 'order_created' }
-      let(:order) { FactoryGirl.create(:order) }
+      let(:order) { FactoryBot.create(:order) }
 
       it 'returns a hash' do
         expect(order.to_webhook_payload(event)).to be_instance_of(Hash)
@@ -400,7 +400,7 @@ RSpec.describe Order, type: :model do
 
   describe '#billing_country_name=' do
     it 'sets billing_country to the named country' do
-      country = FactoryGirl.create(:country)
+      country = FactoryBot.create(:country)
       order = Order.new
       order.billing_country_name = country.name
       expect(order.billing_country).to eq country
@@ -409,7 +409,7 @@ RSpec.describe Order, type: :model do
 
   describe '#delivery_country_name=' do
     it 'sets delivery_country to the named country' do
-      country = FactoryGirl.create(:country)
+      country = FactoryBot.create(:country)
       order = Order.new
       order.delivery_country_name = country.name
       expect(order.delivery_country).to eq country
@@ -445,7 +445,7 @@ RSpec.describe Order, type: :model do
   end
 
   describe '#record_sales_conversion!' do
-    let(:order) { FactoryGirl.build(:order) }
+    let(:order) { FactoryBot.build(:order) }
 
     it 'updates sales_conversion_recorded_at' do
       order.record_sales_conversion!

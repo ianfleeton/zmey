@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Pages admin' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   background do
     Website.delete_all
@@ -9,10 +9,10 @@ feature 'Pages admin' do
     sign_in_as_admin
   end
 
-  let(:the_page) { FactoryGirl.build(:page) }
+  let(:the_page) { FactoryBot.build(:page) }
 
   scenario 'Create page', js: true do
-    image = FactoryGirl.create(:image)
+    image = FactoryBot.create(:image)
 
     visit admin_pages_path
     click_link 'New'

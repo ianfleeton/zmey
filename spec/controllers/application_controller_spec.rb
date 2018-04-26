@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ApplicationController, type: :controller do
   describe '#current_user' do
     it 'returns a user identified by session[:user]' do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       session[:user] = user.id
       expect(controller.current_user).to eq user
     end
@@ -26,7 +26,7 @@ RSpec.describe ApplicationController, type: :controller do
   describe '#logged_in?' do
     it 'returns true when current_user is persisted' do
       allow(controller).to receive(:current_user)
-        .and_return(FactoryGirl.create(:user))
+        .and_return(FactoryBot.create(:user))
       expect(controller.logged_in?).to be_truthy
     end
 

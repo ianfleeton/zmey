@@ -47,7 +47,7 @@ RSpec.describe OrderLine, type: :model do
     let(:order_line) { OrderLine.new(product: product, quantity: quantity) }
 
     context 'with product allowing fractional quantity' do
-      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: true) }
+      let(:product) { FactoryBot.create(:product, allow_fractional_quantity: true) }
       let(:quantity) { 2.5 }
 
       it 'returns a decimal' do
@@ -56,7 +56,7 @@ RSpec.describe OrderLine, type: :model do
     end
 
     context 'with product disallowing fractional quantity' do
-      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: false) }
+      let(:product) { FactoryBot.create(:product, allow_fractional_quantity: false) }
       let(:quantity) { 2 }
 
       it 'returns an integer' do

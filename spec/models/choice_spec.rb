@@ -8,8 +8,8 @@ RSpec.describe Choice, type: :model do
   end
 
   describe '#create_permutations' do
-    let(:component) { FactoryGirl.create(:component) }
-    let(:red) { FactoryGirl.create(:choice) }
+    let(:component) { FactoryBot.create(:component) }
+    let(:red) { FactoryBot.create(:choice) }
 
     context "the choice's feature is not part of a component" do
       it 'creates no permuations' do
@@ -34,12 +34,12 @@ RSpec.describe Choice, type: :model do
     end
 
     context "component has multiple features but this is its feature's first choice" do
-      let(:red) { FactoryGirl.build(:choice) }
+      let(:red) { FactoryBot.build(:choice) }
 
       before do
-        size = FactoryGirl.create(:feature, component_id: component.id)
-        @large = FactoryGirl.create(:choice, feature_id: size.id)
-        @small = FactoryGirl.create(:choice, feature_id: size.id)
+        size = FactoryBot.create(:feature, component_id: component.id)
+        @large = FactoryBot.create(:choice, feature_id: size.id)
+        @small = FactoryBot.create(:choice, feature_id: size.id)
 
         colour = red.feature
         colour.component = component
@@ -55,18 +55,18 @@ RSpec.describe Choice, type: :model do
     end
 
     context "component has multiple features and this is not its feature's first choice" do
-      let(:red) { FactoryGirl.build(:choice) }
+      let(:red) { FactoryBot.build(:choice) }
 
       before do
-        size = FactoryGirl.create(:feature, component_id: component.id)
-        @large = FactoryGirl.create(:choice, feature_id: size.id)
-        @small = FactoryGirl.create(:choice, feature_id: size.id)
+        size = FactoryBot.create(:feature, component_id: component.id)
+        @large = FactoryBot.create(:choice, feature_id: size.id)
+        @small = FactoryBot.create(:choice, feature_id: size.id)
 
         colour = red.feature
         colour.component = component
         colour.save
 
-        @blue = FactoryGirl.create(:choice, feature_id: colour.id)
+        @blue = FactoryBot.create(:choice, feature_id: colour.id)
 
         red.save
       end

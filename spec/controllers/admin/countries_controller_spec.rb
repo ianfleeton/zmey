@@ -17,7 +17,7 @@ RSpec.describe Admin::CountriesController, type: :controller do
   end
 
   describe 'PATCH update' do
-    let(:country) { FactoryGirl.create(:country) }
+    let(:country) { FactoryBot.create(:country) }
 
     context 'when update succeeds' do
       before { allow_any_instance_of(Country).to receive(:update_attributes).and_return(true) }

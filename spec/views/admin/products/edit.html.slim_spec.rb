@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe '/admin/products/edit.html.slim', type: :view do
   include ProductsHelper
 
-  let(:product) { FactoryGirl.create(:product) }
+  let(:product) { FactoryBot.create(:product) }
 
   before(:each) do
     assign(:product, product)
     assign(:product_group_placement, ProductGroupPlacement.new)
-    allow(view).to receive(:website).and_return(FactoryGirl.build(:website))
+    allow(view).to receive(:website).and_return(FactoryBot.build(:website))
   end
 
   it "renders the edit product form" do

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'products/google_data_feed.xml.erb' do
-  let(:website)  { FactoryGirl.create(:website) }
-  let(:products) { [FactoryGirl.create(:product, age_group: 'adult', gender: 'unisex')] }
+  let(:website)  { FactoryBot.create(:website) }
+  let(:products) { [FactoryBot.create(:product, age_group: 'adult', gender: 'unisex')] }
 
   before do
     assign(:products, products)

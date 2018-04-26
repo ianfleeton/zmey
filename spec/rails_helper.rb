@@ -69,7 +69,7 @@ end
 
 load "#{Rails.root}/config/routes.rb"
 
-FactoryGirl.reload
+FactoryBot.reload
 
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)

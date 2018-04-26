@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Product placements admin' do
-  let(:website)  { FactoryGirl.create(:website) }
-  let(:page_obj) { FactoryGirl.create(:page) }
-  let(:product)  { FactoryGirl.create(:product) }
+  let(:website)  { FactoryBot.create(:website) }
+  let(:page_obj) { FactoryBot.create(:page) }
+  let(:product)  { FactoryBot.create(:product) }
 
   background do
     Website.delete_all

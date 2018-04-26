@@ -6,7 +6,7 @@ RSpec.describe Admin::ShippingZonesController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:shipping_class) { FactoryGirl.create(:shipping_class) }
+    let(:shipping_class) { FactoryBot.create(:shipping_class) }
     let(:params) { {name: 'UK Mainland', default_shipping_class_id: shipping_class.id} }
 
     context 'when successful' do
@@ -22,7 +22,7 @@ RSpec.describe Admin::ShippingZonesController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    let(:shipping_zone) { FactoryGirl.create(:shipping_zone) }
+    let(:shipping_zone) { FactoryBot.create(:shipping_zone) }
 
     it 'deletes the shipping zone' do
       delete :destroy, params: { id: shipping_zone.id }

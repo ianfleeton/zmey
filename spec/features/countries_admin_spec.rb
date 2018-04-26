@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Countries admin' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   background do
     Website.delete_all
@@ -9,7 +9,7 @@ feature 'Countries admin' do
     sign_in_as_admin
   end
 
-  let(:country) { FactoryGirl.build(:country) }
+  let(:country) { FactoryBot.build(:country) }
 
   scenario 'Create country' do
     visit admin_countries_path

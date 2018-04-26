@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Shipping classes admin' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   background do
     Website.delete_all
@@ -9,10 +9,10 @@ feature 'Shipping classes admin' do
     sign_in_as_admin
   end
 
-  let(:shipping_class) { FactoryGirl.build(:shipping_class, shipping_zone: FactoryGirl.create(:shipping_zone)) }
+  let(:shipping_class) { FactoryBot.build(:shipping_class, shipping_zone: FactoryBot.create(:shipping_zone)) }
 
   scenario 'Create shipping class with existing zone' do
-    zone = FactoryGirl.create(:shipping_zone)
+    zone = FactoryBot.create(:shipping_zone)
     visit admin_shipping_classes_path
     click_link 'New'
     fill_in 'Name', with: shipping_class.name

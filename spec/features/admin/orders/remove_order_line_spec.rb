@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 feature 'Remove order line' do
-  let(:order) { FactoryGirl.create(:order) }
+  let(:order) { FactoryBot.create(:order) }
 
   background do
-    FactoryGirl.create(:website)
+    FactoryBot.create(:website)
     sign_in_as_admin
   end
 
   scenario 'Remove order line happy path', js: true do
-    ol = FactoryGirl.create(:order_line, order_id: order.id, product_name: 'Widget', product_price: 10, quantity: 1)
+    ol = FactoryBot.create(:order_line, order_id: order.id, product_name: 'Widget', product_price: 10, quantity: 1)
 
     visit edit_admin_order_path(order)
 

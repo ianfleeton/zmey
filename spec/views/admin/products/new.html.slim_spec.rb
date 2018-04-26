@@ -5,7 +5,7 @@ describe '/admin/products/new.html.slim' do
 
   before(:each) do
     assign(:product, Product.new)
-    allow(view).to receive(:website).and_return(FactoryGirl.build(:website))
+    allow(view).to receive(:website).and_return(FactoryBot.build(:website))
   end
 
   it 'renders new product form' do

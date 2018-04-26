@@ -4,9 +4,9 @@ RSpec.describe DispatchNotifier do
   let(:dn) { DispatchNotifier.new }
 
   describe '#pending_objects' do
-    let(:pending) { FactoryGirl.create(:shipment, shipped_at: Date.today, email_sent_at: nil) }
-    let(:already_sent) { FactoryGirl.create(:shipment, shipped_at: Date.today, email_sent_at: Date.today) }
-    let(:unshipped) { FactoryGirl.create(:shipment, shipped_at: nil) }
+    let(:pending) { FactoryBot.create(:shipment, shipped_at: Date.today, email_sent_at: nil) }
+    let(:already_sent) { FactoryBot.create(:shipment, shipped_at: Date.today, email_sent_at: Date.today) }
+    let(:unshipped) { FactoryBot.create(:shipment, shipped_at: nil) }
 
     it 'returns only shipments pending dispatch notifications' do
       shipments = dn.pending_objects
@@ -17,8 +17,8 @@ RSpec.describe DispatchNotifier do
   end
 
   describe '#send_email' do
-    before { FactoryGirl.create(:website) }
-    let(:shipment) { FactoryGirl.create(:shipment) }
+    before { FactoryBot.create(:website) }
+    let(:shipment) { FactoryBot.create(:shipment) }
 
     it 'sends a dispatch notification email' do
       expect { dn.send_email(shipment) }
@@ -28,7 +28,7 @@ RSpec.describe DispatchNotifier do
   end
 
   describe '#record_sent' do
-    let(:shipment) { FactoryGirl.create(:shipment, email_sent_at: nil) }
+    let(:shipment) { FactoryBot.create(:shipment, email_sent_at: nil) }
 
     it "sets the shipment's email_sent_at attribute and saves it" do
       dn.record_sent(shipment)

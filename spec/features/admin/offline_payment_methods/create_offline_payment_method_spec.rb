@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Create offline payment method' do
   background do
-    FactoryGirl.create(:website)
+    FactoryBot.create(:website)
     sign_in_as_admin
   end
 

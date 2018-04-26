@@ -2,14 +2,14 @@ require 'rails_helper'
 
 feature 'Create offline payment method' do
   background do
-    FactoryGirl.create(:website)
-    FactoryGirl.create(:offline_payment_method, name: 'Cheque')
+    FactoryBot.create(:website)
+    FactoryBot.create(:offline_payment_method, name: 'Cheque')
     sign_in_as_admin
   end
 
   let(:amount) { 10.0 }
-  let(:order) { FactoryGirl.create(:order) }
-  let!(:order_line) { FactoryGirl.create(:order_line, order: order, product_price: 10) }
+  let(:order) { FactoryBot.create(:order) }
+  let!(:order_line) { FactoryBot.create(:order_line, order: order, product_price: 10) }
 
   scenario 'Add full payment to order' do
     add_payment(amount)

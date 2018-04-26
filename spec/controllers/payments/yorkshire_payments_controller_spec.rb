@@ -4,7 +4,7 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
   it { should route(:post, '/payments/yorkshire_payments/callback').to(action: :callback) }
 
   let(:merchant_id) { '000000' }
-  before { FactoryGirl.create(:website, yorkshire_payments_merchant_id: merchant_id) }
+  before { FactoryBot.create(:website, yorkshire_payments_merchant_id: merchant_id) }
 
   describe 'POST callback' do
     let(:default_params) {{

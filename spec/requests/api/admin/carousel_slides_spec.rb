@@ -9,7 +9,7 @@ describe 'Admin carousel slides API' do
     it 'inserts a new slide into the website' do
       params = {
         caption: SecureRandom.hex,
-        image_id: FactoryGirl.create(:image).id,
+        image_id: FactoryBot.create(:image).id,
         link: SecureRandom.hex,
         active_from: '2015-01-01 00:00:00',
         active_until: '2015-02-02 23:59:59',
@@ -27,7 +27,7 @@ describe 'Admin carousel slides API' do
 
   describe 'DELETE delete_all' do
     before do
-      @carousel_slide = FactoryGirl.create(:carousel_slide)
+      @carousel_slide = FactoryBot.create(:carousel_slide)
     end
 
     it 'deletes all carousel slides in the website' do

@@ -9,7 +9,7 @@ RSpec.describe Admin::ApiKeysController, type: :controller do
     let(:name) { SecureRandom.hex }
     let(:valid_params) { {'api_key' => {'name' => name}} }
     let(:invalid_params) { {'api_key' => {'name' => ''}} }
-    let(:current_user) { FactoryGirl.create(:admin) }
+    let(:current_user) { FactoryBot.create(:admin) }
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)
@@ -44,10 +44,10 @@ RSpec.describe Admin::ApiKeysController, type: :controller do
     end
 
     context 'with successful authentication' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
 
       context 'with key matching given name found for user' do
-        let(:api_key) { FactoryGirl.create(:api_key, name: key_name, user_id: user.id) }
+        let(:api_key) { FactoryBot.create(:api_key, name: key_name, user_id: user.id) }
 
         it 'succeeds' do
           expect(response).to be_success

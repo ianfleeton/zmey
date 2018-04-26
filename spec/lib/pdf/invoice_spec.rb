@@ -2,9 +2,9 @@ require 'rails_helper'
 
 module PDF
   RSpec.describe Invoice do
-    before { FactoryGirl.create(:website) }
+    before { FactoryBot.create(:website) }
 
-    let(:order) { FactoryGirl.create(:order) }
+    let(:order) { FactoryBot.create(:order) }
     let(:invoice) { Invoice.new(order) }
 
     describe '#generate' do

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Users admin' do
-  let(:website) { FactoryGirl.create(:website) }
-  let(:user)    { FactoryGirl.create(:user) }
-  let(:address) { FactoryGirl.create(:address, user_id: user.id) }
+  let(:website) { FactoryBot.create(:website) }
+  let(:user)    { FactoryBot.create(:user) }
+  let(:address) { FactoryBot.create(:address, user_id: user.id) }
 
   background do
     Website.delete_all

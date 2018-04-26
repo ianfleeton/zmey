@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'layouts/admin.html.slim', type: :view do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   before do
     allow(view).to receive(:website).and_return(website)

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Edit extra attribute' do
-  let!(:website) { FactoryGirl.create(:website) }
-  let!(:extra_attribute) { FactoryGirl.create(:extra_attribute) }
+  let!(:website) { FactoryBot.create(:website) }
+  let!(:extra_attribute) { FactoryBot.create(:extra_attribute) }
 
   background do
     sign_in_as_admin

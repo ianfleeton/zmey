@@ -8,8 +8,8 @@ RSpec.describe ProductImage, type: :model do
   it { should belong_to(:product) }
 
   describe 'after create' do
-    let(:product) { FactoryGirl.create(:product, image: original_image) }
-    let(:image) { FactoryGirl.create(:image) }
+    let(:product) { FactoryBot.create(:product, image: original_image) }
+    let(:image) { FactoryBot.create(:image) }
     let(:original_image) { nil }
 
     before do
@@ -23,7 +23,7 @@ RSpec.describe ProductImage, type: :model do
     end
 
     context 'product has image already' do
-      let(:original_image) { FactoryGirl.create(:image) }
+      let(:original_image) { FactoryBot.create(:image) }
       it 'leaves original image in place' do
         expect(product.image).to eq original_image
       end

@@ -17,7 +17,7 @@ RSpec.describe Admin::ShipmentsController, type: :controller do
       tracking_number: '123',
       tracking_url: 'http://trackyourorder.url/123',
     } }
-    let(:order) { FactoryGirl.create(:order) }
+    let(:order) { FactoryBot.create(:order) }
 
     context 'when successful' do
       it 'creates a new Shipment' do

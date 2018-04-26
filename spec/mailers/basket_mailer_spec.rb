@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe BasketMailer do
-  let(:website) { FactoryGirl.build(:website) }
-  let(:basket) { FactoryGirl.build(:basket, token: 'xyz') }
+  let(:website) { FactoryBot.build(:website) }
+  let(:basket) { FactoryBot.build(:basket, token: 'xyz') }
   let(:email_address) { 'shopper@example.com' }
 
   describe 'saved_basket' do

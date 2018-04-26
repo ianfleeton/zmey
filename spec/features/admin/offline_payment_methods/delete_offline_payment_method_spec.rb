@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Delete offline payment method' do
-  let!(:website) { FactoryGirl.create(:website) }
-  let!(:offline_payment_method) { FactoryGirl.create(:offline_payment_method) }
+  let!(:website) { FactoryBot.create(:website) }
+  let!(:offline_payment_method) { FactoryBot.create(:offline_payment_method) }
 
   background do
     sign_in_as_admin

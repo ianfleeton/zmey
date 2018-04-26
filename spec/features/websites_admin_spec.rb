@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Websites admin' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   background do
     website
@@ -53,7 +53,7 @@ feature 'Websites admin' do
   end
 
   scenario 'Delete website' do
-    website_to_delete = FactoryGirl.create(:website)
+    website_to_delete = FactoryBot.create(:website)
     visit admin_websites_path
     click_link "Delete #{website_to_delete}"
     expect(Website.find_by(id: website_to_delete.id)).to be_nil

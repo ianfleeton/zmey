@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'products/_additional_products.html.erb' do
-  let(:product) { FactoryGirl.create(:product) }
+  let(:product) { FactoryBot.create(:product) }
 
   it 'renders' do
     render 'products/additional_products', product: product

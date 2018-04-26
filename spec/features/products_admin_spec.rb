@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Products admin' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   background do
     Website.delete_all
@@ -10,7 +10,7 @@ feature 'Products admin' do
   end
 
   scenario 'Create product' do
-    product = FactoryGirl.build(:product,
+    product = FactoryBot.build(:product,
       age_group: 'kids',
       allow_fractional_quantity: [true, false].sample,
       gender: 'unisex',

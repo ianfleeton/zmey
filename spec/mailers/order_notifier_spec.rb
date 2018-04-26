@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe OrderNotifier do
-  let(:website) { FactoryGirl.build(:website) }
-  let(:order) { FactoryGirl.build(:order) }
+  let(:website) { FactoryBot.build(:website) }
+  let(:order) { FactoryBot.build(:order) }
 
   describe '#notification' do
     it 'works' do
@@ -11,7 +11,7 @@ RSpec.describe OrderNotifier do
   end
 
   describe '#invoice' do
-    let(:website) { FactoryGirl.create(:website) }
+    let(:website) { FactoryBot.create(:website) }
 
     before do
       order.order_number = 123

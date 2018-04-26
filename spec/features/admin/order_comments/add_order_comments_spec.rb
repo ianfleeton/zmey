@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 feature 'Add order comments' do
-  let(:order) { FactoryGirl.create(:order) }
+  let(:order) { FactoryBot.create(:order) }
 
   before do
-    FactoryGirl.create(:website)
+    FactoryBot.create(:website)
     sign_in_as_admin
   end
 

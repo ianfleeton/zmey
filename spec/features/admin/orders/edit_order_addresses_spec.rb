@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 feature 'Edit order addresses' do
-  let(:order) { FactoryGirl.create(:order) }
+  let(:order) { FactoryBot.create(:order) }
 
   background do
-    FactoryGirl.create(:website)
+    FactoryBot.create(:website)
     sign_in_as_admin
   end
 

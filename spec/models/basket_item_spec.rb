@@ -4,7 +4,7 @@ RSpec.describe BasketItem, type: :model do
   describe '#line_total(inc_tax)' do
     context 'when inc_tax is true' do
       it 'returns the quantity times the price of the product including tax when buying that quantity' do
-        product = FactoryGirl.build(:product)
+        product = FactoryBot.build(:product)
         item = BasketItem.new(quantity: 2)
         allow(item).to receive(:product_price_inc_tax).and_return(12)
         item.product = product
@@ -14,7 +14,7 @@ RSpec.describe BasketItem, type: :model do
 
     context 'when inc_tax is false' do
       it 'returns the quantity times the price of the product excluding tax when buying that quantity' do
-        product = FactoryGirl.build(:product)
+        product = FactoryBot.build(:product)
         item = BasketItem.new(quantity: 2)
         allow(item).to receive(:product_price_ex_tax).and_return(10)
         item.product = product
@@ -25,7 +25,7 @@ RSpec.describe BasketItem, type: :model do
 
   describe '#tax_amount' do
     it 'returns the total amount of tax' do
-      product = FactoryGirl.create(:product, tax_type: Product::EX_VAT, price: 1)
+      product = FactoryBot.create(:product, tax_type: Product::EX_VAT, price: 1)
       basket_item = BasketItem.new(product: product, quantity: 3)
       expect(basket_item.tax_amount).to be_within(0.0001).of(1 * 3 * Product::VAT_RATE)
     end
@@ -33,19 +33,19 @@ RSpec.describe BasketItem, type: :model do
 
   describe '#savings' do
     let(:inc_tax) { false }
-    let(:basket_item) { FactoryGirl.build(:basket_item, product: product, quantity: quantity) }
+    let(:basket_item) { FactoryBot.build(:basket_item, product: product, quantity: quantity) }
 
     subject { basket_item.savings(inc_tax) }
 
     context 'with 1 item, RRP unset' do
       let(:quantity) { 1 }
-      let(:product) { FactoryGirl.create(:product, rrp: nil, price: 1.0) }
+      let(:product) { FactoryBot.create(:product, rrp: nil, price: 1.0) }
       it { should eq 0 }
     end
 
     context 'with 1 item, RRP set to 1.0 more' do
       let(:quantity) { 1 }
-      let(:product) { FactoryGirl.create(:product, rrp: 2.0, price: 1.0, tax_type: tax_type) }
+      let(:product) { FactoryBot.create(:product, rrp: 2.0, price: 1.0, tax_type: tax_type) }
 
       context 'product price ex VAT' do
         let(:tax_type) { Product::EX_VAT }
@@ -60,13 +60,13 @@ RSpec.describe BasketItem, type: :model do
 
     context 'with 2 items, RRP set to 1.0 more' do
       let(:quantity) { 2 }
-      let(:product) { FactoryGirl.create(:product, rrp: 2.0, price: 1.0) }
+      let(:product) { FactoryBot.create(:product, rrp: 2.0, price: 1.0) }
       it { should eq 2.0 }
     end
 
     context 'with 5 items, RRP unset, volume purchase price at 0.50 less' do
       let(:quantity) { 5 }
-      let(:product) { FactoryGirl.create(:product, rrp: nil, price: 2.0) }
+      let(:product) { FactoryBot.create(:product, rrp: nil, price: 2.0) }
 
       before do
         # Make sure we're using QuantityBased price calculations.
@@ -79,7 +79,7 @@ RSpec.describe BasketItem, type: :model do
 
     context 'inc tax, 1 product, RRP is 2.0, price is 1.0' do
       let(:inc_tax) { true }
-      let(:product) { FactoryGirl.create(:product, rrp: 2.0, price: 1.0, tax_type: tax_type) }
+      let(:product) { FactoryBot.create(:product, rrp: 2.0, price: 1.0, tax_type: tax_type) }
       let(:quantity) { 1 }
 
       context 'product price excludes VAT' do
@@ -124,7 +124,7 @@ RSpec.describe BasketItem, type: :model do
   end
 
   describe '#adjust_quantity' do
-    let(:basket_item) { FactoryGirl.build(:basket_item, product_id: product.id) }
+    let(:basket_item) { FactoryBot.build(:basket_item, product_id: product.id) }
 
     before do
       basket_item.quantity = 1.6
@@ -132,7 +132,7 @@ RSpec.describe BasketItem, type: :model do
     end
 
     context 'when product allows fractional quantity' do
-      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: true) }
+      let(:product) { FactoryBot.create(:product, allow_fractional_quantity: true) }
 
       it 'leaves the quantity as a decimal' do
         expect(basket_item.reload.quantity).to eq 1.6
@@ -140,7 +140,7 @@ RSpec.describe BasketItem, type: :model do
     end
 
     context 'when product disallows fractional quantity' do
-      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: false) }
+      let(:product) { FactoryBot.create(:product, allow_fractional_quantity: false) }
 
       it 'rounds the quantity up' do
         expect(basket_item.reload.quantity).to eq 2
@@ -152,7 +152,7 @@ RSpec.describe BasketItem, type: :model do
     let(:basket_item) { BasketItem.new(product: product, quantity: quantity) }
 
     context 'with product allowing fractional quantity' do
-      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: true) }
+      let(:product) { FactoryBot.create(:product, allow_fractional_quantity: true) }
       let(:quantity) { 2.5 }
 
       it 'returns 1' do
@@ -161,7 +161,7 @@ RSpec.describe BasketItem, type: :model do
     end
 
     context 'with product disallowing fractional quantity' do
-      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: false) }
+      let(:product) { FactoryBot.create(:product, allow_fractional_quantity: false) }
       let(:quantity) { 2 }
 
       it 'returns quantity' do
@@ -178,7 +178,7 @@ RSpec.describe BasketItem, type: :model do
     let(:basket_item) { BasketItem.new(product: product, quantity: quantity) }
 
     context 'with product allowing fractional quantity' do
-      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: true) }
+      let(:product) { FactoryBot.create(:product, allow_fractional_quantity: true) }
       let(:quantity) { 2.5 }
 
       it 'returns a decimal' do
@@ -187,7 +187,7 @@ RSpec.describe BasketItem, type: :model do
     end
 
     context 'with product disallowing fractional quantity' do
-      let(:product) { FactoryGirl.create(:product, allow_fractional_quantity: false) }
+      let(:product) { FactoryBot.create(:product, allow_fractional_quantity: false) }
       let(:quantity) { 2 }
 
       it 'returns an integer' do
@@ -199,7 +199,7 @@ RSpec.describe BasketItem, type: :model do
 
   describe '#weight' do
     it 'returns the weight of the product times the quantity' do
-      product = FactoryGirl.build(:product, weight: 2.5)
+      product = FactoryBot.build(:product, weight: 2.5)
       item = BasketItem.new(quantity: 3)
       item.product = product
       expect(item.weight).to eq 7.5
@@ -208,7 +208,7 @@ RSpec.describe BasketItem, type: :model do
 
   describe '#preserve_immutable_quantity' do
     it 'allows quantity to change when mutable' do
-      item = FactoryGirl.create(:basket_item, immutable_quantity: false, quantity: 1)
+      item = FactoryBot.create(:basket_item, immutable_quantity: false, quantity: 1)
       item.quantity = 2
       item.save
       item.reload
@@ -216,7 +216,7 @@ RSpec.describe BasketItem, type: :model do
     end
 
     it 'prevents quantity from changing when immutable' do
-      item = FactoryGirl.create(:basket_item, immutable_quantity: true, quantity: 1)
+      item = FactoryBot.create(:basket_item, immutable_quantity: true, quantity: 1)
       item.quantity = 2
       item.save
       item.reload
@@ -224,7 +224,7 @@ RSpec.describe BasketItem, type: :model do
     end
 
     it 'prevents immutable_quantity from changing back to false once true' do
-      item = FactoryGirl.create(:basket_item, immutable_quantity: true)
+      item = FactoryBot.create(:basket_item, immutable_quantity: true)
       item.immutable_quantity = false
       item.quantity = 2
       item.save
@@ -238,12 +238,12 @@ RSpec.describe BasketItem, type: :model do
     subject { BasketItem.new(product: product).oversize? }
 
     context 'with oversize product' do
-      let(:product) { FactoryGirl.create(:product, oversize: true) }
+      let(:product) { FactoryBot.create(:product, oversize: true) }
       it { should eq true }
     end
 
     context 'with normal size product' do
-      let(:product) { FactoryGirl.create(:product, oversize: false) }
+      let(:product) { FactoryBot.create(:product, oversize: false) }
       it { should eq false }
     end
 
@@ -255,8 +255,8 @@ RSpec.describe BasketItem, type: :model do
 
   describe '#deep_clone' do
     it 'returns a copy of the basket item with feature selections' do
-      feature = FactoryGirl.create(:feature)
-      bi = FactoryGirl.create(:basket_item, quantity: 123)
+      feature = FactoryBot.create(:feature)
+      bi = FactoryBot.create(:basket_item, quantity: 123)
       bi.feature_selections << FeatureSelection.create(
         feature: feature, customer_text: 'deep clone selection'
       )

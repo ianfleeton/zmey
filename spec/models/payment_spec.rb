@@ -6,8 +6,8 @@ RSpec.describe Payment, type: :model do
   end
 
   describe 'after_save' do
-    let(:order) { FactoryGirl.create(:order) }
-    let(:payment) { FactoryGirl.build(:payment, accepted: accepted, order: order) }
+    let(:order) { FactoryBot.create(:order) }
+    let(:payment) { FactoryBot.build(:payment, accepted: accepted, order: order) }
 
     context 'when accepted' do
       let(:accepted) { true }

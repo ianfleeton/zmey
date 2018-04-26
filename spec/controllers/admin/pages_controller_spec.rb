@@ -6,8 +6,8 @@ RSpec.describe Admin::PagesController, type: :controller do
 
     describe 'PATCH update' do
       context 'when update fails' do
-        let!(:existing_page) { FactoryGirl.create(:page) }
-        let(:page) { FactoryGirl.create(:page) }
+        let!(:existing_page) { FactoryBot.create(:page) }
+        let(:page) { FactoryBot.create(:page) }
         before do
           patch :update, params: { id: page.id, page: { slug: existing_page.slug } }
         end

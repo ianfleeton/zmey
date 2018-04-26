@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe UserNotifier do
-  let(:website) { FactoryGirl.build(:website) }
-  let(:user) { FactoryGirl.build(:user) }
+  let(:website) { FactoryBot.build(:website) }
+  let(:user) { FactoryBot.build(:user) }
 
   describe 'token' do
     it 'works' do

@@ -8,8 +8,8 @@ describe 'Admin countries API' do
   describe 'GET index' do
     context 'with countries' do
       before do
-        @country1 = FactoryGirl.create(:country)
-        @country2 = FactoryGirl.create(:country)
+        @country1 = FactoryBot.create(:country)
+        @country2 = FactoryBot.create(:country)
       end
 
       it 'returns all countries' do

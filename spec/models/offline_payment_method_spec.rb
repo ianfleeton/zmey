@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe OfflinePaymentMethod, type: :model do
   describe 'validations' do
-    subject { FactoryGirl.build(:offline_payment_method) }
+    subject { FactoryBot.build(:offline_payment_method) }
     it { should validate_presence_of(:name) }
     it { should validate_uniqueness_of(:name) }
   end

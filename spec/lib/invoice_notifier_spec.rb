@@ -4,9 +4,9 @@ RSpec.describe InvoiceNotifier do
   let(:notifier) { InvoiceNotifier.new }
 
   describe '#pending_objects' do
-    let(:pending) { FactoryGirl.create(:order, shipped_at: Date.today, invoice_sent_at: nil) }
-    let(:already_sent) { FactoryGirl.create(:order, shipped_at: Date.today, invoice_sent_at: Date.today) }
-    let(:unshipped) { FactoryGirl.create(:order, shipped_at: nil) }
+    let(:pending) { FactoryBot.create(:order, shipped_at: Date.today, invoice_sent_at: nil) }
+    let(:already_sent) { FactoryBot.create(:order, shipped_at: Date.today, invoice_sent_at: Date.today) }
+    let(:unshipped) { FactoryBot.create(:order, shipped_at: nil) }
 
     it 'returns only orders pending invoice notifications' do
       orders = notifier.pending_objects
@@ -17,8 +17,8 @@ RSpec.describe InvoiceNotifier do
   end
 
   describe '#send_email' do
-    before { FactoryGirl.create(:website) }
-    let(:order) { FactoryGirl.create(:order) }
+    before { FactoryBot.create(:website) }
+    let(:order) { FactoryBot.create(:order) }
 
     it 'sends an invoice notification email' do
       expect { notifier.send_email(order) }
@@ -28,7 +28,7 @@ RSpec.describe InvoiceNotifier do
   end
 
   describe '#record_sent' do
-    let(:order) { FactoryGirl.create(:order, invoice_sent_at: nil) }
+    let(:order) { FactoryBot.create(:order, invoice_sent_at: nil) }
 
     it "sets the order's invoice_sent_at attribute and saves it" do
       notifier.record_sent(order)

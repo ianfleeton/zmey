@@ -8,8 +8,8 @@ describe 'Admin pages API' do
   describe 'GET index' do
     context 'with pages' do
       before do
-        @page1 = FactoryGirl.create(:page)
-        @page2 = FactoryGirl.create(:page, parent_id: @page1.id)
+        @page1 = FactoryBot.create(:page)
+        @page2 = FactoryBot.create(:page, parent_id: @page1.id)
       end
 
       it 'returns all pages' do
@@ -48,7 +48,7 @@ describe 'Admin pages API' do
   describe 'GET show' do
     context 'when page found' do
       before do
-        @page = FactoryGirl.create(:page)
+        @page = FactoryBot.create(:page)
       end
 
       it 'returns 200 OK' do
@@ -70,7 +70,7 @@ describe 'Admin pages API' do
       name = SecureRandom.hex
       slug = SecureRandom.hex
       title = SecureRandom.hex
-      image = FactoryGirl.create(:image)
+      image = FactoryBot.create(:image)
       visible = [true, false].sample
       description = 'Description'
       post '/api/admin/pages', params: { page: {description: description, image_id: image.id, name: name, slug: slug, thumbnail_image_id: image.id, title: title, visible: visible} }
@@ -85,8 +85,8 @@ describe 'Admin pages API' do
 
   describe 'DELETE delete_all' do
     it 'deletes all pages' do
-      page_1 = FactoryGirl.create(:page)
-      page_2 = FactoryGirl.create(:page, parent_id: page_1.id)
+      page_1 = FactoryBot.create(:page)
+      page_2 = FactoryBot.create(:page, parent_id: page_1.id)
       page_1.save!
       page_2.save!
 

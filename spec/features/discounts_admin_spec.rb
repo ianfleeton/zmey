@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Discounts admin' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   background do
     Website.delete_all
@@ -9,7 +9,7 @@ feature 'Discounts admin' do
     sign_in_as_admin
   end
 
-  let(:discount) { FactoryGirl.build(:discount) }
+  let(:discount) { FactoryBot.build(:discount) }
 
   scenario 'Create discount' do
     visit admin_discounts_path

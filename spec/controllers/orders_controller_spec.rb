@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
-  let(:current_user) { FactoryGirl.create(:user) }
+  let(:current_user) { FactoryBot.create(:user) }
 
   def mock_order(stubs={})
     @mock_order ||= double(Order, stubs)
@@ -58,7 +58,7 @@ RSpec.describe OrdersController, type: :controller do
     end
 
     context 'format is pdf' do
-      let(:order) { FactoryGirl.create(:order) }
+      let(:order) { FactoryBot.create(:order) }
       before do
         allow(controller).to receive(:logged_in?).and_return(true)
         allow(controller).to receive(:can_access_order?).and_return(true)

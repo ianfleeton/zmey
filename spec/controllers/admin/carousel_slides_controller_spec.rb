@@ -59,8 +59,8 @@ RSpec.describe Admin::CarouselSlidesController, type: :controller do
     end
 
     context 'moving' do
-      let!(:first) { FactoryGirl.create(:carousel_slide) }
-      let!(:last)  { FactoryGirl.create(:carousel_slide) }
+      let!(:first) { FactoryBot.create(:carousel_slide) }
+      let!(:last)  { FactoryBot.create(:carousel_slide) }
 
       describe 'GET move_up' do
         it 'moves the carousel slide up the list' do

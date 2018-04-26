@@ -8,8 +8,8 @@ describe 'Admin images API' do
   describe 'GET index' do
     context 'with images' do
       before do
-        @image1 = FactoryGirl.create(:image)
-        @image2 = FactoryGirl.create(:image)
+        @image1 = FactoryBot.create(:image)
+        @image2 = FactoryBot.create(:image)
       end
 
       it 'returns all images' do
@@ -47,7 +47,7 @@ describe 'Admin images API' do
   describe 'GET show' do
     context 'when image found' do
       before do
-        @image = FactoryGirl.create(:image)
+        @image = FactoryBot.create(:image)
       end
 
       it 'returns 200 OK' do
@@ -66,7 +66,7 @@ describe 'Admin images API' do
 
   describe 'DELETE delete_all' do
     before do
-      @image = FactoryGirl.create(:image)
+      @image = FactoryBot.create(:image)
     end
 
     context 'with no DeleteRestrictionErrors' do
@@ -91,7 +91,7 @@ describe 'Admin images API' do
       end
 
       it 'returns 400 Bad Request' do
-        FactoryGirl.create(:carousel_slide, image_id: @image.id)
+        FactoryBot.create(:carousel_slide, image_id: @image.id)
         delete '/api/admin/images'
         expect(response.status).to eq 400
       end

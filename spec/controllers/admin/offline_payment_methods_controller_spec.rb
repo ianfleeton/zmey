@@ -30,7 +30,7 @@ RSpec.describe Admin::OfflinePaymentMethodsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    let(:opm) { FactoryGirl.create(:offline_payment_method) }
+    let(:opm) { FactoryBot.create(:offline_payment_method) }
 
     before do
       delete :destroy, params: { id: opm.id }

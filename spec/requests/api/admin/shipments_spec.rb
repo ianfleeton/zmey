@@ -6,7 +6,7 @@ RSpec.describe 'Admin shipments API', type: :request do
   end
 
   describe 'POST create' do
-    let(:order) { FactoryGirl.create(:order) }
+    let(:order) { FactoryBot.create(:order) }
 
     let(:order_id)    { order.id }
 

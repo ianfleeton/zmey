@@ -13,7 +13,7 @@ describe 'admin/extra_attributes/index.html.slim' do
   end
 
   context 'with attributes' do
-    let(:extra_attribute) { FactoryGirl.create(:extra_attribute) }
+    let(:extra_attribute) { FactoryBot.create(:extra_attribute) }
     let(:extra_attributes) { [extra_attribute] }
 
     it 'has a link to edit attribute' do

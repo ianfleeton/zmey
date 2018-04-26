@@ -7,8 +7,8 @@ describe 'Admin payments API' do
 
   describe 'GET index' do
     before do
-      @order1 = FactoryGirl.create(:order)
-      @payment1 = FactoryGirl.create(
+      @order1 = FactoryBot.create(:order)
+      @payment1 = FactoryBot.create(
         :payment,
         order_id: @order1.id,
         amount: 49.50,
@@ -17,7 +17,7 @@ describe 'Admin payments API' do
         service_provider: 'WorldPay',
         test_mode: false
       )
-      @payment2 = FactoryGirl.create(:payment)
+      @payment2 = FactoryBot.create(:payment)
     end
 
     it 'returns payments for the website' do
@@ -63,8 +63,8 @@ describe 'Admin payments API' do
   describe 'GET show' do
     context 'when payment found' do
       before do
-        @order = FactoryGirl.create(:order)
-        @payment = FactoryGirl.create(:payment, order_id: @order.id)
+        @order = FactoryBot.create(:order)
+        @payment = FactoryBot.create(:payment, order_id: @order.id)
       end
 
       it 'returns 200 OK' do
@@ -82,7 +82,7 @@ describe 'Admin payments API' do
   end
 
   describe 'POST create' do
-    let(:order) { FactoryGirl.create(:order) }
+    let(:order) { FactoryBot.create(:order) }
 
     let(:order_id)    { order.id }
 
@@ -147,7 +147,7 @@ describe 'Admin payments API' do
   end
 
   describe 'DELETE destroy' do
-    let(:payment) { FactoryGirl.create(:payment) }
+    let(:payment) { FactoryBot.create(:payment) }
 
     before { delete '/api/admin/payments/' + id.to_s }
 

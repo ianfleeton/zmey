@@ -24,7 +24,7 @@ RSpec.describe Admin::ExtraAttributesController, type: :controller do
     end
 
     describe 'PATCH update' do
-      let(:extra_attribute) { FactoryGirl.create(:extra_attribute) }
+      let(:extra_attribute) { FactoryBot.create(:extra_attribute) }
       let(:new_attribute_name) { SecureRandom.hex }
       let(:new_class_name) { SecureRandom.hex }
 
@@ -48,7 +48,7 @@ RSpec.describe Admin::ExtraAttributesController, type: :controller do
     end
 
     describe 'DELETE destroy' do
-      let(:a) { FactoryGirl.create(:extra_attribute) }
+      let(:a) { FactoryBot.create(:extra_attribute) }
 
       before do
         delete :destroy, params: { id: a.id }

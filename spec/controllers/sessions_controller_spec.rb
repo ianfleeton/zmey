@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
-  let(:customer) { FactoryGirl.create(:user, admin: false) }
+  let(:customer) { FactoryBot.create(:user, admin: false) }
 
   describe 'POST #create' do
     it 'authenticates the user' do

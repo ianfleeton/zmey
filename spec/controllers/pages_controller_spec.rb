@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PagesController, type: :controller do
   describe 'GET show' do
-    let(:website) { FactoryGirl.create(:website) }
+    let(:website) { FactoryBot.create(:website) }
     let(:slug)    { 'slug' }
     before { allow(controller).to receive(:website).and_return(website) }
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Product groups admin' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   background do
     Website.delete_all
@@ -10,7 +10,7 @@ feature 'Product groups admin' do
   end
 
   scenario 'Create product group' do
-    product_group = FactoryGirl.build(:product_group,
+    product_group = FactoryBot.build(:product_group,
       location: SecureRandom.hex,
       name:   SecureRandom.hex
     )
@@ -29,7 +29,7 @@ feature 'Product groups admin' do
   end
 
   scenario 'Edit product group' do
-    product_group = FactoryGirl.create(:product_group)
+    product_group = FactoryBot.create(:product_group)
     new_name = SecureRandom.hex
 
     visit admin_product_groups_path
@@ -41,7 +41,7 @@ feature 'Product groups admin' do
   end
 
   scenario 'Delete product group' do
-    product_group = FactoryGirl.create(:product_group)
+    product_group = FactoryBot.create(:product_group)
     visit admin_product_groups_path
     click_link "Delete #{product_group}"
     expect(ProductGroup.find_by(id: product_group.id)).to be_nil

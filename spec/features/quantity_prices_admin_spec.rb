@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'Quantity prices administration' do
-  let(:website) { FactoryGirl.create(:website) }
-  let(:product) { FactoryGirl.create(:product) }
-  let(:quantity_price) { FactoryGirl.build(:quantity_price, product: product) }
+  let(:website) { FactoryBot.create(:website) }
+  let(:product) { FactoryBot.create(:product) }
+  let(:quantity_price) { FactoryBot.build(:quantity_price, product: product) }
 
   background do
     Website.delete_all

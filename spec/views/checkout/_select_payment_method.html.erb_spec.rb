@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'checkout/_select_payment_method.html.erb', type: :view do
   context 'when WorldPay active' do
-    let(:website) { FactoryGirl.create(:website, worldpay_active: true, worldpay_installation_id: '1234', worldpay_payment_response_password: 'secret') }
-    let(:order)   { FactoryGirl.create(:order) }
+    let(:website) { FactoryBot.create(:website, worldpay_active: true, worldpay_installation_id: '1234', worldpay_payment_response_password: 'secret') }
+    let(:order)   { FactoryBot.create(:order) }
 
     before do
       allow(view).to receive(:website).and_return(website)
@@ -24,8 +24,8 @@ RSpec.describe 'checkout/_select_payment_method.html.erb', type: :view do
   end
 
   context 'when Cardsave active' do
-    let(:website) { FactoryGirl.create(:website, cardsave_active: true) }
-    let(:order)   { FactoryGirl.create(:order) }
+    let(:website) { FactoryBot.create(:website, cardsave_active: true) }
+    let(:order)   { FactoryBot.create(:order) }
 
     before do
       allow(view).to receive(:website).and_return(website)
@@ -38,8 +38,8 @@ RSpec.describe 'checkout/_select_payment_method.html.erb', type: :view do
   end
 
   context 'when website accepts payment on account' do
-    let(:website) { FactoryGirl.create(:website, accept_payment_on_account: true) }
-    let(:order)   { FactoryGirl.create(:order) }
+    let(:website) { FactoryBot.create(:website, accept_payment_on_account: true) }
+    let(:order)   { FactoryBot.create(:order) }
 
     before do
       allow(view).to receive(:website).and_return(website)

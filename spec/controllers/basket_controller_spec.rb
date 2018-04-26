@@ -33,7 +33,7 @@ RSpec.describe BasketController, type: :controller do
   end
 
   shared_examples_for 'a shipping class updater' do |method, action|
-    let(:shipping_class) { FactoryGirl.create(:shipping_class) }
+    let(:shipping_class) { FactoryBot.create(:shipping_class) }
 
     it 'sets shipping class in the session' do
       send(method, action, params: { shipping_class_id: shipping_class.id })
@@ -64,7 +64,7 @@ RSpec.describe BasketController, type: :controller do
   end
 
   describe 'POST save_and_email' do
-    let(:website) { FactoryGirl.create(:website, name: 'www', email: 'anon@example.org', domain: 'example.org') }
+    let(:website) { FactoryBot.create(:website, name: 'www', email: 'anon@example.org', domain: 'example.org') }
     let(:email_address) { 'shopper@example.org' }
 
     it 'clones the basket and its contents' do
@@ -97,7 +97,7 @@ RSpec.describe BasketController, type: :controller do
 
   describe 'GET load' do
     context 'with valid token' do
-      let(:basket) { FactoryGirl.create(:basket) }
+      let(:basket) { FactoryBot.create(:basket) }
 
       it 'sets the session basket to the matching basket' do
         get :load, params: { token: basket.token }

@@ -15,7 +15,7 @@ describe 'Admin users API' do
 
     before do
       num_items.times do |x|
-        FactoryGirl.create(:user)
+        FactoryBot.create(:user)
       end
 
       @user1 = User.first
@@ -44,7 +44,7 @@ describe 'Admin users API' do
       let(:email) { "#{SecureRandom.hex}@example.org" }
 
       let!(:more_setup) {->{
-        @matching_user = FactoryGirl.create(:user)
+        @matching_user = FactoryBot.create(:user)
         @matching_user.email = email
         @matching_user.save
       }}
@@ -73,7 +73,7 @@ describe 'Admin users API' do
       let(:manages_website_id) { nil }
 
       before do
-        @user = FactoryGirl.create(:user, manages_website_id: manages_website_id)
+        @user = FactoryBot.create(:user, manages_website_id: manages_website_id)
       end
 
       it 'returns 200 OK' do
@@ -116,7 +116,7 @@ describe 'Admin users API' do
     end
 
     context 'when user found' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
 
       it 'responds with 204 No Content' do
         expect(status).to eq 204
@@ -129,7 +129,7 @@ describe 'Admin users API' do
 
     context 'when user not found' do
       let(:user) do
-        u = FactoryGirl.create(:user)
+        u = FactoryBot.create(:user)
         u.id += 1
         u
       end

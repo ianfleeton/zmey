@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/shipping_zones/edit.html.slim', type: :view do
-  let(:shipping_zone) { FactoryGirl.create(:shipping_zone) }
+  let(:shipping_zone) { FactoryBot.create(:shipping_zone) }
   before do
     assign(:shipping_zone, shipping_zone)
   end
@@ -14,7 +14,7 @@ RSpec.describe 'admin/shipping_zones/edit.html.slim', type: :view do
   end
 
   context 'with countries in this zone' do
-    let!(:country) { FactoryGirl.create(:country, shipping_zone: shipping_zone) }
+    let!(:country) { FactoryBot.create(:country, shipping_zone: shipping_zone) }
 
     it 'links to edit the country' do
       render
@@ -23,7 +23,7 @@ RSpec.describe 'admin/shipping_zones/edit.html.slim', type: :view do
   end
 
   context 'with classes in this zone' do
-    let!(:shipping_class) { FactoryGirl.create(:shipping_class, shipping_zone: shipping_zone) }
+    let!(:shipping_class) { FactoryBot.create(:shipping_class, shipping_zone: shipping_zone) }
     it 'links to edit the class' do
       render
       expect(rendered).to have_css "a[href='#{edit_admin_shipping_class_path(shipping_class)}']"

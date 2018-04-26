@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe Basket do
   describe '#set_product_quantities' do
-    let!(:basket) { FactoryGirl.create(:basket) }
-    let(:product) { FactoryGirl.create(:product) }
+    let!(:basket) { FactoryBot.create(:basket) }
+    let(:product) { FactoryBot.create(:product) }
 
     it 'updates existing quantities' do
       basket.basket_items << BasketItem.new(product: product, quantity: 1)
@@ -24,8 +24,8 @@ describe Basket do
   end
 
   describe '#quantity_of_product' do
-    let!(:basket) { FactoryGirl.create(:basket) }
-    let(:product) { FactoryGirl.create(:product) }
+    let!(:basket) { FactoryBot.create(:basket) }
+    let(:product) { FactoryBot.create(:product) }
 
     context 'with product in basket' do
       it 'returns the quantity of that product' do
@@ -87,9 +87,9 @@ describe Basket do
 
   describe '#contains?' do
     it 'returns true when product or product_id is in basket' do
-      p1 = FactoryGirl.create(:product)
-      p2 = FactoryGirl.create(:product)
-      basket = FactoryGirl.create(:basket)
+      p1 = FactoryBot.create(:product)
+      p2 = FactoryBot.create(:product)
+      basket = FactoryBot.create(:basket)
       basket.basket_items << BasketItem.new(product: p1)
       expect(basket.contains?(p1)).to eq true
       expect(basket.contains?(p1.id)).to eq true
@@ -100,9 +100,9 @@ describe Basket do
 
   describe '#items_containing' do
     it 'returns basket items that contain product or product_id' do
-      p1 = FactoryGirl.create(:product)
-      p2 = FactoryGirl.create(:product)
-      basket = FactoryGirl.create(:basket)
+      p1 = FactoryBot.create(:product)
+      p2 = FactoryBot.create(:product)
+      basket = FactoryBot.create(:basket)
       i1 = BasketItem.create!(product: p1, basket: basket)
       i2 = BasketItem.create!(product: p2, basket: basket)
       i3 = BasketItem.create!(product: p1, basket: basket)
@@ -149,8 +149,8 @@ describe Basket do
     end
 
     it 'copies basket items' do
-      p = FactoryGirl.create(:product)
-      b = FactoryGirl.create(:basket)
+      p = FactoryBot.create(:product)
+      b = FactoryBot.create(:basket)
       b.basket_items << BasketItem.new(product_id: p.id)
       expect(b.deep_clone.basket_items.count).to eq 1
       expect(b.basket_items.count).to eq 1

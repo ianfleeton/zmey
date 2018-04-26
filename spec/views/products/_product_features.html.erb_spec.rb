@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'products/_product_features.html.erb', type: :view do
   context 'feature with radio buttons' do
-    let(:product) { FactoryGirl.create(:product) }
+    let(:product) { FactoryBot.create(:product) }
 
     before do
-      feature = FactoryGirl.create(:feature, product: product, ui_type: Feature::RADIO_BUTTONS)
-      FactoryGirl.create(:choice, feature: feature)
+      feature = FactoryBot.create(:feature, product: product, ui_type: Feature::RADIO_BUTTONS)
+      FactoryBot.create(:choice, feature: feature)
       allow(view).to receive(:product).and_return(product)
       render
     end

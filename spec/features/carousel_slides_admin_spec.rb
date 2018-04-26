@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Carousel slides admin' do
-  let(:website) { FactoryGirl.create(:website) }
+  let(:website) { FactoryBot.create(:website) }
 
   background do
     Website.delete_all
@@ -9,8 +9,8 @@ feature 'Carousel slides admin' do
     sign_in_as_admin
   end
 
-  let(:image) { FactoryGirl.create(:image) }
-  let(:carousel_slide) { FactoryGirl.build(:carousel_slide, image: image) }
+  let(:image) { FactoryBot.create(:image) }
+  let(:carousel_slide) { FactoryBot.build(:carousel_slide, image: image) }
 
   scenario 'Create carousel slide', js: true do
     image

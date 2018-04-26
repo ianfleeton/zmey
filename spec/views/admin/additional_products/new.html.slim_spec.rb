@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'admin/additional_products/new.html.slim' do
-  let(:abacus) { FactoryGirl.create(:product) }
+  let(:abacus) { FactoryBot.create(:product) }
   let(:additional_product) { AdditionalProduct.new(product: abacus) }
 
   before do

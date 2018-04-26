@@ -5,39 +5,39 @@ describe Page do
   it { should validate_length_of(:description).is_at_most(200) }
 
   context 'uniqueness' do
-    before  { FactoryGirl.create(:page) }
+    before  { FactoryBot.create(:page) }
     it { should validate_uniqueness_of(:slug).case_insensitive }
     it { should validate_uniqueness_of(:title).case_insensitive }
   end
 
   it 'allows a dot in the slug' do
-    page = FactoryGirl.build(:page)
+    page = FactoryBot.build(:page)
     page.slug = 'legacy.html'
     expect(page).to be_valid
   end
 
   it 'allows underscores in the slug' do
-    page = FactoryGirl.build(:page)
+    page = FactoryBot.build(:page)
     page.slug = 'legacy_page'
     expect(page).to be_valid
   end
 
   it 'nilifies blanks for extra' do
-    page = FactoryGirl.build(:page, extra: '')
+    page = FactoryBot.build(:page, extra: '')
     page.save
     expect(page.extra).to be_nil
   end
 
   it 'prevents parent referencing self' do
-    page = FactoryGirl.create(:page)
+    page = FactoryBot.create(:page)
     page.parent = page
     page.save
     expect(page.errors[:parent_id]).to include 'cannot be self'
   end
 
   it 'prevents parent from referencing a child' do
-    page = FactoryGirl.create(:page)
-    child = FactoryGirl.create(:page)
+    page = FactoryBot.create(:page)
+    child = FactoryBot.create(:page)
     page.children << child
     page.parent = child
     page.save
@@ -46,8 +46,8 @@ describe Page do
 
   describe '#url' do
     it 'returns a full URL using the first website setting URL' do
-      website = FactoryGirl.create(:website)
-      page = FactoryGirl.build(:page, slug: 'slug')
+      website = FactoryBot.create(:website)
+      page = FactoryBot.build(:page, slug: 'slug')
       expect(page.url).to include('slug')
     end
   end

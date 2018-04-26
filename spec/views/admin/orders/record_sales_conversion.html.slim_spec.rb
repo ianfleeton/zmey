@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/orders/record_sales_conversion', type: :view do
-  let(:order) { FactoryGirl.create(:order) }
+  let(:order) { FactoryBot.create(:order) }
 
   before do
     allow(order).to receive(:should_record_sales_conversion?).and_return(should_record_sales_conversion?)

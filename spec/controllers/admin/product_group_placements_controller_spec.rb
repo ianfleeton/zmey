@@ -6,7 +6,7 @@ RSpec.describe Admin::ProductGroupPlacementsController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:product_group) { FactoryGirl.create(:product_group) }
+    let(:product_group) { FactoryBot.create(:product_group) }
 
     before do
       post :create, params: { product_group_placement: { product_group_id: product_group.id } }
@@ -18,7 +18,7 @@ RSpec.describe Admin::ProductGroupPlacementsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    let(:product_group_placement) { FactoryGirl.create(:product_group_placement) }
+    let(:product_group_placement) { FactoryBot.create(:product_group_placement) }
 
     before do
       delete :destroy, params: { id: product_group_placement.id }

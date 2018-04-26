@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Address book' do
-  let(:country) { FactoryGirl.create(:country) }
-  let(:website) { FactoryGirl.create(:website, country: country) }
+  let(:country) { FactoryBot.create(:country) }
+  let(:website) { FactoryBot.create(:website, country: country) }
 
   background do
     Website.delete_all
@@ -10,7 +10,7 @@ feature 'Address book' do
   end
 
   context 'signed in' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
 
     background do
       visit sign_in_path
@@ -39,8 +39,8 @@ feature 'Address book' do
       let(:work_address) { 'My Work Address' }
       let(:home_address) { 'My Home Address' }
 
-      let!(:work_address) { FactoryGirl.create(:address, user_id: user.id, label: 'Work') }
-      let!(:home_address) { FactoryGirl.create(:address, user_id: user.id, label: 'Home') }
+      let!(:work_address) { FactoryBot.create(:address, user_id: user.id, label: 'Work') }
+      let!(:home_address) { FactoryBot.create(:address, user_id: user.id, label: 'Home') }
 
       scenario "Address book shows customer's addresses" do
         visit addresses_path

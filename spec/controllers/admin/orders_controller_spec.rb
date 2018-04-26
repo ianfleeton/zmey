@@ -18,7 +18,7 @@ RSpec.describe Admin::OrdersController, type: :controller do
         delivery_phone_number: '01234 567890',
         email_address: 'shopper@example.org',
       }}
-      let(:order) { FactoryGirl.build(:order, params) }
+      let(:order) { FactoryBot.build(:order, params) }
 
       it 'creates an order' do
         post :create, params: { order: order.attributes }
@@ -43,7 +43,7 @@ RSpec.describe Admin::OrdersController, type: :controller do
     end
 
     describe 'PATCH update' do
-      let(:order) { FactoryGirl.create(:order) }
+      let(:order) { FactoryBot.create(:order) }
       let(:po_number) { 'PO123' }
       let(:shipped_at) { Time.zone.now }
       let(:shipping_tracking_number) { 'TRACK123' }
@@ -132,7 +132,7 @@ RSpec.describe Admin::OrdersController, type: :controller do
 
       context 'with existing order lines' do
         let(:sku) { 'SKU' }
-        let(:order_line) { FactoryGirl.create(:order_line, order: order, product_weight: 1, quantity: 1) }
+        let(:order_line) { FactoryBot.create(:order_line, order: order, product_weight: 1, quantity: 1) }
         let(:order_line_product_name)   { { order_line.id => 'New name' } }
         let(:order_line_product_price)  { { order_line.id => 3.21 } }
         let(:order_line_product_sku)    { { order_line.id => sku } }
@@ -202,7 +202,7 @@ RSpec.describe Admin::OrdersController, type: :controller do
     end
 
     describe 'POST mark_processed' do
-      let(:order) { FactoryGirl.create(:order, processed_at: nil) }
+      let(:order) { FactoryBot.create(:order, processed_at: nil) }
 
       before { post 'mark_processed', params: { id: order.id } }
 
@@ -220,7 +220,7 @@ RSpec.describe Admin::OrdersController, type: :controller do
     end
 
     describe 'POST mark_unprocessed' do
-      let(:order) { FactoryGirl.create(:order, processed_at: Time.zone.now) }
+      let(:order) { FactoryBot.create(:order, processed_at: Time.zone.now) }
 
       before { post 'mark_unprocessed', params: { id: order.id } }
 

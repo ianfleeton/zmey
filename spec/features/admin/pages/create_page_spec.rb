@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Create page' do
-  let!(:website) { FactoryGirl.create(:website) }
+  let!(:website) { FactoryBot.create(:website) }
 
   background do
     sign_in_as_admin

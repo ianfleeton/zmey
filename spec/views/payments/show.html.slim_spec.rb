@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'payments/show.html.slim' do
-  let(:payment) { FactoryGirl.create(:payment) }
+  let(:payment) { FactoryBot.create(:payment) }
 
   before do
     assign(:payment, payment)
@@ -25,7 +25,7 @@ describe 'payments/show.html.slim' do
   end
 
   context 'with associated order' do
-    let(:order) { FactoryGirl.create(:order) }
+    let(:order) { FactoryBot.create(:order) }
 
     before do
       payment.order = order
