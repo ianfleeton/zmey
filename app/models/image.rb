@@ -2,7 +2,6 @@ class Image < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  has_many :carousel_slides, dependent: :restrict_with_exception
   has_many :pages, dependent: :nullify
   has_many :products, dependent: :nullify
   has_many :product_images, dependent: :delete_all
@@ -292,8 +291,6 @@ class Image < ActiveRecord::Base
   end
 
   def self.fast_delete_all
-    raise ActiveRecord::DeleteRestrictionError.new('carousel_slides') if CarouselSlide.any?
-
     Page.where.not(image_id: nil).update_all(image_id: nil, updated_at: Time.zone.now)
     Page.where.not(thumbnail_image_id: nil).update_all(thumbnail_image_id: nil, updated_at: Time.zone.now)
     Product.where.not(image_id: nil).update_all(image_id: nil, updated_at: Time.zone.now)

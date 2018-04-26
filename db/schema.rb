@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323215921) do
+ActiveRecord::Schema.define(version: 20180426100756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,18 +70,6 @@ ActiveRecord::Schema.define(version: 20170323215921) do
     t.string "token", null: false
     t.text "delivery_instructions"
     t.index ["token"], name: "index_baskets_on_token", unique: true
-  end
-
-  create_table "carousel_slides", id: :serial, force: :cascade do |t|
-    t.integer "position", null: false
-    t.integer "image_id", null: false
-    t.string "caption", null: false
-    t.string "link", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "active_from", null: false
-    t.datetime "active_until", null: false
-    t.text "html"
   end
 
   create_table "choices", id: :serial, force: :cascade do |t|

@@ -48,11 +48,6 @@ A successful retrieval will return JSON similar to the example:
 
 ## Endpoints
 
-### Carousel slides
-
-* [`POST` api/admin/carousel_slides](endpoints/admin/carousel_slides/POST_create.md)
-* [`DELETE` api/admin/carousel_slides](endpoints/admin/carousel_slides/DELETE_delete_all.md)
-
 ### Countries
 
 * [`GET` api/admin/countries](endpoints/admin/countries/GET_index.md)

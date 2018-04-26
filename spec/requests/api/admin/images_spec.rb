@@ -67,34 +67,17 @@ describe 'Admin images API' do
   describe 'DELETE delete_all' do
     before do
       @image = FactoryBot.create(:image)
+      expect(Image).to receive(:delete_files)
     end
 
-    context 'with no DeleteRestrictionErrors' do
-      before do
-        expect(Image).to receive(:delete_files)
-      end
-
-      it 'deletes all images in the website' do
-        delete '/api/admin/images'
-        expect(Image.find_by(id: @image.id)).to be_nil
-      end
-
-      it 'returns 204 No Content' do
-        delete '/api/admin/images'
-        expect(response.status).to eq 204
-      end
+    it 'deletes all images in the website' do
+      delete '/api/admin/images'
+      expect(Image.find_by(id: @image.id)).to be_nil
     end
 
-    context 'with DeleteRestrictionError' do
-      before do
-        expect(Image).not_to receive(:delete_files)
-      end
-
-      it 'returns 400 Bad Request' do
-        FactoryBot.create(:carousel_slide, image_id: @image.id)
-        delete '/api/admin/images'
-        expect(response.status).to eq 400
-      end
+    it 'returns 204 No Content' do
+      delete '/api/admin/images'
+      expect(response.status).to eq 204
     end
   end
 end

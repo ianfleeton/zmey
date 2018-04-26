@@ -9,12 +9,6 @@ Rails.application.routes.draw do
         get 'retrieve/:name' => 'api_keys#retrieve', format: :json
       end
     end
-    resources :carousel_slides, except: [:show] do
-      member do
-        get 'move_up'
-        get 'move_down'
-      end
-    end
     resources :choices, except: [:show]
     resources :components, except: [:show]
     resources :countries, except: [:show]
@@ -105,9 +99,6 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :admin do
-      resources :carousel_slides, only: [:create, :show]
-      delete 'carousel_slides', to: 'carousel_slides#delete_all'
-
       resources :countries, only: [:index, :show]
 
       resources :features, only: [:create, :show]

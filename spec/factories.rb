@@ -42,14 +42,6 @@ FactoryBot.define do
     association :product
   end
 
-  factory :carousel_slide do
-    caption      'A slide'
-    link         '#'
-    association  :image
-    active_from  Date.today - 1.day
-    active_until Date.today + 1.day
-  end
-
   factory :choice do
     sequence(:name) { |n| "Choice #{n}" }
     association :feature

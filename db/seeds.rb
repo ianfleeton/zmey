@@ -7,7 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Order.fast_delete_all
-CarouselSlide.destroy_all
 Page.destroy_all
 Product.destroy_all
 User.destroy_all
