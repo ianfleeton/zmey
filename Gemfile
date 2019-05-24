@@ -1,15 +1,12 @@
 source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://github.com/#{repo_name}.git"
-end
-
+ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.0.rc1'
+gem 'rails', '~> 6.0.0.rc1'
 # Use postgresql as the database for Active Record
-gem 'pg'
+gem 'pg', '>= 0.18', '< 2.0'
 
 gem 'RedCloth'
 gem 'image_science'
@@ -45,17 +42,12 @@ gem 'curb'
 gem 'ace-rails-ap'
 
 # Use Puma as the app server
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
-gem 'sass-rails', github: "rails/sass-rails"
+gem 'sass-rails', '~> 5'
 
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
+# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
+gem 'webpacker', '~> 4.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -65,9 +57,25 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
+# gem 'redis', '~> 4.0'
+# Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+
+# Use Active Storage variant
+# gem 'image_processing', '~> 1.2'
+
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.4.2', require: false
+
+group :development, :test do
+  gem "rspec-rails", "~> 3.8"
+
+  # Fixtures
+  gem 'factory_bot_rails'
+
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+end
 
 group :development do
   gem 'brakeman', '~> 3.0.0'
@@ -75,26 +83,9 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'guard-rspec', require: false
 
-  gem 'thin', platforms: :ruby
-
   # Run specs in parallel
   gem 'parallel_tests', group: :development
-end
 
-group :development, :test do
-  gem 'rspec-rails', '~> 3.5.2'
-
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15', '< 4.0'
-  gem 'selenium-webdriver'
-
-  # Fixtures
-  gem 'factory_bot_rails'
-end
-
-group :development do
   # Use Capistrano for deployment
   gem 'capistrano', '~> 3.4.0'
   gem 'capistrano-rails', '~> 1.1'
@@ -102,7 +93,7 @@ group :development do
   gem 'capistrano-passenger'
   gem 'capistrano3-delayed-job', '~> 1.0'
 
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -114,7 +105,9 @@ group :test do
   gem 'launchy'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
-  gem 'database_cleaner'
+  # Adds support for Capybara system testing and selenium driver
+  gem 'capybara', '>= 2.15'
+  gem 'selenium-webdriver'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

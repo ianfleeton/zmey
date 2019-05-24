@@ -1,30 +1,30 @@
 FactoryBot.define do
   factory :admin, class: User do
     sequence(:email) { |n| "admin#{n}@example.org" }
-    name      'Admin'
-    admin     true
-    password  'secret'
+    name      { 'Admin' }
+    admin     { true }
+    password  { 'secret' }
   end
 
   factory :address do
-    address_line_1 '123 My Street'
-    email_address  'shopper@example.org'
-    full_name      'A Shopper'
-    postcode       'L0N D0N'
-    town_city      'London'
+    address_line_1 { '123 My Street' }
+    email_address  { 'shopper@example.org' }
+    full_name      { 'A Shopper' }
+    postcode       { 'L0N D0N' }
+    town_city      { 'London' }
     association    :country
   end
 
   factory :random_address, class: Address do
-    email_address   "#{SecureRandom.hex}@example.org"
-    full_name       SecureRandom.hex
-    company         SecureRandom.hex
-    address_line_1  SecureRandom.hex
-    address_line_2  SecureRandom.hex
-    address_line_3  SecureRandom.hex
-    town_city       SecureRandom.hex
-    county          SecureRandom.hex
-    postcode        SecureRandom.hex
+    email_address   { "#{SecureRandom.hex}@example.org" }
+    full_name       { SecureRandom.hex }
+    company         { SecureRandom.hex }
+    address_line_1  { SecureRandom.hex }
+    address_line_2  { SecureRandom.hex }
+    address_line_3  { SecureRandom.hex }
+    town_city       { SecureRandom.hex }
+    county          { SecureRandom.hex }
+    postcode        { SecureRandom.hex }
     association     :country
   end
 
@@ -37,7 +37,7 @@ FactoryBot.define do
   end
 
   factory :basket_item do
-    quantity 1
+    quantity { 1 }
     association :basket
     association :product
   end
@@ -48,7 +48,7 @@ FactoryBot.define do
   end
 
   factory :component do
-    name 'Component'
+    name { 'Component' }
     association :product
   end
 
@@ -58,26 +58,26 @@ FactoryBot.define do
   end
 
   factory :discount do
-    name 'Discount'
-    reward_type 'percentage_off_order'
+    name { 'Discount' }
+    reward_type { 'percentage_off_order' }
   end
 
   factory :enquiry do
-    name 'Ernie'
-    telephone '01234 567890'
-    email 'ernie@example.org'
-    enquiry 'Do you sell widgets?'
+    name { 'Ernie' }
+    telephone { '01234 567890' }
+    email { 'ernie@example.org' }
+    enquiry { 'Do you sell widgets?' }
   end
 
   factory :extra_attribute do
-    class_name "ClassName"
-    attribute_name "attribute_name"
+    class_name { "ClassName" }
+    attribute_name { "attribute_name" }
   end
 
   factory :feature do
-    name 'Colour'
+    name { 'Colour' }
     association :product
-    ui_type Feature::TEXT_FIELD
+    ui_type { Feature::TEXT_FIELD }
   end
 
   factory :image do
@@ -93,41 +93,41 @@ FactoryBot.define do
   end
 
   factory :order do
-    email_address           'buyer@example.org'
-    billing_address_line_1  '123 Street'
-    billing_town_city       'Harrogate'
-    billing_postcode        'HG1 9ZZ'
-    delivery_address_line_1 '123 Street'
-    delivery_town_city      'Harrogate'
-    delivery_postcode       'HG1 9ZZ'
+    email_address           { 'buyer@example.org' }
+    billing_address_line_1  { '123 Street' }
+    billing_town_city       { 'Harrogate' }
+    billing_postcode        { 'HG1 9ZZ' }
+    delivery_address_line_1 { '123 Street' }
+    delivery_town_city      { 'Harrogate' }
+    delivery_postcode       { 'HG1 9ZZ' }
     association :billing_country,  factory: :country
     association :delivery_country, factory: :country
-    status                  Enums::PaymentStatus::WAITING_FOR_PAYMENT
+    status                  { Enums::PaymentStatus::WAITING_FOR_PAYMENT }
   end
 
   factory :order_comment do
     association :order
-    comment "MyText"
+    comment { "MyText" }
   end
 
   factory :order_line do
-    quantity    1
+    quantity    { 1 }
     association :order
   end
 
   factory :page do
-    name 'Page Name'
+    name { 'Page Name' }
     sequence(:title) { |n| "Page Title #{n}" }
     sequence(:slug)  { |n| "page-#{n}" }
-    description 'Meta description...'
+    description { 'Meta description...' }
   end
 
   factory :payment do
-    amount 0
+    amount { 0 }
   end
 
   factory :product do
-    name 'Product'
+    name { 'Product' }
     sequence(:sku) { |n| "SKU#{n}" }
   end
 
@@ -146,7 +146,7 @@ FactoryBot.define do
   end
 
   factory :quantity_price do
-    quantity 2
+    quantity { 2 }
     association :product
   end
 
@@ -170,19 +170,19 @@ FactoryBot.define do
 
   factory :user do
     sequence(:email) { |n| "shopper#{n}@example.org" }
-    name 'User'
-    password 'secret'
+    name { 'User' }
+    password { 'secret' }
   end
 
   factory :webhook do
     association :website
-    event 'image_created'
-    url 'http://example.org'
+    event { 'image_created' }
+    url { 'http://example.org' }
   end
 
   factory :website do
-    email 'merchant@example.org'
-    name  'Website'
+    email { 'merchant@example.org' }
+    name  { 'Website' }
     sequence(:subdomain) { |n| "host#{n}" }
     association :country
   end

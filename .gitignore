@@ -13,10 +13,6 @@
 # Ignore Simplecov output.
 /coverage
 
-*.doc
-*.odt
-*.psd
-
 # Ignore generated docs.
 /doc/app
 
@@ -33,6 +29,12 @@ secrets.yml
 !/log/.keep
 !/tmp/.keep
 
+# Ignore uploaded files in development.
+/storage/*
+!/storage/.keep
+
+/public/assets
+
 /node_modules
 /yarn-error.log
 
@@ -40,3 +42,13 @@ secrets.yml
 
 # Ignore uploaded images.
 /public/up/images
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
