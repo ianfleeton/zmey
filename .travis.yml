@@ -1,22 +1,21 @@
 language: ruby
 rvm:
-  - '2.4.0'
+  - '2.6.3'
 env:
   - DB=postgresql
 install:
   - sudo apt-get update
   - sudo apt-get install libfreeimage3 libfreeimage-dev
   # wkhtmltopdf
-  - sudo apt-get install libqt4-gui libqt4-network libqt4-webkit libxrender-dev xorg
+  - sudo apt-get install libqtgui4 libqt4-network libqtwebkit4 libxrender-dev xorg
   - sudo apt-get install xfonts-75dpi
-  - wget 'http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb'
-  - sudo dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
+  - wget 'https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.xenial_amd64.deb'
+  - sudo dpkg -i wkhtmltox_0.12.5-1.xenial_amd64.deb
   - bundle install --jobs=1 --retry=3 --deployment --without production
 script:
   - bin/rails db:create RAILS_ENV=test
   - bin/rails db:schema:load RAILS_ENV=test
-  # bundle exec rake pending Firefox 47.0.1 and geckodriver
-  - bundle exec rspec -t ~js
+  - bundle exec rake
 before_script:
   - mysql -e 'create database zmey_test;'
   - cp config/database.travis.yml config/database.yml
