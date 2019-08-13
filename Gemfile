@@ -25,7 +25,7 @@ gem 'delayed_job_active_record'
 gem 'whenever', require: false
 
 # Bootstrap for admin area
-gem 'bootstrap-sass', '~> 3.3.3'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'bootstrap_form'
 
 # Pagination
