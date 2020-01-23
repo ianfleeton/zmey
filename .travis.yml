@@ -1,8 +1,8 @@
 language: ruby
 rvm:
   - '2.6.3'
-env:
-  - DB=postgresql
+service:
+  - postgresql
 install:
   - sudo apt-get update
   - sudo apt-get install libfreeimage3 libfreeimage-dev
@@ -17,7 +17,7 @@ script:
   - bin/rails db:schema:load RAILS_ENV=test
   - bundle exec rake
 before_script:
-  - mysql -e 'create database zmey_test;'
+  - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.travis.yml config/database.yml
   - cp config/secrets.sample.yml config/secrets.yml
   # Selenium WebDriver
