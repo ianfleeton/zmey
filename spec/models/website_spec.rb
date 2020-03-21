@@ -1,8 +1,8 @@
 require "rails_helper"
 
-include ActionDispatch::TestProcess
+RSpec.describe Website, type: :model do
+  include ActionDispatch::TestProcess
 
-describe Website do
   before(:each) do
     @website = Website.new(
       subdomain: "bonsai",
@@ -63,7 +63,7 @@ describe Website do
     end
   end
 
-  it { should belong_to(:default_shipping_class).class_name("ShippingClass") }
+  it { should belong_to(:default_shipping_class).class_name("ShippingClass").optional }
 
   it "should only accept payment on account when payment on account is accepted and no other payment methods are" do
     @website.accept_payment_on_account = true
