@@ -68,19 +68,23 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
-  gem "rspec-rails", "~> 3.8"
+  gem "rspec-rails", "~> 4.0.0.rc1"
 
   # Fixtures
   gem 'factory_bot_rails'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  # Standard - Ruby style guide, linter, and formatter
+  gem "standard"
 end
 
 group :development do
   gem "brakeman", "~> 4.8.0"
 
   gem 'spring-commands-rspec'
+  gem "pry", "~> 0.12.0"
   gem 'guard-rspec', require: false
 
   # Run specs in parallel

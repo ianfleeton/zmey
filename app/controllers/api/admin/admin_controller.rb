@@ -8,7 +8,7 @@ class Api::Admin::AdminController < ApplicationController
       # TODO: Look into HTTP Strict Transport Security configuration and
       # document.
       # TODO: Disable keys that are transmitted over an unencrypted connection.
-      render plain: 'SSL required', status: 403 and return unless request.ssl?
+      render(plain: "SSL required", status: 403) && return unless request.ssl?
     end
 
     key = authenticated_api_key
@@ -34,12 +34,12 @@ class Api::Admin::AdminController < ApplicationController
   #   api_boolean('X')     # => nil
   def api_boolean(value)
     {
-      '0'     => false,
-      'false' => false,
-      'no'    => false,
-      '1'     => true,
-      'true'  => true,
-      'yes'   => true
+      "0" => false,
+      "false" => false,
+      "no" => false,
+      "1" => true,
+      "true" => true,
+      "yes" => true
     }[value.try(:downcase)]
   end
 
@@ -50,7 +50,7 @@ class Api::Admin::AdminController < ApplicationController
 
   private
 
-    def remote_connection?
-      request.remote_ip != '127.0.0.1'
-    end
+  def remote_connection?
+    request.remote_ip != "127.0.0.1"
+  end
 end

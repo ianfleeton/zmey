@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Liquid Templates admin' do
+RSpec.describe "Liquid Templates admin" do
   let(:website) { FactoryBot.create(:website) }
 
   before do
@@ -10,27 +10,27 @@ RSpec.describe 'Liquid Templates admin' do
 
   let(:liquid_template) { FactoryBot.build(:liquid_template, title: SecureRandom.hex) }
 
-  scenario 'Create Liquid Template' do
+  scenario "Create Liquid Template" do
     visit admin_liquid_templates_path
-    click_link 'New'
-    fill_in 'Name',   with: liquid_template.name
-    fill_in 'Markup', with: liquid_template.markup
-    fill_in 'Title',  with: liquid_template.title
-    click_button 'Create Liquid template'
+    click_link "New"
+    fill_in "Name", with: liquid_template.name
+    fill_in "Markup", with: liquid_template.markup
+    fill_in "Title", with: liquid_template.title
+    click_button "Create Liquid template"
     expect(LiquidTemplate.find_by(name: liquid_template.name, title: liquid_template.title)).to be
   end
 
-  scenario 'Edit Liquid Template' do
+  scenario "Edit Liquid Template" do
     liquid_template.save!
     visit admin_liquid_templates_path
     click_link "Edit #{liquid_template}"
     new_name = SecureRandom.hex
-    fill_in 'Name', with: new_name
-    click_button 'Update Liquid template'
+    fill_in "Name", with: new_name
+    click_button "Update Liquid template"
     expect(LiquidTemplate.find_by(name: new_name)).to be
   end
 
-  scenario 'Delete Liquid Template' do
+  scenario "Delete Liquid Template" do
     liquid_template.save!
     visit admin_liquid_templates_path
     click_link "Delete #{liquid_template}"

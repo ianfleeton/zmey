@@ -1,14 +1,14 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe InvoiceNotifier do
   let(:notifier) { InvoiceNotifier.new }
 
-  describe '#pending_objects' do
+  describe "#pending_objects" do
     let(:pending) { FactoryBot.create(:order, shipped_at: Date.today, invoice_sent_at: nil) }
     let(:already_sent) { FactoryBot.create(:order, shipped_at: Date.today, invoice_sent_at: Date.today) }
     let(:unshipped) { FactoryBot.create(:order, shipped_at: nil) }
 
-    it 'returns only orders pending invoice notifications' do
+    it "returns only orders pending invoice notifications" do
       orders = notifier.pending_objects
       expect(orders).to include(pending)
       expect(orders).not_to include(already_sent)
@@ -16,18 +16,18 @@ RSpec.describe InvoiceNotifier do
     end
   end
 
-  describe '#send_email' do
+  describe "#send_email" do
     before { FactoryBot.create(:website) }
     let(:order) { FactoryBot.create(:order) }
 
-    it 'sends an invoice notification email' do
+    it "sends an invoice notification email" do
       expect { notifier.send_email(order) }
         .to change { ActionMailer::Base.deliveries.count }
         .by(1)
     end
   end
 
-  describe '#record_sent' do
+  describe "#record_sent" do
     let(:order) { FactoryBot.create(:order, invoice_sent_at: nil) }
 
     it "sets the order's invoice_sent_at attribute and saves it" do

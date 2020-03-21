@@ -20,7 +20,7 @@ class Importer
     attributes = row.to_hash.slice(*importable_attributes)
 
     if object = find_object(row)
-      if !object.update_attributes(attributes)
+      unless object.update_attributes(attributes)
         @errors << "[#{@current_row}] Failed to updated: #{row}"
       end
     else
@@ -45,13 +45,13 @@ class Importer
   end
 
   def import_id
-    @import_id ||= @klass.respond_to?(:import_id) ? @klass.import_id : 'id'
+    @import_id ||= @klass.respond_to?(:import_id) ? @klass.import_id : "id"
   end
 
   private
 
-    def reset
-      @current_row = 1
-      @errors = []
-    end
+  def reset
+    @current_row = 1
+    @errors = []
+  end
 end

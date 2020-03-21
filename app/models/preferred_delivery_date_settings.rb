@@ -2,8 +2,8 @@ class PreferredDeliveryDateSettings < ActiveRecord::Base
   belongs_to :website
 
   validates_inclusion_of :skip_bank_holidays, in: [true, false]
-  validates_inclusion_of :skip_saturdays,     in: [true, false]
-  validates_inclusion_of :skip_sundays,       in: [true, false]
+  validates_inclusion_of :skip_saturdays, in: [true, false]
+  validates_inclusion_of :skip_sundays, in: [true, false]
 
   validates_inclusion_of :rfc2822_week_commencing_day,
     in: Time::RFC2822_DAY_NAME, allow_nil: true
@@ -32,7 +32,7 @@ class PreferredDeliveryDateSettings < ActiveRecord::Base
 
   def options
     opts = ""
-    dates().each do |d|
+    dates.each do |d|
       opts += "<option>#{d.strftime(date_format)}</option>"
     end
     opts
@@ -62,7 +62,7 @@ class PreferredDeliveryDateSettings < ActiveRecord::Base
     date = week_commencing first_valid_date
     found_dates = [date]
     while found_dates.length < number_of_dates_to_show
-      date = date + 7.days
+      date += 7.days
       found_dates << date
     end
     found_dates
@@ -71,7 +71,7 @@ class PreferredDeliveryDateSettings < ActiveRecord::Base
   def first_valid_date
     considered_date = Date.today
     initial_days_skipped = 0
-    while true
+    loop do
       if possible_date?(considered_date)
         return considered_date if initial_days_skipped == number_of_initial_days_to_skip
         initial_days_skipped += 1
@@ -81,16 +81,16 @@ class PreferredDeliveryDateSettings < ActiveRecord::Base
   end
 
   def week_commencing date
-    while(date.strftime('%a')!=rfc2822_week_commencing_day)
+    while date.strftime("%a") != rfc2822_week_commencing_day
       date = date.yesterday
     end
     date
   end
 
   def possible_date?(date)
-    return false if skip_saturdays and date.wday == 6
-    return false if skip_sundays and date.wday == 0
-    return false if skip_bank_holidays and bank_holiday? date
+    return false if skip_saturdays && (date.wday == 6)
+    return false if skip_sundays && (date.wday == 0)
+    return false if skip_bank_holidays && bank_holiday?(date)
     true
   end
 

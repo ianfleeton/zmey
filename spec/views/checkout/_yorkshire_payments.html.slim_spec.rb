@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'checkout/_yorkshire_payments.html.slim', type: :view do
+RSpec.describe "checkout/_yorkshire_payments.html.slim", type: :view do
   let(:website) { FactoryBot.build(:website) }
   let(:order) { FactoryBot.build(:order) }
 
@@ -10,7 +10,7 @@ RSpec.describe 'checkout/_yorkshire_payments.html.slim', type: :view do
     render
   end
 
-  context 'rendered' do
+  context "rendered" do
     subject { rendered }
     it { should have_selector "form[action='https://gateway.yorkshirepayments.com/paymentform/'][method='post']" }
   end

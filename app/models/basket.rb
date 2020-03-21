@@ -6,7 +6,7 @@ class Basket < ActiveRecord::Base
   before_create :generate_token
 
   def self.old
-    where('updated_at < ?', 90.days.ago)
+    where("updated_at < ?", 90.days.ago)
   end
 
   # Adds +product+ to the basket.
@@ -26,7 +26,8 @@ class Basket < ActiveRecord::Base
         basket_id: id,
         product_id: product.id,
         quantity: quantity,
-        feature_selections: feature_selections)
+        feature_selections: feature_selections
+      )
     end
     yield item if block_given?
     item.save
@@ -76,7 +77,7 @@ class Basket < ActiveRecord::Base
 
   # Returns true if any of the basket items are oversize.
   def oversize?
-    basket_items.any? {|i| i.oversize?}
+    basket_items.any? { |i| i.oversize? }
   end
 
   def weight
@@ -85,7 +86,7 @@ class Basket < ActiveRecord::Base
 
   def total(inc_tax)
     total = 0.0
-    basket_items.each {|i| total += i.line_total(inc_tax)}
+    basket_items.each { |i| total += i.line_total(inc_tax) }
     total
   end
 
@@ -114,25 +115,25 @@ class Basket < ActiveRecord::Base
   # Returns the total quantity of items in the basket. Items that can have
   # fractional quantities are counted as 1 per line.
   def total_quantity
-    basket_items.inject(0) {|q, i| q + i.counting_quantity}
+    basket_items.inject(0) { |q, i| q + i.counting_quantity }
   end
 
   def vat_total
-    basket_items.inject(0) {|t, i| t + i.tax_amount}
+    basket_items.inject(0) { |t, i| t + i.tax_amount }
   end
 
   def apply_shipping?
-    basket_items.any? {|i| i.apply_shipping?}
+    basket_items.any? { |i| i.apply_shipping? }
   end
 
   def shipping_supplement
     supplement = 0.0
-    basket_items.each {|i| supplement += i.product.shipping_supplement * i.quantity}
+    basket_items.each { |i| supplement += i.product.shipping_supplement * i.quantity }
     supplement
   end
 
   def self.purge_old(age = 1.month)
-    self.destroy_all(["created_at < ?", Time.now - age])
+    destroy_all(["created_at < ?", Time.now - age])
   end
 
   def generate_token
@@ -144,13 +145,13 @@ class Basket < ActiveRecord::Base
     b = dup
     b.generate_token
     b.save
-    basket_items.each {|i| b.basket_items << i.deep_clone}
+    basket_items.each { |i| b.basket_items << i.deep_clone }
     b
   end
 
   private
 
-    def to_product_id(product)
-      product.instance_of?(Product) ? product.id : product
-    end
+  def to_product_id(product)
+    product.instance_of?(Product) ? product.id : product
+  end
 end

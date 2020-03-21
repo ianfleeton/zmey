@@ -1,7 +1,7 @@
-require 'csv'
+require "csv"
 
 class Admin::ExportController < Admin::AdminController
-  CLASSES = %w{Product}
+  CLASSES = %w[Product]
 
   def index
     @classes = CLASSES

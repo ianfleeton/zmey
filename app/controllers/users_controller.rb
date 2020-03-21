@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   ]
 
   def show
-    @title = 'Your Account'
+    @title = "Your Account"
   end
 
   def new
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
         flash[:notice] = "New user account has been created."
         redirect_to admin_users_path
       else
-        @current_user  = @user
+        @current_user = @user
         session[:user] = @user.id
         flash[:notice] = "Your account has been created."
         redirect_to @user
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     @user = User.find_by(email: params[:email])
     if @user.nil?
       flash[:notice] = "There is no user registered with that email address"
-      redirect_to action: 'forgot_password'
+      redirect_to action: "forgot_password"
     else
       @user.forgot_password_token = User.generate_forgot_password_token
       @user.save
@@ -77,10 +77,10 @@ class UsersController < ApplicationController
   def forgot_password_change
     if forgot_password_params_ok?
       @user.password = params[:password]
-      @user.forgot_password_token = ''
+      @user.forgot_password_token = ""
       @user.save
-      flash[:notice] = 'Your password has been changed'
-      redirect_to controller: 'sessions', action: 'new'
+      flash[:notice] = "Your password has been changed"
+      redirect_to controller: "sessions", action: "new"
     end
   end
 
@@ -89,12 +89,12 @@ class UsersController < ApplicationController
   def forgot_password_params_ok?
     if @user.forgot_password_token.blank?
       flash[:notice] = "Please enter your email address below"
-      redirect_to action: 'forgot_password'
+      redirect_to action: "forgot_password"
       return false
-    elsif params[:t].nil? or @user.forgot_password_token != params[:t]
+    elsif params[:t].nil? || (@user.forgot_password_token != params[:t])
       flash[:notice] = "The link you entered was invalid. This can happen if you have re-requested " +
         "a forgot password email or you have already reset and changed your password."
-      redirect_to action: 'forgot_password'
+      redirect_to action: "forgot_password"
       return false
     end
     true
@@ -105,15 +105,15 @@ class UsersController < ApplicationController
   end
 
   def admin_or_manager_or_same_user_required
-    if !admin_or_manager? and (!logged_in? or @current_user != @user)
-      redirect_to controller: 'sessions', action: 'new'
-      return
+    if !admin_or_manager? && (!logged_in? || (@current_user != @user))
+      redirect_to controller: "sessions", action: "new"
+      nil
     end
   end
 
   def can_users_create_accounts
-    unless @w.can_users_create_accounts? or admin_or_manager?
-      flash[:notice] = 'New user accounts cannot be created.'
+    unless @w.can_users_create_accounts? || admin_or_manager?
+      flash[:notice] = "New user accounts cannot be created."
       redirect_to root_path
     end
   end

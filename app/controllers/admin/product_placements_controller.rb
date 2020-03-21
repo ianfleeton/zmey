@@ -1,7 +1,7 @@
 class Admin::ProductPlacementsController < Admin::AdminController
   before_action :set_product_placement, except: [:create]
   # TODO: restrict by website
-  
+
   def create
     @product_placement = ProductPlacement.new(product_placement_params)
     if @product_placement.save
@@ -14,7 +14,7 @@ class Admin::ProductPlacementsController < Admin::AdminController
 
   def destroy
     @product_placement.destroy
-    redirect_to edit_admin_page_path(@product_placement.page), notice: 'Product removed from page.'
+    redirect_to edit_admin_page_path(@product_placement.page), notice: "Product removed from page."
   end
 
   def move_up
@@ -29,16 +29,16 @@ class Admin::ProductPlacementsController < Admin::AdminController
 
   private
 
-    def set_product_placement
-      @product_placement = ProductPlacement.find(params[:id])
-    end
+  def set_product_placement
+    @product_placement = ProductPlacement.find(params[:id])
+  end
 
-    def moved
-      flash[:notice] = "Moved."
-      redirect_to edit_admin_page_path(@product_placement.page)
-    end
+  def moved
+    flash[:notice] = "Moved."
+    redirect_to edit_admin_page_path(@product_placement.page)
+  end
 
-    def product_placement_params
-      params.require(:product_placement).permit(:page_id, :position, :product_id)
-    end
+  def product_placement_params
+    params.require(:product_placement).permit(:page_id, :position, :product_id)
+  end
 end

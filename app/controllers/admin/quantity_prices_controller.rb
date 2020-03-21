@@ -4,12 +4,12 @@ class Admin::QuantityPricesController < Admin::AdminController
   def new
     @quantity_price = QuantityPrice.new
     @quantity_price.product_id = params[:product_id]
-    redirect_to admin_products_path and return unless product_valid?
+    redirect_to(admin_products_path) && return unless product_valid?
   end
 
   def create
     @quantity_price = QuantityPrice.new(quantity_price_params)
-    redirect_to admin_products_path and return unless product_valid?
+    redirect_to(admin_products_path) && return unless product_valid?
 
     if @quantity_price.save
       flash[:notice] = "Successfully added new quantity/price rule."
@@ -39,21 +39,21 @@ class Admin::QuantityPricesController < Admin::AdminController
 
   private
 
-    def set_quantity_price
-      @quantity_price = QuantityPrice.find(params[:id])
-      redirect_to admin_products_path and return unless product_valid?
-    end
+  def set_quantity_price
+    @quantity_price = QuantityPrice.find(params[:id])
+    redirect_to(admin_products_path) && return unless product_valid?
+  end
 
-    def product_valid?
-      if Product.find_by(id: @quantity_price.product_id)
-        true
-      else
-        flash[:notice] = 'Invalid product.'
-        false
-      end
+  def product_valid?
+    if Product.find_by(id: @quantity_price.product_id)
+      true
+    else
+      flash[:notice] = "Invalid product."
+      false
     end
+  end
 
-    def quantity_price_params
-      params.require(:quantity_price).permit(:price, :product_id, :quantity)
-    end
+  def quantity_price_params
+    params.require(:quantity_price).permit(:price, :product_id, :quantity)
+  end
 end

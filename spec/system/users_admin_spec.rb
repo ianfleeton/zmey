@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Users admin' do
+RSpec.describe "Users admin" do
   let(:website) { FactoryBot.create(:website) }
-  let(:user)    { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:address) { FactoryBot.create(:address, user_id: user.id) }
 
   before do
@@ -11,7 +11,7 @@ RSpec.describe 'Users admin' do
     sign_in_as_admin
   end
 
-  scenario 'Delete user' do
+  scenario "Delete user" do
     user
 
     visit admin_users_path
@@ -21,15 +21,15 @@ RSpec.describe 'Users admin' do
     expect(current_path).to eq admin_users_path
   end
 
-  scenario 'View user addresses' do
+  scenario "View user addresses" do
     address
 
     visit admin_user_path(user)
-    click_link I18n.t('admin.users.show.addresses')
+    click_link I18n.t("admin.users.show.addresses")
     expect(page).to have_content(address.address_line_1)
   end
 
-  scenario 'Delete user address' do
+  scenario "Delete user address" do
     address
 
     visit admin_user_addresses_path(user)
@@ -38,14 +38,14 @@ RSpec.describe 'Users admin' do
     expect(current_path).to eq admin_user_addresses_path(user)
   end
 
-  scenario 'Edit user address' do
+  scenario "Edit user address" do
     address
 
     new_address_line_1 = SecureRandom.hex
 
     visit admin_user_addresses_path(user)
     click_link "Edit #{address}"
-    fill_in 'Address line 1', with: new_address_line_1
+    fill_in "Address line 1", with: new_address_line_1
     click_button "Update Address"
 
     address.reload

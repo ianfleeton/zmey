@@ -70,12 +70,12 @@
 #   The User account associated with the order. This is set when orders are
 #   placed by registered customers.
 class Order < ActiveRecord::Base
-  require 'order_number_generator'
+  require "order_number_generator"
   include Enums
   include Enums::Conversions
 
   validates_presence_of :email_address
-  validates_presence_of :billing_address_line_1,  :billing_town_city,  :billing_postcode,  :billing_country_id
+  validates_presence_of :billing_address_line_1, :billing_town_city, :billing_postcode, :billing_country_id
   validates_presence_of :delivery_address_line_1, :delivery_town_city, :delivery_postcode, :delivery_country_id, if: -> { requires_delivery_address? }
   validates_uniqueness_of :order_number
 
@@ -83,8 +83,8 @@ class Order < ActiveRecord::Base
   before_create :create_order_number
 
   # Associations
-  belongs_to :billing_country,  class_name: 'Country'
-  belongs_to :delivery_country, class_name: 'Country', optional: true
+  belongs_to :billing_country, class_name: "Country"
+  belongs_to :delivery_country, class_name: "Country", optional: true
   belongs_to :basket, optional: true
   belongs_to :user, optional: true
   has_many :order_comments, dependent: :delete_all, inverse_of: :order
@@ -118,7 +118,7 @@ class Order < ActiveRecord::Base
 
   # Empties the basket associated with this order if there is one.
   def empty_basket
-    basket.basket_items.destroy_all if basket
+    basket&.basket_items&.destroy_all
   end
 
   # Returns +true+ if payment has been received.
@@ -129,7 +129,7 @@ class Order < ActiveRecord::Base
   # An order is locked when payment is received. When an order is locked its
   # contents should not be updated. Shipments and comments can still be
   # added.
-  alias_method :locked?, :payment_received?
+  alias locked? payment_received?
 
   # Returns the sum of all accepted payment amounts.
   def amount_paid
@@ -176,15 +176,15 @@ class Order < ActiveRecord::Base
   # attributes.
   def delivery_address
     Address.new(
-      email_address:  email_address,
-      full_name:      delivery_full_name,
+      email_address: email_address,
+      full_name: delivery_full_name,
       address_line_1: delivery_address_line_1,
       address_line_2: delivery_address_line_2,
-      town_city:      delivery_town_city,
-      county:         delivery_county,
-      postcode:       delivery_postcode,
-      country_id:     delivery_country_id,
-      phone_number:   delivery_phone_number
+      town_city: delivery_town_city,
+      county: delivery_county,
+      postcode: delivery_postcode,
+      country_id: delivery_country_id,
+      phone_number: delivery_phone_number
     )
   end
 
@@ -192,7 +192,7 @@ class Order < ActiveRecord::Base
   # +total+. This is called +before_save+.
   def calculate_total
     t = total_gross
-    t = t + 0.0001 # in case of x.x499999
+    t += 0.0001 # in case of x.x499999
     t = (t * 100).round.to_f / 100
     self.total = t
   end
@@ -214,12 +214,12 @@ class Order < ActiveRecord::Base
 
   # Total amount of all order lines excluding any tax.
   def line_total_net
-    order_lines.inject(0) {|sum, l| sum + l.line_total_net}
+    order_lines.inject(0) { |sum, l| sum + l.line_total_net }
   end
 
   # Total amount of all order lines including any tax.
   def line_total_gross
-    order_lines.inject(0) {|sum, l| sum + l.line_total_net + l.tax_amount}
+    order_lines.inject(0) { |sum, l| sum + l.line_total_net + l.tax_amount }
   end
 
   # Tax amount for all order lines.
@@ -257,7 +257,7 @@ class Order < ActiveRecord::Base
 
     date = Date.strptime(date, settings.date_format)
 
-    raise(ArgumentError, 'date is not valid in accordance with settings') unless settings.valid_date?(date)
+    raise(ArgumentError, "date is not valid in accordance with settings") unless settings.valid_date?(date)
 
     self.preferred_delivery_date = date
     self.preferred_delivery_date_prompt = settings.prompt
@@ -284,7 +284,7 @@ class Order < ActiveRecord::Base
   # <tt>items</tt>.
   def add_basket_items(items)
     items.each do |i|
-      self.order_lines.build(
+      order_lines.build(
         product_id: i.product.id,
         product_sku: i.product.sku,
         product_name: i.product.name,
@@ -300,7 +300,7 @@ class Order < ActiveRecord::Base
 
   # Returns +true+ if all order contents have been shipped, otherwise +false+.
   def fully_shipped?
-    shipments.where(partial: false).where('shipped_at IS NOT NULL').any?
+    shipments.where(partial: false).where("shipped_at IS NOT NULL").any?
   end
 
   def to_webhook_payload(event)

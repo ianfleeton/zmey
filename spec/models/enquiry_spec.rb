@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe Enquiry do
+RSpec.describe Enquiry, type: :model do
 end

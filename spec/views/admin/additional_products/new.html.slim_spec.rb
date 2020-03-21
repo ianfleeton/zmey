@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'admin/additional_products/new.html.slim' do
+RSpec.describe "admin/additional_products/new.html.slim", type: :view do
   let(:abacus) { FactoryBot.create(:product) }
   let(:additional_product) { AdditionalProduct.new(product: abacus) }
 
@@ -8,7 +8,7 @@ describe 'admin/additional_products/new.html.slim' do
     assign(:additional_product, additional_product)
   end
 
-  it 'renders' do
+  it "renders" do
     render
   end
 end

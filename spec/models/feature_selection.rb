@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe FeatureSelection do
+RSpec.describe FeatureSelection, type: :model do
 end

@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Admin::ProductsController, type: :controller do
-  def mock_product(stubs={})
+  def mock_product(stubs = {})
     @mock_product ||= double(Product, stubs)
   end
 
@@ -18,17 +18,19 @@ RSpec.describe Admin::ProductsController, type: :controller do
   end
 
   describe "POST create" do
-    let(:product_params) {{
-      'name' => 'Product Name',
-      'pricing_method' => 'quantity_based',
-      'sku' => 'sku',
-    }}
-    let(:valid_params) { { 'product' => product_params } }
+    let(:product_params) {
+      {
+        "name" => "Product Name",
+        "pricing_method" => "quantity_based",
+        "sku" => "sku"
+      }
+    }
+    let(:valid_params) { {"product" => product_params} }
 
     context "when logged in as admin" do
       before { logged_in_as_admin }
 
-      it 'creates a new product with the given params' do
+      it "creates a new product with the given params" do
         post :create, params: valid_params
         expect(Product.exists?(product_params)).to be_truthy
       end
@@ -47,7 +49,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
   end
 
   describe "PUT update" do
-    let(:valid_params) { { 'id' => '37', 'product' => { 'name' => 'Product Name' } } }
+    let(:valid_params) { {"id" => "37", "product" => {"name" => "Product Name"}} }
 
     context "when logged in as admin" do
       before { logged_in_as_admin }
@@ -86,18 +88,18 @@ RSpec.describe Admin::ProductsController, type: :controller do
       it "destroys the requested product" do
         find_requested_product
         expect(mock_product).to receive(:destroy)
-        delete :destroy, params: { id: '37' }
+        delete :destroy, params: {id: "37"}
       end
 
       it "redirects to the products list" do
         allow(Product).to receive(:find_by).and_return(mock_product(destroy: true))
-        delete :destroy, params: { id: '1' }
+        delete :destroy, params: {id: "1"}
         expect(response).to redirect_to(admin_products_path)
       end
     end
   end
 
-  def find_requested_product(stubs={})
-    expect(Product).to receive(:find_by).with(id: '37').and_return(mock_product(stubs))
+  def find_requested_product(stubs = {})
+    expect(Product).to receive(:find_by).with(id: "37").and_return(mock_product(stubs))
   end
 end

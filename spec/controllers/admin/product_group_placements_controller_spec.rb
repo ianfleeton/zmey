@@ -1,15 +1,15 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Admin::ProductGroupPlacementsController, type: :controller do
   before do
     logged_in_as_admin
   end
 
-  describe 'POST create' do
+  describe "POST create" do
     let(:product_group) { FactoryBot.create(:product_group) }
 
     before do
-      post :create, params: { product_group_placement: { product_group_id: product_group.id } }
+      post :create, params: {product_group_placement: {product_group_id: product_group.id}}
     end
 
     it "redirects to the placement's product group edit page" do
@@ -17,11 +17,11 @@ RSpec.describe Admin::ProductGroupPlacementsController, type: :controller do
     end
   end
 
-  describe 'DELETE destroy' do
+  describe "DELETE destroy" do
     let(:product_group_placement) { FactoryBot.create(:product_group_placement) }
 
     before do
-      delete :destroy, params: { id: product_group_placement.id }
+      delete :destroy, params: {id: product_group_placement.id}
     end
 
     it "redirects to the placement's product group edit page" do

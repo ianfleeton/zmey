@@ -14,7 +14,7 @@ class Admin::ExtraAttributesController < Admin::AdminController
     if @extra_attribute.save
       redirect_to admin_extra_attributes_path
     else
-      render 'new'
+      render "new"
     end
   end
 
@@ -36,14 +36,14 @@ class Admin::ExtraAttributesController < Admin::AdminController
 
   private
 
-    def extra_attribute_params
-      params.require(:extra_attribute).permit(
+  def extra_attribute_params
+    params.require(:extra_attribute).permit(
       :attribute_name,
-      :class_name,
-      )
-    end
+      :class_name
+    )
+  end
 
-    def set_extra_attribute
-      @extra_attribute = ExtraAttribute.find(params[:id])
-    end
+  def set_extra_attribute
+    @extra_attribute = ExtraAttribute.find(params[:id])
+  end
 end

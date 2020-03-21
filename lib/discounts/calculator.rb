@@ -39,7 +39,7 @@ module Discounts
       discount_lines.each { |dl| superset |= dl.mutually_exclusive_with }
       superset.each do |x|
         mx = discount_lines.select { |dl| dl.mutually_exclusive_with.member?(x) }
-                           .sort   { |a,b| a.price_adjustment <=> b.price_adjustment }
+          .sort_by(&:price_adjustment)
         # Keep the best.
         mx.shift
         # Delete the rest.
@@ -49,8 +49,8 @@ module Discounts
 
     private
 
-      def calculator_class(discount)
-        Kernel.const_get('Discounts::Calculators::' + discount.reward_type.camelize)
-      end
+    def calculator_class(discount)
+      Kernel.const_get("Discounts::Calculators::" + discount.reward_type.camelize)
+    end
   end
 end

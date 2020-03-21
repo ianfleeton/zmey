@@ -2,7 +2,7 @@ class Admin::PagesController < Admin::AdminController
   before_action :set_page, only: [:edit, :update, :destroy, :move_up, :move_down]
 
   def index
-    @title = 'Pages'
+    @title = "Pages"
     @parent = params[:parent_id] ? Page.find_by(id: params[:parent_id]) : nil
     @pages = Page.select(:id, :name, :parent_id, :position, :slug, :title).where(parent_id: @parent.try(:id)).order(:position)
   end
@@ -24,7 +24,7 @@ class Admin::PagesController < Admin::AdminController
     params[:page].delete(:position)
     @page.update_extra(params)
     if @page.update_attributes(page_params)
-      flash[:notice] = 'Page saved.'
+      flash[:notice] = "Page saved."
       redirect_to edit_admin_page_path(@page)
     else
       render :edit
@@ -48,7 +48,7 @@ class Admin::PagesController < Admin::AdminController
 
   def destroy
     @page.destroy
-    redirect_to action: 'index', notice: 'Page deleted.'
+    redirect_to action: "index", notice: "Page deleted."
   end
 
   def search_products
@@ -58,19 +58,19 @@ class Admin::PagesController < Admin::AdminController
 
   protected
 
-    def set_page
-      @page = Page.find_by(id: params[:id])
-      not_found unless @page
-    end
+  def set_page
+    @page = Page.find_by(id: params[:id])
+    not_found unless @page
+  end
 
-    def moved
-      flash[:notice] = 'Moved'
-      redirect_to admin_pages_path(parent_id: @page.parent_id)
-    end
+  def moved
+    flash[:notice] = "Moved"
+    redirect_to admin_pages_path(parent_id: @page.parent_id)
+  end
 
-    def page_params
-      params.require(:page).permit(:content, :description, :image_id, :name,
+  def page_params
+    params.require(:page).permit(:content, :description, :image_id, :name,
       :no_follow, :no_index, :parent_id, :slug, :thumbnail_image_id, :title,
       :visible)
-    end
+  end
 end

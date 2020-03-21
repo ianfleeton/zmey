@@ -25,11 +25,11 @@ class Feature < ActiveRecord::Base
 
   def class_name
     {
-      TEXT_FIELD => 'feature_text_field',
-      TEXT_AREA => 'feature_text_area',
-      RADIO_BUTTONS => 'feature_radio_buttons',
-      DROP_DOWN => 'feature_drop_down',
-      CHECK_BOX => 'feature_check_box'
+      TEXT_FIELD => "feature_text_field",
+      TEXT_AREA => "feature_text_area",
+      RADIO_BUTTONS => "feature_radio_buttons",
+      DROP_DOWN => "feature_drop_down",
+      CHECK_BOX => "feature_check_box"
     }[ui_type]
   end
 end

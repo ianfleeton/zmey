@@ -6,7 +6,7 @@ class ImageUnzipper
     FileUtils.cp(zip_file, zip_path)
     # -j junk paths
     `unzip -j #{zip_path} -d #{zip_dir}`
-    Dir.entries(zip_dir).select{|f|File.file?("#{zip_dir}/#{f}") && image?(f)}.each do |f|
+    Dir.entries(zip_dir).select { |f| File.file?("#{zip_dir}/#{f}") && image?(f) }.each do |f|
       yield ImageFromZip.new("#{zip_dir}/#{f}")
     end
   ensure
@@ -23,7 +23,8 @@ class ImageUnzipper
       IO.read(@path)
     end
 
-    def rewind; end
+    def rewind
+    end
 
     def original_filename
       File.basename(@path)
@@ -32,7 +33,7 @@ class ImageUnzipper
 
   private
 
-    def image?(filename)
-      ['.jpg', '.png'].include?(filename[-4, 4].downcase) && filename[0]!='.'
-    end
+  def image?(filename)
+    [".jpg", ".png"].include?(filename[-4, 4].downcase) && filename[0] != "."
+  end
 end

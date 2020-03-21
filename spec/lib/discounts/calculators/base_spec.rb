@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Discounts
   module Calculators
@@ -8,8 +8,8 @@ module Discounts
       it { should respond_to :basket_items }
       it { should respond_to :discount_lines }
 
-      describe '#initialize' do
-        it 'makes the calculator context and discount params readable' do
+      describe "#initialize" do
+        it "makes the calculator context and discount params readable" do
           ctx = double(Calculator)
           disc = Discount.new
           b = Base.new(ctx, disc)

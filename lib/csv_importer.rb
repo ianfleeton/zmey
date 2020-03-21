@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 class CSVImporter < Importer
   def initialize(csv_file, class_name)
@@ -7,7 +7,7 @@ class CSVImporter < Importer
   end
 
   def import
-    lines = CSV.read(@csv_file, headers: true, encoding: 'UTF-8')
+    lines = CSV.read(@csv_file, headers: true, encoding: "UTF-8")
     super(lines)
   end
 end

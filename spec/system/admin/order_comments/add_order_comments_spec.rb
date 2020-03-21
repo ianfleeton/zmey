@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Add order comments' do
+RSpec.describe "Add order comments" do
   let(:order) { FactoryBot.create(:order) }
 
   before do
@@ -8,11 +8,11 @@ RSpec.describe 'Add order comments' do
     sign_in_as_admin
   end
 
-  scenario 'Add order comments when editing order' do
+  scenario "Add order comments when editing order" do
     visit edit_admin_order_path(order)
-    click_link 'Add Comment'
-    fill_in 'Comment', with: 'Refund requested'
-    click_button 'Save'
-    expect(OrderComment.find_by(comment: 'Refund requested')).to be
+    click_link "Add Comment"
+    fill_in "Comment", with: "Refund requested"
+    click_button "Save"
+    expect(OrderComment.find_by(comment: "Refund requested")).to be
   end
 end

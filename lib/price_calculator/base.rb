@@ -7,8 +7,8 @@ module PriceCalculator
     attr_reader :quantity
 
     delegate :tax_type, to: :product
-    delegate :ex_tax,   to: :taxer
-    delegate :inc_tax,  to: :taxer
+    delegate :ex_tax, to: :taxer
+    delegate :inc_tax, to: :taxer
     delegate :with_tax, to: :taxer
 
     def initialize(product:, quantity: 1, basket_item: nil)

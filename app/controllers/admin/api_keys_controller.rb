@@ -13,7 +13,7 @@ class Admin::ApiKeysController < Admin::AdminController
     @api_key = ApiKey.new(api_key_params)
     @api_key.user = current_user
     if @api_key.save
-      redirect_to admin_api_keys_path, notice: I18n.t('controllers.admin.api_keys.create.flash.created')
+      redirect_to admin_api_keys_path, notice: I18n.t("controllers.admin.api_keys.create.flash.created")
     else
       render :new
     end
@@ -35,7 +35,7 @@ class Admin::ApiKeysController < Admin::AdminController
 
   private
 
-    def api_key_params
-      params.require(:api_key).permit(:name)
-    end
+  def api_key_params
+    params.require(:api_key).permit(:name)
+  end
 end

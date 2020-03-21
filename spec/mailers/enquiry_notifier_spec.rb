@@ -1,10 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe EnquiryNotifier do
-  it 'sets delivery settings' do
-    host = 'example.org'
-    user = 'user'
-    pass = 'secret'
+  it "sets delivery settings" do
+    host = "example.org"
+    user = "user"
+    pass = "secret"
     port = 587
 
     website = Website.new(
@@ -23,12 +23,12 @@ describe EnquiryNotifier do
     })
   end
 
-  it 'sets Mandrill subaccount header' do
-    account = 'Monkey Business'
+  it "sets Mandrill subaccount header" do
+    account = "Monkey Business"
     website = Website.new(
       mandrill_subaccount: account
     )
     mail = EnquiryNotifier.enquiry(website, Enquiry.new)
-    expect(mail.header['X-MC-Subaccount'].to_s).to eq account
+    expect(mail.header["X-MC-Subaccount"].to_s).to eq account
   end
 end

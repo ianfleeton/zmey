@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'orders/receipt.html.erb', type: :view do
+RSpec.describe "orders/receipt.html.erb", type: :view do
   let(:order) { FactoryBot.create(:order) }
   let(:website) { FactoryBot.build(:website) }
 
@@ -12,22 +12,22 @@ RSpec.describe 'orders/receipt.html.erb', type: :view do
     assign(:w, website)
   end
 
-  context 'as regular shopper' do
+  context "as regular shopper" do
     before do
       allow(view).to receive(:admin?).and_return(false)
     end
 
-    it 'renders' do
+    it "renders" do
       render
     end
   end
 
-  context 'as admin' do
+  context "as admin" do
     before do
       allow(view).to receive(:admin?).and_return(true)
     end
 
-    it 'renders' do
+    it "renders" do
       render
     end
   end

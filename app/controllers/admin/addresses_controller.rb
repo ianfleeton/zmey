@@ -13,7 +13,7 @@ class Admin::AddressesController < Admin::AdminController
 
   def update
     if @address.update_attributes(address_params)
-      redirect_to admin_user_addresses_path(@address.user), notice: I18n.t('controllers.admin.addresses.update.flash.updated')
+      redirect_to admin_user_addresses_path(@address.user), notice: I18n.t("controllers.admin.addresses.update.flash.updated")
     else
       render :edit
     end
@@ -21,23 +21,22 @@ class Admin::AddressesController < Admin::AdminController
 
   def destroy
     @address.destroy
-    redirect_to admin_user_addresses_path(@address.user), notice: I18n.t('controllers.admin.addresses.destroy.flash.destroyed')
+    redirect_to admin_user_addresses_path(@address.user), notice: I18n.t("controllers.admin.addresses.destroy.flash.destroyed")
   end
 
   private
 
-    def set_address
-      @address = Address.find_by(id: params[:id]) || not_found
-    end
+  def set_address
+    @address = Address.find_by(id: params[:id]) || not_found
+  end
 
-    def set_user
-      @user = User.find_by(id: params[:user_id]) || not_found
-    end
+  def set_user
+    @user = User.find_by(id: params[:user_id]) || not_found
+  end
 
-    def address_params
-      params.require(:address).permit(:address_line_1, :address_line_2,
+  def address_params
+    params.require(:address).permit(:address_line_1, :address_line_2,
       :country_id, :county, :email_address, :full_name, :label,
       :phone_number, :postcode, :town_city)
-    end
+  end
 end
-

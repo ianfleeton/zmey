@@ -2,7 +2,7 @@ class Admin::CountriesController < Admin::AdminController
   before_action :find_country, only: [:edit, :update, :destroy]
 
   def index
-    @countries = Country.order('name')
+    @countries = Country.order("name")
   end
 
   def new
@@ -13,7 +13,7 @@ class Admin::CountriesController < Admin::AdminController
     @country = Country.new(country_params)
 
     if @country.save
-      redirect_to admin_countries_path, notice: 'Saved.'
+      redirect_to admin_countries_path, notice: "Saved."
     else
       render :new
     end
@@ -30,9 +30,9 @@ class Admin::CountriesController < Admin::AdminController
 
   def destroy
     if @country.addresses.length > 0
-      flash[:notice] = 'This country cannot be removed as there are addresses that refer to this country.'
+      flash[:notice] = "This country cannot be removed as there are addresses that refer to this country."
     elsif @country.delivery_orders.length > 0
-      flash[:notice] = 'This country cannot be removed as there are orders that refer to this country.'
+      flash[:notice] = "This country cannot be removed as there are orders that refer to this country."
     else
       @country.destroy
       flash[:notice] = "Country deleted."

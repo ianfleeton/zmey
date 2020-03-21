@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'checkout/confirm.html.slim', type: :view do
+RSpec.describe "checkout/confirm.html.slim", type: :view do
   let(:billing_address) { FactoryBot.create(:address) }
   let(:delivery_address) { FactoryBot.create(:address) }
   let(:preferred_delivery_date_settings) { nil }
@@ -15,44 +15,44 @@ RSpec.describe 'checkout/confirm.html.slim', type: :view do
     assign(:basket, Basket.new)
     assign(:discount_lines, [])
     allow(view).to receive(:website).and_return(website)
-    allow(view).to receive(:logged_in?).and_return(false)    
+    allow(view).to receive(:logged_in?).and_return(false)
     session[:name] = name
     session[:email] = email
     session[:phone] = phone
     render
   end
 
-  it 'shows customer details' do
-    expect(rendered).to have_content I18n.t('checkout.confirm.your_details')
+  it "shows customer details" do
+    expect(rendered).to have_content I18n.t("checkout.confirm.your_details")
     expect(rendered).to have_content name
     expect(rendered).to have_content email
     expect(rendered).to have_content phone
   end
 
-  it 'has a link to edit details' do
-    expect(rendered).to have_selector "a[href='#{checkout_details_path}']", text: I18n.t('checkout.confirm.edit_details')
+  it "has a link to edit details" do
+    expect(rendered).to have_selector "a[href='#{checkout_details_path}']", text: I18n.t("checkout.confirm.edit_details")
   end
 
-  it 'shows billing address' do
-    expect(rendered).to have_content I18n.t('checkout.confirm.billing_address')
+  it "shows billing address" do
+    expect(rendered).to have_content I18n.t("checkout.confirm.billing_address")
   end
 
-  it 'links to edit billing address' do
-    expect(rendered).to have_selector "a[href='#{billing_details_path}']", text: I18n.t('checkout.confirm.edit_address')
+  it "links to edit billing address" do
+    expect(rendered).to have_selector "a[href='#{billing_details_path}']", text: I18n.t("checkout.confirm.edit_address")
   end
 
-  it 'shows delivery address' do
-    expect(rendered).to have_content I18n.t('checkout.confirm.delivery_address')
+  it "shows delivery address" do
+    expect(rendered).to have_content I18n.t("checkout.confirm.delivery_address")
   end
 
-  it 'links to edit delivery address' do
-    expect(rendered).to have_selector "a[href='#{delivery_details_path}']", text: I18n.t('checkout.confirm.edit_address')
+  it "links to edit delivery address" do
+    expect(rendered).to have_selector "a[href='#{delivery_details_path}']", text: I18n.t("checkout.confirm.edit_address")
   end
 
-  context 'with preferred delivery date' do
+  context "with preferred delivery date" do
     let(:preferred_delivery_date_settings) { PreferredDeliveryDateSettings.new }
-    it 'links to change date' do
-      expect(rendered).to have_selector "a[href='#{preferred_delivery_date_path}']", text: I18n.t('checkout.confirm.change_date')
+    it "links to change date" do
+      expect(rendered).to have_selector "a[href='#{preferred_delivery_date_path}']", text: I18n.t("checkout.confirm.change_date")
     end
   end
 end

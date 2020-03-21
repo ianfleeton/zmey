@@ -3,33 +3,33 @@ class OrdersController < ApplicationController
   before_action :require_order, only: [:receipt]
   before_action :user_required, only: [:index, :show, :invoice]
 
-  layout 'basket_checkout', only: [:receipt, :select_payment_method]
+  layout "basket_checkout", only: [:receipt, :select_payment_method]
 
   def index
     @orders = current_user.orders
   end
 
   def receipt
-    redirect_to controller: 'basket', action: 'index' unless can_show_receipt?(@order)
+    redirect_to controller: "basket", action: "index" unless can_show_receipt?(@order)
   end
 
   def show
     if can_access_order?
       render :receipt
     else
-      redirect_to :root, notice: 'You do not have permission to view that order.'
+      redirect_to :root, notice: "You do not have permission to view that order."
     end
   end
 
   def invoice
-    redirect_to new_session_path and return unless can_access_order?
-    redirect_to orders_path and return unless @order.fully_shipped?
+    redirect_to(new_session_path) && return unless can_access_order?
+    redirect_to(orders_path) && return unless @order.fully_shipped?
     respond_to do |format|
       format.pdf do
         send_invoice_pdf(@order)
       end
       format.html do
-        render layout: 'invoice'
+        render layout: "invoice"
       end
     end
   end
@@ -44,7 +44,7 @@ class OrdersController < ApplicationController
   def require_order
     @order = Order.find_by(id: session[:order_id])
     if @order.nil?
-      redirect_to({controller: 'basket', action: 'index'},
+      redirect_to({controller: "basket", action: "index"},
         notice: "We couldn't find an order for you.")
     end
   end
@@ -53,12 +53,12 @@ class OrdersController < ApplicationController
   def find_order
     @order = Order.find_by(id: params[:id])
     if @order.nil?
-      redirect_to orders_path, notice: 'Cannot find order.'
+      redirect_to orders_path, notice: "Cannot find order."
     end
   end
 
   def can_show_receipt?(order)
-    order.payment_received? || order.status==Enums::PaymentStatus::PAYMENT_ON_ACCOUNT || order.status==Enums::PaymentStatus::QUOTE
+    order.payment_received? || order.status == Enums::PaymentStatus::PAYMENT_ON_ACCOUNT || order.status == Enums::PaymentStatus::QUOTE
   end
 
   def send_invoice_pdf(order)

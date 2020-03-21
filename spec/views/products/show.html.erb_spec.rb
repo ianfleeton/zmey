@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'products/show.html.erb' do
+describe "products/show.html.erb" do
   include ProductsHelper
   let(:website) { FactoryBot.build(:website) }
 

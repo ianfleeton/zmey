@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'admin/orders/record_sales_conversion', type: :view do
+RSpec.describe "admin/orders/record_sales_conversion", type: :view do
   let(:order) { FactoryBot.create(:order) }
 
   before do
@@ -8,17 +8,17 @@ RSpec.describe 'admin/orders/record_sales_conversion', type: :view do
     assign(:order, order)
   end
 
-  context 'when order should record sales conversion' do
+  context "when order should record sales conversion" do
     let(:should_record_sales_conversion?) { true }
-    it 'calls #record_sales_conversion' do
+    it "calls #record_sales_conversion" do
       expect(view).to receive(:record_sales_conversion)
       render
     end
   end
 
-  context 'when order should not record sales conversion' do
+  context "when order should not record sales conversion" do
     let(:should_record_sales_conversion?) { false }
-    it 'does not call #record_sales_conversion' do
+    it "does not call #record_sales_conversion" do
       expect(view).not_to receive(:record_sales_conversion)
       render
     end

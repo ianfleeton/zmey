@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Webhooks admin' do
+RSpec.describe "Webhooks admin" do
   let(:website) { FactoryBot.create(:website) }
 
   before do
@@ -9,22 +9,22 @@ RSpec.describe 'Webhooks admin' do
     sign_in_as_admin
   end
 
-  scenario 'Create a webhook' do
+  scenario "Create a webhook" do
     visit admin_webhooks_path
-    click_link 'New'
-    fill_in 'Event', with: 'image_created'
-    fill_in 'URL', with: 'http://url'
-    click_button 'Create Webhook'
-    expect(Webhook.find_by(website_id: website.id, event: 'image_created', url: 'http://url')).to be
+    click_link "New"
+    fill_in "Event", with: "image_created"
+    fill_in "URL", with: "http://url"
+    click_button "Create Webhook"
+    expect(Webhook.find_by(website_id: website.id, event: "image_created", url: "http://url")).to be
   end
 
-  scenario 'Edit a webhook' do
+  scenario "Edit a webhook" do
     url = "http://#{SecureRandom.hex}"
     webhook = FactoryBot.create(:webhook, website_id: website.id)
     visit admin_webhooks_path
     click_link "Edit #{webhook}"
-    fill_in 'URL', with: url
-    click_button 'Update Webhook'
+    fill_in "URL", with: url
+    click_button "Update Webhook"
     expect(Webhook.find_by(url: url)).to be
   end
 end

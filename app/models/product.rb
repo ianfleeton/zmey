@@ -3,25 +3,25 @@ class Product < ActiveRecord::Base
 
   validates_presence_of :name, :sku
   validates_uniqueness_of :sku
-  validates_presence_of :image, unless: Proc.new { |p| p.image_id.nil? }
-  validates :google_description, length: { maximum: 5000 }
-  validates :meta_description, length: { maximum: 255 }
-  validates :price, numericality: { greater_than_or_equal_to: 0 }
+  validates_presence_of :image, unless: proc { |p| p.image_id.nil? }
+  validates :google_description, length: {maximum: 5000}
+  validates :meta_description, length: {maximum: 255}
+  validates :price, numericality: {greater_than_or_equal_to: 0}
 
   PRICE_CALCULATORS = {
-    'basic' => PriceCalculator::Base,
-    'quantity_based' => PriceCalculator::QuantityBased,
+    "basic" => PriceCalculator::Base,
+    "quantity_based" => PriceCalculator::QuantityBased
   }
   validates_inclusion_of :pricing_method, in: PRICE_CALCULATORS.keys
 
   # Google feed attributes
-  AGE_GROUPS = %w(adult kids)
+  AGE_GROUPS = %w[adult kids]
   validates_inclusion_of :age_group, in: AGE_GROUPS, allow_blank: true
-  AVAILABILITIES = ['in stock', 'available for order', 'out of stock', 'preorder']
+  AVAILABILITIES = ["in stock", "available for order", "out of stock", "preorder"]
   validates_inclusion_of :availability, in: AVAILABILITIES
-  CONDITIONS = %w(new used refurbished)
+  CONDITIONS = %w[new used refurbished]
   validates_inclusion_of :condition, in: CONDITIONS
-  GENDERS = %w(female male unisex)
+  GENDERS = %w[female male unisex]
   validates_inclusion_of :gender, in: GENDERS, allow_blank: true
 
   has_many :product_placements, dependent: :delete_all
@@ -29,7 +29,7 @@ class Product < ActiveRecord::Base
   has_many :pages, through: :product_placements
   has_many :components, dependent: :destroy
   has_many :features, dependent: :destroy
-  has_many :quantity_prices, -> { order 'quantity' }, dependent: :delete_all
+  has_many :quantity_prices, -> { order "quantity" }, dependent: :delete_all
 
   # Images
   belongs_to :image, optional: true
@@ -40,7 +40,7 @@ class Product < ActiveRecord::Base
   has_many :orders, through: :order_lines
   has_many :product_group_placements, dependent: :delete_all
   has_many :product_groups, through: :product_group_placements
-  has_many :related_product_scores, -> { order 'score DESC' }, dependent: :delete_all
+  has_many :related_product_scores, -> { order "score DESC" }, dependent: :delete_all
   has_many :related_products, through: :related_product_scores
   has_many :basket_items, dependent: :destroy
 
@@ -63,7 +63,7 @@ class Product < ActiveRecord::Base
   end
 
   def name_with_sku
-    name + ' [' + sku + ']'
+    name + " [" + sku + "]"
   end
 
   # Returns the name of the main image, or <tt>nil</tt> if unset.
@@ -78,7 +78,7 @@ class Product < ActiveRecord::Base
 
   # Returns the names of all images delimieted with the pipe character.
   def image_names
-    images.map {|i| i.name}.join('|')
+    images.map { |i| i.name }.join("|")
   end
 
   # Set images by using the image names.
@@ -88,7 +88,7 @@ class Product < ActiveRecord::Base
   #   product.image_names = 'front.jpg|back.jpg'
   def image_names=(names)
     self.images = []
-    names = names.split('|') if names.kind_of?(String)
+    names = names.split("|") if names.is_a?(String)
     names.each do |name|
       self.images <<= Image.find_by(name: name)
     end
@@ -101,7 +101,7 @@ class Product < ActiveRecord::Base
   # All other associated product groups are removed.
   def product_group=(group)
     product_group_placements.delete_all
-    if group.kind_of?(String)
+    if group.is_a?(String)
       group = ProductGroup.find_by(name: group)
     end
     if group
@@ -119,24 +119,24 @@ class Product < ActiveRecord::Base
   # by the merchant -- tax is not considered
   def price_at_quantity(q)
     p = price
-    if q > 1 and !quantity_prices.empty?
-      quantity_prices.each {|qp| p = qp.price if q >= qp.quantity}
+    if (q > 1) && !quantity_prices.empty?
+      quantity_prices.each { |qp| p = qp.price if q >= qp.quantity }
     end
     p
   end
 
   # the amount of tax for a single product when quantity q is purchased
-  def tax_amount(q=1)
+  def tax_amount(q = 1)
     price_inc_tax(q) - price_ex_tax(q)
   end
 
   # the price exclusive of tax for a single product when quantity q is purchased
-  def price_ex_tax(q=1)
+  def price_ex_tax(q = 1)
     Taxer.new(price_at_quantity(q), tax_type).ex_tax
   end
 
   # the price inclusive of tax for a single product when quantity q is purchased
-  def price_inc_tax(q=1)
+  def price_inc_tax(q = 1)
     Taxer.new(price_at_quantity(q), tax_type).inc_tax
   end
 
@@ -171,11 +171,11 @@ class Product < ActiveRecord::Base
   end
 
   def path
-    '/products/' + to_param
+    "/products/" + to_param
   end
 
   def slug
-    'products/' + to_param
+    "products/" + to_param
   end
 
   def url
@@ -200,9 +200,9 @@ class Product < ActiveRecord::Base
 
   # Returns products matched by search +query+.
   def self.admin_search(query)
-    words = query.split(' ')
+    words = query.split(" ")
     q = Product
-    words.each { |word| q = q.where(['name LIKE ? OR sku = ?', "%#{word}%", word]) }
+    words.each { |word| q = q.where(["name LIKE ? OR sku = ?", "%#{word}%", word]) }
     q.limit(100)
   end
 
@@ -237,9 +237,9 @@ class Product < ActiveRecord::Base
         .each { |product_id| purchase_counts[product_id] += 1 }
     end
 
-    scores = purchase_counts.map do |product_id, purchased|
+    scores = purchase_counts.map { |product_id, purchased|
       [product_id, relatedness(orders.count, purchased)]
-    end.to_h
+    }.to_h
 
     scores.each_pair do |related_id, score|
       RelatedProductScore.create(product_id: id, related_product_id: related_id, score: score)
@@ -247,7 +247,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.import_id
-    'sku'
+    "sku"
   end
 
   def self.exportable_attributes
@@ -255,37 +255,37 @@ class Product < ActiveRecord::Base
   end
 
   def self.importable_attributes
-    attribute_names + ['image_name', 'image_names'] + extra_attribute_names
+    attribute_names + ["image_name", "image_names"] + extra_attribute_names
   end
 
   private
 
-    # Returns a relatedness score between 0 and 1.
-    # <tt>orders_count</tt> is the number of orders in which the first product is
-    # present.
-    # <tt>purchased_with_count</tt> is the number of those orders in which the
-    # second product is also present.
-    def relatedness(orders_count, purchased_with_count)
-      raise 'purchased_with_count cannot be larger than orders_count' if purchased_with_count > orders_count
-      raise 'orders_count must be > 0' if orders_count < 1
-      raise 'purchased_with_count must be > 0' if purchased_with_count < 1
+  # Returns a relatedness score between 0 and 1.
+  # <tt>orders_count</tt> is the number of orders in which the first product is
+  # present.
+  # <tt>purchased_with_count</tt> is the number of those orders in which the
+  # second product is also present.
+  def relatedness(orders_count, purchased_with_count)
+    raise "purchased_with_count cannot be larger than orders_count" if purchased_with_count > orders_count
+    raise "orders_count must be > 0" if orders_count < 1
+    raise "purchased_with_count must be > 0" if purchased_with_count < 1
 
-      purchased_with_count / (orders_count ** 0.5 * purchased_with_count ** 0.5)
-    end
+    purchased_with_count / (orders_count**0.5 * purchased_with_count**0.5)
+  end
 
-    def set_nil_weight_to_zero
-      self.weight ||= 0
-    end
+  def set_nil_weight_to_zero
+    self.weight ||= 0
+  end
 
-    def include_main_image_in_images
-      if image
-        unless images.include?(image)
-          ProductImage.create(product_id: id, image_id: image.id)
-        end
+  def include_main_image_in_images
+    if image
+      unless images.include?(image)
+        ProductImage.create(product_id: id, image_id: image.id)
       end
     end
+  end
 
-    def price_calculator_class
-      PRICE_CALCULATORS[pricing_method]
-    end
+  def price_calculator_class
+    PRICE_CALCULATORS[pricing_method]
+  end
 end

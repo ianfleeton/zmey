@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'products/_product_features.html.erb', type: :view do
-  context 'feature with radio buttons' do
+RSpec.describe "products/_product_features.html.erb", type: :view do
+  context "feature with radio buttons" do
     let(:product) { FactoryBot.create(:product) }
 
     before do
@@ -11,8 +11,8 @@ RSpec.describe 'products/_product_features.html.erb', type: :view do
       render
     end
 
-    it 'renders radio buttons' do
-      expect(rendered).to have_selector 'input[type=radio]'
+    it "renders radio buttons" do
+      expect(rendered).to have_selector "input[type=radio]"
     end
   end
 end

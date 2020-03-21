@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Edit extra attribute' do
+RSpec.describe "Edit extra attribute" do
   let!(:website) { FactoryBot.create(:website) }
   let!(:extra_attribute) { FactoryBot.create(:extra_attribute) }
 
@@ -8,13 +8,13 @@ RSpec.describe 'Edit extra attribute' do
     sign_in_as_admin
   end
 
-  scenario 'Navigate to edit extra attribute' do
+  scenario "Navigate to edit extra attribute" do
     given_i_am_on_the_extra_attributes_page
     when_i_click_on_edit
     then_i_should_be_on_the_new_attribute_page
   end
 
-  scenario 'Edit extra attribute' do
+  scenario "Edit extra attribute" do
     given_i_am_on_the_edit_extra_attribute_page
     when_i_edit_the_form
     and_i_save
@@ -36,12 +36,12 @@ RSpec.describe 'Edit extra attribute' do
   def when_i_edit_the_form
     @new_attribute_name = SecureRandom.hex
     @new_class_name = SecureRandom.hex
-    fill_in 'Attribute name', with: @new_attribute_name
-    fill_in 'Class name', with: @new_class_name
+    fill_in "Attribute name", with: @new_attribute_name
+    fill_in "Class name", with: @new_class_name
   end
 
   def and_i_save
-    click_button 'Save'
+    click_button "Save"
   end
 
   def then_i_should_be_on_the_new_attribute_page

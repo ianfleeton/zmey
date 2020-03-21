@@ -3,13 +3,13 @@ class BasketItem < ActiveRecord::Base
 
   belongs_to :basket, inverse_of: :basket_items, touch: true
   belongs_to :product
-  has_many :feature_selections, -> { order 'id' }, dependent: :delete_all, inverse_of: :basket_item
+  has_many :feature_selections, -> { order "id" }, dependent: :delete_all, inverse_of: :basket_item
   before_save :update_features
   before_save :adjust_quantity
   before_update :preserve_immutable_quantity
 
   delegate :apply_shipping?, to: :product, allow_nil: true
-  delegate :oversize?,       to: :product, allow_nil: true
+  delegate :oversize?, to: :product, allow_nil: true
 
   def line_total(inc_tax)
     quantity * (inc_tax ? product_price_inc_tax : product_price_ex_tax)
@@ -34,10 +34,10 @@ class BasketItem < ActiveRecord::Base
   # * Ten products bought with RRP unset, price of 2.0 and volume purchase
   #   price of 1.5 will have savings of 5.0.
   def savings(inc_tax)
-    if inc_tax
-      rrp = product.rrp_inc_tax || product.price_inc_tax(1)
+    rrp = if inc_tax
+      product.rrp_inc_tax || product.price_inc_tax(1)
     else
-      rrp = product.rrp_ex_tax || product.price_ex_tax(1)
+      product.rrp_ex_tax || product.price_ex_tax(1)
     end
     (rrp * quantity) - line_total(inc_tax)
   end
@@ -57,7 +57,7 @@ class BasketItem < ActiveRecord::Base
   end
 
   def self.describe_feature_selections fs
-    fs.map {|fs| fs.description}.join('|')
+    fs.map { |fs| fs.description }.join("|")
   end
 
   # generates a text description of the features the customer has selected and
@@ -107,7 +107,7 @@ class BasketItem < ActiveRecord::Base
   def deep_clone
     bi = dup
     bi.save
-    feature_selections.each {|fs| bi.feature_selections << fs.dup}
+    feature_selections.each { |fs| bi.feature_selections << fs.dup }
     bi
   end
 end

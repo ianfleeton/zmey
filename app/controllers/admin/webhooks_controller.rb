@@ -15,17 +15,18 @@ class Admin::WebhooksController < Admin::AdminController
     @webhook.website = website
 
     if @webhook.save
-      redirect_to admin_webhooks_path, notice: I18n.t('controllers.admin.webhooks.create.created')
+      redirect_to admin_webhooks_path, notice: I18n.t("controllers.admin.webhooks.create.created")
     else
       render :new
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @webhook.update_attributes(webhook_params)
-      redirect_to admin_webhooks_path, notice: 'Saved.'
+      redirect_to admin_webhooks_path, notice: "Saved."
     else
       render :edit
     end
@@ -33,11 +34,11 @@ class Admin::WebhooksController < Admin::AdminController
 
   private
 
-    def webhook_params
-      params.require(:webhook).permit(:event, :url)
-    end
+  def webhook_params
+    params.require(:webhook).permit(:event, :url)
+  end
 
-    def set_webhook
-      @webhook = Webhook.find_by(id: params[:id], website_id: website.id)
-    end
+  def set_webhook
+    @webhook = Webhook.find_by(id: params[:id], website_id: website.id)
+  end
 end

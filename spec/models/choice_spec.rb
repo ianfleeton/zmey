@@ -1,18 +1,18 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Choice, type: :model do
-  describe '#to_s' do
-    it 'returns its name' do
-      expect(Choice.new(name: 'Blue').to_s).to eq 'Blue'
+  describe "#to_s" do
+    it "returns its name" do
+      expect(Choice.new(name: "Blue").to_s).to eq "Blue"
     end
   end
 
-  describe '#create_permutations' do
+  describe "#create_permutations" do
     let(:component) { FactoryBot.create(:component) }
     let(:red) { FactoryBot.create(:choice) }
 
     context "the choice's feature is not part of a component" do
-      it 'creates no permuations' do
+      it "creates no permuations" do
         red.create_permutations
         expect(Permutation.count).to eq 0
       end
@@ -26,7 +26,7 @@ RSpec.describe Choice, type: :model do
         red.save
       end
 
-      it 'adds a permutation for itself' do
+      it "adds a permutation for itself" do
         red.create_permutations
         p = "_#{red.id}_"
         expect(Permutation.find_by(permutation: p)).to be
@@ -47,7 +47,7 @@ RSpec.describe Choice, type: :model do
         red.save
       end
 
-      it 'is appends its ID to the existing two permutations' do
+      it "is appends its ID to the existing two permutations" do
         expect(Permutation.count).to eq 2
         expect(Permutation.first.permutation).to eq "_#{@large.id}__#{red.id}_"
         expect(Permutation.last.permutation).to eq "_#{@small.id}__#{red.id}_"
@@ -71,7 +71,7 @@ RSpec.describe Choice, type: :model do
         red.save
       end
 
-      it 'is creates a matrix of sorted permutations' do
+      it "is creates a matrix of sorted permutations" do
         expect(Permutation.count).to eq 4
         expect(Permutation.first.permutation).to eq "_#{@large.id}__#{@blue.id}_"
         expect(Permutation.second.permutation).to eq "_#{@small.id}__#{@blue.id}_"

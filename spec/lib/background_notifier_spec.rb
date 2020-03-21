@@ -1,22 +1,22 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe BackgroundNotifier do
   let(:bn) { BackgroundNotifier.new }
 
-  describe '#send_emails' do
+  describe "#send_emails" do
     let(:order) { double(Order) }
 
-    context 'for each pending_object' do
+    context "for each pending_object" do
       before { allow(bn).to receive(:pending_objects).and_return([order]) }
 
-      it 'calls send_email for each pending_object' do
+      it "calls send_email for each pending_object" do
         allow(bn).to receive(:record_sent)
 
         expect(bn).to receive(:send_email).with(order)
         bn.send_emails
       end
 
-      it 'calls record_sent for each pending_object' do
+      it "calls record_sent for each pending_object" do
         allow(bn).to receive(:send_email)
 
         expect(bn).to receive(:record_sent).with(order)
@@ -25,7 +25,7 @@ RSpec.describe BackgroundNotifier do
     end
   end
 
-  describe '#pending_objects' do
+  describe "#pending_objects" do
     subject { BackgroundNotifier.new.pending_objects }
     it { should eq [] }
   end

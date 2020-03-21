@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'admin/additional_products/edit.html.slim' do
+describe "admin/additional_products/edit.html.slim" do
   let(:abacus) { FactoryBot.create(:product) }
   let(:beads) { FactoryBot.create(:product) }
   let(:additional_product) { AdditionalProduct.create!(product: abacus, additional_product: beads) }
@@ -9,7 +9,7 @@ describe 'admin/additional_products/edit.html.slim' do
     assign(:additional_product, additional_product)
   end
 
-  it 'renders' do
+  it "renders" do
     render
   end
 end

@@ -1,64 +1,65 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Discounts
   RSpec.describe Calculator do
-    describe '#initialize' do
-      it 'takes three parameters' do
-        Calculator.new([Discount.new], ['COUPON'], Basket.new)
+    describe "#initialize" do
+      it "takes three parameters" do
+        Calculator.new([Discount.new], ["COUPON"], Basket.new)
       end
 
-      it 'sets nil coupons to an empty array' do
+      it "sets nil coupons to an empty array" do
         c = Calculator.new([Discount.new], nil, Basket.new)
         expect(c.coupons).to eq []
       end
 
-      it 'sets @basket to basket' do
+      it "sets @basket to basket" do
         c = Calculator.new([], [], basket = Basket.new)
         expect(c.basket).to eq basket
       end
 
-      it 'sets @discounts to discounts' do
+      it "sets @discounts to discounts" do
         c = Calculator.new([discount = Discount.new], [], Basket.new)
         expect(c.discounts).to eq [discount]
       end
     end
 
-    describe '#authorized?' do
+    describe "#authorized?" do
       let(:c) { Calculator.new([Discount.new], coupons, Basket.new) }
-      let(:discount) { Discount.new(coupon: coupon)}
+      let(:discount) { Discount.new(coupon: coupon) }
       let(:coupons) { [] }
       subject { c.authorized?(discount) }
 
-      context 'when discount coupon blank' do
-        let(:coupon) { '' }
+      context "when discount coupon blank" do
+        let(:coupon) { "" }
         it { should eq true }
       end
 
-      context 'when discount coupon included in coupons' do
-        let(:coupon) { 'COUPON' }
-        let(:coupons) { ['COUPON'] }
+      context "when discount coupon included in coupons" do
+        let(:coupon) { "COUPON" }
+        let(:coupons) { ["COUPON"] }
         it { should eq true }
       end
 
-      context 'when discount coupon not included in coupons' do
-        let(:coupon) { 'COUPON' }
-        let(:coupons) { ['XYZZY'] }
+      context "when discount coupon not included in coupons" do
+        let(:coupon) { "COUPON" }
+        let(:coupons) { ["XYZZY"] }
         it { should eq false }
       end
     end
 
-    describe '#calculate' do
-      let(:auth_discount) { Discount.new(coupon: 'COUPON') }
-      let(:unused_discount) { Discount.new(coupon: 'UNUSED') }
+    describe "#calculate" do
+      let(:auth_discount) { Discount.new(coupon: "COUPON") }
+      let(:unused_discount) { Discount.new(coupon: "UNUSED") }
       let(:discounts) { [auth_discount, unused_discount] }
-      let(:c) { Calculator.new(discounts, ['COUPON'], Basket.new) }
+      let(:c) { Calculator.new(discounts, ["COUPON"], Basket.new) }
 
       class FakeCalculator
-        def calculate; end
+        def calculate
+        end
       end
       let(:fake_calculator) { FakeCalculator.new }
 
-      it 'calculates each authorized discount' do
+      it "calculates each authorized discount" do
         expect(c).to receive(:calculator_for).with(auth_discount).and_return(fake_calculator)
         expect(c).not_to receive(:calculator_for).with(unused_discount)
         expect(fake_calculator).to receive(:calculate)
@@ -66,33 +67,33 @@ module Discounts
         c.calculate
       end
 
-      it 'filters mutually exclusive discounts' do
+      it "filters mutually exclusive discounts" do
         allow(c).to receive(:calculator_for).and_return(fake_calculator)
         expect(c).to receive(:filter_mutually_exclusive_discounts)
         c.calculate
       end
     end
 
-    describe '#calculator_for' do
-      let(:c) { Calculator.new([Discount.new], ['COUPON'], Basket.new) }
+    describe "#calculator_for" do
+      let(:c) { Calculator.new([Discount.new], ["COUPON"], Basket.new) }
       subject { c.calculator_for(Discount.new(reward_type: reward_type)) }
-      context 'reward_type percentage_off_order' do
-        let(:reward_type) { 'percentage_off_order' }
+      context "reward_type percentage_off_order" do
+        let(:reward_type) { "percentage_off_order" }
         it { should be_instance_of Calculators::PercentageOffOrder }
       end
     end
 
-    describe '#discount_lines' do
-      let(:c) { Calculator.new([Discount.new], ['COUPON'], Basket.new) }
+    describe "#discount_lines" do
+      let(:c) { Calculator.new([Discount.new], ["COUPON"], Basket.new) }
       subject { c.discount_lines }
 
       it { should be_kind_of Array }
     end
 
-    describe '#filter_mutually_exclusive_discounts' do
-      let(:c) { Calculator.new([Discount.new], ['COUPON'], Basket.new) }
+    describe "#filter_mutually_exclusive_discounts" do
+      let(:c) { Calculator.new([Discount.new], ["COUPON"], Basket.new) }
 
-      it 'removes mutually exclusive discounts, keeping the most favorable to the customer' do
+      it "removes mutually exclusive discounts, keeping the most favorable to the customer" do
         d1 = DiscountLine.new(price_adjustment: -10)
         d2 = DiscountLine.new(price_adjustment: -20, mutually_exclusive_with: [:percentage_off_order, :amount_off_order].to_set)
         d3 = DiscountLine.new(price_adjustment: -30, mutually_exclusive_with: [:amount_off_order, :free_products].to_set)

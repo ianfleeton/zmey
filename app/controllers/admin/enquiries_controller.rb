@@ -13,7 +13,7 @@ class Admin::EnquiriesController < Admin::AdminController
 
   def update
     if @enquiry.update_attributes(enquiry_params)
-      redirect_to([:admin, @enquiry], notice: 'Enquiry was successfully updated.')
+      redirect_to([:admin, @enquiry], notice: "Enquiry was successfully updated.")
     else
       render :edit
     end
@@ -26,12 +26,12 @@ class Admin::EnquiriesController < Admin::AdminController
 
   private
 
-    def set_enquiry
-      @enquiry = Enquiry.find_by(id: params[:id], website_id: website.id)
-      not_found unless @enquiry
-    end
+  def set_enquiry
+    @enquiry = Enquiry.find_by(id: params[:id], website_id: website.id)
+    not_found unless @enquiry
+  end
 
-    def enquiry_params
-      params.require(:enquiry).permit(:address, :call_back, :country, :email, :enquiry, :fax, :hear_about, :name, :organisation, :postcode, :telephone)
-    end
+  def enquiry_params
+    params.require(:enquiry).permit(:address, :call_back, :country, :email, :enquiry, :fax, :hear_about, :name, :organisation, :postcode, :telephone)
+  end
 end

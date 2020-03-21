@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Delete extra attribute' do
+RSpec.describe "Delete extra attribute" do
   let!(:website) { FactoryBot.create(:website) }
   let!(:extra_attribute) { FactoryBot.create(:extra_attribute) }
 
@@ -8,7 +8,7 @@ RSpec.describe 'Delete extra attribute' do
     sign_in_as_admin
   end
 
-  scenario 'Delete extra attribute' do
+  scenario "Delete extra attribute" do
     given_i_am_on_the_extra_attributes_page
     when_i_click_on_delete
     then_the_attribute_is_deleted

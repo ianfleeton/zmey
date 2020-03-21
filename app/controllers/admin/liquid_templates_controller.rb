@@ -2,7 +2,7 @@ class Admin::LiquidTemplatesController < Admin::AdminController
   before_action :find_liquid_template, only: [:edit, :update, :destroy]
 
   def index
-    @liquid_templates = LiquidTemplate.order('name')
+    @liquid_templates = LiquidTemplate.order("name")
   end
 
   def new
@@ -45,7 +45,7 @@ class Admin::LiquidTemplatesController < Admin::AdminController
     not_found unless @liquid_template
   end
 
-    def liquid_template_params
-      params.require(:liquid_template).permit(:markup, :name, :title)
-    end
+  def liquid_template_params
+    params.require(:liquid_template).permit(:markup, :name, :title)
+  end
 end

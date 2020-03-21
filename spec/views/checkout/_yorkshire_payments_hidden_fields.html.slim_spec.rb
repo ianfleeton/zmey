@@ -1,11 +1,13 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'checkout/_yorkshire_payments_hidden_fields.html.slim', type: :view do
-  let(:website) { FactoryBot.build(
-    :website,
-    yorkshire_payments_merchant_id: '101380',
-    yorkshire_payments_pre_shared_key: 'secret',
-  ) }
+RSpec.describe "checkout/_yorkshire_payments_hidden_fields.html.slim", type: :view do
+  let(:website) {
+    FactoryBot.build(
+      :website,
+      yorkshire_payments_merchant_id: "101380",
+      yorkshire_payments_pre_shared_key: "secret"
+    )
+  }
   let(:order) { FactoryBot.create(:order) }
 
   before do
@@ -14,7 +16,7 @@ RSpec.describe 'checkout/_yorkshire_payments_hidden_fields.html.slim', type: :vi
     render
   end
 
-  it 'renders' do
+  it "renders" do
     render
   end
 end

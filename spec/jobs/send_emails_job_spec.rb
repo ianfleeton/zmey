@@ -1,13 +1,13 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SendEmailsJob, type: :job do
-  describe '#perform' do
-    it 'sends dispatch notification emails' do
+  describe "#perform" do
+    it "sends dispatch notification emails" do
       expect_email_sending(from: DispatchNotifier, ignore: [InvoiceNotifier])
       SendEmailsJob.new.perform
     end
 
-    it 'sends invoice notification emails' do
+    it "sends invoice notification emails" do
       expect_email_sending(from: InvoiceNotifier, ignore: [DispatchNotifier])
       SendEmailsJob.new.perform
     end

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe ProductGroupPlacement do
+RSpec.describe ProductGroupPlacement, type: :model do
 end

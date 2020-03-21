@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'order_notifier/dispatch.html.erb', type: :view do
+RSpec.describe "order_notifier/dispatch.html.erb", type: :view do
   let(:website) { FactoryBot.create(:website) }
   let(:order) { FactoryBot.create(:order) }
   let(:shipment) { FactoryBot.create(:shipment, order: order) }
@@ -11,7 +11,7 @@ RSpec.describe 'order_notifier/dispatch.html.erb', type: :view do
     assign(:shipment, shipment)
   end
 
-  it 'renders' do
+  it "renders" do
     render
   end
 end

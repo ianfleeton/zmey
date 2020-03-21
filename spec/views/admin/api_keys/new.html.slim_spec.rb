@@ -1,9 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'admin/api_keys/new.html.slim' do
+describe "admin/api_keys/new.html.slim" do
   before { assign(:api_key, ApiKey.new) }
 
-  it 'renders' do
+  it "renders" do
     render
   end
 end

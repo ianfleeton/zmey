@@ -1,19 +1,20 @@
-require 'rails_helper'
+require "rails_helper"
 
 include ActionDispatch::TestProcess
 
 describe Website do
   before(:each) do
     @website = Website.new(
-      subdomain: 'bonsai',
-      domain: 'www.artofbonsai.com',
-      name: 'Art of Bonsai',
-      email: 'artofbonsai@example.org',
-      google_analytics_code: 'UA-9999999-9',
-      country: FactoryBot.create(:country))
+      subdomain: "bonsai",
+      domain: "www.artofbonsai.com",
+      name: "Art of Bonsai",
+      email: "artofbonsai@example.org",
+      google_analytics_code: "UA-9999999-9",
+      country: FactoryBot.create(:country)
+    )
   end
 
-  describe 'validations that need an existing record' do
+  describe "validations that need an existing record" do
     before do
       Website.delete_all
       @website.save
@@ -26,7 +27,7 @@ describe Website do
   it { should validate_presence_of :email }
   it { should validate_presence_of :name }
   it { should validate_presence_of :subdomain }
-  it { should validate_inclusion_of(:custom_view_resolver).in_array(%w{CustomView::DatabaseResolver CustomView::ThemeResolver}) }
+  it { should validate_inclusion_of(:custom_view_resolver).in_array(%w[CustomView::DatabaseResolver CustomView::ThemeResolver]) }
 
   describe "validations" do
     it "should be valid with valid attributes" do
@@ -37,32 +38,32 @@ describe Website do
       @website.worldpay_active = true
       expect(@website).to_not be_valid
 
-      @website.worldpay_installation_id = '1234'
+      @website.worldpay_installation_id = "1234"
       expect(@website).to_not be_valid
 
-      @website.worldpay_installation_id = ''
-      @website.worldpay_payment_response_password = 'abcde'
+      @website.worldpay_installation_id = ""
+      @website.worldpay_payment_response_password = "abcde"
       expect(@website).to_not be_valid
 
-      @website.worldpay_installation_id = '1234'
-      @website.worldpay_payment_response_password = 'abcde'
+      @website.worldpay_installation_id = "1234"
+      @website.worldpay_payment_response_password = "abcde"
       expect(@website).to be_valid
     end
 
-    it 'validates format of subdomain' do
-      ['123host', '123-host', 'HOST123'].each do |valid|
+    it "validates format of subdomain" do
+      ["123host", "123-host", "HOST123"].each do |valid|
         @website.subdomain = valid
         expect(@website).to be_valid
       end
 
-      ['-123host', 'two.parts'].each do |invalid|
+      ["-123host", "two.parts"].each do |invalid|
         @website.subdomain = invalid
         expect(@website).not_to be_valid
       end
     end
   end
 
-  it { should belong_to(:default_shipping_class).class_name('ShippingClass') }
+  it { should belong_to(:default_shipping_class).class_name("ShippingClass") }
 
   it "should only accept payment on account when payment on account is accepted and no other payment methods are" do
     @website.accept_payment_on_account = true
@@ -77,17 +78,17 @@ describe Website do
     expect(@website.only_accept_payment_on_account?).to be_falsey
   end
 
-  it 'orders enquiries in reverse chronological order' do
+  it "orders enquiries in reverse chronological order" do
     @website.save
 
-    params = {name: 'Alice', telephone: '123', email: 'alice@example.org', enquiry: 'Hello'}
+    params = {name: "Alice", telephone: "123", email: "alice@example.org", enquiry: "Hello"}
 
     enquiries = []
     enquiries << Enquiry.new(params)
     enquiries << Enquiry.new(params)
     enquiries << Enquiry.new(params)
 
-    [ 1.hour.ago, 5.minutes.ago, 1.minute.ago ].each_with_index do |time, index|
+    [1.hour.ago, 5.minutes.ago, 1.minute.ago].each_with_index do |time, index|
       enquiry = enquiries[index]
       enquiry.created_at = time
       enquiry.website_id = @website.id
@@ -99,16 +100,16 @@ describe Website do
     expect(@website.enquiries.third).to eq enquiries.first
   end
 
-  describe '#image_uploader' do
-    let(:params)   { { image: fixture_file_upload('images/red.png'), name: 'Red' } }
-    let(:website)  { Website.new }
+  describe "#image_uploader" do
+    let(:params) { {image: fixture_file_upload("images/red.png"), name: "Red"} }
+    let(:website) { Website.new }
     let(:uploader) { website.image_uploader(params) }
 
-    it 'returns an ImageUploader' do
+    it "returns an ImageUploader" do
       expect(uploader).to be_instance_of ImageUploader
     end
 
-    it 'yields the image' do
+    it "yields the image" do
       image = nil
       website.image_uploader(params) do |yielded|
         image = yielded
@@ -117,25 +118,25 @@ describe Website do
     end
   end
 
-  describe '#build_custom_view_resolver' do
-    it 'returns nil when no custom view resolver set' do
+  describe "#build_custom_view_resolver" do
+    it "returns nil when no custom view resolver set" do
       expect(Website.new.build_custom_view_resolver).to be_nil
     end
 
-    it 'builds a new custom view resolver initialized with itself' do
-      website = Website.new(custom_view_resolver: 'CustomView::DatabaseResolver')
+    it "builds a new custom view resolver initialized with itself" do
+      website = Website.new(custom_view_resolver: "CustomView::DatabaseResolver")
       expect(CustomView::DatabaseResolver).to receive(:new).with(website).and_call_original
       expect(website.build_custom_view_resolver).to be_instance_of CustomView::DatabaseResolver
     end
   end
 
-  describe '#email_address' do
-    let(:email) { 'merchant@example.com' }
+  describe "#email_address" do
+    let(:email) { "merchant@example.com" }
     let(:website) { Website.new(email: email, name: name) }
     subject { website.email_address }
     context 'name is "Merchant"' do
-      let(:name) { 'Merchant' }
-      it { should eq 'Merchant <merchant@example.com>' }
+      let(:name) { "Merchant" }
+      it { should eq "Merchant <merchant@example.com>" }
     end
     context 'name is "9" Nail Shop"' do
       let(:name) { '9" Nail Shop' }
@@ -143,20 +144,20 @@ describe Website do
     end
   end
 
-  describe '#to_s' do
-    it 'returns subdomain' do
-      expect(Website.new(subdomain: 'xyzzy').to_s).to eq 'xyzzy'
+  describe "#to_s" do
+    it "returns subdomain" do
+      expect(Website.new(subdomain: "xyzzy").to_s).to eq "xyzzy"
     end
   end
 
-  describe '#smtp_settings' do
-    it 'returns a hash of settings usable with ActionMailer' do
-      website = Website.new(smtp_username: 'u', smtp_password: 'p', smtp_host: 'h', smtp_port: 465)
+  describe "#smtp_settings" do
+    it "returns a hash of settings usable with ActionMailer" do
+      website = Website.new(smtp_username: "u", smtp_password: "p", smtp_host: "h", smtp_port: 465)
       expect(website.smtp_settings).to eq({
-        address: 'h',
-        password: 'p',
+        address: "h",
+        password: "p",
         port: 465,
-        user_name: 'u'
+        user_name: "u"
       })
     end
   end

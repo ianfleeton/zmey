@@ -16,7 +16,7 @@ class Admin::DiscountsController < Admin::AdminController
     @discount = Discount.new(discount_params)
 
     if @discount.save
-      redirect_to admin_discounts_path, notice: 'Successfully added new discount.'
+      redirect_to admin_discounts_path, notice: "Successfully added new discount."
     else
       render :new
     end
@@ -33,7 +33,7 @@ class Admin::DiscountsController < Admin::AdminController
 
   def destroy
     @discount.destroy
-    redirect_to admin_discounts_path, notice: 'Discount deleted.'
+    redirect_to admin_discounts_path, notice: "Discount deleted."
   end
 
   protected

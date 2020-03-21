@@ -1,7 +1,7 @@
 class Webhook < ActiveRecord::Base
   belongs_to :website
 
-  EVENTS = %w(image_created image_updated order_created)
+  EVENTS = %w[image_created image_updated order_created]
 
   validates_inclusion_of :event, in: EVENTS
   validates_presence_of :url
@@ -22,8 +22,8 @@ class Webhook < ActiveRecord::Base
     inject_payload!(payload)
     uri = URI(url)
     begin
-      Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
-        response = http.post(uri.request_uri, payload.to_json, {'Content-Type' => 'application/json'})
+      Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
+        response = http.post(uri.request_uri, payload.to_json, {"Content-Type" => "application/json"})
         if response.code.to_i != 200
           logger.warn "Webhook responded #{response.code}"
         end

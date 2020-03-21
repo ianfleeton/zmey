@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module PDF
   RSpec.describe Invoice do
@@ -7,13 +7,13 @@ module PDF
     let(:order) { FactoryBot.create(:order) }
     let(:invoice) { Invoice.new(order) }
 
-    describe '#generate' do
-      it 'works' do
+    describe "#generate" do
+      it "works" do
         invoice.generate
       end
     end
 
-    describe '#html' do
+    describe "#html" do
       subject { invoice.html }
       it { should include(order.order_number) }
     end

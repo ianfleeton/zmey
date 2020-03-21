@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Delete offline payment method' do
+RSpec.describe "Delete offline payment method" do
   let!(:website) { FactoryBot.create(:website) }
   let!(:offline_payment_method) { FactoryBot.create(:offline_payment_method) }
 
@@ -8,7 +8,7 @@ RSpec.describe 'Delete offline payment method' do
     sign_in_as_admin
   end
 
-  scenario 'Delete offline payment method' do
+  scenario "Delete offline payment method" do
     given_i_am_on_the_offline_payment_methods_page
     when_i_click_on_delete
     then_the_payment_method_is_deleted

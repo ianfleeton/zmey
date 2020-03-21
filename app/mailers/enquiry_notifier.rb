@@ -15,6 +15,6 @@ class EnquiryNotifier < ActionMailer::Base
     @call_back = e.call_back
     @hear_about = e.hear_about
 
-    mail(to: [website.email_address], subject: website.name + ': enquiry sent', from: website.email_address)
+    mail(to: [website.email_address], subject: website.name + ": enquiry sent", from: website.email_address)
   end
 end

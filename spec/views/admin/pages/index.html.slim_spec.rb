@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'admin/pages/index.html.slim', type: :view do
+RSpec.describe "admin/pages/index.html.slim", type: :view do
   let(:parent) { FactoryBot.create(:page) }
 
   before do
@@ -8,7 +8,7 @@ RSpec.describe 'admin/pages/index.html.slim', type: :view do
     assign(:parent, parent)
   end
 
-  it 'has a link to edit the page' do
+  it "has a link to edit the page" do
     render
     expect(rendered).to have_selector "a[href='#{edit_admin_page_path(parent)}']"
   end

@@ -4,7 +4,7 @@ module ExtraAttributes
   module ClassMethods
     # Returns <tt>ExtraAttributes</tt> defined for this class.
     def extra_attributes
-      ExtraAttribute.where(class_name: self.to_s)
+      ExtraAttribute.where(class_name: to_s)
     end
 
     # Returns the names of all <tt>ExtraAttributes</tt> defined for this class.
@@ -29,7 +29,7 @@ module ExtraAttributes
 
   # Returns the <tt>extra</tt> attribute parsed as JSON.
   def extra_json
-    @extra_json ||= JSON.parse(extra || '{}')
+    @extra_json ||= JSON.parse(extra || "{}")
   end
 
   # Clear memoized values.
@@ -49,7 +49,7 @@ module ExtraAttributes
   # Returns <tt>true</tt> if <tt>extra</tt> was changed.
   def update_extra(hash)
     changed = false
-    hash.each_pair do |k,v|
+    hash.each_pair do |k, v|
       changed = true if set_extra_attribute(k, v)
     end
 
@@ -79,19 +79,19 @@ module ExtraAttributes
     end
   end
 
-  def respond_to?(method_sym, include_all=false)
+  def respond_to?(method_sym, include_all = false)
     ExtraAttribute.method_info(method_sym, self.class)[:exists] || super
   end
 
   private
 
-    # Sets a single extra attribute if it exists.
-    #
-    # Returns a truthy value if the attribute exists.
-    def set_extra_attribute(attribute_name, value)
-      if ExtraAttribute.exists?(attribute_name: attribute_name, class_name: self.class.to_s)
-        extra_json[attribute_name] = value
-        self.extra = extra_json.to_json
-      end
+  # Sets a single extra attribute if it exists.
+  #
+  # Returns a truthy value if the attribute exists.
+  def set_extra_attribute(attribute_name, value)
+    if ExtraAttribute.exists?(attribute_name: attribute_name, class_name: self.class.to_s)
+      extra_json[attribute_name] = value
+      self.extra = extra_json.to_json
     end
+  end
 end

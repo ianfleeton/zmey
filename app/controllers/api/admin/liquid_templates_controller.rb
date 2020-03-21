@@ -6,7 +6,7 @@ class Api::Admin::LiquidTemplatesController < Api::Admin::AdminController
       @liquid_template = LiquidTemplate.new
     end
 
-    if !@liquid_template.save
+    unless @liquid_template.save
       render json: @liquid_template.errors.full_messages, status: :unprocessable_entity
     end
   end
@@ -18,7 +18,7 @@ class Api::Admin::LiquidTemplatesController < Api::Admin::AdminController
 
   private
 
-    def liquid_template_params
-      params.require(:liquid_template).permit(:markup, :name, :title)
-    end
+  def liquid_template_params
+    params.require(:liquid_template).permit(:markup, :name, :title)
+  end
 end

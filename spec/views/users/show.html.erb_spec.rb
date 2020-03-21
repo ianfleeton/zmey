@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'users/show.html.erb' do
+describe "users/show.html.erb" do
   before do
-    assign(:user, double(User, name: 'A. Customer', email: 'customer@example.org', managed_website: nil))
+    assign(:user, double(User, name: "A. Customer", email: "customer@example.org", managed_website: nil))
   end
 
-  it 'renders' do
+  it "renders" do
     render
   end
 end

@@ -1,32 +1,32 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Admin::ProductImagesController do
-  describe 'POST create' do
+  describe "POST create" do
     let!(:product) { FactoryBot.create(:product) }
     let(:image) { FactoryBot.create(:image) }
     let(:image_id) { image.id }
 
     before do
       logged_in_as_admin
-      post :create, params: { product_image: { product_id: product.id, image_id: image_id } }
+      post :create, params: {product_image: {product_id: product.id, image_id: image_id}}
     end
 
-    context 'when image found' do
-      it 'adds image to product' do
+    context "when image found" do
+      it "adds image to product" do
         expect(product.reload.images).to include(image)
       end
 
-      it 'sets a successful flash notice' do
-        expect(flash[:notice]).to eq I18n.t('controllers.admin.product_images.create.added')
+      it "sets a successful flash notice" do
+        expect(flash[:notice]).to eq I18n.t("controllers.admin.product_images.create.added")
       end
     end
 
-    it 'redirects to edit product' do
+    it "redirects to edit product" do
       expect(response).to redirect_to(edit_admin_product_path(product))
     end
   end
 
-  describe 'DELETE destroy' do
+  describe "DELETE destroy" do
     let!(:product) { FactoryBot.create(:product) }
     let(:image) { FactoryBot.create(:image) }
     let(:image_id) { image.id }
@@ -37,34 +37,34 @@ RSpec.describe Admin::ProductImagesController do
       product.images << image
       product.image = main_image
       product.save
-      delete :destroy, params: { id: ProductImage.find_by(image_id: image.id).id }
+      delete :destroy, params: {id: ProductImage.find_by(image_id: image.id).id}
     end
 
-    context 'when image found' do
-      it 'removes image from product' do
+    context "when image found" do
+      it "removes image from product" do
         expect(product.reload.images).not_to include(image)
       end
 
-      context 'when main image' do
-        it 'sets product image to nil' do
+      context "when main image" do
+        it "sets product image to nil" do
           expect(product.reload.image).to be_nil
         end
       end
 
-      context 'when not main image' do
+      context "when not main image" do
         let(:main_image) { FactoryBot.create(:image) }
 
-        it 'leaves product main image intact' do
+        it "leaves product main image intact" do
           expect(product.reload.image).to eq main_image
         end
       end
     end
 
-    it 'sets a flash notice' do
-      expect(flash[:notice]).to eq I18n.t('controllers.admin.product_images.destroy.removed')
+    it "sets a flash notice" do
+      expect(flash[:notice]).to eq I18n.t("controllers.admin.product_images.destroy.removed")
     end
 
-    it 'redirects to edit product' do
+    it "redirects to edit product" do
       expect(response).to redirect_to(edit_admin_product_path(product))
     end
   end

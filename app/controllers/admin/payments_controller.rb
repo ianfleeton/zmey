@@ -9,13 +9,13 @@ class Admin::PaymentsController < Admin::AdminController
     if @payment.save
       redirect_to edit_admin_order_path(@payment.order)
     else
-      render 'new'
+      render "new"
     end
   end
 
   private
 
-    def payment_params
-      params.require(:payment).permit(:amount, :order_id, :raw_auth_message, :service_provider)
-    end
+  def payment_params
+    params.require(:payment).permit(:amount, :order_id, :raw_auth_message, :service_provider)
+  end
 end

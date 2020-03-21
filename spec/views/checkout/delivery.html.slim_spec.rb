@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'checkout/delivery.html.slim', type: :view do
-  HIDDEN_PARAMS = { email_address: 'ea', full_name: 'fn', phone_number: '12' }
+RSpec.describe "checkout/delivery.html.slim", type: :view do
+  HIDDEN_PARAMS = {email_address: "ea", full_name: "fn", phone_number: "12"}
   let(:address) { Address.new(HIDDEN_PARAMS) }
 
   before do
@@ -9,12 +9,12 @@ RSpec.describe 'checkout/delivery.html.slim', type: :view do
     render
   end
 
-  it 'has a form to save details' do
+  it "has a form to save details" do
     expect(rendered).to have_selector "form[action='#{save_delivery_details_path}'][method='post']"
   end
 
   [
-    'address_line_1', 'address_line_2', 'town_city', 'county', 'postcode'
+    "address_line_1", "address_line_2", "town_city", "county", "postcode"
   ].each do |component|
     it "has a field for #{component}" do
       expect(rendered).to have_selector "input[name='address[#{component}]']"
@@ -27,11 +27,11 @@ RSpec.describe 'checkout/delivery.html.slim', type: :view do
     end
   end
 
-  it 'has a select box for country' do
+  it "has a select box for country" do
     expect(rendered).to have_selector "select[name='address[country_id]']"
   end
 
-  it 'only lists shipping countries' do
+  it "only lists shipping countries" do
     zone = FactoryBot.create(:shipping_zone)
     ship_to = FactoryBot.create(:country, shipping_zone: zone)
     no_ship = FactoryBot.create(:country)
@@ -40,7 +40,7 @@ RSpec.describe 'checkout/delivery.html.slim', type: :view do
     expect(rendered).not_to have_selector "select[name='address[country_id]'] option[value='#{no_ship.id}']"
   end
 
-  it 'has a submit button' do
+  it "has a submit button" do
     expect(rendered).to have_selector "input[type='submit']"
   end
 end

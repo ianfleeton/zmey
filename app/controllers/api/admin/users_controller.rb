@@ -20,21 +20,21 @@ class Api::Admin::UsersController < Api::Admin::AdminController
 
   private
 
-    def set_user
-      @user = User.find_by(id: params[:id])
-      head 404 unless @user
-    end
+  def set_user
+    @user = User.find_by(id: params[:id])
+    head 404 unless @user
+  end
 
-    def index_query
-      email = params[:email]
+  def index_query
+    email = params[:email]
 
-      conditions = {}
-      conditions[:email] = email if email
+    conditions = {}
+    conditions[:email] = email if email
 
-      User.where(conditions)
-    end
+    User.where(conditions)
+  end
 
-    def user_params
-      params.require(:user).permit(:customer_reference)
-    end
+  def user_params
+    params.require(:user).permit(:customer_reference)
+  end
 end

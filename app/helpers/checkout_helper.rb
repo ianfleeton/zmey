@@ -5,11 +5,11 @@ module CheckoutHelper
   # the live site.
   def paypal_form_tag(sandbox:, &block)
     url = if sandbox
-            'https://www.sandbox.paypal.com/cgi-bin/webscr'
-          else
-            'https://www.paypal.com/cgi-bin/webscr'
-          end
-    "<form action=\"#{url}\" name=\"_xclick\" method=\"post\">".html_safe + capture(&block) + '</form>'.html_safe
+      "https://www.sandbox.paypal.com/cgi-bin/webscr"
+    else
+      "https://www.paypal.com/cgi-bin/webscr"
+    end
+    "<form action=\"#{url}\" name=\"_xclick\" method=\"post\">".html_safe + capture(&block) + "</form>".html_safe
   end
 
   # Returns an array of hidden field name/value pairs for use in the Yorkshire
@@ -20,7 +20,7 @@ module CheckoutHelper
       merchant_id: merchant_id,
       callback_url: callback_url,
       redirect_url: redirect_url,
-      pre_shared_key: pre_shared_key,
+      pre_shared_key: pre_shared_key
     )
     field_list.fields
   end

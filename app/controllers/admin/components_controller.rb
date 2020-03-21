@@ -4,12 +4,12 @@ class Admin::ComponentsController < Admin::AdminController
   def new
     @component = Component.new
     @component.product_id = params[:product_id]
-    redirect_to admin_products_path and return unless product_valid?
+    redirect_to(admin_products_path) && return unless product_valid?
   end
 
   def create
     @component = Component.new(component_params)
-    redirect_to admin_products_path and return unless product_valid?
+    redirect_to(admin_products_path) && return unless product_valid?
 
     if @component.save
       flash[:notice] = "Successfully added new component."
@@ -29,7 +29,7 @@ class Admin::ComponentsController < Admin::AdminController
   end
 
   def edit
-    @features = @component.features.sort {|a,b| b.choices.count <=> a.choices.count}
+    @features = @component.features.sort { |a, b| b.choices.count <=> a.choices.count }
 
     num_permutations = 1
     @choice_array = []
@@ -45,7 +45,7 @@ class Admin::ComponentsController < Admin::AdminController
       num_permutations *= choices.count
       @choice_array[f_index] = []
 
-      choices.each {|choice| @choice_array[f_index] << choice.id}
+      choices.each { |choice| @choice_array[f_index] << choice.id }
       f_index += 1
     end
 
@@ -61,35 +61,35 @@ class Admin::ComponentsController < Admin::AdminController
       end
 
       permutation_array.sort!
-      string = ''
-      (0...permutation_array.count).each {|i| string += "_#{permutation_array[i]}_"}
+      string = ""
+      (0...permutation_array.count).each { |i| string += "_#{permutation_array[i]}_" }
       @rows[c_index][:permutation] = Permutation.find_by(permutation: string)
     end
   end
 
   def destroy
     @component.destroy
-    flash[:notice] = I18n.t('components.destroy.deleted')
+    flash[:notice] = I18n.t("components.destroy.deleted")
     redirect_to edit_admin_product_path(@component.product)
   end
 
   private
 
-    def set_component
-      @component = Component.find(params[:id])
-      redirect_to admin_products_path and return unless product_valid?
-    end
+  def set_component
+    @component = Component.find(params[:id])
+    redirect_to(admin_products_path) && return unless product_valid?
+  end
 
-    def product_valid?
-      if Product.find_by(id: @component.product_id)
-        true
-      else
-        flash[:notice] = 'Invalid product.'
-        false
-      end
+  def product_valid?
+    if Product.find_by(id: @component.product_id)
+      true
+    else
+      flash[:notice] = "Invalid product."
+      false
     end
+  end
 
-    def component_params
-      params.require(:component).permit(:name, :product_id)
-    end
+  def component_params
+    params.require(:component).permit(:name, :product_id)
+  end
 end

@@ -1,4 +1,4 @@
-require 'render_anywhere'
+require "render_anywhere"
 
 module PDF
   class Invoice
@@ -14,7 +14,7 @@ module PDF
     end
 
     def write_html
-      File.open(html_filename, 'w') { |f| f.write(html) }
+      File.open(html_filename, "w") { |f| f.write(html) }
     end
 
     def convert_html_to_pdf
@@ -35,19 +35,19 @@ module PDF
     end
 
     def template
-      'orders/invoice'
+      "orders/invoice"
     end
 
     def layout
-      'layouts/invoice'
+      "layouts/invoice"
     end
 
     def html_filename
-      'tmp/invoice.html'
+      "tmp/invoice.html"
     end
 
     def filename
-      'tmp/invoice.pdf'
+      "tmp/invoice.pdf"
     end
   end
 end

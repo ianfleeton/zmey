@@ -1,20 +1,20 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SessionsController, type: :controller do
   let(:customer) { FactoryBot.create(:user, admin: false) }
 
-  describe 'POST #create' do
-    it 'authenticates the user' do
+  describe "POST #create" do
+    it "authenticates the user" do
       expect(User).to receive(:authenticate)
-      post 'create'
+      post "create"
     end
 
-    context 'when the user authenticates as a customer' do
+    context "when the user authenticates as a customer" do
       before do
         allow(User).to receive(:authenticate).and_return(customer)
       end
 
-      it 'preserves their basket' do
+      it "preserves their basket" do
         basket = Basket.create!
         session[:basket_id] = basket.id
         post :create
@@ -22,34 +22,34 @@ RSpec.describe SessionsController, type: :controller do
       end
 
       it "redirects to the customer's account page" do
-        post 'create'
+        post "create"
         expect(response).to redirect_to(customer)
       end
     end
 
-    context 'when the user authenticates as an admin or manager' do
+    context "when the user authenticates as an admin or manager" do
       before do
         allow(User).to receive(:authenticate).and_return(User.new)
         allow(controller).to receive(:admin_or_manager?).and_return(true)
       end
 
-      it 'redirects to the admin page' do
-        post 'create'
+      it "redirects to the admin page" do
+        post "create"
         expect(response).to redirect_to(admin_path)
       end
     end
   end
 
-  describe 'POST #destroy' do
-    it 'redirects to sessions#new' do
-      post 'destroy'
-      expect(response).to redirect_to(action: 'new')
+  describe "POST #destroy" do
+    it "redirects to sessions#new" do
+      post "destroy"
+      expect(response).to redirect_to(action: "new")
     end
 
-    context 'with redirect_to set' do
-      it 'redirects to the given uri' do
-        post 'destroy', params: { redirect_to: '/' }
-        expect(response).to redirect_to('/')
+    context "with redirect_to set" do
+      it "redirects to the given uri" do
+        post "destroy", params: {redirect_to: "/"}
+        expect(response).to redirect_to("/")
       end
     end
   end

@@ -6,7 +6,7 @@ class Api::Admin::ProductPlacementsController < Api::Admin::AdminController
         render json: @product_placement.errors, status: :unprocessable_entity
       end
     else
-      @product_placement.errors.add(:base, 'Page or product does not exist.')
+      @product_placement.errors.add(:base, "Page or product does not exist.")
       render json: @product_placement.errors, status: :unprocessable_entity
     end
   end
@@ -18,7 +18,7 @@ class Api::Admin::ProductPlacementsController < Api::Admin::AdminController
 
   private
 
-    def product_placement_params
-      params.require(:product_placement).permit(:page_id, :product_id)
-    end
+  def product_placement_params
+    params.require(:product_placement).permit(:page_id, :product_id)
+  end
 end

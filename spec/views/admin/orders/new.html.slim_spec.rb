@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'admin/orders/new.html.slim' do
+RSpec.describe "admin/orders/new.html.slim" do
   let(:order) { Order.new }
   let(:website) { FactoryBot.create(:website) }
 
@@ -9,7 +9,7 @@ RSpec.describe 'admin/orders/new.html.slim' do
     allow(view).to receive(:website).and_return(website)
   end
 
-  it 'renders' do
+  it "renders" do
     render
   end
 end

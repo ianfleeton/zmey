@@ -15,6 +15,6 @@ class InvoiceNotifier < BackgroundNotifier
   # Returns a list of orders that are requiring an invoice notification to be
   # sent to the customer.
   def pending_objects
-    Order.where('shipped_at IS NOT NULL AND invoice_sent_at IS NULL')
+    Order.where("shipped_at IS NOT NULL AND invoice_sent_at IS NULL")
   end
 end

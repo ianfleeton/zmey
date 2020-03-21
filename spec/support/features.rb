@@ -3,10 +3,10 @@ def sign_in_as_admin
 end
 
 def sign_in_as(user)
-  visit '/sessions/new'
-  fill_in 'Email', with: user.email
-  fill_in 'Password', with: user.password
-  click_button 'Sign In'
+  visit "/sessions/new"
+  fill_in "Email", with: user.email
+  fill_in "Password", with: user.password
+  click_button "Sign In"
 end
 
 # Checks <tt>check_box</tt> when <tt>value</tt> is <tt>true</tt>, otherwise

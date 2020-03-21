@@ -15,6 +15,6 @@ class DispatchNotifier < BackgroundNotifier
   # Returns a list of shipments that are requiring a dispatch notification to be
   # sent to the customer.
   def pending_objects
-    Shipment.where('shipped_at IS NOT NULL AND email_sent_at IS NULL')
+    Shipment.where("shipped_at IS NOT NULL AND email_sent_at IS NULL")
   end
 end

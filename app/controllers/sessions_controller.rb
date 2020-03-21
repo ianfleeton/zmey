@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       set_user
     else
       flash[:notice] = "No user was found with this email/password"
-      redirect_to action: 'new'
+      redirect_to action: "new"
     end
   end
 
@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
       if params[:redirect_to]
         redirect_to params[:redirect_to]
       else
-        redirect_to action: 'new'
+        redirect_to action: "new"
       end
     end
   end
@@ -46,14 +46,14 @@ class SessionsController < ApplicationController
 
   private
 
-    def set_user
-      reset_session
-      session[:basket_id] = basket.id
-      session[:user] = @current_user.id
-      if admin_or_manager?
-        redirect_to admin_path
-      else
-        redirect_to @current_user
-      end
+  def set_user
+    reset_session
+    session[:basket_id] = basket.id
+    session[:user] = @current_user.id
+    if admin_or_manager?
+      redirect_to admin_path
+    else
+      redirect_to @current_user
     end
+  end
 end

@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Edit order addresses' do
+RSpec.describe "Edit order addresses" do
   let(:order) { FactoryBot.create(:order) }
 
   before do
@@ -8,17 +8,17 @@ RSpec.describe 'Edit order addresses' do
     sign_in_as_admin
   end
 
-  let(:new_address_line_1) { 'New address line 1' }
-  let(:new_address_line_2) { 'New address line 2' }
-  let(:new_town_city) { 'New town' }
-  let(:new_county) { 'New county' }
-  let(:new_postcode) { 'NEW POST' }
+  let(:new_address_line_1) { "New address line 1" }
+  let(:new_address_line_2) { "New address line 2" }
+  let(:new_town_city) { "New town" }
+  let(:new_county) { "New county" }
+  let(:new_postcode) { "NEW POST" }
 
-  scenario 'Edit billing address' do
+  scenario "Edit billing address" do
     edit_address(:billing)
   end
 
-  scenario 'Edit delivery address' do
+  scenario "Edit delivery address" do
     edit_address(:delivery)
   end
 
@@ -29,7 +29,7 @@ RSpec.describe 'Edit order addresses' do
     fill_in "order_#{type}_town_city", with: new_town_city
     fill_in "order_#{type}_county", with: new_county
     fill_in "order_#{type}_postcode", with: new_postcode
-    click_button 'Save'
+    click_button "Save"
     expect(Order.find_by(
       "#{type}_address_line_1" => new_address_line_1,
       "#{type}_address_line_2" => new_address_line_2,

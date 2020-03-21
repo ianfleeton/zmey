@@ -14,7 +14,7 @@ class ExtraAttribute < ActiveRecord::Base
   def self.method_info(method_name, class_name)
     attribute_name = method_name.to_s
 
-    if attribute_name[-1] == '='
+    if attribute_name[-1] == "="
       attribute_name = attribute_name[0...-1]
       setter = true
     else

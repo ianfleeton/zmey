@@ -4,7 +4,7 @@ class Admin::WebsitesController < Admin::AdminController
   before_action :permission_check, only: [:edit, :update]
 
   def index
-    @websites = Website.order('name')
+    @websites = Website.order("name")
   end
 
   def new
@@ -22,7 +22,7 @@ class Admin::WebsitesController < Admin::AdminController
       Page.bootstrap @website_subject
 
       flash[:notice] = "Successfully added new website."
-      redirect_to action: 'index'
+      redirect_to action: "index"
     else
       render :new
     end
@@ -30,7 +30,7 @@ class Admin::WebsitesController < Admin::AdminController
 
   def update
     if @website_subject.update_attributes(website_params)
-      flash[:notice] = 'Website saved.'
+      flash[:notice] = "Website saved."
       redirect_to edit_admin_website_path(@website_subject)
     else
       render :edit
@@ -40,7 +40,7 @@ class Admin::WebsitesController < Admin::AdminController
   def destroy
     @website_subject.destroy
     flash[:notice] = "Website deleted."
-    redirect_to action: 'index'
+    redirect_to action: "index"
   end
 
   protected
@@ -49,8 +49,8 @@ class Admin::WebsitesController < Admin::AdminController
     admin_or_manager_required
     return if admin?
     if manager? && website != @website_subject
-      flash[:notice] = 'You do not manage this website.'
-      redirect_to controller: 'sessions', action: 'new'
+      flash[:notice] = "You do not manage this website."
+      redirect_to controller: "sessions", action: "new"
     end
   end
 
@@ -90,7 +90,6 @@ class Admin::WebsitesController < Admin::AdminController
       :vat_number,
       :yorkshire_payments_active,
       :yorkshire_payments_merchant_id,
-      :yorkshire_payments_pre_shared_key,
-      )
+      :yorkshire_payments_pre_shared_key)
   end
 end

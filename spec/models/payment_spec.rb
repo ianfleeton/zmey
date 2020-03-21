@@ -1,25 +1,25 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Payment, type: :model do
-  describe 'associations' do
+  describe "associations" do
     it { should belong_to(:order) }
   end
 
-  describe 'after_save' do
+  describe "after_save" do
     let(:order) { FactoryBot.create(:order) }
     let(:payment) { FactoryBot.build(:payment, accepted: accepted, order: order) }
 
-    context 'when accepted' do
+    context "when accepted" do
       let(:accepted) { true }
-      it 'notifies its order' do
+      it "notifies its order" do
         expect(order).to receive(:payment_accepted).with(payment)
         payment.save
       end
     end
 
-    context 'when not accepted' do
+    context "when not accepted" do
       let(:accepted) { false }
-      it 'does not notify its order' do
+      it "does not notify its order" do
         expect(order).not_to receive(:payment_accepted)
         payment.save
       end

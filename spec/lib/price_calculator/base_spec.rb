@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module PriceCalculator
   RSpec.describe Base do
@@ -11,8 +11,8 @@ module PriceCalculator
     it { should delegate_method(:inc_tax).to(:taxer) }
     it { should delegate_method(:with_tax).to(:taxer) }
 
-    describe '#initialize' do
-      it 'makes keyword params available through readers' do
+    describe "#initialize" do
+      it "makes keyword params available through readers" do
         bi = BasketItem.new
         base = Base.new(product: product, quantity: 3, basket_item: bi)
         expect(base.product).to eq product
@@ -21,21 +21,21 @@ module PriceCalculator
       end
     end
 
-    describe '#price' do
+    describe "#price" do
       it "returns the product's price" do
         base = Base.new(product: product)
         expect(base.price).to eq product_price
       end
     end
 
-    describe '#tax_type' do
+    describe "#tax_type" do
       it "returns the product's tax_type" do
         base = Base.new(product: product)
         expect(base.tax_type).to eq tax_type
       end
     end
 
-    describe '#taxer' do
+    describe "#taxer" do
       subject { Base.new(product: product).taxer }
       it { should be_kind_of(Taxer) }
     end

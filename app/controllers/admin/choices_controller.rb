@@ -4,7 +4,7 @@ class Admin::ChoicesController < Admin::AdminController
   def new
     @choice = Choice.new
     @choice.feature_id = params[:feature_id]
-    redirect_to admin_products_path and return unless feature_valid?
+    redirect_to(admin_products_path) && return unless feature_valid?
   end
 
   def edit
@@ -12,7 +12,7 @@ class Admin::ChoicesController < Admin::AdminController
   end
 
   def update
-    redirect_to products_path and return unless feature_valid?
+    redirect_to(products_path) && return unless feature_valid?
     if @choice.update_attributes(choice_params)
       flash[:notice] = "Choice successfully updated."
       redirect_to edit_admin_feature_path(@choice.feature)
@@ -23,7 +23,7 @@ class Admin::ChoicesController < Admin::AdminController
 
   def create
     @choice = Choice.new(choice_params)
-    redirect_to admin_products_path and return unless feature_valid?
+    redirect_to(admin_products_path) && return unless feature_valid?
 
     if @choice.save
       flash[:notice] = "Successfully added new choice."
@@ -34,7 +34,7 @@ class Admin::ChoicesController < Admin::AdminController
   end
 
   def destroy
-    redirect_to admin_products_path and return unless feature_valid?
+    redirect_to(admin_products_path) && return unless feature_valid?
     @choice.destroy
     flash[:notice] = "Choice deleted."
     redirect_to edit_admin_feature_path(@choice.feature)
@@ -51,7 +51,7 @@ class Admin::ChoicesController < Admin::AdminController
     if @feature
       true
     else
-      flash[:notice] = 'Invalid feature.'
+      flash[:notice] = "Invalid feature."
       false
     end
   end

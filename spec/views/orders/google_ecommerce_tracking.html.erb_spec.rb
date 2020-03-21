@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'orders/_google_ecommerce_tracking.html.erb', type: :view do
+RSpec.describe "orders/_google_ecommerce_tracking.html.erb", type: :view do
   let(:order) { FactoryBot.create(:order) }
 
   before do
@@ -8,7 +8,7 @@ RSpec.describe 'orders/_google_ecommerce_tracking.html.erb', type: :view do
     allow(view).to receive(:website).and_return(FactoryBot.build(:website))
   end
 
-  it 'renders' do
-    render partial: 'google_ecommerce_tracking', locals: { order: order }
+  it "renders" do
+    render partial: "google_ecommerce_tracking", locals: {order: order}
   end
 end

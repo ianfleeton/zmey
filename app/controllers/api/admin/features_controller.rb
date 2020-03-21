@@ -9,7 +9,7 @@ class Api::Admin::FeaturesController < Api::Admin::AdminController
 
   private
 
-    def feature_params
-      params.require(:feature).permit(:name, :product_id)
-    end
+  def feature_params
+    params.require(:feature).permit(:name, :product_id)
+  end
 end

@@ -3,12 +3,12 @@ class Api::Admin::OrderLinesController < Api::Admin::AdminController
     @order_line = OrderLine.new(order_line_params)
 
     if params[:order_line][:order_id].blank? || !Order.exists?(id: params[:order_line][:order_id])
-      @order_line.errors.add(:base, 'Order does not exist.')
+      @order_line.errors.add(:base, "Order does not exist.")
     end
 
     if params[:order_line][:product_id].present?
       if @order_line.product.nil?
-        @order_line.errors.add(:base, 'Product is invalid')
+        @order_line.errors.add(:base, "Product is invalid")
       else
         @order_line.product_name = @order_line.product.name unless params[:order_line][:product_name]
         @order_line.product_price = @order_line.calculate_product_price unless params[:order_line][:product_price]
@@ -35,17 +35,17 @@ class Api::Admin::OrderLinesController < Api::Admin::AdminController
 
   private
 
-    def order_line_params
-      params.require(:order_line).permit(
-        :order_id,
-        :product_id,
-        :product_name,
-        :product_price,
-        :product_rrp,
-        :product_sku,
-        :product_weight,
-        :quantity,
-        :tax_amount
-      )
-    end
+  def order_line_params
+    params.require(:order_line).permit(
+      :order_id,
+      :product_id,
+      :product_name,
+      :product_price,
+      :product_rrp,
+      :product_sku,
+      :product_weight,
+      :quantity,
+      :tax_amount
+    )
+  end
 end

@@ -13,7 +13,7 @@ class Admin::ShippingClassesController < Admin::AdminController
     @shipping_class = ShippingClass.new(shipping_class_params)
 
     if @shipping_class.save
-      redirect_to admin_shipping_classes_path, notice: 'Saved.'
+      redirect_to admin_shipping_classes_path, notice: "Saved."
     else
       render :new
     end
@@ -21,7 +21,7 @@ class Admin::ShippingClassesController < Admin::AdminController
 
   def update
     if @shipping_class.update_attributes(shipping_class_params)
-      redirect_to admin_shipping_classes_path, notice: 'Saved.'
+      redirect_to admin_shipping_classes_path, notice: "Saved."
     else
       render :edit
     end
@@ -29,25 +29,25 @@ class Admin::ShippingClassesController < Admin::AdminController
 
   def destroy
     @shipping_class.destroy
-    flash[:notice] = 'Shipping class deleted.'
+    flash[:notice] = "Shipping class deleted."
     redirect_to admin_shipping_classes_path
   end
 
   protected
 
-    def set_shipping_class
-      @shipping_class = ShippingClass.find(params[:id])
-    end
+  def set_shipping_class
+    @shipping_class = ShippingClass.find(params[:id])
+  end
 
-    def shipping_class_params
-      params.require(:shipping_class).permit(
-        :allow_oversize,
-        :charge_tax,
-        :invalid_over_highest_trigger,
-        :name,
-        :requires_delivery_address,
-        :shipping_zone_id,
-        :table_rate_method
-      )
-    end
+  def shipping_class_params
+    params.require(:shipping_class).permit(
+      :allow_oversize,
+      :charge_tax,
+      :invalid_over_highest_trigger,
+      :name,
+      :requires_delivery_address,
+      :shipping_zone_id,
+      :table_rate_method
+    )
+  end
 end

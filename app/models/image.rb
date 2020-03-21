@@ -5,16 +5,16 @@ class Image < ActiveRecord::Base
   has_many :pages, dependent: :nullify
   has_many :products, dependent: :nullify
   has_many :product_images, dependent: :delete_all
-  has_many :thumbnail_pages, foreign_key: 'thumbnail_image_id', class_name: 'Page', dependent: :nullify
+  has_many :thumbnail_pages, foreign_key: "thumbnail_image_id", class_name: "Page", dependent: :nullify
 
-  before_save   :determine_filename
-  after_save    :write_file
+  before_save :determine_filename
+  after_save :write_file
   after_destroy :delete_files
 
   liquid_methods :name
 
   def image=(file_data)
-    unless file_data.kind_of? String and file_data.empty?
+    unless file_data.is_a?(String) && file_data.empty?
       @file_data = file_data
     end
   end
@@ -54,7 +54,7 @@ class Image < ActiveRecord::Base
     File.join(directory_path, f)
   end
 
-  def url(size=nil, method=:longest_side)
+  def url(size = nil, method = :longest_side)
     if size.nil?
       url_for_filename(filename)
     else
@@ -115,7 +115,7 @@ class Image < ActiveRecord::Base
   #   i = Image.new(filename: 'image.jpg')
   #   i.sized_image_filename(100, :longest_side) # => "longest_side.100.jpg"
   def sized_image_filename(size, method)
-    method.to_s + '.' + size.to_s.gsub(", ", 'x').gsub('[', '').gsub(']', '') + '.' + extension
+    method.to_s + "." + size.to_s.gsub(", ", "x").delete("[").delete("]") + "." + extension
   end
 
   # Returns the sized path for image <tt>id</tt>. The method and size is parsed
@@ -141,15 +141,15 @@ class Image < ActiveRecord::Base
   #   # => {method: :cropped, size: [640,480]}
   def self.parse_filename(filename)
     if match = filename.match(/([a-z_]+)\.(\d+)\.[a-z]+/)
-      { method: match[1].to_sym, size: match[2].to_i }
+      {method: match[1].to_sym, size: match[2].to_i}
     elsif match = filename.match(/([a-z_]+)\.(\d+)x(\d+)\.[a-z]+/)
-      { method: match[1].to_sym, size: [match[2].to_i, match[3].to_i] }
+      {method: match[1].to_sym, size: [match[2].to_i, match[3].to_i]}
     end
   end
 
   # Returns the path of the missing image file.
   def self.image_missing_path
-    File.join(Rails.root.to_s, 'public', 'images', IMAGE_MISSING)
+    File.join(Rails.root.to_s, "public", "images", IMAGE_MISSING)
   end
 
   # Creates an image using the constrained method and writes it to
@@ -173,7 +173,7 @@ class Image < ActiveRecord::Base
     src_ar = img.width.to_f / img.height.to_f
     thumb_ar = width.to_f / height.to_f
 
-    if(src_ar > thumb_ar)
+    if src_ar > thumb_ar
       new_width = (img.height.to_f * thumb_ar).to_i
       shave = ((img.width - new_width).to_f / 2.0).to_i
       img.with_crop(shave, 0, img.width - shave, img.height) do |cropped|
@@ -207,7 +207,7 @@ class Image < ActiveRecord::Base
   # Creates an image using the maxpect method and writes it to
   # <tt>path</tt>.
   def size_maxpect(img, size, path)
-    if size.kind_of? Array
+    if size.is_a? Array
       width = size[0]
       height = size[1]
     else
@@ -217,8 +217,8 @@ class Image < ActiveRecord::Base
     src_ar = img.width.to_f / img.height.to_f
     thumb_ar = width.to_f / height.to_f
     tolerance = 0.1
-    if(src_ar * (1+tolerance) < thumb_ar || src_ar / (1+tolerance) > thumb_ar)
-      if(src_ar > thumb_ar)
+    if src_ar * (1 + tolerance) < thumb_ar || src_ar / (1 + tolerance) > thumb_ar
+      if src_ar > thumb_ar
         height = (width / src_ar).to_i
       else
         width = (height * src_ar).to_i
@@ -249,17 +249,15 @@ class Image < ActiveRecord::Base
   # Returns an empty string if the image file is missing or cannot be opened.
   def data_base64
     d = data
-    d ? Base64::encode64(d) : ''
+    d ? Base64.encode64(d) : ""
   end
 
   # Returns the raw file data for the original image.
   # Returns nil if the image file is missing or cannot be opened.
   def data
-    begin
-      File.open(original_path, 'rb') { |f| f.read }
-    rescue
-      nil
-    end
+    File.open(original_path, "rb") { |f| f.read }
+  rescue
+    nil
   end
 
   # deletes the file(s) by removing the whole dir
@@ -271,13 +269,13 @@ class Image < ActiveRecord::Base
     if @file_data.respond_to?(:original_filename)
       @file_data.original_filename.split(".").last.downcase
     else
-      'jpg'
+      "jpg"
     end
   end
 
   def extension
     e = filename.split(".").last
-    e = '' if e.nil?
+    e = "" if e.nil?
     e
   end
 

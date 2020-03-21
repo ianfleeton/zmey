@@ -14,7 +14,7 @@ module EmailSetup
 
   def set_mandrill_subaccount
     if @website.mandrill_subaccount.present?
-      headers['X-MC-Subaccount'] = @website.mandrill_subaccount
+      headers["X-MC-Subaccount"] = @website.mandrill_subaccount
     end
   end
 end

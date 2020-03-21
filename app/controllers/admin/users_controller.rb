@@ -19,7 +19,7 @@ class Admin::UsersController < Admin::AdminController
     @user.admin = false
 
     if @user.save
-      flash[:notice] = I18n.t('controllers.admin.users.create.flash.created')
+      flash[:notice] = I18n.t("controllers.admin.users.create.flash.created")
       redirect_to admin_users_path
     else
       render :new
@@ -40,7 +40,7 @@ class Admin::UsersController < Admin::AdminController
     params[:user].delete(:manages_website_id)
 
     if @user.update_attributes(user_params)
-      flash[:notice] = I18n.t('controllers.admin.users.update.flash.updated')
+      flash[:notice] = I18n.t("controllers.admin.users.update.flash.updated")
       redirect_to [:admin, @user]
     else
       render :edit
@@ -49,16 +49,16 @@ class Admin::UsersController < Admin::AdminController
 
   def destroy
     @user.destroy
-    redirect_to admin_users_path, notice: I18n.t('controller.admin.users.destroy.flash.destroyed')
+    redirect_to admin_users_path, notice: I18n.t("controller.admin.users.destroy.flash.destroyed")
   end
 
   private
 
-    def set_user
-      @user = User.find(params[:id])
-    end
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    def user_params
-      params.require(:user).permit(:customer_reference, :email, :name, :password, :password_confirmation)
-    end
+  def user_params
+    params.require(:user).permit(:customer_reference, :email, :name, :password, :password_confirmation)
+  end
 end

@@ -1,46 +1,46 @@
-require 'rails_helper'
+require "rails_helper"
 
 module YorkshirePayments
   RSpec.describe Signature do
-    describe '#initialize' do
-      context 'with string input' do
-        it 'converts fields from raw POST body' do
-          s = Signature.new('a=A&b=B%0A', '')
+    describe "#initialize" do
+      context "with string input" do
+        it "converts fields from raw POST body" do
+          s = Signature.new("a=A&b=B%0A", "")
           expect(s.fields).to eq [
-            ['a', 'A'],
-            ['b', "B\n"]
+            ["a", "A"],
+            ["b", "B\n"]
           ]
         end
 
-        it 'handles empty values' do
-          s = Signature.new('cardTypeCode=&cartType=', '')
+        it "handles empty values" do
+          s = Signature.new("cardTypeCode=&cartType=", "")
           expect(s.fields).to eq [
-            ['cardTypeCode', ''],
-            ['cartType', '']
+            ["cardTypeCode", ""],
+            ["cartType", ""]
           ]
         end
       end
     end
 
-    describe '#sign' do
-      it 'returns a signature' do
+    describe "#sign" do
+      it "returns a signature" do
         s = Signature.new(fields_without_signature, pre_shared_key)
         expect(s.sign).to eq signature
       end
     end
 
-    describe '#verify' do
-      it 'returns truthy for a correct signature' do
+    describe "#verify" do
+      it "returns truthy for a correct signature" do
         s = Signature.new(fields_with_signature, pre_shared_key)
         expect(s.verify).to be_truthy
       end
 
-      it 'returns falsey for a bad signature' do
+      it "returns falsey for a bad signature" do
         s = Signature.new(fields_with_bad_signature, pre_shared_key)
         expect(s.verify).to be_falsey
       end
 
-      it 'returns falsey for absent signature' do
+      it "returns falsey for absent signature" do
         s = Signature.new(fields_without_signature, pre_shared_key)
         expect(s.verify).to be_falsey
       end
@@ -48,12 +48,12 @@ module YorkshirePayments
 
     def url_encoded_to_fields(url_encoded)
       url_encoded
-        .split('&')
-        .map {|a| a.split('=') }
-        .map {|a,b| [a, CGI::unescape(b)] }
+        .split("&")
+        .map { |a| a.split("=") }
+        .map { |a, b| [a, CGI.unescape(b)] }
     end
 
-    let(:pre_shared_key) { 'Engine0Milk12Next' }
+    let(:pre_shared_key) { "Engine0Milk12Next" }
 
     let(:signature) {
       "48aec70c50b51732edce4cd945e930be0c5dfd4d815cad8e6f56a248390a70a0c17e9b786837b9045b9da72fdbfe59f499931825c5b669b36680fafc976dd4f9"

@@ -17,8 +17,7 @@ module Admin::ExtraAttributesHelper
     value = object.extra_json[attribute_name]
     content_tag(:div,
       label_tag(attribute_name, attribute_name.humanize) +
-      text_field_tag(attribute_name, value, class: 'form-control'),
-      class: 'form-group'
-    )
+      text_field_tag(attribute_name, value, class: "form-control"),
+      class: "form-group")
   end
 end

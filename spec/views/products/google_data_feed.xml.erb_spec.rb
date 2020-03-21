@@ -1,21 +1,21 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'products/google_data_feed.xml.erb' do
-  let(:website)  { FactoryBot.create(:website) }
-  let(:products) { [FactoryBot.create(:product, age_group: 'adult', gender: 'unisex')] }
+describe "products/google_data_feed.xml.erb" do
+  let(:website) { FactoryBot.create(:website) }
+  let(:products) { [FactoryBot.create(:product, age_group: "adult", gender: "unisex")] }
 
   before do
     assign(:products, products)
     allow(view).to receive(:website).and_return(website)
   end
 
-  it 'includes age group' do
+  it "includes age group" do
     render
-    expect(rendered).to include('<g:age_group>adult</g:age_group>')
+    expect(rendered).to include("<g:age_group>adult</g:age_group>")
   end
 
-  it 'includes gender' do
+  it "includes gender" do
     render
-    expect(rendered).to include('<g:gender>unisex</g:gender>')
+    expect(rendered).to include("<g:gender>unisex</g:gender>")
   end
 end

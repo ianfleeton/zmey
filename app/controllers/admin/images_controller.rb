@@ -16,10 +16,10 @@ class Admin::ImagesController < Admin::AdminController
   def create
     uploader = website.image_uploader(image_params)
 
-    flash[:notice] = "#{pluralize(uploader.images.length, 'image')} uploaded."
+    flash[:notice] = "#{pluralize(uploader.images.length, "image")} uploaded."
 
     if uploader.images.length > 0
-      uploader.images.each { |i| Webhook.trigger('image_created', i) }
+      uploader.images.each { |i| Webhook.trigger("image_created", i) }
       redirect_to admin_images_path
     else
       @image = uploader.failed.first || Image.new
@@ -35,9 +35,9 @@ class Admin::ImagesController < Admin::AdminController
     @image = Image.find(params[:id])
 
     if @image.update_attributes(image_params)
-      Webhook.trigger('image_updated', @image)
-      flash[:notice] = 'Image saved.'
-      redirect_to action: 'index'
+      Webhook.trigger("image_updated", @image)
+      flash[:notice] = "Image saved."
+      redirect_to action: "index"
     else
       render :edit
     end
@@ -47,17 +47,17 @@ class Admin::ImagesController < Admin::AdminController
     @image = Image.find(params[:id])
     begin
       @image.destroy
-      flash[:notice] = 'Image deleted.'
+      flash[:notice] = "Image deleted."
     rescue ActiveRecord::DeleteRestrictionError => e
       @image.errors.add(:base, e)
-      render :edit and return
+      render(:edit) && return
     end
     redirect_to admin_images_path
   end
 
   private
 
-    def image_params
-      params.require(:image).permit(:image, :name)
-    end
+  def image_params
+    params.require(:image).permit(:image, :name)
+  end
 end

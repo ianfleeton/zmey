@@ -4,12 +4,12 @@ class Admin::AdditionalProductsController < Admin::AdminController
   def new
     @additional_product = AdditionalProduct.new
     @additional_product.product_id = params[:product_id]
-    redirect_to admin_products_path and return unless product_valid?
+    redirect_to(admin_products_path) && return unless product_valid?
   end
 
   def create
     @additional_product = AdditionalProduct.new(additional_product_params)
-    redirect_to admin_products_path and return unless product_valid?
+    redirect_to(admin_products_path) && return unless product_valid?
 
     if @additional_product.save
       flash[:notice] = "Successfully added new additional product."
@@ -39,25 +39,25 @@ class Admin::AdditionalProductsController < Admin::AdminController
 
   private
 
-    def set_additional_product
-      @additional_product = AdditionalProduct.find(params[:id])
-      redirect_to admin_products_path and return unless product_valid?
-    end
+  def set_additional_product
+    @additional_product = AdditionalProduct.find(params[:id])
+    redirect_to(admin_products_path) && return unless product_valid?
+  end
 
-    def product_valid?
-      if find_product
-        true
-      else
-        flash[:notice] = 'Invalid product.'
-        false
-      end
+  def product_valid?
+    if find_product
+      true
+    else
+      flash[:notice] = "Invalid product."
+      false
     end
+  end
 
-    def find_product
-      Product.find_by(id: @additional_product.product_id)
-    end
+  def find_product
+    Product.find_by(id: @additional_product.product_id)
+  end
 
-    def additional_product_params
-      params.require(:additional_product).permit(:additional_product_id, :product_id, :quantity, :selected_by_default)
-    end
+  def additional_product_params
+    params.require(:additional_product).permit(:additional_product_id, :product_id, :quantity, :selected_by_default)
+  end
 end

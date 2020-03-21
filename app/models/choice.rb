@@ -66,8 +66,8 @@ class Choice < ActiveRecord::Base
       permutation_array << id
 
       permutation_array.sort! # lookups depend on choices being sorted within the permutation
-      string = ''
-      (0...permutation_array.count).each {|i| string += "_#{permutation_array[i]}_"}
+      string = ""
+      (0...permutation_array.count).each { |i| string += "_#{permutation_array[i]}_" }
       Permutation.create!(component_id: feature.component.id, valid_selection: true, permutation: string)
     end
   end
@@ -78,12 +78,12 @@ class Choice < ActiveRecord::Base
     match = "%_#{id}_%"
 
     if feature.choices.count == 1
-      Permutation.where(['component_id = ? AND permutation LIKE ?', feature.component.id, match]).each do |permutation|
-        permutation.permutation = permutation.permutation.gsub("_#{id}_", '')
+      Permutation.where(["component_id = ? AND permutation LIKE ?", feature.component.id, match]).each do |permutation|
+        permutation.permutation = permutation.permutation.gsub("_#{id}_", "")
         permutation.save unless permutation.permutation.blank?
       end
     else
-      Permutation.where('component_id = ? AND permutation LIKE ?', feature.component.id, match).delete_all
+      Permutation.where("component_id = ? AND permutation LIKE ?", feature.component.id, match).delete_all
     end
   end
 end

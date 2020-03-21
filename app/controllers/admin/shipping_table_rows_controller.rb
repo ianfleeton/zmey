@@ -25,11 +25,11 @@ class Admin::ShippingTableRowsController < Admin::AdminController
 
   private
 
-    def set_shipping_table_row
-      @shipping_table_row = ShippingTableRow.find_by(id: params[:id])
-    end
+  def set_shipping_table_row
+    @shipping_table_row = ShippingTableRow.find_by(id: params[:id])
+  end
 
-    def shipping_table_row_params
-      params.require(:shipping_table_row).permit(:amount, :shipping_class_id, :trigger_value)
-    end
+  def shipping_table_row_params
+    params.require(:shipping_table_row).permit(:amount, :shipping_class_id, :trigger_value)
+  end
 end
