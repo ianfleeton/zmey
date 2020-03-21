@@ -78,7 +78,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'brakeman', '~> 3.0.0'
+  gem "brakeman", "~> 4.8.0"
 
   gem 'spring-commands-rspec'
   gem 'guard-rspec', require: false
