@@ -19,7 +19,7 @@ class Importer
     @current_row += 1
     attributes = row.to_hash.slice(*importable_attributes)
 
-    if object = find_object(row)
+    if (object = find_object(row))
       unless object.update_attributes(attributes)
         @errors << "[#{@current_row}] Failed to updated: #{row}"
       end
@@ -29,7 +29,7 @@ class Importer
         unless object.save
           @errors << "[#{@current_row}] Failed to create: #{row}"
         end
-      rescue Exception => e
+      rescue => e
         @errors << "[#{@current_row}] Failed to create: #{row} - #{e.class}: #{e}"
       end
     end

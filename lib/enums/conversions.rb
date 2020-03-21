@@ -2,6 +2,7 @@ module Enums
   module Conversions
     module_function
 
+    # rubocop:disable Naming/MethodName
     def PaymentStatus(status)
       case status
       when PaymentStatus then status
@@ -11,5 +12,6 @@ module Enums
         raise TypeError, "Cannot convert #{status.inspect} to PaymentStatus"
       end
     end
+    # rubocop:enable Naming/MethodName
   end
 end

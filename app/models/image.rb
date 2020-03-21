@@ -69,7 +69,7 @@ class Image < ActiveRecord::Base
   SIZE_METHODS = [:constrained, :cropped, :height, :longest_side, :maxpect, :square, :width].freeze
 
   def sized_url(size, method)
-    if sized = sized_filename(size, method)
+    if (sized = sized_filename(size, method))
       url_for_filename(sized)
     else
       "/#{IMAGE_MISSING}"
@@ -77,7 +77,7 @@ class Image < ActiveRecord::Base
   end
 
   def sized_path(size, method)
-    if sized = sized_filename(size, method)
+    if (sized = sized_filename(size, method))
       path_for_filename(sized)
     else
       Image.image_missing_path
@@ -140,9 +140,9 @@ class Image < ActiveRecord::Base
   #   Image.parse_filename('cropped.640x480.jpg')
   #   # => {method: :cropped, size: [640,480]}
   def self.parse_filename(filename)
-    if match = filename.match(/([a-z_]+)\.(\d+)\.[a-z]+/)
+    if (match = filename.match(/([a-z_]+)\.(\d+)\.[a-z]+/))
       {method: match[1].to_sym, size: match[2].to_i}
-    elsif match = filename.match(/([a-z_]+)\.(\d+)x(\d+)\.[a-z]+/)
+    elsif (match = filename.match(/([a-z_]+)\.(\d+)x(\d+)\.[a-z]+/))
       {method: match[1].to_sym, size: [match[2].to_i, match[3].to_i]}
     end
   end

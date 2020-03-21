@@ -92,7 +92,7 @@ class UsersController < ApplicationController
       redirect_to action: "forgot_password"
       return false
     elsif params[:t].nil? || (@user.forgot_password_token != params[:t])
-      flash[:notice] = "The link you entered was invalid. This can happen if you have re-requested " +
+      flash[:notice] = "The link you entered was invalid. This can happen if you have re-requested " \
         "a forgot password email or you have already reset and changed your password."
       redirect_to action: "forgot_password"
       return false

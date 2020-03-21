@@ -176,7 +176,7 @@ class PaymentsController < ApplicationController
   end
 
   def clean_up
-    if order = Order.find_by(order_number: @payment.cart_id)
+    if (order = Order.find_by(order_number: @payment.cart_id))
       reset_basket(order)
       update_order order
     end

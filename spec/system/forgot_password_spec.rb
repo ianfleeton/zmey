@@ -15,7 +15,10 @@ RSpec.describe "Forgot password" do
     existing_user.reload
     visit password_reset_path(existing_user)
     fill_in "Password", with: "a new password"
-    expect { click_button "Change"; existing_user.reload }.to change { existing_user.encrypted_password }
+    expect {
+      click_button "Change"
+      existing_user.reload
+    }.to change { existing_user.encrypted_password }
   end
 
   def password_reset_path(user)

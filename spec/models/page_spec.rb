@@ -46,7 +46,7 @@ RSpec.describe Page, type: :model do
 
   describe "#url" do
     it "returns a full URL using the first website setting URL" do
-      website = FactoryBot.create(:website)
+      FactoryBot.create(:website)
       page = FactoryBot.build(:page, slug: "slug")
       expect(page.url).to include("slug")
     end

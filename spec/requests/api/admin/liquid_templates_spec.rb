@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Admin Liquid templates API" do
+RSpec.describe "Admin Liquid templates API", type: :request do
   before do
     prepare_api_website
   end
@@ -24,7 +24,7 @@ describe "Admin Liquid templates API" do
 
   describe "DELETE delete_all" do
     it "deletes all Liquid templates" do
-      template = FactoryBot.create(:liquid_template)
+      FactoryBot.create(:liquid_template)
 
       delete "/api/admin/liquid_templates"
 

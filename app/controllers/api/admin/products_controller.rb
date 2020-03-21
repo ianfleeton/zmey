@@ -36,7 +36,7 @@ class Api::Admin::ProductsController < Api::Admin::AdminController
   private
 
   def assign_product_group
-    if group_name = params[:product][:product_group]
+    if (group_name = params[:product][:product_group])
       @product.product_group = group_name
     end
   end

@@ -85,7 +85,7 @@ class Page < ActiveRecord::Base
   # Returns an array of ancestors with closest ancestor first.
   def ancestors
     p, a = self, []
-    while p = p.parent
+    while (p = p.parent)
       a << p
     end
     a

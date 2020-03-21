@@ -123,21 +123,30 @@ class CheckoutController < ApplicationController
   end
 
   def advance_checkout
-    {
-      has_checkout_details?: checkout_details_path,
-      billing_address: billing_details_path,
-      delivery_address_valid?: delivery_details_path
-    }.each_pair do |condition, destination|
-      redirect_to(destination) && return unless send(condition)
+    checkout_conditions.each_pair do |condition, destination|
+      unless send(condition)
+        redirect_to(destination)
+        break
+      end
     end
+    return if performed?
 
     if website.preferred_delivery_date_settings
       unless preferred_delivery_date_valid?
-        redirect_to(preferred_delivery_date_path) && return
+        redirect_to(preferred_delivery_date_path)
+        return
       end
     end
 
     redirect_to confirm_checkout_path
+  end
+
+  def checkout_conditions
+    {
+      has_checkout_details?: checkout_details_path,
+      billing_address: billing_details_path,
+      delivery_address_valid?: delivery_details_path
+    }
   end
 
   def preferred_delivery_date_valid?

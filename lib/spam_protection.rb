@@ -20,7 +20,7 @@ module SpamProtection
     completed_time = Time.now.to_i
     # check required parameter and cookie
     if params[:current_time].nil? || session[:enquiry_token].nil?
-      flash.now[:notice] = "We could not send your form. Check that you have an " +
+      flash.now[:notice] = "We could not send your form. Check that you have an " \
         "up-to-date browser with JavaScript switched on and cookies enabled."
       return false
     end

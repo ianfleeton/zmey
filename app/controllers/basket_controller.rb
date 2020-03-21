@@ -88,16 +88,14 @@ class BasketController < ApplicationController
     discount = Discount.find_by(coupon: params[:coupon_code].upcase)
     if discount.nil?
       flash[:notice] = "Sorry, your coupon code was not recognised."
+    elsif session_contains_coupon? discount.coupon
+      flash[:notice] = "This coupon has already been applied."
+    elsif !discount.currently_valid?
+      flash[:notice] = "This coupon is not currently valid."
     else
-      if session_contains_coupon? discount.coupon
-        flash[:notice] = "This coupon has already been applied."
-      elsif !discount.currently_valid?
-        flash[:notice] = "This coupon is not currently valid."
-      else
-        flash[:notice] = I18n.t("controllers.basket.enter_coupon.applied")
-        add_coupon_to_session(discount.coupon)
-        run_trigger_for_coupon_discount(discount)
-      end
+      flash[:notice] = I18n.t("controllers.basket.enter_coupon.applied")
+      add_coupon_to_session(discount.coupon)
+      run_trigger_for_coupon_discount(discount)
     end
     redirect_to basket_path
   end

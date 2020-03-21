@@ -15,10 +15,10 @@ class Payments::PaypalController < PaymentsController
     @payment.telephone = response[:contact_phone]
     @payment.fax = ""
     @payment.transaction_id = response[:txn_id]
-    @payment.transaction_status = ("SUCCESS" == response[:status])
+    @payment.transaction_status = (response[:status] == "SUCCESS")
     @payment.transaction_time = response[:payment_date]
     @payment.raw_auth_message = response[:raw_auth_message]
-    @payment.accepted = ("SUCCESS" == response[:status]) &&
+    @payment.accepted = (response[:status] == "SUCCESS") &&
       (["Completed", "Processed"].include? response[:payment_status])
     @payment.save
 
@@ -86,7 +86,7 @@ class Payments::PaypalController < PaymentsController
     data.split[1..-1].each do |line|
       key, value = line.strip.split("=")
       key = key.to_sym
-      response[key] = CGI.unescape(value || "") if response.has_key? key
+      response[key] = CGI.unescape(value || "") if response.key? key
     end
 
     charset = response[:charset]

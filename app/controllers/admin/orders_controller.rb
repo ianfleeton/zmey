@@ -138,7 +138,7 @@ class Admin::OrdersController < Admin::AdminController
 
   def update_order_lines
     params[:order_line_quantity].each_pair do |id, _on|
-      if order_line = OrderLine.find_by(id: id, order_id: @order.id)
+      if (order_line = OrderLine.find_by(id: id, order_id: @order.id))
         update_order_line(order_line, id)
       end
     end

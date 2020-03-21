@@ -11,7 +11,7 @@ module Discounts
       end
 
       def make_product_free(product)
-        if basket_item = basket_item.find { |i| product.id == i.id }
+        if basket_item.find { |i| product.id == i.id }
           discount_line = DiscountLine.new
           discount_line.name = "Free " + product.name
           discount_line.price_adjustment = -product.price_ex_tax

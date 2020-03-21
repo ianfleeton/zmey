@@ -1,8 +1,8 @@
 require "rails_helper"
 
-include ActionDispatch::TestProcess
+RSpec.describe ImageUploader do
+  include ActionDispatch::TestProcess
 
-describe ImageUploader do
   let(:upload) { fixture_file_upload("images/red.png") }
 
   describe ".initialize" do

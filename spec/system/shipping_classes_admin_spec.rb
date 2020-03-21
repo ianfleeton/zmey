@@ -12,7 +12,7 @@ RSpec.describe "Shipping classes admin" do
   let(:shipping_class) { FactoryBot.build(:shipping_class, shipping_zone: FactoryBot.create(:shipping_zone)) }
 
   scenario "Create shipping class with existing zone" do
-    zone = FactoryBot.create(:shipping_zone)
+    FactoryBot.create(:shipping_zone)
     visit admin_shipping_classes_path
     click_link "New"
     fill_in "Name", with: shipping_class.name

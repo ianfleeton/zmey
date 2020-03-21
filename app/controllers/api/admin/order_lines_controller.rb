@@ -25,7 +25,7 @@ class Api::Admin::OrderLinesController < Api::Admin::AdminController
   end
 
   def destroy
-    if @order_line = OrderLine.find_by(id: params[:id])
+    if (@order_line = OrderLine.find_by(id: params[:id]))
       @order_line.destroy
       head 204
     else

@@ -19,7 +19,7 @@ class Api::Admin::PaymentsController < Api::Admin::AdminController
   end
 
   def destroy
-    if @payment = Payment.find_by(id: params[:id])
+    if (@payment = Payment.find_by(id: params[:id]))
       @payment.destroy
       head 204
     else

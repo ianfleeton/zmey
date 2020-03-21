@@ -5,7 +5,7 @@ RSpec.describe "Discounts" do
   let(:product) { FactoryBot.create(:product) }
 
   before do
-    d = Discount.create!(name: "Discount", coupon: "DISCOUNT", reward_type: "percentage_off_order")
+    Discount.create!(name: "Discount", coupon: "DISCOUNT", reward_type: "percentage_off_order")
   end
 
   scenario "Apply and remove discount" do

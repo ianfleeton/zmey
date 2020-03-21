@@ -1,14 +1,16 @@
 require "rails_helper"
 
-describe "products/show.html.erb" do
+RSpec.describe "products/show.html.erb", type: :view do
   include ProductsHelper
   let(:website) { FactoryBot.build(:website) }
 
   before(:each) do
     assign(:product, FactoryBot.build(:product))
     assign(:w, website)
-    allow(view).to receive(:website).and_return(website)
-    allow(view).to receive(:admin_or_manager?).and_return(:false)
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(website)
+      allow(view).to receive(:admin_or_manager?).and_return(false)
+    end
   end
 
   it "renders attributes in <p>" do

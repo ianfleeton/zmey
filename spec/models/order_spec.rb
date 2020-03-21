@@ -217,7 +217,7 @@ RSpec.describe Order, type: :model do
       @order.copy_delivery_address(@address)
     end
 
-    from_to = {
+    {
       full_name: :delivery_full_name,
       company: :delivery_company,
       address_line_1: :delivery_address_line_1,
@@ -241,7 +241,7 @@ RSpec.describe Order, type: :model do
       @order.copy_billing_address(@address)
     end
 
-    from_to = {
+    {
       email_address: :email_address,
       full_name: :billing_full_name,
       company: :billing_company,

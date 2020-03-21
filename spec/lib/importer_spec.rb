@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Importer do
-  class FakeModel; end
+  class FakeModel < ApplicationRecord
+  end
+
   let(:importer) { Importer.new "FakeModel" }
 
   describe "#find_object" do
@@ -29,7 +31,7 @@ RSpec.describe Importer do
       end
     end
 
-    context "when the class does not respond to .import_id" do
+    context "when the class does not override .import_id" do
       it 'returns "id"' do
         expect(importer.import_id).to eq "id"
       end

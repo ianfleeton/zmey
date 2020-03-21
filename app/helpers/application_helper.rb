@@ -118,7 +118,7 @@ module ApplicationHelper
 
   # Returns <tt>true</tt> if the current page is the home page.
   def home_page?
-    "/" == request.path
+    request.path == "/"
   end
 
   # Creates a robots meta tag.

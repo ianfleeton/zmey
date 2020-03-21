@@ -39,7 +39,6 @@ class Choice < ActiveRecord::Base
     # populate choices
     # choice_array is 2D [feature][choice] = choice ID
     num_permutations = 1
-    num_features = other_features.count
     choice_array = []
     f_index = 0
 

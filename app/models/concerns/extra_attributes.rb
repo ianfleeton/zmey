@@ -79,7 +79,7 @@ module ExtraAttributes
     end
   end
 
-  def respond_to?(method_sym, include_all = false)
+  def respond_to_missing?(method_sym, include_all = false)
     ExtraAttribute.method_info(method_sym, self.class)[:exists] || super
   end
 

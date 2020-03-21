@@ -46,9 +46,9 @@ class ShippingClass < ActiveRecord::Base
   def get_value(basket)
     case table_rate_method
     when "basket_total"
-      value = basket.total(true)
+      basket.total(true)
     when "weight"
-      value = basket.weight
+      basket.weight
     else
       raise "Unknown table rate method"
     end

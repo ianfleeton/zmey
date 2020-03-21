@@ -136,7 +136,7 @@ class ApplicationController < ActionController::Base
       I18n.load_path << locale_path
       I18n.backend.send(:init_translations)
     end
-  rescue Exception => err
+  rescue => err
     logger.error err
     flash.now[:notice] = "#{I18n.locale} translation not available"
 
@@ -169,7 +169,7 @@ class ApplicationController < ActionController::Base
   # Adapted from http://www.justinball.com/2011/09/27/customizing-views-for-a-multi-tenant-application-using-ruby-on-rails-custom-resolvers/
   def set_resolver
     return unless website
-    if resolver = website_resolver_for(website)
+    if (resolver = website_resolver_for(website))
       resolver.update_website(website)
       prepend_view_path resolver
     end
