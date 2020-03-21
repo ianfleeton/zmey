@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/bionic64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -54,7 +54,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   vb.gui = true
   #
   #   # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ["modifyvm", :id, "--memory", "1280"]
+    vb.customize ["modifyvm", :id, "--memory", "3072"]
   end
   #
   # View the documentation for the provider you're using for more
@@ -139,12 +139,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Install other build dependencies.
   config.vm.provision :shell, inline: %q{apt-get -y install libcurl4-openssl-dev libgmp-dev git-core}
 
-  # Install MySQL.
-  config.vm.provision :shell, inline: %q{debconf-set-selections <<< 'mysql-server-5.6 mysql-server/root_password password secret'}
-  config.vm.provision :shell, inline: %q{debconf-set-selections <<< 'mysql-server-5.6 mysql-server/root_password_again password secret'}
-  config.vm.provision :shell, inline: %q{apt-get -y install mysql-server-5.6}
-  config.vm.provision :shell, inline: %q{apt-get -y install mysql-client-5.6}
-  config.vm.provision :shell, inline: %q{apt-get -y install libmysqlclient-dev}
+  # TODO: Install PostgreSQL.
 
   # Install rvm and ruby.
   config.vm.provision :shell, privileged: false, path: 'install-rvm-ruby.sh'
