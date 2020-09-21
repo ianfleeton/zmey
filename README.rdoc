@@ -36,23 +36,19 @@ For Ubuntu:
 
 For other operating systems see http://docs.seattlerb.org/ImageScience.html.
 
+==== wkhtmltopdf
+
 Zmey uses the LGPL wkhtmltopdf tool for generating invoices and other PDF
-documents from HTML. Some binaries are included in the repository for
-convenience. Its license can be found at:
-https://github.com/wkhtmltopdf/wkhtmltopdf/blob/master/COPYING
+documents from HTML. A macOS binary package can be downloaded from:
 
-wkhtmltopdf's dependencies can be installed on Ubuntu with:
+  https://wkhtmltopdf.org/downloads.html
 
-  apt-get install libqt4-gui libqt4-network libqt4-webkit libxrender-dev xorg
+==== Installing wkhtmltopdf on Ubuntu 18.04 and later
 
-==== Installing wkhtmltopdf on Ubuntu 14.04 and later
+Download and install with:
 
-Download the .deb from http://wkhtmltopdf.org/downloads.html and install with:
-
-  sudo apt-get install xfonts-75dpi
-  sudo dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
-
-Replace the package filename as applicable.
+  wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
+  sudo apt install ./wkhtmltox_0.12.5-1.bionic_amd64.deb
 
 The binary is installed at /usr/local/bin/wkhtmltopdf but is used by Whenever
 in a background task so it will need to be included in cron's PATH. Edit cron
@@ -63,6 +59,14 @@ jobs with:
 Then check that /usr/local/bin is in the path, for example:
 
   PATH=/usr/local/bin:/usr/bin:/bin
+
+==== Installing wkhtmltopdf on macOS
+
+Download the following from GitHub and run the package installer:
+
+https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox-0.12.5-1.macos-cocoa.pkg
+
+The binary is installed at /usr/local/bin/wkhtmltopdf
 
 === Database creation
 
