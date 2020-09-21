@@ -1,14 +1,25 @@
 - object = form.object.class.to_s.tableize.singularize
 javascript:
   $(function() {
-    var hiddenField = "#{object}_#{attribute}";
-    var nextField = hiddenField + '_next';
-    var prevField = hiddenField + '_prev';
-    var imagesModal = hiddenField + '_images';
-    var imagePicker = hiddenField + '_image_picker';
-    var imageRemove = hiddenField + '_image_remove';
-    var imagePreview = hiddenField + '_image_preview';
+    var imageField = "#{object}_#{attribute}";
+    var nextField = imageField + '_next';
+    var prevField = imageField + '_prev';
+    var imagesModal = imageField + '_images';
+    var imagePicker = imageField + '_image_picker';
+    var imageRemove = imageField + '_image_remove';
+    var imagePreview = imageField + '_image_preview';
     var page = 1;
+
+    $(document).on('input change keyup', '#' + imageField, function(event) {
+      var val = $(this).val();
+      var src;
+      if (val == '') {
+        src = '/images/image-missing.png';
+      } else {
+        src = '/up/images/' + $(this).val() + '/image.jpg';
+      }
+      $('#' + imagePreview + ' img').attr('src', src);
+    });
 
     $('#' + imagePicker).click(function(event) {
       event.preventDefault();
@@ -18,7 +29,7 @@ javascript:
 
     $('#' + imageRemove).click(function(event) {
       event.preventDefault();
-      $('#' + hiddenField).val('');
+      $('#' + imageField).val('');
       $('#' + imagePreview + ' img').attr('src', '/images/image-missing.png');
     });
 
@@ -35,7 +46,7 @@ javascript:
           items.push('</div></li>');
         }
         $.each(data.images, function(key, image) {
-          var i = '<li class="picker-image"><a href="#" data-id="' + image.id + '" id="image-' + image.id + '"><img src="/up/images/' + image.id + '/constrained.192x144.jpg" title="' + image.name + '"></a></li>';
+          var i = '<li class="picker-image"><button type="button" data-id="' + image.id + '" id="image-' + image.id + '"><img src="/up/images/' + image.id + '/constrained.192x144.jpg" title="' + image.name + '"></button></li>';
           items.push(i);
         });
         $('#' + imagesModal + ' .results-body').replaceWith(
@@ -54,10 +65,11 @@ javascript:
           getImages();
           setTimeout(function() { $('#' + imagesModal).modal('show') }, 500);
         });
-        $('#' + imagesModal + ' .results-body a').click(function() {
-          $('#' + hiddenField).val($(this).data('id'));
+        $('#' + imagesModal + ' .results-body button').click(function() {
+          $('#' + imageField).val($(this).data('id'));
           $('#' + imagesModal).modal('hide');
           $('#' + imagePreview + ' img').attr('src', $(this).find('img').attr('src'));
+          return false;
         });
       });
     }
@@ -68,33 +80,36 @@ javascript:
       if(active) {
         items.push(' id="' + id + '"');
       }
-      items.push(' class="btn btn-default');
+      items.push(' class="btn btn-outline-secondary');
       if(!active) {
         items.push(' disabled');
       }
       items.push('" title="' + title + '">');
-      items.push('<span class="glyphicon glyphicon-arrow-' + icon + '">');
-      items.push('</span></a>');
+      items.push('<i class="far fa-arrow-' + icon + '">');
+      items.push('</i></a>');
       return items.join('');
     }
   });
-.modal.fade.modal-picker id="#{object}_#{attribute}_images" role="dialog" aria-labelledby="Image Picker" aria-hidden="true"
+.modal.fade.modal-picker id="#{object}_#{attribute}_images" role="dialog" aria-labelledby="images-label" aria-hidden="true"
   .modal-dialog.modal-lg
     .modal-content
       .modal-header
+        h4#images-label.modal-title Images
         button.close type="button" data-dismiss="modal" aria-label="Close"
           span aria-hidden="true" &times;
-        h4.modal-title Images
       .modal-body
         span.results-body
 
-.form-action
-  = form.hidden_field(attribute)
-  .image-preview id="#{object}_#{attribute}_image_preview"
-    - image_url = Image.find_by(id: form.object.send(attribute)).try(:url)
-    - image_url ||= '/images/image-missing.png'
-    img src="#{image_url}"
-  p
-    .btn-group
-      button.btn.btn-default id="#{object}_#{attribute}_image_picker" Pick
-      button.btn.btn-default id="#{object}_#{attribute}_image_remove" Remove
+.form-group
+  .row
+    .col-md-6
+      .image-preview id="#{object}_#{attribute}_image_preview"
+        - image_url = Image.find_by(id: form.object.send(attribute)).try(:url)
+        - image_url ||= '/images/image-missing.png'
+        img src="#{image_url}"
+    .col-md-6
+      = form.text_field(attribute, prepend: 'ID')
+      p
+        .btn-group
+          button.btn.btn-outline-secondary id="#{object}_#{attribute}_image_picker" Pick
+          button.btn.btn-outline-secondary id="#{object}_#{attribute}_image_remove" Remove
