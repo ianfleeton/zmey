@@ -20,7 +20,7 @@ class Admin::ShippingZonesController < Admin::AdminController
   end
 
   def update
-    if @shipping_zone.update_attributes(shipping_zone_params)
+    if @shipping_zone.update(shipping_zone_params)
       redirect_to admin_shipping_zones_path, notice: "Saved."
     else
       render :edit

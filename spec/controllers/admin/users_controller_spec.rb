@@ -40,12 +40,12 @@ RSpec.describe Admin::UsersController, type: :controller do
         before { allow(User).to receive(:find).with("1").and_return(user) }
 
         it "updates the user" do
-          expect(user).to receive(:update_attributes)
+          expect(user).to receive(:update)
           patch_valid
         end
 
         context "when the update succeeds" do
-          before { allow(user).to receive(:update_attributes).and_return(true) }
+          before { allow(user).to receive(:update).and_return(true) }
 
           it "redirects to the admin show user path" do
             patch_valid

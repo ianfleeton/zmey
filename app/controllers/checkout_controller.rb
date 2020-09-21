@@ -186,7 +186,7 @@ class CheckoutController < ApplicationController
   def save_address(address, address_key, template)
     success =
       if (@address = address) && billing_and_delivery_different?
-        @address.update_attributes(address_params.merge(user: current_user))
+        @address.update(address_params.merge(user: current_user))
       else
         @address = Address.new(address_params.merge(user: current_user))
         if @address.save

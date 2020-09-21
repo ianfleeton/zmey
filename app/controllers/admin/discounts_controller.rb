@@ -23,7 +23,7 @@ class Admin::DiscountsController < Admin::AdminController
   end
 
   def update
-    if @discount.update_attributes(discount_params)
+    if @discount.update(discount_params)
       flash[:notice] = "Discount successfully updated."
       redirect_to admin_discounts_path
     else

@@ -26,7 +26,7 @@ class Admin::ProductsController < Admin::AdminController
 
   def update
     @product.update_extra(params)
-    if @product.update_attributes(product_params)
+    if @product.update(product_params)
       flash[:notice] = "Product saved."
       redirect_to edit_admin_product_path(@product)
     else

@@ -19,7 +19,9 @@ RSpec.describe OrdersHelper, type: :helper do
     let(:order) { FactoryBot.create(:order) }
 
     before do
-      allow(view).to receive(:website).and_return(Website.new)
+      without_partial_double_verification do
+        allow(view).to receive(:website).and_return(Website.new)
+      end
     end
 
     it "renders the Google Analytics sales conversion code" do

@@ -6,7 +6,9 @@ describe "products/google_data_feed.xml.erb" do
 
   before do
     assign(:products, products)
-    allow(view).to receive(:website).and_return(website)
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(website)
+    end
   end
 
   it "includes age group" do

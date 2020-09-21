@@ -20,7 +20,7 @@ class Admin::QuantityPricesController < Admin::AdminController
   end
 
   def update
-    if @quantity_price.update_attributes(quantity_price_params)
+    if @quantity_price.update(quantity_price_params)
       flash[:notice] = "Quantity/price rule successfully updated."
       redirect_to edit_admin_product_path(@quantity_price.product.id)
     else

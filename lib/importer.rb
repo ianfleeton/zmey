@@ -20,7 +20,7 @@ class Importer
     attributes = row.to_hash.slice(*importable_attributes)
 
     if (object = find_object(row))
-      unless object.update_attributes(attributes)
+      unless object.update(attributes)
         @errors << "[#{@current_row}] Failed to updated: #{row}"
       end
     else

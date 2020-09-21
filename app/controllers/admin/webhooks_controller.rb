@@ -25,7 +25,7 @@ class Admin::WebhooksController < Admin::AdminController
   end
 
   def update
-    if @webhook.update_attributes(webhook_params)
+    if @webhook.update(webhook_params)
       redirect_to admin_webhooks_path, notice: "Saved."
     else
       render :edit

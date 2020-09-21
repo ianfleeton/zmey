@@ -22,7 +22,7 @@ class Admin::FeaturesController < Admin::AdminController
   end
 
   def update
-    if @feature.update_attributes(feature_params)
+    if @feature.update(feature_params)
       flash[:notice] = "Feature successfully updated."
       if @feature.component
         redirect_to edit_component_path(@feature.component)

@@ -24,7 +24,7 @@ class Admin::LiquidTemplatesController < Admin::AdminController
   end
 
   def update
-    if @liquid_template.update_attributes(liquid_template_params)
+    if @liquid_template.update(liquid_template_params)
       flash[:notice] = "Liquid template successfully updated."
       redirect_to edit_admin_liquid_template_path(@liquid_template)
     else

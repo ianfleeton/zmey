@@ -5,7 +5,9 @@ RSpec.describe "orders/_google_ecommerce_tracking.html.erb", type: :view do
 
   before do
     FactoryBot.create(:order_line, order: order)
-    allow(view).to receive(:website).and_return(FactoryBot.build(:website))
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(FactoryBot.build(:website))
+    end
   end
 
   it "renders" do

@@ -57,13 +57,13 @@ RSpec.describe Admin::ProductsController, type: :controller do
       describe "with valid params" do
         it "updates the requested product" do
           find_requested_product
-          expect(mock_product).to receive(:update_attributes)
+          expect(mock_product).to receive(:update)
           allow(mock_product).to receive(:update_extra)
           put :update, params: valid_params
         end
 
         it "redirects to the edit product page again" do
-          allow(Product).to receive(:find_by).and_return(mock_product(update_attributes: true))
+          allow(Product).to receive(:find_by).and_return(mock_product(update: true))
           allow(mock_product).to receive(:update_extra)
           put :update, params: valid_params
           expect(response).to redirect_to(edit_admin_product_path(mock_product))
@@ -73,7 +73,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
       describe "with invalid params" do
         it "updates the requested product" do
           find_requested_product
-          expect(mock_product).to receive(:update_attributes)
+          expect(mock_product).to receive(:update)
           allow(mock_product).to receive(:update_extra)
           put :update, params: valid_params
         end

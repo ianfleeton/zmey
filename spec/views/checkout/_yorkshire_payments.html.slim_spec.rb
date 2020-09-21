@@ -5,7 +5,9 @@ RSpec.describe "checkout/_yorkshire_payments.html.slim", type: :view do
   let(:order) { FactoryBot.build(:order) }
 
   before do
-    allow(view).to receive(:website).and_return(website)
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(website)
+    end
     assign(:order, order)
     render
   end

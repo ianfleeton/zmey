@@ -22,7 +22,7 @@ class Admin::ExtraAttributesController < Admin::AdminController
   end
 
   def update
-    if @extra_attribute.update_attributes(extra_attribute_params)
+    if @extra_attribute.update(extra_attribute_params)
       redirect_to admin_extra_attributes_path
     else
       render :edit

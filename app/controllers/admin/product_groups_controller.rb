@@ -29,7 +29,7 @@ class Admin::ProductGroupsController < Admin::AdminController
   end
 
   def update
-    if @product_group.update_attributes(product_group_params)
+    if @product_group.update(product_group_params)
       flash[:notice] = "Product group successfully updated."
       redirect_to admin_product_groups_path
     else

@@ -22,7 +22,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
   end
 
   def update
-    @order.update_attributes(order_params)
+    @order.update(order_params)
 
     if @order.save
       head 204

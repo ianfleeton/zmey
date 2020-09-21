@@ -29,7 +29,7 @@ class Admin::WebsitesController < Admin::AdminController
   end
 
   def update
-    if @website_subject.update_attributes(website_params)
+    if @website_subject.update(website_params)
       flash[:notice] = "Website saved."
       redirect_to edit_admin_website_path(@website_subject)
     else

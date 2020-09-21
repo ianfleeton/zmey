@@ -14,8 +14,10 @@ RSpec.describe "checkout/confirm.html.slim", type: :view do
     assign(:delivery_address, delivery_address)
     assign(:basket, Basket.new)
     assign(:discount_lines, [])
-    allow(view).to receive(:website).and_return(website)
-    allow(view).to receive(:logged_in?).and_return(false)
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(website)
+      allow(view).to receive(:logged_in?).and_return(false)
+    end
     session[:name] = name
     session[:email] = email
     session[:phone] = phone

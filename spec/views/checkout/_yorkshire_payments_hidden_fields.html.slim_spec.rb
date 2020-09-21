@@ -11,7 +11,9 @@ RSpec.describe "checkout/_yorkshire_payments_hidden_fields.html.slim", type: :vi
   let(:order) { FactoryBot.create(:order) }
 
   before do
-    allow(view).to receive(:website).and_return(website)
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(website)
+    end
     assign(:order, order)
     render
   end

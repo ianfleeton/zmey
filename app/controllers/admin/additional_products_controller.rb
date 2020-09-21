@@ -20,7 +20,7 @@ class Admin::AdditionalProductsController < Admin::AdminController
   end
 
   def update
-    if @additional_product.update_attributes(additional_product_params)
+    if @additional_product.update(additional_product_params)
       flash[:notice] = "Additional product successfully updated."
       redirect_to edit_admin_product_path(@additional_product.product)
     else

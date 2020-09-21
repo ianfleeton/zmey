@@ -23,7 +23,7 @@ class Admin::PagesController < Admin::AdminController
   def update
     params[:page].delete(:position)
     @page.update_extra(params)
-    if @page.update_attributes(page_params)
+    if @page.update(page_params)
       flash[:notice] = "Page saved."
       redirect_to edit_admin_page_path(@page)
     else

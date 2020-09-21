@@ -13,7 +13,7 @@ class Admin::ChoicesController < Admin::AdminController
 
   def update
     redirect_to(products_path) && return unless feature_valid?
-    if @choice.update_attributes(choice_params)
+    if @choice.update(choice_params)
       flash[:notice] = "Choice successfully updated."
       redirect_to edit_admin_feature_path(@choice.feature)
     else

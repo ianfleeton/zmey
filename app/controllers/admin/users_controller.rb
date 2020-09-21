@@ -39,7 +39,7 @@ class Admin::UsersController < Admin::AdminController
     params[:user].delete(:admin)
     params[:user].delete(:manages_website_id)
 
-    if @user.update_attributes(user_params)
+    if @user.update(user_params)
       flash[:notice] = I18n.t("controllers.admin.users.update.flash.updated")
       redirect_to [:admin, @user]
     else

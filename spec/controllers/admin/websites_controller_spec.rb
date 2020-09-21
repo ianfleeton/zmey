@@ -33,7 +33,6 @@ RSpec.describe Admin::WebsitesController, type: :controller do
 
       it "creates a new website with the given params" do
         allow(Page).to receive(:bootstrap)
-        allow(controller).to receive(:create_latest_news)
 
         post "create", params: {website: valid_params}
 

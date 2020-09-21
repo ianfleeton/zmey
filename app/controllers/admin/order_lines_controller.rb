@@ -2,7 +2,7 @@ class Admin::OrderLinesController < Admin::AdminController
   before_action :set_order_line
 
   def update
-    flash[:notice] = if @order_line.update_attributes(order_line_params)
+    flash[:notice] = if @order_line.update(order_line_params)
       "Updated."
     else
       "Could not update."

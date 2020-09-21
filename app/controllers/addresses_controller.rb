@@ -67,7 +67,7 @@ class AddressesController < ApplicationController
       redirect_to(action: "new") && return
     end
 
-    if @address.update_attributes(address_params)
+    if @address.update(address_params)
       flash[:notice] = I18n.t("controllers.addresses.update.updated")
 
       if session[:source] == "billing"

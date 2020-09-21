@@ -33,9 +33,9 @@ module Admin
 
     def update
       if @order.locked?
-        @order.update_attributes(locked_order_params)
+        @order.update(locked_order_params)
       else
-        @order.update_attributes(order_params)
+        @order.update(order_params)
         if params[:order_line_quantity].present?
           add_order_lines
           update_order_lines

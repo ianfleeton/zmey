@@ -2,6 +2,8 @@ require "rails_helper"
 require_relative "shared_examples/shopping_suspended.rb"
 
 RSpec.describe CheckoutController, type: :controller do
+  FactoryBot.use_parent_strategy = false
+
   let(:website) { Website.new }
   before { allow(controller).to receive(:website).and_return(website) }
 
@@ -380,7 +382,7 @@ RSpec.describe CheckoutController, type: :controller do
   describe "GET preferred_delivery_date" do
     before { get :preferred_delivery_date }
     subject { response }
-    it { should be_success }
+    it { should be_ok }
   end
 
   describe "POST save_preferred_delivery_date" do

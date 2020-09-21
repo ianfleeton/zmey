@@ -8,7 +8,9 @@ RSpec.describe "/admin/products/edit.html.slim", type: :view do
   before(:each) do
     assign(:product, product)
     assign(:product_group_placement, ProductGroupPlacement.new)
-    allow(view).to receive(:website).and_return(FactoryBot.build(:website))
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(FactoryBot.build(:website))
+    end
   end
 
   it "renders the edit product form" do

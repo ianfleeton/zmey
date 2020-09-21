@@ -9,7 +9,7 @@ class Api::Admin::UsersController < Api::Admin::AdminController
   end
 
   def update
-    @user.update_attributes(user_params)
+    @user.update(user_params)
 
     if @user.save
       head 204

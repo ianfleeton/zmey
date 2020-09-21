@@ -8,7 +8,7 @@ RSpec.describe Admin::AdminController, type: :controller do
   describe "GET index" do
     it "succeeds" do
       get :index
-      expect(response).to be_success
+      expect(response).to be_ok
     end
   end
 end

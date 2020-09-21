@@ -20,7 +20,7 @@ class Admin::CountriesController < Admin::AdminController
   end
 
   def update
-    if @country.update_attributes(country_params)
+    if @country.update(country_params)
       flash[:notice] = "Saved."
       redirect_to admin_countries_path
     else

@@ -12,7 +12,7 @@ class Admin::EnquiriesController < Admin::AdminController
   end
 
   def update
-    if @enquiry.update_attributes(enquiry_params)
+    if @enquiry.update(enquiry_params)
       redirect_to([:admin, @enquiry], notice: "Enquiry was successfully updated.")
     else
       render :edit

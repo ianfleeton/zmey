@@ -14,7 +14,9 @@ RSpec.describe "orders/receipt.html.erb", type: :view do
 
   context "as regular shopper" do
     before do
-      allow(view).to receive(:admin?).and_return(false)
+      without_partial_double_verification do
+        allow(view).to receive(:admin?).and_return(false)
+      end
     end
 
     it "renders" do
@@ -24,7 +26,9 @@ RSpec.describe "orders/receipt.html.erb", type: :view do
 
   context "as admin" do
     before do
-      allow(view).to receive(:admin?).and_return(true)
+      without_partial_double_verification do
+        allow(view).to receive(:admin?).and_return(true)
+      end
     end
 
     it "renders" do

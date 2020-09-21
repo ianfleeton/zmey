@@ -20,7 +20,7 @@ class Admin::ComponentsController < Admin::AdminController
   end
 
   def update
-    if @component.update_attributes(component_params)
+    if @component.update(component_params)
       flash[:notice] = "Component successfully updated."
       redirect_to edit_admin_product_path(@component.product)
     else

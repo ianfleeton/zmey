@@ -10,10 +10,6 @@ RSpec.describe Payments::PaypalController, type: :controller do
   it { should route(:get, "/payments/paypal/auto_return").to(action: :auto_return) }
 
   describe "GET auto_return" do
-    before do
-      allow(controller).to receive(:pdf_notification_sync).and_return(pdt_response)
-    end
-
     context "with successful PDT response" do
       let(:pdt_response) {
         {

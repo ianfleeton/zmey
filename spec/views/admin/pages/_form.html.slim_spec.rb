@@ -2,8 +2,10 @@ require "rails_helper"
 
 describe "admin/pages/_form.html.slim" do
   before do
-    allow(view).to receive(:submit_label).and_return("Save")
-    allow(view).to receive(:website).and_return(Website.new)
+    without_partial_double_verification do
+      allow(view).to receive(:submit_label).and_return("Save")
+      allow(view).to receive(:website).and_return(Website.new)
+    end
     assign(:page, FactoryBot.create(:page))
   end
 

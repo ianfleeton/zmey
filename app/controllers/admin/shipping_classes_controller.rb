@@ -20,7 +20,7 @@ class Admin::ShippingClassesController < Admin::AdminController
   end
 
   def update
-    if @shipping_class.update_attributes(shipping_class_params)
+    if @shipping_class.update(shipping_class_params)
       redirect_to admin_shipping_classes_path, notice: "Saved."
     else
       render :edit
