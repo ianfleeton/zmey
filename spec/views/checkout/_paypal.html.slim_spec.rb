@@ -7,7 +7,9 @@ RSpec.describe "checkout/_paypal.html.slim", type: :view do
   let(:test_mode) { false }
 
   before do
-    allow(view).to receive(:website).and_return(website)
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(website)
+    end
     assign(:order, order)
     render
   end

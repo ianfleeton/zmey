@@ -12,7 +12,7 @@ class Admin::AddressesController < Admin::AdminController
   end
 
   def update
-    if @address.update_attributes(address_params)
+    if @address.update(address_params)
       redirect_to admin_user_addresses_path(@address.user), notice: I18n.t("controllers.admin.addresses.update.flash.updated")
     else
       render :edit

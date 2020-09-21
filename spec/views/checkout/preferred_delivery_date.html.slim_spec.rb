@@ -4,7 +4,9 @@ RSpec.describe "checkout/preferred_delivery_date.html.slim", type: :view do
   let(:website) { FactoryBot.create(:website, preferred_delivery_date_settings: PreferredDeliveryDateSettings.new) }
 
   before do
-    allow(view).to receive(:website).and_return(website)
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(website)
+    end
   end
 
   it "has a form to save preferred delivery date" do

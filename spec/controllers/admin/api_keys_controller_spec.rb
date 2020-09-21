@@ -50,7 +50,7 @@ RSpec.describe Admin::ApiKeysController, type: :controller do
         let(:api_key) { FactoryBot.create(:api_key, name: key_name, user_id: user.id) }
 
         it "succeeds" do
-          expect(response).to be_success
+          expect(response).to be_ok
         end
       end
 
