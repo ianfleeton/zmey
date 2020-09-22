@@ -6,7 +6,9 @@ RSpec.describe "checkout/_select_payment_method.html.erb", type: :view do
     let(:order) { FactoryBot.create(:order) }
 
     before do
-      allow(view).to receive(:website).and_return(website)
+      without_partial_double_verification do
+        allow(view).to receive(:website).and_return(website)
+      end
       assign(:order, order)
     end
 
@@ -28,7 +30,9 @@ RSpec.describe "checkout/_select_payment_method.html.erb", type: :view do
     let(:order) { FactoryBot.create(:order) }
 
     before do
-      allow(view).to receive(:website).and_return(website)
+      without_partial_double_verification do
+        allow(view).to receive(:website).and_return(website)
+      end
       assign(:order, order)
     end
 
@@ -42,7 +46,9 @@ RSpec.describe "checkout/_select_payment_method.html.erb", type: :view do
     let(:order) { FactoryBot.create(:order) }
 
     before do
-      allow(view).to receive(:website).and_return(website)
+      without_partial_double_verification do
+        allow(view).to receive(:website).and_return(website)
+      end
       assign(:order, order)
     end
 

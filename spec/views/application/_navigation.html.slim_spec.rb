@@ -3,8 +3,10 @@ require "rails_helper"
 RSpec.describe "application/_navigation.html.slim", type: :view do
   before do
     allow(Page).to receive(:navs).and_return navs
-    allow(view).to receive(:logged_in?).and_return false
-    allow(view).to receive(:website).and_return Website.new
+    without_partial_double_verification do
+      allow(view).to receive(:logged_in?).and_return false
+      allow(view).to receive(:website).and_return Website.new
+    end
   end
 
   context "with a primary nav" do

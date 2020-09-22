@@ -7,8 +7,7 @@ RSpec.describe "products/_product_features.html.erb", type: :view do
     before do
       feature = FactoryBot.create(:feature, product: product, ui_type: Feature::RADIO_BUTTONS)
       FactoryBot.create(:choice, feature: feature)
-      allow(view).to receive(:product).and_return(product)
-      render
+      render partial: "products/product_features", locals: {product: product}
     end
 
     it "renders radio buttons" do

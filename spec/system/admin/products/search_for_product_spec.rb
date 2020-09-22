@@ -31,6 +31,6 @@ RSpec.describe "Search for product" do
   end
 
   def then_i_should_be_on_the_edit_product_page
-    expect(page).to have_css(:h1, text: "Edit Product")
+    expect(page).to have_css("h1", text: "Edit Product")
   end
 end

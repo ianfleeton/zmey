@@ -3,12 +3,16 @@ require "rails_helper"
 describe "/admin/websites/new.html.slim" do
   before do
     assign(:website_subject, Website.new)
-    allow(view).to receive(:website).and_return(Website.new)
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(Website.new)
+    end
   end
 
   context "when manager" do
     before do
-      allow(view).to receive(:admin?).and_return(false)
+      without_partial_double_verification do
+        allow(view).to receive(:admin?).and_return(false)
+      end
     end
 
     it "has a field for theme" do

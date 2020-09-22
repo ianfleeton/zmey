@@ -6,7 +6,9 @@ RSpec.describe "admin/orders/new.html.slim" do
 
   before do
     assign(:order, order)
-    allow(view).to receive(:website).and_return(website)
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(website)
+    end
   end
 
   it "renders" do

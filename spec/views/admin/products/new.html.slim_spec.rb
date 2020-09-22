@@ -5,7 +5,9 @@ describe "/admin/products/new.html.slim" do
 
   before(:each) do
     assign(:product, Product.new)
-    allow(view).to receive(:website).and_return(FactoryBot.build(:website))
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(FactoryBot.build(:website))
+    end
   end
 
   it "renders new product form" do
