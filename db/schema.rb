@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_13_172338) do
+ActiveRecord::Schema.define(version: 2020_10_14_082039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -282,6 +282,8 @@ ActiveRecord::Schema.define(version: 2020_10_13_172338) do
     t.datetime "sales_conversion_recorded_at"
     t.boolean "requires_delivery_address", default: true, null: false
     t.string "stripe_customer_id"
+    t.date "delivery_date"
+    t.date "estimated_delivery_date"
     t.index ["basket_id"], name: "index_orders_on_basket_id"
     t.index ["created_at"], name: "index_orders_on_created_at"
     t.index ["email_address"], name: "index_orders_on_email_address"
