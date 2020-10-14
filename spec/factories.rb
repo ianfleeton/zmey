@@ -47,6 +47,17 @@ FactoryBot.define do
     association :feature
   end
 
+  factory :client do
+    association :clientable, factory: :order
+    ip_address { "MyString" }
+    platform { "web" }
+    device { "MyString" }
+    user_agent { "MyString" }
+    operating_system { "MyString" }
+    browser { "MyString" }
+    browser_version { "MyString" }
+  end
+
   factory :component do
     name { "Component" }
     association :product
