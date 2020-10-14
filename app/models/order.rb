@@ -87,6 +87,8 @@ class Order < ActiveRecord::Base
   belongs_to :delivery_country, class_name: "Country", optional: true
   belongs_to :basket, optional: true
   belongs_to :user, optional: true
+  has_many :discount_uses, dependent: :delete_all
+  has_many :discounts, through: :discount_uses
   has_many :order_comments, dependent: :delete_all, inverse_of: :order
   has_many :order_lines, dependent: :delete_all, inverse_of: :order
   has_many :payments, dependent: :delete_all
