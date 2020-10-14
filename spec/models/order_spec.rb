@@ -166,6 +166,54 @@ RSpec.describe Order, type: :model do
     end
   end
 
+  describe ".matching_new_payment" do
+    it "returns nil when there is no matching order" do
+      FactoryBot.create(:order, order_number: "111222")
+      match = Order.matching_new_payment(Payment.new(cart_id: "333444"))
+      expect(match).to be_nil
+    end
+
+    it "finds the order whose number matches the payment cart_id" do
+      order = FactoryBot.create(:order, order_number: "333444")
+      match = Order.matching_new_payment(Payment.new(cart_id: "333444"))
+      expect(match).to eq order
+    end
+  end
+
+  describe ".current" do
+    it "finds order with matching id" do
+      order = FactoryBot.create(:order)
+      cookies = instance_double(
+        ActionDispatch::Cookies::CookieJar, signed: {order_id: order.id}
+      )
+      expect(Order.current(cookies)).to eq order
+    end
+
+    it "returns nil with non-matching id" do
+      cookies = instance_double(
+        ActionDispatch::Cookies::CookieJar, signed: {order_id: 1}
+      )
+      expect(Order.current(cookies)).to be_nil
+    end
+  end
+
+  describe ".current!" do
+    it "finds order with matching id" do
+      order = FactoryBot.create(:order)
+      cookies = instance_double(
+        ActionDispatch::Cookies::CookieJar, signed: {order_id: order.id}
+      )
+      expect(Order.current!(cookies)).to eq order
+    end
+
+    it "raises an ActiveRecord::RecordNotFound error with non-matching id" do
+      cookies = instance_double(
+        ActionDispatch::Cookies::CookieJar, signed: {order_id: 1}
+      )
+      expect { Order.current!(cookies) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
   describe "#to_s" do
     it "returns its order number" do
       o = Order.new(order_number: "123")

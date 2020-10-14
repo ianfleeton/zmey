@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  UNSET = "unset"
+
   has_many :orders, -> { order "created_at DESC" }, dependent: :nullify
   has_many :addresses, dependent: :delete_all
   has_many :api_keys, -> { order :name }, dependent: :delete_all
@@ -42,6 +44,13 @@ class User < ActiveRecord::Base
   def self.generate_forgot_password_token
     charset = %w[2 3 4 6 7 9 A C D E F G H J K L M N P Q R T V W X Y Z]
     (0...8).map { charset.to_a[rand(charset.size)] }.join
+  end
+
+  # Returns an existing customer account with matching email address, or
+  # creates and returns a new one if needed.
+  def self.find_or_create_by_details(email:, name:)
+    (email && User.find_by(email: email.downcase)) ||
+      User.create(email: email&.downcase, name: name, encrypted_password: UNSET)
   end
 
   def to_s

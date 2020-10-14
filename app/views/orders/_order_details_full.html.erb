@@ -1,0 +1,61 @@
+<table width="100%" cellpadding="4" cellspacing="0">
+  <tr>
+    <th style="border-right:1px solid #FFF;" width="10%" bgcolor="#DDD" align="center"><strong>Qty</strong></th>
+    <th style="border-right:1px solid #FFF;" width="60%" bgcolor="#DDD"><strong>Item Description</strong></th>
+    <th style="border-right:1px solid #FFF;" width="15%" bgcolor="#DDD" align="right"><strong>Unit Price</strong></th>
+    <th width="15%" bgcolor="#DDD" align="right"><strong>Total</strong></th>
+  </tr>
+  <% order_lines.each do |item| %>
+  <tr>
+    <td style="border-bottom:1px solid #DDD" width="10%" bgcolor="#fff" align="center"><%= item.quantity %></td>
+    <td style="border-bottom:1px solid #DDD" width="60%" bgcolor="#fff" align="left">
+      <%= "#{item.product_brand} #{item.product_name}" %>
+      <% if item.feature_descriptions.present? %>
+      <br><small><%= raw nl2br(tidy_cutting_instructions(item)) %></small>
+      <% end %>
+    </td>
+    <td style="border-bottom:1px solid #DDD" width="15%" bgcolor="#fff" align="right"><%= formatted_price(item.product_price ) %></td>
+    <td style="border-bottom:1px solid #DDD" width="15%" bgcolor="#fff" align="right"><%= formatted_price(item.product_price * item.quantity) %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th width="10%" bgcolor="#FFF"></th>
+    <th width="60%" bgcolor="#FFF"></th>
+    <th style="border-bottom:1px solid #FFF; border-right:1px solid #FFF;" width="15%" bgcolor="#DDD" align="right"><strong>Sub Total</strong></th>
+    <th style="border-bottom:1px solid #FFF;" width="15%" bgcolor="#EEE" align="right">
+      <strong><%= formatted_price(order.line_total_net) %></strong>
+    </th>
+  </tr>
+  <tr>
+    <th width="10%" bgcolor="#FFF"></th>
+    <th width="60%" bgcolor="#FFF"></th>
+    <th style="border-bottom:1px solid #FFF; border-right:1px solid #FFF;" width="15%" bgcolor="#DDD" align="right"><strong>Delivery</strong></th>
+    <th style="border-bottom:1px solid #FFF;" width="15%" bgcolor="#EEE" align="right">
+      <strong><%= delivery_amount_description(order) %></strong>
+    </th>
+  </tr>
+  <tr>
+    <th width="10%" bgcolor="#FFF"></th>
+    <th width="60%" bgcolor="#FFF"></th>
+    <th style="border-bottom:1px solid #FFF; border-right:1px solid #FFF;" width="15%" bgcolor="#DDD" align="right">
+      <strong>
+        <% if order.zero_rated? %>
+        VAT (zero-rated)
+        <% else %>
+        VAT (20%)
+        <% end %>
+      </strong>
+    </th>
+    <th style="border-bottom:1px solid #FFF;" width="15%" bgcolor="#EEE" align="right">
+      <strong><%= formatted_price(order.tax_total) %></strong>
+    </th>
+  </tr>
+  <tr>
+    <th width="10%" bgcolor="#FFF"></th>
+    <th width="60%" bgcolor="#FFF"></th>
+    <th style="border-bottom:1px solid #FFF; border-right:1px solid #FFF;" width="15%" bgcolor="#DDD" align="right"><strong>Order Total</strong></th>
+    <th style="border-bottom:1px solid #FFF;" width="15%" bgcolor="#EEE" align="right">
+      <strong><%= formatted_price(order.total) %></strong>
+    </th>
+  </tr>
+</table>

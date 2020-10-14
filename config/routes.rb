@@ -201,6 +201,11 @@ Rails.application.routes.draw do
     get 'paypal/auto_return' => 'paypal#auto_return', as: :paypal_auto_return
     get 'paypal/confirmation' => 'paypal#confirmation', as: :paypal_confirmation
     post 'paypal/ipn_listener' => 'paypal#ipn_listener', as: :paypal_ipn_listener
+
+    namespace :stripe do
+      resources :payment_intents, only: [:create]
+    end
+
     post 'yorkshire_payments/callback' => 'yorkshire_payments#callback', as: :yorkshire_payments_callback
     post 'yorkshire_payments/redirect' => 'yorkshire_payments#redirect', as: :yorkshire_payments_redirect
   end

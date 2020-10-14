@@ -55,14 +55,14 @@ class PaymentsController < ApplicationController
     render layout: false
   end
 
-  # Handles payments being made on account, that is, no payment is actually being
-  # made. This can only happen when the website allows this method of payment.
+  # Handles payments being made on account, that is, no payment is actually
+  # being made. This can only happen when the website allows this method of
+  # payment.
   def on_account
-    if (order = Order.find_by(id: session[:order_id])) && website.accept_payment_on_account?
+    if (order = current_order) && website.accept_payment_on_account?
       order.status = Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
       order.save
-      send_notification(order)
-      reset_basket(order)
+      Orders::Finalizer.new(website).send_confirmation(order)
       redirect_to controller: "orders", action: "receipt"
     else
       redirect_to checkout_path
@@ -103,7 +103,7 @@ class PaymentsController < ApplicationController
     else
       @message = "Payment received"
       @payment.accepted = true
-      clean_up
+      finalize_order
     end
     @payment.save
     render layout: false
@@ -153,14 +153,28 @@ class PaymentsController < ApplicationController
 
   private
 
-  # Empties the basket for the given order and removes any coupons stored in
-  # the session.
-  #
-  # Many actions using this method will be invoked by a remote payments
-  # system which means that coupons won't be cleared in these cases.
-  def reset_basket(order)
-    order.empty_basket
-    session[:coupons] = nil
+  # Finalizes the order and payment.
+  def finalize_order
+    Orders::Finalizer.new(website).finalize_with_payment(@payment)
+  end
+
+  def set_order
+    @order = Order.current!(cookies)
+    handle_submitted_order
+  end
+
+  # Returns the current order in cookie.
+  def current_order
+    Order.current(cookies)
+  end
+
+  # Check in case the order has already been submitted, or perhaps converted
+  # to quote by sales staff.
+  def handle_submitted_order
+    unless @order.waiting_for_payment?
+      flash[:notice] = "Your order has already been submitted."
+      redirect_to receipt_orders_path
+    end
   end
 
   def update_order order
@@ -173,13 +187,6 @@ class PaymentsController < ApplicationController
   # Sends an email notification to the customer and website owner.
   def send_notification(order)
     OrderNotifier.notification(website, order).deliver_now
-  end
-
-  def clean_up
-    if (order = Order.find_by(order_number: @payment.cart_id))
-      reset_basket(order)
-      update_order order
-    end
   end
 
   def cardsave_hash_post

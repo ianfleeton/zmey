@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module OrderNumberGenerator
   module_function
 
   def get_generator(order)
-    DatedRandom.new(order)
+    Sequential.new(order)
   end
 end

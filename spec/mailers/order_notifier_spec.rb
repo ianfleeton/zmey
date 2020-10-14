@@ -1,12 +1,55 @@
 require "rails_helper"
+require_relative "expect_attachment"
 
 RSpec.describe OrderNotifier do
-  let(:website) { FactoryBot.build(:website) }
-  let(:order) { FactoryBot.build(:order) }
+  let(:website) do
+    FactoryBot.create(
+      :website,
+      email: "sales@example.com",
+      order_notifier_email: "orders@example.com",
+      name: "Shop"
+    )
+  end
+  let(:order) { FactoryBot.create(:order) }
 
-  describe "#notification" do
-    it "works" do
-      OrderNotifier.notification(website, order).deliver_now
+  before do
+    stub_pdf_generation
+  end
+
+  def stub_pdf_generation
+    pdf = instance_double(
+      PDF::Invoice,
+      generate: nil,
+      filename: File.join("spec", "fixtures", "pdf", "fake.pdf")
+    )
+    allow(PDF::Invoice).to receive(:new).and_return(pdf)
+    allow(PDF::OrderConfirmationInfo).to receive(:new).and_return(pdf)
+  end
+
+  describe "#confirmation" do
+    it "attaches a PDF with order confirmation and right to cancel info" do
+      mail = OrderNotifier.confirmation(website, order)
+      expect_attachment(mail, "InfoAndRightToCancel.pdf")
+    end
+
+    it "sends an email to the merchant's order_notifier_email" do
+      mail = OrderNotifier.invoice(website, order)
+      expect(mail.to).to include("orders@example.com")
+    end
+
+    it "updates order confirmation sent at field and stores it" do
+      email = OrderNotifier.confirmation(website, order)
+      email.deliver_now
+      expect(order.confirmation_sent_at).to be_within(2.seconds).of Time.current
+      order.reload
+      expect(order.confirmation_sent_at).to be_within(2.seconds).of Time.current
+    end
+
+    it "does not update the confirmation confirmation_sent_at field if the record is new" do
+      order = Order.new
+      email = OrderNotifier.confirmation(website, order)
+      email.deliver_now
+      expect(order.confirmation_sent_at).to be_nil
     end
   end
 
@@ -31,4 +74,6 @@ RSpec.describe OrderNotifier do
       OrderNotifier.admin_waiting_for_payment(website, order).deliver_now
     end
   end
+
+  include ExpectAttachment
 end

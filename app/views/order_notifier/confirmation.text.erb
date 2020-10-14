@@ -1,0 +1,19 @@
+<%=
+template(
+  "emails.order_confirmation.text",
+  {
+    "billing_address" => format_address(@order.billing_address, email: false, html: false),
+    "billing_full_name" => @order.billing_full_name,
+    "collection" => @order.collection?,
+    "delivery_address" => format_address(@order.delivery_address, email: false, html: false),
+    "delivery_date" => @order.relevant_delivery_date.try(:strftime, '%B %e, %Y'),
+    "delivery_date_type" => @order.delivery_date ? "delivery date" : "estimated delivery date",
+    "order_details" => render(partial: "orders/order_details_full", locals: { order: @order, order_lines: @order.order_lines }),
+    "order_number" => @order.order_number,
+    "order_confirmation_info" => render("order_notifier/order_confirmation_info"),
+    "po_number" => @order.po_number.to_s,
+    "website_name" => @website.name,
+    "website_phone_number" => @website.phone_number
+  }
+)
+%>

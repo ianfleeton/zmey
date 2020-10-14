@@ -133,6 +133,22 @@ class Order < ActiveRecord::Base
   delegate :mobile_app?, to: :client, allow_nil: true
   delegate :ip_address, to: :client, allow_nil: true
   delegate :platform, to: :client, allow_nil: true
+
+  # Returns the order whose order number matches the payment's cart_id.
+  def self.matching_new_payment(payment)
+    find_by(order_number: payment.cart_id)
+  end
+
+  def self.current(cookies)
+    order_id = cookies.signed[:order_id]
+    # Avoid unnecessary database query.
+    find_by(id: order_id) if order_id
+  end
+
+  def self.current!(cookies)
+    find(cookies.signed[:order_id])
+  end
+
   # Deletes all orders that have not received payment and are older than +age+.
   def self.purge_old_unpaid(age = 1.month)
     where(["created_at < ? and status = ?", Time.now - age, PaymentStatus::WAITING_FOR_PAYMENT]).destroy_all
@@ -206,6 +222,18 @@ class Order < ActiveRecord::Base
     total - amount_paid
   end
 
+  # Returns true if this order is to be collected rather than delivered.
+  def collection?
+    shipping_method == ShippingClass::COLLECTION
+  end
+
+  # Returns the delivery_date specified by customer, if set, or falls back
+  # to the estimated_delivery_date. Can return nil if neither date has been
+  # set.
+  def relevant_delivery_date
+    delivery_date || estimated_delivery_date
+  end
+
   # Transitions the status to PAYMENT_RECEIVED if sufficient payments have
   # been received.
   #
@@ -231,6 +259,24 @@ class Order < ActiveRecord::Base
   def copy_billing_address(address)
     self.email_address = address.email_address
     copy_address(:billing, address)
+  end
+
+  # Returns a new Address from the +email_address+ and <tt>billing_*</tt>
+  # attributes.
+  def billing_address
+    Address.new(
+      email_address: email_address,
+      company: billing_company,
+      full_name: billing_full_name,
+      address_line_1: billing_address_line_1,
+      address_line_2: billing_address_line_2,
+      address_line_3: billing_address_line_3,
+      town_city: billing_town_city,
+      county: billing_county,
+      postcode: billing_postcode,
+      country_id: billing_country_id,
+      phone_number: billing_phone_number
+    )
   end
 
   # Returns a new Address from the +email_address+ and <tt>delivery_*</tt>

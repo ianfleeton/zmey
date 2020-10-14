@@ -1,8 +1,16 @@
 require "rails_helper"
 
 RSpec.describe PaymentsController, type: :controller do
+  include ActiveJob::TestHelper
+
   let(:accept_payment_on_account) { false }
-  let(:website) { FactoryBot.build(:website, accept_payment_on_account: accept_payment_on_account) }
+  let(:website) do
+    FactoryBot.create(
+      :website,
+      accept_payment_on_account: accept_payment_on_account,
+      phone_number: "01234 567890"
+    )
+  end
 
   before do
     allow(controller).to receive(:website).and_return(website)
@@ -87,8 +95,7 @@ RSpec.describe PaymentsController, type: :controller do
     let(:order) { FactoryBot.create(:order) }
 
     before do
-      session[:order_id] = order_id
-      post :on_account
+      cookies.signed[:order_id] = order_id
     end
 
     context "with an order" do
@@ -98,19 +105,22 @@ RSpec.describe PaymentsController, type: :controller do
         let(:accept_payment_on_account) { true }
 
         it "sets the order payment status to PAYMENT_ON_ACCOUNT" do
+          post :on_account
           expect(order.reload.status).to eq Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
         end
 
-        it "sends an email notification" do
-          expect(ActionMailer::Base.deliveries.last.subject).to include(order.order_number)
-        end
-
-        it "resets the basket" do
-          expect(controller).to receive(:reset_basket).with(order)
+        it "sends an order confirmation email" do
+          finalizer = instance_double(Orders::Finalizer)
+          expect(Orders::Finalizer)
+            .to receive(:new)
+            .with(website)
+            .and_return(finalizer)
+          expect(finalizer).to receive(:send_confirmation).with(order)
           post :on_account
         end
 
         it "redirects to receipt" do
+          post :on_account
           expect(response).to redirect_to(controller: "orders", action: "receipt")
         end
       end
@@ -119,6 +129,7 @@ RSpec.describe PaymentsController, type: :controller do
         let(:accept_payment_on_account) { false }
 
         it "redirects to checkout" do
+          post :on_account
           expect(response).to redirect_to(checkout_path)
         end
       end
@@ -128,6 +139,7 @@ RSpec.describe PaymentsController, type: :controller do
       let(:order_id) { nil }
 
       it "redirects to checkout" do
+        post :on_account
         expect(response).to redirect_to(checkout_path)
       end
     end

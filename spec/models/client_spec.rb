@@ -59,7 +59,7 @@ RSpec.describe Client, type: :model do
         .with("192.168.0.123")
         .and_return(ip_address)
 
-      client = FactoryBot.build(:client, ip_address: "192.168.0.123")
+      client = FactoryBot.build(:client, ip_address: "192.168.0.123", clientable: FactoryBot.create(:order))
       client.save
 
       expect(client.ip_address).to eq "192.168.0.0"

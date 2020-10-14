@@ -1,0 +1,9 @@
+<% order_confirmation_info = render partial: "order_notifier/order_confirmation_info" -%>
+<%= template(
+  "pdfs.order_confirmation_info",
+  {
+    order_confirmation_info: order_confirmation_info,
+    website_domain: website.domain,
+    website_url: website.url
+  }
+) %>

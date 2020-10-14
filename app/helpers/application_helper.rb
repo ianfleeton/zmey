@@ -60,6 +60,23 @@ module ApplicationHelper
     tick_cross yes, false
   end
 
+  def template(name, args = {})
+    lt = LiquidTemplate.find_by(name: name)
+    if lt
+      parse_and_render_template(lt.markup, args)
+    else
+      begin
+        render partial: "default_templates/#{name}", locals: args
+      rescue ActionView::MissingTemplate
+        raw LiquidTemplate.new_called(name).markup
+      end
+    end
+  end
+
+  def parse_and_render_template(markup, args)
+    raw Liquid::Template.parse(markup).render(args.stringify_keys!)
+  end
+
   def nav_link_to page, options = {}, html_options = nil, class_name = ""
     name = page.is_a?(String) ? page : page.name
     class_name = "n_" + name.downcase.tr(" ", "_").gsub("&amp;", "and") if class_name.empty?

@@ -1,0 +1,9 @@
+<% order_lines.each do |item| -%>
+<%= item.quantity %> × <%= item.product_name %><% if item.feature_descriptions.present? %> (<%= raw nl2br(tidy_cutting_instructions(item)) %>)<% end %> (<%= formatted_price(item.line_total_net) %>)
+<% end %>
+
+Sub Total: <%= formatted_price(order.line_total_net) %>
+Delivery: <%= delivery_amount_description(order) %>
+<% if order.zero_rated? %>VAT (zero-rated)<% else %>VAT (20%)<% end %>: <%= formatted_price(order.tax_total) %>
+
+Order Total: <%= formatted_price(order.total) %>

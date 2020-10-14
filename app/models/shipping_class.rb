@@ -1,4 +1,6 @@
 class ShippingClass < ActiveRecord::Base
+  COLLECTION = "Collection"
+
   belongs_to :shipping_zone
   has_many :shipping_table_rows, -> { order "trigger_value" }, dependent: :delete_all
   has_many :shipping_zones, foreign_key: "default_shipping_class_id", dependent: :nullify
