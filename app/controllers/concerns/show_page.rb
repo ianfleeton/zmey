@@ -20,9 +20,6 @@ module ShowPage
       @description = @page.description
       @no_follow = @page.no_follow
       @no_index = @page.no_index
-      if request.path == "/"
-        @blog = website.blog
-      end
       render "pages/show", layout: !request.xhr?
     else
       not_found
