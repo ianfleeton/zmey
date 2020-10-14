@@ -40,4 +40,24 @@ RSpec.describe OrdersHelper, type: :helper do
       record_sales_conversion(order)
     end
   end
+
+  describe "#delivery_amount_description" do
+    it "returns '[Awating quotation]' for orders needing a shipping quote" do
+      order = Order.new(status: Enums::PaymentStatus::NEEDS_SHIPPING_QUOTE)
+      expect(delivery_amount_description(order)).to eq "[Awaiting quotation]"
+    end
+
+    it "returns 'Free' for zero shipping orders" do
+      order = Order.new(status: Enums::PaymentStatus::WAITING_FOR_PAYMENT)
+      expect(delivery_amount_description(order)).to eq "Free"
+    end
+
+    it "returns the formatted shipping amount for all other orders" do
+      order = Order.new(
+        status: Enums::PaymentStatus::WAITING_FOR_PAYMENT,
+        shipping_amount: 10
+      )
+      expect(delivery_amount_description(order)).to eq "£10.00"
+    end
+  end
 end

@@ -17,4 +17,14 @@ module OrdersHelper
     Orders::SalesConversion.new(order).record!
     render(partial: "orders/google_sales_conversion", locals: {order: order})
   end
+
+  def delivery_amount_description(order)
+    if order.needs_shipping_quote?
+      "[Awaiting quotation]"
+    elsif order.shipping_amount == 0
+      "Free"
+    else
+      formatted_price(order.shipping_amount)
+    end
+  end
 end
