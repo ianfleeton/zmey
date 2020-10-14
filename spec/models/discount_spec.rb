@@ -25,4 +25,98 @@ RSpec.describe Discount, type: :model do
       expect(discount.coupon).to eq "COUPON"
     end
   end
+
+  describe ".currently_valid" do
+    subject { Discount.currently_valid }
+    context "with currently valid discount" do
+      let!(:discount) do
+        FactoryBot.create(
+          :discount,
+          valid_from: Time.current - 1.day, valid_to: Time.current + 1.day
+        )
+      end
+      it { should include(discount) }
+    end
+
+    context "with expired discount" do
+      let!(:discount) do
+        FactoryBot.create(
+          :discount,
+          valid_from: Time.current - 2.days, valid_to: Time.current - 1.day
+        )
+      end
+      it { should_not include(discount) }
+    end
+
+    context "with future discount" do
+      let!(:discount) do
+        FactoryBot.create(
+          :discount,
+          valid_from: Time.current + 1.day, valid_to: Time.current + 2.days
+        )
+      end
+      it { should_not include(discount) }
+    end
+
+    context "with unset date range" do
+      let!(:discount) do
+        FactoryBot.create(:discount, valid_from: nil, valid_to: nil)
+      end
+      it { should include(discount) }
+    end
+
+    context "with uses remaining" do
+      let!(:discount) do
+        FactoryBot.create(:discount, uses_remaining: 1)
+      end
+      it { should include(discount) }
+    end
+
+    context "with no uses remaining" do
+      let!(:discount) do
+        FactoryBot.create(:discount, uses_remaining: 0)
+      end
+      it { should_not include(discount) }
+    end
+
+    context "with discount code unset" do
+      let!(:discount) { FactoryBot.create(:discount, code: "APRILSAVE") }
+      it { should_not include(discount) }
+    end
+
+    context "with discount code set" do
+      subject { Discount.currently_valid(code: "MAYSAVE") }
+      let!(:discount1) { FactoryBot.create(:discount, code: "APRILSAVE") }
+      let!(:discount2) { FactoryBot.create(:discount, code: "MAYSAVE") }
+      it { should_not include(discount1) }
+      it { should include(discount2) }
+    end
+
+    context "with discount code set to mismatched case" do
+      subject { Discount.currently_valid(code: "maysave") }
+      let!(:discount) { FactoryBot.create(:discount, code: "MAYSAVE") }
+      it { should include(discount) }
+    end
+  end
+
+  describe "#record_use" do
+    it "reduces uses remaining by one when uses is a number" do
+      discount = FactoryBot.create(:discount, uses_remaining: 3)
+      discount.record_use
+      expect(discount.uses_remaining).to eq 2
+    end
+
+    it "saves the discount" do
+      discount = FactoryBot.create(:discount, uses_remaining: 3)
+      discount.record_use
+      discount.reload
+      expect(discount.uses_remaining).to eq 2
+    end
+
+    it "leaves uses remaining as nil when nil" do
+      discount = FactoryBot.create(:discount, uses_remaining: nil)
+      discount.record_use
+      expect(discount.uses_remaining).to be_nil
+    end
+  end
 end

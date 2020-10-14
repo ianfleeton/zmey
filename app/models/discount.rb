@@ -16,15 +16,41 @@ class Discount < ActiveRecord::Base
     name
   end
 
+  def self.currently_valid(code: nil)
+    # This works even without specifically upcasing the passed in code arg.
+    # This is because the collation for mysql should be set to case insensitive.
+    # We upcase just in case a production database is not configured the same.
+    code_to_find = code&.upcase
+    where("code IS NULL OR code = ?", code_to_find).select(&:currently_valid?)
+  end
+
   def uppercase_coupon_code
     coupon.upcase!
   end
 
   def currently_valid?
+    has_uses_remaining? && within_valid_dates?
+  end
+
+  def record_use
+    if uses_remaining
+      self.uses_remaining -= 1
+      save
+    end
+  end
+
+  private
+
+  def has_uses_remaining?
+    uses_remaining.nil? || uses_remaining.positive?
+  end
+
+  def within_valid_dates?
     if valid_from.nil? || valid_to.nil?
       true
     else
-      Time.zone.now >= valid_from && Time.zone.now <= valid_to
+      Time.current >= valid_from && Time.current <= valid_to
     end
   end
 end
+
