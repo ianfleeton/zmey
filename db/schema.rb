@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_094947) do
+ActiveRecord::Schema.define(version: 2020_10_14_100209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_094947) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "shipping_zone_id"
+    t.boolean "in_eu", default: false, null: false
     t.index ["name"], name: "index_countries_on_name", unique: true
   end
 
