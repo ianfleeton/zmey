@@ -354,18 +354,6 @@ class Order < ActiveRecord::Base
     self.delivery_country = Country.find_by(name: name) || delivery_country
   end
 
-  # Returns <tt>true</tt> if a sales conversion should be recorded for this
-  # order.
-  def should_record_sales_conversion?
-    payment_received? && !sales_conversion_recorded_at
-  end
-
-  # Sets <tt>sales_conversion_recorded_at</tt> to now and saves the order.
-  def record_sales_conversion!
-    self.sales_conversion_recorded_at = Time.zone.now
-    save
-  end
-
   # Associates this order with a user having a matching email address if a user
   # is not already assigned.
   def associate_with_user
