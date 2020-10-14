@@ -1,4 +1,6 @@
 class Discount < ActiveRecord::Base
+  # Associations
+  has_many :discount_uses, dependent: :delete_all
   belongs_to :product_group, optional: true
 
   validates_numericality_of :reward_amount, greater_than_or_equal_to: 0, less_than_or_equal_to: 9999999.999
