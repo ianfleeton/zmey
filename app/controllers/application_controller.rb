@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found
-    render file: "#{Rails.root}/public/404", formats: [:html], layout: false, status: 404
+    render "not_found", formats: [:html], status: 404
   end
 
   def render_error(exception)

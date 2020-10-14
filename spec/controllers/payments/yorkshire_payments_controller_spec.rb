@@ -111,9 +111,9 @@ RSpec.describe Payments::YorkshirePaymentsController, type: :controller do
           expect(payment.transaction_status).to be_falsey
         end
 
-        context "#clean_up" do
-          let(:pre) { -> { expect(controller).not_to receive(:clean_up) } }
-          it "does not call #clean_up" do
+        context "#finalize_order" do
+          let(:pre) { -> { expect(controller).not_to receive(:finalize_order) } }
+          it "does not call #finalize_order" do
           end
         end
       end

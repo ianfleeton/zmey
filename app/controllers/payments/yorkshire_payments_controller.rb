@@ -16,7 +16,7 @@ class Payments::YorkshirePaymentsController < PaymentsController
 
     if params[:responseCode] == "0" && s.verify
       @payment.accepted = @payment.transaction_status = true
-      clean_up
+      finalize_order
     end
 
     @payment.save
