@@ -10,20 +10,18 @@ RSpec.describe "Product groups admin" do
   end
 
   scenario "Create product group" do
-    product_group = FactoryBot.build(:product_group,
-      location: SecureRandom.hex,
-      name: SecureRandom.hex)
+    location = FactoryBot.create(:location, name: "Books")
     visit admin_product_groups_path
     click_link "New"
 
-    fill_in "Name", with: product_group.name
-    fill_in "Location", with: product_group.location
+    fill_in "Name", with: "Fiction"
+    select "Books", from: "Location"
 
     click_button "Create Product group"
 
     expect(ProductGroup.find_by(
-      location: product_group.location,
-      name: product_group.name
+      location_id: location.id,
+      name: "Fiction"
     )).to be
   end
 
