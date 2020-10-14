@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_13_170228) do
+ActiveRecord::Schema.define(version: 2020_10_13_172338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -594,6 +594,7 @@ ActiveRecord::Schema.define(version: 2020_10_13_170228) do
     t.string "yorkshire_payments_merchant_id", default: "", null: false
     t.string "yorkshire_payments_pre_shared_key", default: "", null: false
     t.integer "default_shipping_class_id"
+    t.string "order_notifier_email"
   end
 
 end
