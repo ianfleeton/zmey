@@ -17,7 +17,7 @@ class OrderNotifier < ActionMailer::Base
   end
 
   def dispatch(website, shipment)
-    send_to_customer_and_admin(website: website, order: shipment.order, shipment: shipment, what: "order dispatched")
+    send_to_customer_and_merchant(website: website, order: shipment.order, shipment: shipment, what: "order dispatched")
   end
 
   def invoice(website, order)

@@ -57,7 +57,7 @@
 <% end -%>
     <td class="price shipping_amount"><%= formatted_price(@order.shipping_amount) %></td>
   </tr>
-  <% unless @w.vat_number.empty? -%>
+  <% unless website.vat_number.empty? -%>
   <tr>
     <th colspan="2">VAT:</th>
 <% if admin? -%>
@@ -76,9 +76,9 @@
 
 </table>
 
-<% unless @w.vat_number.empty? -%>
+<% unless website.vat_number.empty? -%>
 <p>
-  VAT number: <%= @w.vat_number %>
+  VAT number: <%= website.vat_number %>
 </p>
 <% end -%>
 

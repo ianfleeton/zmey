@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe OrdersHelper, type: :helper do
+  include ProductsHelper
+
   describe "#sage_pay_form_url" do
     it "returns a live URL when test_mode false" do
       expect(sage_pay_form_url(false)).to eq(

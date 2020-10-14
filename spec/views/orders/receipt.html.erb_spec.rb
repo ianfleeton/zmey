@@ -9,7 +9,9 @@ RSpec.describe "orders/receipt.html.erb", type: :view do
     order.reload
     assign(:order, order)
 
-    assign(:w, website)
+    without_partial_double_verification do
+      allow(view).to receive(:website).and_return(website)
+    end
   end
 
   context "as regular shopper" do

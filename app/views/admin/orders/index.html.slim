@@ -7,7 +7,7 @@ p
 - if @orders.empty?
   p= t('.no_orders')
 - else
-  = will_paginate(orders, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer)
+  = will_paginate(@orders, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer)
   table#orders.table.table-bordered.table-striped
     thead
       tr

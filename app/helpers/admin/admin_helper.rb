@@ -50,6 +50,13 @@ module Admin::AdminHelper
       )
   end
 
+  def dismissable_error_message(&block)
+    render(
+      partial: "admin/shared/dismissable_error_message",
+      locals: {body: capture(&block)}
+    )
+  end
+
   protected
 
   def object_title(object)

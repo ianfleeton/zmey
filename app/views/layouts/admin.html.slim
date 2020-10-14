@@ -9,6 +9,7 @@ html lang="en"
     = csrf_meta_tags
     = stylesheet_link_tag 'admin'
   body
+    = render "shared/disable_transitions" if Rails.env.test?
     nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top role="navigation" style="#{'position:static;' if Rails.env.test?}"
       a.navbar-brand href="/" data-turbolinks="false" Home
       button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
@@ -45,8 +46,10 @@ html lang="en"
           = link_to "<i class='far fa-sign-out'></i>".html_safe, sessions_path, method: :delete, title: t(".sign_out"), class: "dropdown-item"
     .container-fluid
       - if flash[:notice]
-        .alert.alert-info.fade.in
-          a.close data-dismiss="alert" href="#" &times;
+        .alert.alert-info.fade.show
+          button.close type="button" data-dismiss="alert" aria-label="Close"
+            span aria-hidden="true" &times;
           = flash[:notice]
+      = dismissable_error_message { flash[:alert] } if flash[:alert]
 
       = yield

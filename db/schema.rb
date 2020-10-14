@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_111248) do
+ActiveRecord::Schema.define(version: 2020_10_14_131104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -315,6 +315,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_111248) do
     t.boolean "locked", default: false, null: false
     t.string "vat_number"
     t.datetime "confirmation_sent_at"
+    t.boolean "credit_account", default: false, null: false
     t.index ["basket_id"], name: "index_orders_on_basket_id"
     t.index ["created_at"], name: "index_orders_on_created_at"
     t.index ["email_address"], name: "index_orders_on_email_address"
