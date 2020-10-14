@@ -131,6 +131,28 @@ class Order < ActiveRecord::Base
   # added.
   alias locked? payment_received?
 
+  # Returns +true+ if the order is a pro forma invoice.
+  def pro_forma?
+    status == Enums::PaymentStatus::PRO_FORMA
+  end
+
+  # Returns +true+ if the order is a quote.
+  def quote?
+    status == Enums::PaymentStatus::QUOTE
+  end
+
+  def waiting_for_payment?
+    status == Enums::PaymentStatus::WAITING_FOR_PAYMENT
+  end
+
+  def canceled?
+    status == Enums::PaymentStatus::CANCELED
+  end
+
+  def needs_shipping_quote?
+    status == Enums::PaymentStatus::NEEDS_SHIPPING_QUOTE
+  end
+
   # Returns the sum of all accepted payment amounts.
   def amount_paid
     accepted_payments.sum(:amount).to_f

@@ -1,11 +1,16 @@
 module Enums
   class PaymentStatus
+    ORDER_NOT_PLACED = 0
     WAITING_FOR_PAYMENT = 1
     PAYMENT_RECEIVED = 2
     PAYMENT_ON_ACCOUNT = 3
     QUOTE = 4
+    PRO_FORMA = 5
+    PAY_BY_PHONE = 6
+    CANCELED = 7
+    NEEDS_SHIPPING_QUOTE = 8
 
-    VALUES = (WAITING_FOR_PAYMENT..QUOTE)
+    VALUES = (ORDER_NOT_PLACED..NEEDS_SHIPPING_QUOTE)
 
     def initialize(status)
       if VALUES.include?(status)
@@ -22,10 +27,15 @@ module Enums
     # Describes the +status+ attribute in English.
     def to_s
       {
+        ORDER_NOT_PLACED => "Order not placed",
         WAITING_FOR_PAYMENT => "Waiting for payment",
         PAYMENT_RECEIVED => "Payment received",
         PAYMENT_ON_ACCOUNT => "Payment on account",
-        QUOTE => "Quote"
+        QUOTE => "Quote",
+        PRO_FORMA => "Pro forma invoice",
+        PAY_BY_PHONE => "Paying by phone",
+        CANCELED => "Canceled",
+        NEEDS_SHIPPING_QUOTE => "Needs shipping quote"
       }[@status]
     end
 
