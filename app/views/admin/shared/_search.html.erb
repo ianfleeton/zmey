@@ -1,7 +1,7 @@
 <script>
 $(function() {
   $('#search button').click(function() {
-    $.getJSON('#{url_base}search',
+    $.getJSON('<%= url_base %>search',
       {
         query: $('#search input').val()
       },
