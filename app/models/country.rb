@@ -1,7 +1,9 @@
 class Country < ActiveRecord::Base
-  validates :name, presence: true, uniqueness: true
+  UNITED_KINGDOM = "United Kingdom"
+
+  validates :name, presence: true, uniqueness: {case_sensitive: false}, length: {maximum: 100}
   validates_length_of :iso_3166_1_alpha_2, is: 2
-  validates_uniqueness_of :iso_3166_1_alpha_2
+  validates_uniqueness_of :iso_3166_1_alpha_2, case_sensitive: false
 
   belongs_to :shipping_zone, optional: true
   has_many :addresses, dependent: :restrict_with_exception
@@ -262,6 +264,14 @@ class Country < ActiveRecord::Base
       {name: "Zambia", iso_3166_1_alpha_2: "ZM"},
       {name: "Zimbabwe", iso_3166_1_alpha_2: "ZW"}
     ])
+  end
+
+  def self.uk
+    Country.find_by(name: UNITED_KINGDOM)
+  end
+
+  def uk?
+    name == UNITED_KINGDOM
   end
 
   # Returns countries that can be chosen as a shipping destination.
