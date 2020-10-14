@@ -6,6 +6,7 @@ html lang="en"
     meta name="viewport" content="width=device-width, initial-scale=1"
     title= website.name
     = javascript_include_tag 'admin'
+    = javascript_pack_tag "application", async: Rails.env.production?
     = csrf_meta_tags
     = stylesheet_link_tag 'admin'
   body
@@ -36,7 +37,8 @@ html lang="en"
               = link_to "Shipping Classes", admin_shipping_classes_path, class: "dropdown-item"
               = link_to "Shipping Zones", admin_shipping_zones_path, class: "dropdown-item"
               = link_to "Webhooks", admin_webhooks_path, class: "dropdown-item"
-              = link_to "Website Settings", edit_admin_website_path(website), class: "dropdown-item"
+              - if website.persisted?
+                = link_to "Website Settings", edit_admin_website_path(website), class: "dropdown-item"
           li.nav-item.dropdown
             a#extrasDropdown.nav-link.dropdown-toggle href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
               = t(".extras")

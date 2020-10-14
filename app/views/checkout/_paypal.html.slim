@@ -2,5 +2,5 @@
   h2 Pay by PayPal
   p You do not need to have a PayPal account to pay by PayPal.<br>You can pay using your debit or credit card with PayPal.
   = paypal_form_tag(sandbox: website.paypal_test_mode)
-    = render 'paypal_hidden_fields'
+    = render "checkout/paypal_hidden_fields"
     input type="image" src="http://www.paypal.com/en_US/i/btn/btn_buynow_LG.gif" align="top" border="0" alt="Make payments with PayPal - it's fast, free and secure!"

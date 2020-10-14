@@ -58,6 +58,16 @@ FactoryBot.define do
     browser_version { "MyString" }
   end
 
+  factory :closure_date do
+    closed_on { "2020-10-14" }
+    delivery_possible { false }
+  end
+
+  factory :collection_ready_email do
+    association :order
+    sent_at { "2020-10-14 16:55:58" }
+  end
+
   factory :component do
     name { "Component" }
     association :product
@@ -99,6 +109,17 @@ FactoryBot.define do
     sequence(:name) { |n| "Template #{n}" }
   end
 
+  factory :location do
+    name { "MyString" }
+    max_daily_orders { 1 }
+    label { "MyString" }
+  end
+
+  factory :location_orders_exceeded_entry do
+    association :location
+    exceeded_on { "2020-10-14" }
+  end
+
   factory :offline_payment_method do
     sequence(:name) { |n| "Payment Method #{n}" }
   end
@@ -109,6 +130,24 @@ FactoryBot.define do
     billing_town_city { "Harrogate" }
     billing_postcode { "HG1 9ZZ" }
     delivery_address_line_1 { "123 Street" }
+    delivery_town_city { "Harrogate" }
+    delivery_postcode { "HG1 9ZZ" }
+    association :billing_country, factory: :country
+    association :delivery_country, factory: :country
+    status { Enums::PaymentStatus::PAYMENT_RECEIVED }
+  end
+
+  factory :unpaid_order, class: Order do
+    shipping_amount { 1 }
+
+    email_address { "buyer@example.org" }
+    user
+    billing_address_line_1 { "123 Street" }
+    billing_full_name { "Bob Payer" }
+    billing_town_city { "Harrogate" }
+    billing_postcode { "HG1 9ZZ" }
+    delivery_address_line_1 { "123 Street" }
+    delivery_full_name { "Alice Recipient" }
     delivery_town_city { "Harrogate" }
     delivery_postcode { "HG1 9ZZ" }
     association :billing_country, factory: :country

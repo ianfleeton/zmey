@@ -50,6 +50,6 @@ class Admin::ProductGroupsController < Admin::AdminController
   end
 
   def product_group_params
-    params.require(:product_group).permit(:location, :name)
+    params.require(:product_group).permit(:location_id, :name)
   end
 end

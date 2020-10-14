@@ -40,6 +40,7 @@ class Product < ActiveRecord::Base
   has_many :orders, through: :order_lines
   has_many :product_group_placements, dependent: :delete_all
   has_many :product_groups, through: :product_group_placements
+  has_many :locations, through: :product_groups
   has_many :related_product_scores, -> { order "score DESC" }, dependent: :delete_all
   has_many :related_products, through: :related_product_scores
   has_many :basket_items, dependent: :destroy

@@ -56,6 +56,10 @@ class OrderLine < ActiveRecord::Base
     product.tax_amount(quantity) * quantity
   end
 
+  def lead_time
+    product.try(:lead_time) || 0
+  end
+
   def recalculate_order_total
     order.reload
     order.calculate_total

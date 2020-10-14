@@ -13,6 +13,16 @@ class ShippingClass < ActiveRecord::Base
   TABLE_RATE_METHODS = %w[basket_total weight]
   validates_inclusion_of :table_rate_method, in: TABLE_RATE_METHODS
 
+  # Returns the shipping class that represents customer collection.
+  def self.collection
+    find_by(name: COLLECTION)
+  end
+
+  # Returns truthy if this shipping class represents customer collection.
+  def collection?
+    name == COLLECTION
+  end
+
   def amount_for_basket(basket)
     value = get_value(basket)
 

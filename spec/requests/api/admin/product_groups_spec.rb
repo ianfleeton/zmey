@@ -82,9 +82,9 @@ RSpec.describe "Admin product groups API", type: :request do
   describe "POST create" do
     it "inserts a new product group into the website" do
       name = SecureRandom.hex
-      location = SecureRandom.hex
-      post "/api/admin/product_groups", params: {product_group: {name: name, location: location}}
-      expect(ProductGroup.find_by(name: name, location: location)).to be
+      location = FactoryBot.create(:location)
+      post "/api/admin/product_groups", params: {product_group: {name: name, location_id: location.id}}
+      expect(ProductGroup.find_by(name: name, location_id: location.id)).to be
     end
 
     it "returns 422 with bad params" do

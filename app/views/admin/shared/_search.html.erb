@@ -11,7 +11,7 @@ $(function() {
           items.push('<li>No results found</li>');
         }
         $.each(data, function(key, result) {
-          var i = '<li><a href="#{url_base}' + result.id + '/edit">' + result.name + '</a></li>';
+          var i = '<li><a href="<%= url_base %>' + result.id + '/edit">' + result.name + '</a></li>';
           items.push(i);
         });
         $('#results-body').replaceWith(

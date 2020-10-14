@@ -29,6 +29,6 @@ class Api::Admin::ProductGroupsController < Api::Admin::AdminController
   private
 
   def product_group_params
-    params.require(:product_group).permit(:name, :location)
+    params.require(:product_group).permit(:name, :location_id)
   end
 end

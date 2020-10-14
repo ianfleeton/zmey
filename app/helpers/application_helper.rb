@@ -24,10 +24,6 @@ module ApplicationHelper
     request.host.tr!(".", "-")
   end
 
-  def body_class
-    controller_name == "pages" && action_name == "show" ? @page.slug : ""
-  end
-
   def truncate(string, length)
     if string.length > length * 1.1
       string[0, length].rstrip + "..."

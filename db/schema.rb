@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_131104) do
+ActiveRecord::Schema.define(version: 2020_10_14_162613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,21 @@ ActiveRecord::Schema.define(version: 2020_10_14_131104) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["clientable_type", "clientable_id"], name: "index_clients_on_clientable_type_and_clientable_id"
     t.index ["ip_address"], name: "index_clients_on_ip_address"
+  end
+
+  create_table "closure_dates", force: :cascade do |t|
+    t.date "closed_on", null: false
+    t.boolean "delivery_possible", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "collection_ready_emails", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.datetime "sent_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_collection_ready_emails_on_order_id"
   end
 
   create_table "components", id: :serial, force: :cascade do |t|
@@ -231,6 +246,22 @@ ActiveRecord::Schema.define(version: 2020_10_14_131104) do
     t.index ["name"], name: "index_liquid_templates_on_name"
   end
 
+  create_table "location_orders_exceeded_entries", force: :cascade do |t|
+    t.bigint "location_id", null: false
+    t.date "exceeded_on", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_location_orders_exceeded_entries_on_location_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "max_daily_orders", default: 0, null: false
+    t.string "label", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "offline_payment_methods", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -316,6 +347,10 @@ ActiveRecord::Schema.define(version: 2020_10_14_131104) do
     t.string "vat_number"
     t.datetime "confirmation_sent_at"
     t.boolean "credit_account", default: false, null: false
+    t.datetime "invoiced_at"
+    t.date "paid_on"
+    t.date "dispatch_date"
+    t.boolean "on_hold", default: false, null: false
     t.index ["basket_id"], name: "index_orders_on_basket_id"
     t.index ["created_at"], name: "index_orders_on_created_at"
     t.index ["email_address"], name: "index_orders_on_email_address"
@@ -410,7 +445,8 @@ ActiveRecord::Schema.define(version: 2020_10_14_131104) do
     t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "location", default: "", null: false
+    t.bigint "location_id"
+    t.index ["location_id"], name: "index_product_groups_on_location_id"
   end
 
   create_table "product_images", id: :serial, force: :cascade do |t|
@@ -466,6 +502,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_131104) do
     t.text "extra"
     t.boolean "oversize", default: false, null: false
     t.string "pricing_method", default: "basic", null: false
+    t.integer "lead_time", default: 1, null: false
   end
 
   create_table "quantity_prices", id: :serial, force: :cascade do |t|
@@ -515,6 +552,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_131104) do
     t.boolean "invalid_over_highest_trigger", default: false, null: false
     t.boolean "allow_oversize", default: true, null: false
     t.boolean "requires_delivery_address", default: true, null: false
+    t.boolean "choose_date", default: false, null: false
     t.index ["shipping_zone_id"], name: "index_shipping_classes_on_shipping_zone_id"
   end
 
@@ -629,8 +667,12 @@ ActiveRecord::Schema.define(version: 2020_10_14_131104) do
     t.string "yorkshire_payments_pre_shared_key", default: "", null: false
     t.integer "default_shipping_class_id"
     t.string "order_notifier_email"
+    t.integer "delivery_cutoff_hour", default: 10, null: false
   end
 
+  add_foreign_key "collection_ready_emails", "orders"
   add_foreign_key "discount_uses", "discounts"
   add_foreign_key "discount_uses", "orders"
+  add_foreign_key "location_orders_exceeded_entries", "locations"
+  add_foreign_key "product_groups", "locations"
 end

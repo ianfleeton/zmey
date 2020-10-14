@@ -43,6 +43,18 @@ RSpec.describe OrderLine, type: :model do
     end
   end
 
+  describe "#lead_time" do
+    it "returns 0 without a product" do
+      expect(OrderLine.new.lead_time).to be_zero
+    end
+
+    it "delegates to its product" do
+      product = Product.new(lead_time: 3)
+      line = OrderLine.new(product: product)
+      expect(line.lead_time).to eq 3
+    end
+  end
+
   describe "#display_quantity" do
     let(:order_line) { OrderLine.new(product: product, quantity: quantity) }
 

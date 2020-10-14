@@ -16,6 +16,9 @@
 #   Email address as entered by the customer. Email addresses are required for
 #   all orders.
 #
+# +invoiced_at+::
+#   The time when the order became an invoice.
+#
 # +ip_address+::
 #   IP address of the customer's host at the time the order was placed.
 #
@@ -120,11 +123,14 @@ class Order < ActiveRecord::Base
   belongs_to :delivery_country, class_name: "Country", optional: true
   belongs_to :basket, optional: true
   belongs_to :user, optional: true
+  has_many :collection_ready_emails, dependent: :delete_all
   has_many :discount_uses, dependent: :delete_all
   has_many :discounts, through: :discount_uses
+  has_many :locations, -> { distinct }, through: :product_groups
   has_many :order_comments, dependent: :delete_all, inverse_of: :order
   has_many :order_lines, dependent: :delete_all, inverse_of: :order
   has_many :payments, dependent: :delete_all
+  has_many :product_groups, through: :products
   has_many :shipments, dependent: :delete_all, inverse_of: :order
   has_one :client, as: :clientable, dependent: :delete
 
@@ -154,18 +160,6 @@ class Order < ActiveRecord::Base
     where(["created_at < ? and status = ?", Time.now - age, PaymentStatus::WAITING_FOR_PAYMENT]).destroy_all
   end
 
-  # Returns a new order or recycles a previous order specified by +id+ if that
-  # order is eligible for recycling, that is, it exists and is in the waiting
-  # for payment state.
-  def self.new_or_recycled(id)
-    if (order = find_by(id: id)) && order.status == Enums::PaymentStatus::WAITING_FOR_PAYMENT
-      order.order_lines.delete_all
-      order
-    else
-      new
-    end
-  end
-
   # String representation of the order. Returns the order number.
   def to_s
     order_number
@@ -174,6 +168,11 @@ class Order < ActiveRecord::Base
   # Empties the basket associated with this order if there is one.
   def empty_basket
     basket&.basket_items&.destroy_all
+  end
+
+  # Returns +true+ if credit has been given and payment not yet received.
+  def payment_on_account?
+    status == Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
   end
 
   # Returns +true+ if payment has been received.
@@ -222,6 +221,19 @@ class Order < ActiveRecord::Base
     total - amount_paid
   end
 
+  # Whether or not the order can be collected. An order can be collected if
+  # the payment status is acceptable and the order is for collection but not
+  # on hold or already shipped/collected.
+  def collectable?
+    can_supply? && collection? && !(on_hold? || fully_shipped?)
+  end
+
+  # Returns +true+ if the merchant can supply this order which is the case
+  # if payment has been received or if the order is on a credit account.
+  def can_supply?
+    payment_received? || payment_on_account?
+  end
+
   # Returns true if this order is to be collected rather than delivered.
   def collection?
     shipping_method == ShippingClass::COLLECTION
@@ -247,6 +259,18 @@ class Order < ActiveRecord::Base
       self.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
       save
     end
+  end
+
+  # Tells the order that it has been fully paid. Its status is then changed to
+  # PAYMENT_RECEIVED and its paid_on date is set to today. The order is locked
+  # and the invoice date is set. If the order has not yet been fully shipped
+  # (note that a credit account order may be) then update the estimated delivery
+  # date.
+  def fully_paid
+    self.status = Enums::PaymentStatus::PAYMENT_RECEIVED
+    self.paid_on = Date.current
+    self.locked = true
+    update_estimated_delivery_date unless fully_shipped?
   end
 
   # Copies +address+ (an Address) into the <tt>delivery_*</tt> attributes.
@@ -403,6 +427,25 @@ class Order < ActiveRecord::Base
         feature_descriptions: i.feature_descriptions
       )
     end
+  end
+
+  def lead_time
+    order_lines.map(&:lead_time).max || 0
+  end
+
+  # Returns despatch date, or if it;s not set, yesterday.
+  def relevant_dispatch_date
+    dispatch_date || Date.yesterday
+  end
+
+  # Updates the estimated_delivery_date attribute with a new estimate.
+  def update_estimated_delivery_date
+    return if delivery_date
+
+    # TODO: Don't hardcode cutoff.
+    odd = Shipping::OrderDispatchDelivery.new(self, cutoff: 12)
+    self.estimated_delivery_date = odd.delivery_dates.first
+    self.dispatch_date = odd.dispatch_date
   end
 
   # Returns +true+ if all order contents have been shipped, otherwise +false+.

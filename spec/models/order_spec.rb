@@ -31,6 +31,7 @@ RSpec.describe Order, type: :model do
   end
 
   describe "associations" do
+    it { should have_many(:collection_ready_emails).dependent(:delete_all) }
     it { should have_many(:discount_uses).dependent(:delete_all) }
     it { should have_many(:discounts).through(:discount_uses) }
     it { should have_many(:order_comments).dependent(:delete_all).inverse_of(:order) }
@@ -119,53 +120,6 @@ RSpec.describe Order, type: :model do
     end
   end
 
-  describe ".new_or_recycled" do
-    subject { Order.new_or_recycled(id) }
-
-    context "when order_id nil" do
-      let(:id) { nil }
-      it { should be_instance_of(Order) }
-      it "is new" do
-        expect(subject.new_record?).to eq true
-      end
-    end
-
-    context "when order exists" do
-      let(:order) { FactoryBot.create(:order, status: status) }
-      let(:id) { order.id }
-
-      context "when status is waiting for payment" do
-        let(:status) { Enums::PaymentStatus::WAITING_FOR_PAYMENT }
-        it { should eq order }
-
-        context "with order lines" do
-          before do
-            FactoryBot.create(:order_line, order: order)
-          end
-          it "deletes order lines" do
-            expect(subject.order_lines.count).to eq 0
-          end
-        end
-      end
-
-      context "when status is not waiting for payment" do
-        let(:status) { Enums::PaymentStatus::QUOTE }
-        it { should be_instance_of(Order) }
-        it "is new" do
-          expect(subject.new_record?).to eq true
-        end
-      end
-    end
-
-    context "when order does not exist" do
-      let(:id) { 123 }
-      it { should be_instance_of(Order) }
-      it "is new" do
-        expect(subject.new_record?).to eq true
-      end
-    end
-  end
-
   describe ".matching_new_payment" do
     it "returns nil when there is no matching order" do
       FactoryBot.create(:order, order_number: "111222")
@@ -241,6 +195,79 @@ RSpec.describe Order, type: :model do
     end
   end
 
+  describe "#collectable?" do
+    def collectable_order
+      co = FactoryBot.build(
+        :order,
+        status: Enums::PaymentStatus::PAYMENT_RECEIVED,
+        shipping_method: "Collection"
+      )
+      yield co if block_given?
+      co
+    end
+
+    subject { order.collectable? }
+
+    context "when order is paid, unheld, and method is collection" do
+      let(:order) { collectable_order }
+      it { should be_truthy }
+    end
+
+    context "when order is unpaid" do
+      let(:order) do
+        collectable_order do |o|
+          o.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
+        end
+      end
+      it { should be_falsey }
+    end
+
+    context "when order is on hold" do
+      let(:order) do
+        collectable_order do |o|
+          o.on_hold = true
+        end
+      end
+      it { should be_falsey }
+    end
+
+    context "when order is payment on account" do
+      let(:order) do
+        collectable_order do |o|
+          o.status = Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
+        end
+      end
+      it { should be_truthy }
+    end
+
+    context "when order has a shipping method other than Collection" do
+      let(:order) do
+        collectable_order do |o|
+          o.shipping_method = "Mainland UK"
+        end
+      end
+      it { should be_falsey }
+    end
+
+    context "when order is already shipped" do
+      let(:order) { collectable_order }
+      before do
+        order.save
+        FactoryBot.create(
+          :shipment, order: order, partial: false, shipped_at: Time.current
+        )
+      end
+      it { should be_falsey }
+    end
+  end
+
+  describe "#collection?" do
+    it "only returns true when shipping method = Collection" do
+      expect(Order.new(shipping_method: "Collection").collection?).to eq true
+      expect(Order.new(shipping_method: "Mainland UK").collection?).to eq false
+    end
+  end
+
   describe "#payment_accepted" do
     let(:initial_status) { Enums::PaymentStatus::WAITING_FOR_PAYMENT }
     let(:order_total) { 10 }
@@ -292,6 +319,32 @@ RSpec.describe Order, type: :model do
             expect(order.reload.status).to eq Enums::PaymentStatus::PAYMENT_RECEIVED
           end
         end
+      end
+    end
+  end
+
+  describe "#fully_paid" do
+    let(:invoice_time) { nil }
+    let(:order) { FactoryBot.build(:order, invoiced_at: invoice_time) }
+
+    context "when order is not fully shipped" do
+      it "updates the estimated delivery date" do
+        order.fully_paid
+        expect(order.estimated_delivery_date).to be
+      end
+    end
+
+    context "when order is fully shipped" do
+      before do
+        order.save
+        FactoryBot.create(
+          :shipment, order: order, partial: false, shipped_at: Time.current
+        )
+      end
+
+      it "leaves the estimated delivery date alone" do
+        order.fully_paid
+        expect(order.estimated_delivery_date).to be_nil
       end
     end
   end
@@ -437,6 +490,78 @@ RSpec.describe Order, type: :model do
 
     it "copies product RRP" do
       expect(order.order_lines.first.product_rrp).to eq product.rrp
+    end
+  end
+
+  describe "#lead_time" do
+    it "returns the highest value for lead time in order lines" do
+      line1 = instance_double(OrderLine, lead_time: 3)
+      line2 = instance_double(OrderLine, lead_time: 4)
+      order = Order.new
+      allow(order).to receive(:order_lines).and_return [line1, line2]
+      expect(order.lead_time).to eq 4
+    end
+
+    it "returns 0 when the order is empty" do
+      order = Order.new
+      expect(order.lead_time).to eq 0
+    end
+  end
+
+  describe "#relevant_dispatch_date" do
+    let(:order) { FactoryBot.build(:order, dispatch_date: dispatch_date) }
+
+    subject { order.relevant_dispatch_date }
+
+    context "dispatch date" do
+      let(:dispatch_date) { Date.today }
+
+      it { should eq Date.today }
+    end
+
+    context "without dispatch date" do
+      let(:dispatch_date) { nil }
+
+      it { should eq Date.yesterday }
+    end
+  end
+
+  describe "#update_estimated_delivery_date" do
+    let(:order) { Order.new }
+    let(:odd) do
+      instance_double(
+        Shipping::OrderDispatchDelivery,
+        delivery_dates: [Date.new(2017, 7, 19)],
+        dispatch_date: Date.new(2017, 7, 18)
+      )
+    end
+
+    it "sets its estimated_delivery_date to a new estimate" do
+      allow(Shipping::OrderDispatchDelivery)
+        .to receive(:new)
+        .and_return(odd)
+
+      order.update_estimated_delivery_date
+
+      expect(order.estimated_delivery_date).to eq Date.new(2017, 7, 19)
+    end
+
+    it "sets its dispatch_date" do
+      allow(Shipping::OrderDispatchDelivery)
+        .to receive(:new)
+        .and_return(odd)
+
+      order.update_estimated_delivery_date
+
+      expect(order.dispatch_date).to eq Date.new(2017, 7, 18)
+    end
+
+    context "when order has delivery_date set" do
+      let(:order) { Order.new(delivery_date: Date.new(2017, 7, 19)) }
+      it "does not update the estimated delivery date" do
+        order.update_estimated_delivery_date
+        expect(order.estimated_delivery_date).to be_nil
+      end
     end
   end
 

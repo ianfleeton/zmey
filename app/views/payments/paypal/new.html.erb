@@ -1,0 +1,5 @@
+<h1>Pay for Order ##{@order.order_number}</h1>
+
+<h2>Amount to pay: #{formatted_price(@order.total)}</h2>
+
+<%= render partial: "checkout/paypal", locals: { order: @order } %>

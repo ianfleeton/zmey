@@ -58,7 +58,7 @@ class CheckoutController < ApplicationController
   def confirm
     session[:source] = "checkout"
 
-    @order = Order.new_or_recycled(session[:order_id])
+    @order = Orders::Recycler.new_or_recycled(session[:order_id])
     @order.user_id = @current_user.id if logged_in?
     @order.ip_address = request.remote_ip
     @order.requires_delivery_address = delivery_address_required?

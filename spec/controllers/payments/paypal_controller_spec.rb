@@ -1,53 +1,111 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Payments::PaypalController, type: :controller do
-  let(:website) { FactoryBot.build(:website) }
+  let(:website) { FactoryBot.build(:website, paypal_test_mode: true) }
 
   before do
     allow(controller).to receive(:website).and_return(website)
   end
 
-  it { should route(:get, "/payments/paypal/auto_return").to(action: :auto_return) }
+  it do
+    should route(:get, "/payments/paypal/auto_return").to(action: :auto_return)
+  end
 
   describe "GET auto_return" do
-    context "with successful PDT response" do
-      let(:pdt_response) {
-        {
-          status: "SUCCESS",
-          item_name: "",
-          mc_gross: "0.00",
-          mc_currency: "",
-          address_name: "",
-          address_street: "",
-          address_city: "",
-          address_state: "",
-          address_zip: "",
-          address_country_code: "",
-          contact_phone: "",
-          payer_email: "",
-          txn_id: "",
-          payment_date: "",
-          raw_auth_message: "",
-          payment_status: "Completed",
-          charset: "utf-8"
-        }
-      }
+    before do
+      allow(controller).to receive(:pdt_notification_sync)
+        .and_return(pdt_response)
+    end
 
-      it "redirects to the PayPal confirmation page" do
+    let(:pdt_response) do
+      {
+        status: status,
+        item_name: "",
+        mc_gross: "0.00",
+        mc_currency: "",
+        address_name: "",
+        address_street: "",
+        address_city: "",
+        address_state: "",
+        address_zip: "",
+        address_country_code: "",
+        contact_phone: "",
+        payer_email: "",
+        payment_date: "06:45:01 Jun 23, 2015 PDT",
+        txn_id: "5Z1250734065523781",
+        raw_auth_message: "raw",
+        payment_status: "Completed",
+        charset: "utf-8"
+      }
+    end
+
+    context "with successful PDT response" do
+      let(:status) { "SUCCESS" }
+
+      it "creates a new payment with accepted = true" do
         get :auto_return
-        expect(response).to redirect_to(payments_paypal_confirmation_path)
+        payment = Payment.last
+        expect(payment).to be_accepted
+        expect(payment.raw_auth_message).to eq "raw"
+        expect(payment.transaction_id).to eq "5Z1250734065523781"
+        expect(payment.transaction_time).to eq "06:45:01 Jun 23, 2015 PDT"
+      end
+
+      it "redirects to the receipt page" do
+        get :auto_return
+        expect(response).to redirect_to(receipt_orders_path)
+      end
+
+      it "sets a flash notice" do
+        get :auto_return
+        expect(flash[:notice]).to eq "Thank you for your payment. Your transaction has been completed and a receipt for your purchase has been emailed to you. You may log into your account at www.paypal.com/uk to view details of this transaction."
+      end
+    end
+
+    context "with unsucessful PDT response" do
+      let(:status) { "FAIL" }
+
+      it "creates a payment with accepted = false" do
+        get :auto_return
+        payment = Payment.last
+        expect(payment).not_to be_accepted
+      end
+
+      it "redirects to the basket" do
+        get :auto_return
+        expect(response).to redirect_to(basket_path)
+      end
+
+      it "sets a flash notice" do
+        get :auto_return
+        expect(flash[:notice]).to eq "We could not confirm your payment was successful. You may log into your account at www.paypal.com/uk to view details of this transaction."
+      end
+    end
+
+    context "when PDF notification sync results in a SocketError" do
+      let(:status) { "SUCCESS" }
+
+      before do
+        allow(controller).to receive(:pdt_notification_sync)
+          .and_raise(SocketError.new("Failed to open TCP connection to www.paypal.com:443 (getaddrinfo: Name or service not known)"))
+      end
+
+      it "redirects to the basket" do
+        get :auto_return
+        expect(response).to redirect_to(basket_path)
+      end
+
+      it "sets a flash notice" do
+        get :auto_return
+        expect(flash[:notice]).to eq "Sorry, we could not communicate with PayPal to find out if your payment was successful. You may log into your account at www.paypal.com/uk to view details of this transaction."
       end
     end
   end
 
-  describe "GET confirmation" do
-    it "works" do
-      get :confirmation
-    end
-  end
-
   describe "POST ipn_listener" do
-    let(:params) {
+    let(:params) do
       {
         "mc_gross" => "1.00",
         "protection_eligibility" => "Eligible",
@@ -62,15 +120,18 @@ RSpec.describe Payments::PaypalController, type: :controller do
         "first_name" => "test",
         "mc_fee" => "0.23",
         "address_country_code" => "GB",
-        "address_name" => "test buyer",
+        "address_name" => (+"Ruairi O\x92Sullivan").force_encoding("windows-1252"),
         "notify_version" => "3.8",
-        "custom" => "",
+        # custom would usually be set to the order number, if set at all.
+        # We set it to 'CUSTOM' here to differentiate its value in testing.
+        "custom" => "CUSTOM",
         "payer_status" => "verified",
         "business" => "merchant@example.com",
         "address_country" => "United Kingdom",
         "address_city" => "Wolverhampton",
         "quantity" => "1",
-        "verify_sign" => "AnzPAvrf087BDaBIrtu.ICczwZ-gAY4..NHL19pjDaSY-bxUkRlJgK9H",
+        "verify_sign" =>
+          "AnzPAvrf087BDaBIrtu.ICczwZ-gAY4..NHL19pjDaSY-bxUkRlJgK9H",
         "payer_email" => "buyer@example.org",
         "txn_id" => "0TH37164C80937821",
         "payment_type" => "instant",
@@ -91,31 +152,140 @@ RSpec.describe Payments::PaypalController, type: :controller do
         "shipping" => "0.00",
         "ipn_track_id" => "21f2b2c41857e"
       }
-    }
-    let(:ipn_valid?) { nil }
-    let(:payment_status) { nil }
-
-    before do
-      allow(controller).to receive(:ipn_valid?).and_return(ipn_valid?)
     end
+    let(:ipn_valid?) { nil }
+    let(:payment_status) { "" }
 
     it "checks validity of the IPN message" do
-      expect(controller).to receive(:ipn_valid?)
+      expected_params = params.dup
+      expected_params["address_name"] = "Ruairi O\x92Sullivan"
+      expect(controller).to receive(:ipn_valid?).with(hash_including(expected_params))
       post :ipn_listener, params: params
     end
 
+    context "when PayPal post back cannot be reached" do
+      before do
+        http = instance_double(Net::HTTP, :use_ssl= => nil)
+        allow(Net::HTTP)
+          .to receive(:new)
+          .with("www.sandbox.paypal.com", 443)
+          .and_return(http)
+        @error = SocketError.new
+        allow(http)
+          .to receive(:post)
+          .and_raise(@error)
+      end
+
+      it "should respond 500" do
+        post :ipn_listener, params: params
+        expect(response.status).to eq 500
+      end
+
+      it "logs an error message" do
+        expect(Rails.logger).to receive(:error).with(@error)
+        post :ipn_listener, params: params
+      end
+    end
+
+    context "when paypal sends dispute" do
+      let(:params) do
+        {
+          "txn_type" => "new_case",
+          "payment_date" => "04:51:56 Sep 23, 2020 PDT",
+          "case_id" => "PP-D-85785153",
+          "case_type" => "dispute",
+          "business" => "admin@example.com",
+          "verify_sign" => "A.-UecNL5hJyWLfqBV-1IjekrtvdA3KYWCCZSfSqSNcvHuhR.66vIeFe",
+          "payer_email" => "example@gmail.com",
+          "txn_id" => "7DJ67764AK8475733",
+          "case_creation_date" => "10:51:44 Sep 28, 2020 PDT",
+          "receiver_email" => "admin@example.com",
+          "payer_id" => "SUNFGFM2LVUC6",
+          "receiver_id" => "9FD3DLAA65YBJ",
+          "reason_code" => "not_as_described",
+          "custom" => order_number,
+          "charset" => "windows-1252",
+          "notify_version" => "3.9",
+          "ipn_track_id" => "d1b443e67fa56"
+        }
+      end
+
+      let(:order) { FactoryBot.create(:order) }
+      let(:order_number) { order.order_number }
+
+      it "adds an order comment" do
+        post :ipn_listener, params: params
+        comment = order.reload.order_comments.last
+        expect(comment.comment).to eq "Order dispute received from PayPal for reason not_as_described"
+      end
+
+      it "does not create a payment" do
+        post :ipn_listener, params: params
+        expect(Payment.count).to eq 0
+      end
+
+      context "it cannot find an order" do
+        let(:order_number) { nil }
+
+        it "logs to the console" do
+          expect(Rails.logger).to receive(:error).with "Recieved PayPal dispute and could not find an order to comment on. Case ID: PP-D-85785153"
+          post :ipn_listener, params: params
+        end
+      end
+    end
+
     context "when IPN valid" do
-      let(:ipn_valid?) { true }
+      before do
+        allow(controller).to receive(:ipn_valid?).and_return(true)
+      end
+
       it "records a payment" do
         post :ipn_listener, params: params
         payment = Payment.last
-        expect(payment.amount).to eq 1.0
+        expect(payment.amount).to eq 1
         expect(payment.cart_id).to eq "20150623-8ST0"
         expect(payment.currency).to eq "GBP"
         expect(payment.description).to eq "Web purchase"
         expect(payment.email).to eq "buyer@example.org"
         expect(payment.installation_id).to eq "merchant@example.com"
+        expect(payment.name).to eq "Ruairi O’Sullivan"
+        expect(payment.raw_auth_message).to start_with('{:address_city=>"Wolverhampton"')
         expect(payment.service_provider).to eq "PayPal (IPN)"
+        expect(payment.transaction_id).to eq "0TH37164C80937821"
+        expect(payment.transaction_time).to eq "06:45:01 Jun 23, 2015 PDT"
+      end
+
+      context "when PayPal sends a txn_type=cart response (buggy?)" do
+        let(:params) do
+          hash = super().merge(
+            "num_cart_items" => "1",
+            "txn_type" => "cart",
+            "item_name1" => "345678"
+          )
+          hash.delete("item_name")
+          hash
+        end
+
+        it "records the cart_id correctly from item_name1" do
+          post :ipn_listener, params: params
+          payment = Payment.last
+          expect(payment.cart_id).to eq "345678"
+        end
+      end
+
+      context "when PayPal sends item_name=Shopping Cart response (buggy?)" do
+        let(:params) do
+          super().merge(
+            "custom" => "345678",
+            "item_name" => "Shopping Cart"
+          )
+        end
+
+        it "records the cart_id correctly from custom" do
+          post :ipn_listener, params: params
+          payment = Payment.last
+          expect(payment.cart_id).to eq "345678"
+        end
       end
 
       context "when payment_status is Completed" do
@@ -127,8 +297,8 @@ RSpec.describe Payments::PaypalController, type: :controller do
           expect(payment.accepted?).to eq true
         end
 
-        it "calls #clean_up" do
-          expect(controller).to receive(:clean_up)
+        it "calls #finalize_order" do
+          expect(controller).to receive(:finalize_order)
           post :ipn_listener, params: params
         end
       end
@@ -142,16 +312,17 @@ RSpec.describe Payments::PaypalController, type: :controller do
           expect(payment.accepted?).to eq false
         end
 
-        it "does not call #clean_up" do
-          expect(controller).not_to receive(:clean_up)
+        it "does not call #finalize_order" do
+          expect(controller).not_to receive(:finalize_order)
           post :ipn_listener, params: params
         end
       end
     end
   end
 
+  # rubocop:disable Performance/UnfreezeString
   describe "#pdt_notification_sync" do
-    let(:body) {
+    let(:body) do
       "
 mc_gross=99.95
 protection_eligibility=Eligible
@@ -190,11 +361,13 @@ handling_amount=0.00
 transaction_subject=
 payment_gross=
 shipping=0.00
-      ".force_encoding("windows-1252")
-    }
+      ".dup.force_encoding("windows-1252")
+    end
+    # rubocop:enable Performance/UnfreezeString
 
     before do
-      allow(controller).to receive(:pdt_notification_sync_response_body).and_return body
+      allow(controller).to receive(:pdt_notification_sync_response_body)
+        .and_return body
     end
 
     it "converts to UTF-8" do

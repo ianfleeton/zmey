@@ -10,11 +10,17 @@
 # +name+::
 #   A descriptive name for the product group.
 class ProductGroup < ActiveRecord::Base
+  # Associations
+  belongs_to :location, optional: true
+  has_many :product_group_placements, dependent: :delete_all
+  has_many :products, through: :product_group_placements
+
+  # Validations
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  has_many :product_group_placements, dependent: :delete_all
-  has_many :products, through: :product_group_placements
+  # Delegated methods
+  delegate :name, to: :location, prefix: true, allow_nil: true
 
   def to_s
     name

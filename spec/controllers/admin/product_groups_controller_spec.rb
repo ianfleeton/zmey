@@ -9,7 +9,7 @@ RSpec.describe Admin::ProductGroupsController, type: :controller do
     let(:params) {
       {
         name: "My Product Group",
-        location: "Warehouse B"
+        location_id: FactoryBot.create(:location).id
       }
     }
 

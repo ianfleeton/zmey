@@ -1,12 +1,11 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-RSpec.describe "Remove order line" do
+RSpec.describe "Remove order line", type: :system do
   let(:order) { FactoryBot.create(:order) }
 
-  before do
-    FactoryBot.create(:website)
-    sign_in_as_admin
-  end
+  before { sign_in_as_admin }
 
   scenario "Remove order line happy path", js: true do
     ol = FactoryBot.create(:order_line, order_id: order.id, product_name: "Widget", product_price: 10, quantity: 1)

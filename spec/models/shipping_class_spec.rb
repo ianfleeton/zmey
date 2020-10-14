@@ -4,6 +4,35 @@ RSpec.describe ShippingClass, type: :model do
   it { should have_many(:shipping_zones).with_foreign_key("default_shipping_class_id") }
   it { should have_many(:websites).with_foreign_key("default_shipping_class_id") }
 
+  shared_examples_for "a shipping class by name finder" do |name|
+    it "returns the shipping class named '#{name}'" do
+      match = FactoryBot.create(
+        :shipping_class, name: name
+      )
+      FactoryBot.create(
+        :shipping_class, name: "not the one"
+      )
+      expect(subject).to eq match
+    end
+  end
+
+  describe ".collection" do
+    subject { ShippingClass.collection }
+    it_behaves_like "a shipping class by name finder", ShippingClass::COLLECTION
+  end
+
+  describe "#collection?" do
+    subject { sc.collection? }
+    context "when the shipping class is named Collection" do
+      let(:sc) { ShippingClass.new(name: ShippingClass::COLLECTION) }
+      it { should be_truthy }
+    end
+    context "when the shipping class is named something else" do
+      let(:sc) { ShippingClass.new(name: "Mainland UK") }
+      it { should be_falsey }
+    end
+  end
+
   describe "#amount_for_basket" do
     let(:shipping_class) { FactoryBot.create(:shipping_class, table_rate_method: table_rate_method) }
     let(:total) { 0 }
