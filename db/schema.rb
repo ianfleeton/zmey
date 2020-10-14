@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_090539) do
+ActiveRecord::Schema.define(version: 2020_10_14_092405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,22 @@ ActiveRecord::Schema.define(version: 2020_10_14_090539) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["feature_id"], name: "index_choices_on_feature_id"
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.integer "clientable_id", null: false
+    t.string "clientable_type", null: false
+    t.string "ip_address", limit: 45
+    t.string "platform", default: "web", null: false
+    t.string "device"
+    t.text "user_agent"
+    t.string "operating_system"
+    t.string "browser"
+    t.string "browser_version"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["clientable_type", "clientable_id"], name: "index_clients_on_clientable_type_and_clientable_id"
+    t.index ["ip_address"], name: "index_clients_on_ip_address"
   end
 
   create_table "components", id: :serial, force: :cascade do |t|

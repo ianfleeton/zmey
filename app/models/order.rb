@@ -93,9 +93,13 @@ class Order < ActiveRecord::Base
   has_many :order_lines, dependent: :delete_all, inverse_of: :order
   has_many :payments, dependent: :delete_all
   has_many :shipments, dependent: :delete_all, inverse_of: :order
+  has_one :client, as: :clientable, dependent: :delete
 
   validates_inclusion_of :status, in: Enums::PaymentStatus::VALUES
 
+  delegate :mobile_app?, to: :client, allow_nil: true
+  delegate :ip_address, to: :client, allow_nil: true
+  delegate :platform, to: :client, allow_nil: true
   # Deletes all orders that have not received payment and are older than +age+.
   def self.purge_old_unpaid(age = 1.month)
     where(["created_at < ? and status = ?", Time.now - age, PaymentStatus::WAITING_FOR_PAYMENT]).destroy_all

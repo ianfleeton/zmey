@@ -14,5 +14,6 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym "CSV"
   inflect.acronym "HTML"
+  inflect.acronym "IP"
   inflect.acronym "PDF"
 end
