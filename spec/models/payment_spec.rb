@@ -25,4 +25,16 @@ RSpec.describe Payment, type: :model do
       end
     end
   end
+
+  describe "#paypal_ipn?" do
+    subject { Payment.new(service_provider: provider).paypal_ipn? }
+    context "when provider is PayPal IPN" do
+      let(:provider) { "PayPal (IPN)" }
+      it { should be_truthy }
+    end
+    context "when provider is not PayPal IPN" do
+      let(:provider) { "PayPal Express Checkout" }
+      it { should be_falsey }
+    end
+  end
 end
