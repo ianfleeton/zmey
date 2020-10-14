@@ -1,10 +1,18 @@
 require "rails_helper"
 
 RSpec.describe Order, type: :model do
+  FactoryBot.use_parent_strategy = false
+
   context "uniqueness" do
     before { FactoryBot.create(:order, order_number: "AB123") }
     it { should validate_uniqueness_of :order_number }
   end
+
+  # Irish VAT numbers
+  it { should allow_value("IE1234567X").for(:vat_number) }
+  it { should allow_value("IE1X23456X").for(:vat_number) }
+  # Irish VAT numbers since January 2013
+  it { should allow_value("IE1234567NH").for(:vat_number) }
 
   context "if requires delivery address" do
     before { subject.requires_delivery_address = true }
@@ -63,24 +71,50 @@ RSpec.describe Order, type: :model do
     end
   end
 
-  describe "before_save :associate_with_user" do
-    let(:user_id) { nil }
-    let(:order) { FactoryBot.build(:order, email_address: "c2@example.org", user_id: user_id) }
-
-    subject { order.user_id }
-    context "with no matching user" do
-      before { order.save }
-      it { should be_nil }
+  describe "before_validation :associate_with_user" do
+    let(:user1) { FactoryBot.create(:user) }
+    let(:user2) { FactoryBot.create(:user, email: "c2@example.org") }
+    let(:nobody) do
+      FactoryBot.create(:user, email: Address::PLACEHOLDER_EMAIL)
     end
-    context "with matching user" do
-      let!(:user) { FactoryBot.create(:user, email: "c2@example.org") }
-      before { order.save }
-      context "with user_id already set" do
-        let(:user_id) { 123 }
-        it { should eq 123 }
+    let(:order_user) { nil }
+    let(:order) do
+      FactoryBot.build(
+        :order,
+        email_address: "c2@example.org",
+        user: order_user,
+        billing_full_name: "Alice"
+      )
+    end
+
+    context "with user set" do
+      let(:order_user) { user1 }
+
+      it "does not link the order to another users account with a matching " \
+      "email" do
+        expect(User).not_to receive(:find_or_create_by_details)
+        order.valid?
+        expect(order.user).to eq(user1)
       end
-      context "with user_id not set yet" do
-        it { should eq user.id }
+
+      context "when user email is the address placeholder email" do
+        let(:order_user) { nobody }
+
+        it "finds or creates the user based on the order email address" do
+          expect(User).to receive(:find_or_create_by_details)
+            .with(email: "c2@example.org", name: "Alice").and_return(user2)
+          order.valid?
+          expect(order.user).to eq(user2)
+        end
+      end
+    end
+
+    context "with user not set" do
+      it "gets the user based on the order email address" do
+        expect(User).to receive(:find_or_create_by_details)
+          .with(email: "c2@example.org", name: "Alice").and_return(user2)
+        order.valid?
+        expect(order.user).to eq(user2)
       end
     end
   end
@@ -417,5 +451,33 @@ RSpec.describe Order, type: :model do
       order.delivery_country_name = country.name
       expect(order.delivery_country).to eq country
     end
+  end
+
+  shared_examples_for "a VAT number tidier" do |message|
+    it "converts a blank VAT number to nil" do
+      order = Order.new(vat_number: "")
+      order.send(message)
+      expect(order.vat_number).to be_nil
+    end
+
+    it "strips spaces and other non alpha-numerics" do
+      order = Order.new(vat_number: "GB 123?")
+      order.send(message)
+      expect(order.vat_number).to eq "GB123"
+    end
+
+    it "upcases the VAT number" do
+      order = Order.new(vat_number: "gb123")
+      order.send(message)
+      expect(order.vat_number).to eq "GB123"
+    end
+  end
+
+  describe "#tidy_vat_number" do
+    it_behaves_like "a VAT number tidier", :tidy_vat_number
+  end
+
+  describe "before_validation :tidy_vat_number" do
+    it_behaves_like "a VAT number tidier", :valid?
   end
 end
