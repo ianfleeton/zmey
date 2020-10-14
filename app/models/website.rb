@@ -35,6 +35,11 @@ class Website < ActiveRecord::Base
     end
   end
 
+  # Returns the address as a string formatted in a single line.
+  def address
+    [address_line_1, address_line_2, town_city, county, postcode].join(", ")
+  end
+
   # Returns an initialized custom view resolver, or nil if there isn't one.
   def build_custom_view_resolver
     if custom_view_resolver.present?

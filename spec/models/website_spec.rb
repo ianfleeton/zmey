@@ -100,6 +100,21 @@ RSpec.describe Website, type: :model do
     expect(@website.enquiries.third).to eq enquiries.first
   end
 
+  describe "#address" do
+    it "returns the address as a string formatted in single line" do
+      website = Website.new(
+        address_line_1: "123 Pythagoras Place",
+        address_line_2: "Balby",
+        town_city: "Doncaster",
+        county: "South Yorkshire",
+        postcode: "DN1 2QP"
+      )
+      expect(website.address).to eq(
+        "123 Pythagoras Place, Balby, Doncaster, South Yorkshire, DN1 2QP"
+      )
+    end
+  end
+
   describe "#image_uploader" do
     let(:params) { {image: fixture_file_upload("images/red.png"), name: "Red"} }
     let(:website) { Website.new }
