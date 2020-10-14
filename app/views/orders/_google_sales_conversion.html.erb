@@ -1,0 +1,21 @@
+<script id="google-sales-conversion">
+var purchasedItems = [];
+<% order.order_lines.each do |line| -%>
+purchasedItems.push({
+  'id': '<%= j line.product_sku %>',
+  'name': '<%= j line.product_name %>',
+  'category': '<%= j line.product.try(:pages).try(:first).try(:name) %>',
+  'price': '<%= line.product_price %>',
+  'quantity': '<%= line.quantity %>'
+});
+<% end -%>
+
+gtag('event', 'purchase', {
+  'transaction_id': '<%= order.order_number %>',
+  'affiliation': '<%= j website.name %>',
+  'value': '<%= order.total_gross.round(2) %>',
+  'shipping': '<%= order.shipping_amount_gross %>',
+  'tax': '<%= order.tax_total.round(2) %>',
+  'items': purchasedItems
+});
+</script>
