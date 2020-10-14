@@ -25,12 +25,12 @@ gem 'delayed_job_active_record'
 gem 'whenever', require: false
 
 # Bootstrap for admin area
-gem 'bootstrap-sass', '~> 3.4.1'
-gem 'bootstrap_form'
+gem "bootstrap", "~> 4.5"
+gem "bootstrap_form", "~> 4.5"
 
 # Pagination
 gem 'will_paginate'
-gem 'bootstrap-will_paginate'
+gem "bootstrap-will_paginate"
 
 # Look up addresses by postcode
 gem 'postcode_software', '~> 0.0.1'

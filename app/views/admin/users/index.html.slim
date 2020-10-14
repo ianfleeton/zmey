@@ -1,4 +1,4 @@
-= page_header t('.heading')
+= page_header t(".heading")
 
 p= new_button [:admin, User]
 
@@ -16,7 +16,7 @@ table.table.table-bordered
         td= tick u.admin
         td
           - if admin?
-            => link_to(t('.switch_user'), switch_user_path(u), method: 'post', class: 'btn btn-default')
+            => link_to(t(".switch_user"), switch_user_path(u), method: "post", class: "btn btn-outline-secondary")
           = edit_button([:admin, u])
           =< delete_button([:admin, u])
 

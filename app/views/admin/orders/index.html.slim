@@ -2,7 +2,7 @@
 
 p
   => new_button [:admin, Order]
-  button#search-orders.btn.btn-default type="button" data-toggle="modal" data-target="#search-modal"= t('.search')
+  = search_button
 
 - if @orders.empty?
   p= t('.no_orders')

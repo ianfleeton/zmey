@@ -1,15 +1,17 @@
-= page_header 'Edit Page'
+- content_for(:title, t(".heading", page: @page.name))
+= page_header t(".heading", page: @page.name)
 
-ol.breadcrumb
-  li= link_to_if(@parent, t('.top'), admin_pages_path)
-  - @page.ancestors.reverse.each do |page|
-    li= link_to(page.name, admin_pages_path(parent_id: page.id))
-  li= link_to(@page.name, admin_pages_path(parent_id: @page.id))
-  li= 'Edit Page'
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item= link_to_if(@page.parent, t(".top"), admin_pages_path)
+    - @page.ancestors.reverse.each do |page|
+      li.breadcrumb-item= link_to(page.name, admin_pages_path(parent_id: page.id))
+    li.breadcrumb-item= link_to(@page.name, admin_pages_path(parent_id: @page.id))
+    li.breadcrumb-item.active= "Edit Page"
 
 .row
   .col-md-5
-    = render 'form', submit_label: 'Save'
+    = render "form", submit_label: "Save"
   .col-md-7
     h2 Products
     - if @page.product_placements.empty?
@@ -33,38 +35,39 @@ ol.breadcrumb
             td
               .btn-group
                 - unless pp.first?
-                  = link_to icon_up, { controller: '/admin/product_placements', action: 'move_up', id: pp.id }, title: 'Move Up', class: 'btn btn-default', method: :post
+                  = link_to icon_top, { controller: "/admin/product_placements", action: "move_top", id: pp.id }, title: "Move Top", class: "btn btn-outline-secondary", method: :post
+                  = link_to icon_up, { controller: "/admin/product_placements", action: "move_up", id: pp.id }, title: "Move Up", class: "btn btn-outline-secondary", method: :post
                 - unless pp.last?
-                  = link_to icon_down, { controller: '/admin/product_placements', action: 'move_down', id: pp.id }, title: 'Move Down', class: 'btn btn-default', method: :post
+                  = link_to icon_down, { controller: "/admin/product_placements", action: "move_down", id: pp.id }, title: "Move Down', class: 'btn btn-outline-secondary", method: :post
+                  = link_to icon_bottom, { controller: "/admin/product_placements", action: "move_bottom", id: pp.id }, title: "Move Bottom", class: 'btn btn-outline-secondary', method: :post
                 = edit_button([:admin, pp.product])
-                = link_to icon_remove, admin_product_placement_path(pp), class: 'btn btn-default', title: 'Remove from page', method: :delete
+                = link_to icon_remove, admin_product_placement_path(pp), class: "btn btn-outline-secondary", title: "Remove from page", method: :delete
 
-    .well
-      - unless Product.count == 0
-        = form_for [:admin, ProductPlacement.new] do |form|
-          input type="hidden" name="product_placement[page_id]" value="#{@page.id}"
-          javascript:
-            $(function() {
-              $('#search-products').click(function() {
-                $.get('/admin/pages/search_products', {query: $('#product-search-query').val()}, function(data) {
-                  $('#product_placement_product_id').replaceWith(data);
-                  $('#product_placement_product_id').focus();
-                });
-                return false;
+    - unless Product.count == 0
+      = form_for [:admin, ProductPlacement.new] do |form|
+        input type="hidden" name="product_placement[page_id]" value="#{@page.id}"
+        javascript:
+          $(function() {
+            $('#search-products').click(function() {
+              $.get('/admin/pages/search_products', {query: $('#product-search-query').val()}, function(data) {
+                $('#product_placement_product_id').replaceWith(data);
+                $('#product_placement_product_id').focus();
               });
+              return false;
             });
-          .form-group
-            .row
-              .col-xs-9
-                label.sr-only Search Products
-                input.form-control#product-search-query type="search" name="query" placeholder="Product to find"
-              .col-xs-3
-                button.btn.btn-default#search-products Search
-          .form-group
-            .row
-              .col-xs-9
-                - cache products_cache_key
-                  = form.collection_select :product_id, Product.limit(100), :id, :name_with_sku, {}, class: 'form-control'
-              .col-xs-3
-                = submit_tag 'Add Product', class: 'btn btn-default'
+          });
+        .form-group
+          .row
+            .col-xs-9
+              label.sr-only Search Products
+              input.form-control#product-search-query type="search" name="query" placeholder="Product to find"
+            .col-xs-3
+              button.btn.btn-default#search-products Search
+        .form-group
+          .row
+            .col-xs-9
+              - cache products_cache_key
+                = form.collection_select :product_id, Product.limit(100), :id, :name_with_sku, {}, class: 'form-control'
+            .col-xs-3
+              = submit_tag "Add Product", class: "btn btn-outline-secondary"
     = delete_button([:admin, @page])

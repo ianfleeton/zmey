@@ -2,56 +2,12 @@
 
 p
   => new_button [:admin, Product]
-  = link_to t('.export'), csv_admin_export_index_path(class_name: 'Product'), class: 'btn btn-default'
+  = link_to t(".export"), csv_admin_export_index_path(class_name: "Product"), class: "btn btn-outline-secondary", data: { turbolinks: "false" }
 
 - if @products.empty?
   p No products
 - else
-  javascript:
-    $(function() {
-      $('#product-search button').click(function() {
-        $.getJSON('/admin/products/search',
-          {
-            query: $('#product-search input').val()
-          },
-          function(data) {
-            var items = [];
-            if(data.length == 0) {
-              items.push('<li>No results found</li>');
-            }
-            $.each(data, function(key, product) {
-              var i = '<li><a href="/admin/products/' + product.id + '/edit">' + product.name + '</a></li>';
-              items.push(i);
-            });
-            $('#results-body').replaceWith(
-              $('<ul/>', {
-                'id': 'results-body',
-                html: items.join('')
-              })
-            );
-            $('#search-results').modal('show');
-          }
-        );
-        return false;
-      });
-    });
-
-  .modal.fade#search-results
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button.close type="button" data-dismiss="modal"
-            span aria-hidden="true" &times;
-            span.sr-only Close
-          h4.modal-title Products
-        .modal-body
-          span#results-body
-
-  form#product-search.form-inline
-    .input-group
-      input.form-control.search-query type="text" name="query"
-      .input-group-btn
-        button.btn.btn-default type="submit" class="btn" Search
+  = render partial: "admin/shared/search", locals: {url_base: "/admin/products/"}
 
   = will_paginate @products
   table.table.table-striped.table-bordered

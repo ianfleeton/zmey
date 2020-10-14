@@ -130,6 +130,8 @@ en:
         heading: 'Add Comment to Order %{order_number}'
         save: 'Save'
     pages:
+      edit:
+        heading: "Edit %{page}"
       form:
         no_follow: 'NOFOLLOW (search engines should not follow links from this page)'
         no_index: 'NOINDEX (search engines should not index this page)'
