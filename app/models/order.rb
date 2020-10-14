@@ -76,6 +76,7 @@ class Order < ActiveRecord::Base
   require "order_number_generator"
   include Enums
   include Enums::Conversions
+  include TotalMoney
 
   validates_presence_of :email_address
   validates_presence_of :billing_address_line_1, :billing_town_city, :billing_postcode, :billing_country_id
@@ -114,6 +115,7 @@ class Order < ActiveRecord::Base
 
   # ActiveRecord callbacks
   before_save :calculate_total, :associate_with_user
+  before_save :update_payment_status
   before_create :create_order_number
   before_validation :associate_with_user
   before_validation :tidy_vat_number
@@ -216,9 +218,9 @@ class Order < ActiveRecord::Base
     payments.where(accepted: true)
   end
 
-  # Returns the amount still left to be paid.
+  # Returns the amount still left to be paid, taking credit notes into account.
   def outstanding_payment_amount
-    total - amount_paid
+    (total - amount_paid).round(2)
   end
 
   # Whether or not the order can be collected. An order can be collected if
@@ -246,19 +248,19 @@ class Order < ActiveRecord::Base
     delivery_date || estimated_delivery_date
   end
 
-  # Transitions the status to PAYMENT_RECEIVED if sufficient payments have
-  # been received.
+  # Transitions the status to PAYMENT_RECEIVED and locks the order if sufficient
+  # payments have been received.
   #
   # Transitions the status to WAITING_FOR_PAYMENT if the payment is negative
   # and there is still an outstanding payment amount.
   def payment_accepted(payment)
+    payment_amount = payment.amount.to_f
     if outstanding_payment_amount <= 0
-      self.status = Enums::PaymentStatus::PAYMENT_RECEIVED
-      save
-    elsif payment.amount.to_f < 0
+      fully_paid if payment_amount > 0
+    elsif payment_amount < 0
       self.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
-      save
     end
+    save
   end
 
   # Tells the order that it has been fully paid. Its status is then changed to
@@ -322,10 +324,26 @@ class Order < ActiveRecord::Base
   # Calculates the total, including shipping and taxes, and assigns it to
   # +total+. This is called +before_save+.
   def calculate_total
-    t = total_gross
-    t += 0.0001 # in case of x.x499999
-    t = (t * 100).round.to_f / 100
-    self.total = t
+    self.total = total_money(total_gross)
+  end
+
+  # Demotes a status of PAYMENT_RECEIVED to WAITING_FOR_PAYMENT if there is an
+  # outstanding payment amount for the current total.
+  #
+  # Promotes a status of WAITING_FOR_PAYMENT to PAYMENT_RECEIVED if there is no
+  # outstanding payment amount for the current total, or if that outstanding
+  # amount is negative which may occur if, for example, a negative order line
+  # has been added to the order.
+  def update_payment_status
+    outstanding = outstanding_payment_amount
+
+    if outstanding > 0
+      if payment_received?
+        self.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
+      end
+    elsif waiting_for_payment?
+      self.status = Enums::PaymentStatus::PAYMENT_RECEIVED
+    end
   end
 
   # Total amount for the order including shipping but excluding any taxes.
@@ -338,20 +356,26 @@ class Order < ActiveRecord::Base
     shipping_amount_gross + line_total_gross
   end
 
-  # Shipping amount including shipping tax.
+  # Shipping amount including any applicable shipping tax.
+  # Tax is excluded if the order is zero-rated.
   def shipping_amount_gross
-    shipping_amount + shipping_tax_amount
+    shipping_amount + (zero_rated? ? 0 : shipping_tax_amount)
   end
 
   # Total amount of all order lines excluding any tax.
   def line_total_net
-    order_lines.inject(0) { |sum, l| sum + l.line_total_net }
+    order_lines.inject(BigDecimal("0")) { |sum, l| sum + l.line_total_net }
   end
 
-  # Total amount of all order lines including any tax.
+  # Total amount of all order lines including any applicable tax.
+  # Tax is excluded if the order is zero-rated.
   def line_total_gross
-    order_lines.inject(0) { |sum, l| sum + l.line_total_net + l.tax_amount }
+    zr = zero_rated?
+    order_lines.inject(BigDecimal("0")) do |sum, l|
+      sum + l.line_total_net + (zr ? 0 : l.tax_amount)
+    end
   end
+  alias_method :total_for_shipping, :line_total_gross
 
   # Tax amount for all order lines.
   def line_tax_total

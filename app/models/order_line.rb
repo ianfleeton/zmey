@@ -1,12 +1,21 @@
 class OrderLine < ActiveRecord::Base
+  # Associations
   belongs_to :order, touch: true, inverse_of: :order_lines
   belongs_to :product, optional: true
 
-  validates_numericality_of :quantity, greater_than_or_equal_to: 1
+  # Validations
+  validates_numericality_of(
+    :quantity,
+    greater_than: 0, less_than_or_equal_to: 10_000
+  )
 
+  # ActiveRecord callbacks
   before_save :keep_shipped_in_bounds
   after_save :recalculate_order_total
   after_destroy :recalculate_order_total
+
+  # Delegated methods
+  delegate :delivery_cutoff_hour, to: :product, allow_nil: true
 
   def to_s
     "#{quantity} × #{product_name}"

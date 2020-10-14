@@ -187,8 +187,10 @@ RSpec.describe Order, type: :model do
 
   describe "#outstanding_payment_amount" do
     it "returns the amount still left to be paid" do
-      o = FactoryBot.create(:order)
-      o.total = 50
+      o = FactoryBot.build(:order)
+      line = FactoryBot.build(:order_line, product_price: 50, quantity: 1)
+      o.order_lines << line
+
       FactoryBot.create(:payment, order: o, amount: 5, accepted: true)
       FactoryBot.create(:payment, order: o, amount: 10, accepted: true)
       expect(o.outstanding_payment_amount).to eq 35.0
@@ -394,6 +396,147 @@ RSpec.describe Order, type: :model do
     }.each do |from, to|
       it "copies address.#{from} to order.#{to}" do
         expect(@order.send(to)).to eq @address.send(from)
+      end
+    end
+  end
+
+  describe "#calculate_total" do
+    it "calculates and assigns the order grand total to self.total" do
+      order = Order.new(shipping_amount: 1, shipping_tax_amount: 0.2)
+      order.order_lines << OrderLine.new(
+        quantity: 1, product_price: 3, tax_amount: 0.6
+      )
+      order.calculate_total
+      expect(order.total).to eq 4.8
+    end
+  end
+
+  shared_examples_for "a WAITING_FOR_PAYMENT to PAYMENT_RECEIVED transition" do
+    let(:order) { Order.new(total: total, status: initial_status) }
+
+    before { order.update_payment_status }
+
+    subject { order.status }
+
+    context "when initial status is WAITING_FOR_PAYMENT" do
+      let(:initial_status) { Enums::PaymentStatus::WAITING_FOR_PAYMENT }
+      it { should eq Enums::PaymentStatus::PAYMENT_RECEIVED }
+    end
+
+    context "when initial status is anything else" do
+      let(:initial_status) { Enums::PaymentStatus::QUOTE }
+      it { should eq Enums::PaymentStatus::QUOTE }
+    end
+  end
+
+  describe "#update_payment_status" do
+    context "when there is an outstanding payment amount" do
+      let(:order) { Order.new(total: 1, status: initial_status) }
+
+      before { order.update_payment_status }
+
+      subject { order.status }
+
+      context "when initial status is PAYMENT_RECEIVED" do
+        let(:initial_status) { Enums::PaymentStatus::PAYMENT_RECEIVED }
+        it { should eq Enums::PaymentStatus::WAITING_FOR_PAYMENT }
+      end
+
+      context "when initial status is anything else" do
+        let(:initial_status) { Enums::PaymentStatus::QUOTE }
+        it { should eq Enums::PaymentStatus::QUOTE }
+      end
+    end
+
+    context "when there is no outstanding payment amount" do
+      let(:total) { 0 }
+      it_behaves_like "a WAITING_FOR_PAYMENT to PAYMENT_RECEIVED transition"
+    end
+
+    context "when the outstanding payment amount is negative" do
+      let(:total) { -5 }
+      it_behaves_like "a WAITING_FOR_PAYMENT to PAYMENT_RECEIVED transition"
+    end
+  end
+
+  describe "#shipping_amount_gross" do
+    before do
+      @order = FactoryBot.build(
+        :order, shipping_amount: 10, shipping_tax_amount: 2
+      )
+    end
+
+    context "when not zero-rated" do
+      it "returns the shipping amount including tax" do
+        expect(@order.shipping_amount_gross).to eq 12
+      end
+    end
+
+    context "when zero-rated" do
+      before do
+        make_order_zero_rated(@order)
+      end
+
+      it "returns the shipping amount excluding tax" do
+        expect(@order.shipping_amount_gross).to eq 10
+      end
+    end
+  end
+
+  def make_order_zero_rated(order)
+    allow(Orders::TaxStatus)
+      .to receive(:new)
+      .with(order)
+      .and_return(instance_double(Orders::TaxStatus, zero_rated?: true))
+  end
+
+  describe "#line_total_net" do
+    context "without order lines" do
+      it "returns a BigDecimal zero" do
+        ltn = Order.new.line_total_net
+        expect(ltn).to be_zero
+        expect(ltn.class).to eq BigDecimal
+      end
+    end
+  end
+
+  describe "#line_total_gross" do
+    before do
+      @order = FactoryBot.create(:order)
+    end
+
+    context "without order lines" do
+      it "returns a BigDecimal zero" do
+        ltg = @order.line_total_gross
+        expect(ltg).to be_zero
+        expect(ltg.class).to eq BigDecimal
+      end
+    end
+
+    context "with order lines" do
+      before do
+        @order.order_lines << FactoryBot.build(
+          :order_line, product_price: 5, quantity: 2, tax_amount: 2
+        )
+        @order.order_lines << FactoryBot.build(
+          :order_line, product_price: 4, quantity: 1, tax_amount: 0.8
+        )
+      end
+
+      context "when not zero-rated" do
+        it "returns the sum of line totals including tax" do
+          expect(@order.line_total_gross).to eq 16.8
+        end
+      end
+
+      context "when zero-rated" do
+        before do
+          make_order_zero_rated(@order)
+        end
+
+        it "returns the sum of line totals excluding tax" do
+          expect(@order.line_total_gross).to eq 14
+        end
       end
     end
   end

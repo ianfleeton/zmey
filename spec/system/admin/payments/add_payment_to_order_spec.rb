@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Create offline payment method" do
+RSpec.describe "Add offline payments on behalf of customer", type: :system do
   before do
     FactoryBot.create(:website)
     FactoryBot.create(:offline_payment_method, name: "Cheque")
