@@ -7,7 +7,7 @@ p
 - if @orders.empty?
   p= t('.no_orders')
 - else
-  = will_paginate @orders
+  = will_paginate(orders, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer)
   table#orders.table.table-bordered.table-striped
     thead
       tr
@@ -17,7 +17,6 @@ p
         th= t('.when_placed')
         th= t('.full_name')
         th= t('.status')
-        th= t('.analytics')
         th &nbsp;
     tbody
       - @orders.each do |o|
@@ -28,11 +27,6 @@ p
           td= o.created_at
           td= o.billing_full_name
           td= payment_status(o)
-          td
-            - if o.sales_conversion_recorded_at
-              = tick(true)
-            - if o.should_record_sales_conversion?
-              = link_to 'Record conversion', record_sales_conversion_admin_order_path(o), target: '_blank'
           td style="width: 100px;"
             .btn-group
               = edit_button [:admin, o]

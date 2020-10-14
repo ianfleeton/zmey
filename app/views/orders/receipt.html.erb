@@ -1,5 +1,3 @@
-<% record_sales_conversion(@order) if @order.should_record_sales_conversion? -%>
-
 <% if @order.payment_received? -%>
 <h1>Receipt</h1>
 <% else -%>
@@ -83,3 +81,8 @@
   VAT number: <%= @w.vat_number %>
 </p>
 <% end -%>
+
+<% if @order.sales_conversion_recorded_at.nil? %>
+  <% Orders::SalesConversion.new(@order).record! %>
+  <%= render partial: "conversion_code", locals: { order: @order } %>
+<% end %>
