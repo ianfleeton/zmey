@@ -28,13 +28,20 @@ Ruby 2.7.2.
 
 === System dependencies
 
-Zmey uses ImageScience, which depends on FreeImage, for image resizing.
+Uses RMagick and convert, which depend on ImageMagick, for image resizing.
 
 For Ubuntu:
 
-  apt-get install libfreeimage3 libfreeimage-dev
+  apt-get install libmagickwand-dev imagemagick
 
-For other operating systems see http://docs.seattlerb.org/ImageScience.html.
+For Fedora:
+
+  dnf install ImageMagick-devel
+
+For macOS with Homebrew:
+
+  brew install imagemagick@6
+  brew link --force imagemagick@6
 
 ==== wkhtmltopdf
 

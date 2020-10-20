@@ -54,7 +54,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   vb.gui = true
   #
   #   # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ["modifyvm", :id, "--memory", "3072"]
+    vb.customize ["modifyvm", :id, "--memory", "4096"]
   end
   #
   # View the documentation for the provider you're using for more
@@ -124,17 +124,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   #   chef.validation_client_name = "ORGNAME-validator"
 
-  # Set up some swap space.
-  config.vm.provision :shell, inline: %q{fallocate -l 1024M /swapfile}
-  config.vm.provision :shell, inline: %q{chmod 600 /swapfile}
-  config.vm.provision :shell, inline: %q{mkswap /swapfile}
-  config.vm.provision :shell, inline: %q{swapon /swapfile}, run: 'always'
-
   # Update apt.
   config.vm.provision :shell, inline: %q{apt-get update}
 
-  # Install FreeImage (ImageScience dependency).
-  config.vm.provision :shell, inline: %q{apt-get -y install libfreeimage3 libfreeimage-dev}
+  # Install ImageMagick (RMagick dependency).
+  config.vm.provision :shell, inline: "apt-get -y install libmagickwand-dev"
 
   # Install other build dependencies.
   config.vm.provision :shell, inline: %q{apt-get -y install libcurl4-openssl-dev libgmp-dev git-core}

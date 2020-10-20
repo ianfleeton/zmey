@@ -8,16 +8,15 @@ gem "rails", "~> 6.0.3.4"
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 
-gem 'RedCloth'
-gem 'image_science'
-gem 'RubyInline'
-gem 'liquid', '~> 3.0'
-gem 'acts_as_list'
-gem 'acts_as_tree'
-gem 'exception_notification'
-gem 'nilify_blanks'
-gem 'slim'
-gem 'render_anywhere'
+gem "RedCloth"
+gem "acts_as_list"
+gem "acts_as_tree"
+gem "exception_notification"
+gem "liquid", "~> 3.0"
+gem "nilify_blanks"
+gem "render_anywhere"
+gem "rmagick"
+gem "slim"
 
 # Run jobs in the background
 gem 'daemons'
