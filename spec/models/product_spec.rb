@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "shared_examples/extra_attributes_shared.rb"
+require_relative "shared_examples/extra_attributes_shared"
 
 RSpec.describe Product, type: :model do
   before(:each) do

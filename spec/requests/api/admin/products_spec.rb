@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "shared_examples/api_pagination.rb"
+require_relative "shared_examples/api_pagination"
 
 describe "Admin products API" do
   before do

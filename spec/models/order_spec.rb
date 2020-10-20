@@ -178,6 +178,35 @@ RSpec.describe Order, type: :model do
     end
   end
 
+  describe "#can_update_basket?" do
+    it "returns false when payment received, on account, quote or pay by " \
+    "phone" do
+      [
+        Enums::PaymentStatus::NEEDS_SHIPPING_QUOTE,
+        Enums::PaymentStatus::PAYMENT_RECEIVED,
+        Enums::PaymentStatus::PAYMENT_ON_ACCOUNT,
+        Enums::PaymentStatus::QUOTE,
+        Enums::PaymentStatus::PAY_BY_PHONE
+      ].each do |status|
+        expect(
+          Order.new(status: status).can_update_basket?
+        ).to be_falsey
+      end
+    end
+
+    it "returns true when any other status" do
+      [
+        Enums::PaymentStatus::ORDER_NOT_PLACED,
+        Enums::PaymentStatus::WAITING_FOR_PAYMENT,
+        Enums::PaymentStatus::PRO_FORMA
+      ].each do |status|
+        expect(
+          Order.new(status: status).can_update_basket?
+        ).to be_truthy
+      end
+    end
+  end
+
   describe "#amount_paid" do
     it "returns the sum of accepted payment amounts" do
       o = FactoryBot.create(:order)

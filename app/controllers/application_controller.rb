@@ -145,17 +145,24 @@ class ApplicationController < ActionController::Base
   end
 
   def find_basket
-    @basket = if session[:basket_id]
-                Basket.find_by(id: session[:basket_id])
-              else
-                nil
+    if session[:basket_id]
+      @basket = Basket.find_by(id: session[:basket_id])
+      @basket if @basket&.can_update?
+    else
+      @basket = nil
     end || create_basket
   end
 
   def create_basket
-    @basket = Basket.create
+    @basket = Basket.new
+    update_basket_details
     session[:basket_id] = @basket.id
     @basket
+  end
+
+  # Updates the current basket with details from the user's session.
+  def update_basket_details
+    basket.update_details(session)
   end
 
   # Allows the use of a website custom view template resolver to let

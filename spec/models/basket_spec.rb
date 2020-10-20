@@ -1,6 +1,26 @@
 require "rails_helper"
 
 RSpec.describe Basket, type: :model do
+  describe "#update_details" do
+    it "sets email, mobile, name, phone, shipping_class_id from details hash" do
+      basket = FactoryBot.build(:basket)
+      details = {
+        email: "sparklebatch@example.com",
+        mobile: "07777 123456",
+        name: "Sparklebatch Rumblesnack",
+        phone: "01234 567890",
+        shipping_class_id: 1
+      }
+      basket.update_details(details)
+      basket.reload
+      expect(basket.email).to eq "sparklebatch@example.com"
+      expect(basket.mobile).to eq "07777 123456"
+      expect(basket.name).to eq "Sparklebatch Rumblesnack"
+      expect(basket.phone).to eq "01234 567890"
+      expect(basket.shipping_class_id).to eq 1
+    end
+  end
+
   describe "#set_product_quantities" do
     let!(:basket) { FactoryBot.create(:basket) }
     let(:product) { FactoryBot.create(:product) }
@@ -37,6 +57,31 @@ RSpec.describe Basket, type: :model do
     context "without product in basket" do
       it "returns 0" do
         expect(basket.quantity_of_product(product)).to eq 0
+      end
+    end
+  end
+
+  describe "#can_update?" do
+    let(:basket) { Basket.new(order: order) }
+    subject { basket.can_update? }
+
+    context "when not associated with an order" do
+      let(:order) { nil }
+      it { should be_truthy }
+    end
+
+    context "when associated with an order" do
+      let(:order) { Order.new }
+      before do
+        allow(order).to receive(:can_update_basket?).and_return(can_update)
+      end
+      context "when order state can update basket" do
+        let(:can_update) { true }
+        it { should be_truthy }
+      end
+      context "when order state cannot update basket" do
+        let(:can_update) { false }
+        it { should be_falsey }
       end
     end
   end

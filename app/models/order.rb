@@ -168,9 +168,24 @@ class Order < ActiveRecord::Base
     order_number
   end
 
+  # Returns truthy if the customer can update a basket associated with this
+  # order.
+  def can_update_basket?
+    !(
+      needs_shipping_quote? || quote? || payment_on_account? || pay_by_phone? ||
+      payment_received?
+    )
+  end
+
   # Empties the basket associated with this order if there is one.
   def empty_basket
     basket&.basket_items&.destroy_all
+  end
+
+  # Returns +true+ if the customer has chosen to pay by phone but has not yet
+  # paid.
+  def pay_by_phone?
+    status == Enums::PaymentStatus::PAY_BY_PHONE
   end
 
   # Returns +true+ if credit has been given and payment not yet received.

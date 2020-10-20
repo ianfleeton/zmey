@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "shared_examples/shopping_suspended.rb"
+require_relative "shared_examples/shopping_suspended"
 
 RSpec.describe BasketController, type: :controller do
   let(:website) { Website.new }

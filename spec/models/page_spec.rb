@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "shared_examples/extra_attributes_shared.rb"
+require_relative "shared_examples/extra_attributes_shared"
 
 RSpec.describe Page, type: :model do
   it { should validate_length_of(:description).is_at_most(200) }

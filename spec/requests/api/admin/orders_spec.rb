@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "shared_examples/api_pagination.rb"
+require_relative "shared_examples/api_pagination"
 
 describe "Admin orders API" do
   before do
@@ -166,11 +166,11 @@ describe "Admin orders API" do
       end
 
       ["billing_address_line_3", "billing_company",
-       "customer_note",
-       "delivery_address_line_3", "delivery_company",
-       "delivery_instructions",
-       "po_number",
-       "shipping_tracking_number", "weight"].each do |component|
+        "customer_note",
+        "delivery_address_line_3", "delivery_company",
+        "delivery_instructions",
+        "po_number",
+        "shipping_tracking_number", "weight"].each do |component|
         it "includes #{component} in JSON" do
           get api_admin_order_path(@order)
           expect(order[component]).to eq @order.send(component.to_sym)

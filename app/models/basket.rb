@@ -9,6 +9,16 @@ class Basket < ActiveRecord::Base
     where("updated_at < ?", 90.days.ago)
   end
 
+  # Updates user-related details from the given hash and saves the basket.
+  def update_details(details)
+    self.email = details[:email]
+    self.mobile = details[:mobile]
+    self.name = details[:name]
+    self.phone = details[:phone]
+    self.shipping_class_id = details[:shipping_class_id]
+    save
+  end
+
   # Adds +product+ to the basket.
   # Yields the container +BasketItem+ for editing if a block is given.
   def add(product, feature_selections, quantity)
@@ -63,6 +73,15 @@ class Basket < ActiveRecord::Base
 
   def items_at_full_price
     basket_items.select { |i| i.product.full_price? }
+  end
+
+  # Returns truthy if the customer can update this basket.
+  def can_update?
+    if order
+      order.can_update_basket?
+    else
+      true
+    end
   end
 
   # Returns the sum of basket item savings.
