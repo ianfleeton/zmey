@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_162613) do
+ActiveRecord::Schema.define(version: 2020_10_20_100055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -290,6 +290,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_162613) do
     t.integer "shipped", default: 0, null: false
     t.decimal "product_weight", precision: 10, scale: 3, default: "0.0", null: false
     t.decimal "product_rrp", precision: 10, scale: 3
+    t.string "product_brand", default: "", null: false
     t.index ["order_id"], name: "index_order_lines_on_order_id"
     t.index ["product_id"], name: "index_order_lines_on_product_id"
   end

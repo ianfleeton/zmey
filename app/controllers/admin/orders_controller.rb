@@ -145,26 +145,21 @@ module Admin
       end
     end
 
-    def update_order_line(order_line, id)
-      orig_tax_percentage = order_line.tax_percentage
-      order_line.quantity = params[:order_line_quantity][id]
-      order_line.product_name = params[:order_line_product_name][id]
-      order_line.product_sku = params[:order_line_product_sku][id]
-      order_line.product_weight = params[:order_line_product_weight][id]
-
-      # Prevent AR change being recorded unnecessarily.
-      if order_line.product_price != params[:order_line_product_price][id].to_f
-        order_line.product_price = params[:order_line_product_price][id].to_f
-      end
-
-      # Use three decimal places and ignore changes to a higher precision.
-      tax_changed = (orig_tax_percentage.round(3) != params[:order_line_tax_percentage][id].to_f.round(3))
-
-      if order_line.changed? || tax_changed
-        order_line.tax_amount = tax_amount(order_line, params[:order_line_tax_percentage][id])
-      end
-
-      order_line.save
+    def update_order_line(order_line, key)
+      updater = ::Orders::OrderLineUpdater.new(
+        administrator: "Unknown",
+        order_line: order_line,
+        feature_descriptions: params[:order_line_feature_descriptions][key],
+        product_brand: params[:order_line_product_brand][key],
+        product_id: params[:order_line_product_id][key],
+        product_name: params[:order_line_product_name][key],
+        product_price: params[:order_line_product_price][key],
+        product_sku: params[:order_line_product_sku][key],
+        product_weight: params[:order_line_product_weight][key],
+        quantity: params[:order_line_quantity][key],
+        tax_percentage: params[:order_line_tax_percentage][key]
+      )
+      updater.save
     end
 
     # Calculates the tax amount for <tt>order_line</tt> when the tax rate is

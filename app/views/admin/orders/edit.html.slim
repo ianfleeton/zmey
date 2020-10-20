@@ -65,35 +65,46 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
       th.qty Qty
       th SKU
       th Product name
+      th Brand
       th Weight (each)
       th.price Price (each)
       th Tax (%)
+      th Feature Descriptions
       th Total
 
     - @order.order_lines.each do |line|
       tr
         td
-          input name="order_line_quantity[#{line.id}]" value="#{line.quantity}"
+          = hidden_field_tag "order_line_product_id[#{line.id}]", line.product_id
+          = text_field_tag "order_line_quantity[#{line.id}]", line.quantity, size: 4, readonly: @order.locked? || @order.processed_at, class: 'form-control'
         td
-          input name="order_line_product_sku[#{line.id}]" value="#{line.product_sku}"
-          | &nbsp;
-          span.glyphicon.glyphicon-search.product-search data-id="#{line.id}"
+          .input-group
+            = text_field_tag "order_line_product_sku[#{line.id}]", line.product_sku, size: 15, readonly: @order.locked? || @order.processed_at || line.product_id, class: 'form-control', style: 'width: auto;'
+            .input-group-append
+              span.btn.btn-outline-secondary.product-search data-id="#{line.id}"
+                i.far.fa-search
         td
           input name="order_line_product_name[#{line.id}]" value="#{line.product_name}"
         td
-          input name="order_line_product_weight[#{line.id}]" value="#{line.product_weight}"
+          = text_field_tag "order_line_product_brand[#{line.id}]", line.product_brand, readonly: @order.locked? || @order.processed_at || line.product_id, class: 'form-control'
         td
-          input name="order_line_product_price[#{line.id}]" value="#{line.product_price}"
+          = text_field_tag "order_line_product_weight[#{line.id}]", line.product_weight, size: 5, readonly: @order.locked? || @order.processed_at, class: 'form-control'
         td
-          input name="order_line_tax_percentage[#{line.id}]" value="#{line.tax_percentage}"
+          = text_field_tag "order_line_product_price[#{line.id}]", line.product_price, size: 5, readonly: @order.locked? || @order.processed_at, class: 'form-control'
+        td
+          = text_field_tag "order_line_tax_percentage[#{line.id}]", line.tax_percentage, size: 4, readonly: @order.locked? || @order.processed_at, class: 'form-control'
+        td
+          = text_area_tag "order_line_feature_descriptions[#{line.id}]", line.feature_descriptions, rows: 3, cols: 60, readonly: @order.locked? || @order.processed_at, class: 'form-control'
         td
           = line.line_total_net
         td
-          = delete_button [:admin, line]
+          = delete_button [:admin, line] unless @order.locked? || @order.processed_at
     tbody.additional-lines
     tr
       td colspan="5"
-        button#add-line Add Line
+        - unless @order.locked? || @order.processed_at
+          button#add-line.btn.btn-outline-secondary title="Add Line"
+            => icon_add
       th VAT
       td.price.total= formatted_price(@order.tax_total)
     tr
@@ -109,12 +120,17 @@ javascript:
     var id = -1;
     $('#add-line').click(function() {
       html = '<tr>' +
-        '<td><input name="order_line_quantity[' + id + ']" value="1"></td>' +
-        '<td><input name="order_line_product_sku[' + id + ']"> <span class="glyphicon glyphicon-search product-search" data-id="' + id + '"></span></td>' +
-        '<td><input name="order_line_product_name[' + id + ']"></td>' +
-        '<td><input name="order_line_product_weight[' + id + ']" value="0.0"></td>' +
-        '<td><input name="order_line_product_price[' + id + ']" value="0.0"></td>' +
-        '<td><input name="order_line_tax_percentage[' + id + ']" value="0.0"></td>' +
+        '<td>' +
+        '<input type="hidden" name="order_line_product_id[' + id + ']">' +
+        '<input class="form-control" name="order_line_quantity[' + id + ']" value="1" size="5">' +
+        '</td>' +
+        '<td><div class="input-group"><input class="form-control" name="order_line_product_sku[' + id + ']"><div class="input-group-append"><span class="btn btn-outline-secondary product-search" data-id="' + id + '"><i class=\"far fa-search\"></i></span></div></div></td>' +
+        '<td><input class="form-control" name="order_line_product_name[' + id + ']"></td>' +
+        '<td><input class="form-control" name="order_line_product_brand[' + id + ']"></td>' +
+        '<td><input class="form-control" name="order_line_product_weight[' + id + ']" value="0.0" size="5"></td>' +
+        '<td><input class="form-control" name="order_line_product_price[' + id + ']" value="0.0" size="5"></td>' +
+        '<td><input class="form-control" name="order_line_tax_percentage[' + id + ']" value="#{Product::VAT_RATE * 100.0}" size="5"></td>' +
+        '<td><textarea class="form-control" name="order_line_feature_descriptions[' + id + ']" rows="2" cols="60"></textarea></td>' +
         '<td></td>' +
         '</tr>';
       $('.additional-lines').append(html);
