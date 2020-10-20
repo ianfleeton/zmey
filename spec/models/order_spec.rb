@@ -34,7 +34,10 @@ RSpec.describe Order, type: :model do
     it { should have_many(:collection_ready_emails).dependent(:delete_all) }
     it { should have_many(:discount_uses).dependent(:delete_all) }
     it { should have_many(:discounts).through(:discount_uses) }
+    it { should have_many(:locations).through(:product_groups) }
     it { should have_many(:order_comments).dependent(:delete_all).inverse_of(:order) }
+    it { should have_many(:product_groups).through(:products) }
+    it { should have_many(:products).through(:order_lines) }
     it { should have_many(:shipments).dependent(:delete_all).inverse_of(:order) }
   end
 
@@ -194,6 +197,39 @@ RSpec.describe Order, type: :model do
       FactoryBot.create(:payment, order: o, amount: 5, accepted: true)
       FactoryBot.create(:payment, order: o, amount: 10, accepted: true)
       expect(o.outstanding_payment_amount).to eq 35.0
+    end
+  end
+
+  describe "#shippable?" do
+    let(:on_hold) { false }
+    let(:status) { Enums::PaymentStatus::PAYMENT_RECEIVED }
+    let(:order) { Order.new(on_hold: on_hold, status: status) }
+
+    it "is shippable when payment is received" do
+      expect(order.shippable?).to eq(true)
+    end
+
+    it "is shippable when payment is on account" do
+      order.status = Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
+      expect(order.shippable?).to eq(true)
+    end
+
+    it "is not shippable when the order is on hold" do
+      order.on_hold = true
+      expect(order.shippable?).to eq(false)
+    end
+
+    it "is not shippable when the order is for collection" do
+      order.shipping_method = "Collection"
+      expect(order.shippable?).to eq(false)
+    end
+
+    it "is not shippable when status is not payment received or payment on " \
+    "account" do
+      order.status = Enums::PaymentStatus::QUOTE
+      expect(order.shippable?).to eq(false)
+      order.status = Enums::PaymentStatus::WAITING_FOR_PAYMENT
+      expect(order.shippable?).to eq(false)
     end
   end
 

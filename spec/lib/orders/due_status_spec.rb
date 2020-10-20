@@ -377,7 +377,7 @@ module Orders
 
       it "includes unique, sorted locations for products in the order" do
         computers = FactoryBot.create(:location, name: "Computers")
-        books = FactoryBot.create(:location, name: "book")
+        books = FactoryBot.create(:location, name: "Books")
         pg1 = FactoryBot.create(:product_group, location: computers)
         pg2 = FactoryBot.create(:product_group, location: books)
         p1 = FactoryBot.create(:product, product_groups: [pg1])

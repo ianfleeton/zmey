@@ -128,11 +128,12 @@ class Order < ActiveRecord::Base
   has_many :collection_ready_emails, dependent: :delete_all
   has_many :discount_uses, dependent: :delete_all
   has_many :discounts, through: :discount_uses
-  has_many :locations, -> { distinct }, through: :product_groups
   has_many :order_comments, dependent: :delete_all, inverse_of: :order
   has_many :order_lines, dependent: :delete_all, inverse_of: :order
   has_many :payments, dependent: :delete_all
+  has_many :products, through: :order_lines
   has_many :product_groups, through: :products
+  has_many :locations, -> { distinct }, through: :product_groups
   has_many :shipments, dependent: :delete_all, inverse_of: :order
   has_one :client, as: :clientable, dependent: :delete
 
@@ -216,6 +217,14 @@ class Order < ActiveRecord::Base
   # Returns the amount still left to be paid, taking credit notes into account.
   def outstanding_payment_amount
     (total - amount_paid).round(2)
+  end
+
+  # Whether or not the order is allowed to be shipped. An order is shippable if
+  # its status is either Enums::PaymentStatus::PAYMENT_RECEIVED or
+  # Enums::PaymentStatus::PAYMENT_ON_ACCOUNT and that the order is neither
+  # on hold nor for collection.
+  def shippable?
+    can_supply? && !(on_hold? || collection?)
   end
 
   # Whether or not the order can be collected. An order can be collected if
