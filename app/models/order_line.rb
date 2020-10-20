@@ -5,6 +5,11 @@ class OrderLine < ActiveRecord::Base
 
   # Validations
   validates_numericality_of(
+    :product_price,
+    greater_than_or_equal_to: -Product::MAX_PRICE,
+    less_than_or_equal_to: Product::MAX_PRICE
+  )
+  validates_numericality_of(
     :quantity,
     greater_than: 0, less_than_or_equal_to: 10_000
   )

@@ -1,7 +1,22 @@
 require "rails_helper"
 
 RSpec.describe OrderLine, type: :model do
-  it { should validate_numericality_of(:quantity).is_greater_than_or_equal_to(1) }
+  describe "validations" do
+    it do
+      should(
+        validate_numericality_of(:product_price)
+          .is_greater_than_or_equal_to(-Product::MAX_PRICE)
+          .is_less_than_or_equal_to(Product::MAX_PRICE)
+      )
+    end
+    it do
+      should(
+        validate_numericality_of(:quantity)
+          .is_greater_than(0)
+          .is_less_than_or_equal_to(10_000)
+      )
+    end
+  end
 
   describe "#to_s" do
     it "returns quantity × product_name" do

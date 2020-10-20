@@ -1,4 +1,5 @@
 class Product < ActiveRecord::Base
+  MAX_PRICE = 100_000
   include ExtraAttributes
 
   validates_presence_of :name, :sku
