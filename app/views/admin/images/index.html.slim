@@ -1,16 +1,38 @@
-= page_header 'Images'
+- heading = t(".heading")
+- content_for(:title, heading)
+= page_header(heading)
 
-p= link_to 'Upload New Image', new_admin_image_path, class: 'btn btn-primary'
+p
+  .btn-group
+    = link_to "Upload New Image", new_admin_image_path, class: "btn btn-primary"
+    = search_button
 
-= content_tag(:p, 'No images') if @images.empty?
+= content_tag(:p, "No images") if @images.empty?
 
-= will_paginate @images
+= will_paginate(@images, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer)
 
-- @images.each_slice(4) do |slice|
-  .row
+- @images.each_slice(6) do |slice|
+  .row.mb-3
     - slice.each do |i|
-      .col-xs-6.col-md-3
-        .thumbnail
-          img src="#{i.url}"
-          h5= truncate(i.name, 20)
-          p= edit_button([:admin, i])
+      .col-xs-6.col-md-2
+        .card
+          = image_tag(i.sized_url(240, :longest_side), class: "card-img-top")
+          .card-body
+            h5.card-title= truncate(i.name, 20)
+            p= edit_button([:admin, i])
+
+#search-modal.modal.fade tabindex="-1" role="dialog" aria-labelledby="search-images-label" aria-hidden="true"
+  .modal-dialog
+    = bootstrap_form_tag(method: :get) do |f|
+      .modal-content
+        .modal-header
+          h4#search-images-label.modal-title= t(".search_images")
+          button.close type="button" data-dismiss="modal" aria-label="#{t(".close")}"
+            span aria-hidden="true" &times;
+        .modal-body
+          .row
+            .col-md-6
+              = f.text_field :images_name, label: "Name"
+        .modal-footer
+          button.btn.btn-outline-secondary type="button" data-dismiss="modal"= t(".close")
+          input.btn.btn-primary type="submit" value="#{t(".apply_search")}"

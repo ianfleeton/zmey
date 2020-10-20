@@ -59,7 +59,7 @@ module Admin
     private
 
     def image_params
-      params.require(:image).permit(:image, :name)
+      params.require(:image).permit(:file, :name)
     end
   end
 end

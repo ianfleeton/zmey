@@ -37,7 +37,7 @@ class Image < ActiveRecord::Base
     if (sized = sized_filename(size, method))
       path_for_filename(sized)
     else
-      Image.image_missing_path
+      Image.item_missing_path
     end
   end
 

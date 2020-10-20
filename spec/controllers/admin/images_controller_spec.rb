@@ -12,7 +12,7 @@ RSpec.describe Admin::ImagesController, type: :controller do
     let(:red_image) { fixture_file_upload("images/red.png") }
 
     def post_create
-      post :create, params: {image: {"image" => red_image, "name" => "red"}}
+      post :create, params: {image: {"file" => red_image, "name" => "red"}}
     end
 
     it "creates a new ImageUploader" do

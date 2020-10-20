@@ -116,7 +116,7 @@ RSpec.describe Website, type: :model do
   end
 
   describe "#image_uploader" do
-    let(:params) { {image: fixture_file_upload("images/red.png"), name: "Red"} }
+    let(:params) { {file: fixture_file_upload("images/red.png"), name: "Red"} }
     let(:website) { Website.new }
     let(:uploader) { website.image_uploader(params) }
 

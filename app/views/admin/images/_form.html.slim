@@ -1,7 +1,4 @@
-.form-group
-  = form.label :image, "Image (.jpeg, .jpg, .gif, .png)"
-  = form.file_field :image, class: 'form-control'
-
-.form-group
-  = form.label :name
-  = form.text_field :name, class: 'form-control'
+= bootstrap_form_for [:admin, @image], html: { multipart: true } do |form|
+  = form.file_field :file, label: "Image (.jpeg, .jpg, .gif, .png)", required: @image.new_record?
+  = form.text_field :name, required: true
+  = submit_tag button_label, class: "btn btn-primary"
