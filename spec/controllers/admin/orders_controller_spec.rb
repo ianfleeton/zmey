@@ -21,7 +21,8 @@ module Admin
             delivery_country_id: country.id.to_s,
             delivery_full_name: "A Recipient",
             delivery_phone_number: "01234 567890",
-            email_address: "shopper@example.org"
+            email_address: "shopper@example.org",
+            shipping_amount: BigDecimal("10")
           }
         }
         let(:order) { FactoryBot.build(:order, params) }
@@ -63,24 +64,30 @@ module Admin
         }
         let(:pre) { nil }
 
+        let(:order_line_product_brand) { nil }
+        let(:order_line_product_id) { nil }
         let(:order_line_product_name) { nil }
         let(:order_line_product_price) { nil }
         let(:order_line_product_sku) { nil }
         let(:order_line_product_weight) { nil }
         let(:order_line_quantity) { nil }
         let(:order_line_tax_percentage) { nil }
+        let(:order_line_feature_descriptions) { nil }
 
         before do
           pre.try(:call)
           patch :update, params: {
             id: order.id,
             order: order_params,
+            order_line_product_brand: order_line_product_brand,
+            order_line_product_id: order_line_product_id,
             order_line_product_name: order_line_product_name,
             order_line_product_price: order_line_product_price,
             order_line_product_sku: order_line_product_sku,
             order_line_product_weight: order_line_product_weight,
             order_line_quantity: order_line_quantity,
-            order_line_tax_percentage: order_line_tax_percentage
+            order_line_tax_percentage: order_line_tax_percentage,
+            order_line_feature_descriptions: order_line_feature_descriptions
           }
         end
 
@@ -115,19 +122,26 @@ module Admin
 
         context "with new order lines" do
           let(:sku) { "SKU" }
+          let(:order_line_product_brand) { {"-1" => "brand1", "-2" => "brand2"} }
           let(:order_line_product_name) { {"-1" => "A", "-2" => "B"} }
           let(:order_line_product_price) { {"-1" => "3", "-2" => "7"} }
           let(:order_line_product_sku) { {"-1" => sku, "-2" => "Z"} }
           let(:order_line_product_weight) { {"-1" => "1", "-2" => "3"} }
           let(:order_line_quantity) { {"-1" => "1", "-2" => "2"} }
           let(:order_line_tax_percentage) { {"-1" => "15", "-2" => "20"} }
+          let(:order_line_feature_descriptions) do
+            {"-1" => "fd1", "-2" => "fd2"}
+          end
 
           it "adds new order lines" do
             expect(order.reload.order_lines.count).to eq 2
           end
 
-          it "records SKUs" do
-            expect(order.reload.order_lines.first.product_sku).to eq sku
+          it "records details" do
+            order_line = order.reload.order_lines.first
+            expect(order_line.product_brand).to eq "brand1"
+            expect(order_line.product_sku).to eq sku
+            expect(order_line.feature_descriptions).to eq "fd1"
           end
 
           context "when order locked" do
@@ -141,6 +155,7 @@ module Admin
         context "with existing order lines" do
           let(:sku) { "SKU" }
           let(:order_line) { FactoryBot.create(:order_line, order: order, product_weight: 1, quantity: 1) }
+          let(:order_line_product_brand) { {order_line.id => "New brand"} }
           let(:order_line_product_name) { {order_line.id => "New name"} }
           let(:order_line_product_price) { {order_line.id => 3.21} }
           let(:order_line_product_sku) { {order_line.id => sku} }
@@ -150,6 +165,7 @@ module Admin
 
           it "updates the order line" do
             order_line.reload
+            expect(order_line.product_brand).to eq "New brand"
             expect(order_line.product_name).to eq "New name"
             expect(order_line.product_price).to eq 3.21
             expect(order_line.product_weight).to eq 2
