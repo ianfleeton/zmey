@@ -23,8 +23,8 @@ Deployment is handled by Capistrano. To deploy to production run the following:
 
 === Ruby version
 
-Zmey should run fine on Ruby 2.2.5 or above. It is currently in use on MRI
-Ruby 2.4.0.
+Zmey should run fine on Ruby 2.5 or above. It is currently in use on MRI
+Ruby 2.7.2.
 
 === System dependencies
 
@@ -94,16 +94,6 @@ advantage of multiple cores:
 
 Be sure to set up multiple databases as described in the README
 https://github.com/grosser/parallel_tests
-
-==== Selenium headless Firefox in Ubuntu
-
-  # Install with:
-  sudo apt-get update
-  sudo apt-get install firefox xvfb
-
-  # Run with:
-  sudo Xvfb :99 -ac
-  export DISPLAY=:99.0
 
 === REST API documentation
 
