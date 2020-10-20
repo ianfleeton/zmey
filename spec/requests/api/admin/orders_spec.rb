@@ -27,7 +27,7 @@ describe "Admin orders API" do
 
       num_items.times do |x|
         FactoryBot.create(
-          :order,
+          :unpaid_order,
           user_id: FactoryBot.create(:user).id,
           created_at: Date.today - x.days # affects ordering
         )
@@ -66,7 +66,7 @@ describe "Admin orders API" do
 
       let!(:more_setup) {
         -> {
-          @matching_order = FactoryBot.create(:order)
+          @matching_order = FactoryBot.create(:unpaid_order)
           @matching_order.order_number = order_number
           @matching_order.save
         }
@@ -258,7 +258,7 @@ describe "Admin orders API" do
     let(:delivery_town_city) { SecureRandom.hex }
     let(:email_address) { "#{SecureRandom.hex}@example.org" }
     let(:order_number) { "ORDER123456" }
-    let(:payment_status) { "waiting_for_payment" }
+    let(:payment_status) { "payment_received" }
     let(:po_number) { "PO123" }
     let(:processed_at) { "2015-03-05T10:00:00.000+00:00" }
 
@@ -289,12 +289,24 @@ describe "Admin orders API" do
 
     it "inserts a new order into the website" do
       post "/api/admin/orders", params: {order: basic_params}
-      expect(Order.find_by(
-        basic_params.merge(
-          processed_at: "2015-03-05 10:00:00",
-          status: Enums::PaymentStatus::WAITING_FOR_PAYMENT
-        )
-      )).to be
+      o = Order.last
+      expect(o.billing_address_line_1).to eq billing_address_line_1
+      expect(o.billing_address_line_3).to eq billing_address_line_3
+      expect(o.billing_company).to eq billing_company
+      expect(o.billing_country).to eq country
+      expect(o.billing_postcode).to eq billing_postcode
+      expect(o.billing_town_city).to eq billing_town_city
+      expect(o.delivery_address_line_1).to eq delivery_address_line_1
+      expect(o.delivery_address_line_3).to eq delivery_address_line_3
+      expect(o.delivery_company).to eq delivery_company
+      expect(o.delivery_country).to eq country
+      expect(o.delivery_postcode).to eq delivery_postcode
+      expect(o.delivery_town_city).to eq delivery_town_city
+      expect(o.email_address).to eq email_address
+      expect(o.order_number).to eq order_number
+      expect(o.po_number).to eq po_number
+      expect(o.processed_at).to eq "2015-03-05 10:00:00"
+      expect(o.status).to eq Enums::PaymentStatus::PAYMENT_RECEIVED
     end
 
     it "ignores a blank status" do
