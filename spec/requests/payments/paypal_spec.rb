@@ -26,8 +26,6 @@ RSpec.describe "PayPal", type: :request do
     context "when order is already paid" do
       it { should redirect_to root_path }
       it "sets a flash alert" do
-        puts order.status
-        puts order.total
         expect(flash[:alert]).to eq "This order is fully paid!"
       end
     end
