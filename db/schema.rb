@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_20_100055) do
+ActiveRecord::Schema.define(version: 2020_10_20_113823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -352,6 +352,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_100055) do
     t.date "paid_on"
     t.date "dispatch_date"
     t.boolean "on_hold", default: false, null: false
+    t.datetime "completed_at"
     t.index ["basket_id"], name: "index_orders_on_basket_id"
     t.index ["created_at"], name: "index_orders_on_created_at"
     t.index ["email_address"], name: "index_orders_on_email_address"
