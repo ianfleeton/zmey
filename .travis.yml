@@ -1,16 +1,16 @@
 language: ruby
 rvm:
-  - '2.6.3'
+  - '2.7.2'
 services:
   - postgresql
 install:
   - sudo apt-get update
-  - sudo apt-get install libfreeimage3 libfreeimage-dev
+  - sudo apt-get install libmagickwand-dev
   # wkhtmltopdf
   - sudo apt-get install libqtgui4 libqt4-network libqtwebkit4 libxrender-dev xorg
   - sudo apt-get install xfonts-75dpi
-  - wget 'https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.xenial_amd64.deb'
-  - sudo dpkg -i wkhtmltox_0.12.5-1.xenial_amd64.deb
+  - wget 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.xenial_amd64.deb'
+  - sudo dpkg -i wkhtmltox_0.12.6-1.xenial_amd64.deb
   - bundle install --jobs=1 --retry=3 --deployment --without production
 script:
   - bin/rails db:create RAILS_ENV=test
