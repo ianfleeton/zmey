@@ -9,6 +9,7 @@ class BasketItem < ActiveRecord::Base
   before_update :preserve_immutable_quantity
 
   delegate :apply_shipping?, to: :product, allow_nil: true
+  delegate :delivery_cutoff_hour, to: :product
   delegate :oversize?, to: :product, allow_nil: true
 
   def line_total(inc_tax)

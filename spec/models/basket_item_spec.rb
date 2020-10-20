@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe BasketItem, type: :model do
+  describe "delegated methods" do
+    it { should delegate_method(:delivery_cutoff_hour).to(:product) }
+  end
+
   describe "#line_total(inc_tax)" do
     context "when inc_tax is true" do
       it "returns the quantity times the price of the product including tax when buying that quantity" do
