@@ -1,18 +1,17 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-RSpec.describe "Edit order addresses" do
+RSpec.describe "Edit order addresses", type: :system do
   let(:order) { FactoryBot.create(:order) }
 
-  before do
-    FactoryBot.create(:website)
-    sign_in_as_admin
-  end
+  before { sign_in_as_admin }
 
   let(:new_address_line_1) { "New address line 1" }
   let(:new_address_line_2) { "New address line 2" }
   let(:new_town_city) { "New town" }
   let(:new_county) { "New county" }
-  let(:new_postcode) { "NEW POST" }
+  let(:new_postcode) { "AB1 2CD" }
 
   scenario "Edit billing address" do
     edit_address(:billing)
@@ -29,7 +28,7 @@ RSpec.describe "Edit order addresses" do
     fill_in "order_#{type}_town_city", with: new_town_city
     fill_in "order_#{type}_county", with: new_county
     fill_in "order_#{type}_postcode", with: new_postcode
-    click_button "Save"
+    find(".cancel-save").click_button "Save"
     expect(Order.find_by(
       "#{type}_address_line_1" => new_address_line_1,
       "#{type}_address_line_2" => new_address_line_2,

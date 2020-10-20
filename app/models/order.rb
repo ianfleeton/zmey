@@ -182,11 +182,6 @@ class Order < ActiveRecord::Base
     status == Enums::PaymentStatus::PAYMENT_RECEIVED
   end
 
-  # An order is locked when payment is received. When an order is locked its
-  # contents should not be updated. Shipments and comments can still be
-  # added.
-  alias locked? payment_received?
-
   # Returns +true+ if the order is a pro forma invoice.
   def pro_forma?
     status == Enums::PaymentStatus::PRO_FORMA

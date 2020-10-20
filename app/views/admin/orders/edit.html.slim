@@ -15,6 +15,10 @@
 p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class: 'btn btn-default'
 
 = bootstrap_form_for [:admin, @order] do |f|
+  .form-group.cancel-save
+    .btn-group
+      = link_to "Cancel Editing", admin_order_path(@order), class: "btn btn-outline-secondary"
+      = admin_submit_button(f)
 
   .row
     .col-md-6
