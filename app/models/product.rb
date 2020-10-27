@@ -64,6 +64,10 @@ class Product < ActiveRecord::Base
     VAT_RATE
   end
 
+  def delivery_cutoff_hour
+    product_groups.map(&:delivery_cutoff_hour).min
+  end
+
   def name_with_sku
     name + " [" + sku + "]"
   end

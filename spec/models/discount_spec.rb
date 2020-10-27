@@ -6,9 +6,9 @@ RSpec.describe Discount, type: :model do
   end
 
   describe "validations" do
-    it { should validate_numericality_of(:reward_amount).is_less_than_or_equal_to(9999999.999).is_greater_than_or_equal_to(0) }
+    it { should validate_numericality_of(:reward_amount).is_less_than(10_000_000).is_greater_than_or_equal_to(0) }
     it { should validate_inclusion_of(:reward_type).in_array(Discount::REWARD_TYPES) }
-    it { should validate_numericality_of(:threshold).is_less_than_or_equal_to(9999999.999).is_greater_than_or_equal_to(0) }
+    it { should validate_numericality_of(:threshold).is_less_than(10_000_000).is_greater_than_or_equal_to(0) }
   end
 
   describe "#to_s" do
@@ -96,6 +96,19 @@ RSpec.describe Discount, type: :model do
       subject { Discount.currently_valid(code: "maysave") }
       let!(:discount) { FactoryBot.create(:discount, code: "MAYSAVE") }
       it { should include(discount) }
+    end
+  end
+
+  describe ".current_percentage_off_order_discounts" do
+    let(:discount) { Discount }
+    let(:percentage_off_order) { FactoryBot.build(:discount, reward_type: "percentage_off_order") }
+    let(:amount_off_order) { FactoryBot.build(:discount, reward_type: "amount_off_order") }
+    let(:discounts) { [percentage_off_order, amount_off_order] }
+
+    before { allow(discount).to receive(:currently_valid).and_return(discounts) }
+
+    it "returns currently valid percentage off order discounts" do
+      expect(discount.current_percentage_off_order_discounts).to eq [percentage_off_order]
     end
   end
 

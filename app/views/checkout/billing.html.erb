@@ -1,0 +1,23 @@
+<h1><%= t("checkout") %></h1>
+<%= render partial: "progress", locals: {step: 1} %>
+
+<%= content_for :content do %>
+
+  <h2><%= t(".heading") %></h2>
+
+  <% if @shipping_class.nil? || !@shipping_class.collection? %>
+    <div class="checkout-help collection-info">
+      <p>You can also collect your order for free from our warehouse.</p>
+      <p>
+        You have chosen <%= @shipping_class %>.
+        You can change your shipping options and choose Collection from the basket page.
+        <%= link_to "Change shipping method", basket_path %>.
+      </p>
+    </div>
+  <% end %>
+
+  <%= render partial: "billing_details_form" %>
+
+<% end %>
+
+<%= render partial: "page" %>

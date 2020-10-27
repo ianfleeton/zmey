@@ -18,7 +18,6 @@ class Website < ActiveRecord::Base
 
   validates :country_id, presence: true
 
-  has_one :preferred_delivery_date_settings, dependent: :delete
   has_many :custom_views, dependent: :delete_all
   has_many :enquiries, -> { order "created_at DESC" }, dependent: :destroy
   has_many :webhooks, dependent: :delete_all

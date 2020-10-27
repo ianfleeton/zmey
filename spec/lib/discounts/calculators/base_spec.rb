@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 module Discounts
@@ -7,6 +9,9 @@ module Discounts
       it { should respond_to :basket }
       it { should respond_to :basket_items }
       it { should respond_to :discount_lines }
+
+      # Delegated methods.
+      it { should delegate_method(:add_discount_line).to(:context) }
 
       describe "#initialize" do
         it "makes the calculator context and discount params readable" do

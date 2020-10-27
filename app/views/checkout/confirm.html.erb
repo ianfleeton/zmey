@@ -1,0 +1,15 @@
+<%= render partial: "review", locals: {paypal_express: false} %>
+
+<% if !@shipping_quote_needed && !bacs_only?(@order) %>
+  <%= render "checkout/stripe_payment_intents" %>
+<% end %>
+
+<div class="checkout-proceed">
+  <% if @shipping_quote_needed %>
+    <%= render partial: "checkout/shipping_quote_needed" %>
+  <% elsif bacs_only?(@order) %>
+    <%= render partial: "checkout/bacs_only" %>
+  <% else %>
+    <%= render partial: "checkout/all_payments" %>
+  <% end %>
+</div>

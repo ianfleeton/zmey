@@ -4,7 +4,7 @@ class AddressesController < ApplicationController
 
   KNOWN_SOURCES = ["address_book", "billing", "delivery"]
 
-  ADDRESS_PARAMS_WHITELIST = [:address_line_1, :address_line_2, :address_line_3,
+  ADDRESS_PARAMS_ALLOW_LIST = [:address_line_1, :address_line_2, :address_line_3,
     :company, :country_id, :county, :email_address, :full_name, :label,
     :phone_number, :postcode, :town_city]
 
@@ -104,7 +104,7 @@ class AddressesController < ApplicationController
   end
 
   def address_params
-    params.require(:address).permit(ADDRESS_PARAMS_WHITELIST)
+    params.require(:address).permit(ADDRESS_PARAMS_ALLOW_LIST)
   end
 
   def path_after_save

@@ -21,8 +21,38 @@ module PriceCalculator
       product.price
     end
 
+    # Returns the weight of a single product. That is, it is not multiplied
+    # by the quantity.
+    def weight
+      product.weight
+    end
+
     def taxer
       @taxer ||= Taxer.new(price, tax_type)
+    end
+
+    # Returns the sum of RRP and volume purchasing savings. Other discounts are
+    # not considered.
+    #
+    # Amount will include tax if <tt>inc_vat</tt> is true, otherwise it will
+    # exclude tax.
+    #
+    # ==== Examples
+    # * A product bought at 2.0 with no RRP set will have savings of 0.0.
+    # * A single product bought at 2.0 with an RRP of 3.0 will have savings of
+    #   1.0.
+    # * Two products bought at 2.0 with an RRP of 3.0 will have savings of 2.0.
+    # * Ten products bought with RRP unset, price of 2.0 and volume purchase
+    #   price of 1.5 will have savings of 5.0.
+    def savings(inc_tax:)
+      return 0 unless basket_item && product
+
+      rrp = if inc_tax
+        product.rrp_inc_tax || product.price_inc_tax(1)
+      else
+        product.rrp_ex_tax || product.price_ex_tax(1)
+      end
+      (rrp * quantity) - basket_item.line_total(inc_tax)
     end
   end
 end

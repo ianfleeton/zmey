@@ -19,6 +19,47 @@ RSpec.describe Address, type: :model do
     end
   end
 
+  describe ".new_or_reuse" do
+    it "returns a new address with nil user even if a matching address " \
+    "exists" do
+      address = FactoryBot.create(:address, user: nil)
+      expect(Address.new_or_reuse(address.attributes).new_record?).to be_truthy
+    end
+
+    it "returns an existing address for user when a matching address exists" do
+      user = FactoryBot.create(:user)
+      address = FactoryBot.create(:address, user: user)
+      expect(Address.new_or_reuse(address.attributes).persisted?).to be_truthy
+    end
+
+    it "returns a new address for user when no matching address exists" do
+      user = FactoryBot.create(:user)
+      address = FactoryBot.create(:address, user: user)
+      expect(
+        Address.new_or_reuse(
+          address.attributes.merge(town_city: "Somewhere else")
+        ).new_record?
+      ).to be_truthy
+    end
+  end
+
+  describe ".placeholder" do
+    subject { Address.placeholder }
+
+    context "when UK exists in database" do
+      let(:uk) do
+        FactoryBot.build_stubbed(:country, name: Country::UNITED_KINGDOM)
+      end
+      before { allow(Country).to receive(:uk).and_return(uk) }
+      it "sets UK as the country" do
+        expect(subject.country).to eq uk
+      end
+      it "returns a valid address" do
+        expect(subject.valid?).to be_truthy
+      end
+    end
+  end
+
   describe "#shipping_zone" do
     before { setup_address_with_shipping_classes }
 

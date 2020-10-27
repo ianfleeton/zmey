@@ -103,6 +103,33 @@ RSpec.describe Basket, type: :model do
     end
   end
 
+  describe "#overweight?" do
+    let(:basket) { Basket.new }
+    let(:basket_item) { double(BasketItem, product_weight: product_weight) }
+    let(:max_product_weight) { 10 }
+    before do
+      allow(basket).to receive(:basket_items).and_return([basket_item])
+    end
+    subject { basket.overweight?(max_product_weight: max_product_weight) }
+    context "with products exceeding max weight" do
+      let(:product_weight) { 10.1 }
+      it { should eq true }
+    end
+    context "with products at max weight" do
+      let(:product_weight) { 10 }
+      it { should eq false }
+    end
+    context "with products below max weight" do
+      let(:product_weight) { 9.9 }
+      it { should eq false }
+    end
+    context "when max_product_weight is zero" do
+      let(:max_product_weight) { 0 }
+      let(:product_weight) { 1 }
+      it { should eq false }
+    end
+  end
+
   describe "#weight" do
     it "returns the sum of the weight of all basket items" do
       item1 = double(BasketItem, weight: 5)
@@ -110,6 +137,29 @@ RSpec.describe Basket, type: :model do
       basket = Basket.new
       allow(basket).to receive(:basket_items).and_return [item1, item2]
       expect(basket.weight).to eq 15
+    end
+  end
+
+  describe "#lead_time" do
+    it "returns the highest value for lead time in basket items" do
+      item1 = instance_double(BasketItem, lead_time: 3)
+      item2 = instance_double(BasketItem, lead_time: 4)
+      basket = Basket.new
+      allow(basket).to receive(:basket_items).and_return [item1, item2]
+      expect(basket.lead_time).to eq 4
+    end
+
+    it "returns 0 when the basket is empty" do
+      basket = Basket.new
+      expect(basket.lead_time).to eq 0
+    end
+  end
+
+  describe "#total_for_shipping" do
+    it "returns the basket total inc tax" do
+      basket = Basket.new
+      expect(basket).to receive(:total).with(true).and_return(12.0)
+      expect(basket.total_for_shipping).to eq 12.0
     end
   end
 
@@ -199,6 +249,33 @@ RSpec.describe Basket, type: :model do
       b.basket_items << BasketItem.new(product_id: p.id)
       expect(b.deep_clone.basket_items.count).to eq 1
       expect(b.basket_items.count).to eq 1
+    end
+  end
+
+  describe "#delete_rewards" do
+    it "removes basket items that were added as rewards" do
+      basket = FactoryBot.create(:basket)
+      bi1 = FactoryBot.create(:basket_item, basket: basket, reward: false)
+      bi2 = FactoryBot.create(:basket_item, basket: basket, reward: true)
+
+      basket.delete_rewards
+
+      expect(basket.basket_items).to include(bi1)
+      expect(basket.basket_items).not_to include(bi2)
+    end
+  end
+
+  describe "#reward_items" do
+    it "returns basket items that are rewards" do
+      basket = FactoryBot.create(:basket)
+      bi1 = FactoryBot.build(:basket_item, reward: false)
+      bi2 = FactoryBot.build(:basket_item, reward: true)
+      basket.basket_items = [bi1, bi2]
+
+      reward_items = basket.reward_items
+
+      expect(reward_items).to include(bi2)
+      expect(reward_items).not_to include(bi1)
     end
   end
 end

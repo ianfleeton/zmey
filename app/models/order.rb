@@ -421,24 +421,6 @@ class Order < ActiveRecord::Base
     self.order_number = generator.generate
   end
 
-  # Records preferred delivery date.
-  #
-  # * <tt>settings</tt> is an instance of <tt>PreferredDeliveryDateSettings</tt>.
-  # * <tt>date</tt> is a string representation of a date which is expected to
-  #   match the format in the settings.
-  def record_preferred_delivery_date(settings, date)
-    return unless date && settings
-
-    date = Date.strptime(date, settings.date_format)
-
-    raise(ArgumentError, "date is not valid in accordance with settings") unless settings.valid_date?(date)
-
-    self.preferred_delivery_date = date
-    self.preferred_delivery_date_prompt = settings.prompt
-    self.preferred_delivery_date_format = settings.date_format
-    self
-  end
-
   # Adds the contents of <tt>basket</tt> to the order and associates the basket
   # with the order.
   #
@@ -448,10 +430,14 @@ class Order < ActiveRecord::Base
   # The customer note and delivery instructions are also copied from the
   # basket to the order.
   def add_basket(basket)
-    add_basket_items(basket.basket_items)
+    add_lines(basket.to_order_lines)
     self.basket = basket
     self.customer_note = basket.customer_note
     self.delivery_instructions = basket.delivery_instructions
+  end
+
+  def add_discount_lines(discount_lines)
+    add_lines(discount_lines.map(&:to_order_line))
   end
 
   # Creates an <tt>OrderLine<tt> for each <tt>BasketItem</tt> in
@@ -470,6 +456,10 @@ class Order < ActiveRecord::Base
         feature_descriptions: i.feature_descriptions
       )
     end
+  end
+
+  def add_lines(lines)
+    order_lines << lines
   end
 
   def lead_time

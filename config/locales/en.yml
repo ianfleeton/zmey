@@ -6,6 +6,7 @@ en:
     attributes:
       address:
         label: 'Label to use in dropdown menu'
+        town_city: "City"
   add_to_cart: Add to Basket
   addresses:
     choose_address:
@@ -225,7 +226,7 @@ en:
     billing:
       continue: 'Continue'
       deliver_here: 'Deliver here?'
-      heading: 'Billing Address'
+      heading: "Your billing address"
       town_city: 'Town / city'
     checkout: 'Checkout'
     confirm:
@@ -239,7 +240,7 @@ en:
       your_details: 'Your Details'
     delivery:
       continue: 'Continue'
-      heading: 'Delivery Address'
+      heading: "Your delivery address"
       town_city: 'Town / city'
     details:
       continue: 'Continue'
@@ -247,9 +248,6 @@ en:
       full_name: 'Full name'
       heading: 'Your Details'
       phone_number: 'Phone number'
-    preferred_delivery_date:
-      continue: 'Continue'
-      heading: 'Preferred Delivery Date'
     select_payment_method:
       place_order_on_account: 'Place Order on Account'
   components:

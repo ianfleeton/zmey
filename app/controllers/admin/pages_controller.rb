@@ -1,76 +1,78 @@
-class Admin::PagesController < Admin::AdminController
-  before_action :set_page, only: [:edit, :update, :destroy, :move_up, :move_down]
+module Admin
+  class PagesController < AdminController
+    before_action :set_page, only: [:edit, :update, :destroy, :move_up, :move_down]
 
-  def index
-    @title = "Pages"
-    @parent = params[:parent_id] ? Page.find_by(id: params[:parent_id]) : nil
-    @pages = Page.select(:id, :name, :parent_id, :position, :slug, :title).where(parent_id: @parent.try(:id)).order(:position)
-  end
-
-  def edit
-  end
-
-  def move_up
-    @page.move_higher
-    moved
-  end
-
-  def move_down
-    @page.move_lower
-    moved
-  end
-
-  def update
-    params[:page].delete(:position)
-    @page.update_extra(params)
-    if @page.update(page_params)
-      flash[:notice] = "Page saved."
-      redirect_to edit_admin_page_path(@page)
-    else
-      render :edit
+    def index
+      @title = "Pages"
+      @parent = params[:parent_id] ? Page.find_by(id: params[:parent_id]) : nil
+      @pages = Page.select(:id, :name, :parent_id, :position, :slug, :title).where(parent_id: @parent.try(:id)).order(:position)
     end
-  end
 
-  def new
-    @page = Page.new
-  end
-
-  def create
-    @page = Page.new(page_params)
-
-    if @page.save
-      flash[:notice] = "Successfully added new page."
-      redirect_to new_admin_page_path
-    else
-      render :new
+    def edit
     end
-  end
 
-  def destroy
-    @page.destroy
-    redirect_to action: "index", notice: "Page deleted."
-  end
+    def move_up
+      @page.move_higher
+      moved
+    end
 
-  def search_products
-    @products = Product.admin_search(params[:query])
-    render layout: false
-  end
+    def move_down
+      @page.move_lower
+      moved
+    end
 
-  protected
+    def update
+      params[:page].delete(:position)
+      @page.update_extra(params)
+      if @page.update(page_params)
+        flash[:notice] = "Page saved."
+        redirect_to edit_admin_page_path(@page)
+      else
+        render :edit
+      end
+    end
 
-  def set_page
-    @page = Page.find_by(id: params[:id])
-    not_found unless @page
-  end
+    def new
+      @page = Page.new
+    end
 
-  def moved
-    flash[:notice] = "Moved"
-    redirect_to admin_pages_path(parent_id: @page.parent_id)
-  end
+    def create
+      @page = Page.new(page_params)
 
-  def page_params
-    params.require(:page).permit(:content, :description, :image_id, :name,
-      :no_follow, :no_index, :parent_id, :slug, :thumbnail_image_id, :title,
-      :visible)
+      if @page.save
+        flash[:notice] = "Successfully added new page."
+        redirect_to new_admin_page_path
+      else
+        render :new
+      end
+    end
+
+    def destroy
+      @page.destroy
+      redirect_to action: "index", notice: "Page deleted."
+    end
+
+    def search_products
+      @products = Product.admin_search(params[:query])
+      render layout: false
+    end
+
+    protected
+
+    def set_page
+      @page = Page.find_by(id: params[:id])
+      not_found unless @page
+    end
+
+    def moved
+      flash[:notice] = "Moved"
+      redirect_to admin_pages_path(parent_id: @page.parent_id)
+    end
+
+    def page_params
+      params.require(:page).permit(:content, :description, :image_id, :name,
+        :no_follow, :no_index, :parent_id, :slug, :thumbnail_image_id, :title,
+        :visible)
+    end
   end
 end

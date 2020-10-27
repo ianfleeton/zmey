@@ -1,5 +1,6 @@
 class ShippingClass < ActiveRecord::Base
   COLLECTION = "Collection"
+  MAINLAND = "Mainland England & Wales"
 
   belongs_to :shipping_zone
   has_many :shipping_table_rows, -> { order "trigger_value" }, dependent: :delete_all
@@ -23,42 +24,44 @@ class ShippingClass < ActiveRecord::Base
     name == COLLECTION
   end
 
-  def amount_for_basket(basket)
-    value = get_value(basket)
+  # Returns the shipping class that represents Mainland England & Wales.
+  def self.mainland
+    find_by(name: MAINLAND)
+  end
 
-    shipping = nil
+  # Returns truthy if this shipping class represents Mainland England & Wales.
+  def mainland?
+    name == MAINLAND
+  end
+
+  # Returns the shipping amount for the given shopping. shopping can be any
+  # object that responds to #total_for_shipping and #weight, such as a basket
+  # or an order.
+  #
+  # Returns 0 if the shipping table is empty.
+  def amount_for(shopping, delivery_date = nil)
+    val = value(shopping)
+
+    shipping = BigDecimal("0")
 
     unless shipping_table_rows.empty?
       shipping_table_rows.each do |row|
-        if value >= row.trigger_value
-          shipping = row.amount
-        end
+        shipping = row.amount if val >= row.trigger_value
       end
+    end
+
+    if delivery_date && shopping.am_delivery? && allows_am_delivery
+      shipping += weekday_am_surcharge if delivery_date.on_weekday?
+      shipping += saturday_am_surcharge if delivery_date.saturday?
     end
 
     shipping
   end
 
-  def valid_for_basket?(basket)
-    valid_for_value?(basket) && valid_for_size?(basket)
-  end
-
-  def valid_for_size?(basket)
-    allow_oversize? || !basket.oversize?
-  end
-
-  def valid_for_value?(basket)
-    if invalid_over_highest_trigger?
-      get_value(basket) <= shipping_table_rows.last.trigger_value
-    else
-      true
-    end
-  end
-
-  def get_value(basket)
+  def value(basket)
     case table_rate_method
     when "basket_total"
-      basket.total(true)
+      basket.total_for_shipping
     when "weight"
       basket.weight
     else

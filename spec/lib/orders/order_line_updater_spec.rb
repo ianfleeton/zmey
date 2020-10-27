@@ -13,7 +13,7 @@ module Orders
         administrator: admin,
         order_line: line,
         feature_descriptions: "fd",
-        product_brand: "Q clamp",
+        product_brand: "brand",
         product_id: product.id,
         product_name: "pn",
         product_price: 1.23,
@@ -29,7 +29,7 @@ module Orders
         updater
         ol = updater.order_line
         expect(ol.feature_descriptions).to eq "fd"
-        expect(ol.product_brand).to eq "Q clamp"
+        expect(ol.product_brand).to eq "brand"
         expect(ol.product_id).to eq product.id
         expect(ol.product_name).to eq "pn"
         expect(ol.product_price).to eq 1.23

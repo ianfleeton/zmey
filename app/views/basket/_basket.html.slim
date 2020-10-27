@@ -15,7 +15,7 @@
         - if can_update
           th= t('.remove_item')
     tbody
-      - @basket.basket_items.each do |item|
+      - basket.basket_items.each do |item|
         tr
           td= item.product.sku
           td
@@ -33,15 +33,16 @@
           - if can_update
             td
               input.pure-button type="submit" value="#{t('.remove_item')}" name="remove_item[#{item.id}]"
-      - @discount_lines.each do |dl|
-        tr
-          td= t('.discount')
-          td= dl.name
-          td.empty &nbsp;
-          td.empty &nbsp;
-          td.price= formatted_price(dl.price_with_tax(inc_tax))
-          - if can_update
+      - if defined?(@discount_lines)
+        - @discount_lines.each do |dl|
+          tr
+            td= t('.discount')
+            td= dl.name
             td.empty &nbsp;
+            td.empty &nbsp;
+            td.price= formatted_price(dl.price_with_tax(inc_tax))
+            - if can_update
+              td.empty &nbsp;
       - if shipping_amount
         tr.shipping_amount
           th colspan="4"= t('.shipping_amount')
@@ -61,7 +62,7 @@
           - else
             = t('.basket_total')
         td.price
-          - basket_total = @basket.total(inc_tax) + shipping_amount.to_f + discount_lines_price_total
+          - basket_total = basket.total(inc_tax) + shipping_amount.to_f + discount_lines_price_total
           - if inc_tax
             - basket_total += discount_lines_tax_total + shipping_tax_amount.to_f
           = formatted_price basket_total
@@ -71,17 +72,17 @@
         tr.vat_amount
           th colspan="4"= t('.tax')
           td.price
-            - vat_total = @basket.vat_total + discount_lines_tax_total + shipping_tax_amount.to_f
+            - vat_total = basket.vat_total + discount_lines_tax_total + shipping_tax_amount.to_f
             = formatted_price vat_total
           - if can_update
             td.empty &nbsp;
         tr.total
           th colspan="4"= t('.total')
-          td class="price"= formatted_price(@basket.total(false) + discount_lines_price_total + shipping_amount.to_f + vat_total)
+          td class="price"= formatted_price(basket.total(false) + discount_lines_price_total + shipping_amount.to_f + vat_total)
           - if can_update
             td.empty &nbsp;
   - if can_update
-    = render partial: 'customer_note', locals: { customer_note: @basket.customer_note }
+    = render partial: 'customer_note', locals: { customer_note: basket.customer_note }
     p.basket_buttons
       input.update-quantities.pure-button type="submit" name="update_quantities" value="#{t('.update_quantities')}"
       = ' '

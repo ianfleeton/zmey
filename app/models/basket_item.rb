@@ -10,7 +10,10 @@ class BasketItem < ActiveRecord::Base
 
   delegate :apply_shipping?, to: :product, allow_nil: true
   delegate :delivery_cutoff_hour, to: :product
+  delegate :lead_time, to: :product
+  delegate :name, to: :product
   delegate :oversize?, to: :product, allow_nil: true
+  delegate :sku, to: :product
 
   def line_total(inc_tax)
     quantity * (inc_tax ? product_price_inc_tax : product_price_ex_tax)
@@ -21,26 +24,11 @@ class BasketItem < ActiveRecord::Base
     line_total(true) - line_total(false)
   end
 
-  # Returns the sum of RRP and volume purchasing savings. Other discounts are
-  # not considered.
-  #
-  # Amount will include tax if <tt>inc_vat</tt> is true, otherwise it will
-  # exclude tax.
-  #
-  # ==== Examples
-  # * A product bought at 2.0 with no RRP set will have savings of 0.0.
-  # * A single product bought at 2.0 with an RRP of 3.0 will have savings of
-  #   1.0.
-  # * Two products bought at 2.0 with an RRP of 3.0 will have savings of 2.0.
-  # * Ten products bought with RRP unset, price of 2.0 and volume purchase
-  #   price of 1.5 will have savings of 5.0.
-  def savings(inc_tax)
-    rrp = if inc_tax
-      product.rrp_inc_tax || product.price_inc_tax(1)
-    else
-      product.rrp_ex_tax || product.price_ex_tax(1)
-    end
-    (rrp * quantity) - line_total(inc_tax)
+  # Returns the savings made on the basket item, taking into account things such
+  # as RRP and volume discounts. The strategy is provided by the price
+  # calculator.
+  def savings(inc_tax:)
+    price_calculator.savings(inc_tax: inc_tax)
   end
 
   # Returns the price of a single product with tax.
@@ -88,8 +76,14 @@ class BasketItem < ActiveRecord::Base
     product.allow_fractional_quantity? ? quantity : quantity.to_i
   end
 
+  # Returns the weight of a single product in this line.
+  def product_weight
+    price_calculator.weight
+  end
+
+  # Returns the combined weight of all products in this line.
   def weight
-    product.weight * quantity
+    product_weight * quantity
   end
 
   # If quantity is immutable then prevents any changes to quantity attribute.
@@ -110,5 +104,21 @@ class BasketItem < ActiveRecord::Base
     bi.save
     feature_selections.each { |fs| bi.feature_selections << fs.dup }
     bi
+  end
+
+  # Returns an instance of OrderLine representing this item.
+  def to_order_line
+    OrderLine.new(
+      product_id: product.id,
+      product_sku: sku,
+      product_name: product.name,
+      product_brand: product.brand,
+      product_rrp: product.rrp,
+      product_price: product_price_ex_tax,
+      product_weight: product_weight,
+      tax_amount: tax_amount,
+      quantity: quantity,
+      feature_descriptions: feature_descriptions
+    )
   end
 end

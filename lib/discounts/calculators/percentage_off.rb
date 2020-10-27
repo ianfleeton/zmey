@@ -1,20 +1,40 @@
+# frozen_string_literal: true
+
 module Discounts
   module Calculators
+    # Applies a percentage off discount for matching basket items.
     class PercentageOff < Base
       def calculate
-        basket_items.each do |basket_item|
-          if discount.product_group.nil? || discount.product_group.products.include?(basket_item.product)
-            apply_discount(basket_item)
-          end
-        end
+        valid_items = basket_items.select { |basket_item|
+          discount.product_group.nil? ||
+            discount.product_group.products.include?(basket_item.product)
+        }
+        apply_discount(valid_items) if valid_items.any?
       end
 
-      def apply_discount(basket_item)
-        discount_line = DiscountLine.new
-        discount_line.name = "#{discount.name} - #{basket_item.product.name}"
-        discount_line.price_adjustment = -(discount.reward_amount / 100.0) * basket_item.line_total(false)
-        discount_line.tax_adjustment = -(discount.reward_amount / 100.0) * basket_item.tax_amount
-        discount_lines << discount_line
+      def apply_discount(items)
+        discount_line = DiscountLine.new(
+          discount,
+          name: discount_name(items),
+          mutually_exclusive_with: [:percentage_off_order].to_set,
+          price_adjustment: price_adjustment(items),
+          tax_adjustment: tax_adjustment(items)
+        )
+        add_discount_line(discount_line)
+      end
+
+      private
+
+      def discount_name(items)
+        "#{discount.name} - #{items.map(&:name).join(", ")}"
+      end
+
+      def price_adjustment(items)
+        -(discount.reward_amount / 100.0) * items.sum { |i| i.line_total(false) }
+      end
+
+      def tax_adjustment(items)
+        -(discount.reward_amount / 100.0) * items.sum(&:tax_amount)
       end
     end
   end

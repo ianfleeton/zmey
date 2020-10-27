@@ -154,7 +154,7 @@ Rails.application.routes.draw do
   get 'basket/load/:token' => 'basket#load', as: :load_basket
   post 'basket/save_and_email' => 'basket#save_and_email', as: :save_and_email_basket
   post 'basket/update' => 'basket#update'
-  get 'basket(/:action(.:format))', controller: 'basket'
+  get "basket/updated_warning" => "basket#updated_warning", as: :basket_updated_warning
 
   get   'checkout'               => 'checkout#index',         as: :checkout
   get   'checkout/details'       => 'checkout#details',       as: :checkout_details
@@ -162,11 +162,12 @@ Rails.application.routes.draw do
   get   'checkout/billing'       => 'checkout#billing',       as: :billing_details
   post  'checkout/save_billing'  => 'checkout#save_billing',  as: :save_billing_details
   patch 'checkout/save_billing'  => 'checkout#save_billing'
+  post  "checkout/collect"       => "checkout#collect",       :as => :collect
   get   'checkout/delivery'      => 'checkout#delivery',      as: :delivery_details
   post  'checkout/save_delivery' => 'checkout#save_delivery', as: :save_delivery_details
   patch 'checkout/save_delivery' => 'checkout#save_delivery'
-  get   'checkout/preferred_delivery_date'      => 'checkout#preferred_delivery_date',      as: :preferred_delivery_date
-  post  'checkout/save_preferred_delivery_date' => 'checkout#save_preferred_delivery_date', as: :save_preferred_delivery_date
+  get   "checkout/delivery_instructions" => "checkout#delivery_instructions", :as => :delivery_instructions
+  post  "checkout/save_delivery_instructions" => "checkout#save_delivery_instructions", :as => :save_delivery_instructions
   get   'checkout/confirm'       => 'checkout#confirm',       as: :confirm_checkout
 
   resources :enquiries, only: [:create, :new] do

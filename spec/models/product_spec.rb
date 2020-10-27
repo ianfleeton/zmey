@@ -45,6 +45,25 @@ RSpec.describe Product, type: :model do
     end
   end
 
+  describe "#delivery_cutoff_hour" do
+    it "returns nil when no product groups" do
+      expect(Product.new.delivery_cutoff_hour).to be_nil
+    end
+
+    it "returns cutoff hour from product group" do
+      group = ProductGroup.new(delivery_cutoff_hour: 9)
+      product = Product.new(product_groups: [group])
+      expect(product.delivery_cutoff_hour).to eq 9
+    end
+
+    it "returns earliest cutoff hour from multiple groups" do
+      group1 = ProductGroup.new(delivery_cutoff_hour: 9)
+      group2 = ProductGroup.new(delivery_cutoff_hour: 8)
+      product = Product.new(product_groups: [group1, group2])
+      expect(product.delivery_cutoff_hour).to eq 8
+    end
+  end
+
   describe "#name_with_sku" do
     it "returns the name followed by the SKU in square brackets" do
       @product.name = "Banana"

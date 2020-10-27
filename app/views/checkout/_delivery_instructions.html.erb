@@ -1,0 +1,25 @@
+<h3>Delivery instructions</h3>
+<p>
+  What would you like us to do if nobody is available to receive the delivery?
+</p>
+
+<ul>
+  <%- predefined_selected = false %>
+  <%- ["Leave with neighbour", "Leave in shed, garage, or outbuilding", "Leave down side of house"].each do |option| %>
+    <%- selected = (basket.delivery_instructions == option) %>
+    <%- predefined_selected ||= selected %>
+    <li>
+      <label>
+        <%= radio_button_tag "deliver_option", option, selected %>
+        <%= option %>
+      </label>
+    </li>
+  <% end %>
+  <li>
+    <label>
+      <%= radio_button_tag "deliver_option", "Other", !predefined_selected %>
+      Other
+    </label>
+    <%= text_field_tag :deliver_other, (predefined_selected ? "" : basket.delivery_instructions) %>
+  </li>
+</li>

@@ -86,7 +86,7 @@ class Basket < ActiveRecord::Base
 
   # Returns the sum of basket item savings.
   def savings(inc_tax)
-    basket_items.inject(0) { |s, i| s + i.savings(inc_tax) }
+    basket_items.reduce(0) { |acc, elem| acc + elem.savings(inc_tax: inc_tax) }
   end
 
   # Returns true if any of the basket items have made savings.
@@ -99,14 +99,32 @@ class Basket < ActiveRecord::Base
     basket_items.any? { |i| i.oversize? }
   end
 
-  def weight
-    basket_items.inject(0) { |w, i| w + i.weight }
+  # Returns true if any individual product exceeds max_product_weight, except
+  # if max_product_weight is zero in which case false is returned.
+  def overweight?(max_product_weight:)
+    max_product_weight.positive? &&
+      basket_items.any? { |item| item.product_weight > max_product_weight }
   end
 
-  def total(inc_tax)
+  def weight
+    basket_items.sum(&:weight)
+  end
+
+  # Returns the lead time for preparing this basket's order.
+  def lead_time
+    basket_items.map(&:lead_time).max || 0
+  end
+
+  def total(inc_vat)
     total = 0.0
-    basket_items.each { |i| total += i.line_total(inc_tax) }
+    basket_items.each { |i| total += i.line_total(inc_vat) }
     total
+  end
+
+  # Returns the total value that should be considered for shipping, which is
+  # the total inclusive of VAT.
+  def total_for_shipping
+    total(true)
   end
 
   # Returns +true+ if the basket is empty.
@@ -166,6 +184,23 @@ class Basket < ActiveRecord::Base
     b.save
     basket_items.each { |i| b.basket_items << i.deep_clone }
     b
+  end
+
+  # Returns order lines representing the basket's contents.
+  def to_order_lines
+    basket_items.map(&:to_order_line)
+  end
+
+  def delete_rewards
+    reward_items.destroy_all
+  end
+
+  def reward_items
+    basket_items.where(reward: true)
+  end
+
+  def reward_items_total(inc_vat:)
+    reward_items.sum { |bi| bi.line_total(inc_vat) }
   end
 
   private

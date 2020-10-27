@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "checkout/confirm.html.slim", type: :view do
+  let(:basket) { Basket.new }
   let(:billing_address) { FactoryBot.create(:address) }
   let(:delivery_address) { FactoryBot.create(:address) }
-  let(:preferred_delivery_date_settings) { nil }
-  let(:website) { FactoryBot.create(:website, preferred_delivery_date_settings: preferred_delivery_date_settings) }
+  let(:website) { FactoryBot.create(:website) }
   let(:name) { SecureRandom.hex }
   let(:email) { SecureRandom.hex }
   let(:phone) { SecureRandom.hex }
@@ -12,9 +12,9 @@ RSpec.describe "checkout/confirm.html.slim", type: :view do
   before do
     assign(:billing_address, billing_address)
     assign(:delivery_address, delivery_address)
-    assign(:basket, Basket.new)
     assign(:discount_lines, [])
     without_partial_double_verification do
+      allow(view).to receive(:basket).and_return basket
       allow(view).to receive(:website).and_return(website)
       allow(view).to receive(:logged_in?).and_return(false)
     end
@@ -49,12 +49,5 @@ RSpec.describe "checkout/confirm.html.slim", type: :view do
 
   it "links to edit delivery address" do
     expect(rendered).to have_selector "a[href='#{delivery_details_path}']", text: I18n.t("checkout.confirm.edit_address")
-  end
-
-  context "with preferred delivery date" do
-    let(:preferred_delivery_date_settings) { PreferredDeliveryDateSettings.new }
-    it "links to change date" do
-      expect(rendered).to have_selector "a[href='#{preferred_delivery_date_path}']", text: I18n.t("checkout.confirm.change_date")
-    end
   end
 end

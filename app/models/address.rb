@@ -1,4 +1,5 @@
 class Address < ActiveRecord::Base
+  BLANK = "[BLANK]"
   PLACEHOLDER_EMAIL = "nobody@example.org"
 
   validates_presence_of :full_name, :email_address, :address_line_1, :town_city, :postcode, :country_id
@@ -9,6 +10,25 @@ class Address < ActiveRecord::Base
   delegate :shipping_zone, to: :country, allow_nil: true
 
   before_validation :set_default_label
+
+  def self.new_or_reuse(params)
+    if params["user_id"]
+      Address.find_or_initialize_by(params)
+    else
+      Address.new(params)
+    end
+  end
+
+  def self.placeholder
+    Address.new(
+      full_name: BLANK,
+      email_address: PLACEHOLDER_EMAIL,
+      address_line_1: BLANK,
+      town_city: BLANK,
+      postcode: BLANK,
+      country: Country.uk
+    )
+  end
 
   def set_default_label
     self.label = "#{full_name} - #{postcode}" if label.blank?

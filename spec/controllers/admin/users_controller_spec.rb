@@ -4,7 +4,7 @@ RSpec.describe Admin::UsersController, type: :controller do
   let(:user) { FactoryBot.create(:user) }
 
   context "when admin or manager" do
-    before { allow(controller).to receive(:admin_or_manager?).and_return(true) }
+    before { allow(controller).to receive(:admin?).and_return(true) }
 
     describe "POST create" do
       def post_valid
@@ -29,11 +29,6 @@ RSpec.describe Admin::UsersController, type: :controller do
     describe "PATCH update" do
       def patch_valid
         patch "update", params: {id: "1", user: {"some" => "params"}}
-      end
-
-      it "finds the user" do
-        expect(User).to receive(:find).with("1").and_return(user)
-        patch_valid
       end
 
       context "when the user is found" do

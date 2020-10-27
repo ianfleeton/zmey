@@ -7,7 +7,7 @@ module Admin
     end
 
     context "when admin or manager" do
-      before { allow(controller).to receive(:admin_or_manager?).and_return(true) }
+      before { allow(controller).to receive(:admin?).and_return(true) }
 
       describe "POST create" do
         let(:country) { FactoryBot.create(:country) }

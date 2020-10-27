@@ -1,0 +1,179 @@
+<% order_total = basket.total(true) + (@shipping_amount || 0) + (@shipping_tax_amount || 0) + discount_lines_price_total + discount_lines_tax_total %>
+<% if can_update %>
+  <div class="delivery-area-selections" id="deliveryAreaSelect">
+    <h3>Summary</h3>
+    <div class="order-total">
+      <h4>Total</h4>
+      <p><%= formatted_price(order_total) %></p>
+    </div>
+
+    <h3>Delivery options</h3>
+    <% session[:delivery_option] = "deliver-to-postcode" if session[:delivery_option].nil? %>
+    <% unless delivery_option_chosen?(session) %>
+      <div class="basket-warning">
+        Please enter your postcode or choose another delivery option to proceed to checkout.
+      </div>
+    <% end %>
+    <label class="<%= "delivery-area-selected" if session[:delivery_option] == "deliver-to-postcode" %>">
+      <%= radio_button_tag(:delivery_option, "deliver-to-postcode", session[:delivery_option] == "deliver-to-postcode") %>
+      Deliver to postcode
+      <br>
+      <input name="delivery_postcode" value="<%= session[:delivery_postcode] %>">
+      <input id="update_delivery_postcode" type="submit" value="Update" name="update_quantities">
+    </label>
+    <label class="<%= "delivery-area-selected" if session[:delivery_option] == "collection" %>">
+      <%= radio_button_tag(:delivery_option, "collection", session[:delivery_option] == "collection") %>
+      I am collecting
+    </label>
+
+    <% if needs_delivery_date? %>
+      <h3><%= delivery_date_heading(session) %></h3>
+      <% unless valid_delivery_date? %>
+        <div class="basket-warning">
+          Please choose a <%= delivery_date_heading(session).downcase %> to proceed to checkout
+        </div>
+      <% end %>
+      <label>
+        <input id="delivery_date" name="delivery_date" value="#{session[:delivery_date]}">
+      </label>
+      <% if @shipping_class&.allows_am_delivery? %>
+        <%= label_tag "am_delivery", "AM Delivery", class: "am-delivery-checkbox" do %>
+          AM Delivery (+ <%= am_delivery_surcharge(session[:delivery_date], @shipping_class) %>)
+          <%= check_box_tag "am_delivery", "1", basket.am_delivery? %>
+        <% end %>
+      <% end %>
+      <input id="update_delivery_date" type="submit" value="Update" name="update_quantities">
+
+      <%= render "basket/delivery_js" %>
+    <% end %>
+
+    <%= content_for(:checkout_options) %>
+  </div>
+<% end %>
+
+<table id="basketTable" data-updated-at="#{basket.updated_at.to_i}">
+  <thead>
+    <tr>
+      <% if can_update %>
+        <th class="del">
+          <input type="image" src="#" alt="Delete" name="update_quantities">
+        </th>
+      <% end %>
+      <th class="qty">Qty</th>
+      <th class="description">Product description</th>
+      <th class="weight">Weight</th>
+      <th class="price">Price (each)</th>
+      <th class="price">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% basket.basket_items.each do |item| %>
+      <tr>
+        <% if can_update %>
+          <td class="del">
+            <input type="checkbox" name="remove_item[<%= item.id %>]">
+          </td>
+        <% end %>
+        <td class="qty">
+          <% if can_update %>
+            <input class="qty-input" name="qty[<%= item.id %>]" type="number" min="0" max="999" step="any" value="<%= item.quantity %>">
+          <% else %>
+            <%= item.quantity %>
+          <% end %>
+        </td>
+        <td class="description">
+          <div class="basket-image">
+            <% if item.product.image %>
+              <%= image_tag item.product.image.sized_url(80, :square) %>
+            <% elsif item.product.pages.any? && ti = item.product.pages.first.try(:thumbnail_image) %>
+              <%= image_tag ti.sized_url(80, :square) %>
+            <% end %>
+          </div>
+          <div class="basket-product-detail">
+            <% if item.product.brand.present? %>
+              <span class="product-brand"><%= item.product.brand %></span>
+            <% end %>
+            <% if can_update && item.path %>
+              <%= basket_item_link(item) %>
+            <% else %>
+              <%= item.name %>
+            <% end %>
+            <% if item.feature_selections.any? %>
+              <br>
+              <%= item.feature_descriptions %>
+            <% end %>
+          </div>
+        </td>
+        <td class="weight">
+          <%= item.weight.round(2) %><span class="kg"><%= "&nbsp;kg".html_safe %></span>
+        </td>
+        <td class="price"><%= formatted_price(item.product_price_ex_tax) %></td>
+        <td class="price"><%= formatted_price(item.line_total(false)) %></td>
+      </tr>
+    <% end %>
+    <% if defined?(@discount_lines) %>
+      <% @discount_lines.each do |dl| %>
+        <tr>
+          <% if can_update %>
+            <td class="del">&nbsp;</td>
+          <% end %>
+          <td class="qty">1</td>
+          <td class="description"><%= dl.name %></td>
+          <td class="empty">&nbsp;</td>
+          <td class="price"><%= formatted_price(dl.price_with_tax(false)) %></td>
+          <td class="price"><%= formatted_price(dl.price_with_tax(false)) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <% if total_savings(basket, false) != 0 %>
+      <tr class="discount">
+        <td colspan="<%= can_update ? 3 : 2 %>">
+        <th class="price" colspan="2">You save</th>
+        <th class="price">- <%= formatted_price(total_savings(basket, false)) %></th>
+      </tr>
+    <% end %>
+    <tr>
+      <td rowspan="5" colspan="<%= can_update ? 3 : 2 %>" id="basketUpdate">
+        <% if can_update %>
+          <div id="basketUpdateButton">
+            p.basket-changes-note If you make any changes to item quantities, or want to remove items from your basket, please make sure you update your basket using the ‘Update Basket’ button below.
+            input.basket-update-button.button type="submit" value="Update Basket" role="button" aria-disabled="false" name="update_quantities"
+          </div>
+        <% end %>
+      </td>
+      <th class="price" colspan="2">Subtotal</th>
+      <th class="price basket-total"><%= formatted_price(basket.total(false) + discount_lines_price_total) %></th>
+    </tr>
+    <tr>
+      <th class="price" colspan="2">
+        <% if can_update %>
+          <a href="/delivery">More delivery info</a>
+        <% end %>
+        <%= @shipping_class %>
+      </th>
+      <th class="price delivery">
+        <% if @shipping_quote_needed %>
+          <em>£call</em>
+        <% elsif @shipping_amount == 0 %>
+          <em>Free</em>
+        <% else %>
+          <%= formatted_price(@shipping_amount) %>
+        <% end %>
+      </th>
+    </tr>
+    <tr>
+      <th class="price" colspan="2">VAT (20%)</th>
+      <th class="price"><%= formatted_price(basket.vat_total + (@shipping_tax_amount || 0) + discount_lines_tax_total) %></th>
+    </tr>
+    <tr id="orderGrandTotal">
+      <th class="price" colspan="2">Order total</th>
+      <th class="price"><%= formatted_price(order_total) %></th>
+    </tr>
+    <tr>
+      <th class="price" colspan="2">Weight</th>
+      <th class="price"><%= basket.weight.round(2) %> kg</th>
+    </tr>
+  </tfoot>
+</table>

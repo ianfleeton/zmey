@@ -36,65 +36,12 @@ RSpec.describe BasketItem, type: :model do
   end
 
   describe "#savings" do
-    let(:inc_tax) { false }
-    let(:basket_item) { FactoryBot.build(:basket_item, product: product, quantity: quantity) }
-
-    subject { basket_item.savings(inc_tax) }
-
-    context "with 1 item, RRP unset" do
-      let(:quantity) { 1 }
-      let(:product) { FactoryBot.create(:product, rrp: nil, price: 1.0) }
-      it { should eq 0 }
-    end
-
-    context "with 1 item, RRP set to 1.0 more" do
-      let(:quantity) { 1 }
-      let(:product) { FactoryBot.create(:product, rrp: 2.0, price: 1.0, tax_type: tax_type) }
-
-      context "product price ex VAT" do
-        let(:tax_type) { Product::EX_VAT }
-        it { should eq 1.0 }
-      end
-
-      context "product price inc VAT" do
-        let(:tax_type) { Product::INC_VAT }
-        it { should be_within(0.0001).of(0.8333) }
-      end
-    end
-
-    context "with 2 items, RRP set to 1.0 more" do
-      let(:quantity) { 2 }
-      let(:product) { FactoryBot.create(:product, rrp: 2.0, price: 1.0) }
-      it { should eq 2.0 }
-    end
-
-    context "with 5 items, RRP unset, volume purchase price at 0.50 less" do
-      let(:quantity) { 5 }
-      let(:product) { FactoryBot.create(:product, rrp: nil, price: 2.0) }
-
-      before do
-        # Make sure we're using QuantityBased price calculations.
-        expect(product).to receive(:price_calculator_class).and_return(PriceCalculator::QuantityBased)
-        QuantityPrice.create(quantity: 5, price: 1.5, product: product)
-      end
-
-      it { should eq 2.5 }
-    end
-
-    context "inc tax, 1 product, RRP is 2.0, price is 1.0" do
-      let(:inc_tax) { true }
-      let(:product) { FactoryBot.create(:product, rrp: 2.0, price: 1.0, tax_type: tax_type) }
-      let(:quantity) { 1 }
-
-      context "product price excludes VAT" do
-        let(:tax_type) { Product::EX_VAT }
-        it { should eq 1.0 * (1 + Product::VAT_RATE) }
-      end
-
-      context "product price includes VAT" do
-        let(:tax_type) { Product::INC_VAT }
-        it { should eq 1.0 }
-      end
+    it "delegates to the price calculator" do
+      calc = instance_double(PriceCalculator::Base)
+      expect(calc).to receive(:savings).with(inc_tax: false).and_return(3.5)
+      @object = BasketItem.new
+      allow(@object).to receive(:price_calculator).and_return(calc)
+      expect(@object.savings(inc_tax: false)).to eq 3.5
     end
   end
 
@@ -270,6 +217,58 @@ RSpec.describe BasketItem, type: :model do
       expect(bi2.feature_selections.count).to eq 1
       expect(bi2.feature_selections.first.customer_text).to eq "deep clone selection"
       expect(bi2.feature_selections.first).not_to eq bi.feature_selections.first
+    end
+  end
+
+  describe "#to_order_line" do
+    let(:calc) do
+      instance_double(
+        PriceCalculator::Base, ex_tax: 1.23, inc_tax: 1.48, weight: 0.5
+      )
+    end
+    let(:product) { Product.new(id: 123, rrp: 2.34, sku: "sku", name: "Short Tee 101", brand: "Interclamp") }
+    let(:item) { BasketItem.new(product: product, quantity: 3) }
+    let(:order) { Order.new }
+    let(:line) { item.to_order_line }
+
+    before do
+      allow(product).to receive(:price_calculator).and_return(calc)
+    end
+
+    it "sets product id" do
+      expect(line.product_id).to eq product.id
+    end
+
+    it "sets product sku" do
+      expect(line.product_sku).to eq product.sku
+    end
+
+    it "sets product name" do
+      expect(line.product_name).to eq "Short Tee 101"
+    end
+
+    it "sets product brand" do
+      expect(line.product_brand).to eq "Interclamp"
+    end
+
+    it "sets product RRP" do
+      expect(line.product_rrp).to eq product.rrp
+    end
+
+    it "sets the price ex tax for a single product" do
+      expect(line.product_price).to eq 1.23
+    end
+
+    it "sets the weight for a single product" do
+      expect(line.weight).to eq 1.5
+    end
+
+    it "sets the tax amount of the line total" do
+      expect(line.tax_amount).to eq 0.75
+    end
+
+    it "sets quantity" do
+      expect(line.quantity).to eq 3
     end
   end
 end

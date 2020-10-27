@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 module Discounts
   module Calculators
     class Base
       attr_reader :context
       attr_reader :discount
+
+      delegate :add_discount_line, to: :context
 
       def initialize(context, discount)
         @context = context

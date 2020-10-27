@@ -2,11 +2,12 @@ class Discount < ActiveRecord::Base
   # Associations
   has_many :discount_uses, dependent: :delete_all
   belongs_to :product_group, optional: true
+  has_many :products, through: :product_group
 
-  validates_numericality_of :reward_amount, greater_than_or_equal_to: 0, less_than_or_equal_to: 9999999.999
+  validates_numericality_of :reward_amount, greater_than_or_equal_to: 0, less_than: 10_000_000
   REWARD_TYPES = ["amount_off_order", "free_products", "percentage_off", "percentage_off_order"]
   validates_inclusion_of :reward_type, in: REWARD_TYPES
-  validates_numericality_of :threshold, greater_than_or_equal_to: 0, less_than_or_equal_to: 9999999.999
+  validates_numericality_of :threshold, greater_than_or_equal_to: 0, less_than: 10_000_000
 
   validates :name, presence: true
 
@@ -22,6 +23,10 @@ class Discount < ActiveRecord::Base
     # We upcase just in case a production database is not configured the same.
     code_to_find = code&.upcase
     where("code IS NULL OR code = ?", code_to_find).select(&:currently_valid?)
+  end
+
+  def self.current_percentage_off_order_discounts
+    Discount.currently_valid.select { |discount| discount.reward_type == "percentage_off_order" }
   end
 
   def uppercase_coupon_code

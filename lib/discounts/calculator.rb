@@ -1,30 +1,30 @@
+# frozen_string_literal: true
+
 module Discounts
-  # Calculates discounts for a basket based on applicable coupons. It delegates
-  # to a specialized calculator for each discount type.
+  # Calculates discounts for a basket.
+  # It delegates to a specialized calculator for each discount type.
   class Calculator
     attr_reader :basket
-    attr_reader :coupons
     attr_accessor :discounts
     attr_accessor :discount_lines
 
-    def initialize(discounts, coupons, basket)
-      @basket, @discounts = basket, discounts
-      @coupons = coupons || []
+    def initialize(discounts, basket)
+      @basket = basket
+      @discounts = discounts
       @discount_lines = []
-    end
-
-    # Returns <tt>true</tt> if the discount doesn't require a coupon code or if
-    # the customer has supplied the correct coupon code.
-    def authorized?(discount)
-      discount.coupon.blank? || coupons.include?(discount.coupon)
     end
 
     # Calculates discount lines.
     def calculate
       discounts.each do |discount|
-        calculator_for(discount).calculate if authorized?(discount)
+        calculator_for(discount).calculate
       end
       filter_mutually_exclusive_discounts
+    end
+
+    def apply_changes_to_basket
+      @basket.delete_rewards
+      discount_lines.map { |dl| dl.calculator }.compact.uniq.each { |calc| calc.apply_changes_to_basket }
     end
 
     # Returns a calculator instance for the discount.
@@ -47,10 +47,16 @@ module Discounts
       end
     end
 
+    def add_discount_line(discount_line)
+      discount_lines << discount_line
+    end
+
     private
 
     def calculator_class(discount)
-      Kernel.const_get("Discounts::Calculators::" + discount.reward_type.camelize)
+      Kernel.const_get(
+        "Discounts::Calculators::" + discount.reward_type.camelize
+      )
     end
   end
 end

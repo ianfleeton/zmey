@@ -1,0 +1,10 @@
+<div class="checkout group">
+  <div class="checkout-main">
+    <%= content_for :content %>
+  </div>
+  <%- if content_for? :sidebar %>
+  <div class="checkout-sidebar">
+    <%= content_for :sidebar %>
+  </div>
+  <% end %>
+</div>

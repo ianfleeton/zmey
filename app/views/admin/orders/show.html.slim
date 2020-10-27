@@ -12,10 +12,6 @@ table.table.table-bordered
   tr
     th Order status
     td= payment_status(@order)
-  - if @order.preferred_delivery_date
-    tr
-      th= @order.preferred_delivery_date_prompt
-      td= @order.preferred_delivery_date.strftime(@order.preferred_delivery_date_format)
 
 h2 Deliver to
 

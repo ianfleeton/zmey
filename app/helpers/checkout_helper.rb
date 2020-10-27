@@ -1,4 +1,15 @@
 module CheckoutHelper
+  def checkout_steps
+    [
+      "Your details",
+      "Billing address",
+      "Shipping address",
+      "Review your order",
+      "Secure payment",
+      "Order confirmation"
+    ]
+  end
+
   # Renders a form tag for the PayPal payments form. Set
   # <tt>sandbox</tt> to <tt>true</tt> to send the customer to the
   # PayPal sandbox (test site), or <tt>false</tt> to send them to

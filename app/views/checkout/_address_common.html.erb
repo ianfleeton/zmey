@@ -1,0 +1,40 @@
+<%= f.hidden_field :full_name %>
+
+<%= f.label :email_address %>
+<%= f.email_field :email_address, autocomplete: "xyzzy", required: true, title: "Just numbers and spaces. At least 10 digits." %>
+<p>
+  Please ensure your email address is correct as we will send your order confirmation email here.
+</p>
+
+<%= f.label :phone_number %>
+<%= f.telephone_field :phone_number, autocomplete: "xyzzy", required: true, inputmode: "numeric", pattern: "[0-9 ]{10,}", title: "Just numbers and spaces. At least 10 digits." %>
+<p>
+  We need a valid phone number in case we need to contact you about your order.
+</p>
+
+<%= f.label :mobile_number %>
+<%= f.telephone_field :mobile_number, autocomplete: "xyzzy", required: true, inputmode: "numeric", pattern: "[0-9 ]{10,}", title: "Just numbers and spaces. At least 10 digits." %>
+<p>
+  We need a valid mobile number in case we or our couriers need to contact you to deliver your order.
+</p>
+
+<%= f.label :postcode %>
+<%= f.text_field :postcode, autocomplete: "xyzzy", required: true %>
+
+<%= f.label :company %>
+<%= f.text_field :company, autocomplete: "xyzzy" %>
+
+<%= f.label :address_line_1, "Address" %>
+<%= f.text_field :address_line_1, autocomplete: "xyzzy", required: true %>
+
+<label for="address_address_line_2"></label>
+<%= f.text_field :address_line_2, autocomplete: "xyzzy" %>
+
+<label for="address_address_line_3"></label>
+<%= f.text_field :address_line_3, autocomplete: "xyzzy" %>
+
+<%= f.label :town_city %>
+<%= f.text_field :town_city, autocomplete: "xyzzy", required: true %>
+
+<%= f.label :county %>
+<%= f.text_field :county, autocomplete: "xyzzy" %>

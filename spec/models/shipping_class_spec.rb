@@ -1,8 +1,15 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe ShippingClass, type: :model do
-  it { should have_many(:shipping_zones).with_foreign_key("default_shipping_class_id") }
-  it { should have_many(:websites).with_foreign_key("default_shipping_class_id") }
+  it do
+    should have_many(:shipping_zones)
+      .with_foreign_key("default_shipping_class_id")
+  end
+  it do
+    should have_many(:websites).with_foreign_key("default_shipping_class_id")
+  end
 
   shared_examples_for "a shipping class by name finder" do |name|
     it "returns the shipping class named '#{name}'" do
@@ -33,20 +40,30 @@ RSpec.describe ShippingClass, type: :model do
     end
   end
 
-  describe "#amount_for_basket" do
-    let(:shipping_class) { FactoryBot.create(:shipping_class, table_rate_method: table_rate_method) }
+  describe "#amount_for" do
+    let(:shipping_class) do
+      FactoryBot.create(:shipping_class, table_rate_method: table_rate_method)
+    end
     let(:total) { 0 }
     let(:weight) { 0 }
     let(:basket) { FactoryBot.create(:basket) }
 
-    subject { shipping_class.amount_for_basket(basket) }
+    subject { shipping_class.amount_for(basket) }
 
     before do
-      ShippingTableRow.create!(shipping_class: shipping_class, trigger_value: 0, amount: 5)
-      ShippingTableRow.create!(shipping_class: shipping_class, trigger_value: 10, amount: 15)
-      ShippingTableRow.create!(shipping_class: shipping_class, trigger_value: 20, amount: 25)
-      ShippingTableRow.create!(shipping_class: shipping_class, trigger_value: 30, amount: 35)
-      allow(basket).to receive(:total).with(true).and_return(total)
+      ShippingTableRow.create!(
+        shipping_class: shipping_class, trigger_value: 0, amount: 5
+      )
+      ShippingTableRow.create!(
+        shipping_class: shipping_class, trigger_value: 10, amount: 15
+      )
+      ShippingTableRow.create!(
+        shipping_class: shipping_class, trigger_value: 20, amount: 25
+      )
+      ShippingTableRow.create!(
+        shipping_class: shipping_class, trigger_value: 30, amount: 35
+      )
+      allow(basket).to receive(:total_for_shipping).and_return(total)
       allow(basket).to receive(:weight).and_return(weight)
     end
 
@@ -77,36 +94,11 @@ RSpec.describe ShippingClass, type: :model do
         it { should eq 35 }
       end
     end
-  end
 
-  describe "#valid_for_size?" do
-    let(:allow_oversize) { true }
-    let(:basket) { Basket.new }
-    let(:shipping_class) { ShippingClass.new(allow_oversize: allow_oversize) }
-    subject { shipping_class.valid_for_size?(basket) }
-
-    before do
-      allow(basket).to receive(:oversize?).and_return(oversize?)
-    end
-
-    context "shipping class allows oversize" do
-      let(:allow_oversize) { true }
-      context "basket is oversize" do
-        let(:oversize?) { true }
-        it { should eq true }
-      end
-    end
-
-    context "shipping class disallows oversize" do
-      let(:allow_oversize) { false }
-      context "basket is oversize" do
-        let(:oversize?) { true }
-        it { should eq false }
-      end
-      context "basket is normal size" do
-        let(:oversize?) { false }
-        it { should eq true }
-      end
+    context "shipping class has no table rows" do
+      let(:table_rate_method) { "basket_total" }
+      subject { FactoryBot.create(:shipping_class).amount_for(basket) }
+      it { should eq 0 }
     end
   end
 

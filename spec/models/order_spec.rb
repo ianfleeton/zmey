@@ -606,52 +606,6 @@ RSpec.describe Order, type: :model do
     end
   end
 
-  describe "#record_preferred_delivery_date" do
-    let(:date_format) { "%d/%m/%y" }
-    let(:prompt) { "Preferred delivery date" }
-    let(:date_str) { "13/08/15" }
-    let(:date) { Date.new(2015, 8, 13) }
-    let(:settings) { PreferredDeliveryDateSettings.new(date_format: date_format, prompt: prompt) }
-    let(:valid_date?) { nil }
-
-    subject(:order) { Order.new.record_preferred_delivery_date(settings, date_str) }
-
-    before do
-      allow(settings).to receive(:valid_date?).and_return(valid_date?) if settings
-    end
-
-    context "when date is valid according to settings" do
-      let(:valid_date?) { true }
-
-      it "records the date, parsing with the format given in settings" do
-        expect(order.preferred_delivery_date).to eq date
-      end
-
-      it "records the prompt" do
-        expect(order.preferred_delivery_date_prompt).to eq prompt
-      end
-
-      it "records the format" do
-        expect(order.preferred_delivery_date_format).to eq date_format
-      end
-    end
-
-    context "with nil settings" do
-      let(:settings) { nil }
-      it "returns nil" do
-        expect(order).to be_nil
-      end
-    end
-
-    context "when date is not valid according to settings" do
-      let(:valid_date?) { false }
-
-      it "raises an ArgumentError" do
-        expect { order }.to raise_error ArgumentError
-      end
-    end
-  end
-
   describe "#add_basket" do
     let(:customer_note) { "customer note" }
     let(:delivery_instructions) { "delivery instructions" }
@@ -659,7 +613,11 @@ RSpec.describe Order, type: :model do
     let(:basket) { Basket.new(customer_note: customer_note, delivery_instructions: delivery_instructions) }
 
     it "adds basket items" do
-      expect(order).to receive(:add_basket_items).with(basket.basket_items)
+      lines = [OrderLine.new, OrderLine.new]
+
+      allow(basket).to receive(:to_order_lines).and_return(lines)
+      expect(order).to receive(:add_lines).with(lines)
+
       order.add_basket(basket)
     end
 
@@ -677,6 +635,21 @@ RSpec.describe Order, type: :model do
     it "copies the delivery_instructions" do
       order.add_basket(basket)
       expect(order.delivery_instructions).to eq delivery_instructions
+    end
+  end
+
+  describe "#add_discount_lines" do
+    it "adds lines" do
+      ol1 = OrderLine.new
+      ol2 = OrderLine.new
+      discount_lines = [
+        instance_double(DiscountLine, to_order_line: ol1),
+        instance_double(DiscountLine, to_order_line: ol2)
+      ]
+      order = Order.new
+      order.add_discount_lines(discount_lines)
+      expect(order.order_lines.first).to eq ol1
+      expect(order.order_lines.last).to eq ol2
     end
   end
 

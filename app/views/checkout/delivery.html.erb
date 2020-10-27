@@ -1,0 +1,25 @@
+<h1><%= t("checkout") %></h1>
+<%= render partial: "progress", locals: {step: 2} %>
+
+<%= content_for :content do %>
+  <h2><%= t(".heading") %></h2>
+
+  <%= render partial: "address_errors" %>
+  <%= form_for(@address, url: save_delivery_details_path, html: {autocomplete: "off"}) do |f| %>
+
+    <%= render partial: "address_common", locals: {f: f} %>
+
+    <%= f.label :country_id %>
+    <%= collection_select :address, :country_id, Country.shipping, :id, :name %>
+    <p>
+      We currently only ship to these countries. If you would like a quote for an international order, please contact us.
+    </p>
+
+    <%= render partial: "delivery_instructions" %>
+
+    <input type="submit" value="Continue">
+
+  <% end %>
+<% end %>
+
+<%= render partial: "page" %>

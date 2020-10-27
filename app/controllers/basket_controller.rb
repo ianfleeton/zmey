@@ -6,9 +6,6 @@ class BasketController < ApplicationController
 
   before_action :update_shipping_class, only: [:update]
 
-  before_action :remove_invalid_discounts, only: [:index]
-  before_action :calculate_discounts, only: [:index]
-
   before_action :update_customer_note, only: [:update, :checkout]
 
   # Main basket page.

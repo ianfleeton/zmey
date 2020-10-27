@@ -1,32 +1,43 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 require_relative "shared_examples/shopping_suspended"
+require_relative "shared_examples/check_updated_baskets"
 
 RSpec.describe CheckoutController, type: :controller do
+  render_views
+
   FactoryBot.use_parent_strategy = false
+
+  def cookies
+    ActionDispatch::Request.new(request.env).cookie_jar
+  end
 
   let(:website) { Website.new }
   before { allow(controller).to receive(:website).and_return(website) }
+  let!(:uk) { FactoryBot.create(:country, name: Country::UNITED_KINGDOM) }
 
   it_behaves_like "a suspended shop bouncer"
 
   shared_examples_for "a checkout advancer" do |method, action|
-    let(:has_checkout_details) { true }
+    let(:all_checkout_details) { true }
     let(:billing_address) { FactoryBot.create(:address) }
     let(:delivery_address_valid?) { true }
-    let(:preferred_delivery_date) { "2015-02-16" }
-    let(:preferred_delivery_date_settings) { nil }
+    let(:shipping_class_valid?) { true }
 
     before do
-      allow(controller).to receive(:has_checkout_details?).and_return(has_checkout_details)
+      allow(controller).to receive(:all_checkout_details?)
+        .and_return(all_checkout_details)
       allow(controller).to receive(:billing_address).and_return(billing_address)
-      allow(controller).to receive(:delivery_address_valid?).and_return(delivery_address_valid?)
-      allow(website).to receive(:preferred_delivery_date_settings).and_return(preferred_delivery_date_settings)
-      session[:preferred_delivery_date] = preferred_delivery_date
+      allow(controller).to receive(:delivery_address_valid?)
+        .and_return(delivery_address_valid?)
+      allow(controller).to receive(:shipping_class_valid?)
+        .and_return(shipping_class_valid?)
       send(method, action, params: params)
     end
 
-    context "without name, phone and email set in session" do
-      let(:has_checkout_details) { false }
+    context "without name, phone, mobile, and email set in session" do
+      let(:all_checkout_details) { false }
       it { should redirect_to checkout_details_path }
     end
 
@@ -40,17 +51,9 @@ RSpec.describe CheckoutController, type: :controller do
       it { should redirect_to delivery_details_path }
     end
 
-    context "without preferred delivery date" do
-      let(:preferred_delivery_date) { nil }
-
-      context "when used" do
-        let(:preferred_delivery_date_settings) { PreferredDeliveryDateSettings.new }
-        it { should redirect_to preferred_delivery_date_path }
-      end
-
-      context "when not used" do
-        it { should redirect_to confirm_checkout_path }
-      end
+    context "without a valid shipping class" do
+      let(:shipping_class_valid?) { false }
+      it { should redirect_to delivery_details_path }
     end
 
     context "with all details" do
@@ -70,6 +73,8 @@ RSpec.describe CheckoutController, type: :controller do
 
       let(:params) { {} }
       it_behaves_like "a checkout advancer", :get, :index
+
+      it_behaves_like "a checker of updated baskets", :get, :index
     end
   end
 
@@ -77,31 +82,54 @@ RSpec.describe CheckoutController, type: :controller do
     let(:current_user) { User.new }
     let(:name) { nil }
     let(:email) { nil }
+    let(:phone) { nil }
+    let(:mobile) { nil }
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)
-      session[:name] = name
-      session[:email] = email
-      get :details
+
+      get :details, session: {
+        name: name,
+        email: email,
+        phone: phone,
+        mobile: mobile
+      }
     end
 
     context "when logged in" do
-      let(:current_user) { FactoryBot.create(:user, name: SecureRandom.hex) }
+      let(:current_user) do
+        double(
+          User,
+          name: "joe", email: "joe@example.com",
+          phone_number: "1", mobile_number: "2",
+          persisted?: true, admin?: false
+        )
+      end
+
+      it "sets source in session to checkout/details" do
+        expect(session[:source]).to eq "checkout/details"
+      end
 
       context "when details blank" do
-        it "populates name and email from user account" do
+        it "populates name, email, phone, and mobile from user account" do
           expect(session[:name]).to eq current_user.name
           expect(session[:email]).to eq current_user.email
+          expect(session[:phone]).to eq "1"
+          expect(session[:mobile]).to eq "2"
         end
       end
 
       context "when details present" do
         let(:name) { "untouched" }
         let(:email) { "untouched" }
+        let(:phone) { "untouched" }
+        let(:mobile) { "untouched" }
 
         it "leaves details untouched" do
           expect(session[:name]).to eq name
           expect(session[:email]).to eq email
+          expect(session[:phone]).to eq phone
+          expect(session[:mobile]).to eq mobile
         end
       end
     end
@@ -110,15 +138,42 @@ RSpec.describe CheckoutController, type: :controller do
   describe "POST save_details" do
     context "with valid details" do
       before do
-        post :save_details, params: {name: "n", phone: "1", email: "x"}
+        post :save_details, params: {
+          mobile: "0", name: "n", phone: "1", email: "x"
+        }
       end
 
+      it { should set_session[:mobile].to("0") }
       it { should set_session[:name].to("n") }
       it { should set_session[:phone].to("1") }
       it { should set_session[:email].to("x") }
 
       let(:params) { {name: "n", phone: "1", email: "x"} }
-      it_behaves_like "a checkout advancer", :post, :save_details
+      it_behaves_like("a checkout advancer", :post, :save_details)
+
+      it "updates basket details" do
+        basket = Basket.last
+        expect(basket.email).to eq "x"
+        expect(basket.mobile).to eq "0"
+        expect(basket.name).to eq "n"
+        expect(basket.phone).to eq "1"
+      end
+    end
+  end
+
+  shared_examples_for "an address prefiller" do
+    it "prefills some of the address from session details" do
+      assert_select('input#address_full_name[value="n"]')
+      assert_select('input#address_phone_number[value="1"]')
+      assert_select('input#address_mobile_number[value="2"]')
+      assert_select('input#address_email_address[value="x"]')
+    end
+
+    it "sets the address country as United Kingdom" do
+      assert_select(
+        "#address_country_id option[selected=selected]",
+        text: uk.name
+      )
     end
   end
 
@@ -141,13 +196,14 @@ RSpec.describe CheckoutController, type: :controller do
       let(:addresses) { [] }
       let(:name) { "n" }
       let(:phone) { "1" }
+      let(:mobile) { "2" }
       let(:email) { "x" }
-      let!(:uk) { FactoryBot.create(:country, name: "United Kingdom") }
 
       before do
         add_items_to_basket
         session[:name] = name
         session[:phone] = phone
+        session[:mobile] = mobile
         session[:email] = email
         session[:billing_address_id] = billing_address_id
         allow_any_instance_of(User).to receive(:addresses).and_return addresses
@@ -157,10 +213,16 @@ RSpec.describe CheckoutController, type: :controller do
       it_behaves_like "a customer details user"
 
       context "with existing billing address" do
-        let(:billing_address) { FactoryBot.create(:address) }
+        let(:billing_address) do
+          FactoryBot.create(:address, address_line_1: "10 Downing St")
+        end
         let(:billing_address_id) { billing_address.id }
 
         it { should respond_with(200) }
+
+        it "populates the address form" do
+          assert_select "input#address_address_line_1[value='10 Downing St']"
+        end
       end
 
       context "with no existing billing address" do
@@ -171,6 +233,10 @@ RSpec.describe CheckoutController, type: :controller do
 
           it { should set_session[:source].to("billing") }
           it { should redirect_to choose_billing_address_addresses_path }
+        end
+
+        context "when user has no addresses" do
+          it_behaves_like "an address prefiller"
         end
       end
     end
@@ -183,7 +249,8 @@ RSpec.describe CheckoutController, type: :controller do
     before do
       allow(controller).to receive(:current_user).and_return(current_user)
       allow(controller).to receive(:billing_address).and_return(billing_address)
-      allow(controller).to receive(:delivery_address).and_return(delivery_address)
+      allow(controller).to receive(:delivery_address)
+        .and_return(delivery_address)
       post method, params: {address: address.attributes}
     end
 
@@ -210,76 +277,175 @@ RSpec.describe CheckoutController, type: :controller do
     end
   end
 
-  ATTRIBUTES_TO_SAVE = [
-    "address_line_1", "address_line_2", "address_line_3",
-    "company", "country_id", "county", "postcode", "town_city"
-  ]
+  ATTRIBUTES_TO_SAVE = %w[
+    address_line_1 address_line_2 address_line_3 company country_id county
+    postcode town_city
+  ].freeze
 
-  describe "POST save_billing" do
-    let(:address) { FactoryBot.build(:random_address) }
-    let(:billing_address) { nil }
-    let(:deliver_here) { nil }
-    let(:session_billing_address_id) { nil }
-    let(:session_delivery_address_id) { nil }
+  shared_examples_for "deliver_here checked" do
+    context "when deliver_here checked" do
+      let(:deliver_here) { "1" }
 
-    before do
-      allow(controller).to receive(:billing_address).and_return(billing_address)
-      session[:billing_address_id] = session_billing_address_id
-      session[:delivery_address_id] = session_delivery_address_id
-      post :save_billing, params: {address: address.attributes, deliver_here: deliver_here}
-    end
-
-    context "when billing address found" do
-      let(:billing_address) { FactoryBot.create(:address) }
-
-      it "updates the billing address" do
-        expect(billing_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
-          .to eq address.attributes.slice(*ATTRIBUTES_TO_SAVE)
-      end
-
-      context "when deliver_here checked" do
-        let(:deliver_here) { "1" }
-
-        it "sets the session delivery_address_id to the billing address" do
-          expect(session[:delivery_address_id]).to eq billing_address.reload.id
+      context "when billing country is a shipping country" do
+        let(:selected_country) do
+          FactoryBot.create(
+            :country, shipping_zone: FactoryBot.create(:shipping_zone)
+          )
         end
-      end
-    end
-
-    context "when updating and billing and delivery address are the same" do
-      let(:billing_address) { FactoryBot.create(:address) }
-      let(:session_billing_address_id) { billing_address.id }
-      let(:session_delivery_address_id) { billing_address.id }
-
-      it "makes a copy of the billing address" do
-        expect(session[:billing_address_id]).to be
-        expect(session[:billing_address_id]).to_not eq billing_address.id
-      end
-    end
-
-    context "when billing address not found" do
-      let(:billing_address) { nil }
-
-      it "creates a new address" do
-        expect(Address.find_by(address_line_1: address.address_line_1)).to be
-      end
-
-      context "when deliver_here checked" do
-        let(:deliver_here) { "1" }
 
         it "sets the session delivery_address_id to the billing address" do
           expect(session[:delivery_address_id]).to eq Address.last.id
         end
+
+        it "redirects to delivery instructions" do
+          expect(response).to redirect_to delivery_instructions_path
+        end
       end
 
-      it { should set_session[:billing_address_id] }
+      context "when billing country is not a shipping country" do
+        let(:selected_country) do
+          FactoryBot.create(:country, shipping_zone: nil)
+        end
+
+        it "does not set the session delivery_address_id" do
+          expect(session[:delivery_address_id]).to be_nil
+        end
+
+        it "redirects to billing" do
+          expect(response).to redirect_to billing_details_path
+        end
+
+        it "sets a flash notice" do
+          expect(flash[:notice]).to eq(
+            I18n.t("controllers.checkout.save_billing.cannot_ship_to_country")
+          )
+        end
+      end
+    end
+  end
+
+  def create_collection_class
+    FactoryBot.create(
+      :shipping_class,
+      name: "Collection", requires_delivery_address: false
+    )
+  end
+
+  shared_examples_for "collection selected" do
+    it "sets the shipping_class_id session var to that matching the " \
+      "Collection class" do
+      expect(session[:shipping_class_id]).to eq collection_class.id
+    end
+
+    it "updates the basket shipping_class_id to that matching the " \
+      "Collection class" do
+      expect(Basket.last.shipping_class_id).to eq collection_class.id
+    end
+
+    it "redirects to checkout confirmation" do
+      expect(response).to redirect_to confirm_checkout_path
+    end
+  end
+
+  describe "POST save_billing" do
+    let(:selected_country) { FactoryBot.create(:country) }
+    let(:address) do
+      FactoryBot.build(:random_address, country: selected_country)
+    end
+    let(:billing_address) { nil }
+    let(:collection) { nil }
+    let(:deliver_here) { nil }
+    let(:session_billing_address_id) { nil }
+    let(:session_delivery_address_id) { nil }
+    let(:mainland_uk) do
+      FactoryBot.create(
+        :shipping_class,
+        name: "Mainland UK", requires_delivery_address: true
+      )
+    end
+    let!(:collection_class) { create_collection_class }
+
+    describe "specs where we call action first" do
+      before do
+        allow(controller).to receive(:billing_address).and_return(billing_address)
+        post :save_billing, params: {
+          address: address.attributes, deliver_here: deliver_here,
+          collection: collection
+        }, session: {
+          billing_address_id: session_billing_address_id,
+          delivery_address_id: session_delivery_address_id,
+          shipping_class_id: mainland_uk.id,
+          name: "Janey Humblestrum",
+          email: "janey@humblestrum.com",
+          mobile: "07777 123456",
+          phone: "01234 567890"
+        }
+      end
+
+      context "when billing address found" do
+        let(:billing_address) { FactoryBot.create(:address) }
+
+        it "updates the billing address" do
+          expect(billing_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
+            .to eq address.attributes.slice(*ATTRIBUTES_TO_SAVE)
+        end
+
+        it_behaves_like "deliver_here checked"
+
+        context "when collection checked" do
+          let(:collection) { "1" }
+
+          it_behaves_like "collection selected"
+        end
+      end
+
+      context "when updating and billing and delivery address are the same" do
+        let(:billing_address) { FactoryBot.create(:address) }
+        let(:session_billing_address_id) { billing_address.id }
+        let(:session_delivery_address_id) { billing_address.id }
+
+        it "makes a copy of the billing address" do
+          expect(session[:billing_address_id]).to be
+          expect(session[:billing_address_id]).to_not eq billing_address.id
+        end
+      end
+
+      context "when billing address not found" do
+        let(:billing_address) { nil }
+
+        it "creates a new address" do
+          expect(Address.find_by(address_line_1: address.address_line_1)).to be
+        end
+
+        it_behaves_like "deliver_here checked"
+
+        it { should set_session[:billing_address_id] }
+      end
+
+      context "when create/update fails" do
+        let(:address) { Address.new }
+        it "redisplays the billing address form" do
+          assert_select "h2", text: "Your billing address"
+        end
+      end
     end
 
     context "when create/update succeeds" do
       let(:params) { {address: FactoryBot.build(:address).attributes} }
-      it_behaves_like "a checkout advancer", :post, :save_billing
+      it_behaves_like("a checkout advancer", :post, :save_billing)
+
       it_behaves_like "an address/user associator", :save_billing
     end
+  end
+
+  describe "POST collect" do
+    let!(:collection_class) { create_collection_class }
+
+    before do
+      post :collect
+    end
+
+    it_behaves_like "collection selected"
   end
 
   describe "GET delivery" do
@@ -294,6 +460,7 @@ RSpec.describe CheckoutController, type: :controller do
       let(:addresses) { [] }
       let(:name) { "n" }
       let(:phone) { "1" }
+      let(:mobile) { "2" }
       let(:email) { "x" }
       let!(:uk) { FactoryBot.create(:country, name: "United Kingdom") }
 
@@ -301,8 +468,10 @@ RSpec.describe CheckoutController, type: :controller do
         add_items_to_basket
         session[:name] = name
         session[:phone] = phone
+        session[:mobile] = mobile
         session[:email] = email
         session[:delivery_address_id] = delivery_address_id
+        session[:delivery_postcode] = "DN1 2QP"
         allow_any_instance_of(User).to receive(:addresses).and_return addresses
         get :delivery
       end
@@ -310,10 +479,19 @@ RSpec.describe CheckoutController, type: :controller do
       it_behaves_like "a customer details user"
 
       context "with existing delivery address" do
-        let(:delivery_address) { FactoryBot.create(:address) }
+        let(:delivery_address) do
+          FactoryBot.create(
+            :address, address_line_1: "10 Downing St", postcode: "SW1A 2AA"
+          )
+        end
         let(:delivery_address_id) { delivery_address.id }
 
         it { should respond_with(200) }
+
+        it "populates the address form" do
+          assert_select "input#address_address_line_1[value='10 Downing St']"
+          assert_select "input#address_postcode[value='SW1A 2AA']"
+        end
       end
 
       context "with no existing delivery address" do
@@ -325,7 +503,34 @@ RSpec.describe CheckoutController, type: :controller do
           it { should set_session[:source].to("delivery") }
           it { should redirect_to choose_delivery_address_addresses_path }
         end
+
+        context "when user has no addresses" do
+          it_behaves_like "an address prefiller"
+
+          it "prefills the delivery postcode from the session" do
+            assert_select "input#address_postcode[value='DN1 2QP']"
+          end
+        end
       end
+    end
+  end
+
+  shared_examples_for "a delivery instructions updater" do |action|
+    let(:address) { FactoryBot.build(:random_address) }
+
+    it "records deliver options, except other, in delivery_instructions" do
+      post action, params: {
+        address: address.attributes, deliver_option: "Leave with neighbour"
+      }
+      expect(Basket.last.delivery_instructions).to eq "Leave with neighbour"
+    end
+
+    it "records custom other deliver instruction in delivery_instructions" do
+      post action, params: {
+        address: address.attributes, deliver_option: "Other",
+        deliver_other: "Leave at unit 3"
+      }
+      expect(Basket.last.delivery_instructions).to eq "Leave at unit 3"
     end
   end
 
@@ -335,80 +540,103 @@ RSpec.describe CheckoutController, type: :controller do
     let(:session_billing_address_id) { nil }
     let(:session_delivery_address_id) { nil }
 
-    before do
-      allow(controller).to receive(:delivery_address).and_return(delivery_address)
-      session[:billing_address_id] = session_billing_address_id
-      session[:delivery_address_id] = session_delivery_address_id
-      post :save_delivery, params: {address: address.attributes}
-    end
-
-    context "when delivery address found" do
-      let(:delivery_address) { FactoryBot.create(:address) }
-
-      it "updates the delivery address" do
-        expect(delivery_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
-          .to eq address.attributes.slice(*ATTRIBUTES_TO_SAVE)
-      end
-    end
-
-    context "when updating and billing and delivery address are the same" do
-      let(:delivery_address) { FactoryBot.create(:address) }
-      let(:session_billing_address_id) { delivery_address.id }
-      let(:session_delivery_address_id) { delivery_address.id }
-
-      it "makes a copy of the delivery address" do
-        expect(session[:delivery_address_id]).to be
-        expect(session[:delivery_address_id]).to_not eq delivery_address.id
-      end
-    end
-
-    context "when delivery address not found" do
-      let(:delivery_address) { nil }
-
-      it "creates a new address" do
-        expect(Address.find_by(address_line_1: address.address_line_1)).to be
+    describe "specs where we call action first" do
+      before do
+        allow(controller).to receive(:delivery_address)
+          .and_return(delivery_address)
+        session[:billing_address_id] = session_billing_address_id
+        session[:delivery_address_id] = session_delivery_address_id
+        post :save_delivery, params: {address: address.attributes}
       end
 
-      it { should set_session[:delivery_address_id] }
+      context "when delivery address found" do
+        let(:delivery_address) { FactoryBot.create(:address) }
+
+        it "updates the delivery address" do
+          expect(delivery_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
+            .to eq address.attributes.slice(*ATTRIBUTES_TO_SAVE)
+        end
+      end
+
+      context "when updating and billing and delivery address are the same" do
+        let(:delivery_address) { FactoryBot.create(:address) }
+        let(:session_billing_address_id) { delivery_address.id }
+        let(:session_delivery_address_id) { delivery_address.id }
+
+        it "makes a copy of the delivery address" do
+          expect(session[:delivery_address_id]).to be
+          expect(session[:delivery_address_id]).to_not eq delivery_address.id
+        end
+      end
+
+      context "when delivery address not found" do
+        let(:delivery_address) { nil }
+
+        it "creates a new address" do
+          expect(Address.find_by(address_line_1: address.address_line_1)).to be
+        end
+
+        it { should set_session[:delivery_address_id] }
+      end
+
+      it_behaves_like "a delivery instructions updater", :save_delivery
+
+      context "when create/update fails" do
+        let(:address) { Address.new }
+        it "re-displays the delivery address form" do
+          assert_select "h2", text: "Your delivery address"
+        end
+      end
     end
 
     context "when create/update succeeds" do
       let(:params) { {address: FactoryBot.build(:address).attributes} }
-      it_behaves_like "a checkout advancer", :post, :save_delivery
+      it_behaves_like("a checkout advancer", :post, :save_delivery)
+
       it_behaves_like "an address/user associator", :save_delivery
     end
   end
 
-  describe "GET preferred_delivery_date" do
-    before { get :preferred_delivery_date }
-    subject { response }
-    it { should be_ok }
+  describe "GET delivery_instructions" do
+    it "renders a form to enter delivery instructions" do
+      get :delivery_instructions
+      assert_select(
+        "form[action='#{save_delivery_instructions_path}']" \
+        "[method=post]"
+      )
+    end
   end
 
-  describe "POST save_preferred_delivery_date" do
-    let(:preferred_delivery_date) { "2015-02-16" }
+  describe "POST save_delivery_instructions" do
+    it_behaves_like(
+      "a delivery instructions updater", :save_delivery_instructions
+    )
 
-    before do
-      post :save_preferred_delivery_date, params: {preferred_delivery_date: preferred_delivery_date}
+    it "redirects to checkout" do
+      post :save_delivery_instructions, params: {
+        deliver_option: "Other", deliver_other: "Leave at unit 3"
+      }
+      expect(response).to redirect_to checkout_path
     end
-
-    it "records preferred delivery date in the session" do
-      expect(session[:preferred_delivery_date]).to eq preferred_delivery_date
-    end
-
-    let(:params) { {} }
-    it_behaves_like "a checkout advancer", :post, :save_preferred_delivery_date
   end
 
   describe "GET confirm" do
     let(:website) { Website.new(email: "merchant@example.com") }
+    let(:valid_delivery_date) { true }
+
+    before do
+      allow(controller)
+        .to receive(:valid_delivery_date?)
+        .and_return(valid_delivery_date)
+    end
+
     context "with empty basket" do
       before { get :confirm }
 
       it { should redirect_to basket_path }
     end
 
-    context "with items in the basket" do
+    context "with items in the basket and addresses set" do
       let(:billing_address) { FactoryBot.create(:address) }
       let(:delivery_address) { FactoryBot.create(:address) }
       let(:billing_address_id) { billing_address.try(:id) }
@@ -419,12 +647,37 @@ RSpec.describe CheckoutController, type: :controller do
         session[:billing_address_id] = billing_address_id
         session[:delivery_address_id] = delivery_address_id
         add_items_to_basket
-        allow(controller).to receive(:delivery_address_required?).and_return(delivery_address_required?)
+        allow(controller).to receive(:delivery_address_required?)
+          .and_return(delivery_address_required?)
       end
 
-      context "action" do
+      it_behaves_like "a checker of updated baskets", :get, :confirm
+
+      context "with invalid or missing (but required) delivery date" do
+        let(:valid_delivery_date) { false }
         before { get :confirm }
-        it { should use_before_action :remove_invalid_discounts }
+
+        it { should redirect_to basket_path }
+        it "sets a flash alert" do
+          expect(flash[:alert]).to eq "Please choose a valid delivery date."
+        end
+      end
+
+      it "prepares an order for payment" do
+        expect(controller).to receive(:prepare_order_for_payment)
+          .and_call_original
+        get :confirm
+      end
+
+      it "displays customer details" do
+        get :confirm, session: {
+          name: "Alice", email: "alice@example.org", mobile: "07777 987654",
+          phone: "01234 567890"
+        }
+        expect(response.body).to include("Alice")
+        expect(response.body).to include("alice@example.org")
+        expect(response.body).to include("01234 567890")
+        expect(response.body).to include("07777 987654")
       end
 
       context "without a billing address" do
@@ -445,50 +698,9 @@ RSpec.describe CheckoutController, type: :controller do
         end
       end
 
-      it "recycles a previous unpaid order if one exists" do
-        session[:order_id] = 123
-        expect(Orders::Recycler).to receive(:new_or_recycled).with(123).and_call_original
+      it "sets :order_id as a signed cookied" do
         get :confirm
-      end
-
-      it "records preferred delivery date" do
-        date = "28/12/15"
-        session[:preferred_delivery_date] = date
-        settings = double(PreferredDeliveryDateSettings).as_null_object
-        allow(website).to receive(:preferred_delivery_date_settings).and_return(settings)
-        expect_any_instance_of(Order).to receive(:record_preferred_delivery_date).with(settings, date)
-        get :confirm
-      end
-
-      it "redirects to preferred_delivery_date with an invalid date" do
-        date = "28-12-15"
-        session[:preferred_delivery_date] = date
-        settings = PreferredDeliveryDateSettings.new
-        allow(website).to receive(:preferred_delivery_date_settings).and_return(settings)
-        get :confirm
-        expect(response).to redirect_to preferred_delivery_date_path
-      end
-
-      it "adds the basket to the order" do
-        expect_any_instance_of(Order).to receive(:add_basket).with(@basket)
-        get :confirm
-      end
-
-      it "triggers an order_created Webhook" do
-        expect(Webhook).to receive(:trigger).with("order_created", anything)
-        get :confirm
-      end
-
-      it "copies the billing address to the order" do
-        expect_any_instance_of(Order).to receive(:copy_billing_address)
-          .with(billing_address).and_call_original
-        get :confirm
-      end
-
-      it "copies the delivery address to the order" do
-        expect_any_instance_of(Order).to receive(:copy_delivery_address)
-          .with(delivery_address).and_call_original
-        get :confirm
+        expect(cookies.signed[:order_id]).to eq Order.last.id
       end
 
       context "without address" do
@@ -502,84 +714,93 @@ RSpec.describe CheckoutController, type: :controller do
           it { should redirect_to checkout_path }
         end
       end
-
-      context "with a shipping class" do
-        let!(:shipping_class) { FactoryBot.create(:shipping_class, name: "Royal Mail") }
-        before do
-          allow(controller).to receive(:shipping_class).and_return(shipping_class)
-          get :confirm
-        end
-        it "records the shipping class name as the shipping method" do
-          expect(Order.last.shipping_method).to eq "Royal Mail"
-        end
-      end
-
-      context "without a shipping class" do
-        before { get :confirm }
-        it 'records "Standard Shipping" as the shipping method' do
-          expect(Order.last.shipping_method).to eq "Standard Shipping"
-        end
-      end
-
-      context "pending payments email setting" do
-        before do
-          website.send_pending_payment_emails = send_pending_payment_emails
-          website.save
-        end
-
-        context "when on" do
-          let(:send_pending_payment_emails) { true }
-
-          it "sends an email to admin" do
-            expect(OrderNotifier).to receive(:admin_waiting_for_payment).and_call_original
-            get :confirm
-          end
-        end
-
-        context "when off" do
-          let(:send_pending_payment_emails) { false }
-
-          it "does not send an email to admin" do
-            expect(OrderNotifier).not_to receive(:admin_waiting_for_payment)
-            get :confirm
-          end
-        end
-      end
-
-      it "prepares payment methods" do
-        expect(controller).to receive(:prepare_payment_methods)
-        get :confirm
-      end
     end
   end
 
-  describe "#prepare_payment_methods" do
-    context "when Sage Pay is active" do
-      before do
-        allow(website).to receive(:sage_pay_active?).and_return(true)
-        allow(website).to receive(:cardsave_active?).and_return(false)
-      end
+  describe "#prepare_order_for_payment" do
+    let(:billing_address) { FactoryBot.create(:address) }
+    let(:delivery_address) { FactoryBot.create(:address) }
+    let(:billing_address_id) { billing_address.try(:id) }
+    let(:delivery_address_id) { delivery_address.try(:id) }
 
-      let(:order) { FactoryBot.create(:order) }
+    before do
+      session[:billing_address_id] = billing_address_id
+      session[:delivery_address_id] = delivery_address_id
+      add_items_to_basket
+    end
 
-      it "instantiates a SagePay" do
-        allow(website).to receive(:sage_pay_pre_shared_key).and_return "secret"
+    it "prepares an order for payment" do
+      user = User.new
+      allow(controller).to receive(:current_user).and_return(user)
+      cookies.signed[:order_id] = 1234
+      discount_lines = [double(DiscountLine)]
+      allow(controller).to receive(:discount_lines).and_return(discount_lines)
 
-        expect(SagePay).to receive(:new).with(hash_including(
-          pre_shared_key: website.sage_pay_pre_shared_key,
-          vendor_tx_code: order.order_number,
-          amount: order.total,
-          delivery_surname: order.delivery_full_name,
-          delivery_firstnames: order.delivery_full_name,
-          delivery_address: order.delivery_address_line_1,
-          delivery_city: order.delivery_town_city,
-          delivery_post_code: order.delivery_postcode,
-          delivery_country: order.delivery_country.iso_3166_1_alpha_2,
-          success_url: sage_pay_success_payments_url,
-          failure_url: sage_pay_failure_payments_url
-        )).and_return(double(SagePay).as_null_object)
-        controller.prepare_payment_methods(order)
-      end
+      shipping_amount = 5.95
+      shipping_tax_amount = 1.19
+      shipping_method = "Super Express Parcel"
+      shipping_quote_needed = true
+
+      dispatch_date = Date.new(2017, 7, 3)
+      delivery_date = Date.new(2017, 7, 4)
+
+      delivery_address_required = [true, false].sample
+      allow(controller).to receive(:delivery_address_required?)
+        .and_return(delivery_address_required)
+
+      allow(controller).to receive(:shipping_amount).and_return(shipping_amount)
+      allow(controller).to receive(:shipping_tax_amount)
+        .and_return(shipping_tax_amount)
+      allow(controller).to receive(:shipping_method).and_return(shipping_method)
+      allow(controller).to receive(:shipping_quote_needed?)
+        .and_return(shipping_quote_needed)
+
+      allow(controller).to receive(:dispatch_date).and_return(dispatch_date)
+      allow(controller).to receive(:delivery_date).and_return(delivery_date)
+
+      ob = double(Orders::OrderBuilder)
+      expect(Orders::OrderBuilder)
+        .to receive(:build)
+        .with(1234)
+        .and_yield(ob)
+        .and_return(FactoryBot.build(:order))
+      expect(ob).to receive(:add_client_details).with(
+        ip_address: "0.0.0.0",
+        user_agent: "Rails Testing"
+      )
+      expect(ob).to receive(:add_basket).with(@basket)
+      expect(ob).to receive(:billing_address=).with(billing_address)
+      expect(ob).to receive(:delivery_address=).with(delivery_address)
+      expect(ob).to receive(:requires_delivery_address=)
+        .with(delivery_address_required)
+      expect(ob).to receive(:user=).with(user)
+      expect(ob).to receive(:add_discount_lines).with(discount_lines)
+      expect(ob).to receive(:add_shipping_details).with(
+        net_amount: shipping_amount,
+        tax_amount: shipping_tax_amount,
+        method: shipping_method,
+        # quote_needed should not be set to true at this stage as we don't want
+        # to invalidate the basket; it is set later on when order placed
+        quote_needed: false
+      )
+      expect(ob).to receive(:dispatch_date=).with(dispatch_date)
+      expect(ob).to receive(:delivery_date=).with(delivery_date)
+
+      controller.prepare_order_for_payment
+    end
+
+    it "updates the estimated delivery date" do
+      order = instance_double(Order).as_null_object
+      allow(Orders::OrderBuilder).to receive(:build).and_return(order)
+
+      expect(order).to receive(:update_estimated_delivery_date)
+
+      controller.prepare_order_for_payment
+    end
+
+    it "saves the order" do
+      expect_any_instance_of(Order).to receive(:save!)
+      controller.prepare_order_for_payment
     end
   end
 
@@ -593,21 +814,53 @@ RSpec.describe CheckoutController, type: :controller do
       it { should be_truthy }
     end
     context "shipping class requires delivery address" do
-      let(:shipping_class) { FactoryBot.build(:shipping_class, requires_delivery_address: true) }
+      let(:shipping_class) do
+        FactoryBot.build(:shipping_class, requires_delivery_address: true)
+      end
       it { should be_truthy }
     end
     context "shipping class does not require delivery address" do
-      let(:shipping_class) { FactoryBot.build(:shipping_class, requires_delivery_address: false) }
+      let(:shipping_class) do
+        FactoryBot.build(:shipping_class, requires_delivery_address: false)
+      end
       it { should be_falsey }
+    end
+  end
+
+  describe "#shipping_method" do
+    before do
+      allow(controller).to receive(:shipping_class).and_return(shipping_class)
+    end
+
+    context "with a shipping class" do
+      let(:shipping_class) do
+        FactoryBot.create(:shipping_class, name: "Royal Mail")
+      end
+
+      it "records the shipping class name as the shipping method" do
+        expect(controller.shipping_method).to eq "Royal Mail"
+      end
+    end
+
+    context "without a shipping class" do
+      let(:shipping_class) { nil }
+
+      it 'records "Standard Shipping" as the shipping method' do
+        expect(controller.shipping_method).to eq "Standard Shipping"
+      end
     end
   end
 
   def add_items_to_basket
     @basket = FactoryBot.create(:basket)
-    t_shirt = FactoryBot.create(:product, weight: 0.2)
-    jeans = FactoryBot.create(:product, weight: 0.35)
-    FactoryBot.create(:basket_item, product: t_shirt, quantity: 2, basket_id: @basket.id)
-    FactoryBot.create(:basket_item, product: jeans, quantity: 1, basket_id: @basket.id)
+    t_shirt = FactoryBot.create(:product)
+    jeans = FactoryBot.create(:product)
+    @basket.basket_items << FactoryBot.create(
+      :basket_item, product: t_shirt, quantity: 2, basket_id: @basket.id
+    )
+    @basket.basket_items << FactoryBot.create(
+      :basket_item, product: jeans, quantity: 1, basket_id: @basket.id
+    )
     allow(controller).to receive(:basket).and_return(@basket)
   end
 end

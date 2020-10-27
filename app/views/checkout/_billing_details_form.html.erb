@@ -1,0 +1,26 @@
+<%= render partial: "address_errors" %>
+
+<%= form_for(@address, url: save_billing_details_path, html: {autocomplete: "off"}) do |f| %>
+  <%= render partial: "address_common", locals: {f: f} %>
+
+  <%= f.label :country_id %>
+  <%= collection_select :address, :country_id, Country.order(:name), :id, :name %>
+
+  <label for="deliver_here">Deliver here?</label>
+  <% if session[:billing_address_id] && session[:billing_address_id] == session[:delivery_address_id] %>
+  <%= check_box_tag :deliver_here, "1", checked: true %>
+  <% else %>
+  <%= check_box_tag :deliver_here %>
+  <% end %>
+  <p>This is also the address where my order should be delivered</p>
+
+  <label for="collection">Collection?</label>
+  <% if @shipping_class.try(:collection?) %>
+  <%= check_box_tag :collection, "1", checked: true %>
+  <% else %>
+  <%= check_box_tag :collection %>
+  <p>This order will be collected instead of delivered</p>
+  <% end %>
+
+  <input type="submit" value="Continue">
+<% end %>

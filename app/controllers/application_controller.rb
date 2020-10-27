@@ -1,16 +1,34 @@
 class ApplicationController < ActionController::Base
+  include DeliveryDateConcerns
+  include DiscountConcerns
+  include Shipping
+
   protect_from_forgery with: :exception
 
-  include Shipping
   helper :all # include all helpers, all the time
 
-  helper_method :website, :logged_in?, :admin?, :admin_or_manager?, :manager?
+  helper_method(
+    :admin?,
+    :admin_or_manager?,
+    :basket,
+    :logged_in?,
+    :manager?,
+    :website
+  )
 
-  before_action :set_time_zone, :website, :protect_staging_website,
-    :initialize_page_defaults, :current_user,
-    :set_locale, :protect_private_website, :initialize_tax_display,
+  before_action(
+    :set_time_zone,
+    :website,
+    :protect_staging_website,
+    :initialize_page_defaults,
+    :current_user,
+    :set_locale,
+    :protect_private_website,
+    :initialize_tax_display,
     :set_resolver,
-    :basket, :set_shipping_class, :set_shipping_amount
+    :basket,
+    :set_shipping_amount
+  )
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_error
@@ -50,7 +68,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_or_manager?
-    admin? || manager?
+    admin?
   end
 
   def admin_required
@@ -68,10 +86,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_or_manager_required
-    unless admin_or_manager?
-      flash[:notice] = "You need to be logged in as an administrator or manager to do that."
-      redirect_to sign_in_path
-    end
+    admin_required
   end
 
   def set_time_zone

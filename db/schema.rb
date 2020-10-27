@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_20_133125) do
+ActiveRecord::Schema.define(version: 2020_10_27_111527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_133125) do
     t.string "label", null: false
     t.string "company"
     t.string "address_line_3"
+    t.string "mobile_number"
   end
 
   create_table "api_keys", id: :serial, force: :cascade do |t|
@@ -61,6 +62,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_133125) do
     t.datetime "updated_at"
     t.text "feature_descriptions"
     t.boolean "immutable_quantity", default: false, null: false
+    t.boolean "reward", default: false, null: false
   end
 
   create_table "baskets", id: :serial, force: :cascade do |t|
@@ -74,6 +76,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_133125) do
     t.string "name"
     t.string "phone"
     t.bigint "shipping_class_id"
+    t.boolean "am_delivery", default: false, null: false
     t.index ["email"], name: "index_baskets_on_email"
     t.index ["shipping_class_id"], name: "index_baskets_on_shipping_class_id"
     t.index ["token"], name: "index_baskets_on_token", unique: true
@@ -323,9 +326,6 @@ ActiveRecord::Schema.define(version: 2020_10_20_133125) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "basket_id"
-    t.date "preferred_delivery_date"
-    t.string "preferred_delivery_date_prompt"
-    t.string "preferred_delivery_date_format"
     t.string "ip_address"
     t.decimal "shipping_tax_amount", precision: 10, scale: 3, default: "0.0", null: false
     t.text "customer_note"
@@ -362,6 +362,8 @@ ActiveRecord::Schema.define(version: 2020_10_20_133125) do
     t.date "dispatch_date"
     t.boolean "on_hold", default: false, null: false
     t.datetime "completed_at"
+    t.boolean "logged_in", default: false, null: false
+    t.boolean "am_delivery", default: false, null: false
     t.index ["basket_id"], name: "index_orders_on_basket_id"
     t.index ["created_at"], name: "index_orders_on_created_at"
     t.index ["email_address"], name: "index_orders_on_email_address"
@@ -429,22 +431,6 @@ ActiveRecord::Schema.define(version: 2020_10_20_133125) do
     t.index ["permutation"], name: "index_permutations_on_permutation"
   end
 
-  create_table "preferred_delivery_date_settings", id: :serial, force: :cascade do |t|
-    t.integer "website_id", default: 0, null: false
-    t.string "prompt", default: "Preferred delivery date", null: false
-    t.string "date_format", default: "%a %d %b"
-    t.integer "number_of_dates_to_show", default: 5, null: false
-    t.string "rfc2822_week_commencing_day"
-    t.integer "number_of_initial_days_to_skip", default: 1, null: false
-    t.string "skip_after_time_of_day"
-    t.boolean "skip_bank_holidays", default: true, null: false
-    t.boolean "skip_saturdays", default: true, null: false
-    t.boolean "skip_sundays", default: true, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["website_id"], name: "index_preferred_delivery_date_settings_on_website_id"
-  end
-
   create_table "product_group_placements", id: :serial, force: :cascade do |t|
     t.integer "product_id", default: 0, null: false
     t.integer "product_group_id", default: 0, null: false
@@ -457,6 +443,7 @@ ActiveRecord::Schema.define(version: 2020_10_20_133125) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.bigint "location_id"
+    t.integer "delivery_cutoff_hour", default: 0, null: false
     t.index ["location_id"], name: "index_product_groups_on_location_id"
   end
 
@@ -564,6 +551,9 @@ ActiveRecord::Schema.define(version: 2020_10_20_133125) do
     t.boolean "allow_oversize", default: true, null: false
     t.boolean "requires_delivery_address", default: true, null: false
     t.boolean "choose_date", default: false, null: false
+    t.integer "max_product_weight", default: 0, null: false
+    t.text "postcode_districts"
+    t.boolean "allows_am_delivery", default: false, null: false
     t.index ["shipping_zone_id"], name: "index_shipping_classes_on_shipping_zone_id"
   end
 

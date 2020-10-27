@@ -10,13 +10,6 @@
 
 <p>The status of your order is: <b><%= payment_status(@order) %></b></p>
 
-<% if @order.preferred_delivery_date -%>
-<p>
-  <%= @order.preferred_delivery_date_prompt %>:
-  <%= @order.preferred_delivery_date.strftime(@order.preferred_delivery_date_format) %>
-</p>
-<% end -%>
-
 <p>You have ordered:</p>
 
 <table style="background:#fff;font-size:14px;color:#333;width:100%;">

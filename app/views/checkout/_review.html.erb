@@ -1,0 +1,77 @@
+<h1>Checkout</h1>
+<%= render partial: "checkout/progress", locals: {step: 3} %>
+
+<h2>Please confirm your order</h2>
+
+<h3>Your details</h3>
+<% unless paypal_express %>
+<%= link_to "edit details", checkout_details_path %>
+<p>
+  <%= "#{h(session[:name])}<br>#{h(session[:email])}<br>t: #{h(session[:phone])}<br>m: #{h(session[:mobile])}".html_safe %>
+</p>
+
+<h3>Billing address</h3>
+<% unless paypal_express %>
+  <%= link_to "edit billing address", billing_details_path %>
+  <% if logged_in? %>
+    <%= link_to "change address", choose_billing_address_addresses_path %>
+  <% end %>
+<% end %>
+<%= format_address @billing_address, html: true %>
+
+<% if @order.requires_delivery_address? %>
+  <h3>Delivery address</h3>
+  <% if paypal_express %>
+    <p><%= link_to "change in PayPal", payments_paypal_express_path %></p>
+  <% else %>
+    <p><%= link_to "edit address", delivery_details_path %></p>
+    <% if logged_in? %>
+      <p><%= link_to "change", choose_delivery_address_addresses_path %></p>
+    <% end %>
+    <%= format_address @delivery_address, html: true %>
+  <% end %>
+
+  <h3>Delivery instructions</h3>
+  <% unless paypal_express %>
+    <p><%= link_to "edit delivery details", delivery_details_path %>
+  <% end %>
+  <p>If nobody is available to receive the delivery:</p>
+  <% if paypal_express %>
+    <%= form_tag({action: "update_delivery_instructions"}, remote: true, id: "update_delivery_instructions") %>
+      <%= text_field_tag :delivery_instructions, @order.delivery_instructions %>
+      <%= submit_tag "Save" %>
+    <% end %>
+  <% else %>
+    <p><strong><%= basket.delivery_instructions %></strong></p>
+  <% end %>
+
+  <% if (d_date = delivery_date) %>
+    <h3>Delivery</h3>
+    <p>Your delivery date is:</p>
+  <% else %>
+    <% # TODO: use delivery date estimator %>
+    <% d_date = Date.current + 1.week %>
+    <h3>Estimated delivery</h3>
+    <p Your estimated delivery date is:</p>
+    <p>
+      <strong><%= "#{d_date.strftime("%A #{d_date.day.ordinalize} %B, %Y")} #{ @order.am_delivery? ? '(AM)' : ''}" %></strong>
+    </p>
+    <p>
+      This is based on your order being fully completed and payment received. Your actual delivery date will be confirmed by email when your goods are dispatched.
+    </p>
+  <% end %>
+<% else %>
+  <h3>Collecting your order</h3>
+  <% # TODO: Add map %>
+  <p><strong>You have chosen to collect your order. Our collection address is:</strong></p>
+  <p>
+    (Address)
+  </p>
+
+  <p><%= link_to "Change to delivery", basket_path %></p>
+
+<% end %>
+
+<h3>Your order</h3>
+<%= link_to "edit basket", basket_path %>
+<%= render partial: "basket/table", object: basket, locals: {can_update: false, shipping_amount: @shipping_amount, shipping_tax_amount: @shipping_tax_amount} %>

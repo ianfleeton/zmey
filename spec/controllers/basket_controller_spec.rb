@@ -68,8 +68,10 @@ RSpec.describe BasketController, type: :controller do
     let(:email_address) { "shopper@example.org" }
 
     it "clones the basket and its contents" do
-      basket = double(Basket, apply_shipping?: false, shipping_supplement: 0)
+      basket = FactoryBot.create(:basket)
+      items = [FactoryBot.create(:basket_item, basket: basket)]
       allow(controller).to receive(:basket).and_return basket
+      allow(basket).to receive(:basket_items).and_return(items)
       expect(basket).to receive(:deep_clone)
         .and_return(Basket.new(token: "token"))
       post :save_and_email, params: {email_address: email_address}
