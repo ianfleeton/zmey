@@ -4,7 +4,7 @@ RSpec.describe Admin::ComponentsController, type: :controller do
   describe "GET new" do
     context "when logged in as an administrator" do
       before do
-        allow(controller).to receive(:admin?).and_return(true)
+        logged_in_as_admin
       end
 
       it "instantiates a new Component" do
@@ -41,7 +41,7 @@ RSpec.describe Admin::ComponentsController, type: :controller do
     let(:component) { FactoryBot.create(:component) }
 
     before do
-      allow(controller).to receive(:admin?).and_return(true)
+      logged_in_as_admin
       allow(controller).to receive(:product_valid?).and_return(true)
     end
 

@@ -27,6 +27,9 @@ gem 'whenever', require: false
 gem "bootstrap", "~> 4.5"
 gem "bootstrap_form", "~> 4.5"
 
+# Authentication and related security policies
+gem "devise"
+
 # Pagination
 gem 'will_paginate'
 gem "bootstrap-will_paginate"

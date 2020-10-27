@@ -1,6 +1,5 @@
 = page_header 'Edit Website'
 
-- if admin?
-  = breadcrumbs({'Websites' => admin_websites_path}, 'Edit Website')
+= breadcrumbs({"Websites" => admin_websites_path}, "Edit website")
 
 = render 'form', submit_label: 'Save'

@@ -8,9 +8,6 @@
     <li><%= link_to(t('.view_your_orders'), user_orders_path(@user)) %></li>
     <li><%= link_to(t('.manage_address_book'), addresses_path) %></li>
   </ul>
-<% unless @user.managed_website.nil? -%>
-  <p>Website manager for <%= @user.managed_website.name %></p>
-<% end -%>
 	<p class="modify">
 		<%= link_to 'Edit', edit_user_path(@user) %>
 	</p>

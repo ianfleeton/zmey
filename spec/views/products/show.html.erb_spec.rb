@@ -9,7 +9,7 @@ RSpec.describe "products/show.html.erb", type: :view do
     assign(:w, website)
     without_partial_double_verification do
       allow(view).to receive(:website).and_return(website)
-      allow(view).to receive(:admin_or_manager?).and_return(false)
+      allow(view).to receive(:admin?).and_return(false)
     end
   end
 

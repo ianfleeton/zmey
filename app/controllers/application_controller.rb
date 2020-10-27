@@ -9,10 +9,8 @@ class ApplicationController < ActionController::Base
 
   helper_method(
     :admin?,
-    :admin_or_manager?,
     :basket,
     :logged_in?,
-    :manager?,
     :website
   )
 
@@ -59,22 +57,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def admin?
-    logged_in? && current_user.admin?
-  end
-
-  def manager?
-    logged_in? && (current_user.managed_website == website)
-  end
-
-  def admin_or_manager?
-    admin?
-  end
-
   def admin_required
-    unless admin?
+    unless administrator_signed_in?
       flash[:notice] = "You need to be logged in as an administrator to do that."
-      redirect_to sign_in_path
+      redirect_to new_administrator_session_path
     end
   end
 
@@ -83,10 +69,6 @@ class ApplicationController < ActionController::Base
       flash[:notice] = "You need to be logged in to do that."
       redirect_to sign_in_path
     end
-  end
-
-  def admin_or_manager_required
-    admin_required
   end
 
   def set_time_zone

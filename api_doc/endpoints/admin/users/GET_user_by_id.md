@@ -27,8 +27,6 @@ returned.
     "salt": "d49b4ad9cb8b9c7044710a1d57550909434e1d85",
     "forgot_password_token": "A59CZQAM",
     "customer_reference": "JS1410",
-    "admin": false,
-    "manager": false,
     "created_at": "2014-08-29T17:25:28.000+01:00",
     "updated_at": "2014-08-29T17:25:28.000+01:00"
   }

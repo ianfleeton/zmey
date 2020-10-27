@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe Admin::UsersController, type: :controller do
   let(:user) { FactoryBot.create(:user) }
 
-  context "when admin or manager" do
-    before { allow(controller).to receive(:admin?).and_return(true) }
+  context "when admin" do
+    before { logged_in_as_admin }
 
     describe "POST create" do
       def post_valid

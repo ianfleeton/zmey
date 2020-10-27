@@ -82,24 +82,6 @@ describe "Admin users API" do
         get api_admin_user_path(@user)
         expect(response.status).to eq 200
       end
-
-      context "when user does not manage current website" do
-        it "sets manager to false" do
-          get api_admin_user_path(@user)
-          user = JSON.parse(response.body)
-          expect(user["user"]["manager"]).to be_falsey
-        end
-      end
-
-      context "when user manages current website" do
-        let(:manages_website_id) { @website.id }
-
-        it "sets manager to true" do
-          get api_admin_user_path(@user)
-          user = JSON.parse(response.body)
-          expect(user["user"]["manager"]).to be_truthy
-        end
-      end
     end
 
     context "when no user" do

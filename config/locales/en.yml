@@ -182,7 +182,6 @@ en:
         heading: 'View User'
         registered_email_address: 'Registered email address'
         users: 'Users'
-        website_manager_for: 'Website manager for %{website}'
     webhooks:
       edit:
         heading: 'Edit Webhook'

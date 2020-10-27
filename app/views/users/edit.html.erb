@@ -12,12 +12,12 @@
   </div>
 <% end %>
 
-<div class="form"> 
-	 
+<div class="form">
+
 	<%= form_for @user do |form| %>
   <fieldset>
-    <legend>Edit User Details</legend> 
-    <div> 
+    <legend>Edit User Details</legend>
+    <div>
       <%= form.label :name %>:<br>
       <%= form.text_field :name, size: 35, required: true %>
     </div>
@@ -32,10 +32,6 @@
       <label for="user_admin_true">Yes</label>
       <%= form.radio_button :admin, false %>
       <label for="user_admin">No</label>
-    </div>
-    <div>
-      <%= form.label :manages_website_id, 'Manager for website' %>:<br>
-      <%= form.collection_select :manages_website_id, Website.order('name'), :id, :name, {include_blank: '-- Does not manage a website --'} %>
     </div>
 <% end %>
 

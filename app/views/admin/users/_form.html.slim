@@ -22,20 +22,6 @@
     .form-group
       = form.label :password_confirmation
       = form.password_field :password_confirmation, size: 35, required: @user.new_record?, class: 'form-control'
-    - if admin?
-      .form-group
-        | Administrator:
-        .radio
-          label for="user_admin_true"
-            => form.radio_button :admin, true
-            | Yes
-        .radio
-          label for="user_admin"
-          => form.radio_button :admin, false
-          | No
-      .form-group
-        = form.label :manages_website_id, t('.manager_for_website')
-        = form.collection_select :manages_website_id, Website.order('name'), :id, :name, {include_blank: t('.does_not_manage_a_website')}, class: 'form-control'
 
     = form.submit(t('.save'), class: 'btn btn-primary')
     = link_to t('.cancel'), admin_users_path

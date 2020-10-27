@@ -50,10 +50,6 @@ class SessionsController < ApplicationController
     reset_session
     session[:basket_id] = basket.id
     session[:user] = @current_user.id
-    if admin_or_manager?
-      redirect_to admin_path
-    else
-      redirect_to @current_user
-    end
+    redirect_to @current_user
   end
 end

@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.describe Admin::ChoicesController, type: :controller do
-  describe "GET new" do
-    context "when logged in as an administrator" do
-      before do
-        allow(controller).to receive(:admin?).and_return(true)
-      end
+module Admin
+  RSpec.describe ChoicesController, type: :controller do
+    before do
+      logged_in_as_admin
+    end
 
+    describe "GET new" do
       it "instantiates a new Choice" do
         allow(controller).to receive(:feature_valid?)
         expect(Choice).to receive(:new).and_return(double(Choice).as_null_object)
@@ -26,13 +26,6 @@ RSpec.describe Admin::ChoicesController, type: :controller do
           get "new"
           expect(response).to redirect_to(admin_products_path)
         end
-      end
-    end
-
-    context "when not logged in as an administrator" do
-      it "redirects to the sign in page" do
-        get "new"
-        expect(response).to redirect_to(sign_in_path)
       end
     end
   end

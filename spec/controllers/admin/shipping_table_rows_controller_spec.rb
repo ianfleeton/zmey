@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Admin::ShippingTableRowsController, type: :controller do
   before do
-    allow(controller).to receive(:admin?).and_return(true)
+    logged_in_as_admin
   end
 
   describe "POST create" do

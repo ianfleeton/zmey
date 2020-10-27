@@ -1,15 +1,13 @@
 class User < ActiveRecord::Base
   UNSET = "unset"
 
+  # Associations
   has_many :orders, -> { order "created_at DESC" }, dependent: :nullify
   has_many :addresses, dependent: :delete_all
   has_many :api_keys, -> { order :name }, dependent: :delete_all
 
   # unencrypted password
   attr_accessor :password
-
-  # associations
-  belongs_to :managed_website, foreign_key: :manages_website_id, class_name: "Website", optional: true
 
   validates_uniqueness_of :customer_reference, allow_blank: true
 
@@ -54,7 +52,7 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    "#{name} <#{email}>" + (admin? ? " (admin)" : "")
+    "#{name} <#{email}>"
   end
 
   protected

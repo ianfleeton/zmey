@@ -3,7 +3,7 @@ require "rails_helper"
 module Admin
   RSpec.describe PagesController, type: :controller do
     context "when admin" do
-      before { allow(controller).to receive(:admin?).and_return(true) }
+      before { logged_in_as_admin }
 
       describe "PATCH update" do
         context "when update fails" do

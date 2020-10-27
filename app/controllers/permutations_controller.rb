@@ -1,6 +1,6 @@
 class PermutationsController < ApplicationController
   layout "admin"
-  before_action :admin_or_manager_required
+  before_action :admin_required
 
   def update
     permutation = Permutation.find(params[:id])

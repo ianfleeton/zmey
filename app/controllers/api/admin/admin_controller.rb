@@ -13,7 +13,7 @@ class Api::Admin::AdminController < ApplicationController
 
     key = authenticated_api_key
     if key
-      @website = key.user.managed_website
+      @website = Website.first
       head 403 unless @website # forbidden
     else
       head 401 # unauthorized

@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
   protected
 
   def can_access_order?
-    admin_or_manager? || @current_user.id == @order.user_id
+    admin? || @current_user.id == @order.user_id
   end
 
   # get valid order from current session or send user back to their basket

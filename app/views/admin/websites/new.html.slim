@@ -1,6 +1,5 @@
 = page_header 'New Website'
 
-- if admin?
-  = breadcrumbs({'Websites' => admin_websites_path}, 'New Website')
+= breadcrumbs({"Websites" => admin_websites_path}, "New website")
 
 = render 'form', submit_label: 'Create New Website'

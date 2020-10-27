@@ -8,7 +8,7 @@ describe "/admin/websites/new.html.slim" do
     end
   end
 
-  context "when manager" do
+  context "when admin" do
     before do
       without_partial_double_verification do
         allow(view).to receive(:admin?).and_return(false)

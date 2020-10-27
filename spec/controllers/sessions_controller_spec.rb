@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SessionsController, type: :controller do
-  let(:customer) { FactoryBot.create(:user, admin: false) }
+  let(:customer) { FactoryBot.create(:user) }
 
   describe "POST #create" do
     it "authenticates the user" do
@@ -9,7 +9,7 @@ RSpec.describe SessionsController, type: :controller do
       post "create"
     end
 
-    context "when the user authenticates as a customer" do
+    context "when the user authenticates" do
       before do
         allow(User).to receive(:authenticate).and_return(customer)
       end
@@ -24,18 +24,6 @@ RSpec.describe SessionsController, type: :controller do
       it "redirects to the customer's account page" do
         post "create"
         expect(response).to redirect_to(customer)
-      end
-    end
-
-    context "when the user authenticates as an admin or manager" do
-      before do
-        allow(User).to receive(:authenticate).and_return(User.new)
-        allow(controller).to receive(:admin_or_manager?).and_return(true)
-      end
-
-      it "redirects to the admin page" do
-        post "create"
-        expect(response).to redirect_to(admin_path)
       end
     end
   end

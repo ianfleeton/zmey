@@ -1,11 +1,4 @@
 FactoryBot.define do
-  factory :admin, class: User do
-    sequence(:email) { |n| "admin#{n}@example.org" }
-    name { "Admin" }
-    admin { true }
-    password { "secret" }
-  end
-
   factory :address do
     address_line_1 { "123 My Street" }
     email_address { "shopper@example.org" }
@@ -26,6 +19,12 @@ FactoryBot.define do
     county { SecureRandom.hex }
     postcode { SecureRandom.hex }
     association :country
+  end
+
+  factory :administrator do
+    sequence(:email) { |n| "admin#{n}@example.org" }
+    sequence(:name) { |n| "Admin #{n}" }
+    password { "secret1" }
   end
 
   factory :api_key do

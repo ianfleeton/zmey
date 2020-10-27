@@ -7,6 +7,7 @@ RSpec.describe "View offline payment methods" do
   end
 
   scenario "Visit offline payments page from admin" do
+    visit "/admin/"
     click_link "Offline Payments"
   end
 

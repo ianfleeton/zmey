@@ -6,8 +6,8 @@ module Admin
       @mock_order ||= double(Order, stubs)
     end
 
-    context "when admin or manager" do
-      before { allow(controller).to receive(:admin?).and_return(true) }
+    context "when admin" do
+      before { logged_in_as_admin }
 
       describe "POST create" do
         let(:country) { FactoryBot.create(:country) }

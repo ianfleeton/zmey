@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :find_user, except: [:new, :create, :forgot_password, :forgot_password_send]
-  before_action :admin_or_manager_or_same_user_required, only: [:show, :edit, :update]
+  before_action :admin_or_same_user_required, only: [:show, :edit, :update]
   before_action :can_users_create_accounts, only: [:new, :create]
 
   skip_before_action :protect_private_website, only: [
@@ -20,15 +20,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      if admin_or_manager?
-        flash[:notice] = "New user account has been created."
-        redirect_to admin_users_path
-      else
-        @current_user = @user
-        session[:user] = @user.id
-        flash[:notice] = "Your account has been created."
-        redirect_to @user
-      end
+      @current_user = @user
+      session[:user] = @user.id
+      flash[:notice] = "Your account has been created."
+      redirect_to @user
     else
       render :new
     end
@@ -104,15 +99,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def admin_or_manager_or_same_user_required
-    if !admin_or_manager? && (!logged_in? || (@current_user != @user))
+  def admin_or_same_user_required
+    if !admin? && (!logged_in? || (@current_user != @user))
       redirect_to controller: "sessions", action: "new"
       nil
     end
   end
 
   def can_users_create_accounts
-    unless @w.can_users_create_accounts? || admin_or_manager?
+    unless @w.can_users_create_accounts? || admin?
       flash[:notice] = "New user accounts cannot be created."
       redirect_to root_path
     end

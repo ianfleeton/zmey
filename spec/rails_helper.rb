@@ -41,6 +41,18 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Warden::Test::Helpers
+  config.include DeviseRequestHelpers, type: :request
+  config.before :suite do
+    Warden.test_mode!
+  end
+
+  config.include ControllerHelpers, type: :controller
+  config.include RequestHelpers, type: :request
+  config.include SystemHelpers, type: :system
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -77,5 +89,5 @@ RSpec.configure do |config|
 end
 
 def logged_in_as_admin
-  allow(controller).to receive(:admin?).and_return(true)
+  logged_in_as_admin
 end

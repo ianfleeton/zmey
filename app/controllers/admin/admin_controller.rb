@@ -1,8 +1,10 @@
-class Admin::AdminController < ApplicationController
-  before_action :admin_or_manager_required
+module Admin
+  class AdminController < ApplicationController
+    before_action :admin_required
 
-  layout "admin"
+    layout "admin"
 
-  def index
+    def index
+    end
   end
 end

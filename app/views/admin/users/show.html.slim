@@ -8,9 +8,7 @@ h3= t('.registered_email_address')
 p= mail_to @user.email
 
 p= link_to(@user.name + '’s orders', user_orders_path(@user))
-- unless @user.managed_website.nil?
-  p= t('.website_manager_for', website: @user.managed_website.name)
-- if admin_or_manager?
+- if admin?
   p
     = link_to t('.addresses'), admin_user_addresses_path(@user)
     = edit_button([:admin, @user])
