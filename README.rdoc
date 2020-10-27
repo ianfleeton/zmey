@@ -132,12 +132,3 @@ webhooks, run the adapter service: https://github.com/ianfleeton/zmey-webhook-ha
 [ZMEY_REPOSITORY]
 
     URL of the git repository. Used when deploying with Capistrano.
-
-=== Create your own theme
-
-Set the +theme+ attribute in your website settings.
-
-Set the +custom_view_resolver+ attribute to +CustomView::ThemeResolver+.
-
-Create a subdirectory matching this name under app/views. Any views you create
-here will override the base views.
