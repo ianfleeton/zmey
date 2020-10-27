@@ -125,11 +125,6 @@ webhooks, run the adapter service: https://github.com/ianfleeton/zmey-webhook-ha
 
 === Environment variables
 
-[ZMEY_ASSETS]
-
-    Location of additional assets. This allows a website's custom assets to be
-    stored outside of the core Zmey repository.
-
 [ZMEY_EXCEPTION_RECIPIENT]
 
     Email address to which exception notifications will be sent.
