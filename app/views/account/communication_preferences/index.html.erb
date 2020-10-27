@@ -1,0 +1,24 @@
+<% content_for :title, t(".title", website: website) %>
+
+<h1>Your communication preferences</h1>
+
+<%= form_tag(action: :update) do %>
+<div class="field-group">
+  <label for="email">Email address</label>
+  <input id="email" type="email" name="email" value="<%= params[:email] %>" required>
+</div>
+<div class="field-group">
+  <p>
+    Yes please send me emails, with special offers and information regarding our
+    products.
+  </p>
+  <input type="submit" name="wanted" value="Yes Please" class="button">
+</div>
+<div class="field-group">
+  <p>
+    I do not wish to receive special offers and product information by email
+    from <%= website %>.
+  </p>
+  <input type="submit" name="wanted" value="No Thanks" class="button">
+</div>
+<% end %>

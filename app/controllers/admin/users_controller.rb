@@ -15,7 +15,6 @@ module Admin
 
     def create
       @user = User.new(user_params)
-      @user.admin = false
 
       if @user.save
         flash[:notice] = I18n.t("controllers.admin.users.create.flash.created")

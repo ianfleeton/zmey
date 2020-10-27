@@ -1,4 +1,6 @@
 class Basket < ActiveRecord::Base
+  NEXT_DISCOUNT_TRIGGER_VALUE = 20
+
   # basket items are destroyed so that their feature selections can be cleaned up
   has_many :basket_items, inverse_of: :basket, dependent: :destroy
   has_one :order, dependent: :nullify

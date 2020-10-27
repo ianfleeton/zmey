@@ -13,25 +13,14 @@ RSpec.describe ProductsController, type: :controller do
         )
       end
 
-      context "as admin" do
-        before { logged_in_as_admin }
-
-        it "succeeds" do
-          get :show, params: {id: "37"}
-          expect(response).to be_successful
-        end
-      end
-
-      context "as visitor" do
-        it "404s" do
-          get :show, params: {id: "37"}
-          expect(response.status).to eq 404
-        end
+      it "404s" do
+        get :show, params: {slug: "widget"}
+        expect(response.status).to eq 404
       end
     end
   end
 
   def find_requested_product(stubs = {})
-    expect(Product).to receive(:find_by).with(id: "37").and_return(mock_product(stubs))
+    expect(Product).to receive(:find_by).with(slug: "widget").and_return(mock_product(stubs))
   end
 end

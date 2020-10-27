@@ -226,7 +226,7 @@ RSpec.describe BasketItem, type: :model do
         PriceCalculator::Base, ex_tax: 1.23, inc_tax: 1.48, weight: 0.5
       )
     end
-    let(:product) { Product.new(id: 123, rrp: 2.34, sku: "sku", name: "Short Tee 101", brand: "Interclamp") }
+    let(:product) { Product.new(id: 123, rrp: 2.34, sku: "sku", name: "Name", brand: "Brand") }
     let(:item) { BasketItem.new(product: product, quantity: 3) }
     let(:order) { Order.new }
     let(:line) { item.to_order_line }
@@ -244,11 +244,11 @@ RSpec.describe BasketItem, type: :model do
     end
 
     it "sets product name" do
-      expect(line.product_name).to eq "Short Tee 101"
+      expect(line.product_name).to eq "Name"
     end
 
     it "sets product brand" do
-      expect(line.product_brand).to eq "Interclamp"
+      expect(line.product_brand).to eq "Brand"
     end
 
     it "sets product RRP" do

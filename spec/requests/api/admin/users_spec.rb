@@ -72,10 +72,8 @@ describe "Admin users API" do
 
   describe "GET show" do
     context "when user found" do
-      let(:manages_website_id) { nil }
-
       before do
-        @user = FactoryBot.create(:user, manages_website_id: manages_website_id)
+        @user = FactoryBot.create(:user)
       end
 
       it "returns 200 OK" do

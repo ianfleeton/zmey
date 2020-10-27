@@ -1,0 +1,44 @@
+<% content_for(:title, t(".title", website: website)) %>
+<h1><%= t(".your_account") %></h1>
+
+<h2><%= @user.name %></h2>
+
+<p class="email">
+  <%= t(".registered_email_address") %>:
+  <%= mail_to @user.email %>
+</p>
+
+<ul class="account-nav group">
+  <li>
+    <a href="<%= account_edit_path %>" id="update-details">
+      <strong>Update my details</strong>
+      <span>Change your name, email address and communication preferences.</span>
+    </a>
+  </li>
+  <li>
+    <a href="<%= orders_path %>">
+      <strong>View my orders</strong>
+      <span>View your past orders and invoices with us.</span>
+    </a>
+  </li>
+  <li>
+    <a href="<%= account_change_password_path %>">
+      <strong>Change my password</strong>
+      <span>Keep your password memorable but secure.</span>
+    </a>
+  </li>
+  <li>
+    <a href="<%= customer_sessions_path %>" data-method="post">
+      <strong>Log out</strong>
+      <span>Log out of the website so it’s safe to leave your computer.</span>
+    </a>
+  </li>
+  <li>
+    <a href="<%= addresses_path %>">
+      <strong><%= t(".manage_address_book") %></strong>
+      <span>
+        Add, remove and edit addresses used for shipping and billing.
+      </span>
+    </a>
+  </li>
+</ul>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_27_140839) do
+ActiveRecord::Schema.define(version: 2020_10_27_162549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -601,6 +601,11 @@ ActiveRecord::Schema.define(version: 2020_10_27_140839) do
     t.datetime "updated_at"
     t.string "customer_reference", default: "", null: false
     t.string "stripe_customer_id"
+    t.string "email_verification_token"
+    t.datetime "email_verified_at"
+    t.datetime "forgot_password_sent_at"
+    t.datetime "explicit_opt_in_at"
+    t.boolean "opt_in", default: true, null: false
   end
 
   create_table "webhooks", id: :serial, force: :cascade do |t|

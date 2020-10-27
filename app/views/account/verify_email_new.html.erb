@@ -1,0 +1,10 @@
+<% content_for(:title, t(".title", website: website)) %>
+
+<h1>Resend your verification email</h1>
+
+<p>Enter your email address below and press <em>Send</em>.</p>
+
+<%= form_tag account_verify_email_send_path do %>
+  <%= email_field_tag :email, unverified_user.try(:email), id: "verify_email", required: true, size: 30 %>
+  <%= submit_tag "Send" %>
+<% end %>

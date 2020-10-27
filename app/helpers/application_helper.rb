@@ -20,10 +20,6 @@ module ApplicationHelper
     content
   end
 
-  def body_id
-    request.host.tr!(".", "-")
-  end
-
   def truncate(string, length)
     if string.length > length * 1.1
       string[0, length].rstrip + "..."

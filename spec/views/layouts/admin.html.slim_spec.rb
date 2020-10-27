@@ -11,6 +11,6 @@ RSpec.describe "layouts/admin.html.slim", type: :view do
 
   it "has a link to sign out" do
     render
-    expect(rendered).to have_selector "a[href='#{sessions_path}']"
+    expect(rendered).to have_selector "a[href='#{destroy_administrator_session_path}']"
   end
 end

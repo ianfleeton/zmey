@@ -36,11 +36,10 @@ ProductPlacement.create!(
   product: idevice
 )
 
-admin = User.create!(
-  admin: true,
-  email: 'merchant@example.com',
-  name: 'Alice Adams',
-  password: 'secret',
+admin = Administrator.create!(
+  email: "merchant@example.com",
+  name: "Alice Adams",
+  password: "secret",
 )
 
 bob = User.create!(

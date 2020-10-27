@@ -2,21 +2,20 @@
 
 p= new_button [:admin, User]
 
+= will_paginate(@users, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer)
+
 table.table.table-bordered
   thead
     tr
-      th= t('.name')
-      th= t('.email')
-      th= t('.admin')
+      th= User.human_attribute_name :name
+      th= User.human_attribute_name :email
   tbody
     - @users.each do |u|
       tr
         td= link_to u.name, [:admin, u]
         td= mail_to u.email, u.email
-        td= tick u.admin
         td
-          - if admin?
-            => link_to(t(".switch_user"), switch_user_path(u), method: "post", class: "btn btn-outline-secondary")
+          => link_to(t(".switch_user"), switch_user_path(u), method: "post", class: "btn btn-outline-secondary")
           = edit_button([:admin, u])
           =< delete_button([:admin, u])
 

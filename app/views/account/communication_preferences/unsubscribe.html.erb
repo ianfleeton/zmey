@@ -1,0 +1,21 @@
+<h1>Unsubscribe</h1>
+
+<p>
+  Unsubscription requests will be processed immediately except when a
+  mailing is already in progress. In this case it will be updated before the
+  next mailing.
+</p>
+
+<%= form_tag(action: :update) do %>
+<div class="field-group">
+  <label for="email">Email address</label>
+  <input id="email" type="email" name="email" value="<%= params[:email] %>" required>
+</div>
+<div class="field-group">
+  <p>
+    I do not wish to receive special offers and product information by email
+    from <%= website %>.
+  </p>
+  <input type="submit" name="wanted" value="Unsubscribe Me" class="button">
+</div>
+<% end %>

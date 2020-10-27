@@ -7,7 +7,6 @@ json.user do
   json.salt @user.salt
   json.forgot_password_token @user.forgot_password_token
   json.customer_reference @user.customer_reference
-  json.admin @user.admin?
   json.created_at @user.created_at
   json.updated_at @user.updated_at
 end

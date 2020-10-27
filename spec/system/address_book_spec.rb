@@ -2,21 +2,16 @@ require "rails_helper"
 
 RSpec.describe "Address book", type: :system do
   let(:country) { FactoryBot.create(:country) }
-  let(:website) { FactoryBot.create(:website, country: country) }
-
-  before do
-    Website.delete_all
-    website
-  end
+  let!(:website) { FactoryBot.create(:website, country: country) }
 
   context "signed in" do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { FactoryBot.create(:user, email_verified_at: Time.current) }
 
     before do
       visit sign_in_path
-      fill_in "Email", with: user.email
-      fill_in "Password", with: user.password
-      click_button "Sign In"
+      fill_in "email", with: user.email
+      fill_in "password", with: user.password
+      click_button "Sign in"
     end
 
     context "without addresses" do
@@ -39,8 +34,12 @@ RSpec.describe "Address book", type: :system do
       let(:work_address) { "My Work Address" }
       let(:home_address) { "My Home Address" }
 
-      let!(:work_address) { FactoryBot.create(:address, user_id: user.id, label: "Work") }
-      let!(:home_address) { FactoryBot.create(:address, user_id: user.id, label: "Home") }
+      let!(:work_address) do
+        FactoryBot.create(:address, user_id: user.id, label: "Work")
+      end
+      let!(:home_address) do
+        FactoryBot.create(:address, user_id: user.id, label: "Home")
+      end
 
       scenario "Address book shows customer's addresses" do
         visit addresses_path

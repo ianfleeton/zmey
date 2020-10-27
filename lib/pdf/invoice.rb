@@ -1,39 +1,5 @@
-require "render_anywhere"
-
 module PDF
-  class Invoice
-    include RenderAnywhere
-
-    def initialize(order)
-      @order = order
-    end
-
-    def generate
-      write_html
-      convert_html_to_pdf
-    end
-
-    def write_html
-      File.open(html_filename, "w") { |f| f.write(html) }
-    end
-
-    def convert_html_to_pdf
-      `#{WebKitHTMLToPDF.binary} #{html_filename} #{filename}`
-    end
-
-    def html
-      set_instance_variable(:order, @order)
-      render template, layout: layout
-    end
-
-    class RenderingController < ApplicationController
-      def initialize
-        super
-        set_resolver
-      end
-      attr_accessor :order
-    end
-
+  class Invoice < OrderDocument
     def template
       "orders/invoice"
     end
@@ -43,11 +9,11 @@ module PDF
     end
 
     def html_filename
-      "tmp/invoice.html"
+      "tmp/invoice.#{@order.order_number}.html"
     end
 
     def filename
-      "tmp/invoice.pdf"
+      "tmp/Order #{@order.order_number} - #{@order.paperwork_type.titleize}.pdf"
     end
   end
 end

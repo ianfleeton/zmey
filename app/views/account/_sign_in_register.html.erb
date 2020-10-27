@@ -1,0 +1,52 @@
+<h2>Shopped with us before?</h2>
+<p>
+  If you’ve shopped with us before you can log in to retreive your previous order details and speed up the checkout process.
+  If you don't have a password yet you can <%= link_to("get one here", account_forgot_password_path) %>.
+</p>
+<%= form_tag({controller: "/customer_sessions", action: "create"}) do %>
+  <%= hidden_field_tag :unsafe_redirect_url, @unsafe_redirect_url %>
+  <label for="sign_in_email">Email address</label>
+  <%= email_field_tag :email, params[:email], required: true, id: "sign_in_email" %>
+  <label for="sign_in_password">Password</label>
+  <%= password_field_tag :password, params[:password], class: 'short', required: true, id: "sign_in_password" %>
+  <input type="submit" value="Sign in">
+
+  <h3>Forgetten your password, or don't have one yet?</h3>
+  <p><%= link_to(t(".get_a_new_password"), account_forgot_password_path) %></p>
+<% end %>
+
+<h2>Not registered yet?</h2>
+
+<% @user ||= User.new %>
+
+<% if @user.errors.any? %>
+<h3><%= pluralize(@user.errors.count, "error") %> prevented this account from being created:</h3>
+<ul>
+  <% @user.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<p>
+  By registering with us you will automatically save your shopping basket so you can check out later.
+  You will also be able to track your orders and access your previous orders and invoices.
+</p>
+
+<%= form_for(@user, url: account_path) do |form| %>
+  <%= hidden_field_tag :unsafe_redirect_url, @unsafe_redirect_url %>
+
+  <label for="user_name">Full name</label>
+  <%= form.text_field :name, required: true %>
+
+  <label for="user_email">Email</label>
+  <%= form.email_field :email, required: true %>
+
+  <label for="user_password">Password</label>
+  <%= form.password_field :password, required: true, pattern: ".{8,}", oninvalid: 'this.setCustomValidity("Password must be at least 8 characters long")', onchange: 'this.setAttribute("pattern", ".{8,}")', oninput: 'try{this.setCustomValidity("")}catch(e){};this.removeAttribute("pattern")' %>
+
+  <label for="user_password_confirmation">Confirm password</label>
+  <%= form.password_field :password_confirmation, required: true, pattern: ".{8,}", oninvalid: 'this.setCustomValidity("Password must be at least 8 characters long")', onchange: 'this.setAttribute("pattern", ".{8,}")', oninput: 'try{this.setCustomValidity("")}catch(e){};this.removeAttribute("pattern")' %>
+
+  <%= submit_tag "Register" %>
+<% end %>

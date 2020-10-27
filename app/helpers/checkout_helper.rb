@@ -35,4 +35,8 @@ module CheckoutHelper
     )
     field_list.fields
   end
+
+  def bacs_only?(order)
+    order.total > 2000
+  end
 end

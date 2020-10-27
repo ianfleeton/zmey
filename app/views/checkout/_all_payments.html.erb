@@ -1,0 +1,9 @@
+<%= render partial: "checkout/bacs" %>
+<%= render "checkout/yorkshire_payments" if website.yorkshire_payments_active? %>
+<%= form_tag phone_path do %>
+  <input type="submit" name="payment[payment_method]" value="phone">
+<% end %>
+<%= render partial: "checkout/paypal", locals: {order: @order} %>
+<%= form_tag cheque_path do %>
+  <input type="submit" name="payment[payment_method]" value="cheque">
+<% end %>

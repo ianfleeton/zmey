@@ -22,13 +22,16 @@ class OrdersController < ApplicationController
   end
 
   def invoice
-    redirect_to(new_session_path) && return unless can_access_order?
-    redirect_to(orders_path) && return unless @order.fully_shipped?
+    ensure_invoice_access
+    ensure_order_is_invoice
+
+    return if performed?
+
     respond_to do |format|
-      format.pdf do
-        send_invoice_pdf(@order)
-      end
+      format.pdf { send_invoice_pdf(@order) }
       format.html do
+        @subject = "#{@order.paperwork_type.titleize} # " \
+          "#{@order.order_number} | #{website}"
         render layout: "invoice"
       end
     end
@@ -36,8 +39,16 @@ class OrdersController < ApplicationController
 
   protected
 
+  def ensure_invoice_access
+    redirect_to new_customer_session_path unless can_access_order?
+  end
+
+  def ensure_order_is_invoice
+    redirect_to orders_path unless @order.invoice?
+  end
+
   def can_access_order?
-    admin? || @current_user.id == @order.user_id
+    current_user.id == @order.user_id
   end
 
   # get valid order from current session or send user back to their basket

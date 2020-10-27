@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, if: :password_required?
 
   # callbacks
+  before_create :set_email_verification_token
   before_save :encrypt_password
 
   # encrypts given password using salt
@@ -39,7 +40,7 @@ class User < ActiveRecord::Base
     encrypted_password == User.encrypt(pass, salt)
   end
 
-  def self.generate_forgot_password_token
+  def self.generate_token
     charset = %w[2 3 4 6 7 9 A C D E F G H J K L M N P Q R T V W X Y Z]
     (0...8).map { charset.to_a[rand(charset.size)] }.join
   end
@@ -51,8 +52,54 @@ class User < ActiveRecord::Base
       User.create(email: email&.downcase, name: name, encrypted_password: UNSET)
   end
 
+  # Returns an existing unverified user account with matching email address, or
+  # creates and returns a new one if needed. Returns nil if the email address
+  # matches an existing verified account.
+  def self.unverified_user(email:, name:)
+    # Avoid unnecessary database query.
+    return nil unless email
+
+    user = find_or_create_by_details(email: email, name: name)
+    user if user&.persisted? && !user.email_verified_at
+  end
+
+  def self.temporary
+    # Opt in is false for temporary users but true for new real ones.
+    User.new(opt_in: false)
+  end
+
   def to_s
     "#{name} <#{email}>"
+  end
+
+  def set_email_verification_token
+    self.email_verification_token = self.class.generate_token
+  end
+
+  # Recording of explicit opt in for GDPR compliance.
+  def update_explicit_opt_in(opting_in)
+    if opting_in
+      self.explicit_opt_in_at = Time.current
+      self.opt_in = true
+    else
+      self.explicit_opt_in_at = nil
+      self.opt_in = false
+    end
+  end
+
+  # Opt in that uses PECR rules instead of GDPR. Opting in here
+  # should not be considered an explicit opt in.
+  def update_opt_in(opting_in)
+    if opting_in
+      self.opt_in = true
+    else
+      self.explicit_opt_in_at = nil
+      self.opt_in = false
+    end
+  end
+
+  def password_set?
+    encrypted_password != UNSET
   end
 
   protected

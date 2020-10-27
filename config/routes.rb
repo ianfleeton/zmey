@@ -199,6 +199,17 @@ Rails.application.routes.draw do
     end
   end
 
+  post "bacs" => "payments#bacs", :as => :bacs
+  get "bacs_instructions" => "payments#bacs_instructions", as: :bacs_instructions
+
+  post "cheque" => "payments#cheque", :as => :cheque
+  get "cheque_instructions" => "payments#cheque_instructions", as: :cheque_instructions
+
+  post "phone" => "payments#phone", :as => :phone
+  get "phone_instructions" => "payments#phone_instructions", as: :phone_instructions
+
+  post "confirm_alternative" => "payments#confirm_alternative", as: :confirm_alternative
+
   namespace :payments do
     get "paypal/:order_number/:fingerprint/new" => "paypal#new", :as => :new_paypal_payment
     get 'paypal/auto_return' => 'paypal#auto_return', as: :paypal_auto_return
@@ -220,26 +231,51 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :sessions do
-    post 'destroy', on: :collection
+  resources :customer_sessions do
+    collection do
+      post "destroy"
+      get "password_reset"
+      get "password_set"
+      get "reset"
+    end
   end
-  get  'sign-in'              => 'sessions#new',         as: :sign_in
-  post 'switch_user/:user_id' => 'sessions#switch_user', as: :switch_user
+  get  "sign-in"              => "customer_sessions#new", :as => :sign_in
+  get  "login"                => redirect("sign-in")
+  post "switch_user/:user_id" => "customer_sessions#switch_user", :as => :switch_user
+
+  namespace :account do
+    get "", action: "index"
+    post "", action: "create"
+    patch "", action: "update"
+    get "new"
+    get "edit"
+
+    post "set_unverified_password"
+    get "verify_email"
+    get "verify_email_new"
+    post "verify_email_send"
+    get  "change_password"
+    post "update_password"
+
+    namespace :communication_preferences do
+      get "", action: "index"
+      get "unsubscribe"
+      post "update"
+      get "updated"
+    end
+
+    namespace :forgot_password do
+      get "", action: "index"
+      post "send_email"
+      get  "sent"
+      get "new"
+      post "change"
+    end
+  end
 
   get 'sitemap.xml' => 'pages#sitemap', as: 'sitemap', format: 'xml'
 
   get 'terms' => 'pages#terms', as: :terms
-
-  resources :users, except: [:index, :destroy] do
-    collection do
-      get 'forgot_password'
-      post 'forgot_password_change'
-      get 'forgot_password_new'
-      post 'forgot_password_send'
-    end
-
-    resources :orders
-  end
 
   resources :pages, only: [:show]
 
@@ -247,7 +283,9 @@ Rails.application.routes.draw do
   # exception reporting.
   get 'error' => 'application#error'
 
-  get ':slug' => 'pages#show', as: :slug, constraints: { slug: /[-a-z0-9_\/\.]*/ }
+  SLUG_CONSTRAINTS = {slug: /[-a-zA-Z0-9_\/\.]*/}
+  get "product/:slug" => "products#show", constraints: SLUG_CONSTRAINTS
+  get ':slug' => 'pages#show', as: :slug, constraints: SLUG_CONSTRAINTS
 
   root controller: 'pages', action: 'show', slug: ''
 end

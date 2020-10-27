@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include DeliveryDateConcerns
   include DiscountConcerns
+  include RunningInProduction
   include Shipping
 
   protect_from_forgery with: :exception
@@ -10,7 +11,9 @@ class ApplicationController < ActionController::Base
   helper_method(
     :admin?,
     :basket,
+    :current_user,
     :logged_in?,
+    :unverified_user,
     :website
   )
 
@@ -20,10 +23,10 @@ class ApplicationController < ActionController::Base
     :protect_staging_website,
     :initialize_page_defaults,
     :current_user,
+    :unverified_user,
     :set_locale,
     :protect_private_website,
     :initialize_tax_display,
-    :set_resolver,
     :basket,
     :set_shipping_amount
   )
@@ -44,7 +47,17 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user]) || User.new
+    @current_user ||= user_from_session || User.temporary
+  end
+
+  def unverified_user
+    return @unverified_user if @unverified_user
+    if (@unverified_user = unverified_user_from_session)
+      if @unverified_user.email_verified_at
+        @unverified_user = session[:unverified_user_id] = nil
+      end
+    end
+    @unverified_user
   end
 
   def website
@@ -57,6 +70,19 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def user_from_session
+    user_type_from_session(:user_id)
+  end
+
+  def unverified_user_from_session
+    User.unverified_user(name: session[:name], email: session[:email]) ||
+      user_type_from_session(:unverified_user_id)
+  end
+
+  def user_type_from_session(user_key)
+    session[user_key] && User.find_by(id: session[user_key])
+  end
+
   def admin_required
     unless administrator_signed_in?
       flash[:notice] = "You need to be logged in as an administrator to do that."
@@ -65,10 +91,9 @@ class ApplicationController < ActionController::Base
   end
 
   def user_required
-    unless logged_in?
-      flash[:notice] = "You need to be logged in to do that."
-      redirect_to sign_in_path
-    end
+    return if logged_in?
+    flash[:notice] = "You need to be logged in to do that."
+    redirect_to sign_in_path
   end
 
   def set_time_zone
@@ -162,26 +187,26 @@ class ApplicationController < ActionController::Base
     basket.update_details(session)
   end
 
-  # Allows the use of a website custom view template resolver to let
-  # websites override the base templates with custom ones, either in the
-  # database or in the filesystem under the directory
-  # +app/views/theme+.
-  #
-  # Since templates can execute arbitrary Ruby code this should be used in
-  # a deployment where only trusted developers can create templates.
-  #
-  # Adapted from http://www.justinball.com/2011/09/27/customizing-views-for-a-multi-tenant-application-using-ruby-on-rails-custom-resolvers/
-  def set_resolver
-    return unless website
-    if (resolver = website_resolver_for(website))
-      resolver.update_website(website)
-      prepend_view_path resolver
-    end
-  end
-
-  @@website_resolver = {}
-
-  def website_resolver_for(website)
-    @@website_resolver[website.id] ||= website.build_custom_view_resolver
+  def reset_customer_session
+    %i[
+      user_id
+      address_id
+      basket_id
+      billing_address_id
+      delivery_address_id
+      delivery_date
+      delivery_option
+      delivery_postcode
+      discount_code
+      email
+      mobile
+      name
+      order_id
+      page_id
+      phone
+      shipping_class_id
+      source
+    ].each { |k| session[k] = nil }
+    cookies.signed[:order_id] = nil
   end
 end

@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.describe Admin::ComponentsController, type: :controller do
-  describe "GET new" do
-    context "when logged in as an administrator" do
-      before do
-        logged_in_as_admin
-      end
+module Admin
+  RSpec.describe ComponentsController, type: :controller do
+    before do
+      logged_in_as_admin
+    end
 
+    describe "GET new" do
       it "instantiates a new Component" do
         allow(controller).to receive(:product_valid?)
         expect(Component).to receive(:new).and_return(double(Component).as_null_object)
@@ -29,39 +29,31 @@ RSpec.describe Admin::ComponentsController, type: :controller do
       end
     end
 
-    context "when not logged in as an administrator" do
-      it "redirects to the sign in page" do
-        get "new"
-        expect(response).to redirect_to(sign_in_path)
+    describe "DELETE destroy" do
+      let(:component) { FactoryBot.create(:component) }
+
+      before do
+        allow(controller).to receive(:product_valid?).and_return(true)
       end
-    end
-  end
 
-  describe "DELETE destroy" do
-    let(:component) { FactoryBot.create(:component) }
+      def delete_destroy
+        delete :destroy, params: {id: component.id}
+      end
 
-    before do
-      logged_in_as_admin
-      allow(controller).to receive(:product_valid?).and_return(true)
-    end
+      it "destroys the component" do
+        delete_destroy
+        expect(Component.find_by(id: component.id)).to be_nil
+      end
 
-    def delete_destroy
-      delete :destroy, params: {id: component.id}
-    end
+      it "redirects to the component's product editing page" do
+        delete_destroy
+        expect(response).to redirect_to edit_admin_product_path(component.product)
+      end
 
-    it "destroys the component" do
-      delete_destroy
-      expect(Component.find_by(id: component.id)).to be_nil
-    end
-
-    it "redirects to the component's product editing page" do
-      delete_destroy
-      expect(response).to redirect_to edit_admin_product_path(component.product)
-    end
-
-    it "sets a flash notice" do
-      delete_destroy
-      expect(flash[:notice]).to eq I18n.t("components.destroy.deleted")
+      it "sets a flash notice" do
+        delete_destroy
+        expect(flash[:notice]).to eq I18n.t("components.destroy.deleted")
+      end
     end
   end
 end

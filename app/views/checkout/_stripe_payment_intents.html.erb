@@ -1,0 +1,227 @@
+<h2>Checkout here with Stripe</h2>
+
+<% if logged_in? %>
+  <% Payments::StripeCustomer.new(current_user).payment_methods.each do |payment_method| %>
+    <%= form_tag(payments_stripe_charges_path, method: :post, id: "saved-form", class: "saved-form stripe-form") do %>
+      <input
+        name="idempotency_key"
+        type="hidden"
+        value="<%= Payments::IdempotencyKey.new %>"/>
+
+      <input type="hidden" name="use_saved" value="on" />
+      <input type="hidden" name="payment_method_id" value="<%= payment_method.id %>" />
+
+      <div style="text-align: center">
+        <button class="button stripe-button saved-submit">Pay with <%= payment_method %></button>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= form_tag("", method: "post", id: "stripe-form", class: "stripe-form") do %>
+  <div class="form-row">
+    <input
+      id="idempotency-key"
+      name="idempotency_key"
+      type="hidden"
+      value="<%= Payments::IdempotencyKey.new %>"/>
+
+    <input id="stripe-name" type="hidden" name="name" value="<%= @order.billing_full_name %>">
+    <input type="hidden" name="email" value="<%= @order.email_address %>">
+
+    <label for="card-element" style="font-weight:bold;">
+      Credit or debit card
+    </label>
+    <div id="card-element" style="margin: 10px 0;">
+      <!-- a Stripe Element will be inserted here. -->
+    </div>
+
+    <% if logged_in? %>
+    <label>
+      <input type="checkbox" id="save" name="save" checked /> Save my card for future purchases
+      <br><small style="color:#999;">When ticked, your card details are stored securely by Stripe. We do not store or transmit them.</small>
+    </label>
+    <% end %>
+
+    <!-- Used to display Element errors -->
+    <div id="card-errors" class="card-errors" role="alert"></div>
+  </div>
+
+  <div style="text-align: center">
+    <button class="button stripe-button" id="stripe-submit">Submit Payment</button>
+  </div>
+<% end %>
+<script>
+function stripeReadyHandler() {
+<% if running_in_production? %>
+  var stripe = Stripe('pk_live_3aVP5sp2kzd6uy7vdnUZ0cQ4');
+<% else %>
+  var stripe = Stripe('pk_test_U9gwyaf9HqONAMOIUN8c0jYF');
+<% end %>
+  var elements = stripe.elements();
+
+  // Custom styling can be passed to options when creating an Element.
+  var style = {
+    base: {
+      // Add your base input styles here. For example:
+      fontSize: '16px',
+      color: "#444444",
+    }
+  };
+
+  var value = {
+    postalCode: '<%= j @order.billing_postcode %>'
+  };
+
+  // Create an instance of the card Element
+  var card = elements.create('card', {style: style, value: value});
+  // Get the Rails authenticity token used for CSRF protection.
+  var authenticityToken = document.querySelector("meta[name='csrf-token']").getAttribute('content');
+
+  // Add an instance of the card Element into the `card-element` <div>
+  card.mount('#card-element');
+
+  card.addEventListener('change', function(event) {
+    var displayError = document.getElementById('card-errors');
+    if (event.error) {
+      displayError.textContent = event.error.message;
+    } else {
+      displayError.textContent = '';
+    }
+  });
+
+  var savedForms = document.querySelectorAll('.saved-form');
+  for (var i = 0; i < savedForms.length; i++) {
+    var savedForm = savedForms[i];
+    savedForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Disable submit button on saved payment method form once pressed.
+      event.target.querySelector('.saved-submit').disabled = true;
+      var idempotencyKey = event.target.querySelector('input[name="idempotency_key"]').value;
+      var paymentMethodId = event.target.querySelector('input[name="payment_method_id"]').value;
+
+      // Send paymentMethodId to server
+      fetch('/payments/stripe/payment_intents', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': authenticityToken
+        },
+        body: JSON.stringify({
+          payment_method_id: paymentMethodId,
+          idempotency_key: idempotencyKey,
+          use_saved: 'on',
+        })
+      }).then(function(result) {
+        // Handle server response
+        result.json().then(function(json) {
+          handleServerResponse(json);
+        })
+      });
+
+    });
+  }
+
+  function reEnableSubmitButtons() {
+    var buttons = document.querySelectorAll('.stripe-button');
+    for (var i = 0; i < buttons.length; i ++) {
+      buttons[i].disabled = false;
+    }
+  }
+
+  // Create a token or display an error when the form is submitted.
+  var form = document.getElementById('stripe-form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Disable the submit button to prevent multiple submissions
+    document.getElementById('stripe-submit').disabled = true;
+
+    var idempotencyKey = document.getElementById('idempotency-key').value;
+    var authenticityToken = document.querySelector("meta[name='csrf-token']").getAttribute('content');
+    var save = '';
+    var saveElement = document.getElementById('save');
+    if (saveElement && saveElement.checked) {
+      save = 'on';
+    }
+
+    stripe.createPaymentMethod(
+      'card',
+      card
+    ).then(function(result) {
+      if (result.error) {
+        // Inform the customer that there was an error
+        var errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
+        reEnableSubmitButtons();
+      } else {
+        // Send paymentMethod.id to server
+        fetch('/payments/stripe/payment_intents', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': authenticityToken
+          },
+          body: JSON.stringify({
+            payment_method_id: result.paymentMethod.id,
+            idempotency_key: idempotencyKey,
+            save: save
+          })
+        }).then(function(result) {
+          // Handle server response
+          result.json().then(function(json) {
+            handleServerResponse(json);
+          })
+        });
+      }
+    });
+  });
+
+  function handleServerResponse(response) {
+    if (response.error) {
+      // Inform the customer that there was an error
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = response.error;
+      reEnableSubmitButtons();
+    } else if (response.requires_action) {
+      // Use Stripe.js to handle required card action
+      handleAction(response);
+    } else {
+      // Show success message
+      window.location = '<%= receipt_orders_path %>';
+    }
+  }
+
+  function handleAction(response) {
+    stripe.handleCardAction(
+      response.payment_intent_client_secret
+    ).then(function(result) {
+      if (result.error) {
+        // Inform the customer that there was an error
+        var errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
+        reEnableSubmitButtons();
+      } else {
+        // The card action has been handled
+        // The PaymentIntent can be confirmed again on the server
+        fetch('/payments/stripe/payment_intents', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': authenticityToken
+          },
+          body: JSON.stringify({
+            payment_intent_id: result.paymentIntent.id
+          })
+        }).then(function(confirmResult) {
+          return confirmResult.json();
+        }).then(handleServerResponse);
+      }
+    });
+  }
+}
+</script>

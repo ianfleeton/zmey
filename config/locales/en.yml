@@ -7,6 +7,40 @@ en:
       address:
         label: 'Label to use in dropdown menu'
         town_city: "City"
+  account:
+    change_password:
+      title: "Change your password | %{website}"
+    communication_preferences:
+      index:
+        title: "Communication preferences | %{website}"
+      updated:
+        title: "Communication preferences updated | %{website}"
+    edit:
+      communication_preferences: "Communication preferences"
+      heading: "Account details"
+      opt_in: "I would like to receive email promotions and similar marketing communications from %{company}"
+      title: "Account details | %{website}"
+    forgot_password:
+      index:
+        title: "Forgot password | %{website}"
+      new:
+        title: "Choose new password | %{website}"
+      sent:
+        title: "Email sent | %{website}"
+    index:
+      manage_address_book: "Manage address book"
+      registered_email_address: "Your registered email address"
+      title: "Your account at %{website}"
+      view_your_orders: "View your orders"
+      your_account: "Your account"
+    new:
+      heading: "Create an account"
+      new_user_details: "New user details"
+      sign_up: "Sign up"
+      title: "Create an account at %{website}"
+      your_details: "Your details"
+    sign_in_register:
+      get_a_new_password: "Get a new password"
   add_to_cart: Add to Basket
   addresses:
     choose_address:
@@ -302,6 +336,25 @@ en:
   view_cart: View Basket
 
   controllers:
+    account:
+      communication_preferences:
+        update:
+          unrecognised: "Sorry we do not recognise your email address."
+      create:
+        created: "Your account has been created. A verification email has been sent to your email address. Please follow the link contained within it to complete registration."
+      forgot_password:
+        expired: "Your password reset link has expired. Please request a new link using the form below."
+      update:
+        updated: "Your account details have been updated."
+      update_password:
+        changed: "Your password has been changed successfully."
+        invalid: "Please choose a better password that is at least 8 characters long."
+      verify_email:
+        invalid_link: "Your verification link is invalid. Please try again by entering your email address below."
+        verified: "Your email address has been verified!"
+      verify_email_send:
+        sent: "Email has been sent."
+        unrecognised: "There is no account with that email address. Please register instead."
     addresses:
       create:
         saved: 'Your address has been saved.'

@@ -45,7 +45,7 @@ html lang="en"
             .dropdown-menu aria-labelledby="extrasDropdown"
               = link_to t(".import"), admin_import_index_path, class: "dropdown-item"
         ul.nav.navbar-nav.navbar-right
-          = link_to "<i class='far fa-sign-out'></i>".html_safe, sessions_path, method: :delete, title: t(".sign_out"), class: "dropdown-item"
+          = link_to "<i class='far fa-sign-out'></i>".html_safe, destroy_administrator_session_path, method: :delete, title: t(".sign_out"), class: "dropdown-item"
     .container-fluid
       - if flash[:notice]
         .alert.alert-info.fade.show

@@ -5,11 +5,11 @@
     - if nav.id_attribute == 'primary_nav'
       = nav_link_to I18n.t('controllers.enquiries'), new_enquiry_path
       - if logged_in?
-        = nav_link_to I18n.t('my_account'), {controller: 'users', action: 'show', id: @current_user}, nil, 'n_account'
-        = nav_link_to I18n.t('logout'), sessions_path, method: 'post'
+        = nav_link_to I18n.t('my_account'), account_path, nil, "n_account"
+        = nav_link_to I18n.t("logout"), customer_sessions_path, method: "post"
       - else
         - if website.can_users_create_accounts?
-          = nav_link_to I18n.t('register'), controller: 'users', action: 'new'
+          = nav_link_to I18n.t('register'), account_new_path
           = nav_link_to I18n.t('login'), sign_in_path
       - unless website.shopping_suspended?
         = nav_link_to I18n.t('view_cart'), basket_path

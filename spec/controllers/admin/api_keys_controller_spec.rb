@@ -9,7 +9,7 @@ RSpec.describe Admin::ApiKeysController, type: :controller do
     let(:name) { SecureRandom.hex }
     let(:valid_params) { {"api_key" => {"name" => name}} }
     let(:invalid_params) { {"api_key" => {"name" => ""}} }
-    let(:current_user) { FactoryBot.create(:admin) }
+    let(:current_user) { FactoryBot.create(:user) }
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)
