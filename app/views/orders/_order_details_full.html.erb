@@ -11,7 +11,7 @@
     <td style="border-bottom:1px solid #DDD" width="60%" bgcolor="#fff" align="left">
       <%= "#{item.product_brand} #{item.product_name}" %>
       <% if item.feature_descriptions.present? %>
-      <br><small><%= raw nl2br(tidy_cutting_instructions(item)) %></small>
+      <br><small><%= raw nl2br(item.feature_descriptions) %></small>
       <% end %>
     </td>
     <td style="border-bottom:1px solid #DDD" width="15%" bgcolor="#fff" align="right"><%= formatted_price(item.product_price ) %></td>
