@@ -8,7 +8,6 @@ RSpec.describe Admin::ShipmentsController, type: :controller do
   describe "POST create" do
     let(:valid_params) {
       {
-        courier_name: "Courier",
         order_id: order.id,
         partial: [true, false].sample,
         picked_by: "Jo Picker",

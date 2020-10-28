@@ -3,12 +3,12 @@
 = bootstrap_form_for [:admin, @shipment] do |f|
   = f.hidden_field :order_id
   = f.check_box :partial
-  = f.text_field :courier_name
+  = f.select :courier_id, Courier.all.collect { |c| [c.name, c.id] }, include_blank: true
   = f.hidden_field :shipped_at, value: Time.zone.now
   = f.text_field :picked_by
   = f.number_field :number_of_parcels
   = f.text_field :total_weight
-  = f.text_field :tracking_number
+  = f.text_field :consignment_number
   = f.url_field :tracking_url
   = f.text_area :comment
   = f.submit
