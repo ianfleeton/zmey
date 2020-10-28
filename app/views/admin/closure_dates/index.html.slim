@@ -1,0 +1,22 @@
+- heading = t('.heading')
+- content_for(:title, heading)
+= page_header(heading)
+
+p.btn-group
+  = new_button [:admin, ClosureDate]
+  = link_to 'Simulate', simulate_admin_closure_dates_path, class: 'btn btn-outline-secondary'
+
+table.table.table-bordered.table-striped
+  thead
+    tr
+      th Closed On
+      th Delivery Possible
+  tbody
+    - @closure_dates.each do |cd|
+      tr
+        td= cd.closed_on.strftime("%d-%m-%y")
+        td= tick_cross(cd.delivery_possible)
+        td
+          .btn-group
+            = edit_button [:admin, cd]
+            = delete_button [:admin, cd]

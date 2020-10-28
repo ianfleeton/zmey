@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       end
     end
     resources :choices, except: [:show]
+    resources :closure_dates, except: [:show] do
+      get :simulate, on: :collection
+    end
     resources :components, except: [:show]
     resources :countries, except: [:show]
     resources :discounts, except: [:show]

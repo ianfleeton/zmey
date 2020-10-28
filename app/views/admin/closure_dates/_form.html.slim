@@ -1,0 +1,13 @@
+- if @closure_date.errors.any?
+  = dismissable_error_message do
+    h2= "#{pluralize(@closure_date.errors.count, "error")} prohibited this closure date from being saved:"
+    ul
+      - @closure_date.errors.full_messages.each do |msg|
+        li= msg
+
+= bootstrap_form_for [:admin, @closure_date] do |form|
+  = form.text_field :closed_on, required: true, placeholder: 'yyyy-mm-dd'
+  = form.check_box :delivery_possible
+
+  br
+  = form.submit class: 'btn btn-primary'

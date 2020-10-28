@@ -1,0 +1,16 @@
+h1 Simulate/check delivery dates
+= bootstrap_form_tag(url: simulate_admin_closure_dates_path, method: :get) do |f|
+  p Time from which to consider the order as ready to prepare (yyyy-mm-dd hh:mm)
+  = f.text_field :start_time, value: params[:start_time] || Time.current, required: true
+  p Number of days lead time to prepare order (e.g., tube clamp = 0, cuttable length = 1)
+  = f.number_field :lead_time, value: params[:lead_time] || 1, required: true, min: 0, max: 10
+  p Number of days to deliver order (e.g., collection = 0, DX = 1)
+  = f.number_field :delivery_time, value: params[:delivery_time] || 1, required: true, min: 0, max: 10
+  p Delivery cut off hour
+  = f.number_field :cutoff_hour, value: params[:cutoff_hour] || website.delivery_cutoff_hour, required: true, min: 0, max: 23
+  = f.submit 'Simulate'
+
+- if defined? @dates
+  ul
+    - @dates.each do |date|
+      li= date

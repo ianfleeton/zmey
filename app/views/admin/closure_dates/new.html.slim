@@ -1,0 +1,7 @@
+- heading = t('.heading')
+- content_for(:title, heading)
+= page_header(heading)
+
+= breadcrumbs({ 'Closure Dates' => admin_closure_dates_path }, heading)
+
+= render 'form'

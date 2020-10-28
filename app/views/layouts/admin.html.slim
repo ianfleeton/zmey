@@ -30,6 +30,7 @@ html lang="en"
             a#settingsDropdown.nav-link.dropdown-toggle href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
               | Settings
             .dropdown-menu aria-labelledby="settingsDropdown"
+              = link_to "Closure dates", admin_closure_dates_path, class: "dropdown-item"
               = link_to "Countries", admin_countries_path, class: "dropdown-item"
               = link_to "Discounts", admin_discounts_path, class: "dropdown-item"
               = link_to "Offline Payments", admin_offline_payment_methods_path, class: "dropdown-item"
