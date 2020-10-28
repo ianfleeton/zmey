@@ -63,7 +63,7 @@ RSpec.describe "checkout/confirm.html.erb", type: :view do
     let(:delivery_address) { nil }
     it "renders info about collection" do
       render
-      expect(rendered).to have_content "Collecting Your Order"
+      expect(rendered).to have_content "Collecting your order"
     end
   end
 end

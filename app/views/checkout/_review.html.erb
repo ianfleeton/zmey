@@ -5,7 +5,8 @@
 
 <h3>Your details</h3>
 <% unless paypal_express %>
-<%= link_to "edit details", checkout_details_path %>
+  <%= link_to "edit details", checkout_details_path %>
+<% end %>
 <p>
   <%= "#{h(session[:name])}<br>#{h(session[:email])}<br>t: #{h(session[:phone])}<br>m: #{h(session[:mobile])}".html_safe %>
 </p>
@@ -37,7 +38,7 @@
   <% end %>
   <p>If nobody is available to receive the delivery:</p>
   <% if paypal_express %>
-    <%= form_tag({action: "update_delivery_instructions"}, remote: true, id: "update_delivery_instructions") %>
+    <%= form_tag({action: "update_delivery_instructions"}, remote: true, id: "update_delivery_instructions") do %>
       <%= text_field_tag :delivery_instructions, @order.delivery_instructions %>
       <%= submit_tag "Save" %>
     <% end %>
@@ -52,14 +53,14 @@
     <% # TODO: use delivery date estimator %>
     <% d_date = Date.current + 1.week %>
     <h3>Estimated delivery</h3>
-    <p Your estimated delivery date is:</p>
-    <p>
-      <strong><%= "#{d_date.strftime("%A #{d_date.day.ordinalize} %B, %Y")} #{ @order.am_delivery? ? '(AM)' : ''}" %></strong>
-    </p>
-    <p>
-      This is based on your order being fully completed and payment received. Your actual delivery date will be confirmed by email when your goods are dispatched.
-    </p>
+    <p>Your estimated delivery date is:</p>
   <% end %>
+  <p>
+    <strong><%= "#{d_date.strftime("%A #{d_date.day.ordinalize} %B, %Y")} #{ @order.am_delivery? ? '(AM)' : ''}" %></strong>
+  </p>
+  <p>
+    This is based on your order being fully completed and payment received. Your actual delivery date will be confirmed by email when your goods are dispatched.
+  </p>
 <% else %>
   <h3>Collecting your order</h3>
   <% # TODO: Add map %>
