@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, case_sensitive: false, message: "has already been taken. If you have forgotten your password you can request a new one."
 
   validates_presence_of :name
-  validates_length_of :password, within: 4..40,
+  validates_length_of :password, within: 8..40,
                                  if: :password_required?
   validates_confirmation_of :password, if: :password_required?
 

@@ -225,7 +225,7 @@ FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "shopper#{n}@example.org" }
     name { "User" }
-    password { "secret" }
+    password { "topsecret" }
   end
 
   factory :webhook do
