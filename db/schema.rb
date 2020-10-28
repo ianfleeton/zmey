@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_27_162549) do
+ActiveRecord::Schema.define(version: 2020_10_28_095858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,16 @@ ActiveRecord::Schema.define(version: 2020_10_27_162549) do
     t.integer "shipping_zone_id"
     t.boolean "in_eu", default: false, null: false
     t.index ["name"], name: "index_countries_on_name", unique: true
+  end
+
+  create_table "couriers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "account_number"
+    t.string "tracking_url"
+    t.boolean "generate_consignment_number", default: false, null: false
+    t.string "consignment_prefix"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "custom_views", id: :serial, force: :cascade do |t|
@@ -382,10 +392,15 @@ ActiveRecord::Schema.define(version: 2020_10_27_162549) do
     t.datetime "completed_at"
     t.boolean "logged_in", default: false, null: false
     t.boolean "am_delivery", default: false, null: false
+    t.string "billing_mobile_number"
+    t.string "delivery_mobile_number"
+    t.string "email_confirmation_token", default: "", null: false
+    t.string "token"
     t.index ["basket_id"], name: "index_orders_on_basket_id"
     t.index ["created_at"], name: "index_orders_on_created_at"
     t.index ["email_address"], name: "index_orders_on_email_address"
     t.index ["processed_at"], name: "index_orders_on_processed_at"
+    t.index ["token"], name: "index_orders_on_token"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -541,8 +556,7 @@ ActiveRecord::Schema.define(version: 2020_10_27_162549) do
 
   create_table "shipments", id: :serial, force: :cascade do |t|
     t.integer "order_id", null: false
-    t.string "courier_name"
-    t.string "tracking_number"
+    t.string "consignment_number"
     t.string "tracking_url"
     t.string "picked_by"
     t.integer "number_of_parcels", default: 1, null: false
@@ -553,6 +567,8 @@ ActiveRecord::Schema.define(version: 2020_10_27_162549) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "courier_id", null: false
+    t.index ["courier_id"], name: "index_shipments_on_courier_id"
     t.index ["email_sent_at"], name: "index_shipments_on_email_sent_at"
     t.index ["order_id"], name: "index_shipments_on_order_id"
     t.index ["shipped_at"], name: "index_shipments_on_shipped_at"
@@ -698,4 +714,5 @@ ActiveRecord::Schema.define(version: 2020_10_27_162549) do
   add_foreign_key "discount_uses", "orders"
   add_foreign_key "location_orders_exceeded_entries", "locations"
   add_foreign_key "product_groups", "locations"
+  add_foreign_key "shipments", "couriers"
 end

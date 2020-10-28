@@ -77,6 +77,10 @@ FactoryBot.define do
     sequence(:iso_3166_1_alpha_2) { |n| (n % 1296).to_s(36).rjust(2, "0") }
   end
 
+  factory :courier do
+    sequence(:name) { |n| "Courier #{n}" }
+  end
+
   factory :discount do
     name { "Discount" }
     reward_type { "percentage_off_order" }

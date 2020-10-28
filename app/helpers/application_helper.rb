@@ -1,4 +1,11 @@
 module ApplicationHelper
+  FRIENDLY_TIME_FORMAT = "%e %B %Y - %l:%M %P"
+
+  # Returns a friendly formatted date and time for consistency.
+  def formatted_time(time)
+    time ? time.strftime(FRIENDLY_TIME_FORMAT) : ""
+  end
+
   # Renders HTML for the flash notice.
   def flash_notice
     notice = flash_notice_content

@@ -1,84 +1,49 @@
-<% if @order.payment_received? -%>
-<h1>Receipt</h1>
-<% else -%>
-<h1>Details of your order</h1>
-<% end -%>
+<% content_for(
+  :title,
+  t(".title", order_number: @order.order_number, website: website)
+) %>
+<h1>Checkout</h1>
+<%= render partial: "checkout/progress", locals: {step: 6} %>
 
-<p>Order number: <%= @order.order_number %></p>
+<h2>Order Complete</h2>
 
-<p>Order placed: <%= @order.created_at %></p>
+<div class="content">
+  <p>
+    <strong><%= t(".thank_you", company: website.name) %></strong>
+  </p>
+  <p>
+    Here is a summary of your order (we've also sent a copy of this by email):
+  </p>
+  <p class="order-number">
+    Your order reference number is:
+    <%= @order.order_number %>
+  </p>
+  <p>
+    Please have this reference number at hand if you need to contact us regarding your order.
+    A copy of your order will be emailed to you at
+    <%= @order.email_address %>
+    once your payment is confirmed (this can take several minutes).
+  </p>
+</div>
 
-<p>Order status: <%= payment_status(@order) %></p>
+<h3>For reference, here is a summary of your order:</h3>
 
-<h2>Deliver to</h2>
-
-<%= format_address @order.delivery_address %>
-
-<table id="receipt">
-
-  <tr>
-    <th>Product</th>
-    <th class="qty">Qty</th>
-<% if admin? -%>
-    <th class="shipped">Shipped</th>
-<% end -%>
-    <th class="price">Price</th>
-  </tr>
-
-  <% @order.order_lines.each do |line| -%>
-  <tr>
-    <td>
-      <%= line.product_name %>
-      <% unless line.feature_descriptions.blank? -%>
-        <br>
-        <small>
-          <%= line.feature_descriptions %>
-        </small>
-      <% end -%>
-    </td>
-    <td class="qty"><%= line.quantity %></td>
-<% if admin? -%>
-    <td class="shipped"><%= form_for [:admin, line] do |f| %>
-      <%= f.text_field :shipped %>
-      <%= f.submit 'Update' %>
-    <% end %></td>
-<% end -%>
-    <td class="price line_total"><%= formatted_price(line.line_total_net)  %></td>
-  </tr>
-  <% end -%>
-  <tr>
-    <th colspan="2"><%= @order.shipping_method %>:</th>
-<% if admin? -%>
-    <td>&nbsp;</td>
-<% end -%>
-    <td class="price shipping_amount"><%= formatted_price(@order.shipping_amount) %></td>
-  </tr>
-  <% unless website.vat_number.empty? -%>
-  <tr>
-    <th colspan="2">VAT:</th>
-<% if admin? -%>
-    <td>&nbsp;</td>
-<% end -%>
-    <td class="price vat"><%= formatted_price(@order.tax_total) %></td>
-  </tr>
-  <% end -%>
-  <tr>
-    <th colspan="2">Order total:</th>
-<% if admin? -%>
-    <td>&nbsp;</td>
-<% end -%>
-    <td class="price total"><%= formatted_price(@order.total) %></td>
-  </tr>
-
-</table>
-
-<% unless website.vat_number.empty? -%>
 <p>
-  VAT number: <%= website.vat_number %>
+  Please take a moment to check the details are correct. If anything isn't quite
+  right, please contact us quoting your order reference number above and we'll
+  be happy to help.
 </p>
-<% end -%>
+
+<h2>Order tracking</h2>
+<p><strong>Did you know you can track your order progress online?</strong></p>
+<p>
+  Simply log in to you account with your email address and password and select &ldquo;My Orders&rdquo;.
+  From here you can see an up-to-date status of each order, including your delivery tracking information.
+</p>
+
+<%= render partial: "view", locals: {order: @order} %>
 
 <% if @order.sales_conversion_recorded_at.nil? %>
   <% Orders::SalesConversion.new(@order).record! %>
-  <%= render partial: "conversion_code", locals: { order: @order } %>
+  <%= render partial: "conversion_code", locals: {order: @order} %>
 <% end %>

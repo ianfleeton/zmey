@@ -1,0 +1,90 @@
+<h3>Your details</h3>
+<p>
+  <%= order.billing_full_name %>
+  <br>
+  <%= order.email_address %>
+  <br>
+  t: <%= order.billing_phone_number %>
+  <br>
+  m: <%= order.billing_mobile_number %>
+</p>
+
+<h3>Billing address</h3>
+<p>
+  <%= format_address order.billing_address, html: true %>
+</p>
+
+<% if order.requires_delivery_address? %>
+  <h3>Delivery address</h3>
+  <p>
+    <%= format_address order.delivery_address, html: true %>
+  </p>
+
+  <h3>Delivery instructions</h3>
+  <p>
+    If nobody is available to receive the delivery:
+  </p>
+  <p>
+    <strong><%= order.delivery_instructions %></strong>
+  </p>
+<% end %>
+
+<% if order.collection? %>
+  <h3>Your order is for collection</h3>
+  <% if order.collectable? %>
+    <p>Please contact us to ensure your order is ready for collection and bring your email or order number with you when you collect.</p>
+  <% elsif order.fully_shipped? %>
+    <p>Your order has been collected.</p>
+  <% elsif !order.can_supply? %>
+    <p>
+      Your order will be prepared when payment is received.
+      We will then contact you when you order is ready for collection.
+      Bring your email or order number with you when you collect.
+    </p>
+  <% else %>
+    <p>
+      Please contact us to check on the status of your collection.
+    </p>
+  <% end %>
+<% end %>
+
+<h3>Your order</h3>
+    table#basketTable.basket-table.product-table
+      thead
+        tr
+          th.qty align="center" Qty
+          th.description align="left" Product Description
+          th.price align="right" Price (each)
+          th.price align="right" Total
+      tbody
+        - order.order_lines.each do |line|
+          tr
+            td.qty align="center"
+              = line.quantity.to_i
+            td.description align="left"
+              = "#{line.product_brand} #{line.product_name}"
+              - if line.feature_descriptions.present?
+                br
+                = raw nl2br(tidy_cutting_instructions(line))
+            td.price align="right"
+              = formatted_price(line.product_price)
+            td.price align="right"
+              = formatted_price(line.line_total_net)
+      tfoot
+        tr
+          td#basketUpdate rowspan="5" colspan="2" valign="top" align="left"
+          th class="price" align="right" Sub Total
+          th class="price" align="right"= formatted_price(order.line_total_net)
+        tr
+          th class="price" align="right" Delivery
+          th class="price" align="right"= delivery_amount_description(order)
+        tr
+          th class="price" align="right"
+            - if order.zero_rated?
+              | VAT (zero-rated)
+            -  else
+              | VAT (20%)
+          th class="price" align="right"= formatted_price(order.tax_total)
+        tr
+          th class="price" align="right" Order Total</th>
+          th class="price" align="right"= formatted_price(order.total_gross)

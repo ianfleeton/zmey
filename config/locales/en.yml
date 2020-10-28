@@ -299,17 +299,26 @@ en:
   my_account: My Account
   orders:
     index:
-      heading: 'Orders'
+      heading: "Your orders"
       no_orders: 'There are no orders for you.'
-      order_number: 'Order Number'
-      order_total: 'Order Total'
-      status: 'Status'
-      when_placed: 'When Placed'
+      order_number: "Order # %{order_number}"
+      title: "Your orders | %{website}"
+      total: "Total: %{total}"
+      when_placed: "Placed: %{when}"
     invoice:
       customer_reference: 'Customer reference:'
+      title: "%{paperwork_type} # %{order_number} | %{website}"
     invoice_links:
       invoice_html: 'View invoice'
       invoice_pdf: 'Download invoice (PDF)'
+    receipt:
+      thank_you: "Thank you, your order with %{company} is now complete."
+      title: "Receipt # %{order_number} | %{website}"
+    show:
+      title: "Order # %{order_number} | %{website}"
+    track:
+      heading: "Track your order %{order_number}"
+      title: "Track # %{order_number}"
   password: Password
   payments:
     show:
@@ -418,6 +427,9 @@ en:
     enquiries: Enquiries
     images: Images
     liquid_templates: Templates
+    orders:
+      show:
+        no_permission: "You do not have permission to view that order."
     pages: Pages
     payments:
       cardsave_callback:

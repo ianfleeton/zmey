@@ -1,0 +1,30 @@
+<% content_for(
+  :title,
+  t(".title", order_number: @order.order_number, website: website)
+) %>
+<h1>Your Order</h1>
+
+<p>
+  <%= link_to "View all orders", orders_path %>
+</p>
+
+<p>
+  Here is a summary of your order:
+</p>
+<p class="order-number">
+  Your order reference number is:
+  <%= @order.order_number %>
+</p>
+<p>
+  Please have this reference number at hand if you need to contact us regarding your order.
+</p>
+
+<h3>For reference, here is a summary of your order:</h3>
+
+<p>
+  Please take a moment to check the details are correct. If anything isn't quite
+  right, please contact us quoting your order reference number above and we'll
+  be happy to help.
+</p>
+
+<%= render partial: "view", locals: {order: @order} %>

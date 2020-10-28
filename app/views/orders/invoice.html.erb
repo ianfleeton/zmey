@@ -1,0 +1,141 @@
+<% order = @order %>
+<h1><%= order.paperwork_type.titleize %></h1>
+<% if order.quote? %>
+  <%= template("invoice.quote_heading") %>
+<% end %>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="30%" valign="top">
+            <strong>Bill to</strong>
+            <br>
+            <%= order.billing_full_name %>
+            <br>
+            <%= sales_invoice_billing_address(order) %>
+          </td>
+          <td width="30%" valign="top">
+            <strong>Ship to</strong>
+            <br>
+            <% if order.collection? %>
+              Order is for collection
+            <% else %>
+              <%= order.delivery_full_name %>
+              <br>
+              <%= sales_invoice_delivery_address(order) %>
+            <% end %>
+          </td>
+          <td width="40%" align="right" valign="top">
+            <table width="100%" border="0" cellspacing="1" cellpadding="5">
+              <tr>
+                <td align="right" bgcolor="#DDD">
+                  <span style="font-weight:bold; color:#000">
+                    <%= order.paperwork_type.titleize %> number
+                  </span>
+                </td>
+                <td align="left" bgcolor="#EEEEEE">
+                  <%= order.order_number %>
+                </td>
+              </tr>
+              <tr>
+                <td align="right" bgcolor="#DDD">
+                  <span style="font-weight:bold; color:#000">
+                    <%= order_date_label(order) %>
+                  </span>
+                </td>
+                <td align="left" bgcolor="#EEEEEE">
+                  <%= order_formatted_time(order) %>
+                </td>
+              </tr>
+              <% if order.po_number.present? %>
+                <tr>
+                  <td align="right" bgcolor="#DDD">
+                    <span style="font-weight:bold; color:#000">PO number</span>
+                  </td>
+                  <td align="left" bgcolor="#EEEEEE">
+                    <%= order.po_number %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if order.payments.any? %>
+                <tr>
+                  <td align="right" bgcolor="#DDD">
+                    <span style="font-weight:bold; color:#000">Payment method</span>
+                  </td>
+                  <td align="left" bgcolor="#EEEEEE">
+                    <%= order.payments.first.try(:service_provider) %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<div>
+  <%= render partial: "orders/order_details_full", locals: {order: order, order_lines: order.order_lines} %>
+</div>
+
+<p>
+  <strong>
+    <em>Special instructions:</em>
+    <br>
+    <% if order.customer_note.present? %>
+      <%= order.customer_note %>
+    <% else %>
+      None
+    <% end %>
+  </strong>
+</p>
+
+<% if order.status == Enums::PaymentStatus::PRO_FORMA %>
+  <h3>Making a payment</h3>
+  <p>
+    For payments direct to our bank please use the following details:
+  </p>
+  <br>
+  <table border="0" cellspacing="1" cellpadding="5">
+    <tr>
+      <td align="right" bgcolor="#DDD">
+        <span style="font-weight:bold; color:#000">
+          Sort code
+        </span>
+      </td>
+      <td align="left" bgcolor="#EEEEEE">
+        XX-XX-XX
+      </td>
+    </tr>
+    <tr>
+      <td align="right" bgcolor="#DDD">
+        <span style="font-weight:bold; color:#000">
+          Account number
+        </span>
+      </td>
+      <td align="left" bgcolor="#EEEEEE">
+        <%= bank_account_number %>
+      </td>
+    </tr>
+    <tr>
+      <td align="right" bgcolor="#DDD">
+        <span style="font-weight:bold; color:#000">
+          Payment reference
+        </span>
+      </td>
+      <td.payment-reference align="left" bgcolor="#EEEEEE">
+        <%= order.order_number %>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
+<% unless [Enums::PaymentStatus::PAYMENT_RECEIVED, Enums::PaymentStatus::PAYMENT_ON_ACCOUNT].include?(order.status) %>
+  <h2 style="text-align:center;">
+    This is not a VAT invoice
+  </h2>
+<% end %>

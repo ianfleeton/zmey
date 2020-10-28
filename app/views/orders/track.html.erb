@@ -1,0 +1,37 @@
+<% content_for :title, t(".title", order_number: @order.order_number) -%>
+<h1><%= t(".heading", order_number: @order.order_number) %></h1>
+
+<% if @shipments.any? %>
+  <p>
+    Your order consists of <%= pluralize(@shipments.count, "consignment") %>.
+  </p>
+<% else %>
+  <p>
+    Your order has not yet been shipped.
+  </p>
+<% end %>
+
+<% if @shipments.count > 1 %>
+<p>
+  Please be aware that your delivery has multiple consignments.
+  This is because it could have been shipped from different locations.
+</p>
+<% end %>
+
+<ul class="track-shipments">
+  <% @shipments.each do |shipment| %>
+  <li class="track-shipment">
+    <h2><%= shipment.courier_name %></h2>
+    <% if shipment.tracking_url.present? %>
+      <p>Courier tracking link: <%= link_to shipment.consignment_number, shipment.tracking_url, target: "_blank", rel: "noopener noreferrer" %></p>
+    <% else %>
+      <p>No tracking information is available for this consignment.</p>
+    <% end %>
+    <p>
+      This consignment consists of <%= pluralize(shipment.number_of_parcels, "parcel") %> and weighs <%= shipment.total_weight %> kg.
+      <br>
+      Please bear this in mind when taking receipt of your goods.
+    </p>
+  </li>
+  <% end %>
+</ul>

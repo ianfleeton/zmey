@@ -182,10 +182,13 @@ Rails.application.routes.draw do
 
   resources :orders, only: [:index, :show] do
     collection do
-      get 'receipt'
+      post "opt_in"
+      get "receipt"
+      post "request_shipping_quote"
     end
     member do
-      get 'invoice'
+      get "invoice"
+      get "track"
     end
   end
 

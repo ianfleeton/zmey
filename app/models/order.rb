@@ -52,6 +52,10 @@
 # +status+::
 #   Status of payment for the order. One of <tt>Enums::PaymentStatus::VALUES</tt>.
 #
+# +token+::
+#   A secure random token used to claim ownership of the order without being
+#   signed in, such as when using the public API.
+#
 # === Associations
 #
 # +basket+::
@@ -78,6 +82,9 @@ class Order < ActiveRecord::Base
   include Enums::Conversions
   include TotalMoney
 
+  has_secure_token
+
+  # Validations
   validates_presence_of :email_address
   validates_presence_of :billing_address_line_1, :billing_town_city, :billing_postcode, :billing_country_id
   validates_presence_of :delivery_address_line_1, :delivery_town_city, :delivery_postcode, :delivery_country_id, if: -> { requires_delivery_address? }
@@ -177,9 +184,18 @@ class Order < ActiveRecord::Base
     )
   end
 
-  # Empties the basket associated with this order if there is one.
-  def empty_basket
-    basket&.basket_items&.destroy_all
+  # Returns +true+ if payment has been received and the order is fully shipped.
+  def invoice?
+    (payment_on_account? || payment_received?) && fully_shipped?
+  end
+
+  # Returns the invoice date.
+  def invoice_date
+    invoiced_on || created_at.to_date
+  end
+
+  def invoiced_on
+    invoiced_at.try(:to_date)
   end
 
   # Returns +true+ if the customer has chosen to pay by phone but has not yet
@@ -218,6 +234,20 @@ class Order < ActiveRecord::Base
 
   def needs_shipping_quote?
     status == Enums::PaymentStatus::NEEDS_SHIPPING_QUOTE
+  end
+
+  # Describes the appropriate order details paperwork type in English, such
+  # as "invoice" for PAYMENT_RECEIVED or "quotation" for QUOTE.
+  def paperwork_type
+    if invoice?
+      "sales invoice"
+    elsif quote? || pay_by_phone?
+      "quotation"
+    elsif pro_forma?
+      "pro forma invoice"
+    else
+      "order details"
+    end
   end
 
   # Returns the sum of all accepted payment amounts.
@@ -531,6 +561,11 @@ class Order < ActiveRecord::Base
 
   def zero_rated?
     ::Orders::TaxStatus.new(self).zero_rated?
+  end
+
+  def set_email_confirmation_token
+    self.email_confirmation_token = Security::RandomToken.new
+    save
   end
 
   private
