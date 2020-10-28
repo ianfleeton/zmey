@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_28_095858) do
+ActiveRecord::Schema.define(version: 2020_10_28_122947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -370,7 +370,6 @@ ActiveRecord::Schema.define(version: 2020_10_28_095858) do
     t.string "delivery_company"
     t.string "billing_address_line_3"
     t.string "delivery_address_line_3"
-    t.string "shipping_tracking_number"
     t.datetime "shipped_at"
     t.datetime "shipment_email_sent_at"
     t.datetime "invoice_sent_at"

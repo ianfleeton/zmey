@@ -34,7 +34,6 @@ json.order do
   json.shipping_amount @order.shipping_amount
   json.shipping_tax_amount @order.shipping_tax_amount
   json.shipping_method @order.shipping_method
-  json.shipping_tracking_number @order.shipping_tracking_number
   json.status Enums::PaymentStatus.new(@order.status).to_api
   json.total @order.total
   json.weight @order.weight

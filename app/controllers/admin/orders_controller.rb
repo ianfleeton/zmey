@@ -100,15 +100,13 @@ module Admin
         :shipping_amount,
         :shipped_at,
         :shipping_method,
-        :shipping_tax_amount,
-        :shipping_tracking_number
+        :shipping_tax_amount
       )
     end
 
     def locked_order_params
       params.require(:order).permit(
-        :shipped_at,
-        :shipping_tracking_number
+        :shipped_at
       )
     end
 

@@ -13,14 +13,14 @@ class Api::Admin::ShipmentsController < Api::Admin::AdminController
 
   def shipment_params
     params.require(:shipment).permit(
-      :courier_name,
+      :consignment_number,
+      :courier_id,
+      :number_of_parcels,
       :order_id,
       :partial,
       :picked_by,
-      :number_of_parcels,
       :shipped_at,
       :total_weight,
-      :tracking_number,
       :tracking_url
     )
   end

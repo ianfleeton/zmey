@@ -66,8 +66,8 @@ RSpec.describe "admin/orders/edit.html.slim", type: :view do
       expect(rendered).to have_selector(".shipped-at")
     end
 
-    it "displays the shipping_tracking_number" do
-      expect(rendered).to have_selector(".shipping-tracking-number")
+    it "displays the shipment's consignment_number" do
+      expect(rendered).to have_selector(".shipping-consignment-number")
     end
   end
 

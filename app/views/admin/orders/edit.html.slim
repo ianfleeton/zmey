@@ -40,7 +40,7 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
             - @order.shipments.each do |shipment|
               tr
                 td.shipped-at= shipment.shipped_at
-                td.shipping-tracking-number= shipment.tracking_number
+                td.shipping-tracking-number= shipment.consignment_number
 
   .row
     .col-md-6

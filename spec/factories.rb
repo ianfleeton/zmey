@@ -204,7 +204,8 @@ FactoryBot.define do
   end
 
   factory :shipment do
-    association :order
+    courier
+    order
   end
 
   factory :shipping_class do

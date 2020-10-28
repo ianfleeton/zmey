@@ -53,13 +53,11 @@ module Admin
         let(:order) { FactoryBot.create(:order) }
         let(:po_number) { "PO123" }
         let(:shipped_at) { Time.zone.now }
-        let(:shipping_tracking_number) { "TRACK123" }
         let(:order_params) {
           {
             order_number: order.order_number,
             po_number: po_number,
-            shipped_at: shipped_at,
-            shipping_tracking_number: shipping_tracking_number
+            shipped_at: shipped_at
           }
         }
         let(:pre) { nil }
@@ -99,7 +97,6 @@ module Admin
           order.reload
           expect(order.po_number).to eq po_number
           expect(order.shipped_at).to be_within(1.second).of(shipped_at)
-          expect(order.shipping_tracking_number).to eq shipping_tracking_number
         end
 
         def lock_order
@@ -116,7 +113,6 @@ module Admin
           it "does update some details" do
             order.reload
             expect(order.shipped_at).to be_within(1.second).of(shipped_at)
-            expect(order.shipping_tracking_number).to eq shipping_tracking_number
           end
         end
 

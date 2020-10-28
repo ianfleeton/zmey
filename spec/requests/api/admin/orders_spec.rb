@@ -156,8 +156,7 @@ describe "Admin orders API" do
           delivery_instructions: "Leave in the dog kennel. He won't bite.",
           po_number: "PO123",
           shipment_email_sent_at: "2014-05-14T16:25:56.000+01:00",
-          shipped_at: "2014-05-14T15:50:12.000+01:00",
-          shipping_tracking_number: "TRACK123")
+          shipped_at: "2014-05-14T15:50:12.000+01:00")
       end
 
       it "returns 200 OK" do
@@ -170,7 +169,7 @@ describe "Admin orders API" do
         "delivery_address_line_3", "delivery_company",
         "delivery_instructions",
         "po_number",
-        "shipping_tracking_number", "weight"].each do |component|
+        "weight"].each do |component|
         it "includes #{component} in JSON" do
           get api_admin_order_path(@order)
           expect(order[component]).to eq @order.send(component.to_sym)
@@ -355,7 +354,6 @@ describe "Admin orders API" do
     let(:processed_at) { "2014-05-14T14:03:56.000+01:00" }
     let(:shipment_email_sent_at) { "2014-05-14T16:25:56.000+01:00" }
     let(:shipped_at) { "2014-05-14T15:50:12.000+01:00" }
-    let(:shipping_tracking_number) { "TRACK123" }
     let(:payment_status) { "payment_received" }
 
     let(:basic_params) {
@@ -363,7 +361,6 @@ describe "Admin orders API" do
         processed_at: processed_at,
         shipment_email_sent_at: shipment_email_sent_at,
         shipped_at: shipped_at,
-        shipping_tracking_number: shipping_tracking_number,
         status: payment_status
       }
     }
