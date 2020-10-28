@@ -37,6 +37,11 @@ module OrdersHelper
     render(partial: "orders/google_sales_conversion", locals: {order: order})
   end
 
+  # Returns the bank account number for the currently active website.
+  def bank_account_number
+    "ACCOUNTNUMBER"
+  end
+
   def delivery_amount_description(order)
     if order.needs_shipping_quote?
       "[Awaiting quotation]"
