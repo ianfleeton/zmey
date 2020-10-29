@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
     resources :components, except: [:show]
     resources :countries, except: [:show]
+    resources :couriers, except: [:show]
     resources :discounts, except: [:show]
     resources :enquiries
     resources :extra_attributes, except: [:show]

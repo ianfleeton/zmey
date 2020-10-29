@@ -1,0 +1,23 @@
+<% if @courier.errors.any? %>
+  <%= dismissable_error_message do %>
+    <h2><%= pluralize(@courier.errors.count, "error") %> prohibited this courier from being saved:</h2>
+    <ul>
+      <% @courier.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+<%= bootstrap_form_for [:admin, @courier] do |form| %>
+  <%= form.text_field :name, required: true %>
+
+  <%= form.text_field :account_number %>
+
+  <%= form.text_field :consignment_prefix %>
+
+  <%= form.text_field :tracking_url %>
+
+  <br>
+  <%= form.submit class: "btn btn-primary" %>
+<% end %>

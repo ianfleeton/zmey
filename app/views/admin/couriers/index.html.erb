@@ -1,0 +1,30 @@
+<% heading = t(".heading") %>
+<% content_for(:title, heading) %>
+<%= page_header(heading) %>
+
+<p><%= new_button [:admin, Courier] %></p>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Account Number</th>
+      <th>Tracking URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @couriers.each do |courier| %>
+      <tr>
+        <td><%= courier.name %></td>
+        <td><%= courier.account_number %></td>
+        <td><%= courier.tracking_url %></td>
+        <td>
+          <div class="btn-group">
+            <%= edit_button [:admin, courier] %>
+            <%= delete_button [:admin, courier] %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

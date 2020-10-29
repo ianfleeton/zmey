@@ -1,0 +1,7 @@
+<% heading = t(".heading") %>
+<% content_for(:title, heading) %>
+<%= page_header(heading) %>
+
+<%= breadcrumbs({"Couriers" => admin_couriers_path}, heading) %>
+
+<%= render "form" %>
