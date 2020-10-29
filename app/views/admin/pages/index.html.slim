@@ -1,19 +1,25 @@
-= page_header 'Pages'
+- heading = t(".heading")
+- content_for(:title, heading)
+= page_header(heading)
 
 p.btn-group
-  = new_button [:admin, Page]
+  = new_button [:admin, Page], parent_id: @parent.try(:id)
+  = link_to '<i class="far fa-file-export"></i> '.html_safe + t(".export"), csv_admin_export_index_path(class_name: "Page"), class: "btn btn-outline-secondary", data: {turbolinks: "false"}
   - if @parent
     =< edit_button [:admin, @parent]
 
-ol.breadcrumb
-  li= link_to_if(@parent, t('.top'), admin_pages_path)
-  - if @parent
-    - @parent.ancestors.reverse.each do |page|
-      li= link_to(page.name, admin_pages_path(parent_id: page.id))
-    li= @parent.name
+= render partial: "admin/shared/search", locals: {url_base: "/admin/pages/"}
+
+nav arial-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item= link_to_if(@parent, t(".top"), admin_pages_path)
+    - if @parent
+      - @parent.ancestors.reverse.each do |page|
+        li.breadcrumb-item= link_to(page.name, admin_pages_path(parent_id: page.id))
+      li.breadcrumb-item.active= @parent.name
 
 table.table.table-striped.table-bordered
   - @pages.each do |p|
     = page_edit_table_row(p)
 
-  = content_tag(:tr, content_tag(:td, 'No pages')) if @pages.empty?
+  = content_tag(:tr, content_tag(:td, t(".no_pages"))) if @pages.empty?

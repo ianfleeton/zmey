@@ -172,7 +172,10 @@ en:
         no_index: 'NOINDEX (search engines should not index this page)'
         visible: 'Visible (customers can see this page)'
       index:
-        top: 'Top'
+        export: "Export"
+        heading: "Pages"
+        no_pages: "No pages"
+        top: "Top"
     payments:
       new:
         choose_method: 'Choose method'
