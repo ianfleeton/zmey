@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_28_122947) do
+ActiveRecord::Schema.define(version: 2020_10_29_142803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -419,6 +419,9 @@ ActiveRecord::Schema.define(version: 2020_10_28_122947) do
     t.text "extra"
     t.integer "thumbnail_image_id"
     t.boolean "visible", default: true, null: false
+    t.bigint "canonical_page_id"
+    t.string "cached_name_with_ancestors"
+    t.index ["canonical_page_id"], name: "index_pages_on_canonical_page_id"
     t.index ["parent_id"], name: "index_pages_on_parent_id"
     t.index ["slug"], name: "index_pages_on_slug"
     t.index ["thumbnail_image_id"], name: "index_pages_on_thumbnail_image_id"
@@ -606,6 +609,15 @@ ActiveRecord::Schema.define(version: 2020_10_28_122947) do
     t.integer "default_shipping_class_id"
   end
 
+  create_table "slug_histories", force: :cascade do |t|
+    t.bigint "page_id", null: false
+    t.string "slug"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["page_id"], name: "index_slug_histories_on_page_id"
+    t.index ["slug"], name: "index_slug_histories_on_slug"
+  end
+
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "name", default: "", null: false
@@ -712,6 +724,8 @@ ActiveRecord::Schema.define(version: 2020_10_28_122947) do
   add_foreign_key "discount_uses", "discounts"
   add_foreign_key "discount_uses", "orders"
   add_foreign_key "location_orders_exceeded_entries", "locations"
+  add_foreign_key "pages", "pages", column: "canonical_page_id"
   add_foreign_key "product_groups", "locations"
   add_foreign_key "shipments", "couriers"
+  add_foreign_key "slug_histories", "pages"
 end

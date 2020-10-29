@@ -56,12 +56,15 @@ Rails.application.routes.draw do
 
     resources :pages, except: [:show] do
       collection do
-        get 'search_products'
+        get "new_shortcut"
+        post "create_shortcut"
+        get "search"
+        get "search_products"
       end
 
       member do
-        get 'move_up'
-        get 'move_down'
+        post "move_up"
+        post "move_down"
       end
     end
 
@@ -92,6 +95,7 @@ Rails.application.routes.draw do
     resources :shipping_classes, except: [:show]
     resources :shipping_table_rows
     resources :shipping_zones, except: [:show]
+    resources :slug_histories, only: [:index, :create, :destroy]
 
     resources :users do
       resources :addresses, shallow: true

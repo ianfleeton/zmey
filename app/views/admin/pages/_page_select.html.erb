@@ -1,0 +1,1 @@
+<%= form.collection_select attribute, Page.where(canonical_page_id: nil).sort_by {|p| p.cached_name_with_ancestors}, :id, :cached_name_with_ancestors, include_blank: "-- None --" %>

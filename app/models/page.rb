@@ -8,6 +8,12 @@ class Page < ActiveRecord::Base
 
   has_many :product_placements, -> { order("position") }, dependent: :delete_all
   has_many :products, through: :product_placements
+  has_many(
+    :shortcuts,
+    class_name: "Page", foreign_key: "canonical_page_id", dependent: :destroy
+  )
+  has_many :slug_histories, dependent: :delete_all
+  belongs_to :canonical_page, class_name: "Page", optional: true
   belongs_to :image, optional: true
   belongs_to :thumbnail_image, class_name: "Image", optional: true
 
@@ -20,6 +26,10 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :title, case_sensitive: false
   validates_uniqueness_of :name, scope: :parent_id, case_sensitive: false, unless: proc { |page| page.parent_id.nil? }
 
+  # Active Record callbacks
+  before_save :cache_name_with_ancestors
+  before_update :record_slug_history
+
   scope :visible, -> { where(visible: true) }
 
   liquid_methods :image, :name, :path, :url
@@ -30,8 +40,38 @@ class Page < ActiveRecord::Base
     product_placements.joins(:product).where(products: {active: true}).includes(:product)
   end
 
+  # Caches the results of name_with_ancestors into cached_name_with_ancestors,
+  # only if this page's name or parent_id has been changed.
+  def cache_name_with_ancestors
+    if attribute_changed?(:name) || attribute_changed?(:parent_id)
+      cache_name_with_ancestors!
+    end
+  end
+
+  # Caches the results of name_with_ancestors into cached_name_with_ancestors.
+  def cache_name_with_ancestors!
+    self.cached_name_with_ancestors = name_with_ancestors
+    children.reload.each do |c|
+      c.cache_name_with_ancestors!
+      c.save
+    end
+  end
+
   def name_with_ancestors
     parent ? parent.name_with_ancestors + " > " + name : name
+  end
+
+  # Returns pages matched by search +query+.
+  def self.admin_search(query)
+    words = query.split(" ")
+    q = Page
+    words.each do |word|
+      fuzzy = "%#{word}%"
+      q = q.where(
+        ["name LIKE ? OR slug LIKE ? OR title LIKE ?", fuzzy, fuzzy, fuzzy]
+      )
+    end
+    q.limit(100)
   end
 
   def self.bootstrap website
@@ -111,5 +151,11 @@ class Page < ActiveRecord::Base
     if descendants.include?(parent)
       errors.add(:parent_id, "cannot be a child")
     end
+  end
+
+  private
+
+  def record_slug_history
+    SlugHistory.add(self) if slug_changed?
   end
 end

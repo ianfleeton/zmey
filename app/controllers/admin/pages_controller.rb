@@ -52,6 +52,39 @@ module Admin
       redirect_to action: "index", notice: "Page deleted."
     end
 
+    def new_shortcut
+      set_parent
+    end
+
+    def create_shortcut
+      random = SecureRandom.hex
+      set_parent
+      canonical = Page.find(params[:target_id])
+      name = params[:name].present? ? params[:name] : canonical.name
+      page = Page.new(
+        canonical_page: canonical,
+        parent: @parent,
+        name: name,
+        title: random,
+        slug: random,
+        description: random
+      )
+      if page.save
+        redirect_to(
+          admin_pages_path(parent_id: @parent), notice: "Shortcut created."
+        )
+      else
+        flash[:alert] =
+          I18n.t("controllers.admin.pages.create_shortcut.duplicate_name")
+        redirect_to new_shortcut_admin_pages_path(parent_id: params[:parent_id])
+      end
+    end
+
+    def search
+      @pages = Page.admin_search(params[:query])
+      render json: @pages
+    end
+
     def search_products
       @products = Product.admin_search(params[:query])
       render layout: false
@@ -62,6 +95,10 @@ module Admin
     def set_page
       @page = Page.find_by(id: params[:id])
       not_found unless @page
+    end
+
+    def set_parent
+      @parent = params[:parent_id] ? Page.find_by(id: params[:parent_id]) : nil
     end
 
     def moved

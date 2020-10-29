@@ -1,0 +1,18 @@
+<% heading = t(".heading") %>
+<% content_for(:title, heading) %>
+<%= page_header(heading) %>
+
+<h2>From page '<%= @parent.name %>'</h2>
+
+<%= bootstrap_form_tag(url: create_shortcut_admin_pages_path) do |f| %>
+  <%= hidden_field_tag :parent_id, @parent.id %>
+  <%= f.text_field :name %>
+  <p>
+    The name of the target page will be used if you do not enter a name above.
+    You will want to enter a name if the target's current name does not make sense, or is unclear, on the new page.
+  </p>
+  <% cache(pages_cache_key) do %>
+    <%= render partial: "page_select", locals: {attribute: :target_id, form: f} %>
+  <% end %>
+  <%= f.submit "Create Shortcut" %>
+<% end %>

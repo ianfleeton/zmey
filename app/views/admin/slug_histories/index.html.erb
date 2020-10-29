@@ -1,0 +1,37 @@
+<% content_for :title, t(".heading") %>
+
+<%= page_header t(".heading") %>
+
+<p>
+  The URLs on the right hand side of the table will redirect users and search engines to pages on the left hand side.
+</p>
+
+<%= bootstrap_form_for([:admin, SlugHistory.new]) do |f| %>
+  <%= f.text_field :slug, placeholder: "some-page-name" %>
+  <%= f.collection_select :page_id, Page.all.sort_by { |p| p.name_with_ancestors }, :id, :name_with_ancestors, {include_blank: "-- No page --"} %>
+  <p><%= f.submit class: "btn btn-primary" %></p>
+<% end %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Page</th>
+      <th>Slug</th>
+      <th>Since</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @slug_histories.each do |sh| %>
+      <tr>
+        <td>
+          <% sh.page.name %> (<code>/<%= sh.page.slug %></code>)
+        </td>
+        <td>
+          <%= format_slug_history(website, sh) %>
+        </td>
+        <td><%= sh.created_at.to_date %></td>
+        <td><%= delete_button([:admin, sh]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

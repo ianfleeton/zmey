@@ -13,6 +13,18 @@ nav aria-label="breadcrumb"
   .col-md-5
     = render "form", submit_label: "Save"
   .col-md-7
+    - if @page.slug_histories.any?
+      h2 Slug History
+      table.table.table-bordered.slug-histories
+        thead: tr
+          th Previous slug
+          th Since
+        tbody
+          - @page.slug_histories.each do |sh|
+            tr
+              td= format_slug_history(website, sh)
+              td= sh.created_at.to_date
+              td= delete_button [:admin, sh]
     h2 Products
     - if @page.product_placements.empty?
       p There are no products on this page.

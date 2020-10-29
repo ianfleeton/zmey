@@ -222,6 +222,10 @@ FactoryBot.define do
     sequence(:name) { |n| "Shipping Zone #{n}" }
   end
 
+  factory :slug_history do
+    page
+  end
+
   factory :user do
     sequence(:email) { |n| "shopper#{n}@example.org" }
     name { "User" }
