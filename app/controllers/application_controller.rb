@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     rescue_from Exception, with: :render_error
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
     rescue_from ActionController::RoutingError, with: :not_found
-    rescue_from ActionController::UnknownController, with: :not_found
+    rescue_from AbstractController::ActionNotFound, with: :not_found
   end
 
   def error
