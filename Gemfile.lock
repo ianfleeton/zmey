@@ -10,7 +10,6 @@ GEM
   remote: https://rubygems.org/
   specs:
     RedCloth (4.3.2)
-    ace-rails-ap (4.4)
     actioncable (6.0.3.4)
       actionpack (= 6.0.3.4)
       nio4r (~> 2.0)
@@ -394,7 +393,6 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
-  ace-rails-ap
   acts_as_list
   acts_as_tree
   bootsnap (>= 1.4.2)

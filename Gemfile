@@ -43,9 +43,6 @@ gem 'curb'
 # Stripe
 gem "stripe"
 
-# Ajax.org Cloud9 Editor (Ace) for the Rails 3.1+ asset pipeline
-gem 'ace-rails-ap'
-
 # Use Puma as the app server
 gem 'puma', '~> 3.12'
 # Use SCSS for stylesheets
