@@ -41,6 +41,8 @@ en:
       your_details: "Your details"
     sign_in_register:
       get_a_new_password: "Get a new password"
+    verify_email_new:
+      title: "Resend verification email | %{website}"
   add_to_cart: Add to Basket
   addresses:
     choose_address:
@@ -89,6 +91,13 @@ en:
         no_keys: "You don't have any keys set up yet."
       new:
         heading: New API Key
+    closure_dates:
+      edit:
+        heading: "Edit closure date"
+      index:
+        heading: "Closure dates"
+      new:
+        heading: "New closure date"
     enquiries:
       index:
         actions: 'Actions'
@@ -106,6 +115,10 @@ en:
       index:
         attribute_name: 'Attribute name'
         class_name: 'Class name'
+    images:
+      index:
+        heading: "Images"
+        search: "Search"
     import:
       index:
         class_name: 'What kind of data do you want to import?'
@@ -124,6 +137,7 @@ en:
         heading: 'New Offline Payment Method'
     orders:
       edit:
+        add_comment: "Add Comment"
         add_payment: 'Add Payment'
         add_shipment: 'Add Shipment'
         comment: 'Comment'
@@ -138,8 +152,6 @@ en:
         not_fully_shipped: 'This order is not yet fully shipped'
         po_number: 'PO number'
         processed_warning: 'This order has been marked as processed by an external system.'
-        shipped_at: 'Shipped at'
-        shipping_tracking_number: 'Tracking number'
       index:
         analytics: 'Analytics?'
         apply_search: 'Apply Search'
@@ -167,6 +179,7 @@ en:
     pages:
       edit:
         heading: "Edit %{page}"
+        top: "Top"
       form:
         no_follow: 'NOFOLLOW (search engines should not follow links from this page)'
         no_index: 'NOINDEX (search engines should not index this page)'
@@ -201,6 +214,9 @@ en:
         countries_in_this_zone: 'The following countries are in this shipping zone:'
         no_countries: 'There are no countries in this shipping zone.'
         shipping_classes: 'Shipping Classes'
+    slug_histories:
+      index:
+        heading: "Slug histories"
     users:
       edit:
         heading: 'Edit User Account Details'
@@ -291,6 +307,13 @@ en:
       deleted: 'Component deleted.'
   continue_shopping: Continue shopping
   cost: Cost
+  customer_sessions:
+    new:
+      title: "Sign in | %{website}"
+    password_reset:
+      title: "Password reset | %{website}"
+    password_set:
+      title: "Missing password | %{website}"
   forgot_your_password: Forgotten your password?
   layouts:
     admin:

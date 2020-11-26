@@ -34,8 +34,8 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
         table.table.table-bordered
           thead
             tr
-              th= t('.shipped_at')
-              th= t('.shipping_tracking_code')
+              th= Shipment.human_attribute_name "shipped_at"
+              th= Shipment.human_attribute_name "consignment_number"
           tbody
             - @order.shipments.each do |shipment|
               tr
