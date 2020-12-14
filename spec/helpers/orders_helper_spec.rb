@@ -3,6 +3,55 @@ require "rails_helper"
 RSpec.describe OrdersHelper, type: :helper do
   include ProductsHelper
 
+  describe "#order_date_label" do
+    let(:status) { Enums::PaymentStatus::PAYMENT_RECEIVED }
+    let(:order) { Order.new(invoiced_at: invoiced_at, status: status) }
+    subject { helper.order_date_label(order) }
+
+    context "invoiced_at is set" do
+      let(:invoiced_at) { Time.current }
+      it { should eq "Invoice Date" }
+    end
+
+    context "invoiced_at is nil" do
+      let(:invoiced_at) { nil }
+      it { should eq "Order Date" }
+
+      context "order is a quote" do
+        let(:status) { Enums::PaymentStatus::QUOTE }
+        it { should eq "Quotation Date" }
+      end
+    end
+  end
+
+  describe "#order_formatted_time" do
+    let(:order) do
+      Order.new(
+        invoiced_at: invoiced_at,
+        created_at: created_at
+      )
+    end
+    subject { helper.order_formatted_time(order) }
+
+    context "invoiced_at is set" do
+      let(:created_at) { DateTime.new(2016, 12, 9, 12, 52) }
+      let(:invoiced_at) { DateTime.new(2016, 12, 10, 10, 25) }
+      it { should eq "10 December 2016 - 10:25 am" }
+    end
+
+    context "invoiced_at is nil" do
+      let(:created_at) { DateTime.new(2016, 12, 9, 12, 52) }
+      let(:invoiced_at) { nil }
+      it { should eq " 9 December 2016 - 12:52 pm" }
+    end
+
+    context "neither invoiced_at nor created_at is set" do
+      let(:created_at) { nil }
+      let(:invoiced_at) { nil }
+      it { should eq "" }
+    end
+  end
+
   describe "#sage_pay_form_url" do
     it "returns a live URL when test_mode false" do
       expect(sage_pay_form_url(false)).to eq(

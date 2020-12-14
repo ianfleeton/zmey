@@ -22,10 +22,24 @@ module OrdersHelper
   end
 
   # Returns the order date and time, formatted. The invoiced_at time is used if
-  # set, otherwise the order created_at time is used.
+  # set, otherwise the order created_at time is used. Returns a blank string if
+  # neither is set because the order is a new record.
+  #
+  #   order_formatted_time(Order.new)                   # => ""
+  #   order_formatted_time(Order.new(
+  #     created_at: DateTime.new(2016, 12, 9, 12, 52),
+  #     invoiced_at: DateTime.new(2016, 12, 10, 10, 25)
+  #   ))                                                # => "10 December 2016 - 10:25 am"
+  #   order_formatted_time(Order.new(
+  #     created_at: DateTime.new(2016, 12, 9, 12, 52),
+  #   ))                                                # => " 9 December 2016 - 12:52 pm"
   def order_formatted_time(order)
     time = order.invoiced_at || order.created_at
-    time.strftime(ApplicationHelper::FRIENDLY_TIME_FORMAT)
+    if time
+      time.strftime(ApplicationHelper::FRIENDLY_TIME_FORMAT)
+    else
+      ""
+    end
   end
 
   def sage_pay_form_url(test_mode)
