@@ -99,8 +99,12 @@ en:
       new:
         heading: "New closure date"
     couriers:
+      edit:
+        heading: "Edit courier"
       index:
         heading: "Couriers"
+      new:
+        heading: "New courier"
     enquiries:
       index:
         actions: 'Actions'
@@ -120,6 +124,7 @@ en:
         class_name: 'Class name'
     images:
       index:
+        apply_search: "Apply search"
         close: "Close"
         heading: "Images"
         search: "Search"
