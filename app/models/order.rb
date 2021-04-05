@@ -34,7 +34,7 @@
 #   used by Zmey internally.
 #
 # +shipping_amount+::
-#   Shipping amount excluding tax.
+#   Shipping amount excluding VAT.
 #
 # +shipped_at+::
 #   When the order contents were shipped.
@@ -391,45 +391,45 @@ class Order < ActiveRecord::Base
     end
   end
 
-  # Total amount for the order including shipping but excluding any taxes.
+  # Total amount for the order including shipping but excluding any VAT.
   def total_net
     shipping_amount + line_total_net
   end
 
-  # Overall total amount for the order including shipping and all taxes.
+  # Overall total amount for the order including shipping and all VAT.
   def total_gross
     shipping_amount_gross + line_total_gross
   end
 
-  # Shipping amount including any applicable shipping tax.
+  # Shipping amount including any applicable shipping VAT.
   # Tax is excluded if the order is zero-rated.
   def shipping_amount_gross
-    shipping_amount + (zero_rated? ? 0 : shipping_tax_amount)
+    shipping_amount + (zero_rated? ? 0 : shipping_vat_amount)
   end
 
-  # Total amount of all order lines excluding any tax.
+  # Total amount of all order lines excluding any VAT.
   def line_total_net
     order_lines.inject(BigDecimal("0")) { |sum, l| sum + l.line_total_net }
   end
 
-  # Total amount of all order lines including any applicable tax.
-  # Tax is excluded if the order is zero-rated.
+  # Total amount of all order lines including any applicable VAT.
+  # VAT is excluded if the order is zero-rated.
   def line_total_gross
     zr = zero_rated?
     order_lines.inject(BigDecimal("0")) do |sum, l|
-      sum + l.line_total_net + (zr ? 0 : l.tax_amount)
+      sum + l.line_total_net + (zr ? 0 : l.vat_amount)
     end
   end
   alias_method :total_for_shipping, :line_total_gross
 
-  # Tax amount for all order lines.
-  def line_tax_total
-    order_lines.inject(0) { |sum, l| sum + l.tax_amount }
+  # VAT amount for all order lines.
+  def line_vat_total
+    order_lines.inject(0) { |sum, l| sum + l.vat_amount }
   end
 
-  # Tax amount for the whole order including any shipping tax.
-  def tax_total
-    line_tax_total + shipping_tax_amount
+  # VAT amount for the whole order including any shipping VAT.
+  def vat_total
+    line_vat_total + shipping_vat_amount
   end
 
   # Weight of all products in this order.
@@ -475,9 +475,9 @@ class Order < ActiveRecord::Base
         product_sku: i.product.sku,
         product_name: i.product.name,
         product_rrp: i.product.rrp,
-        product_price: i.product.price_ex_tax(i.quantity),
+        product_price: i.product.price_ex_vat(i.quantity),
         product_weight: i.product.weight,
-        tax_amount: i.product.tax_amount(i.quantity) * i.quantity,
+        vat_amount: i.product.vat_amount(i.quantity) * i.quantity,
         quantity: i.quantity,
         feature_descriptions: i.feature_descriptions
       )

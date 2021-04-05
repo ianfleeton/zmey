@@ -34,7 +34,7 @@ module Discounts
       end
 
       def tax_adjustment(items)
-        -(discount.reward_amount / 100.0) * items.sum(&:tax_amount)
+        -(discount.reward_amount / 100.0) * items.sum(&:vat_amount)
       end
     end
   end

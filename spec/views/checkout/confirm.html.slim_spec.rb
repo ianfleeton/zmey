@@ -13,7 +13,7 @@ RSpec.describe "checkout/confirm.html.erb", type: :view do
     )
   end
   let(:shipping_amount) { 0 }
-  let(:shipping_tax_amount) { 0 }
+  let(:shipping_vat_amount) { 0 }
   let(:delivery_date) { nil }
   let(:website) { FactoryBot.create(:website) }
 
@@ -31,7 +31,7 @@ RSpec.describe "checkout/confirm.html.erb", type: :view do
     assign(:billing_address, billing_address)
     assign(:delivery_address, delivery_address)
     assign(:shipping_amount, shipping_amount)
-    assign(:shipping_tax_amount, shipping_tax_amount)
+    assign(:shipping_vat_amount, shipping_vat_amount)
     assign(:basket, basket)
     assign(:discount_lines, discount_lines)
     assign(:order, order)

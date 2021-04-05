@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     :unverified_user,
     :set_locale,
     :protect_private_website,
-    :initialize_tax_display,
+    :initialize_vat_display,
     :basket,
     :set_shipping_amount
   )
@@ -136,14 +136,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def initialize_tax_display
-    @inc_tax = false
+  def initialize_vat_display
+    @inc_vat = false
 
     unless website.vat_number.empty?
-      @inc_tax = website.show_vat_inclusive_prices
+      @inc_vat = website.show_vat_inclusive_prices
       # override with user's preference
-      unless session[:inc_tax].nil?
-        @inc_tax = session[:inc_tax]
+      unless session[:inc_vat].nil?
+        @inc_vat = session[:inc_vat]
       end
     end
   end

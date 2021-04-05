@@ -8,8 +8,8 @@ RSpec.describe BasketHelper, type: :helper do
     end
   end
 
-  describe "#discount_lines_tax_total" do
-    subject { helper.discount_lines_tax_total }
+  describe "#discount_lines_vat_total" do
+    subject { helper.discount_lines_vat_total }
     context "with undefined @discount_lines" do
       it { should eq 0 }
     end

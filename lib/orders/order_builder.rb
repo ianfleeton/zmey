@@ -40,9 +40,9 @@ module Orders
       @order.copy_delivery_address(address) if address
     end
 
-    def add_shipping_details(net_amount:, tax_amount:, method:, quote_needed:)
+    def add_shipping_details(net_amount:, vat_amount:, method:, quote_needed:)
       order.shipping_amount = net_amount
-      order.shipping_tax_amount = tax_amount
+      order.shipping_vat_amount = vat_amount
       order.shipping_method = method
       order.status = Enums::PaymentStatus::NEEDS_SHIPPING_QUOTE if quote_needed
     end

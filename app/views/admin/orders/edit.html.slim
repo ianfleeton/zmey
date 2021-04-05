@@ -56,7 +56,7 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
         .col-lg-3
           = f.text_field :shipping_amount
         .col-lg-3
-          = f.text_field :shipping_tax_amount
+          = f.text_field :shipping_vat_amount
 
 
   h2 Order Contents
@@ -68,7 +68,7 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
       th Brand
       th Weight (each)
       th.price Price (each)
-      th Tax (%)
+      th VAT (%)
       th Feature Descriptions
       th Total
 
@@ -92,7 +92,7 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
         td
           = text_field_tag "order_line_product_price[#{line.id}]", line.product_price, size: 5, readonly: @order.locked? || @order.processed_at, class: 'form-control'
         td
-          = text_field_tag "order_line_tax_percentage[#{line.id}]", line.tax_percentage, size: 4, readonly: @order.locked? || @order.processed_at, class: 'form-control'
+          = text_field_tag "order_line_vat_percentage[#{line.id}]", line.vat_percentage, size: 4, readonly: @order.locked? || @order.processed_at, class: 'form-control'
         td
           = text_area_tag "order_line_feature_descriptions[#{line.id}]", line.feature_descriptions, rows: 3, cols: 60, readonly: @order.locked? || @order.processed_at, class: 'form-control'
         td
@@ -106,7 +106,7 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
           button#add-line.btn.btn-outline-secondary title="Add Line"
             => icon_add
       th VAT
-      td.price.total= formatted_price(@order.tax_total)
+      td.price.total= formatted_price(@order.vat_total)
     tr
       td colspan="5"
       th Total
@@ -129,7 +129,7 @@ javascript:
         '<td><input class="form-control" name="order_line_product_brand[' + id + ']"></td>' +
         '<td><input class="form-control" name="order_line_product_weight[' + id + ']" value="0.0" size="5"></td>' +
         '<td><input class="form-control" name="order_line_product_price[' + id + ']" value="0.0" size="5"></td>' +
-        '<td><input class="form-control" name="order_line_tax_percentage[' + id + ']" value="#{Product::VAT_RATE * 100.0}" size="5"></td>' +
+        '<td><input class="form-control" name="order_line_vat_percentage[' + id + ']" value="#{Product::VAT_RATE * 100.0}" size="5"></td>' +
         '<td><textarea class="form-control" name="order_line_feature_descriptions[' + id + ']" rows="2" cols="60"></textarea></td>' +
         '<td></td>' +
         '</tr>';

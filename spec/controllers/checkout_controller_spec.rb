@@ -737,7 +737,7 @@ RSpec.describe CheckoutController, type: :controller do
       allow(controller).to receive(:discount_lines).and_return(discount_lines)
 
       shipping_amount = 5.95
-      shipping_tax_amount = 1.19
+      shipping_vat_amount = 1.19
       shipping_method = "Super Express Parcel"
       shipping_quote_needed = true
 
@@ -749,8 +749,8 @@ RSpec.describe CheckoutController, type: :controller do
         .and_return(delivery_address_required)
 
       allow(controller).to receive(:shipping_amount).and_return(shipping_amount)
-      allow(controller).to receive(:shipping_tax_amount)
-        .and_return(shipping_tax_amount)
+      allow(controller).to receive(:shipping_vat_amount)
+        .and_return(shipping_vat_amount)
       allow(controller).to receive(:shipping_method).and_return(shipping_method)
       allow(controller).to receive(:shipping_quote_needed?)
         .and_return(shipping_quote_needed)
@@ -777,7 +777,7 @@ RSpec.describe CheckoutController, type: :controller do
       expect(ob).to receive(:add_discount_lines).with(discount_lines)
       expect(ob).to receive(:add_shipping_details).with(
         net_amount: shipping_amount,
-        tax_amount: shipping_tax_amount,
+        vat_amount: shipping_vat_amount,
         method: shipping_method,
         # quote_needed should not be set to true at this stage as we don't want
         # to invalidate the basket; it is set later on when order placed

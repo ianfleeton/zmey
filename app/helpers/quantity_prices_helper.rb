@@ -13,7 +13,7 @@ module QuantityPricesHelper
         </tr>
         <tr>
           <td>#{first}</td>
-          <td>#{formatted_price(product.price_with_tax(1, @inc_tax))}</td>
+          <td>#{formatted_price(product.price_with_vat(1, @inc_vat))}</td>
           <td>&nbsp;</td>
         </tr>
 HTML
@@ -22,7 +22,7 @@ HTML
       qp_next = rules.last == qp ? nil : rules[i + 1]
       html << "<tr>"
       html << "<td>#{qp.quantity}#{qp_next ? "&#8211;" + (qp_next.quantity - 1).to_s : "+"}</td>"
-      html << "<td>#{formatted_price(product.price_with_tax(qp.quantity, @inc_tax))}</td>"
+      html << "<td>#{formatted_price(product.price_with_vat(qp.quantity, @inc_vat))}</td>"
       if block_given?
         end_of_row = capture { yield qp }
         html << end_of_row

@@ -84,7 +84,7 @@
               | VAT (zero-rated)
             -  else
               | VAT (20%)
-          th class="price" align="right"= formatted_price(order.tax_total)
+          th class="price" align="right"= formatted_price(order.vat_total)
         tr
           th class="price" align="right" Order Total</th>
           th class="price" align="right"= formatted_price(order.total_gross)

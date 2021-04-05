@@ -28,8 +28,8 @@
               input name="qty[#{item.id}]" size="2" maxlength="7" value="#{item.display_quantity}"
             - else
               = item.display_quantity
-          td.price= formatted_price(item.product.price_with_tax(item.quantity, inc_tax))
-          td.line_total= formatted_price(item.line_total(inc_tax))
+          td.price= formatted_price(item.product.price_with_vat(item.quantity, inc_vat))
+          td.line_total= formatted_price(item.line_total(inc_vat))
           - if can_update
             td
               input type="submit" value="#{t('.remove_item')}" name="remove_item[#{item.id}]"
@@ -40,14 +40,14 @@
             td= dl.name
             td.empty &nbsp;
             td.empty &nbsp;
-            td.price= formatted_price(dl.price_with_tax(inc_tax))
+            td.price= formatted_price(dl.price_with_vat(inc_vat))
             - if can_update
               td.empty &nbsp;
       - if shipping_amount
         tr.shipping_amount
           th colspan="4"= t('.shipping_amount')
-          - if inc_tax
-            td.price= formatted_price shipping_amount + shipping_tax_amount
+          - if inc_vat
+            td.price= formatted_price shipping_amount + shipping_vat_amount
           - else
             td.price= formatted_price shipping_amount
           - if can_update
@@ -55,24 +55,24 @@
       tr.basket_total
         th colspan="4"
           - if website.vat_number.present?
-            - if inc_tax
-              = t('.basket_total_inc_tax')
+            - if inc_vat
+              = t('.basket_total_inc_vat')
             - else
-              = t('.basket_total_ex_tax')
+              = t('.basket_total_ex_vat')
           - else
             = t('.basket_total')
         td.price
-          - basket_total = basket.total(inc_tax) + shipping_amount.to_f + discount_lines_price_total
-          - if inc_tax
-            - basket_total += discount_lines_tax_total + shipping_tax_amount.to_f
+          - basket_total = basket.total(inc_vat) + shipping_amount.to_f + discount_lines_price_total
+          - if inc_vat
+            - basket_total += discount_lines_vat_total + shipping_vat_amount.to_f
           = formatted_price basket_total
         - if can_update
           td.empty &nbsp;
-      - if website.vat_number.present? && !inc_tax
+      - if website.vat_number.present? && !inc_vat
         tr.vat_amount
-          th colspan="4"= t('.tax')
+          th colspan="4"= t('.vat')
           td.price
-            - vat_total = basket.vat_total + discount_lines_tax_total + shipping_tax_amount.to_f
+            - vat_total = basket.vat_total + discount_lines_vat_total + shipping_vat_amount.to_f
             = formatted_price vat_total
           - if can_update
             td.empty &nbsp;

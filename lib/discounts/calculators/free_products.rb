@@ -41,8 +41,8 @@ module Discounts
         else
           discount_line.name = "Free #{product.name}"
         end
-        discount_line.price_adjustment -= product.price_ex_tax
-        discount_line.tax_adjustment -= product.tax_amount
+        discount_line.price_adjustment -= product.price_ex_vat
+        discount_line.tax_adjustment -= product.vat_amount
       end
 
       def discount_line

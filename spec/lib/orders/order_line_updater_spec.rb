@@ -20,7 +20,7 @@ module Orders
         product_sku: product.sku,
         product_weight: 2.34,
         quantity: 2,
-        tax_percentage: 20
+        vat_percentage: 20
       )
     end
 
@@ -36,7 +36,7 @@ module Orders
         expect(ol.product_sku).to eq product.sku
         expect(ol.product_weight).to eq 2.34
         expect(ol.quantity).to eq 2
-        expect(ol.tax_percentage).to eq 20
+        expect(ol.vat_percentage).to eq 20
       end
     end
 

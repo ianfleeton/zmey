@@ -28,7 +28,7 @@ module Discounts
         let(:calc) { PercentageOff.new(context, discount) }
         before do
           allow(item).to receive(:line_total).with(false).and_return(10)
-          allow(item).to receive(:tax_amount).and_return(2)
+          allow(item).to receive(:vat_amount).and_return(2)
           calc.calculate
         end
 
@@ -58,7 +58,7 @@ module Discounts
 
         shared_examples_for "a multiple discount applier" do
           let(:dl) { calc.discount_lines.first }
-          let(:item2) { instance_double(BasketItem, product: product, name: "Brum", line_total: 15, tax_amount: 3) }
+          let(:item2) { instance_double(BasketItem, product: product, name: "Brum", line_total: 15, vat_amount: 3) }
           let(:basket) { instance_double(Basket, basket_items: [item, item2]) }
 
           it "applies a discount" do

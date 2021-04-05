@@ -15,8 +15,8 @@ class DiscountLine
     self.tax_adjustment = attrs[:tax_adjustment]
   end
 
-  def price_with_tax(inc_tax)
-    if inc_tax
+  def price_with_vat(inc_vat)
+    if inc_vat
       price_adjustment + tax_adjustment
     else
       price_adjustment
@@ -42,7 +42,7 @@ class DiscountLine
       product_sku: SKU,
       product_name: name,
       product_price: price_adjustment,
-      tax_amount: tax_adjustment
+      vat_amount: tax_adjustment
     )
   end
 

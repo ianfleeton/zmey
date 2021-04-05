@@ -176,43 +176,43 @@ RSpec.describe Product, type: :model do
   describe "tax" do
     it "should be added and tax amount calculated when price is ex-VAT" do
       @product.tax_type = Product::EX_VAT
-      expect(@product.price_inc_tax).to eq 1.2
-      expect(@product.price_ex_tax).to eq 1.0
-      expect(@product.tax_amount).to eq 0.2
+      expect(@product.price_inc_vat).to eq 1.2
+      expect(@product.price_ex_vat).to eq 1.0
+      expect(@product.vat_amount).to eq 0.2
     end
 
     it "should not be added but tax amount is calculated when price is inc-VAT" do
       @product.tax_type = Product::INC_VAT
-      expect(@product.price_inc_tax).to eq 1.0
-      expect(@product.price_ex_tax).to be_within(0.001).of(0.8333)
-      expect(@product.tax_amount).to be_within(0.001).of(0.1667)
+      expect(@product.price_inc_vat).to eq 1.0
+      expect(@product.price_ex_vat).to be_within(0.001).of(0.8333)
+      expect(@product.vat_amount).to be_within(0.001).of(0.1667)
     end
 
     it "should not be added nor calculated when product has no tax" do
       @product.tax_type = Product::NO_TAX
-      expect(@product.price_inc_tax).to eq 1.0
-      expect(@product.price_ex_tax).to eq 1.0
-      expect(@product.tax_amount).to eq 0
+      expect(@product.price_inc_vat).to eq 1.0
+      expect(@product.price_ex_vat).to eq 1.0
+      expect(@product.vat_amount).to eq 0
     end
   end
 
-  describe "#rrp_inc_tax" do
-    it "uses Taxer#inc_tax" do
+  describe "#rrp_inc_vat" do
+    it "uses Taxer#inc_vat" do
       @product.rrp = 123
       @product.tax_type = Product::INC_VAT
       allow(Taxer).to receive(:new).with(123, Product::INC_VAT)
-        .and_return(double(Taxer, inc_tax: 45))
-      expect(@product.rrp_inc_tax).to eq 45
+        .and_return(double(Taxer, inc_vat: 45))
+      expect(@product.rrp_inc_vat).to eq 45
     end
   end
 
-  describe "#rrp_ex_tax" do
-    it "uses Taxer#ex_tax" do
+  describe "#rrp_ex_vat" do
+    it "uses Taxer#ex_vat" do
       @product.rrp = 456
       @product.tax_type = Product::EX_VAT
       allow(Taxer).to receive(:new).with(456, Product::EX_VAT)
-        .and_return(double(Taxer, ex_tax: 78))
-      expect(@product.rrp_ex_tax).to eq 78
+        .and_return(double(Taxer, ex_vat: 78))
+      expect(@product.rrp_ex_vat).to eq 78
     end
   end
 

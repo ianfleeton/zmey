@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe Taxer do
   before { allow(Product).to receive(:vat_rate).and_return(0.2) }
 
-  describe "#inc_tax" do
-    subject { Taxer.new(price, tax_type).inc_tax }
+  describe "#inc_vat" do
+    subject { Taxer.new(price, tax_type).inc_vat }
     let(:price) { 10 }
 
     context "tax_type is Product::EX_VAT" do
@@ -29,8 +29,8 @@ RSpec.describe Taxer do
     end
   end
 
-  describe "#ex_tax" do
-    subject { Taxer.new(price, tax_type).ex_tax }
+  describe "#ex_vat" do
+    subject { Taxer.new(price, tax_type).ex_vat }
     let(:price) { 12 }
 
     context "tax_type is Product::EX_VAT" do

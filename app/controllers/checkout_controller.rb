@@ -148,7 +148,7 @@ class CheckoutController < ApplicationController
       builder.requires_delivery_address = delivery_address_required?
       builder.user = current_user
       builder.add_shipping_details(
-        net_amount: shipping_amount, tax_amount: shipping_tax_amount,
+        net_amount: shipping_amount, vat_amount: shipping_vat_amount,
         method: shipping_method,
         # we set the NEEDS_SHIPPING_QUOTE status at a later stage if it's
         # needed, not now as it will invalidate the basket

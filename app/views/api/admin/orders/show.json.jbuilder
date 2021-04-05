@@ -32,7 +32,7 @@ json.order do
   json.shipment_email_sent_at @order.shipment_email_sent_at
   json.shipped_at @order.shipped_at
   json.shipping_amount @order.shipping_amount
-  json.shipping_tax_amount @order.shipping_tax_amount
+  json.shipping_vat_amount @order.shipping_vat_amount
   json.shipping_method @order.shipping_method
   json.status Enums::PaymentStatus.new(@order.status).to_api
   json.total @order.total
@@ -58,7 +58,7 @@ json.order do
     json.product_weight order_line.product_weight
     json.quantity order_line.quantity
     json.line_total_net order_line.line_total_net
-    json.tax_amount order_line.tax_amount
+    json.vat_amount order_line.vat_amount
     json.feature_descriptions order_line.feature_descriptions
     json.shipped order_line.shipped
     json.created_at order_line.created_at

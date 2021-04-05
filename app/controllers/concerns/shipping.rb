@@ -34,7 +34,7 @@ module Shipping
 
   def set_shipping_amount
     @shipping_amount = shipping_amount
-    @shipping_tax_amount = shipping_tax_amount
+    @shipping_vat_amount = shipping_vat_amount
     @shipping_quote_needed = shipping_quote_needed?
   end
 
@@ -44,8 +44,8 @@ module Shipping
     shipping_calculator.amount
   end
 
-  def shipping_tax_amount
-    shipping_calculator.tax_amount
+  def shipping_vat_amount
+    shipping_calculator.vat_amount
   end
 
   def shipping_quote_needed?

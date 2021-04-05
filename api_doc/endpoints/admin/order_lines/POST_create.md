@@ -23,10 +23,10 @@ Providing these optional attributes will override the default product
 attributes which are used otherwise.
 
 * **product_name** — Name of the product
-* **product_price** — Price excluding tax for a single product
+* **product_price** — Price excluding VAT for a single product
 * **product_rrp** — RRP of the product
 * **product_weight** — Weight of the product
-* **tax_amount** — Total amount of tax for **quantity** products
+* **vat_amount** — Total amount of VAT for **quantity** products
 
 ## Example
 

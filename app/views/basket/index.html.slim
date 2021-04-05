@@ -6,4 +6,4 @@ h1= t('cart')
   p Your basket is empty.
 - else
   = render partial: 'email_basket_form', locals: { basket: @basket }
-  = render partial: 'basket', object: @basket, locals: {can_update: true, shipping_amount: nil, shipping_tax_amount: nil, inc_tax: @inc_tax}
+  = render partial: 'basket', object: @basket, locals: {can_update: true, shipping_amount: nil, shipping_vat_amount: nil, inc_vat: @inc_vat}

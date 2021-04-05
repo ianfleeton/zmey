@@ -7,8 +7,8 @@ module PriceCalculator
     attr_reader :quantity
 
     delegate :tax_type, to: :product
-    delegate :ex_tax, to: :taxer
-    delegate :inc_tax, to: :taxer
+    delegate :ex_vat, to: :taxer
+    delegate :inc_vat, to: :taxer
     delegate :with_tax, to: :taxer
 
     def initialize(product:, quantity: 1, basket_item: nil)
@@ -44,15 +44,15 @@ module PriceCalculator
     # * Two products bought at 2.0 with an RRP of 3.0 will have savings of 2.0.
     # * Ten products bought with RRP unset, price of 2.0 and volume purchase
     #   price of 1.5 will have savings of 5.0.
-    def savings(inc_tax:)
+    def savings(inc_vat:)
       return 0 unless basket_item && product
 
-      rrp = if inc_tax
-        product.rrp_inc_tax || product.price_inc_tax(1)
+      rrp = if inc_vat
+        product.rrp_inc_vat || product.price_inc_vat(1)
       else
-        product.rrp_ex_tax || product.price_ex_tax(1)
+        product.rrp_ex_vat || product.price_ex_vat(1)
       end
-      (rrp * quantity) - basket_item.line_total(inc_tax)
+      (rrp * quantity) - basket_item.line_total(inc_vat)
     end
   end
 end

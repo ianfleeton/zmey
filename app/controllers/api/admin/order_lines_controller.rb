@@ -15,7 +15,7 @@ class Api::Admin::OrderLinesController < Api::Admin::AdminController
         @order_line.product_rrp = @order_line.product.rrp unless params[:order_line][:product_rrp]
         @order_line.product_sku = @order_line.product.sku
         @order_line.product_weight = @order_line.product.weight unless params[:order_line][:product_weight]
-        @order_line.tax_amount = @order_line.calculate_tax_amount unless params[:order_line][:tax_amount]
+        @order_line.vat_amount = @order_line.calculate_vat_amount unless params[:order_line][:vat_amount]
       end
     end
 
@@ -45,7 +45,7 @@ class Api::Admin::OrderLinesController < Api::Admin::AdminController
       :product_sku,
       :product_weight,
       :quantity,
-      :tax_amount
+      :vat_amount
     )
   end
 end

@@ -100,7 +100,7 @@ module Admin
         :shipping_amount,
         :shipped_at,
         :shipping_method,
-        :shipping_tax_amount
+        :shipping_vat_amount
       )
     end
 
@@ -155,14 +155,14 @@ module Admin
         product_sku: params[:order_line_product_sku][key],
         product_weight: params[:order_line_product_weight][key],
         quantity: params[:order_line_quantity][key],
-        tax_percentage: params[:order_line_tax_percentage][key]
+        vat_percentage: params[:order_line_vat_percentage][key]
       )
       updater.save
     end
 
-    # Calculates the tax amount for <tt>order_line</tt> when the tax rate is
+    # Calculates the VAT amount for <tt>order_line</tt> when the VAT rate is
     # <tt>percentage</tt>%.
-    def tax_amount(order_line, percentage)
+    def vat_amount(order_line, percentage)
       percentage.to_f / 100.0 * order_line.line_total_net
     end
 

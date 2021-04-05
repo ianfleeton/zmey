@@ -75,4 +75,4 @@
 
 <h3>Your order</h3>
 <%= link_to "edit basket", basket_path %>
-<%= render partial: "basket/table", object: basket, locals: {can_update: false, shipping_amount: @shipping_amount, shipping_tax_amount: @shipping_tax_amount} %>
+<%= render partial: "basket/table", object: basket, locals: {can_update: false, shipping_amount: @shipping_amount, shipping_vat_amount: @shipping_vat_amount} %>

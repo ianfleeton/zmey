@@ -7,14 +7,14 @@ module ProductsHelper
     number_to_currency(price, unit: "GBP", format: "%n %u")
   end
 
-  def tax_explanation(product)
+  def vat_explanation(product)
     if @w.vat_number.empty?
       ""
     elsif product.tax_type == Product::EX_VAT || product.tax_type == Product::INC_VAT
-      if @inc_tax
-        ' <span class="tax_explanation">inc VAT</span>'.html_safe
+      if @inc_vat
+        ' <span class="vat_explanation">inc VAT</span>'.html_safe
       else
-        ' <span class="tax_explanation">ex VAT</span>'.html_safe
+        ' <span class="vat_explanation">ex VAT</span>'.html_safe
       end
     end
   end

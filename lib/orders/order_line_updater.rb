@@ -8,7 +8,7 @@ module Orders
     def initialize(
       administrator:,
       order_line:, feature_descriptions:, product_brand:, product_id:, product_name:,
-      product_price:, product_sku:, product_weight:, quantity:, tax_percentage:
+      product_price:, product_sku:, product_weight:, quantity:, vat_percentage:
     )
       @administrator = administrator
       @order_line = order_line
@@ -21,7 +21,7 @@ module Orders
       order_line.feature_descriptions = feature_descriptions
 
       update_product_price(product_price)
-      update_tax(tax_percentage)
+      update_vat(vat_percentage)
     end
 
     def save
@@ -41,23 +41,23 @@ module Orders
       order_line.product_price = new_price.to_f
     end
 
-    def update_tax(tax_percentage)
-      return unless order_line.changed? || tax_changed?(tax_percentage)
-      order_line.tax_amount = tax_amount(tax_percentage)
+    def update_vat(vat_percentage)
+      return unless order_line.changed? || tax_changed?(vat_percentage)
+      order_line.vat_amount = vat_amount(vat_percentage)
     end
 
-    def tax_changed?(new_tax)
+    def vat_changed?(new_vat)
       # Use three decimal places and ignore changes to a higher precision.
-      original_tax_percentage.round(3) != new_tax.to_f.round(3)
+      original_vat_percentage.round(3) != new_vat.to_f.round(3)
     end
 
-    def original_tax_percentage
-      order_line.tax_percentage
+    def original_vat_percentage
+      order_line.vat_percentage
     end
 
-    # Calculates the tax amount for <tt>order_line</tt> when the tax rate is
+    # Calculates the VAT amount for <tt>order_line</tt> when the VAT rate is
     # <tt>percentage</tt>%.
-    def tax_amount(percentage)
+    def vat_amount(percentage)
       percentage.to_f / 100.0 * order_line.line_total_net if order_line.valid?
     end
   end

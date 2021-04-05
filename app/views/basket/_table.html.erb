@@ -1,4 +1,4 @@
-<% order_total = basket.total(true) + (@shipping_amount || 0) + (@shipping_tax_amount || 0) + discount_lines_price_total + discount_lines_tax_total %>
+<% order_total = basket.total(true) + (@shipping_amount || 0) + (@shipping_vat_amount || 0) + discount_lines_price_total + discount_lines_vat_total %>
 <% if can_update %>
   <div class="delivery-area-selections" id="deliveryAreaSelect">
     <h3>Summary</h3>
@@ -107,7 +107,7 @@
         <td class="weight">
           <%= item.weight.round(2) %><span class="kg"><%= "&nbsp;kg".html_safe %></span>
         </td>
-        <td class="price"><%= formatted_price(item.product_price_ex_tax) %></td>
+        <td class="price"><%= formatted_price(item.product_price_ex_vat) %></td>
         <td class="price"><%= formatted_price(item.line_total(false)) %></td>
       </tr>
     <% end %>
@@ -120,8 +120,8 @@
           <td class="qty">1</td>
           <td class="description"><%= dl.name %></td>
           <td class="empty">&nbsp;</td>
-          <td class="price"><%= formatted_price(dl.price_with_tax(false)) %></td>
-          <td class="price"><%= formatted_price(dl.price_with_tax(false)) %></td>
+          <td class="price"><%= formatted_price(dl.price_with_vat(false)) %></td>
+          <td class="price"><%= formatted_price(dl.price_with_vat(false)) %></td>
         </tr>
       <% end %>
     <% end %>
@@ -165,7 +165,7 @@
     </tr>
     <tr>
       <th class="price" colspan="2">VAT (20%)</th>
-      <th class="price"><%= formatted_price(basket.vat_total + (@shipping_tax_amount || 0) + discount_lines_tax_total) %></th>
+      <th class="price"><%= formatted_price(basket.vat_total + (@shipping_vat_amount || 0) + discount_lines_vat_total) %></th>
     </tr>
     <tr id="orderGrandTotal">
       <th class="price" colspan="2">Order total</th>

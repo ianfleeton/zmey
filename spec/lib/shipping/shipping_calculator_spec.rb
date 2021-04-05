@@ -36,21 +36,21 @@ module Shipping
       end
     end
 
-    describe "#tax_amount" do
+    describe "#vat_amount" do
       let(:calculator) { ShippingCalculator.new(options) }
       let(:shipping_class) do
-        instance_double(ShippingClass, charge_tax?: charge_tax)
+        instance_double(ShippingClass, charge_vat?: charge_vat)
       end
 
-      subject { calculator.tax_amount }
+      subject { calculator.vat_amount }
 
       context "when shipping class charges tax" do
-        let(:charge_tax) { true }
+        let(:charge_vat) { true }
         it { should eq 4.69 }
       end
 
       context "when shipping class does not charge tax" do
-        let(:charge_tax) { false }
+        let(:charge_vat) { false }
         it { should be_zero }
       end
     end

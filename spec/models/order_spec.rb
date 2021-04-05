@@ -467,9 +467,9 @@ RSpec.describe Order, type: :model do
 
   describe "#calculate_total" do
     it "calculates and assigns the order grand total to self.total" do
-      order = Order.new(shipping_amount: 1, shipping_tax_amount: 0.2)
+      order = Order.new(shipping_amount: 1, shipping_vat_amount: 0.2)
       order.order_lines << OrderLine.new(
-        quantity: 1, product_price: 3, tax_amount: 0.6
+        quantity: 1, product_price: 3, vat_amount: 0.6
       )
       order.calculate_total
       expect(order.total).to eq 4.8
@@ -527,7 +527,7 @@ RSpec.describe Order, type: :model do
   describe "#shipping_amount_gross" do
     before do
       @order = FactoryBot.build(
-        :order, shipping_amount: 10, shipping_tax_amount: 2
+        :order, shipping_amount: 10, shipping_vat_amount: 2
       )
     end
 
@@ -581,10 +581,10 @@ RSpec.describe Order, type: :model do
     context "with order lines" do
       before do
         @order.order_lines << FactoryBot.build(
-          :order_line, product_price: 5, quantity: 2, tax_amount: 2
+          :order_line, product_price: 5, quantity: 2, vat_amount: 2
         )
         @order.order_lines << FactoryBot.build(
-          :order_line, product_price: 4, quantity: 1, tax_amount: 0.8
+          :order_line, product_price: 4, quantity: 1, vat_amount: 0.8
         )
       end
 

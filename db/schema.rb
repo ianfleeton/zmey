@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_05_184505) do
+ActiveRecord::Schema.define(version: 2021_04_05_191951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -322,7 +322,7 @@ ActiveRecord::Schema.define(version: 2021_04_05_184505) do
     t.string "product_sku", default: "", null: false
     t.string "product_name", default: "", null: false
     t.decimal "product_price", precision: 10, scale: 3, default: "0.0", null: false
-    t.decimal "tax_amount", precision: 10, scale: 3, default: "0.0", null: false
+    t.decimal "vat_amount", precision: 10, scale: 3, default: "0.0", null: false
     t.decimal "quantity", precision: 10, scale: 3, default: "1.0", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -355,7 +355,7 @@ ActiveRecord::Schema.define(version: 2021_04_05_184505) do
     t.datetime "updated_at"
     t.integer "basket_id"
     t.string "ip_address"
-    t.decimal "shipping_tax_amount", precision: 10, scale: 3, default: "0.0", null: false
+    t.decimal "shipping_vat_amount", precision: 10, scale: 3, default: "0.0", null: false
     t.text "customer_note"
     t.datetime "processed_at"
     t.string "billing_full_name", default: "", null: false
@@ -584,7 +584,7 @@ ActiveRecord::Schema.define(version: 2021_04_05_184505) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "table_rate_method", default: "basket_total", null: false
-    t.boolean "charge_tax", default: true, null: false
+    t.boolean "charge_vat", default: true, null: false
     t.boolean "invalid_over_highest_trigger", default: false, null: false
     t.boolean "allow_oversize", default: true, null: false
     t.boolean "requires_delivery_address", default: true, null: false

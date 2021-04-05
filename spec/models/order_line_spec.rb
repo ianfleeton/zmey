@@ -32,29 +32,29 @@ RSpec.describe OrderLine, type: :model do
     end
   end
 
-  describe "#product_tax_amount" do
-    it "returns the line tax amount / quantity" do
-      ol = OrderLine.new(product_price: 7, quantity: 3, tax_amount: 4.2)
-      expect(ol.product_tax_amount).to eq 1.4
+  describe "#product_vat_amount" do
+    it "returns the line VAT amount / quantity" do
+      ol = OrderLine.new(product_price: 7, quantity: 3, vat_amount: 4.2)
+      expect(ol.product_vat_amount).to eq 1.4
     end
   end
 
-  describe "#product_price_inc_tax" do
-    it "returns the product price including tax" do
-      ol = OrderLine.new(product_price: 7, quantity: 1, tax_amount: 1.4)
-      expect(ol.product_price_inc_tax).to eq 8.4
+  describe "#product_price_inc_vat" do
+    it "returns the product price including VAT" do
+      ol = OrderLine.new(product_price: 7, quantity: 1, vat_amount: 1.4)
+      expect(ol.product_price_inc_vat).to eq 8.4
     end
   end
 
-  describe "#tax_percentage" do
+  describe "#vat_percentage" do
     it "returns 0 when the line total is 0" do
       o = OrderLine.new(product_price: 0, quantity: 2)
-      expect(o.tax_percentage).to eq 0.0
+      expect(o.vat_percentage).to eq 0.0
     end
 
-    it "returns 20 when the line total is 10 and tax amount 2" do
-      o = OrderLine.new(product_price: 5, quantity: 2, tax_amount: 2)
-      expect(o.tax_percentage).to eq 20.0
+    it "returns 20 when the line total is 10 and VAT amount 2" do
+      o = OrderLine.new(product_price: 5, quantity: 2, vat_amount: 2)
+      expect(o.vat_percentage).to eq 20.0
     end
   end
 

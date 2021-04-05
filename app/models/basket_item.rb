@@ -15,30 +15,30 @@ class BasketItem < ActiveRecord::Base
   delegate :oversize?, to: :product, allow_nil: true
   delegate :sku, to: :product
 
-  def line_total(inc_tax)
-    quantity * (inc_tax ? product_price_inc_tax : product_price_ex_tax)
+  def line_total(inc_vat)
+    quantity * (inc_vat ? product_price_inc_vat : product_price_ex_vat)
   end
 
-  # Returns the total amount of tax for this line.
-  def tax_amount
+  # Returns the total amount of VAT for this line.
+  def vat_amount
     line_total(true) - line_total(false)
   end
 
   # Returns the savings made on the basket item, taking into account things such
   # as RRP and volume discounts. The strategy is provided by the price
   # calculator.
-  def savings(inc_tax:)
-    price_calculator.savings(inc_tax: inc_tax)
+  def savings(inc_vat:)
+    price_calculator.savings(inc_vat: inc_vat)
   end
 
-  # Returns the price of a single product with tax.
-  def product_price_inc_tax
-    price_calculator.inc_tax
+  # Returns the price of a single product with VAT.
+  def product_price_inc_vat
+    price_calculator.inc_vat
   end
 
-  # Returns the price of a single product without tax.
-  def product_price_ex_tax
-    price_calculator.ex_tax
+  # Returns the price of a single product without VAT.
+  def product_price_ex_vat
+    price_calculator.ex_vat
   end
 
   def price_calculator
@@ -114,9 +114,9 @@ class BasketItem < ActiveRecord::Base
       product_name: product.name,
       product_brand: product.brand,
       product_rrp: product.rrp,
-      product_price: product_price_ex_tax,
+      product_price: product_price_ex_vat,
       product_weight: product_weight,
-      tax_amount: tax_amount,
+      vat_amount: vat_amount,
       quantity: quantity,
       feature_descriptions: feature_descriptions
     )

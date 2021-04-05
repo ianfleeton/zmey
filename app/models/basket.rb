@@ -87,8 +87,8 @@ class Basket < ActiveRecord::Base
   end
 
   # Returns the sum of basket item savings.
-  def savings(inc_tax)
-    basket_items.reduce(0) { |acc, elem| acc + elem.savings(inc_tax: inc_tax) }
+  def savings(inc_vat)
+    basket_items.reduce(0) { |acc, elem| acc + elem.savings(inc_vat: inc_vat) }
   end
 
   # Returns true if any of the basket items have made savings.
@@ -158,7 +158,7 @@ class Basket < ActiveRecord::Base
   end
 
   def vat_total
-    basket_items.inject(0) { |t, i| t + i.tax_amount }
+    basket_items.inject(0) { |t, i| t + i.vat_amount }
   end
 
   def apply_shipping?

@@ -15,7 +15,7 @@ gtag('event', 'purchase', {
   'affiliation': '<%= j website.name %>',
   'value': '<%= order.total_gross.round(2) %>',
   'shipping': '<%= order.shipping_amount_gross %>',
-  'tax': '<%= order.tax_total.round(2) %>',
+  'tax': '<%= order.vat_total.round(2) %>',
   'items': purchasedItems
 });
 </script>

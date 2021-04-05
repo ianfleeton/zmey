@@ -262,8 +262,8 @@ en:
     basket:
       apply_coupon: 'Apply Coupon'
       basket_total: 'Basket total:'
-      basket_total_ex_tax: 'Basket total ex VAT:'
-      basket_total_inc_tax: 'Basket total inc VAT:'
+      basket_total_ex_vat: 'Basket total ex VAT:'
+      basket_total_inc_vat: 'Basket total inc VAT:'
       coupons: 'Coupons'
       coupons_applied: 'You have applied the following coupons:'
       discount: 'DISCOUNT'
@@ -272,9 +272,9 @@ en:
       remove_item: 'Remove Item'
       shipping_amount: 'Shipping amount:'
       sku: 'Ref'
-      tax: 'VAT:'
       total: 'Total:'
       update_quantities: 'Update Quantities'
+      vat: 'VAT:'
     customer_note:
       label: 'Please enter any additional notes about your order, such as delivery instructions:'
     email_basket_form:

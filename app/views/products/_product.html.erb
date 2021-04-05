@@ -29,7 +29,7 @@
     <%= render(partial: "products/additional_products", locals: {product: product}) %>
     <p class="product_price">
       <%= I18n.t('price') %>:
-      <%= formatted_price(product.price_with_tax(1, @inc_tax)) %><%= tax_explanation(product) %>
+      <%= formatted_price(product.price_with_vat(1, @inc_vat)) %><%= vat_explanation(product) %>
     </p>
     <span class="quantity"><label><%= I18n.t('quantity') %>: <input type="text" name="quantity" value="1" /></label></span>
     <% unless website.shopping_suspended? %>

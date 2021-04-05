@@ -14,11 +14,11 @@ RSpec.describe DiscountLine do
     end
   end
 
-  describe "#price_with_tax" do
+  describe "#price_with_vat" do
     context "when param is true" do
       it "returns sum of price adjustment and tax adjustment" do
         dl = DiscountLine.new(nil, price_adjustment: 10, tax_adjustment: 5)
-        result = dl.price_with_tax(true)
+        result = dl.price_with_vat(true)
         expect(result).to eq 15
       end
     end
@@ -26,7 +26,7 @@ RSpec.describe DiscountLine do
     context "when param is false" do
       it "returns price adjustment" do
         dl = DiscountLine.new(nil, price_adjustment: 10, tax_adjustment: 5)
-        result = dl.price_with_tax(false)
+        result = dl.price_with_vat(false)
         expect(result).to eq 10
       end
     end
@@ -80,8 +80,8 @@ RSpec.describe DiscountLine do
       expect(order_line.product_price).to eq(-10)
     end
 
-    it "sets the tax_amount to tax_adjustment" do
-      expect(order_line.tax_amount).to eq(-2)
+    it "sets the vat_amount to tax_adjustment" do
+      expect(order_line.vat_amount).to eq(-2)
     end
 
     it "sets the quantity to 1" do

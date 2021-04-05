@@ -38,14 +38,14 @@ class OrderLine < ActiveRecord::Base
     product_price * quantity
   end
 
-  # Returns the tax amount for a single product.
-  def product_tax_amount
-    tax_amount / quantity
+  # Returns the VAT amount for a single product.
+  def product_vat_amount
+    vat_amount / quantity
   end
 
-  # Returns the price of a single product with tax applied.
-  def product_price_inc_tax
-    product_price + product_tax_amount
+  # Returns the price of a single product with VAT applied.
+  def product_price_inc_vat
+    product_price + product_vat_amount
   end
 
   # Combined weight of the products in this order line.
@@ -53,21 +53,21 @@ class OrderLine < ActiveRecord::Base
     product_weight * quantity
   end
 
-  # Returns the tax percentage applied to the order line.
-  def tax_percentage
+  # Returns the VAT percentage applied to the order line.
+  def vat_percentage
     if line_total_net == 0
       line_total_net
     else
-      tax_amount / line_total_net * 100
+      vat_amount / line_total_net * 100
     end
   end
 
   def calculate_product_price
-    product.price_ex_tax(quantity)
+    product.price_ex_vat(quantity)
   end
 
-  def calculate_tax_amount
-    product.tax_amount(quantity) * quantity
+  def calculate_vat_amount
+    product.vat_amount(quantity) * quantity
   end
 
   def lead_time

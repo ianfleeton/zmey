@@ -10,8 +10,8 @@ module Shipping
       amount_for_basket || amount
     end
 
-    def tax_amount
-      if @options[:shipping_class].nil? || @options[:shipping_class].charge_tax?
+    def vat_amount
+      if @options[:shipping_class].nil? || @options[:shipping_class].charge_vat?
         Product.vat_rate * amount.to_f
       else
         BigDecimal("0")

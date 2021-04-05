@@ -18,7 +18,7 @@ describe "Admin order lines API" do
     let(:product_price) { nil }
     let(:product_rrp) { nil }
     let(:product_weight) { nil }
-    let(:tax_amount) { nil }
+    let(:vat_amount) { nil }
 
     before do
       post "/api/admin/order_lines", params: {
@@ -30,7 +30,7 @@ describe "Admin order lines API" do
           product_rrp: product_rrp,
           product_weight: product_weight,
           quantity: quantity,
-          tax_amount: tax_amount
+          vat_amount: vat_amount
         }
       }
     end
@@ -52,7 +52,7 @@ describe "Admin order lines API" do
       end
 
       it "sets the product price" do
-        expect(order_line.product_price).to eq product.price_ex_tax(quantity)
+        expect(order_line.product_price).to eq product.price_ex_vat(quantity)
       end
 
       it "sets the product RRP" do
@@ -68,7 +68,7 @@ describe "Admin order lines API" do
       end
 
       it "sets the tax amount" do
-        expect(order_line.tax_amount).to eq product.tax_amount(quantity) * quantity
+        expect(order_line.vat_amount).to eq product.vat_amount(quantity) * quantity
       end
 
       context "with optional attributes supplied" do
@@ -76,14 +76,14 @@ describe "Admin order lines API" do
         let(:product_price) { 56.78 }
         let(:product_rrp) { 67.89 }
         let(:product_weight) { 0.4 }
-        let(:tax_amount) { 8.52 }
+        let(:vat_amount) { 8.52 }
 
         it "uses them instead" do
           expect(order_line.product_name).to eq product_name
           expect(order_line.product_price).to eq product_price
           expect(order_line.product_rrp).to eq product_rrp
           expect(order_line.product_weight).to eq product_weight
-          expect(order_line.tax_amount).to eq tax_amount
+          expect(order_line.vat_amount).to eq vat_amount
         end
       end
     end

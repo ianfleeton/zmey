@@ -88,12 +88,12 @@ module Orders
       it "records shipping details" do
         order = OrderBuilder.build(123) { |builder|
           builder.add_shipping_details(
-            net_amount: 5.95, tax_amount: 1.19, method: "Royal Mail",
+            net_amount: 5.95, vat_amount: 1.19, method: "Royal Mail",
             quote_needed: true
           )
         }
         expect(order.shipping_amount).to eq 5.95
-        expect(order.shipping_tax_amount).to eq 1.19
+        expect(order.shipping_vat_amount).to eq 1.19
         expect(order.shipping_method).to eq "Royal Mail"
         expect(order.status).to eq Enums::PaymentStatus::NEEDS_SHIPPING_QUOTE
       end
@@ -173,7 +173,7 @@ module Orders
         it "leaves the order status untouched" do
           ob = OrderBuilder.new(123)
           ob.add_shipping_details(
-            net_amount: 0, tax_amount: 0, method: "", quote_needed: true
+            net_amount: 0, vat_amount: 0, method: "", quote_needed: true
           )
           ob.prepare_for_payment
           expect(ob.order.status).to eq Enums::PaymentStatus::NEEDS_SHIPPING_QUOTE

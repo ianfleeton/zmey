@@ -16,8 +16,8 @@ RSpec.describe "Shipping classes admin" do
     visit admin_shipping_classes_path
     click_link "New"
     fill_in "Name", with: shipping_class.name
-    charge_tax = [true, false].sample
-    check_or_uncheck "Charge tax", charge_tax
+    charge_vat = [true, false].sample
+    check_or_uncheck "Charge VAT", charge_vat
     invalid_over_highest_trigger = [true, false].sample
     check_or_uncheck "Invalid over highest trigger", invalid_over_highest_trigger
     allow_oversize = [true, false].sample
@@ -27,7 +27,7 @@ RSpec.describe "Shipping classes admin" do
     click_button "Create Shipping class"
     expect(ShippingClass.find_by(
       name: shipping_class.name,
-      charge_tax: charge_tax,
+      charge_vat: charge_vat,
       invalid_over_highest_trigger: invalid_over_highest_trigger,
       allow_oversize: allow_oversize,
       requires_delivery_address: requires_delivery_address

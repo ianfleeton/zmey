@@ -11,7 +11,7 @@ xmlns:c="http://base.google.com/cns/1.0">
     <title><%= p.title_for_google %></title>
     <link>http://<%= website.domain %><%= url_for p %></link>
     <g:description><%= strip_tags p.description_for_google %></g:description>
-    <g:price><%= formatted_gbp_price p.price_with_tax(1, !website.vat_number.empty?) %></g:price>
+    <g:price><%= formatted_gbp_price p.price_with_vat(1, !website.vat_number.empty?) %></g:price>
 <% unless p.image.nil? -%>
     <g:image_link>http://<%= website.domain %><%= p.image.url(website.product_image_size) %></g:image_link>
 <% end -%>

@@ -69,7 +69,7 @@ module Admin
         let(:order_line_product_sku) { nil }
         let(:order_line_product_weight) { nil }
         let(:order_line_quantity) { nil }
-        let(:order_line_tax_percentage) { nil }
+        let(:order_line_vat_percentage) { nil }
         let(:order_line_feature_descriptions) { nil }
 
         before do
@@ -84,7 +84,7 @@ module Admin
             order_line_product_sku: order_line_product_sku,
             order_line_product_weight: order_line_product_weight,
             order_line_quantity: order_line_quantity,
-            order_line_tax_percentage: order_line_tax_percentage,
+            order_line_vat_percentage: order_line_vat_percentage,
             order_line_feature_descriptions: order_line_feature_descriptions
           }
         end
@@ -124,7 +124,7 @@ module Admin
           let(:order_line_product_sku) { {"-1" => sku, "-2" => "Z"} }
           let(:order_line_product_weight) { {"-1" => "1", "-2" => "3"} }
           let(:order_line_quantity) { {"-1" => "1", "-2" => "2"} }
-          let(:order_line_tax_percentage) { {"-1" => "15", "-2" => "20"} }
+          let(:order_line_vat_percentage) { {"-1" => "15", "-2" => "20"} }
           let(:order_line_feature_descriptions) do
             {"-1" => "fd1", "-2" => "fd2"}
           end
@@ -157,7 +157,7 @@ module Admin
           let(:order_line_product_sku) { {order_line.id => sku} }
           let(:order_line_product_weight) { {order_line.id => 2} }
           let(:order_line_quantity) { {order_line.id => 3} }
-          let(:order_line_tax_percentage) { {order_line.id => 20} }
+          let(:order_line_vat_percentage) { {order_line.id => 20} }
 
           it "updates the order line" do
             order_line.reload

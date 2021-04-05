@@ -122,7 +122,7 @@ class Product < ActiveRecord::Base
   end
 
   # the price of a single product when quantity q is purchased as entered
-  # by the merchant -- tax is not considered
+  # by the merchant -- VAT is not considered
   def price_at_quantity(q)
     p = price
     if (q > 1) && !quantity_prices.empty?
@@ -131,37 +131,37 @@ class Product < ActiveRecord::Base
     p
   end
 
-  # the amount of tax for a single product when quantity q is purchased
-  def tax_amount(q = 1)
-    price_inc_tax(q) - price_ex_tax(q)
+  # the amount of VAT for a single product when quantity q is purchased
+  def vat_amount(q = 1)
+    price_inc_vat(q) - price_ex_vat(q)
   end
 
-  # the price exclusive of tax for a single product when quantity q is purchased
-  def price_ex_tax(q = 1)
-    Taxer.new(price_at_quantity(q), tax_type).ex_tax
+  # the price exclusive of VAT for a single product when quantity q is purchased
+  def price_ex_vat(q = 1)
+    Taxer.new(price_at_quantity(q), tax_type).ex_vat
   end
 
-  # the price inclusive of tax for a single product when quantity q is purchased
-  def price_inc_tax(q = 1)
-    Taxer.new(price_at_quantity(q), tax_type).inc_tax
+  # the price inclusive of VAT for a single product when quantity q is purchased
+  def price_inc_vat(q = 1)
+    Taxer.new(price_at_quantity(q), tax_type).inc_vat
   end
 
-  # the price for a single product when quantity q is purchased with tax included
-  # if inc_tax is true or tax excluded if inc_tax is false
-  def price_with_tax(q, inc_tax)
-    if inc_tax
-      price_inc_tax(q)
+  # the price for a single product when quantity q is purchased with VAT included
+  # if inc_vat is true or VAT excluded if inc_vat is false
+  def price_with_vat(q, inc_vat)
+    if inc_vat
+      price_inc_vat(q)
     else
-      price_ex_tax(q)
+      price_ex_vat(q)
     end
   end
 
-  def rrp_inc_tax
-    Taxer.new(rrp, tax_type).inc_tax
+  def rrp_inc_vat
+    Taxer.new(rrp, tax_type).inc_vat
   end
 
-  def rrp_ex_tax
-    Taxer.new(rrp, tax_type).ex_tax
+  def rrp_ex_vat
+    Taxer.new(rrp, tax_type).ex_vat
   end
 
   def rrp?

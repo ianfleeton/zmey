@@ -22,6 +22,6 @@ class Admin::OrderLinesController < Admin::AdminController
   end
 
   def order_line_params
-    params.require(:order_line).permit(:feature_descriptions, :product_id, :product_name, :product_price, :product_sku, :quantity, :shipped, :tax_amount)
+    params.require(:order_line).permit(:feature_descriptions, :product_id, :product_name, :product_price, :product_sku, :quantity, :shipped, :vat_amount)
   end
 end

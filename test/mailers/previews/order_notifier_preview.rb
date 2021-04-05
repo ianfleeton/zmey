@@ -17,7 +17,7 @@ class OrderNotifierPreview < ActionMailer::Preview
     order.shipping_method = 'Standard shipping'
     order.status = Order::PAYMENT_RECEIVED
     order.website = website
-    order.order_lines << OrderLine.new(product_sku: 'WDG123', product_name: 'A shabby chic coffee table', feature_descriptions: 'Coffee stains: Included', product_price: 975, quantity: 1, tax_amount: 195)
+    order.order_lines << OrderLine.new(product_sku: 'WDG123', product_name: 'A shabby chic coffee table', feature_descriptions: 'Coffee stains: Included', product_price: 975, quantity: 1, vat_amount: 195)
     order.total = 1170
 
     OrderNotifier.notification(website, order)

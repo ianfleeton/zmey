@@ -7,8 +7,8 @@ module PriceCalculator
     let(:product) { Product.new(price: product_price, tax_type: tax_type) }
 
     subject { Base.new(product: product) }
-    it { should delegate_method(:ex_tax).to(:taxer) }
-    it { should delegate_method(:inc_tax).to(:taxer) }
+    it { should delegate_method(:ex_vat).to(:taxer) }
+    it { should delegate_method(:inc_vat).to(:taxer) }
     it { should delegate_method(:with_tax).to(:taxer) }
 
     describe "#initialize" do

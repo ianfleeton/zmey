@@ -18,7 +18,7 @@ RSpec.describe "Add order line" do
     fill_in "order_line_product_brand[-1]", with: "Brand 1"
     fill_in "order_line_product_weight[-1]", with: "1"
     fill_in "order_line_product_price[-1]", with: "1"
-    fill_in "order_line_tax_percentage[-1]", with: "10"
+    fill_in "order_line_vat_percentage[-1]", with: "10"
     fill_in "order_line_feature_descriptions[-1]", with: "fd"
 
     click_button "Add Line"
@@ -28,7 +28,7 @@ RSpec.describe "Add order line" do
     fill_in "order_line_product_brand[-2]", with: "Brand 2"
     fill_in "order_line_product_weight[-2]", with: "2"
     fill_in "order_line_product_price[-2]", with: "2"
-    fill_in "order_line_tax_percentage[-2]", with: "20"
+    fill_in "order_line_vat_percentage[-2]", with: "20"
 
     find(".cancel-save").click_button "Save"
 

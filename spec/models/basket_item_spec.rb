@@ -5,43 +5,43 @@ RSpec.describe BasketItem, type: :model do
     it { should delegate_method(:delivery_cutoff_hour).to(:product) }
   end
 
-  describe "#line_total(inc_tax)" do
-    context "when inc_tax is true" do
+  describe "#line_total(inc_vat)" do
+    context "when inc_vat is true" do
       it "returns the quantity times the price of the product including tax when buying that quantity" do
         product = FactoryBot.build(:product)
         item = BasketItem.new(quantity: 2)
-        allow(item).to receive(:product_price_inc_tax).and_return(12)
+        allow(item).to receive(:product_price_inc_vat).and_return(12)
         item.product = product
         expect(item.line_total(true)).to eq 24
       end
     end
 
-    context "when inc_tax is false" do
+    context "when inc_vat is false" do
       it "returns the quantity times the price of the product excluding tax when buying that quantity" do
         product = FactoryBot.build(:product)
         item = BasketItem.new(quantity: 2)
-        allow(item).to receive(:product_price_ex_tax).and_return(10)
+        allow(item).to receive(:product_price_ex_vat).and_return(10)
         item.product = product
         expect(item.line_total(false)).to eq 20
       end
     end
   end
 
-  describe "#tax_amount" do
+  describe "#vat_amount" do
     it "returns the total amount of tax" do
       product = FactoryBot.create(:product, tax_type: Product::EX_VAT, price: 1)
       basket_item = BasketItem.new(product: product, quantity: 3)
-      expect(basket_item.tax_amount).to be_within(0.0001).of(1 * 3 * Product::VAT_RATE)
+      expect(basket_item.vat_amount).to be_within(0.0001).of(1 * 3 * Product::VAT_RATE)
     end
   end
 
   describe "#savings" do
     it "delegates to the price calculator" do
       calc = instance_double(PriceCalculator::Base)
-      expect(calc).to receive(:savings).with(inc_tax: false).and_return(3.5)
+      expect(calc).to receive(:savings).with(inc_vat: false).and_return(3.5)
       @object = BasketItem.new
       allow(@object).to receive(:price_calculator).and_return(calc)
-      expect(@object.savings(inc_tax: false)).to eq 3.5
+      expect(@object.savings(inc_vat: false)).to eq 3.5
     end
   end
 
@@ -56,21 +56,21 @@ RSpec.describe BasketItem, type: :model do
     end
   end
 
-  describe "#product_price_inc_tax" do
+  describe "#product_price_inc_vat" do
     it "gets a price inc tax from the calculator" do
       basket_item = BasketItem.new
-      calculator = double(PriceCalculator::Base, inc_tax: 123)
+      calculator = double(PriceCalculator::Base, inc_vat: 123)
       allow(basket_item).to receive(:price_calculator).and_return calculator
-      expect(basket_item.product_price_inc_tax).to eq 123
+      expect(basket_item.product_price_inc_vat).to eq 123
     end
   end
 
-  describe "#product_price_ex_tax" do
+  describe "#product_price_ex_vat" do
     it "gets a price ex tax from the calculator" do
       basket_item = BasketItem.new
-      calculator = double(PriceCalculator::Base, ex_tax: 123)
+      calculator = double(PriceCalculator::Base, ex_vat: 123)
       allow(basket_item).to receive(:price_calculator).and_return calculator
-      expect(basket_item.product_price_ex_tax).to eq 123
+      expect(basket_item.product_price_ex_vat).to eq 123
     end
   end
 
@@ -223,7 +223,7 @@ RSpec.describe BasketItem, type: :model do
   describe "#to_order_line" do
     let(:calc) do
       instance_double(
-        PriceCalculator::Base, ex_tax: 1.23, inc_tax: 1.48, weight: 0.5
+        PriceCalculator::Base, ex_vat: 1.23, inc_vat: 1.48, weight: 0.5
       )
     end
     let(:product) { Product.new(id: 123, rrp: 2.34, sku: "sku", name: "Name", brand: "Brand") }
@@ -264,7 +264,7 @@ RSpec.describe BasketItem, type: :model do
     end
 
     it "sets the tax amount of the line total" do
-      expect(line.tax_amount).to eq 0.75
+      expect(line.vat_amount).to eq 0.75
     end
 
     it "sets quantity" do

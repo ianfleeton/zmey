@@ -4,6 +4,6 @@
 
 Sub Total: <%= formatted_price(order.line_total_net) %>
 Delivery: <%= delivery_amount_description(order) %>
-<% if order.zero_rated? %>VAT (zero-rated)<% else %>VAT (20%)<% end %>: <%= formatted_price(order.tax_total) %>
+<% if order.zero_rated? %>VAT (zero-rated)<% else %>VAT (20%)<% end %>: <%= formatted_price(order.vat_total) %>
 
 Order Total: <%= formatted_price(order.total) %>
