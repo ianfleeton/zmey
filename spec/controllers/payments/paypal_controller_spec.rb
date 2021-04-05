@@ -120,7 +120,7 @@ RSpec.describe Payments::PaypalController, type: :controller do
         "first_name" => "test",
         "mc_fee" => "0.23",
         "address_country_code" => "GB",
-        "address_name" => (+"Ruairi O\x92Sullivan").force_encoding("windows-1252"),
+        "address_name" => "Lenina Crowne",
         "notify_version" => "3.8",
         # custom would usually be set to the order number, if set at all.
         # We set it to 'CUSTOM' here to differentiate its value in testing.
@@ -158,7 +158,7 @@ RSpec.describe Payments::PaypalController, type: :controller do
 
     it "checks validity of the IPN message" do
       expected_params = params.dup
-      expected_params["address_name"] = "Ruairi O\x92Sullivan"
+      expected_params["address_name"] = "Lenina Crowne"
       expect(controller).to receive(:ipn_valid?).with(hash_including(expected_params))
       post :ipn_listener, params: params
     end
@@ -248,7 +248,7 @@ RSpec.describe Payments::PaypalController, type: :controller do
         expect(payment.description).to eq "Web purchase"
         expect(payment.email).to eq "buyer@example.org"
         expect(payment.installation_id).to eq "merchant@example.com"
-        expect(payment.name).to eq "Ruairi O’Sullivan"
+        expect(payment.name).to eq "Lenina Crowne"
         expect(payment.raw_auth_message).to start_with('{:address_city=>"Wolverhampton"')
         expect(payment.service_provider).to eq "PayPal (IPN)"
         expect(payment.transaction_id).to eq "0TH37164C80937821"
