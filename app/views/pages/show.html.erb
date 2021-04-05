@@ -1,41 +1,23 @@
-<% child_pages = '' %>
-<% unless @page.children.visible.empty? -%>
-<% child_pages = template("child_pages_before") %>
-  <% @page.children.visible.each do |child| -%>
-  <%
-  child_pages += template('child_page',
-    child: child,
-    thumbnail_exists: !child.image.nil?,
-    thumbnail_url: child.image ? child.image.url(website.page_thumbnail_size) : ''
-  )
-  %>
-  <% end -%>
-<% child_pages += template("child_pages_after") %>
+<%= flash_notice %>
+<%= @page.content %>
+
+<% @page.children.visible.each do |child| -%>
+  <div class="childPage">
+    <p class="childPage-image">
+      <% if child.image.present? -%>
+      <%= link_to image_tag(child.image.url(website.page_thumbnail_size), alt: child.image.name), child.path %>
+      <% end -%>
+    </p>
+    <%= link_to child.name, child.path %>
+  </div>
 <% end -%>
 
-<% product_summaries = template("product_summaries_before") %>
 <% @page.active_product_placements.each do |placement| %>
   <% product = placement.product %>
-  <%
-  product_summaries += template('product_summary',
-    additional_products: render(partial: "products/additional_products", locals: {product: product}),
+
+  <%= render partial: "products/product", object: product, locals: {
     full: false,
     page: @page,
     placement: placement,
-    price: formatted_price(product.price_with_tax(1, @inc_tax)),
-    product: product,
-    product_features: render(partial: "products/product_features", locals: {product: product}),
-    product_image_url: product.image.nil? ? '' : product.image.url(website.product_thumbnail_size)
-    )
-  %>
+  } %>
 <% end %>
-<% product_summaries += template("product_summaries_after") %>
-
-<%=
-template('page',
-  child_pages: child_pages,
-  content: raw(textilize(@page.content)),
-  notice: flash_notice,
-  product_summaries: product_summaries
-)
-%>

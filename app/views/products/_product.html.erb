@@ -5,6 +5,7 @@
   <% unless product.image.nil? -%>
   <p class="product_image">
     <% if full %>
+    <% product_image_url = product.image.nil? ? '' : product.image.url(website.product_thumbnail_size) %>
     <%= image_tag(product_image_url, alt: product.image.name) %>
     <% else %>
     <%= link_to image_tag(product.image.url(@w.product_thumbnail_size), alt: product.image.name), product_path(product) %>
@@ -24,8 +25,8 @@
       <%= raw textilize(product.description) %>
       <% end -%>
     </div>
-    <%= product_features %>
-    <%= additional_products %>
+    <%= render(partial: "products/product_features", locals: {product: product}) %>
+    <%= render(partial: "products/additional_products", locals: {product: product}) %>
     <p class="product_price">
       <%= I18n.t('price') %>:
       <%= formatted_price(product.price_with_tax(1, @inc_tax)) %><%= tax_explanation(product) %>
