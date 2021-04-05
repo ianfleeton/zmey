@@ -93,7 +93,7 @@ group :development do
   gem 'parallel_tests', group: :development
 
   # Use Capistrano for deployment
-  gem 'capistrano', '~> 3.4.0'
+  gem "capistrano", "~> 3.16"
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-rvm', git: 'https://github.com/capistrano/rvm.git'
   gem 'capistrano-passenger'
