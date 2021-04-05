@@ -1,0 +1,35 @@
+<div class="address-actions">
+  <ul>
+    <li><%= link_to t(".#{source}_add"), new_address_path %></li>
+    <li><%= link_to t(".edit_or_delete"), addresses_path(source: source) %></li>
+  </ul>
+</div>
+
+<div class="address-book">
+  <% @addresses.each do |address| %>
+    <div class="address-container">
+      <div class="address">
+        <p>
+          <strong><%= address.full_name %></strong>
+          <br>
+          <%= address.address_line_1 %>
+          <br>
+          = address.address_line_2
+          <br>
+          = address.town_city
+          <br>
+          = address.county
+          <br>
+          = address.postcode
+          <br>
+          = address.country
+        </p>
+        <p class="address-deliver-to">
+          <%= form_tag(action: "select_for_#{source}", id: address.id) do %>
+            <%= submit_tag t(".select_#{source}_address") %>
+          <% end %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
