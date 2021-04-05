@@ -54,7 +54,7 @@ module Admin
         :can_users_create_accounts, :cardsave_active,
         :cardsave_merchant_id, :cardsave_password, :cardsave_pre_shared_key,
         :country_id, :county,
-        :css_url, :default_locale, :default_shipping_class_id, :domain, :email, :fax_number,
+        :default_locale, :default_shipping_class_id, :domain, :email, :fax_number,
         :google_analytics_code, :google_domain_name, :google_ftp_password,
         :google_ftp_username, :invoice_details,
         :mandrill_subaccount,

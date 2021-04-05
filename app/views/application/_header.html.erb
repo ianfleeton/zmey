@@ -9,7 +9,6 @@
     <meta name="description" content="<%= @description %>">
     <%= robots_meta_tag(index: !@no_index, follow: !@no_follow) %>
     <%= stylesheet_link_tag("screen", media: "screen", "data-turbolinks-track": "reload") %>
-    <%= website.css_url.blank? ? '' : stylesheet_link_tag(website.css_url, media: 'screen',  'data-turbolinks-track': 'reload') %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= render("shared/google_analytics_code") %>
   </head>
