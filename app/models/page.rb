@@ -19,7 +19,7 @@ class Page < ActiveRecord::Base
 
   validates_presence_of :title, :name
   validates :description, presence: true, length: {maximum: 200}
-  validates_format_of :slug, with: /\A[-a-z0-9_\/\.]+\Z/,
+  validates_format_of :slug, with: /\A[-a-z0-9_\/.]+\Z/,
                              message: "can only contain lowercase letters, numbers, hyphens, dots, underscores and forward slashes",
                              allow_blank: true
   validates_uniqueness_of :slug, case_sensitive: false

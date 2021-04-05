@@ -11,7 +11,7 @@ module BasketHelper
   def total_savings(basket, inc_tax)
     basket.savings(inc_tax) +
       -1 *
-      (discount_lines_price_total + (inc_tax ? discount_lines_tax_total : 0))
+        (discount_lines_price_total + (inc_tax ? discount_lines_tax_total : 0))
   end
 
   # Returns the total discount amount from discount lines excluding tax.

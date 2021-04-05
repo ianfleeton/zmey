@@ -227,6 +227,6 @@ class PaymentsController < ApplicationController
   end
 
   def cardsave_address
-    [:Address1, :Address2, :Address3, :Address4, :City, :State].map { |k| params[k] }.join("\n").gsub(/\n+/, "\n")
+    [:Address1, :Address2, :Address3, :Address4, :City, :State].map { |k| params[k] }.join("\n").squeeze("\n")
   end
 end

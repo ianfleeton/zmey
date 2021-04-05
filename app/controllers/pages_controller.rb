@@ -14,7 +14,7 @@ class PagesController < ApplicationController
     products = Product.select(:id, :name, :updated_at)
     @collections = [pages, products]
     @other_urls = ["/enquiries/new", "/users/forgot_password", "/users/new",
-                   "/sessions/new", "/basket", "/pages/terms"].collect { |x| website.url + x }
+      "/sessions/new", "/basket", "/pages/terms"].collect { |x| website.url + x }
 
     respond_to do |format|
       format.xml { render layout: false }
