@@ -98,6 +98,9 @@ en:
         heading: "Closure dates"
       new:
         heading: "New closure date"
+    couriers:
+      index:
+        heading: "Couriers"
     enquiries:
       index:
         actions: 'Actions'
@@ -117,8 +120,10 @@ en:
         class_name: 'Class name'
     images:
       index:
+        close: "Close"
         heading: "Images"
         search: "Search"
+        search_images: "Search images"
     import:
       index:
         class_name: 'What kind of data do you want to import?'
@@ -189,6 +194,8 @@ en:
         heading: "Pages"
         no_pages: "No pages"
         top: "Top"
+      new_shortcut:
+        heading: "New shortcut"
     payments:
       new:
         choose_method: 'Choose method'
@@ -407,9 +414,6 @@ en:
         create:
           flash:
             created: 'Your new API key has been created.'
-      couriers:
-        index:
-          heading: "Couriers"
       import:
         csv:
           import_in_progress: 'Import is running in the background.'
@@ -422,9 +426,6 @@ en:
       offline_payment_methods:
         create:
           created: 'New offline payment method has been created.'
-      pages:
-        new_shortcut:
-          heading: "New shortcut"
       product_images:
         create:
           added: 'Image added.'
