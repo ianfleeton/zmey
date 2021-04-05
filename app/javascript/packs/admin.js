@@ -8,7 +8,9 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
-import 'jquery';
+import $ from 'jquery';
+// Attach to window for legacy admin inline jQuery-using JavaScript.
+window.$ = $;
 import('admin/plugins');
 
 import 'ace-builds';
