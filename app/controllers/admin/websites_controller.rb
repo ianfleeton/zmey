@@ -77,7 +77,6 @@ module Admin
         :show_vat_inclusive_prices, :skip_payment, :skype_name,
         :subdomain,
         :terms_and_conditions, :town_city, :twitter_username,
-        :use_default_css,
         :vat_number,
         :yorkshire_payments_active,
         :yorkshire_payments_merchant_id,

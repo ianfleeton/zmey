@@ -147,17 +147,6 @@
             = form.label :css_url, 'CSS URL'
             = form.text_field :css_url, class: 'form-control'
 
-          .form-group
-            p.form-control-static Use default CSS?
-            .radio
-              label
-                = form.radio_button :use_default_css, true, class: 'radio'
-                | Yes
-            .radio
-              label
-                = form.radio_button :use_default_css, false, class: 'radio'
-                | No
-
     .col-md-4
       .panel.panel-default
         .panel-heading

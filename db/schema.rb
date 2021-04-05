@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_05_183145) do
+ActiveRecord::Schema.define(version: 2021_04_05_184154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -655,7 +655,6 @@ ActiveRecord::Schema.define(version: 2021_04_05_183145) do
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
     t.text "css_url"
-    t.boolean "use_default_css", default: false, null: false
     t.boolean "worldpay_active", default: false, null: false
     t.string "worldpay_installation_id", default: "", null: false
     t.string "worldpay_payment_response_password", default: "", null: false
