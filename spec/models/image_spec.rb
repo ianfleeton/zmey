@@ -15,7 +15,7 @@ RSpec.describe Image, type: :model do
   describe "#write_file" do
     it "writes a copy of the supplied image data to disk" do
       img = FactoryBot.create(:image)
-      original = "spec/fixtures/images/red.png"
+      original = "spec/fixtures/files/images/red.png"
       File.open(original) do |image|
         img.file = image
         img.determine_filename
@@ -29,7 +29,7 @@ RSpec.describe Image, type: :model do
 
     it "updates the md5 hash attribute to match the file data" do
       img = FactoryBot.create(:image)
-      original = "spec/fixtures/images/red.png"
+      original = "spec/fixtures/files/images/red.png"
       File.open(original) do |image|
         img.file = image
         img.determine_filename

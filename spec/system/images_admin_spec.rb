@@ -8,7 +8,7 @@ RSpec.describe "Images admin" do
 
   scenario "Upload a ZIP file of images" do
     visit new_admin_image_path
-    attach_file "Image", "spec/fixtures/images/two-images.zip"
+    attach_file "Image", "spec/fixtures/files/images/two-images.zip"
     fill_in "Name", with: "Widget"
     click_button "Upload New Image"
     expect(page).to have_content "2 images uploaded."
