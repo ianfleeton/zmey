@@ -1,9 +1,9 @@
-doctype html
-html
-  head
-    meta charset="utf-8"
-    title Invoice
-    css:
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
+    <style>
       body {
         font-family: Arial, Verdana, sans-serif;
       }
@@ -66,5 +66,9 @@ html
         border-bottom: 3pt solid #000;
         padding: 8pt;
       }
-  body
-    = yield
+    </style>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>
