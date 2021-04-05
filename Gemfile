@@ -19,9 +19,8 @@ gem "rmagick"
 gem "slim"
 
 # Run jobs in the background
-gem 'daemons'
-gem 'delayed_job_active_record'
-gem 'whenever', require: false
+gem "sidekiq", "~> 6.0"
+gem "whenever", require: false
 
 # Bootstrap for admin area
 gem "bootstrap", "~> 4.5"
@@ -59,7 +58,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem "redis", "~> 4.0"
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -97,7 +96,6 @@ group :development do
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-rvm', git: 'https://github.com/capistrano/rvm.git'
   gem 'capistrano-passenger'
-  gem 'capistrano3-delayed-job', '~> 1.0'
 
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'

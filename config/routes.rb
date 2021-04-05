@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
   devise_for :administrators
+
+  require "sidekiq/web"
+  authenticate :administrator do
+    mount Sidekiq::Web => "/sidekiq"
+  end
+
   namespace :admin do
     get '' => 'admin#index'
 

@@ -52,14 +52,11 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # set :keep_releases, 5
 
 namespace :deploy do
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+  task :restart_sidekiq do
+    on roles(:all) do
+      execute :sudo, :systemctl, "restart", "sidekiq"
     end
   end
-
 end
+
+after "deploy", "deploy:restart_sidekiq"
