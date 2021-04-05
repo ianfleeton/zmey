@@ -407,6 +407,9 @@ en:
         create:
           flash:
             created: 'Your new API key has been created.'
+      couriers:
+        index:
+          heading: "Couriers"
       import:
         csv:
           import_in_progress: 'Import is running in the background.'
@@ -419,6 +422,9 @@ en:
       offline_payment_methods:
         create:
           created: 'New offline payment method has been created.'
+      pages:
+        new_shortcut:
+          heading: "New shortcut"
       product_images:
         create:
           added: 'Image added.'
