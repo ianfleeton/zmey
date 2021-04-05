@@ -14,8 +14,8 @@
 <% end %>
 
 
-<%= form_for(@address, html: {class: 'pure-form pure-form-stacked'}) do |f| %>
+<%= form_for(@address) do |f| %>
   <%= render partial: 'form', object: f %>
-  <%= submit_tag 'Save', class: 'pure-button pure-button-primary' %>
+  <%= submit_tag "Save" %>
 <% end %>
 </div>

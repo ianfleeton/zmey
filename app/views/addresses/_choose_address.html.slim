@@ -3,9 +3,9 @@
     li= link_to t(".#{source}_add"), new_address_path
     li= link_to t('.edit_or_delete'), addresses_path(source: source)
 
-.address-book.pure-g
+.address-book
   - @addresses.each do |address|
-    .address-container.pure-u-1-2
+    .address-container
       .address
         p
           strong= address.full_name
@@ -23,4 +23,4 @@
           = address.country
         p.address-deliver-to
           = form_tag(action: "select_for_#{source}", id: address.id) do
-            = submit_tag t(".select_#{source}_address"), class: 'pure-button'
+            = submit_tag t(".select_#{source}_address")

@@ -1,6 +1,6 @@
 h1= t('.heading')
 
-= form_tag save_details_path, class: 'pure-form pure-form-stacked' do
+= form_tag save_details_path do
   label
     = t('.full_name')
     = text_field_tag :name, session[:name], required: true
@@ -10,4 +10,4 @@ h1= t('.heading')
   label
     = t('.phone_number')
     = telephone_field_tag :phone, session[:phone], required: true
-  = submit_tag t('.continue'), class: 'pure-button'
+  = submit_tag t(".continue")

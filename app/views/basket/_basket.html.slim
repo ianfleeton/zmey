@@ -1,10 +1,10 @@
-= form_tag({controller: 'basket', action: 'update'}, class: 'pure-form') do
+= form_tag({controller: "basket", action: "update"}) do
   - if can_update
     / Hack to make Update Quantities the default submit button by putting a
     / duplicate of it first and then using CSS to hide it.
     span style="position: absolute; left: -100%;"
       input type="submit" name="update_quantities" value="#{t('.update_quantities')}"
-  table#basket.basket.pure-table.pure-table-bordered
+  table#basket.basket
     thead
       tr
         th= t('.sku')
@@ -32,7 +32,7 @@
           td.line_total= formatted_price(item.line_total(inc_tax))
           - if can_update
             td
-              input.pure-button type="submit" value="#{t('.remove_item')}" name="remove_item[#{item.id}]"
+              input type="submit" value="#{t('.remove_item')}" name="remove_item[#{item.id}]"
       - if defined?(@discount_lines)
         - @discount_lines.each do |dl|
           tr
@@ -84,9 +84,9 @@
   - if can_update
     = render partial: 'customer_note', locals: { customer_note: basket.customer_note }
     p.basket_buttons
-      input.update-quantities.pure-button type="submit" name="update_quantities" value="#{t('.update_quantities')}"
+      input.update-quantities type="submit" name="update_quantities" value="#{t('.update_quantities')}"
       = ' '
-      input.checkout.pure-button.pure-button-primary type="submit" name="checkout" value="#{t('checkout.checkout')}"
+      input.checkout type="submit" name="checkout" value="#{t('checkout.checkout')}"
 
 - if can_update
   h2= t('.coupons')
@@ -100,9 +100,9 @@
             = " (#{Discount.find_by(coupon: coupon).name}) "
             = link_to('Remove', { controller: :basket, action: :remove_coupon, coupon_code: coupon }, title: "Remove #{coupon}")
 
-  = form_tag({controller: 'basket', action: 'enter_coupon'}, class: 'pure-form') do
+  = form_tag({controller: 'basket', action: 'enter_coupon'}) do
     fieldset
       legend= t('.enter_coupon_code')
       input#coupon_code type="text" name="coupon_code"
       = ' '
-      input.apply-coupon.pure-button type="submit" value="#{t('.apply_coupon')}"
+      input.apply-coupon type="submit" value="#{t('.apply_coupon')}"
