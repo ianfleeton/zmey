@@ -20,11 +20,11 @@ RSpec.describe "Orders admin" do
     fill_in "Billing address line 1", with: "123 Street"
     fill_in "Billing town city", with: "Doncaster"
     fill_in "Billing postcode", with: "DN99 1AB"
-    select Country.first, from: "Billing country"
+    select Country.first.name, from: "Billing country"
     fill_in "Delivery address line 1", with: "123 Street"
     fill_in "Delivery town city", with: "Doncaster"
     fill_in "Delivery postcode", with: "DN99 1AB"
-    select Country.first, from: "Delivery country"
+    select Country.first.name, from: "Delivery country"
     click_button "Save"
 
     expect(Order.find_by(email_address: email)).to be
