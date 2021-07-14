@@ -48,7 +48,7 @@ gem 'puma', '~> 4.3'
 gem 'sass-rails', '~> 5'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 4.0'
+gem "webpacker", "~> 5.0"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
