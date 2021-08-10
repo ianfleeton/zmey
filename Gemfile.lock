@@ -9,7 +9,6 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    RedCloth (4.3.2)
     actioncable (6.1.4)
       actionpack (= 6.1.4)
       activesupport (= 6.1.4)
@@ -399,7 +398,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  RedCloth
   acts_as_list
   acts_as_tree
   bootsnap (>= 1.4.2)

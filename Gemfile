@@ -8,7 +8,6 @@ gem "rails", "~> 6.1.4"
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 
-gem "RedCloth"
 gem "acts_as_list"
 gem "acts_as_tree"
 gem "exception_notification"
