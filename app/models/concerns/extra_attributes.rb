@@ -21,10 +21,8 @@ module ExtraAttributes
   #   product.length = '1500'
   #   product.attributes # => {"length" => "1500", "width" => nil}
   def extra_attributes
-    Hash[
-      self.class.extra_attributes
-        .map { |a| [a.attribute_name, send(a.attribute_name)] }
-    ]
+    self.class.extra_attributes
+      .map { |a| [a.attribute_name, send(a.attribute_name)] }.to_h
   end
 
   # Returns the <tt>extra</tt> attribute parsed as JSON.

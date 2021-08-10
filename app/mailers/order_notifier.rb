@@ -46,7 +46,7 @@ class OrderNotifier < ActionMailer::Base
     @website = website
     @order = order
     mail(to: recipients, subject: website.name + ": waiting for payment " + order.order_number,
-         from: website.email_address)
+      from: website.email_address)
     render "notification"
   end
 

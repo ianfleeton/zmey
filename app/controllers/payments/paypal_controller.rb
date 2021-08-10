@@ -140,7 +140,7 @@ class Payments::PaypalController < PaymentsController
   # Keys are symbolized.
   def convert_to_utf8(hash)
     charset = hash[:charset]
-    Hash[hash.map { |k, v| [k, v.dup.force_encoding(charset).encode("utf-8")] }].symbolize_keys
+    hash.map { |k, v| [k, v.dup.force_encoding(charset).encode("utf-8")] }.to_h.symbolize_keys
   end
 
   def pdt_notification_sync_response_body(transaction_token, identity_token)
