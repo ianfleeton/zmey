@@ -7,6 +7,8 @@ en:
       address:
         label: 'Label to use in dropdown menu'
         town_city: "City"
+      order:
+        shipping_vat_amount: "Shipping VAT amount"
   account:
     change_password:
       title: "Change your password | %{website}"

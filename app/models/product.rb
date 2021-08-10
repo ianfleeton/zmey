@@ -118,7 +118,7 @@ class Product < ActiveRecord::Base
   # Returns a <tt>PriceCalculator</tt> to work out the price of this product
   # in a basket.
   def price_calculator(params)
-    @price_calculator ||= price_calculator_class.new(params.merge(product: self))
+    @price_calculator ||= price_calculator_class.new(product: self, basket_item: params[:basket_item])
   end
 
   # the price of a single product when quantity q is purchased as entered

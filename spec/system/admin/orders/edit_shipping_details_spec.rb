@@ -17,8 +17,8 @@ RSpec.describe "Edit shipping details" do
     order.reload
     expect(order.shipping_method).to eq "Long distance courier"
     expect(order.shipping_amount).to eq 8
-    expect(order.shipping_vat_amount).to eq 1.6
-    expect(order.total).to eq 9.6
+    expect(order.shipping_vat_amount).to eq BigDecimal("1.6")
+    expect(order.total).to eq BigDecimal("9.6")
   end
 
   scenario "Edit delivery instructions" do
