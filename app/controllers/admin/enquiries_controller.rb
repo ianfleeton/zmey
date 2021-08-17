@@ -32,6 +32,6 @@ class Admin::EnquiriesController < Admin::AdminController
   end
 
   def enquiry_params
-    params.require(:enquiry).permit(:address, :call_back, :country, :email, :enquiry, :fax, :hear_about, :name, :organisation, :postcode, :telephone)
+    params.require(:enquiry).permit(:address, :call_back, :country, :email, :enquiry, :hear_about, :name, :organisation, :postcode, :telephone)
   end
 end

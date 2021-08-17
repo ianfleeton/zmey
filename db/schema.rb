@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_10_184044) do
+ActiveRecord::Schema.define(version: 2021_08_17_092216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,7 +213,6 @@ ActiveRecord::Schema.define(version: 2021_08_10_184044) do
     t.string "postcode", default: "", null: false
     t.string "telephone", default: "", null: false
     t.string "email", default: "", null: false
-    t.string "fax", default: "", null: false
     t.text "enquiry"
     t.string "call_back", default: "", null: false
     t.string "hear_about", default: "", null: false
@@ -674,7 +673,6 @@ ActiveRecord::Schema.define(version: 2021_08_10_184044) do
     t.string "postcode", default: "", null: false
     t.integer "country_id", null: false
     t.string "phone_number", default: "", null: false
-    t.string "fax_number", default: "", null: false
     t.string "twitter_username", default: "", null: false
     t.string "skype_name", default: "", null: false
     t.boolean "sage_pay_active", default: false, null: false

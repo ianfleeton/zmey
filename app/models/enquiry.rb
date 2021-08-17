@@ -10,7 +10,6 @@
 # * +call_back+ -- Whether and when the customer would like to be phoned by the merchant.
 # * +email+
 # * +enquiry+
-# * +fax+
 # * +hear_about+ -- How the customer heard about the shop.
 # * +name+
 # * +organisation+ -- Organisation the customer belongs to (such as a company).

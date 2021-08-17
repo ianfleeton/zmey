@@ -10,7 +10,6 @@ class EnquiryNotifier < ActionMailer::Base
     @postcode = e.postcode
     @telephone = e.telephone
     @email = e.email
-    @fax = e.fax
     @enquiry = e.enquiry
     @call_back = e.call_back
     @hear_about = e.hear_about
