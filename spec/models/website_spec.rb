@@ -78,28 +78,6 @@ RSpec.describe Website, type: :model do
     expect(@website.only_accept_payment_on_account?).to be_falsey
   end
 
-  it "orders enquiries in reverse chronological order" do
-    @website.save
-
-    params = {name: "Alice", telephone: "123", email: "alice@example.org", enquiry: "Hello"}
-
-    enquiries = []
-    enquiries << Enquiry.new(params)
-    enquiries << Enquiry.new(params)
-    enquiries << Enquiry.new(params)
-
-    [1.hour.ago, 5.minutes.ago, 1.minute.ago].each_with_index do |time, index|
-      enquiry = enquiries[index]
-      enquiry.created_at = time
-      enquiry.website_id = @website.id
-      enquiry.save!
-    end
-
-    expect(@website.enquiries.first).to eq enquiries.last
-    expect(@website.enquiries.second).to eq enquiries.second
-    expect(@website.enquiries.third).to eq enquiries.first
-  end
-
   describe "#address" do
     it "returns the address as a string formatted in single line" do
       website = Website.new(
