@@ -8,23 +8,9 @@ module ApplicationHelper
 
   # Renders HTML for the flash notice.
   def flash_notice
-    notice = flash_notice_content
-    if notice.present?
-      content_tag("div", h(notice), {id: "flash_notice"})
+    if flash[:notice].present?
+      content_tag("div", h(flash[:notice]), {id: "flash_notice"})
     end
-  end
-
-  # Returns a string containing the content of the flash notice. If there is
-  # no notice then an empty string is returned.
-  def flash_notice_content
-    content = ""
-    if flash[:now]
-      content = flash[:now]
-    end
-    if flash[:notice]
-      content += " " + flash[:notice]
-    end
-    content
   end
 
   def truncate(string, length)
