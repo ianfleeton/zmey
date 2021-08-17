@@ -119,11 +119,7 @@ module ApplicationHelper
     if lt
       raw Liquid::Template.parse(lt.markup).render(args.stringify_keys!)
     else
-      begin
-        render partial: "default_templates/#{name}", locals: args
-      rescue ActionView::MissingTemplate
-        raw LiquidTemplate.new_called(name).markup
-      end
+      raw LiquidTemplate.new_called(name).markup
     end
   end
 
