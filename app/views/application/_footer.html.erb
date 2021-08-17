@@ -1,8 +1,7 @@
 <footer role="contentinfo">
   &copy;<%= Date.today.year %> <%= website.name %>. All rights reserved.
-  <%= link_to('Terms', terms_path) unless website.terms_and_conditions.blank? %>
+  <%= link_to("Terms", terms_path) unless website.terms_and_conditions.blank? %>
 </footer>
 </div><!--#wrapper-->
-<div id="bottom"></div>
 </body>
 </html>

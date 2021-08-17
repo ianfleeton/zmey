@@ -1,5 +1,0 @@
-- if order.fully_shipped?
-  .invoice-html
-    = link_to t('.invoice_html'), invoice_order_path(order), data: { no_turbolink: true }
-  .invoice-pdf
-    = link_to t('.invoice_pdf'), invoice_order_path(order, format: :pdf)

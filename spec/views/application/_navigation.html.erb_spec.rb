@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "application/_navigation.html.slim", type: :view do
+RSpec.describe "application/_navigation.html.erb", type: :view do
   before do
     allow(Page).to receive(:navs).and_return navs
     without_partial_double_verification do

@@ -1,0 +1,38 @@
+<h1><%= t(".heading") %></h1>
+
+<p><%= t(".introduction") %></p>
+
+<p><%= link_to t(".add_new_address"), new_address_path %></p>
+
+<div class="address-book">
+  <% @addresses.each do |address| %>
+    <div class="address-container">
+      <div class="address">
+        <p>
+          <strong><%= address.full_name %></strong>
+          <br>
+          <%= address.address_line_1 %>
+          <br>
+          <%= address.address_line_2 %>
+          <br>
+          <%= address.town_city %>
+          <br>
+          <%= address.county %>
+          <br>
+          <%= address.postcode %>
+          <br>
+          <%= address.country %>
+        </p>
+        <p class="address-label-info">
+          <%= t(".label_info", label: address.label) %>
+        </p>
+        <p class="address-edit">
+          <%= link_to t(".edit"), edit_address_path(address), title: "Edit #{address}" %>
+        </p>
+        <p class="address-delete">
+          <%= link_to t(".delete"), address_path(address), data: {confirm: "Are you sure?"}, method: :delete, title: "Delete #{address}" %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>

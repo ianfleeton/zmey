@@ -1,0 +1,8 @@
+<% if order.fully_shipped? %>
+  <div class="invoice-html">
+    <%= link_to t(".invoice_html"), invoice_order_path(order), data: {no_turbolink: true} %>
+  </div>
+  <div class="invoice-pdf">
+    <%= link_to t(".invoice_pdf"), invoice_order_path(order, format: :pdf) %>
+  </div>
+<% end %>
