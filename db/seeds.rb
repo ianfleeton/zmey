@@ -6,6 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+Administrator.destroy_all
 Order.fast_delete_all
 Page.destroy_all
 Product.destroy_all
@@ -15,20 +16,20 @@ Website.destroy_all
 Country.populate!
 
 website = Website.create!(
-  country: Country.find_by(name: 'United Kingdom'),
-  domain: 'www.localhost',
-  email: 'merchant@example.com',
-  name: 'Shop',
-  subdomain: 'local'
+  country: Country.find_by(name: "United Kingdom"),
+  domain: "www.localhost",
+  email: "merchant@example.com",
+  name: "Shop",
+  subdomain: "local"
 )
 
 Page.bootstrap(website)
 
-home_page = Page.find_by(name: 'Home')
+home_page = Page.find_by(name: "Home")
 
 idevice = Product.create!(
-  name: 'iDevice',
-  sku: 'IDV13',
+  name: "iDevice",
+  sku: "IDV13"
 )
 
 ProductPlacement.create!(
@@ -36,24 +37,24 @@ ProductPlacement.create!(
   product: idevice
 )
 
-admin = Administrator.create!(
+Administrator.create!(
   email: "merchant@example.com",
   name: "Alice Adams",
-  password: "secret",
+  password: "secret"
 )
 
 bob = User.create!(
-  email: 'bob@example.com',
-  name: 'Bob Brown',
-  password: 'letmein',
+  email: "bob@example.com",
+  name: "Bob Brown",
+  password: "topsecret"
 )
 
-bob_home = Address.create!(
-  address_line_1: '1 Somerset Road',
+Address.create!(
+  address_line_1: "1 Somerset Road",
   country: Country.first,
-  email_address: 'bob@example.org',
-  full_name: 'Bob Brown',
-  postcode: 'L0N D0N',
-  town_city: 'London',
+  email_address: "bob@example.org",
+  full_name: "Bob Brown",
+  postcode: "L0N D0N",
+  town_city: "London",
   user: bob
 )
