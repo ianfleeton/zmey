@@ -54,7 +54,7 @@ gem "jquery-rails"
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "turbolinks", "~> 5"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem "jbuilder", "~> 2.5"
+gem "jbuilder", "~> 2.7"
 
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 4.0"
@@ -65,7 +65,7 @@ gem "redis", "~> 4.0"
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", ">= 1.4.2", require: false
+gem "bootsnap", ">= 1.4.4", require: false
 
 group :development, :test do
   gem "rspec-rails", "~> 5.0.0"
@@ -84,7 +84,6 @@ group :development do
   gem "brakeman", "~> 4.8.0"
 
   gem "spring-commands-rspec"
-  gem "pry", "~> 0.12.0"
   gem "guard-rspec", require: false
 
   #  Run specs in parallel
@@ -97,11 +96,10 @@ group :development do
   gem "capistrano-passenger"
 
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem "web-console", ">= 3.3.0"
-  gem "listen", "~> 3.2"
+  gem "web-console", ">= 4.1.0"
+  gem "listen", "~> 3.3"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
 end
 
 group :test do
@@ -109,7 +107,7 @@ group :test do
   gem "shoulda-matchers"
   gem "simplecov", require: false
   # Adds support for Capybara system testing and selenium driver
-  gem "capybara", ">= 2.15"
+  gem "capybara", ">= 3.26"
   gem "selenium-webdriver"
 
   # Allows stubbing HTTP requests and setting expectations on HTTP requests
