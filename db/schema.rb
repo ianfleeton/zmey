@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_17_092216) do
+ActiveRecord::Schema.define(version: 2021_08_17_100701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -218,8 +218,6 @@ ActiveRecord::Schema.define(version: 2021_08_17_092216) do
     t.string "hear_about", default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer "website_id", default: 0, null: false
-    t.index ["website_id"], name: "index_enquiries_on_website_id"
   end
 
   create_table "extra_attributes", id: :serial, force: :cascade do |t|
