@@ -1,23 +1,25 @@
-class Admin::ImportController < Admin::AdminController
-  def index
-  end
+module Admin
+  class ImportController < AdminController
+    ALLOW_LIST = ["Page", "Product", "ProductGroup"].freeze
 
-  def csv
-    if params[:csv].present?
-      fn = "#{SecureRandom.hex[0, 8]}-#{params[:csv].original_filename}"
-      path = File.join("tmp", fn)
-      File.open(path, "w") { |f| f.write(File.read(params[:csv].tempfile)) }
-
-      importer = CSVImporter.new(path, params[:class_name])
-      if Rails.env.production?
-        importer.delay.import
-      else
-        importer.import
-      end
-      notice = I18n.t("controllers.admin.import.csv.import_in_progress")
-    else
-      notice = I18n.t("controllers.admin.import.csv.nothing_uploaded")
+    def index
     end
-    redirect_to admin_import_index_path, notice: notice
+
+    def csv
+      return head(403) unless ALLOW_LIST.include?(params[:class_name])
+
+      if params[:csv].present?
+        fn = "#{SecureRandom.hex[0, 8]}-#{params[:csv].original_filename}"
+        path = File.join("tmp", fn)
+        File.open(path, "w") { |f| f.write(File.read(params[:csv].tempfile)) }
+
+        CSVImportWorker.perform_async(path, params[:class_name])
+
+        notice = I18n.t("controllers.admin.import.csv.import_in_progress")
+      else
+        notice = I18n.t("controllers.admin.import.csv.nothing_uploaded")
+      end
+      redirect_to admin_import_index_path, notice: notice
+    end
   end
 end
