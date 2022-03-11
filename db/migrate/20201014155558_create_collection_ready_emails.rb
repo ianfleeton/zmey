@@ -1,4 +1,4 @@
-class CreateCollectionReadyEmails < ActiveRecord::Migration[6.0]
+class CreateCollectionReadyEmails < ActiveRecord::Migration[6.1]
   def change
     create_table :collection_ready_emails do |t|
       t.references :order, null: false, foreign_key: true

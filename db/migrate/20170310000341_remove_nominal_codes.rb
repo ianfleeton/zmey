@@ -1,4 +1,4 @@
-class RemoveNominalCodes < ActiveRecord::Migration[5.1]
+class RemoveNominalCodes < ActiveRecord::Migration[6.0]
   def change
     create_table "additional_products", id: :integer, force: :cascade do |t|
       t.integer "product_id", null: false
@@ -232,7 +232,7 @@ class RemoveNominalCodes < ActiveRecord::Migration[5.1]
       t.index ["product_id"], name: "index_order_lines_on_product_id"
     end
 
-    create_table "orders", id: :integer, force: :cascade do |t|
+    create_table "orders", id: :bigint, force: :cascade do |t|
       t.integer "user_id"
       t.string "order_number", default: "", null: false
       t.string "email_address", default: "", null: false
