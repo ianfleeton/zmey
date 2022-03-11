@@ -1,5 +1,0 @@
-class RemoveFaxFromEnquiries < ActiveRecord::Migration[6.1]
-  def change
-    remove_column :enquiries, :fax
-  end
-end
