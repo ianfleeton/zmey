@@ -22,8 +22,8 @@ gem "sidekiq", "~> 6.4"
 gem "whenever", require: false
 
 # Bootstrap for admin area
-gem "bootstrap", "~> 4.5"
-gem "bootstrap_form", "~> 4.5"
+gem "bootstrap", "~> 5.0"
+gem "bootstrap_form", "~> 5.0"
 
 # Authentication and related security policies
 gem "devise"
