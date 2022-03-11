@@ -23,8 +23,7 @@ Deployment is handled by Capistrano. To deploy to production run the following:
 
 === Ruby version
 
-Zmey should run fine on Ruby 2.5 or above. It is currently in use on MRI
-Ruby 2.7.2.
+Zmey runs on Ruby 3.0.2.
 
 === System dependencies
 
