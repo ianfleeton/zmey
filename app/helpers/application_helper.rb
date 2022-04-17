@@ -50,11 +50,7 @@ module ApplicationHelper
     if lt
       parse_and_render_template(lt.markup, args)
     else
-      begin
-        render partial: "default_templates/#{name}", locals: args
-      rescue ActionView::MissingTemplate
-        raw LiquidTemplate.new_called(name).markup
-      end
+      raw LiquidTemplate.new_called(name).markup
     end
   end
 
@@ -97,15 +93,6 @@ module ApplicationHelper
       d.strftime("%e %b at ") + d.strftime("%l:%M%p").downcase
     else
       d.strftime("%e %b %Y at ") + d.strftime("%l:%M%p").downcase
-    end
-  end
-
-  def template(name, args = {})
-    lt = LiquidTemplate.find_by(name: name)
-    if lt
-      raw Liquid::Template.parse(lt.markup).render(args.stringify_keys!)
-    else
-      raw LiquidTemplate.new_called(name).markup
     end
   end
 

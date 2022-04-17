@@ -8,7 +8,7 @@ module PDF
       FactoryBot.create(:website)
       FactoryBot.create(
         :liquid_template, name: "pdfs.order_confirmation_info",
-                          markup: "outer {{ order_confirmation_info }}"
+        markup: "outer {{ order_confirmation_info }}"
       )
       FactoryBot.create(
         :liquid_template, name: "order_confirmation_info.html", markup: "inner"

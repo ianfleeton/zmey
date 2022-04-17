@@ -66,7 +66,7 @@ module MediaItem
   # Returns the raw file data for the original item.
   # Returns nil if the image file is missing or cannot be opened.
   def data
-    File.open(original_path, "rb", &:read)
+    File.binread(original_path)
   rescue
     nil
   end

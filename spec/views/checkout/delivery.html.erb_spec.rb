@@ -1,8 +1,9 @@
 require "rails_helper"
 
+HIDDEN_DELIVERY_ADDRESS_PARAMS = {full_name: "fn"}.freeze
+
 RSpec.describe "checkout/delivery", type: :view do
-  HIDDEN_PARAMS = {full_name: "fn"}.freeze
-  let(:address) { Address.new(HIDDEN_PARAMS) }
+  let(:address) { Address.new(HIDDEN_DELIVERY_ADDRESS_PARAMS) }
 
   before do
     without_partial_double_verification do
@@ -39,7 +40,7 @@ RSpec.describe "checkout/delivery", type: :view do
     expect(rendered).to have_selector "input[name='address[town_city]']"
   end
 
-  HIDDEN_PARAMS.each do |k, v|
+  HIDDEN_DELIVERY_ADDRESS_PARAMS.each do |k, v|
     it "has a hidden field for #{k} with value #{v}" do
       expect(rendered).to have_selector(
         "input[type='hidden'][name='address[#{k}]'][value='#{v}']",

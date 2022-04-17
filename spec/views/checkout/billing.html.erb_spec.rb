@@ -1,8 +1,10 @@
 require "rails_helper"
 
+HIDDEN_BILLING_ADDRESS_PARAMS = {full_name: "fn"}.freeze
+
 RSpec.describe "checkout/billing", type: :view do
-  HIDDEN_PARAMS = {full_name: "fn"}.freeze
-  let(:address) { Address.new(HIDDEN_PARAMS) }
+  def HIDDEN_BILLING_ADDRESS_PARAMS = {full_name: "fn"}.freeze
+  let(:address) { Address.new(HIDDEN_BILLING_ADDRESS_PARAMS) }
 
   let(:shipping_class_name) { "Mainland UK" }
   let(:shipping_class) { ShippingClass.new(name: shipping_class_name) }
@@ -35,7 +37,7 @@ RSpec.describe "checkout/billing", type: :view do
     end
   end
 
-  HIDDEN_PARAMS.each do |k, v|
+  HIDDEN_BILLING_ADDRESS_PARAMS.each do |k, v|
     it "has a hidden field for #{k} with value #{v}" do
       expect(rendered).to have_selector(
         "input[type='hidden'][name='address[#{k}]'][value='#{v}']",

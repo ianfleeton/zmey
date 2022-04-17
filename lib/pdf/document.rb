@@ -46,7 +46,7 @@ module PDF
     end
 
     def write_html
-      File.open(html_filename, "w") { |f| f.write(html) }
+      File.write(html_filename, html)
     end
 
     def orientation

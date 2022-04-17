@@ -3,11 +3,11 @@
 require "rails_helper"
 
 module Shipping
-  RSpec.describe BestShippingClass do
-    class DummyClass
-      include BestShippingClass
-    end
+  class DummyClass
+    include BestShippingClass
+  end
 
+  RSpec.describe BestShippingClass do
     describe "#best_shipping_class" do
       it "returns only valid shipping classes" do
         basket = instance_double(Basket)

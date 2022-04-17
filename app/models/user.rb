@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :name
   validates_length_of :password, within: 8..40,
-                                 if: :password_required?
+    if: :password_required?
   validates_confirmation_of :password, if: :password_required?
 
   # callbacks

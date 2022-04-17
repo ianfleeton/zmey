@@ -11,7 +11,7 @@ module Admin
       if params[:csv].present?
         fn = "#{SecureRandom.hex[0, 8]}-#{params[:csv].original_filename}"
         path = File.join("tmp", fn)
-        File.open(path, "w") { |f| f.write(File.read(params[:csv].tempfile)) }
+        File.write(path, File.read(params[:csv].tempfile))
 
         CSVImportWorker.perform_async(path, params[:class_name])
 

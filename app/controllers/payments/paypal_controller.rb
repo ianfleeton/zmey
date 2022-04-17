@@ -127,7 +127,7 @@ class Payments::PaypalController < PaymentsController
     response[:raw_auth_message] = data
     response[:status] = data.split[0].strip
 
-    data.split[1..-1].each do |line|
+    data.split[1..].each do |line|
       key, value = line.strip.split("=")
       key = key.to_sym
       response[key] = CGI.unescape(value || "") if response.key? key

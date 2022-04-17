@@ -277,10 +277,12 @@ RSpec.describe CheckoutController, type: :controller do
     end
   end
 
-  ATTRIBUTES_TO_SAVE = %w[
-    address_line_1 address_line_2 address_line_3 company country_id county
-    postcode town_city
-  ].freeze
+  def attributes_to_save
+    %w[
+      address_line_1 address_line_2 address_line_3 company country_id county
+      postcode town_city
+    ].freeze
+  end
 
   shared_examples_for "deliver_here checked" do
     context "when deliver_here checked" do
@@ -386,8 +388,8 @@ RSpec.describe CheckoutController, type: :controller do
         let(:billing_address) { FactoryBot.create(:address) }
 
         it "updates the billing address" do
-          expect(billing_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
-            .to eq address.attributes.slice(*ATTRIBUTES_TO_SAVE)
+          expect(billing_address.reload.attributes.slice(*attributes_to_save))
+            .to eq address.attributes.slice(*attributes_to_save)
         end
 
         it_behaves_like "deliver_here checked"
@@ -553,8 +555,8 @@ RSpec.describe CheckoutController, type: :controller do
         let(:delivery_address) { FactoryBot.create(:address) }
 
         it "updates the delivery address" do
-          expect(delivery_address.reload.attributes.slice(*ATTRIBUTES_TO_SAVE))
-            .to eq address.attributes.slice(*ATTRIBUTES_TO_SAVE)
+          expect(delivery_address.reload.attributes.slice(*attributes_to_save))
+            .to eq address.attributes.slice(*attributes_to_save)
         end
       end
 

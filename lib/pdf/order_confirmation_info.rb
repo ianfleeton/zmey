@@ -16,10 +16,6 @@ module PDF
     end
 
     class RenderingController < ApplicationController
-      def initialize
-        super
-      end
-
       # Provide a request object that returns nil for any attributes.
       def request
         OpenStruct.new

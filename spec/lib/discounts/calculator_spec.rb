@@ -3,6 +3,11 @@
 require "rails_helper"
 
 module Discounts
+  class FakeCalculator
+    def calculate
+    end
+  end
+
   RSpec.describe Calculator do
     describe "#initialize" do
       it "takes two parameters" do
@@ -25,10 +30,6 @@ module Discounts
       let(:discounts) { [discount] }
       let(:c) { Calculator.new(discounts, Basket.new) }
 
-      class FakeCalculator
-        def calculate
-        end
-      end
       let(:fake_calculator) { FakeCalculator.new }
 
       it "calculates each discount" do

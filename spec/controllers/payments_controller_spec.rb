@@ -16,31 +16,33 @@ RSpec.describe PaymentsController, type: :controller do
     allow(controller).to receive(:website).and_return(website)
   end
 
-  CALLBACK_PARAMS = {
-    Address1: "a1",
-    Address2: "a2",
-    Address3: "a3",
-    Address4: "a4",
-    Amount: "1000",
-    City: "ct",
-    CountryCode: "123",
-    CrossReference: "xr",
-    CurrencyCode: "456",
-    CustomerName: "cn",
-    Message: "msg",
-    OrderDescription: "od",
-    OrderID: "id",
-    PostCode: "pc",
-    PreviousMessage: "pm",
-    PreviousStatusCode: "psc",
-    State: "st",
-    StatusCode: "0",
-    TransactionDateTime: "sc",
-    TransactionType: "tt"
-  }
+  def callback_params
+    {
+      Address1: "a1",
+      Address2: "a2",
+      Address3: "a3",
+      Address4: "a4",
+      Amount: "1000",
+      City: "ct",
+      CountryCode: "123",
+      CrossReference: "xr",
+      CurrencyCode: "456",
+      CustomerName: "cn",
+      Message: "msg",
+      OrderDescription: "od",
+      OrderID: "id",
+      PostCode: "pc",
+      PreviousMessage: "pm",
+      PreviousStatusCode: "psc",
+      State: "st",
+      StatusCode: "0",
+      TransactionDateTime: "sc",
+      TransactionType: "tt"
+    }
+  end
 
   describe "POST cardsave_callback" do
-    let(:params) { CALLBACK_PARAMS }
+    let(:params) { callback_params }
 
     it "creates a new payment" do
       expect { post :cardsave_callback, params: params }.to change { Payment.count }.by(1)
@@ -48,7 +50,7 @@ RSpec.describe PaymentsController, type: :controller do
   end
 
   describe "#cardsave_plaintext_post" do
-    let(:params) { CALLBACK_PARAMS }
+    let(:params) { callback_params }
 
     before do
       website.cardsave_pre_shared_key = "xyzzy"

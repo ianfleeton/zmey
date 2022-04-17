@@ -37,7 +37,7 @@ module Orders
 
     def update_product_price(new_price)
       # Prevent AR change being recorded unnecessarily.
-      return if order_line.product_price == new_price.to_f
+      return if order_line.product_price == new_price.to_d
       order_line.product_price = new_price.to_f
     end
 
