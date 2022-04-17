@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "checkout/_select_payment_method.html.erb", type: :view do
+RSpec.describe "checkout/_select_payment_method", type: :view do
   context "when WorldPay active" do
     let(:website) { FactoryBot.create(:website, worldpay_active: true, worldpay_installation_id: "1234", worldpay_payment_response_password: "secret") }
     let(:order) { FactoryBot.create(:order) }

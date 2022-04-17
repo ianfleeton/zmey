@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "admin/extra_attributes/edit.html.slim" do
+describe "admin/extra_attributes/edit" do
   before do
     assign(:extra_attribute, ExtraAttribute.new)
   end

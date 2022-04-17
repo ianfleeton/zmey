@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/products/_product_groups.html.slim", type: :view do
+RSpec.describe "admin/products/_product_groups", type: :view do
   let(:product) { FactoryBot.create(:product) }
   let(:product_group_placement) { ProductGroupPlacement.new(product: product) }
 

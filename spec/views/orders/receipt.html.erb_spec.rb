@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "orders/receipt.html.erb", type: :view do
+RSpec.describe "orders/receipt", type: :view do
   let(:order) { FactoryBot.create(:order) }
   let(:website) { FactoryBot.build(:website) }
 

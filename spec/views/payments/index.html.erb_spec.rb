@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "payments/index.html.erb" do
+describe "payments/index" do
   let(:alice) { FactoryBot.create(:payment, name: "Alice", amount: "123") }
   let(:bob) { FactoryBot.create(:payment, name: "Bob", amount: "456") }
 

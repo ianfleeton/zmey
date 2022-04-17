@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "orders/invoice.html.erb", type: :view do
+RSpec.describe "orders/invoice", type: :view do
   let(:customer_note) { nil }
   let(:po_number) { nil }
   let!(:status) { Enums::PaymentStatus::WAITING_FOR_PAYMENT }

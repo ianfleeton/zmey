@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/products/index.html.slim", type: :view do
+RSpec.describe "admin/products/index", type: :view do
   include ProductsHelper
 
   before(:each) do

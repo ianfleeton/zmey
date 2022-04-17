@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "admin/products/_form.html.slim" do
+describe "admin/products/_form" do
   before do
     without_partial_double_verification do
       allow(view).to receive(:website).and_return(Website.new)

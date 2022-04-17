@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "addresses/new.html.erb" do
+describe "addresses/new" do
   before do
     assign(:address, Address.new)
   end

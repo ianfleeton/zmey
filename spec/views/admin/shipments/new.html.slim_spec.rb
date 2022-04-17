@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/shipments/new.html.slim" do
+RSpec.describe "admin/shipments/new" do
   let(:shipment) { Shipment.new }
 
   before do

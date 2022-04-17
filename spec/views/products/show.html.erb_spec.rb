@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "products/show.html.erb", type: :view do
+RSpec.describe "products/show", type: :view do
   include ProductsHelper
   let(:website) { FactoryBot.build(:website) }
 

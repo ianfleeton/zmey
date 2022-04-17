@@ -61,7 +61,7 @@ class Api::Admin::OrdersController < Api::Admin::AdminController
       not_conditions[:processed_at] = nil
     end
 
-    Order.where(conditions).where.not(not_conditions)
+    Order.where(conditions).where.not(not_conditions).order(id: :asc)
   end
 
   def convert_order_status

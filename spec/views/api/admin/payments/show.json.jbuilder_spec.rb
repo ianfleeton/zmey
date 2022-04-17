@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "api/admin/payments/show.json.jbuilder" do
+RSpec.describe "api/admin/payments/show" do
   let(:payment) { FactoryBot.create(:payment) }
 
   before do

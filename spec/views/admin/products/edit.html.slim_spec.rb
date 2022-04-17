@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "/admin/products/edit.html.slim", type: :view do
+RSpec.describe "admin/products/edit", type: :view do
   include ProductsHelper
 
   let(:product) { FactoryBot.create(:product) }

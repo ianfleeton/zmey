@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "checkout/_paypal.html.slim", type: :view do
+RSpec.describe "checkout/_paypal", type: :view do
   let(:website) { FactoryBot.create(:website, paypal_active: true, paypal_test_mode: test_mode, paypal_email_address: "paypal@example.com") }
   let(:order) { FactoryBot.create(:order) }
 

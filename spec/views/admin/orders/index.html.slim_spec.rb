@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/orders/index.html.slim", type: :view do
+RSpec.describe "admin/orders/index", type: :view do
   context "with orders" do
     let!(:order) { FactoryBot.create(:order, billing_full_name: "BILLING FN") }
 

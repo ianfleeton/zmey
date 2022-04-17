@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "layouts/admin.html.slim", type: :view do
+RSpec.describe "layouts/admin", type: :view do
   let(:website) { FactoryBot.create(:website) }
 
   before do

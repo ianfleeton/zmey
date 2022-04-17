@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "/admin/products/new.html.slim" do
+describe "admin/products/new" do
   include ProductsHelper
 
   before(:each) do

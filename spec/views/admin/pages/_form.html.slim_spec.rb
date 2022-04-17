@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "admin/pages/_form.html.slim" do
+describe "admin/pages/_form" do
   before do
     without_partial_double_verification do
       allow(view).to receive(:submit_label).and_return("Save")

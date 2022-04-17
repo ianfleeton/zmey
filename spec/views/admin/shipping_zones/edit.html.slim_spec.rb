@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/shipping_zones/edit.html.slim", type: :view do
+RSpec.describe "admin/shipping_zones/edit", type: :view do
   let(:shipping_zone) { FactoryBot.create(:shipping_zone) }
   before do
     assign(:shipping_zone, shipping_zone)

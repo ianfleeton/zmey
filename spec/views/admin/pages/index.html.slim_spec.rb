@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/pages/index.html.slim", type: :view do
+RSpec.describe "admin/pages/index", type: :view do
   let(:parent) { FactoryBot.create(:page) }
 
   before do

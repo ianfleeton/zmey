@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "checkout/_yorkshire_payments.html.erb", type: :view do
+RSpec.describe "checkout/_yorkshire_payments", type: :view do
   let(:website) { FactoryBot.build(:website) }
   let(:order) { FactoryBot.build(:order) }
 

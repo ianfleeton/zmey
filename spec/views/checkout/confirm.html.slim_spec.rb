@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "checkout/confirm.html.erb", type: :view do
+RSpec.describe "checkout/confirm", type: :view do
   let(:logged_in?) { true }
   let(:billing_address) { Address.new }
   let(:delivery_address) { Address.new }

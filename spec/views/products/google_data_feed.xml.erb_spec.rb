@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "products/google_data_feed.xml.erb" do
+describe "products/google_data_feed" do
   let(:website) { FactoryBot.create(:website) }
   let(:products) { [FactoryBot.create(:product, age_group: "adult", gender: "unisex")] }
 

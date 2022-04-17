@@ -44,13 +44,14 @@ RSpec.describe SlugHistory, type: :model do
   describe ".add" do
     it "deletes any existing histories with the new slug in it" do
       old_sh = FactoryBot.create(:slug_history, slug: "existing")
-      SlugHistory.add(double(Page, slug: "existing", slug_was: "", id: 3))
+      page = FactoryBot.create(:page)
+      SlugHistory.add(double(Page, slug: "existing", slug_previously_was: "", id: page.id))
       expect(SlugHistory.exists?(old_sh.id)).to be_falsey
     end
 
     it "creates a new history with the old slug" do
       page = FactoryBot.create(:page)
-      SlugHistory.add(double(Page, slug: "new", slug_was: "old", id: page.id))
+      SlugHistory.add(double(Page, slug: "new", slug_previously_was: "old", id: page.id))
       expect(SlugHistory.exists?(slug: "old", page_id: page.id)).to be_truthy
     end
   end

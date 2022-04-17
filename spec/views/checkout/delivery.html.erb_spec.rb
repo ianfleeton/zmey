@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "checkout/delivery.html.erb", type: :view do
+RSpec.describe "checkout/delivery", type: :view do
   HIDDEN_PARAMS = {full_name: "fn"}.freeze
   let(:address) { Address.new(HIDDEN_PARAMS) }
 

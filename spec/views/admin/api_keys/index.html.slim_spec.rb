@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/api_keys/index.html.slim", type: :view do
+RSpec.describe "admin/api_keys/index", type: :view do
   let(:api_keys) { [] }
 
   before do

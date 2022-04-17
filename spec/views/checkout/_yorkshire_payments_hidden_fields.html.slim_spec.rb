@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "checkout/_yorkshire_payments_hidden_fields.html.slim", type: :view do
+RSpec.describe "checkout/_yorkshire_payments_hidden_fields", type: :view do
   let(:website) {
     FactoryBot.build(
       :website,

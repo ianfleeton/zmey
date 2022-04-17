@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "order_notifier/dispatch.text.erb", type: :view do
+RSpec.describe "order_notifier/dispatch.text", type: :view do
   let(:website) { FactoryBot.create(:website) }
   let(:order) { FactoryBot.create(:order) }
   let(:shipment) { FactoryBot.create(:shipment, order: order) }

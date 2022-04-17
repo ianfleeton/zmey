@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "admin/additional_products/edit.html.slim" do
+describe "admin/additional_products/edit" do
   let(:abacus) { FactoryBot.create(:product) }
   let(:beads) { FactoryBot.create(:product) }
   let(:additional_product) { AdditionalProduct.create!(product: abacus, additional_product: beads) }

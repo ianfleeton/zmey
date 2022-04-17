@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "payments/show.html.slim" do
+describe "payments/show" do
   let(:payment) { FactoryBot.create(:payment) }
 
   before do

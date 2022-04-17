@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "checkout/details.html.slim" do
+RSpec.describe "checkout/details" do
   it "has a form to save details" do
     render
     expect(rendered).to have_selector "form[action='#{save_details_path}']"

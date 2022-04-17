@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "/admin/websites/new.html.slim" do
+describe "admin/websites/new" do
   before do
     assign(:website_subject, Website.new)
     without_partial_double_verification do

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "admin/extra_attributes/index.html.slim" do
+describe "admin/extra_attributes/index" do
   let(:extra_attributes) { [] }
 
   before do

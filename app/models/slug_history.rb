@@ -13,7 +13,7 @@ class SlugHistory < ApplicationRecord
 
   def self.add(page)
     SlugHistory.where(slug: page.slug).delete_all
-    SlugHistory.create(page_id: page.id, slug: page.slug_was)
+    SlugHistory.create(page_id: page.id, slug: page.slug_previously_was)
   end
 
   def delete_others_with_slug

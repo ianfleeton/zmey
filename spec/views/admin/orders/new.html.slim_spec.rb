@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/orders/new.html.slim" do
+RSpec.describe "admin/orders/new" do
   let(:order) { Order.new }
   let(:website) { FactoryBot.create(:website) }
 

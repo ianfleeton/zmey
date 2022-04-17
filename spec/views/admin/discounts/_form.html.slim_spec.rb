@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/discounts/_form.html.slim", type: :view do
+RSpec.describe "admin/discounts/_form", type: :view do
   let(:discount) { Discount.new }
 
   before do
