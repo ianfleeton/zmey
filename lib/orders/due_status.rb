@@ -137,7 +137,7 @@ module Orders
           "paid_on IS NOT NULL OR status = ?",
           Enums::PaymentStatus::PAYMENT_ON_ACCOUNT
         )
-        .where("orders.updated_at > ?", (today - 62.day).to_s(:db))
+        .where("orders.updated_at > ?", (today - 62.day).to_fs(:db))
     end
   end
 end
