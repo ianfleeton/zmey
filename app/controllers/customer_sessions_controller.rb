@@ -58,11 +58,7 @@ class CustomerSessionsController < ApplicationController
   def destroy
     reset_customer_session
     flash[:notice] = "Logged out successfully"
-    if params[:redirect_to]
-      redirect_to params[:redirect_to]
-    else
-      redirect_to action: "new"
-    end
+    redirect_to params[:redirect_to] || {action: "new"}
   end
 
   # Ends the current session using the HTTP GET method.

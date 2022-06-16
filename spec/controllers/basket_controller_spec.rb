@@ -51,7 +51,7 @@ RSpec.describe BasketController, type: :controller do
     end
 
     context "with checkout.x param set (in case of <button>)" do
-      before { post :update, params: {'checkout.x': "10"} }
+      before { post :update, params: {"checkout.x": "10"} }
 
       it { should redirect_to checkout_path }
     end
