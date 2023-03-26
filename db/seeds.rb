@@ -20,7 +20,9 @@ website = Website.create!(
   domain: "www.localhost",
   email: "merchant@example.com",
   name: "Shop",
-  subdomain: "local"
+  show_vat_inclusive_prices: true,
+  subdomain: "local",
+  vat_number: "GB123456789"
 )
 
 Page.bootstrap(website)
@@ -29,7 +31,9 @@ home_page = Page.find_by(name: "Home")
 
 idevice = Product.create!(
   name: "iDevice",
-  sku: "IDV13"
+  price: BigDecimal("579.17"),
+  sku: "IDV13",
+  tax_type: Product::EX_VAT
 )
 
 ProductPlacement.create!(
