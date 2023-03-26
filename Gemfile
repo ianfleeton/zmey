@@ -102,9 +102,10 @@ group :test do
   gem "launchy"
   gem "shoulda-matchers"
   gem "simplecov", require: false
-  # Adds support for Capybara system testing and selenium driver
-  gem "capybara", ">= 3.26"
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem "capybara"
   gem "selenium-webdriver"
+  gem "webdrivers"
 
   # Allows stubbing HTTP requests and setting expectations on HTTP requests
   gem "webmock", "~> 3.0"
