@@ -366,9 +366,6 @@ GEM
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
-    spring (4.0.0)
-    spring-commands-rspec (1.0.4)
-      spring (>= 0.9.1)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -464,8 +461,6 @@ DEPENDENCIES
   sidekiq (~> 6.4)
   simplecov
   slim
-  spring
-  spring-commands-rspec
   standard
   stripe
   turbolinks (~> 5)

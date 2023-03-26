@@ -96,7 +96,7 @@ This can be downloaded from https://github.com/mozilla/geckodriver/releases
 You can run the tests faster in parallel using parallel_tests which will take
 advantage of multiple cores:
 
-  DISABLE_SPRING=1 rake parallel:spec
+  rake parallel:spec
 
 Be sure to set up multiple databases as described in the README
 https://github.com/grosser/parallel_tests
