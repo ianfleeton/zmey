@@ -26,7 +26,7 @@ describe "Admin users API" do
     end
 
     context "with users" do
-      it "returns users for the website" do
+      it "returns users" do
         expect(json["users"].length).to eq 2 # 1 set up + admin
         user = json["users"][0]
         expect(user["id"]).to eq @user1.id
