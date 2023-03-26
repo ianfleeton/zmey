@@ -41,7 +41,7 @@ gem "curb"
 # Stripe
 gem "stripe"
 
-# Use Puma as the app server
+# Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.6"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 5"
@@ -89,10 +89,9 @@ group :development do
   gem "parallel_tests", group: :development
 
   # Use Capistrano for deployment
-  gem "capistrano", "~> 3.16"
-  gem "capistrano-rails", "~> 1.1"
+  gem "capistrano-rails"
   gem "capistrano-rvm", git: "https://github.com/capistrano/rvm.git"
-  gem "capistrano-passenger"
+  gem "capistrano3-puma", "~> 5.2"
 
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
