@@ -87,7 +87,7 @@ GEM
       execjs (~> 2)
     bcrypt (3.1.18)
     bindex (0.8.1)
-    bootsnap (1.12.0)
+    bootsnap (1.16.0)
       msgpack (~> 1.2)
     bootstrap (5.1.3)
       autoprefixer-rails (>= 9.1.0)
@@ -201,7 +201,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.1)
     minitest (5.18.0)
-    msgpack (1.5.2)
+    msgpack (1.6.1)
     nenv (0.3.0)
     net-imap (0.3.4)
       date
@@ -424,7 +424,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_list
   acts_as_tree
-  bootsnap (>= 1.4.4)
+  bootsnap
   bootstrap (~> 5.0)
   bootstrap-will_paginate
   bootstrap_form (~> 5.0)
