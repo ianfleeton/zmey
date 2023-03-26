@@ -105,7 +105,7 @@ class AccountController < ApplicationController
     user.save
     session[:user_id] = user.id
     flash[:notice] = I18n.t("controllers.account.verify_email.verified")
-    redirect_to session[:source] == "checkout/details" ? checkout_details_path : root_path
+    redirect_to (session[:source] == "checkout/details") ? checkout_details_path : root_path
   end
 
   def verify_email_new

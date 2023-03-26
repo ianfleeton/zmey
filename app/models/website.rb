@@ -47,7 +47,7 @@ class Website < ActiveRecord::Base
 
   # Constructs a URL from the website's scheme, domain and port.
   def url
-    "#{scheme}://#{domain}" + (port == 80 ? "" : ":#{port}")
+    "#{scheme}://#{domain}" + ((port == 80) ? "" : ":#{port}")
   end
 
   # Returns an email address including the display name taken from the website's

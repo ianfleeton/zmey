@@ -51,7 +51,7 @@ module Shipping
         end
       end
       context "with date_checker" do
-        it "returns its date_checker\'s #possible?" do
+        it "returns its date_checker's #possible?" do
           date_checker = double
           date = Date.new
           sd = ShippingDate.new(date, date_checker)

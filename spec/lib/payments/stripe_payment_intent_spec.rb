@@ -203,8 +203,7 @@ module Payments
                   "payment_method_details" => {
                     "card" => {
                       "wallet" => {
-                        "apple_pay" => {
-                        },
+                        "apple_pay" => {},
                         "dynamic_last4" => "4242",
                         "type" => "apple_pay"
                       }
@@ -376,8 +375,7 @@ module Payments
       def stub_stripe
         stub_request(:post, "https://api.stripe.com/v1/payment_intents/pi_123/confirm")
           .with(
-            body: {
-            }
+            body: {}
           )
           .to_return(
             status: status,

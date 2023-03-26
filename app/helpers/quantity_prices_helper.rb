@@ -19,7 +19,7 @@ module QuantityPricesHelper
 HTML
     rules.each_index do |i|
       qp = rules[i]
-      qp_next = rules.last == qp ? nil : rules[i + 1]
+      qp_next = (rules.last == qp) ? nil : rules[i + 1]
       html << "<tr>"
       html << "<td>#{qp.quantity}#{qp_next ? "&#8211;" + (qp_next.quantity - 1).to_s : "+"}</td>"
       html << "<td>#{formatted_price(product.price_with_vat(qp.quantity, @inc_vat))}</td>"

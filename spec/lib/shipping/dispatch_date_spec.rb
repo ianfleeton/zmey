@@ -6,7 +6,7 @@ module Shipping
   RSpec.describe DispatchDate do
     describe "#possible?" do
       context "with date_checker" do
-        it "returns its date_checker\'s #possible?" do
+        it "returns its date_checker's #possible?" do
           date_checker = double
           date = Date.new
           dd = DispatchDate.new(date, date_checker)
