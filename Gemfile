@@ -108,7 +108,7 @@ group :test do
   gem "webdrivers"
 
   # Allows stubbing HTTP requests and setting expectations on HTTP requests
-  gem "webmock", "~> 3.0"
+  gem "webmock"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
