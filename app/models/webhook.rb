@@ -12,7 +12,7 @@ class Webhook < ApplicationRecord
     hooks = Webhook.where(event: event)
     if hooks.any?
       payload = object.to_webhook_payload(event)
-      hooks.each { |h| h.delay.trigger(payload) }
+      hooks.each { |h| h.trigger(payload) }
     end
   end
 

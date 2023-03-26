@@ -13,7 +13,7 @@ database.
 
 === Services (job queues, cache servers, search engines, etc.)
 
-Background tasks are handled by Delayed Job.
+Background tasks are handled by Sidekiq which depends on Redis.
 
 === Deployment instructions
 
