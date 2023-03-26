@@ -1,4 +1,4 @@
-class Country < ActiveRecord::Base
+class Country < ApplicationRecord
   UNITED_KINGDOM = "United Kingdom"
 
   validates :name, presence: true, uniqueness: {case_sensitive: false}, length: {maximum: 100}

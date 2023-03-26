@@ -1,4 +1,4 @@
-class Permutation < ActiveRecord::Base
+class Permutation < ApplicationRecord
   belongs_to :component
 
   def to_s

@@ -1,4 +1,4 @@
-class ShippingClass < ActiveRecord::Base
+class ShippingClass < ApplicationRecord
   COLLECTION = "Collection"
   MAINLAND = "Mainland England & Wales"
 

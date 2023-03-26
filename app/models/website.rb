@@ -1,4 +1,4 @@
-class Website < ActiveRecord::Base
+class Website < ApplicationRecord
   validates_inclusion_of :custom_view_resolver, in: %w[CustomView::DatabaseResolver CustomView::ThemeResolver], allow_blank: true
   validates :email, presence: true
   validates_uniqueness_of :google_analytics_code, allow_blank: true

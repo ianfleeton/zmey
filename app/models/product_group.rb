@@ -9,7 +9,7 @@
 #   Where this product's stock is located, such as a particular warehouse.
 # +name+::
 #   A descriptive name for the product group.
-class ProductGroup < ActiveRecord::Base
+class ProductGroup < ApplicationRecord
   # Associations
   belongs_to :location, optional: true
   has_many :product_group_placements, dependent: :delete_all

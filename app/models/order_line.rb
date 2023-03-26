@@ -1,4 +1,4 @@
-class OrderLine < ActiveRecord::Base
+class OrderLine < ApplicationRecord
   # Associations
   belongs_to :order, touch: true, inverse_of: :order_lines
   belongs_to :product, optional: true

@@ -1,4 +1,4 @@
-class Webhook < ActiveRecord::Base
+class Webhook < ApplicationRecord
   belongs_to :website
 
   EVENTS = %w[image_created image_updated order_created]

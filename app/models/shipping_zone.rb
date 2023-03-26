@@ -1,4 +1,4 @@
-class ShippingZone < ActiveRecord::Base
+class ShippingZone < ApplicationRecord
   has_many :countries, -> { order :name }, dependent: :nullify
   has_many :shipping_classes, -> { order "shipping_classes.name" }, dependent: :destroy
   belongs_to :default_shipping_class, class_name: "ShippingClass", optional: true

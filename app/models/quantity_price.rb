@@ -1,4 +1,4 @@
-class QuantityPrice < ActiveRecord::Base
+class QuantityPrice < ApplicationRecord
   belongs_to :product
   validates_presence_of :product_id
   validates_inclusion_of :quantity, in: 2..10_000, message: "should be between 2 and 10,000"

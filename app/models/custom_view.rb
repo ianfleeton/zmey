@@ -1,4 +1,4 @@
-class CustomView < ActiveRecord::Base
+class CustomView < ApplicationRecord
   belongs_to :website
 
   # Resolver implementation adapted from http://www.justinball.com/2011/09/27/customizing-views-for-a-multi-tenant-application-using-ruby-on-rails-custom-resolvers/

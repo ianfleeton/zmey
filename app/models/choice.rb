@@ -1,4 +1,4 @@
-class Choice < ActiveRecord::Base
+class Choice < ApplicationRecord
   belongs_to :feature
   has_many :feature_selections
   has_many :basket_items, through: :feature_selections, dependent: :destroy

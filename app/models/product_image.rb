@@ -1,4 +1,4 @@
-class ProductImage < ActiveRecord::Base
+class ProductImage < ApplicationRecord
   validates_presence_of :image_id, :product_id
 
   belongs_to :image

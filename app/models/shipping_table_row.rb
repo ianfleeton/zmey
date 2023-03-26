@@ -1,4 +1,4 @@
-class ShippingTableRow < ActiveRecord::Base
+class ShippingTableRow < ApplicationRecord
   belongs_to :shipping_class
   validates_uniqueness_of :trigger_value, scope: "shipping_class_id"
 

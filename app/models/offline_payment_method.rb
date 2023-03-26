@@ -1,4 +1,4 @@
-class OfflinePaymentMethod < ActiveRecord::Base
+class OfflinePaymentMethod < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   def to_s

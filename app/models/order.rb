@@ -72,7 +72,7 @@
 # +user+::
 #   The User account associated with the order. This is set when orders are
 #   placed by registered customers.
-class Order < ActiveRecord::Base
+class Order < ApplicationRecord
   require "order_number_generator"
   include Enums
   include Enums::Conversions

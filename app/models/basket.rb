@@ -1,4 +1,4 @@
-class Basket < ActiveRecord::Base
+class Basket < ApplicationRecord
   NEXT_DISCOUNT_TRIGGER_VALUE = 20
 
   # basket items are destroyed so that their feature selections can be cleaned up

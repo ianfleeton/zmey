@@ -1,4 +1,4 @@
-class Discount < ActiveRecord::Base
+class Discount < ApplicationRecord
   # Associations
   has_many :discount_uses, dependent: :delete_all
   belongs_to :product_group, optional: true

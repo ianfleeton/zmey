@@ -1,4 +1,4 @@
-class Page < ActiveRecord::Base
+class Page < ApplicationRecord
   include ExtraAttributes
 
   acts_as_tree order: :position, dependent: :nullify

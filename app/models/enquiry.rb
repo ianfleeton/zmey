@@ -24,6 +24,6 @@
 #
 # +website+::
 #   Website the customer was using to send the enquiry.
-class Enquiry < ActiveRecord::Base
+class Enquiry < ApplicationRecord
   validates_presence_of :name, :telephone, :email, :enquiry
 end

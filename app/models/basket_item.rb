@@ -1,4 +1,4 @@
-class BasketItem < ActiveRecord::Base
+class BasketItem < ApplicationRecord
   validates_numericality_of :quantity, greater_than: 0
 
   belongs_to :basket, inverse_of: :basket_items, touch: true

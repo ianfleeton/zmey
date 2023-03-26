@@ -1,4 +1,4 @@
-class Component < ActiveRecord::Base
+class Component < ApplicationRecord
   has_many :features, dependent: :destroy
   has_many :permutations, dependent: :delete_all
   belongs_to :product

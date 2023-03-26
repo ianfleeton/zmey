@@ -1,4 +1,4 @@
-class AdditionalProduct < ActiveRecord::Base
+class AdditionalProduct < ApplicationRecord
   belongs_to :product
   belongs_to :additional_product, class_name: "Product"
 

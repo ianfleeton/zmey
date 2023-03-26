@@ -1,4 +1,4 @@
-class Product < ActiveRecord::Base
+class Product < ApplicationRecord
   MAX_PRICE = 100_000
   include ExtraAttributes
 

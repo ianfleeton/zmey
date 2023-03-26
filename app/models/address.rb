@@ -1,4 +1,4 @@
-class Address < ActiveRecord::Base
+class Address < ApplicationRecord
   BLANK = "[BLANK]"
   PLACEHOLDER_EMAIL = "nobody@example.org"
 

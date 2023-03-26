@@ -1,4 +1,4 @@
-class Shipment < ActiveRecord::Base
+class Shipment < ApplicationRecord
   # Associations
   belongs_to :courier, inverse_of: :shipments
   belongs_to :order

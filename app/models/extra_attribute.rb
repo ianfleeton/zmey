@@ -1,4 +1,4 @@
-class ExtraAttribute < ActiveRecord::Base
+class ExtraAttribute < ApplicationRecord
   validates_uniqueness_of :attribute_name, scope: :class_name
 
   # Returns 'ClassName#attribute_name'.

@@ -1,4 +1,4 @@
-class ApiKey < ActiveRecord::Base
+class ApiKey < ApplicationRecord
   belongs_to :user
 
   validates :name, format: /\A[-a-zA-Z0-9]+\Z/, uniqueness: {scope: :user_id}

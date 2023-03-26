@@ -1,4 +1,4 @@
-class FeatureSelection < ActiveRecord::Base
+class FeatureSelection < ApplicationRecord
   belongs_to :feature
   belongs_to :basket_item, inverse_of: :feature_selections
   belongs_to :choice, optional: true

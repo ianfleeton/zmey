@@ -1,4 +1,4 @@
-class LiquidTemplate < ActiveRecord::Base
+class LiquidTemplate < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   def to_s
