@@ -94,9 +94,8 @@ group :development do
   gem "capistrano-rvm", git: "https://github.com/capistrano/rvm.git"
   gem "capistrano-passenger"
 
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem "web-console", ">= 4.1.0"
-  gem "listen", "~> 3.3"
+  # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem "web-console"
 end
 
 group :test do

@@ -451,7 +451,6 @@ DEPENDENCIES
   jquery-rails
   launchy
   liquid (~> 3.0)
-  listen (~> 3.3)
   nilify_blanks
   parallel_tests
   pg (>= 0.18, < 2.0)
@@ -472,7 +471,7 @@ DEPENDENCIES
   stripe
   turbolinks (~> 5)
   tzinfo-data
-  web-console (>= 4.1.0)
+  web-console
   webmock (~> 3.0)
   webpacker (~> 5.0)
   whenever
