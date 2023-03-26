@@ -72,7 +72,7 @@ class Image < ApplicationRecord
 
   # Writes the processed image to disk.
   def save_image(img, path)
-    img.write(path) { self.quality = 85 }
+    img.write(path) { |options| options.quality = 85 }
     # Remove metadata.
     `convert -strip #{path} #{path}`
   end
