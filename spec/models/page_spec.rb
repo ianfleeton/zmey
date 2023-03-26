@@ -30,7 +30,7 @@ RSpec.describe Page, type: :model do
 
   it "prevents parent referencing self" do
     page = FactoryBot.create(:page)
-    page.parent = page
+    page.parent_id = page.id
     page.save
     expect(page.errors[:parent_id]).to include "cannot be self"
   end
@@ -39,7 +39,7 @@ RSpec.describe Page, type: :model do
     page = FactoryBot.create(:page)
     child = FactoryBot.create(:page)
     page.children << child
-    page.parent = child
+    page.parent_id = child.id
     page.save
     expect(page.errors[:parent_id]).to include "cannot be a child"
   end

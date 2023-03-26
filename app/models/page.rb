@@ -142,15 +142,11 @@ class Page < ApplicationRecord
   # Custom validations.
 
   def parent_cannot_be_self
-    if parent == self
-      errors.add(:parent_id, "cannot be self")
-    end
+    errors.add(:parent_id, "cannot be self") if parent == self
   end
 
   def parent_cannot_be_a_child
-    if descendants.include?(parent)
-      errors.add(:parent_id, "cannot be a child")
-    end
+    errors.add(:parent_id, "cannot be a child") if descendants.include?(parent)
   end
 
   private
