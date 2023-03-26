@@ -1,1 +1,1 @@
-require 'ext/string'
+require "ext/string"
