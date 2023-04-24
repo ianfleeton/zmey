@@ -18,7 +18,7 @@ gem "rmagick"
 gem "slim"
 
 # Run jobs in the background
-gem "sidekiq", "~> 6.4"
+gem "sidekiq", "~> 7.0"
 gem "whenever", require: false
 
 # Bootstrap for admin area
