@@ -44,7 +44,7 @@ gem "stripe"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.6"
 # Use SCSS for stylesheets
-gem "sass-rails", "~> 5"
+gem "sass-rails", "~> 6"
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker", "~> 5.0"
