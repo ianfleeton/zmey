@@ -59,6 +59,7 @@ nav aria-label="breadcrumb"
       = form_for [:admin, ProductPlacement.new] do |form|
         input type="hidden" name="product_placement[page_id]" value="#{@page.id}"
         javascript:
+          /*
           $(function() {
             $('#search-products').click(function() {
               $.get('/admin/pages/search_products', {query: $('#product-search-query').val()}, function(data) {
@@ -68,6 +69,7 @@ nav aria-label="breadcrumb"
               return false;
             });
           });
+          */
         .form-group
           .row
             .col-xs-9

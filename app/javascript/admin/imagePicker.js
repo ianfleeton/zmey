@@ -1,6 +1,6 @@
-import $ from 'jquery';
-
 export default function imagePicker(object, attribute) {
+  return; // TODO: Use vanilla JS to replace this function.
+
   const imageField = object + '_' + attribute;
   const nextField = imageField + '_next';
   const prevField = imageField + '_prev';

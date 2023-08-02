@@ -5,47 +5,49 @@ html lang="en"
     meta http-equiv="X-UA-Compatible" content="IE=edge"
     meta name="viewport" content="width=device-width, initial-scale=1"
     title= website.name
-    = javascript_pack_tag "admin"
+    = javascript_importmap_tags
+    = javascript_import_module_tag "admin/imagePicker"
     = csrf_meta_tags
-    = stylesheet_link_tag 'admin'
+    = stylesheet_link_tag "admin"
   body
     = render "shared/disable_transitions" if Rails.env.test?
     nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top role="navigation" style="#{'position:static;' if Rails.env.test?}"
-      a.navbar-brand href="/" data-turbolinks="false" Home
-      button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-        span.navbar-toggler-icon
-      #navbarSupportedContent.collapse.navbar-collapse
-        ul.navbar-nav.mr-auto
-          = admin_menu_links({\
-            t('controllers.enquiries') => admin_enquiries_path,\
-            t('controllers.pages') => admin_pages_path,\
-            t('controllers.liquid_templates') => admin_liquid_templates_path,\
-            'Products' => admin_products_path,\
-            'Users' => admin_users_path,\
-            'Orders' => admin_orders_path,\
-            t('controllers.images') => admin_images_path,\
-            })
-          li.nav-item.dropdown
-            a#settingsDropdown.nav-link.dropdown-toggle href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-              | Settings
-            .dropdown-menu aria-labelledby="settingsDropdown"
-              = link_to "Closure dates", admin_closure_dates_path, class: "dropdown-item"
-              = link_to "Countries", admin_countries_path, class: "dropdown-item"
-              = link_to "Discounts", admin_discounts_path, class: "dropdown-item"
-              = link_to "Offline Payments", admin_offline_payment_methods_path, class: "dropdown-item"
-              = link_to "Product Groups", admin_product_groups_path, class: "dropdown-item"
-              = link_to "Shipping Classes", admin_shipping_classes_path, class: "dropdown-item"
-              = link_to "Shipping Zones", admin_shipping_zones_path, class: "dropdown-item"
-              = link_to "Webhooks", admin_webhooks_path, class: "dropdown-item"
-              - if website.persisted?
-                = link_to "Website Settings", edit_admin_website_path(website), class: "dropdown-item"
-          li.nav-item.dropdown
-            a#extrasDropdown.nav-link.dropdown-toggle href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-              = t(".extras")
-            .dropdown-menu aria-labelledby="extrasDropdown"
-              = link_to t(".import"), admin_import_index_path, class: "dropdown-item"
-        ul.nav.navbar-nav.navbar-right
-          = link_to "<i class='far fa-sign-out'></i>".html_safe, destroy_administrator_session_path, method: :delete, title: t(".sign_out"), class: "dropdown-item"
+      .container-fluid
+        a.navbar-brand href="/" data-turbolinks="false" Home
+        button.navbar-toggler type="button" data-bs-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+          span.navbar-toggler-icon
+        #navbarSupportedContent.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+            = admin_menu_links({\
+              t('controllers.enquiries') => admin_enquiries_path,\
+              t('controllers.pages') => admin_pages_path,\
+              t('controllers.liquid_templates') => admin_liquid_templates_path,\
+              'Products' => admin_products_path,\
+              'Users' => admin_users_path,\
+              'Orders' => admin_orders_path,\
+              t('controllers.images') => admin_images_path,\
+              })
+            li.nav-item.dropdown
+              a#settingsDropdown.nav-link.dropdown-toggle href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                | Settings
+              .dropdown-menu aria-labelledby="settingsDropdown"
+                = link_to "Closure dates", admin_closure_dates_path, class: "dropdown-item"
+                = link_to "Countries", admin_countries_path, class: "dropdown-item"
+                = link_to "Discounts", admin_discounts_path, class: "dropdown-item"
+                = link_to "Offline Payments", admin_offline_payment_methods_path, class: "dropdown-item"
+                = link_to "Product Groups", admin_product_groups_path, class: "dropdown-item"
+                = link_to "Shipping Classes", admin_shipping_classes_path, class: "dropdown-item"
+                = link_to "Shipping Zones", admin_shipping_zones_path, class: "dropdown-item"
+                = link_to "Webhooks", admin_webhooks_path, class: "dropdown-item"
+                - if website.persisted?
+                  = link_to "Website Settings", edit_admin_website_path(website), class: "dropdown-item"
+            li.nav-item.dropdown
+              a#extrasDropdown.nav-link.dropdown-toggle href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                = t(".extras")
+              .dropdown-menu aria-labelledby="extrasDropdown"
+                = link_to t(".import"), admin_import_index_path, class: "dropdown-item"
+          ul.nav.navbar-nav.navbar-right
+            = link_to "<i class='far fa-sign-out'></i>".html_safe, destroy_administrator_session_path, method: :delete, title: t(".sign_out"), class: "dropdown-item"
     .container-fluid
       - if flash[:notice]
         .alert.alert-info.fade.show

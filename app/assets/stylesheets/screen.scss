@@ -8,14 +8,6 @@ div, li, p, td {
   font-size: 13px;
 }
 
-.clear {
-  clear: both;
-  margin: 0;
-  padding: 0;
-  line-height: 1px;
-  font-size: 1px;
-}
-
 #flash_notice {
   padding: 10px;
   color: #000;
@@ -117,7 +109,7 @@ form.button-to {
 .form legend {
   font-weight: bold;
 }
-.form fieldset { 
+.form fieldset {
 	margin: 0 0 12px 0;
 	border: 1px solid #ECE6D2;
 	padding: 8px 12px;
