@@ -98,7 +98,7 @@ GEM
     bootstrap_form (5.2.3)
       actionpack (>= 6.0)
       activemodel (>= 6.0)
-    brakeman (5.2.3)
+    brakeman (6.0.1)
     builder (3.2.4)
     capistrano (3.17.3)
       airbrussh (>= 1.0.0)
@@ -433,7 +433,7 @@ DEPENDENCIES
   bootstrap (~> 5.0)
   bootstrap-will_paginate
   bootstrap_form (~> 5.0)
-  brakeman (~> 5.2.2)
+  brakeman (~> 6.0.1)
   capistrano-rails
   capistrano-rvm!
   capistrano3-puma (~> 5.2)
