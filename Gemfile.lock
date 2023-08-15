@@ -89,9 +89,9 @@ GEM
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
-    bootstrap (5.2.3)
+    bootstrap (5.3.1)
       autoprefixer-rails (>= 9.1.0)
-      popper_js (>= 2.11.6, < 3)
+      popper_js (>= 2.11.8, < 3)
       sassc-rails (>= 2.0.0)
     bootstrap-will_paginate (1.0.0)
       will_paginate
@@ -240,7 +240,7 @@ GEM
       racc
     pg (1.5.3)
     pkg-config (1.5.2)
-    popper_js (2.11.7)
+    popper_js (2.11.8)
     postcode_software (0.0.3)
       nokogiri (~> 1.6)
     pry (0.14.2)
@@ -431,7 +431,7 @@ DEPENDENCIES
   acts_as_list
   acts_as_tree
   bootsnap
-  bootstrap (~> 5.0)
+  bootstrap (~> 5.3)
   bootstrap-will_paginate
   bootstrap_form (~> 5.0)
   brakeman (~> 6.0.1)
