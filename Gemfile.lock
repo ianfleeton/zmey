@@ -412,7 +412,7 @@ GEM
     standard-performance (1.2.0)
       lint_roller (~> 1.1)
       rubocop-performance (~> 1.19.0)
-    stripe (9.2.0)
+    stripe (10.1.0)
     temple (0.10.2)
     thor (1.2.2)
     tilt (2.2.0)
