@@ -417,6 +417,9 @@ en:
         destroy:
           flash:
             destroyed: 'Address deleted.'
+        update:
+          flash:
+            updated: "Address updated."
       api_keys:
         create:
           flash:
@@ -433,6 +436,9 @@ en:
       offline_payment_methods:
         create:
           created: 'New offline payment method has been created.'
+      pages:
+        create_shortcut:
+          duplicate_name: "The parent page already has a child of the same name. Please choose another."
       product_images:
         create:
           added: 'Image added.'
@@ -464,6 +470,9 @@ en:
         removed: 'Invalid coupon(s) have been removed from your basket.'
       save_and_email:
         email_sent: "Your basket has been emailed to %{email_address}."
+    checkout:
+      save_billing:
+        cannot_ship_to_country: "We cannot ship to the country you have selected."
     enquiries: Enquiries
     images: Images
     liquid_templates: Templates

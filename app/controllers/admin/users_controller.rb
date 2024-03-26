@@ -39,7 +39,7 @@ module Admin
 
     def destroy
       @user.destroy
-      redirect_to admin_users_path, notice: I18n.t("controller.admin.users.destroy.flash.destroyed")
+      redirect_to admin_users_path, notice: I18n.t("controllers.admin.users.destroy.flash.destroyed")
     end
 
     private
