@@ -46,8 +46,6 @@ class Product < ApplicationRecord
   has_many :related_products, through: :related_product_scores
   has_many :basket_items, dependent: :destroy
 
-  liquid_methods :id, :description, :full_detail, :name, :path, :rrp?, :rrp, :shipping_supplement, :sku, :url
-
   before_save :set_nil_weight_to_zero
   after_save :include_main_image_in_images
 

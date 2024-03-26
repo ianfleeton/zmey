@@ -9,8 +9,6 @@ class Image < ApplicationRecord
   has_many :product_images, dependent: :delete_all
   has_many :thumbnail_pages, foreign_key: "thumbnail_image_id", class_name: "Page", dependent: :nullify
 
-  liquid_methods :name
-
   def url(size = nil, method = :longest_side)
     if size.nil?
       url_for_filename(filename)

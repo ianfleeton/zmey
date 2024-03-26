@@ -32,8 +32,6 @@ class Page < ApplicationRecord
 
   scope :visible, -> { where(visible: true) }
 
-  liquid_methods :image, :name, :path, :url
-
   nilify_blanks only: [:extra]
 
   def active_product_placements
