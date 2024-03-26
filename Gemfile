@@ -46,7 +46,7 @@ gem "curb"
 gem "stripe"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.6"
+gem "puma"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -95,7 +95,7 @@ group :development do
   # Use Capistrano for deployment
   gem "capistrano-rails"
   gem "capistrano-rvm", git: "https://github.com/capistrano/rvm.git"
-  gem "capistrano3-puma", "~> 5.2"
+  gem "capistrano3-puma", github: "seuros/capistrano-puma"
 
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
