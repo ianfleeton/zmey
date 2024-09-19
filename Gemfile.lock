@@ -205,7 +205,7 @@ GEM
     launchy (2.5.2)
       addressable (~> 2.8)
     lint_roller (1.1.0)
-    liquid (5.4.0)
+    liquid (5.5.0)
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -485,7 +485,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   launchy
-  liquid (~> 5.4)
+  liquid (~> 5.5)
   nilify_blanks
   parallel_tests
   pg (>= 0.18, < 2.0)
