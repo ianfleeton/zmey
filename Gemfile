@@ -85,7 +85,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "brakeman", "~> 6.0.1"
+  gem "brakeman", "~> 6.2.1"
 
   gem "guard-rspec", require: false
 
