@@ -317,8 +317,8 @@ GEM
       ffi (~> 1.0)
     rdoc (6.7.0)
       psych (>= 4.0.0)
-    redis (5.0.8)
-      redis-client (>= 0.17.0)
+    redis (5.3.0)
+      redis-client (>= 0.22.0)
     redis-client (0.22.2)
       connection_pool
     regexp_parser (2.9.2)
@@ -498,7 +498,7 @@ DEPENDENCIES
   postcode_software (~> 0.0.3)
   puma
   rails (~> 7.2.1)
-  redis (~> 5.0)
+  redis (~> 5.3)
   render_anywhere
   rmagick
   rspec-rails
