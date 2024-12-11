@@ -1,5 +1,5 @@
 class Admin::ShippingTableRowsController < Admin::AdminController
-  before_action :set_shipping_table_row, only: [:edit, :update, :destroy]
+  before_action :set_shipping_table_row, only: [:destroy]
 
   def new
     @shipping_table_row = ShippingTableRow.new

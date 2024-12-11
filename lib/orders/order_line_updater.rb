@@ -42,7 +42,7 @@ module Orders
     end
 
     def update_vat(vat_percentage)
-      return unless order_line.changed? || tax_changed?(vat_percentage)
+      return unless order_line.changed? || vat_changed?(vat_percentage)
       order_line.vat_amount = vat_amount(vat_percentage)
     end
 

@@ -62,3 +62,9 @@ Address.create!(
   town_city: "London",
   user: bob
 )
+
+FactoryBot.create(:order,
+  order_lines: [
+    FactoryBot.build(:order_line, product: idevice, quantity: 1)
+  ]
+)

@@ -42,6 +42,14 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+  # See: https://github.com/heartcombo/devise/issues/5705
+  # Remove this once https://github.com/heartcombo/devise/pull/5728 is included
+  # in a new release of Devise (>= 4.9.5?)
+  config.before(:each, type: :controller) do
+    Rails.application.reload_routes_unless_loaded
+  end
+  # Remove to here
+
   # rspec-mocks config goes here. You can use an alternate test double
   # library (such as bogus or mocha) by changing the `mock_with` option here.
   config.mock_with :rspec do |mocks|

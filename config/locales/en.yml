@@ -5,7 +5,7 @@ en:
   activerecord:
     attributes:
       address:
-        label: 'Label to use in dropdown menu'
+        label: "Label to use in dropdown menu"
         town_city: "City"
       order:
         shipping_vat_amount: "Shipping VAT amount"
@@ -48,36 +48,36 @@ en:
   add_to_cart: Add to Basket
   addresses:
     choose_address:
-      billing_add: 'Add a new billing address'
-      delivery_add: 'Add a new delivery address'
-      edit_or_delete: 'Edit or delete addresses'
-      select_billing_address: 'Set as billing address'
-      select_delivery_address: 'Deliver to this address'
+      billing_add: "Add a new billing address"
+      delivery_add: "Add a new delivery address"
+      edit_or_delete: "Edit or delete addresses"
+      select_billing_address: "Set as billing address"
+      select_delivery_address: "Deliver to this address"
     choose_billing_address:
-      heading: 'Choose a billing address'
+      heading: "Choose a billing address"
     choose_delivery_address:
-      heading: 'Choose a delivery address'
+      heading: "Choose a delivery address"
     edit:
-      heading: 'Change Address'
+      heading: "Change Address"
     index:
-      add_new_address: 'Add new address'
-      delete: 'Delete'
-      edit: 'Edit'
-      heading: 'Address Book'
-      introduction: 'You can use this page to edit addresses in your address book, delete addresses that you no longer need, or add a new address.'
+      add_new_address: "Add new address"
+      delete: "Delete"
+      edit: "Edit"
+      heading: "Address Book"
+      introduction: "You can use this page to edit addresses in your address book, delete addresses that you no longer need, or add a new address."
       label_info: 'Will display in dropdown as "%{label}"'
     new:
-      heading: 'New Address'
+      heading: "New Address"
   admin:
     additional_products:
       edit:
-        heading: 'Edit Additional Product'
-        products: 'Products'
+        heading: "Edit Additional Product"
+        products: "Products"
       form:
-        selected_by_default: 'Selected by default?'
+        selected_by_default: "Selected by default?"
       new:
-        heading: 'New Additional Product'
-        products: 'Products'
+        heading: "New Additional Product"
+        products: "Products"
     addresses:
       address:
         label_info: 'Will display in dropdown as "%{label}"'
@@ -109,21 +109,21 @@ en:
         heading: "New courier"
     enquiries:
       index:
-        actions: 'Actions'
-        call_back: 'Call back'
-        email: 'Email'
-        heading: 'Enquiries'
-        name: 'Name'
-        no_enquiries: 'No enquiries have been sent yet.'
-        organisation: 'Organisation'
-        postcode: 'Postcode'
-        sent: 'Sent'
-        telephone: 'Telephone'
-        view: 'View'
+        actions: "Actions"
+        call_back: "Call back"
+        email: "Email"
+        heading: "Enquiries"
+        name: "Name"
+        no_enquiries: "No enquiries have been sent yet."
+        organisation: "Organisation"
+        postcode: "Postcode"
+        sent: "Sent"
+        telephone: "Telephone"
+        view: "View"
     extra_attributes:
       index:
-        attribute_name: 'Attribute name'
-        class_name: 'Class name'
+        attribute_name: "Attribute name"
+        class_name: "Class name"
     images:
       index:
         apply_search: "Apply search"
@@ -133,69 +133,69 @@ en:
         search_images: "Search images"
     import:
       index:
-        class_name: 'What kind of data do you want to import?'
-        heading: 'Import Data from a CSV File'
-        import: 'Import'
+        class_name: "What kind of data do you want to import?"
+        heading: "Import Data from a CSV File"
+        import: "Import"
     offline_payment_methods:
       create:
         flash:
-          created: 'New offline payment method saved.'
+          created: "New offline payment method saved."
       form:
-        save: 'Save'
+        save: "Save"
       index:
-        heading: 'Offline Payment Methods'
-        name: 'Name'
+        heading: "Offline Payment Methods"
+        name: "Name"
       new:
-        heading: 'New Offline Payment Method'
+        heading: "New Offline Payment Method"
     orders:
       edit:
         add_comment: "Add Comment"
-        add_payment: 'Add Payment'
-        add_shipment: 'Add Shipment'
-        comment: 'Comment'
-        comment_created_at: 'When'
-        comments: 'Comments'
-        fully_shipped: 'This order is fully shipped'
-        heading: 'Edit Order'
-        locked_warning: 'This order is now locked and many details cannot be changed.'
-        mark_processed: 'Mark Processed'
-        mark_unprocessed: 'Mark Unprocessed'
-        no_comments: 'No comments have been added to this order yet.'
-        not_fully_shipped: 'This order is not yet fully shipped'
-        po_number: 'PO number'
-        processed_warning: 'This order has been marked as processed by an external system.'
+        add_payment: "Add Payment"
+        add_shipment: "Add Shipment"
+        comment: "Comment"
+        comment_created_at: "When"
+        comments: "Comments"
+        fully_shipped: "This order is fully shipped"
+        heading: "Edit Order"
+        locked_warning: "This order is now locked and many details cannot be changed."
+        mark_processed: "Mark Processed"
+        mark_unprocessed: "Mark Unprocessed"
+        no_comments: "No comments have been added to this order yet."
+        not_fully_shipped: "This order is not yet fully shipped"
+        po_number: "PO number"
+        processed_warning: "This order has been marked as processed by an external system."
       index:
-        analytics: 'Analytics?'
-        apply_search: 'Apply Search'
-        close: 'Close'
-        full_name: 'Full Name'
-        heading: 'Orders'
-        invoice: 'Invoice'
-        no_orders: 'There are no orders.'
-        order_number: 'Order Number'
-        order_total: 'Order Total'
-        search: 'Search'
-        search_orders: 'Search Orders'
-        status: 'Status'
-        when_placed: 'When Placed'
+        analytics: "Analytics?"
+        apply_search: "Apply Search"
+        close: "Close"
+        full_name: "Full Name"
+        heading: "Orders"
+        invoice: "Invoice"
+        no_orders: "There are no orders."
+        order_number: "Order Number"
+        order_total: "Order Total"
+        search: "Search"
+        search_orders: "Search Orders"
+        status: "Status"
+        when_placed: "When Placed"
       new:
-        heading: 'New Order'
+        heading: "New Order"
       payments:
-        heading: 'Payments'
+        heading: "Payments"
       show:
-        heading: 'Order Details'
+        heading: "Order Details"
     order_comments:
       new:
-        heading: 'Add Comment to Order %{order_number}'
-        save: 'Save'
+        heading: "Add Comment to Order %{order_number}"
+        save: "Save"
     pages:
       edit:
         heading: "Edit %{page}"
         top: "Top"
       form:
-        no_follow: 'NOFOLLOW (search engines should not follow links from this page)'
-        no_index: 'NOINDEX (search engines should not index this page)'
-        visible: 'Visible (customers can see this page)'
+        no_follow: "NOFOLLOW (search engines should not follow links from this page)"
+        no_index: "NOINDEX (search engines should not index this page)"
+        visible: "Visible (customers can see this page)"
       index:
         export: "Export"
         heading: "Pages"
@@ -205,120 +205,120 @@ en:
         heading: "New shortcut"
     payments:
       new:
-        choose_method: 'Choose method'
-        heading: 'Add Payment for Order %{order_number}'
-        payment_method: 'Payment method'
-        save: 'Save'
+        choose_method: "Choose method"
+        heading: "Add Payment for Order %{order_number}"
+        payment_method: "Payment method"
+        save: "Save"
     posts:
       edit:
-        heading: 'Edit Post'
+        heading: "Edit Post"
     products:
       form:
-        active: 'Show product on website'
-        allow_fractional_quantity: 'Allow fractional quantity to be ordered'
-        oversize: 'Oversize'
-        save: 'Save'
+        active: "Show product on website"
+        allow_fractional_quantity: "Allow fractional quantity to be ordered"
+        oversize: "Oversize"
+        save: "Save"
       index:
-        export: 'Export'
+        export: "Export"
     shipments:
       new:
-        heading: 'Add Shipment'
+        heading: "Add Shipment"
     shipping_zones:
       edit:
-        countries_in_this_zone: 'The following countries are in this shipping zone:'
-        no_countries: 'There are no countries in this shipping zone.'
-        shipping_classes: 'Shipping Classes'
+        countries_in_this_zone: "The following countries are in this shipping zone:"
+        no_countries: "There are no countries in this shipping zone."
+        shipping_classes: "Shipping Classes"
     slug_histories:
       index:
         heading: "Slug histories"
     users:
       edit:
-        heading: 'Edit User Account Details'
+        heading: "Edit User Account Details"
       form:
-        cancel: 'Cancel'
-        does_not_manage_a_website: 'Does not manage a website'
-        save: 'Save'
+        cancel: "Cancel"
+        does_not_manage_a_website: "Does not manage a website"
+        save: "Save"
       index:
-        heading: 'Users'
-        new_user: 'New User'
-        switch_user: 'Switch User'
+        heading: "Users"
+        new_user: "New User"
+        switch_user: "Switch User"
       new:
-        heading: 'New User Account'
+        heading: "New User Account"
       show:
-        addresses: 'Addresses'
-        heading: 'View User'
-        registered_email_address: 'Registered email address'
-        users: 'Users'
+        addresses: "Addresses"
+        heading: "View User"
+        registered_email_address: "Registered email address"
+        users: "Users"
     webhooks:
       edit:
-        heading: 'Edit Webhook'
+        heading: "Edit Webhook"
       index:
-        event: 'Event'
-        heading: 'Webhooks'
+        event: "Event"
+        heading: "Webhooks"
       new:
-        heading: 'New Webhook'
+        heading: "New Webhook"
     websites:
       form:
-        smtp_settings: 'SMTP Settings'
+        smtp_settings: "SMTP Settings"
   basket:
     basket:
-      apply_coupon: 'Apply Coupon'
-      basket_total: 'Basket total:'
-      basket_total_ex_vat: 'Basket total ex VAT:'
-      basket_total_inc_vat: 'Basket total inc VAT:'
-      coupons: 'Coupons'
-      coupons_applied: 'You have applied the following coupons:'
-      discount: 'DISCOUNT'
-      enter_coupon_code: 'If you have a coupon code, enter it here.'
-      item: 'Item'
-      remove_item: 'Remove Item'
-      shipping_amount: 'Shipping amount:'
-      sku: 'Ref'
-      total: 'Total:'
-      update_quantities: 'Update Quantities'
-      vat: 'VAT:'
+      apply_coupon: "Apply Coupon"
+      basket_total: "Basket total:"
+      basket_total_ex_vat: "Basket total ex VAT:"
+      basket_total_inc_vat: "Basket total inc VAT:"
+      coupons: "Coupons"
+      coupons_applied: "You have applied the following coupons:"
+      discount: "DISCOUNT"
+      enter_coupon_code: "If you have a coupon code, enter it here."
+      item: "Item"
+      remove_item: "Remove Item"
+      shipping_amount: "Shipping amount:"
+      sku: "Ref"
+      total: "Total:"
+      update_quantities: "Update Quantities"
+      vat: "VAT:"
     customer_note:
-      label: 'Please enter any additional notes about your order, such as delivery instructions:'
+      label: "Please enter any additional notes about your order, such as delivery instructions:"
     email_basket_form:
-      email_address: 'Email address'
-      heading: 'Save / Email Basket'
-      send: 'Send'
+      email_address: "Email address"
+      heading: "Save / Email Basket"
+      send: "Send"
   basket_mailer:
     saved_basket:
-      subject: 'Your Saved Basket'
-      view_basket: 'View Your Basket'
+      subject: "Your Saved Basket"
+      view_basket: "View Your Basket"
   cart: Basket
   checkout:
     billing:
-      continue: 'Continue'
-      deliver_here: 'Deliver here?'
+      continue: "Continue"
+      deliver_here: "Deliver here?"
       heading: "Your billing address"
-      town_city: 'Town / city'
-    checkout: 'Checkout'
+      town_city: "Town / city"
+    checkout: "Checkout"
     confirm:
-      billing_address: 'Billing Address'
-      change_address: 'Change Address'
-      change_date: 'Change Date'
-      delivery_address: 'Delivery Address'
-      edit_address: 'Edit Address'
-      edit_details: 'Edit Details'
-      your_basket: 'Your Basket'
-      your_details: 'Your Details'
+      billing_address: "Billing Address"
+      change_address: "Change Address"
+      change_date: "Change Date"
+      delivery_address: "Delivery Address"
+      edit_address: "Edit Address"
+      edit_details: "Edit Details"
+      your_basket: "Your Basket"
+      your_details: "Your Details"
     delivery:
-      continue: 'Continue'
+      continue: "Continue"
       heading: "Your delivery address"
-      town_city: 'Town / city'
+      town_city: "Town / city"
     details:
-      continue: 'Continue'
-      email_address: 'Email address'
-      full_name: 'Full name'
-      heading: 'Your Details'
-      phone_number: 'Phone number'
+      continue: "Continue"
+      email_address: "Email address"
+      full_name: "Full name"
+      heading: "Your Details"
+      phone_number: "Phone number"
     select_payment_method:
-      place_order_on_account: 'Place Order on Account'
+      place_order_on_account: "Place Order on Account"
   components:
     destroy:
-      deleted: 'Component deleted.'
+      deleted: "Component deleted."
   continue_shopping: Continue shopping
   cost: Cost
   customer_sessions:
@@ -331,26 +331,26 @@ en:
   forgot_your_password: Forgotten your password?
   layouts:
     admin:
-      extras: 'Extras'
-      import: 'Import'
-      sign_out: 'Sign Out'
+      extras: "Extras"
+      import: "Import"
+      sign_out: "Sign Out"
   login: Sign In
   logout: Logout
   my_account: My Account
   orders:
     index:
       heading: "Your orders"
-      no_orders: 'There are no orders for you.'
+      no_orders: "There are no orders for you."
       order_number: "Order # %{order_number}"
       title: "Your orders | %{website}"
       total: "Total: %{total}"
       when_placed: "Placed: %{when}"
     invoice:
-      customer_reference: 'Customer reference:'
+      customer_reference: "Customer reference:"
       title: "%{paperwork_type} # %{order_number} | %{website}"
     invoice_links:
-      invoice_html: 'View invoice'
-      invoice_pdf: 'Download invoice (PDF)'
+      invoice_html: "View invoice"
+      invoice_pdf: "Download invoice (PDF)"
     receipt:
       thank_you: "Thank you, your order with %{company} is now complete."
       title: "Receipt # %{order_number} | %{website}"
@@ -362,26 +362,26 @@ en:
   password: Password
   payments:
     show:
-      amount: 'Amount'
-      heading: 'Payment Details'
-      order: 'Order'
+      amount: "Amount"
+      heading: "Payment Details"
+      order: "Order"
   price: Price
   quantity: Qty
   register: Sign Up
   sessions:
     new:
-      sign_up: 'Sign Up'
+      sign_up: "Sign Up"
   users:
     new:
-      heading: 'Create An Account'
-      new_user_details: 'New user details'
-      sign_up: 'Sign Up'
-      your_details: 'Your details'
+      heading: "Create An Account"
+      new_user_details: "New user details"
+      sign_up: "Sign Up"
+      your_details: "Your details"
     show:
-      manage_address_book: 'Manage Address Book'
-      registered_email_address: 'Your registered email address'
-      view_your_orders: 'View Your Orders'
-      your_account: 'Your Account'
+      manage_address_book: "Manage Address Book"
+      registered_email_address: "Your registered email address"
+      view_your_orders: "View Your Orders"
+      your_account: "Your Account"
   view_cart: View Basket
 
   controllers:
@@ -406,68 +406,68 @@ en:
         unrecognised: "There is no account with that email address. Please register instead."
     addresses:
       create:
-        saved: 'Your address has been saved.'
+        saved: "Your address has been saved."
       destroy:
-        deleted: 'That address has now been deleted from your address book.'
+        deleted: "That address has now been deleted from your address book."
       update:
         invalid: "Something's wrong with that address. Please create a new one."
-        updated: 'Your address has been updated.'
+        updated: "Your address has been updated."
     admin:
       addresses:
         destroy:
           flash:
-            destroyed: 'Address deleted.'
+            destroyed: "Address deleted."
         update:
           flash:
             updated: "Address updated."
       api_keys:
         create:
           flash:
-            created: 'Your new API key has been created.'
+            created: "Your new API key has been created."
       import:
         csv:
-          import_in_progress: 'Import is running in the background.'
-          nothing_uploaded: 'Nothing was uploaded.'
+          import_in_progress: "Import is running in the background."
+          nothing_uploaded: "Nothing was uploaded."
       orders:
         mark_processed:
-          marked: 'This order has been marked as processed.'
+          marked: "This order has been marked as processed."
         mark_unprocessed:
-          marked: 'This order has been marked as unprocessed.'
+          marked: "This order has been marked as unprocessed."
       offline_payment_methods:
         create:
-          created: 'New offline payment method has been created.'
+          created: "New offline payment method has been created."
       pages:
         create_shortcut:
           duplicate_name: "The parent page already has a child of the same name. Please choose another."
       product_images:
         create:
-          added: 'Image added.'
-          not_added: 'No image added.'
+          added: "Image added."
+          not_added: "No image added."
         destroy:
-          removed: 'Image removed.'
+          removed: "Image removed."
       users:
         create:
           flash:
-            created: 'New user account has been created.'
+            created: "New user account has been created."
         destroy:
           flash:
-            destroyed: 'User account has been deleted.'
+            destroyed: "User account has been deleted."
         update:
           flash:
-            updated: 'User account details have been saved.'
+            updated: "User account details have been saved."
       webhooks:
         create:
-          created: 'Webhook created.'
+          created: "Webhook created."
     basket:
       enter_coupon:
-        applied: 'Your coupon has been applied to your basket.'
+        applied: "Your coupon has been applied to your basket."
       load:
-        basket_loaded: 'Welcome back. Your saved basket has been loaded.'
-        invalid_basket: 'That basket could not be found.'
+        basket_loaded: "Welcome back. Your saved basket has been loaded."
+        invalid_basket: "That basket could not be found."
       remove_coupon:
-        removed: 'Your coupon has been removed.'
+        removed: "Your coupon has been removed."
       remove_invalid_discounts:
-        removed: 'Invalid coupon(s) have been removed from your basket.'
+        removed: "Invalid coupon(s) have been removed from your basket."
       save_and_email:
         email_sent: "Your basket has been emailed to %{email_address}."
     checkout:
@@ -477,17 +477,19 @@ en:
     images: Images
     liquid_templates: Templates
     orders:
+      request_shipping_quote:
+        what_next: "We will contact you during office hours with a quote for shipping. Alternatively, you can call us."
       show:
         no_permission: "You do not have permission to view that order."
     pages: Pages
     payments:
       cardsave_callback:
         flash:
-          accepted: 'Payment received'
-          declined: 'Payment declined'
-          hash_mismatch: 'There was a failure validating your payment'
-          processing_error: 'There was an error processing your card transaction'
-          unknown: 'We cannot confirm that your payment was successful'
+          accepted: "Payment received"
+          declined: "Payment declined"
+          hash_mismatch: "There was a failure validating your payment"
+          processing_error: "There was an error processing your card transaction"
+          unknown: "We cannot confirm that your payment was successful"
     products: Products
     users: Users
 
@@ -495,13 +497,13 @@ en:
     admin:
       admin:
         admin_submit_button:
-          save: 'Save'
+          save: "Save"
       products:
         tax_type_options:
-          ex_vat: 'Price excludes VAT'
-          inc_vat: 'Price includes VAT'
-          no_tax: 'No tax'
+          ex_vat: "Price excludes VAT"
+          inc_vat: "Price includes VAT"
+          no_tax: "No tax"
       shipping_classes:
         table_rate_method_options:
-          basket_total: 'Basket total including VAT'
-          weight: 'Weight'
+          basket_total: "Basket total including VAT"
+          weight: "Weight"

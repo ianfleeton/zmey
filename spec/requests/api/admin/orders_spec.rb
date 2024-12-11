@@ -27,7 +27,8 @@ describe "Admin orders API" do
 
       num_items.times do |x|
         FactoryBot.create(
-          :unpaid_order,
+          :order,
+          :unpaid,
           user_id: FactoryBot.create(:user).id,
           created_at: Date.today - x.days # affects ordering
         )
@@ -66,7 +67,7 @@ describe "Admin orders API" do
 
       let!(:more_setup) {
         -> {
-          @matching_order = FactoryBot.create(:unpaid_order)
+          @matching_order = FactoryBot.create(:order, :unpaid)
           @matching_order.order_number = order_number
           @matching_order.save
         }

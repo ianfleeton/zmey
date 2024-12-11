@@ -7,12 +7,12 @@
 - if @order.processed_at?
   .alert.alert-warning
     = t('.processed_warning')
-    =< link_to t('.mark_unprocessed'), mark_unprocessed_admin_order_path(@order), method: :post, class: 'btn btn-default', title: "Mark #{@order} unprocessed"
+    =< link_to t('.mark_unprocessed'), mark_unprocessed_admin_order_path(@order), method: :post, class: 'btn btn-outline-secondary', title: "Mark #{@order} unprocessed"
 - else
-  p = link_to t('.mark_processed'), mark_processed_admin_order_path(@order), method: :post, class: 'btn btn-default', title: "Mark #{@order} processed"
+  p = link_to t('.mark_processed'), mark_processed_admin_order_path(@order), method: :post, class: 'btn btn-outline-secondary', title: "Mark #{@order} processed"
 
 
-p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class: 'btn btn-default'
+p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class: 'btn btn-outline-secondary'
 
 = bootstrap_form_for [:admin, @order] do |f|
   .form-group.cancel-save
@@ -29,7 +29,7 @@ p= link_to t('.add_payment'), new_admin_payment_path(order_id: @order.id), class
         h2= t('.fully_shipped')
       - else
         h2= t('.not_fully_shipped')
-        = link_to t('.add_shipment'), new_admin_shipment_path(order_id: @order.id), class: 'btn btn-default'
+        = link_to t('.add_shipment'), new_admin_shipment_path(order_id: @order.id), class: 'btn btn-outline-secondary'
       - if @order.shipments.any?
         table.table.table-bordered
           thead
@@ -179,19 +179,19 @@ javascript:
               label.sr-only Search Products
               input.form-control#product-search-query type="search" name="query" placeholder="Product to find"
             .col-xs-3
-              button.btn.btn-default#search-products Search
+              button.btn.btn-outline-secondary#search-products Search
         .form-group
           .row
             .col-xs-9
               span.results-body
             .col-xs-3
-              button.btn.btn-default#select-product Select
+              button.btn.btn-outline-secondary#select-product Select
 
 = render partial: 'payments', locals: { payments: @order.payments } if @order.payments.any?
 
 h2= t('.comments')
 
-p= link_to t('.add_comment'), new_admin_order_comment_path(order_id: @order.id), class: 'btn btn-default'
+p= link_to t('.add_comment'), new_admin_order_comment_path(order_id: @order.id), class: 'btn btn-outline-secondary'
 
 - if @order.order_comments.any?
   table.table.table-bordered

@@ -28,7 +28,7 @@ RSpec.describe "Pages admin", type: :request do
         assert_select ".slug-histories" do
           assert_select ".slug", text: "old/slug"
           assert_select(
-            "a[href='#{admin_slug_history_path(sh)}'][data-method='delete']"
+            "a[href='#{admin_slug_history_path(sh)}'][data-turbo-method='delete']"
           )
         end
       end

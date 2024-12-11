@@ -45,5 +45,5 @@ p
           - [:billing_company, :billing_full_name, :billing_postcode, :delivery_postcode, :email_address].each do |field|
             = f.text_field field, value: params[field]
         .modal-footer
-          button.btn.btn-default type="button" data-dismiss="modal"= t('.close')
+          button.btn.btn-outline-secondary type="button" data-dismiss="modal"= t('.close')
           input.btn.btn-primary type="submit" value="#{t('.apply_search')}"

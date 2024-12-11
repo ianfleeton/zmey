@@ -6,7 +6,7 @@ class BasketController < ApplicationController
 
   before_action :update_shipping_class, only: [:update]
 
-  before_action :update_customer_note, only: [:update, :checkout]
+  before_action :update_customer_note, only: [:update]
 
   # Main basket page.
   #

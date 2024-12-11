@@ -4,12 +4,12 @@ require "rails_helper"
 
 RSpec.describe "Stripe payment intents", type: :request do
   describe "POST /payments/stripe/payment_intents" do
+    let(:basket) { FactoryBot.create(:basket) }
     let(:order) do
-      instance_double(
-        Order,
-        :waiting_for_payment? => true,
-        :email_address => "billpayer@example.com",
-        :stripe_customer_id => nil, :stripe_customer_id= => nil
+      FactoryBot.create(
+        :order, :unpaid,
+        email_address: "billpayer@example.com",
+        basket:
       )
     end
     before { allow(Order).to receive(:current!).and_return(order) }
@@ -135,6 +135,12 @@ RSpec.describe "Stripe payment intents", type: :request do
           error = instance_double(Stripe::CardError, message: "Declined")
           stub_stripe_payment_intent(error: error, succeeded: false, requires_action: false)
           perform
+        end
+
+        it "adds an order comment" do
+          comments = order.order_comments
+          expect(comments.count).to eq 1
+          expect(comments.first.comment).to eq "Stripe payment intent creation error: Declined"
         end
 
         it "responds 400" do

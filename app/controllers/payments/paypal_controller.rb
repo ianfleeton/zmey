@@ -36,13 +36,6 @@ class Payments::PaypalController < PaymentsController
         (%w[Completed Processed].include? response[:payment_status])
       @payment.save
     rescue SocketError => error
-      ExceptionNotifier.notify_exception(
-        error,
-        env: request.env,
-        data: {
-          message: "SocketError during PayPal#auto_return"
-        }
-      )
       return finish_auto_return(
         basket_path,
         "Sorry, we could not communicate with PayPal to find out if your payment was successful."

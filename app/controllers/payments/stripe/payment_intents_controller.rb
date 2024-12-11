@@ -72,13 +72,8 @@ module Payments
       private
 
       def attempt_failed(error)
-        ExceptionNotifier.notify_exception(
-          error,
-          env: request.env,
-          data: {
-            message: "Stripe charge creation error",
-            order: @order
-          }
+        @order.order_comments.create(
+          comment: "Stripe payment intent creation error: #{error.message}"
         )
 
         render json: {error: "Payment failed: #{error.message}"}, status: 400

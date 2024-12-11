@@ -22,4 +22,4 @@
       .form-group
         = form.collection_select(:product_group_id, ProductGroup.order('name'), :id, :name, {}, class: 'form-control')
       .form-group
-        = submit_tag 'Add to Group', class: 'btn btn-default'
+        = submit_tag 'Add to Group', class: 'btn btn-outline-secondary'

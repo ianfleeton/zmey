@@ -121,7 +121,18 @@ RSpec.describe "Orders", type: :request do
     end
 
     context "when the order is found" do
-      let(:order) { instance_double(Order, paperwork_type: "Sales Invoice", invoiced_at: Time.current, order_lines: [], payments: []).as_null_object }
+      let(:order) {
+        instance_double(
+          Order,
+          paperwork_type: "Sales Invoice",
+          invoiced_at: Time.current,
+          order_lines: [],
+          payments: [],
+          line_total_net: BigDecimal("123.45"),
+          vat_total: BigDecimal("23.45"),
+          total: BigDecimal("146.90")
+        ).as_null_object
+      }
 
       before do
         allow(Order).to receive(:find_by).and_return(order)

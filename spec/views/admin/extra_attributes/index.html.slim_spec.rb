@@ -23,7 +23,7 @@ describe "admin/extra_attributes/index" do
 
     it "has a link to delete attribute" do
       render
-      expect(rendered).to have_selector "a[href='#{admin_extra_attribute_path(extra_attribute)}'][data-method='delete']"
+      expect(rendered).to have_selector "a[href='#{admin_extra_attribute_path(extra_attribute)}'][data-turbo-method='delete']"
     end
   end
 end

@@ -21,7 +21,7 @@ TODO: Use Kamal.
 
 === Ruby version
 
-Zmey runs on Ruby 3.1.3.
+Zmey runs on Ruby 3.3.6.
 
 === System dependencies
 

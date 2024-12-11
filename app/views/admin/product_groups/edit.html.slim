@@ -12,7 +12,7 @@ h2 Products in this group
     .form-group
       = form.collection_select(:product_id, Product.order('name'), :id, :name, {}, class: 'form-control')
     .form-group
-      = submit_tag 'Add Product', class: 'btn btn-default'
+      = submit_tag 'Add Product', class: 'btn btn-outline-secondary'
 
 - if @product_group.products.empty?
   p There are no products in this group yet.

@@ -5,7 +5,7 @@
 = render 'form'
 
 h2 Shipping Table
-p= link_to 'New', new_admin_shipping_table_row_path(shipping_class_id: @shipping_class.id), class: 'btn btn-default'
+p= link_to 'New', new_admin_shipping_table_row_path(shipping_class_id: @shipping_class.id), class: 'btn btn-outline-secondary'
 - if @shipping_class.shipping_table_rows.empty?
   p You have no shipping rules yet for this shipping class.
 - else

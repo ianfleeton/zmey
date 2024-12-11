@@ -18,7 +18,7 @@ module Orders
       context "when order exists" do
         let(:paid_on) { nil }
         let(:order) do
-          FactoryBot.create(:unpaid_order, status: status, paid_on: paid_on)
+          FactoryBot.create(:order, :unpaid, status:, paid_on:)
         end
 
         let(:id) { order.id }

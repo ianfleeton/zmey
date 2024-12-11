@@ -206,7 +206,7 @@ class Product < ApplicationRecord
   def self.admin_search(query)
     words = query.split(" ")
     q = Product
-    words.each { |word| q = q.where(["name LIKE ? OR sku = ?", "%#{word}%", word]) }
+    words.each { |word| q = q.where(["name ILIKE ? OR sku = ?", "%#{word}%", word]) }
     q.limit(100)
   end
 

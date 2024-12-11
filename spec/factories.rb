@@ -138,24 +138,11 @@ FactoryBot.define do
     association :billing_country, factory: :country
     association :delivery_country, factory: :country
     status { Enums::PaymentStatus::PAYMENT_RECEIVED }
-  end
 
-  factory :unpaid_order, class: Order do
-    shipping_amount { 1 }
-
-    email_address { "buyer@example.org" }
-    user
-    billing_address_line_1 { "123 Street" }
-    billing_full_name { "Bob Payer" }
-    billing_town_city { "Harrogate" }
-    billing_postcode { "HG1 9ZZ" }
-    delivery_address_line_1 { "123 Street" }
-    delivery_full_name { "Alice Recipient" }
-    delivery_town_city { "Harrogate" }
-    delivery_postcode { "HG1 9ZZ" }
-    association :billing_country, factory: :country
-    association :delivery_country, factory: :country
-    status { Enums::PaymentStatus::WAITING_FOR_PAYMENT }
+    trait :unpaid do
+      shipping_amount { 1 }
+      status { Enums::PaymentStatus::WAITING_FOR_PAYMENT }
+    end
   end
 
   factory :order_comment do

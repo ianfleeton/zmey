@@ -31,7 +31,7 @@ RSpec.describe "PayPal", type: :request do
     end
 
     context "when order is unpaid" do
-      let(:order) { FactoryBot.create(:unpaid_order) }
+      let(:order) { FactoryBot.create(:order, :unpaid) }
 
       it "sets cookies.signed[:order_id]" do
         expect(cookies.signed[:order_id]).to eq order.id

@@ -3,6 +3,10 @@
 module Admin
   # Provides button, link and icon helpers for the admin area.
   module ButtonsHelper
+    def font_awesome?
+      false
+    end
+
     def admin_submit_button(form)
       form.submit(
         t("helpers.admin.admin.admin_submit_button.save"),
@@ -44,8 +48,7 @@ module Admin
       link_to(
         icon_delete,
         object,
-        data: {confirm: "Are you sure?"},
-        method: :delete,
+        data: {"turbo-confirm": "Are you sure?", "turbo-method": "delete"},
         class: "btn btn-danger",
         title: "Delete #{object_title(object)}"
       )
@@ -95,59 +98,59 @@ module Admin
     end
 
     def icon_add
-      '<i class="far fa-plus-circle"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-plus-circle"></i>'.html_safe : "Add"
     end
 
     def icon_bottom
-      '<i class="far fa-arrow-to-bottom"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-arrow-to-bottom"></i>'.html_safe : "Bottom"
     end
 
     def icon_cloud_download
-      '<i class="far fa-cloud-download"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-cloud-download"></i>'.html_safe : "Download"
     end
 
     def icon_delete
-      '<i class="far fa-trash-alt"></i>'.html_safe
+      font_awesome? ? '<i class="fas fa-trash-alt"></i>'.html_safe : "Delete"
     end
 
     def icon_down
-      '<i class="far fa-arrow-down"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-arrow-down"></i>'.html_safe : "Down"
     end
 
     def icon_download
-      '<i class="far fa-download"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-download"></i>'.html_safe : "Download"
     end
 
     def icon_edit
-      '<i class="far fa-edit"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-edit"></i>'.html_safe : "Edit"
     end
 
     def icon_file
-      '<i class="far fa-file"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-file"></i>'.html_safe : "Save"
     end
 
     def icon_print
-      '<i class="far fa-print"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-print"></i>'.html_safe : "Print"
     end
 
     def icon_remove
-      '<i class="far fa-minus-circle"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-minus-circle"></i>'.html_safe : "Remove"
     end
 
     def icon_search
-      '<i class="far fa-search"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-search"></i>'.html_safe : "Search"
     end
 
     def icon_tags
-      '<i class="far fa-tags"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-tags"></i>'.html_safe : "Tags"
     end
 
     def icon_top
-      '<i class="far fa-arrow-to-top"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-arrow-to-top"></i>'.html_safe : "Top"
     end
 
     def icon_up
-      '<i class="far fa-arrow-up"></i>'.html_safe
+      font_awesome? ? '<i class="far fa-arrow-up"></i>'.html_safe : "Up"
     end
   end
 end

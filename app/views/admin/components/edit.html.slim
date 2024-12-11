@@ -8,7 +8,7 @@
 
   .col-md-6
     h2 Features
-    p= link_to 'Add Feature', new_admin_feature_path(component_id: @component.id, product_id: @component.product_id), class: 'btn btn-default'
+    p= link_to 'Add Feature', new_admin_feature_path(component_id: @component.id, product_id: @component.product_id), class: 'btn btn-outline-secondary'
     - if @component.features.empty?
       p This component has no features.
     - else
@@ -38,4 +38,4 @@
             | GBP
             = form.text_field :weight, class: 'span1'
             | kg
-            = form.submit class: 'btn btn-default'
+            = form.submit class: 'btn btn-outline-secondary'
