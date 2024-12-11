@@ -18,8 +18,6 @@ gem "render_anywhere"
 gem "rmagick"
 gem "slim"
 
-# Run jobs in the background
-gem "sidekiq", "~> 7.3"
 gem "whenever", require: false
 
 # Bootstrap for admin area
@@ -55,10 +53,14 @@ gem "stimulus-rails"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder"
 
-# Use Redis adapter to run Action Cable in production
-gem "redis", "~> 5.3"
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem "solid_cache"
+gem "solid_queue"
+gem "solid_cable"
+gem "mission_control-jobs"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

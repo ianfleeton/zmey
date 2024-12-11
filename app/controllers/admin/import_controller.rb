@@ -13,7 +13,7 @@ module Admin
         path = File.join("tmp", fn)
         File.write(path, File.read(params[:csv].tempfile))
 
-        CSVImportWorker.perform_async(path, params[:class_name])
+        CSVImportJob.perform_later(path, params[:class_name])
 
         notice = I18n.t("controllers.admin.import.csv.import_in_progress")
       else

@@ -26,5 +26,8 @@ module Zmey
 
     config.autoload_paths += Dir["#{config.root}/lib"]
     config.autoload_paths << Rails.root.join('app', 'mailers', 'concerns')
+
+    config.mission_control.jobs.base_controller_class = "Admin::AdminController"
+    config.mission_control.jobs.http_basic_auth_enabled = false
   end
 end
