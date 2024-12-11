@@ -17,9 +17,7 @@ Background tasks are handled by Sidekiq which depends on Redis.
 
 === Deployment instructions
 
-Deployment is handled by Capistrano. To deploy to production run the following:
-
-  bundle exec cap production deploy
+TODO: Use Kamal.
 
 === Ruby version
 
@@ -127,7 +125,3 @@ webhooks, run the adapter service: https://github.com/ianfleeton/zmey-webhook-ha
 [ZMEY_EXCEPTION_RECIPIENT]
 
     Email address to which exception notifications will be sent.
-
-[ZMEY_REPOSITORY]
-
-    URL of the git repository. Used when deploying with Capistrano.

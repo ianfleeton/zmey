@@ -92,11 +92,6 @@ group :development do
   #  Run specs in parallel
   gem "parallel_tests", group: :development
 
-  # Use Capistrano for deployment
-  gem "capistrano-rails"
-  gem "capistrano-rvm", git: "https://github.com/capistrano/rvm.git"
-  gem "capistrano3-puma", github: "seuros/capistrano-puma"
-
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
