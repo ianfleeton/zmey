@@ -15,7 +15,6 @@ gem "acts_as_tree"
 gem "liquid", "~> 5.5"
 gem "nilify_blanks"
 gem "render_anywhere"
-gem "rmagick"
 gem "slim"
 
 gem "whenever", require: false
@@ -63,7 +62,7 @@ gem "solid_cable"
 gem "mission_control-jobs"
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem "image_processing", "~> 1.2"
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", require: false

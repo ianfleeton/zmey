@@ -124,13 +124,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Update apt.
   config.vm.provision :shell, inline: %q{apt-get update}
 
-  # Install ImageMagick (RMagick dependency).
-  config.vm.provision :shell, inline: "apt-get -y install libmagickwand-dev"
-
   # Install other build dependencies.
   config.vm.provision :shell, inline: %q{apt-get -y install libcurl4-openssl-dev libgmp-dev git-core}
-
-  # TODO: Install PostgreSQL.
 
   # Install rvm and ruby.
   config.vm.provision :shell, privileged: false, path: 'install-rvm-ruby.sh'

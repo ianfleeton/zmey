@@ -42,13 +42,11 @@ RSpec.describe Image, type: :model do
 
   describe "#sized_url" do
     context "destination file does not exist" do
-      let(:rmagick_image_list) { double(Magick::ImageList).as_null_object }
+      let(:image_builder) { double(ImageProcessing::Builder).as_null_object }
+
       before do
         allow(FileTest).to receive(:exist?).and_return(false)
-        allow(Magick::ImageList).to receive(:new).and_return(rmagick_image_list)
-        allow_any_instance_of(Image)
-          .to receive(:original_image)
-          .and_return(rmagick_image_list)
+        allow(ImageProcessing::Vips).to receive(:source).and_return(image_builder)
       end
 
       context "method is :longest_side" do
@@ -56,20 +54,21 @@ RSpec.describe Image, type: :model do
 
         it "calls #size_longest_side" do
           image = Image.new
-          expect(image).to receive(:size_longest_side)
-            .with(rmagick_image_list, 100)
+          expect(image).to receive(:size_longest_side).with(image_builder, 100)
           image.sized_url(100, :longest_side)
+        end
+
+        it "resizes the image and then saves it to a file" do
+          expect(image_builder).to receive(:resize_to_fit).with(100, 100).ordered
+          expect(image_builder).to receive(:call).with(destination: anything).ordered
+          Image.new.sized_url(100, method, :jpg)
         end
       end
     end
   end
 
   describe "#sized_item_filename" do
-    before do
-      allow_any_instance_of(Image).to receive(:extension).and_return("jpg")
-    end
-
-    subject { Image.new.sized_item_filename(size, method) }
+    subject { Image.new.sized_item_filename(size, method, :jpg) }
 
     context "for size 100 and method :longest_side" do
       let(:size) { 100 }

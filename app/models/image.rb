@@ -9,11 +9,11 @@ class Image < ApplicationRecord
   has_many :product_images, dependent: :delete_all
   has_many :thumbnail_pages, foreign_key: "thumbnail_image_id", class_name: "Page", dependent: :nullify
 
-  def url(size = nil, method = :longest_side)
+  def url(size = nil, method = :longest_side, format = :jpg)
     if size.nil?
       url_for_filename(filename)
     else
-      sized_url(size, method)
+      sized_url(size, method, format)
     end
   end
 
@@ -21,10 +21,11 @@ class Image < ApplicationRecord
     "#{IMAGE_STORAGE_URL}/#{id}/#{f}"
   end
 
-  SIZE_METHODS = [:constrained, :cropped, :height, :longest_side, :maxpect, :square, :width].freeze
+  SIZE_METHODS = [:constrained, :cropped, :height, :longest_side, :width].freeze
+  FORMATS = [:webp, :jpg, :png].freeze
 
-  def sized_url(size, method)
-    if (sized = sized_filename(size, method))
+  def sized_url(size, method, format = :jpg)
+    if (sized = sized_filename(size, method, format))
       url_for_filename(sized)
     else
       "/#{IMAGE_MISSING}"
@@ -39,22 +40,23 @@ class Image < ApplicationRecord
     end
   end
 
-  def sized_filename(size, method)
+  def sized_filename(size, method, format)
     unless SIZE_METHODS.include?(method)
       raise ArgumentError, "method must be one of #{SIZE_METHODS}"
     end
 
-    f = sized_item_filename(size, method)
+    unless FORMATS.include?(format)
+      raise ArgumentError, "format must be one of #{FORMATS}"
+    end
+
+    f = sized_item_filename(size, method, format)
 
     path = File.join(directory_path, f)
     # create a new image of the required size if it doesn't exist
     unless FileTest.exist?(path)
       begin
-        img = original_image
-
-        img = send(:"size_#{method}", img, size)
-
-        save_image(img, path)
+        image = send(:"size_#{method}", original_image, size)
+        image.convert(format).call(destination: path)
       rescue => e
         Rails.logger.warn("Image processing error: #{e}")
         return nil
@@ -65,14 +67,7 @@ class Image < ApplicationRecord
 
   def original_image
     raise "Original image missing" unless File.exist?(original_path)
-    Magick::ImageList.new(original_path)
-  end
-
-  # Writes the processed image to disk.
-  def save_image(img, path)
-    img.write(path) { |options| options.quality = 85 }
-    # Remove metadata.
-    `convert -strip #{path} #{path}`
+    ImageProcessing::Vips.source(original_path)
   end
 
   # Returns the path of the missing image file.
@@ -97,12 +92,7 @@ class Image < ApplicationRecord
 
   # Creates an image using the longest_side method.
   def size_longest_side(img, size)
-    img.resize_to_fit(size)
-  end
-
-  # Creates an image using the square method.
-  def size_square(img, size)
-    img.resize_to_fill(size)
+    img.resize_to_fit(size, size)
   end
 
   # Creates an image using the width method.

@@ -80,8 +80,8 @@ module MediaItem
   #
   #   i = Image.new(filename: 'image.jpg')
   #   i.sized_image_filename(100, :longest_side) # => "longest_side.100.jpg"
-  def sized_item_filename(size, method)
-    method.to_s + "." + size.to_s.gsub(", ", "x").delete("[").delete("]") + "." + extension
+  def sized_item_filename(size, method, format = nil)
+    method.to_s + "." + size.to_s.gsub(", ", "x").delete("[").delete("]") + "." + format.to_s
   end
 
   def extension
