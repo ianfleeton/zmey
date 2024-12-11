@@ -227,7 +227,6 @@ GEM
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
-    pg (1.5.9)
     pkg-config (1.5.8)
     popper_js (2.11.8)
     postcode_software (0.0.3)
@@ -378,6 +377,8 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    sqlite3 (2.4.1)
+      mini_portile2 (~> 2.8.0)
     standard (1.43.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -453,7 +454,6 @@ DEPENDENCIES
   liquid (~> 5.5)
   nilify_blanks
   parallel_tests
-  pg (>= 0.18, < 2.0)
   postcode_software (~> 0.0.3)
   puma
   rails (~> 8.0.0)
@@ -468,6 +468,7 @@ DEPENDENCIES
   simplecov
   slim
   sprockets-rails
+  sqlite3 (>= 2.1)
   standard
   stimulus-rails
   stripe

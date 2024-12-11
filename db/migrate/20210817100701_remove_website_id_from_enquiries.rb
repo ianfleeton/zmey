@@ -1,6 +1,6 @@
 class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
   def up
-    create_table "additional_products", id: :serial, force: :cascade do |t|
+    create_table "additional_products", force: :cascade do |t|
       t.integer "product_id", null: false
       t.integer "additional_product_id", null: false
       t.boolean "selected_by_default", default: false, null: false
@@ -10,7 +10,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["product_id"], name: "index_additional_products_on_product_id"
     end
 
-    create_table "addresses", id: :serial, force: :cascade do |t|
+    create_table "addresses", force: :cascade do |t|
       t.integer "user_id"
       t.string "full_name", default: "", null: false
       t.string "address_line_1", default: "", null: false
@@ -39,15 +39,15 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.integer "sign_in_count", default: 0, null: false
       t.datetime "current_sign_in_at"
       t.datetime "last_sign_in_at"
-      t.inet "current_sign_in_ip"
-      t.inet "last_sign_in_ip"
+      t.string "current_sign_in_ip"
+      t.string "last_sign_in_ip"
       t.datetime "created_at", precision: 6, null: false
       t.datetime "updated_at", precision: 6, null: false
       t.index ["email"], name: "index_administrators_on_email", unique: true
       t.index ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true
     end
 
-    create_table "api_keys", id: :serial, force: :cascade do |t|
+    create_table "api_keys", force: :cascade do |t|
       t.string "name", null: false
       t.string "key", null: false
       t.integer "user_id", null: false
@@ -57,7 +57,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["user_id"], name: "index_api_keys_on_user_id"
     end
 
-    create_table "basket_items", id: :serial, force: :cascade do |t|
+    create_table "basket_items", force: :cascade do |t|
       t.integer "basket_id", null: false
       t.integer "product_id", null: false
       t.decimal "quantity", precision: 10, scale: 3, default: "1.0", null: false
@@ -68,7 +68,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.boolean "reward", default: false, null: false
     end
 
-    create_table "baskets", id: :serial, force: :cascade do |t|
+    create_table "baskets", force: :cascade do |t|
       t.datetime "created_at"
       t.datetime "updated_at"
       t.text "customer_note"
@@ -85,7 +85,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["token"], name: "index_baskets_on_token", unique: true
     end
 
-    create_table "choices", id: :serial, force: :cascade do |t|
+    create_table "choices", force: :cascade do |t|
       t.integer "feature_id", default: 0, null: false
       t.string "name"
       t.datetime "created_at"
@@ -124,7 +124,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["order_id"], name: "index_collection_ready_emails_on_order_id"
     end
 
-    create_table "components", id: :serial, force: :cascade do |t|
+    create_table "components", force: :cascade do |t|
       t.string "name", null: false
       t.integer "product_id", null: false
       t.datetime "created_at"
@@ -132,7 +132,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["product_id"], name: "index_components_on_product_id"
     end
 
-    create_table "countries", id: :serial, force: :cascade do |t|
+    create_table "countries", force: :cascade do |t|
       t.string "name", default: "", null: false
       t.string "iso_3166_1_alpha_2", default: "", null: false
       t.datetime "created_at"
@@ -152,7 +152,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.datetime "updated_at", precision: 6, null: false
     end
 
-    create_table "custom_views", id: :serial, force: :cascade do |t|
+    create_table "custom_views", force: :cascade do |t|
       t.integer "website_id", null: false
       t.string "path"
       t.string "locale"
@@ -174,7 +174,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["order_id"], name: "index_discount_uses_on_order_id"
     end
 
-    create_table "discounts", id: :serial, force: :cascade do |t|
+    create_table "discounts", force: :cascade do |t|
       t.string "name", default: "", null: false
       t.string "coupon", default: "", null: false
       t.string "reward_type", default: "", null: false
@@ -190,7 +190,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.integer "uses_remaining"
     end
 
-    create_table "enquiries", id: :serial, force: :cascade do |t|
+    create_table "enquiries", force: :cascade do |t|
       t.string "name", default: "", null: false
       t.string "organisation", default: "", null: false
       t.text "address"
@@ -205,14 +205,14 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.datetime "updated_at"
     end
 
-    create_table "extra_attributes", id: :serial, force: :cascade do |t|
+    create_table "extra_attributes", force: :cascade do |t|
       t.string "class_name"
       t.string "attribute_name"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
     end
 
-    create_table "feature_selections", id: :serial, force: :cascade do |t|
+    create_table "feature_selections", force: :cascade do |t|
       t.integer "basket_item_id", default: 0, null: false
       t.integer "feature_id", default: 0, null: false
       t.integer "choice_id"
@@ -223,7 +223,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["basket_item_id"], name: "index_feature_selections_on_basket_item_id"
     end
 
-    create_table "features", id: :serial, force: :cascade do |t|
+    create_table "features", force: :cascade do |t|
       t.integer "product_id"
       t.string "name", default: "", null: false
       t.datetime "created_at"
@@ -235,7 +235,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["product_id"], name: "index_features_on_product_id"
     end
 
-    create_table "images", id: :serial, force: :cascade do |t|
+    create_table "images", force: :cascade do |t|
       t.string "name", default: "", null: false
       t.string "filename", default: "", null: false
       t.datetime "created_at"
@@ -244,7 +244,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["md5_hash"], name: "index_images_on_md5_hash"
     end
 
-    create_table "liquid_templates", id: :serial, force: :cascade do |t|
+    create_table "liquid_templates", force: :cascade do |t|
       t.string "name", null: false
       t.text "markup"
       t.datetime "created_at"
@@ -269,13 +269,13 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.datetime "updated_at", precision: 6, null: false
     end
 
-    create_table "offline_payment_methods", id: :serial, force: :cascade do |t|
+    create_table "offline_payment_methods", force: :cascade do |t|
       t.string "name", null: false
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
     end
 
-    create_table "order_comments", id: :serial, force: :cascade do |t|
+    create_table "order_comments", force: :cascade do |t|
       t.integer "order_id", null: false
       t.text "comment"
       t.datetime "created_at", null: false
@@ -283,7 +283,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["order_id"], name: "index_order_comments_on_order_id"
     end
 
-    create_table "order_lines", id: :serial, force: :cascade do |t|
+    create_table "order_lines", force: :cascade do |t|
       t.integer "order_id", default: 0, null: false
       t.integer "product_id"
       t.string "product_sku", default: "", null: false
@@ -370,7 +370,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["user_id"], name: "index_orders_on_user_id"
     end
 
-    create_table "pages", id: :serial, force: :cascade do |t|
+    create_table "pages", force: :cascade do |t|
       t.string "title", default: "", null: false
       t.string "slug", default: "", null: false
       t.datetime "created_at"
@@ -394,7 +394,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["thumbnail_image_id"], name: "index_pages_on_thumbnail_image_id"
     end
 
-    create_table "payments", id: :serial, force: :cascade do |t|
+    create_table "payments", force: :cascade do |t|
       t.integer "order_id"
       t.string "service_provider"
       t.string "installation_id"
@@ -421,7 +421,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.boolean "stored", default: false, null: false
     end
 
-    create_table "permutations", id: :serial, force: :cascade do |t|
+    create_table "permutations", force: :cascade do |t|
       t.integer "component_id", null: false
       t.string "permutation", null: false
       t.boolean "valid_selection", null: false
@@ -433,14 +433,14 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["permutation"], name: "index_permutations_on_permutation"
     end
 
-    create_table "product_group_placements", id: :serial, force: :cascade do |t|
+    create_table "product_group_placements", force: :cascade do |t|
       t.integer "product_id", default: 0, null: false
       t.integer "product_group_id", default: 0, null: false
       t.datetime "created_at"
       t.datetime "updated_at"
     end
 
-    create_table "product_groups", id: :serial, force: :cascade do |t|
+    create_table "product_groups", force: :cascade do |t|
       t.string "name"
       t.datetime "created_at"
       t.datetime "updated_at"
@@ -449,7 +449,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["location_id"], name: "index_product_groups_on_location_id"
     end
 
-    create_table "product_images", id: :serial, force: :cascade do |t|
+    create_table "product_images", force: :cascade do |t|
       t.integer "product_id", null: false
       t.integer "image_id", null: false
       t.datetime "created_at", null: false
@@ -458,7 +458,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["product_id"], name: "index_product_images_on_product_id"
     end
 
-    create_table "product_placements", id: :serial, force: :cascade do |t|
+    create_table "product_placements", force: :cascade do |t|
       t.integer "page_id", default: 0, null: false
       t.integer "product_id", default: 0, null: false
       t.integer "position", default: 0, null: false
@@ -468,7 +468,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["product_id"], name: "index_product_placements_on_product_id"
     end
 
-    create_table "products", id: :serial, force: :cascade do |t|
+    create_table "products", force: :cascade do |t|
       t.string "sku", default: "", null: false
       t.string "name", default: "", null: false
       t.decimal "price", precision: 10, scale: 3, default: "0.0", null: false
@@ -507,7 +507,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["slug"], name: "index_products_on_slug"
     end
 
-    create_table "quantity_prices", id: :serial, force: :cascade do |t|
+    create_table "quantity_prices", force: :cascade do |t|
       t.integer "product_id"
       t.integer "quantity", default: 0, null: false
       t.decimal "price", precision: 10, scale: 3, default: "0.0", null: false
@@ -516,7 +516,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["product_id"], name: "index_quantity_prices_on_product_id"
     end
 
-    create_table "related_product_scores", id: :serial, force: :cascade do |t|
+    create_table "related_product_scores", force: :cascade do |t|
       t.integer "product_id", null: false
       t.integer "related_product_id", null: false
       t.decimal "score", precision: 4, scale: 3, null: false
@@ -525,7 +525,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["product_id"], name: "index_related_product_scores_on_product_id"
     end
 
-    create_table "shipments", id: :serial, force: :cascade do |t|
+    create_table "shipments", force: :cascade do |t|
       t.integer "order_id", null: false
       t.string "consignment_number"
       t.string "tracking_url"
@@ -545,7 +545,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["shipped_at"], name: "index_shipments_on_shipped_at"
     end
 
-    create_table "shipping_classes", id: :serial, force: :cascade do |t|
+    create_table "shipping_classes", force: :cascade do |t|
       t.integer "shipping_zone_id", default: 0, null: false
       t.string "name", default: "", null: false
       t.datetime "created_at"
@@ -562,7 +562,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["shipping_zone_id"], name: "index_shipping_classes_on_shipping_zone_id"
     end
 
-    create_table "shipping_table_rows", id: :serial, force: :cascade do |t|
+    create_table "shipping_table_rows", force: :cascade do |t|
       t.integer "shipping_class_id", default: 0, null: false
       t.decimal "trigger_value", precision: 10, scale: 3, default: "0.0", null: false
       t.decimal "amount", precision: 10, scale: 3, default: "0.0", null: false
@@ -571,7 +571,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["shipping_class_id"], name: "index_shipping_table_rows_on_shipping_class_id"
     end
 
-    create_table "shipping_zones", id: :serial, force: :cascade do |t|
+    create_table "shipping_zones", force: :cascade do |t|
       t.string "name", default: "", null: false
       t.datetime "created_at"
       t.datetime "updated_at"
@@ -587,7 +587,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["slug"], name: "index_slug_histories_on_slug"
     end
 
-    create_table "users", id: :serial, force: :cascade do |t|
+    create_table "users", force: :cascade do |t|
       t.string "email", default: "", null: false
       t.string "name", default: "", null: false
       t.string "encrypted_password"
@@ -604,7 +604,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.boolean "opt_in", default: true, null: false
     end
 
-    create_table "webhooks", id: :serial, force: :cascade do |t|
+    create_table "webhooks", force: :cascade do |t|
       t.integer "website_id", null: false
       t.string "event", null: false
       t.string "url", null: false
@@ -613,7 +613,7 @@ class RemoveWebsiteIdFromEnquiries < ActiveRecord::Migration[6.1]
       t.index ["website_id", "event"], name: "index_webhooks_on_website_id_and_event"
     end
 
-    create_table "websites", id: :serial, force: :cascade do |t|
+    create_table "websites", force: :cascade do |t|
       t.string "subdomain", default: "", null: false
       t.string "domain", default: "", null: false
       t.datetime "created_at"

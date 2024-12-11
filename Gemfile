@@ -8,10 +8,8 @@ gem "rails", "~> 8.0.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
-
-# Use postgresql as the database for Active Record
-gem "pg", ">= 0.18", "< 2.0"
-
+# Use sqlite3 as the database for Active Record
+gem "sqlite3", ">= 2.1"
 gem "acts_as_list"
 gem "acts_as_tree"
 gem "liquid", "~> 5.5"
