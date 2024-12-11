@@ -108,9 +108,6 @@ class ApplicationController < ActionController::Base
   end
 
   def render_error(exception)
-    ExceptionNotifier::Notifier
-      .exception_notification(request.env, exception)
-      .deliver
     render file: "#{Rails.root}/public/500", layout: false, status: 500
   end
 
