@@ -22,7 +22,7 @@ module Admin
             delivery_full_name: "A Recipient",
             delivery_phone_number: "01234 567890",
             email_address: "shopper@example.org",
-            shipping_amount: BigDecimal("10")
+            shipping_amount: BigDecimal(10)
           }
         }
         let(:order) { FactoryBot.build(:order, params) }

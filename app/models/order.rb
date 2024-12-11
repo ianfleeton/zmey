@@ -409,14 +409,14 @@ class Order < ApplicationRecord
 
   # Total amount of all order lines excluding any VAT.
   def line_total_net
-    order_lines.inject(BigDecimal("0")) { |sum, l| sum + l.line_total_net }
+    order_lines.inject(BigDecimal(0)) { |sum, l| sum + l.line_total_net }
   end
 
   # Total amount of all order lines including any applicable VAT.
   # VAT is excluded if the order is zero-rated.
   def line_total_gross
     zr = zero_rated?
-    order_lines.inject(BigDecimal("0")) do |sum, l|
+    order_lines.inject(BigDecimal(0)) do |sum, l|
       sum + l.line_total_net + (zr ? 0 : l.vat_amount)
     end
   end

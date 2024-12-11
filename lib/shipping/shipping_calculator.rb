@@ -5,7 +5,7 @@ module Shipping
     end
 
     def amount
-      amount = BigDecimal("0")
+      amount = BigDecimal(0)
       amount_for_basket = @options[:shipping_class].try(:amount_for, basket, @options[:delivery_date])
       amount_for_basket || amount
     end
@@ -14,7 +14,7 @@ module Shipping
       if @options[:shipping_class].nil? || @options[:shipping_class].charge_vat?
         Product.vat_rate * amount.to_f
       else
-        BigDecimal("0")
+        BigDecimal(0)
       end
     end
 

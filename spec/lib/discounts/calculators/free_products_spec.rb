@@ -9,9 +9,9 @@ module Discounts
 
       it "adds a free item to the basket when threshold met" do
         products = [Product.new(name: "Notebook", price: BigDecimal("1.66"), tax_type: Product::EX_VAT)]
-        discount = instance_double(Discount, threshold: BigDecimal("10"), products: products)
+        discount = instance_double(Discount, threshold: BigDecimal(10), products: products)
         basket = instance_double(Basket)
-        et = instance_double(EffectiveTotal, ex_vat: BigDecimal("10"))
+        et = instance_double(EffectiveTotal, ex_vat: BigDecimal(10))
         allow(EffectiveTotal).to receive(:new).with(discount, basket).and_return(et)
         calculator = Calculator.new([], basket)
         free_products = FreeProducts.new(calculator, discount)
@@ -29,9 +29,9 @@ module Discounts
           Product.new(name: "Notebook", price: BigDecimal("1.66")),
           Product.new(name: "Pen", price: BigDecimal("1.05"))
         ]
-        discount = instance_double(Discount, threshold: BigDecimal("10"), products: products)
+        discount = instance_double(Discount, threshold: BigDecimal(10), products: products)
         basket = instance_double(Basket)
-        et = instance_double(EffectiveTotal, ex_vat: BigDecimal("10"))
+        et = instance_double(EffectiveTotal, ex_vat: BigDecimal(10))
         allow(EffectiveTotal).to receive(:new).with(discount, basket).and_return(et)
         calculator = Calculator.new([], basket)
         free_products = FreeProducts.new(calculator, discount)
@@ -46,9 +46,9 @@ module Discounts
       it "adds nothing to the basket when threshold is not met" do
         skip
         products = [Product.new(name: "Notebook", price: BigDecimal("1.66"))]
-        discount = instance_double(Discount, threshold: BigDecimal("11"), products: products)
+        discount = instance_double(Discount, threshold: BigDecimal(11), products: products)
         basket = instance_double(Basket)
-        et = instance_double(EffectiveTotal, ex_vat: BigDecimal("10"))
+        et = instance_double(EffectiveTotal, ex_vat: BigDecimal(10))
         allow(EffectiveTotal).to receive(:new).with(discount, basket).and_return(et)
         calculator = Calculator.new([], basket)
         free_products = FreeProducts.new(calculator, discount)

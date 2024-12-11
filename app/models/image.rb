@@ -52,7 +52,7 @@ class Image < ApplicationRecord
       begin
         img = original_image
 
-        img = send("size_#{method}", img, size)
+        img = send(:"size_#{method}", img, size)
 
         save_image(img, path)
       rescue => e

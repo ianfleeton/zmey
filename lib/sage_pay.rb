@@ -13,7 +13,7 @@ class SagePay
       :delivery_country,
       :success_url,
       :failure_url
-    ].each { |o| instance_variable_set("@#{o}", opts[o]) }
+    ].each { |o| instance_variable_set(:"@#{o}", opts[o]) }
   end
 
   def encrypt

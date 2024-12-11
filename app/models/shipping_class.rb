@@ -42,7 +42,7 @@ class ShippingClass < ApplicationRecord
   def amount_for(shopping, delivery_date = nil)
     val = value(shopping)
 
-    shipping = BigDecimal("0")
+    shipping = BigDecimal(0)
 
     unless shipping_table_rows.empty?
       shipping_table_rows.each do |row|

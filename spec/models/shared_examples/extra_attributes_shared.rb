@@ -93,12 +93,12 @@ shared_examples_for "an object with extra attributes" do
     end
 
     it "provides getters and setters for extra attributes" do
-      object.send("#{attribute_name}=".to_sym, value)
+      object.send(:"#{attribute_name}=", value)
       expect(object.send(attribute_name.to_sym)).to eq value
     end
 
     it "updates the extra attribute" do
-      object.send("#{attribute_name}=".to_sym, value)
+      object.send(:"#{attribute_name}=", value)
       expect(object.extra_json[attribute_name]).to eq value
     end
   end
