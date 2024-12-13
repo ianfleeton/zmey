@@ -32,9 +32,6 @@ secrets.yml
 
 /public/assets
 
-/node_modules
-/yarn-error.log
-
 .byebug_history
 
 # Ignore uploaded images.
@@ -46,10 +43,6 @@ secrets.yml
 
 /public/packs
 /public/packs-test
-/node_modules
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
