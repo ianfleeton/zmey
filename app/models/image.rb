@@ -32,8 +32,8 @@ class Image < ApplicationRecord
     end
   end
 
-  def sized_path(size, method)
-    if (sized = sized_filename(size, method))
+  def sized_path(size, method, format = :jpg)
+    if (sized = sized_filename(size, method, format))
       path_for_filename(sized)
     else
       Image.item_missing_path
