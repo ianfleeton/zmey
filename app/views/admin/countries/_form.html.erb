@@ -1,0 +1,24 @@
+<% if @country.errors.any? %>
+  <%= dismissable_error_message do %>
+    <h2> <%= "#{pluralize(@country.errors.count, "error")} prohibited this country from being saved:" %> </h2>
+    <ul>
+      <% @country.errors.full_messages.each do |msg| %>
+        <li> <%= msg %> </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+<%= bootstrap_form_for [:admin, @country] do |form| %>
+  <%= form.text_field :name, class: "form-control" %>
+
+  <%= form.text_field :iso_3166_1_alpha_2, label: "ISO 3166-1 alpha-2" %>
+
+  <%= form.check_box :in_eu, label: "In EU" %>
+
+  <%= form.collection_select :shipping_zone_id, ShippingZone.order(:name), :id, :name, {include_blank: "-- No shipping zone --"} %>
+
+  <br>
+
+  <%= form.submit class: "btn btn-primary" %>
+<% end %>

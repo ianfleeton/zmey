@@ -11,6 +11,11 @@ module Admin::AdminHelper
     )
   end
 
+  def page_header_and_title(title)
+    content_for(:title, title)
+    page_header(title)
+  end
+
   def page_header(title)
     content_tag(:div, content_tag(:h1, title), class: "page-header")
   end

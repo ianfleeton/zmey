@@ -1,0 +1,26 @@
+<%= page_header_and_title "Countries" %>
+
+<p> <%= new_button [:admin, Country] %> </p>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <th>Country</th>
+    <th>ISO 3166-1-alpha-2</th>
+    <th>In EU</th>
+    <th>Shipping zone</th>
+  </thead>
+  <tbody>
+    <% @countries.each do |country| %>
+      <tr>
+        <td><%= country.name %></td>
+        <td><%= country.iso_3166_1_alpha_2 %></td>
+        <td><%= tick(country.in_eu?) %></td>
+        <td> <%= country.shipping_zone ? country.shipping_zone.name : "-" %> </td>
+        <td>
+          <%= edit_button [:admin, country] %>
+          <%= delete_button [:admin, country] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
