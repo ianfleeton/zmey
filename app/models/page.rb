@@ -96,7 +96,7 @@ class Page < ApplicationRecord
     )
   end
 
-  def self.navs website_id
+  def self.navs
     navs = []
     nav_roots = Page.where(parent_id: nil).order("position")
     nav_roots.each do |nr|

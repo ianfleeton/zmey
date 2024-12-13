@@ -1,5 +1,5 @@
-<% Page.navs(website).each do |nav| %>
-  <ul id="<%= nav.id_attribute %>">
+<% Page.navs.each do |nav| %>
+  <ul class="primaryNav" id="<%= nav.id_attribute %>">
     <% nav.pages.each do |p| %>
       <%= nav_link_to(p, p.path) %>
     <% end %>

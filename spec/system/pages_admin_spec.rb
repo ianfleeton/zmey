@@ -12,7 +12,7 @@ RSpec.describe "Pages admin" do
   let(:the_page) { FactoryBot.build(:page) }
 
   scenario "Create page", js: true do
-    image = FactoryBot.create(:image)
+    FactoryBot.create(:image)
 
     visit admin_pages_path
     click_link "New"

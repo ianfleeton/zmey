@@ -1,14 +1,12 @@
 body {
   background: #eee;
   color: #333;
-  font-family: 'Lucida Grande', Verdana, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  padding: 16px;
 }
 
-div, li, p, td {
-  font-size: 13px;
-}
-
-#flash_notice {
+.flashNotice {
   padding: 10px;
   color: #000;
   border: 1px solid #edebcd;
@@ -16,71 +14,72 @@ div, li, p, td {
   font-size: 11px;
 }
 
-#wrapper {
+.wrapper {
   background: #fff;
-  border: 1px solid #222;
-  width: 960px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 16px;
 }
 
-#primary_nav {
-  font-size: 13px;
+.primaryNav {
+  background: #666;
+  display: flex;
   font-weight: bold;
-  height: 24px;
   list-style: none;
   margin: 0;
   padding: 0;
-  background: #4580D5;
   border-top: 1px solid #fff;
 
   li {
-    float: left;
     line-height: 24px;
   }
 }
 
-#primary_nav .n_current, #primary_nav a {
-  padding: 0 20px;
+.primaryNav .n_current,
+.primaryNav a {
+  padding: 4px 16px;
 }
 
-#primary_nav .n_current {
+.primaryNav .n_current {
   color: yellow;
 }
 
-#primary_nav a {
-	display: block;
-	height: 24px;
-	line-height: 24px;
-	color: #fff;
-	text-decoration: none;
+.primaryNav a {
+  display: block;
+  line-height: 24px;
+  color: #fff;
+  text-decoration: none;
 }
 
-#primary_nav a:hover {
-	background: #266ab7;
+.primaryNav a:hover {
+  background: #ccc;
+  color: #000;
 }
 
-#header {
-	display: block;
-	height: 144px;
-	background: #266ab7;
+.header {
+  display: block;
+  height: 144px;
+  background: #266ab7;
 }
 
-#header span { display: none; }
+.header span {
+  display: none;
+}
 
-#content {
+.content {
   padding: 12px 24px;
 }
 
-h1 { color: #c00; font-size: 16px; margin: 12px 0; }
+h1 {
+  color: #c00;
+  margin: 12px 0;
+}
 
 footer[role="contentinfo"] {
-	background: #4580D5;
-	color: #fff;
-	border-top: 1px solid #333;
-	font-size: 11px;
-	line-height: 24px;
-	text-align: center;
+  background: #333;
+  color: #fff;
+  line-height: 24px;
+  margin-top: 24px;
+  padding: 64px 32px;
+  text-align: center;
 
   a {
     color: #fff;
@@ -88,8 +87,13 @@ footer[role="contentinfo"] {
   }
 }
 
-#no_ajax { display: none; }
-.required { color: red; font-weight: bold; }
+#no_ajax {
+  display: none;
+}
+.required {
+  color: red;
+  font-weight: bold;
+}
 
 /**
  * forms
@@ -100,44 +104,45 @@ form.button-to {
 }
 
 .fieldWithErrors {
-	display: inline;
+  display: inline;
 }
 .fieldWithErrors label {
-	color: red;
+  color: red;
 }
 
 .form legend {
   font-weight: bold;
 }
 .form fieldset {
-	margin: 0 0 12px 0;
-	border: 1px solid #ECE6D2;
-	padding: 8px 12px;
-	background-color: #FCFBF7;
-	line-height: 24px;
+  margin: 0 0 12px 0;
+  border: 1px solid #ece6d2;
+  padding: 8px 12px;
+  background-color: #fcfbf7;
+  line-height: 24px;
 }
 .form div {
-	line-height: 24px;
-	margin-bottom: 12px;
+  line-height: 24px;
+  margin-bottom: 12px;
 }
 .form .text {
-	width: 450px;
+  width: 450px;
 }
 .form .short {
-	width: 200px;
+  width: 200px;
 }
 .form .tiny {
-	width: 100px;
+  width: 100px;
 }
 .form .radio {
-	vertical-align: top;
+  vertical-align: top;
 }
 .form textarea.short {
-	width: 300px; height: 72px;
+  width: 300px;
+  height: 72px;
 }
 .form textarea.large {
-	width: 640px;
-	height: 420px;
+  width: 640px;
+  height: 420px;
 }
 
 #images_list li {

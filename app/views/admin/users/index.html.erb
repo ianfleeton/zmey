@@ -1,0 +1,27 @@
+<%= page_header_and_title t(".heading") %>
+
+<p><%= new_button [:admin, User] %></p>
+
+<%= will_paginate(@users, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer) %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th><%= User.human_attribute_name :name %></th>
+      <th><%= User.human_attribute_name :email %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |u| %>
+      <tr>
+        <td><%= link_to u.name, [:admin, u] %></td>
+        <td><%= mail_to u.email, u.email %></td>
+        <td>
+          <%= link_to(t(".switch_user"), switch_user_path(u), method: "post", class: "btn btn-outline-secondary") %>
+          <%= edit_button([:admin, u]) %>
+          <%= delete_button([:admin, u]) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

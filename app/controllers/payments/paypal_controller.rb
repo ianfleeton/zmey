@@ -35,7 +35,7 @@ class Payments::PaypalController < PaymentsController
       @payment.accepted = (response[:status] == "SUCCESS") &&
         (%w[Completed Processed].include? response[:payment_status])
       @payment.save
-    rescue SocketError => error
+    rescue SocketError
       return finish_auto_return(
         basket_path,
         "Sorry, we could not communicate with PayPal to find out if your payment was successful."

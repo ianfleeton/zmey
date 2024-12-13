@@ -1,0 +1,20 @@
+<% if @component.errors.any? %>
+  <%= dismissable_error_message do %>
+    <h2> <%= "#{pluralize(@component.errors.count, "error")} prohibited this component from being saved:" %> </h2>
+    <ul>
+      <% @component.errors.full_messages.each do |msg| %>
+        <li> <%= msg %> </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+<%= bootstrap_form_for [:admin, @component] do |form| %>
+
+  <%= form.hidden_field :product_id %>
+
+  <%= form.text_field :name, required: true %>
+
+  <%= form.submit class: "btn btn-primary" %>
+
+<% end %>
