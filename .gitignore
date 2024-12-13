@@ -7,9 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore Vagrant files.
-/.vagrant
-
 # Ignore Simplecov output.
 /coverage
 
