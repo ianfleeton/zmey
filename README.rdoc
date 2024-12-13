@@ -1,7 +1,5 @@
 == README
 
-{<img src="https://travis-ci.org/ianfleeton/zmey.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/ianfleeton/zmey]
-
 Zmey is a template for building e-commerce websites. Fork it, keep what you do
 need and delete what you don't. It's pre-release quality and has not yet been
 given a version number.
@@ -35,8 +33,7 @@ Zmey runs on Ruby 3.3.6.
 
 === How to run the test suite
 
-You will need geckodriver to run the JavaScript tests with selenium-webdriver.
-This can be downloaded from https://github.com/mozilla/geckodriver/releases
+You will need chromedriver to run the JavaScript tests with selenium-webdriver.
 
   bin/rspec
 
@@ -68,9 +65,3 @@ webhooks, run the adapter service: https://github.com/ianfleeton/zmey-webhook-ha
 
 * Image (image_created)
 * Order (order_created)
-
-=== Environment variables
-
-[ZMEY_EXCEPTION_RECIPIENT]
-
-    Email address to which exception notifications will be sent.
