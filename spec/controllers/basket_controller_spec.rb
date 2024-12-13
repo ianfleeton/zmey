@@ -56,6 +56,13 @@ RSpec.describe BasketController, type: :controller do
       it { should redirect_to checkout_path }
     end
 
+    it "removes items from the basket" do
+      basket_item = FactoryBot.create(:basket_item)
+      session[:basket_id] = basket_item.basket_id
+      post :update, params: {remove_item: {"1" => "Remove+Item"}}
+      expect(BasketItem.exists?(basket_item.id)).to be false
+    end
+
     context "xhr request" do
       before { post :update, xhr: true }
 

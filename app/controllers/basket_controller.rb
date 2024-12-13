@@ -204,7 +204,7 @@ class BasketController < ApplicationController
 
   def remove_item
     params[:remove_item].each_key do |id|
-      BasketItem.destroy_all(id: id, basket_id: @basket.id)
+      BasketItem.where(id:, basket_id: @basket.id).destroy_all
     end
   end
 
