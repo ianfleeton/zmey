@@ -11,13 +11,22 @@ module PDF
 
     attr_reader :header
 
-    def initialize
-      @header = nil
-    end
-
     def generate
       write_html
       convert_html_to_pdf
+    end
+
+    def html
+      "<span data-renderer='weasyprint'></span>"
+    end
+
+    def renderer
+      Nokogiri
+        .parse(html)
+        .css("[data-renderer]")
+        .attribute("data-renderer")
+        &.value
+        &.to_sym || default_renderer
     end
 
     # Adds a header to each page using the HTML at the given URL.
@@ -27,36 +36,23 @@ module PDF
       self
     end
 
-    # The system command used to convert the HTML file to a PDF file.
-    def convert_html_to_pdf_command
-      "#{WebKitHTMLToPDF.binary} -O #{orientation} #{header_command} " \
-        "--disable-smart-shrinking " \
-        "-T 15mm -B 25mm -L 10mm -R 10mm " \
-        "#{Shellwords.escape(html_filename)} " \
-        "#{Shellwords.escape(filename)} 2>/dev/null"
-    end
-
     # Executes the system command to convert the HTML file to a PDF file.
     def convert_html_to_pdf
-      cmd = convert_html_to_pdf_command
-      Rails.logger.info("Converting HTML to PDF")
-      Rails.logger.info(cmd)
-      `#{cmd}`
-      Rails.logger.info("Converted HTML to PDF")
+      ConvertCommands::ConvertCommand.for(self, testing: Rails.env.test?).execute
     end
 
-    def write_html
-      File.write(html_filename, html)
-    end
+    def write_html = File.write(html_filename, html)
 
-    def orientation
-      "portrait"
-    end
+    def orientation = "portrait"
+
+    def html_filename = raise "Implement in subclass"
+
+    def pdf_filename = filename
+
+    def filename = raise "Implement in subclass"
 
     private
 
-    def header_command
-      "--header-html #{Shellwords.escape(header)}" if header
-    end
+    def default_renderer = :weasyprint
   end
 end

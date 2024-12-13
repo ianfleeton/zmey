@@ -9,11 +9,6 @@ install:
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen scn 1600x1200x16"
-  # wkhtmltopdf
-  - sudo apt-get install libqtgui4 libqt4-network libqtwebkit4 libxrender-dev xorg
-  - sudo apt-get install xfonts-75dpi
-  - wget 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.xenial_amd64.deb'
-  - sudo dpkg -i wkhtmltox_0.12.6-1.xenial_amd64.deb
   - bundle install --jobs=1 --retry=3 --deployment --without production
 script:
   - bin/rails db:create RAILS_ENV=test
