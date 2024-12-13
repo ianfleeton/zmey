@@ -16,7 +16,7 @@ RSpec.describe "Users admin", type: :request do
       end
 
       context "with valid params" do
-        let(:params) { {user: {"email" => "shopper@example.org", name: "Shopper", password: "topsecret", password_confirmation: "topsecret"}} }
+        let(:params) { {user: {"email" => "shopper@example.org", :name => "Shopper", :password => "topsecret", :password_confirmation => "topsecret"}} }
 
         it "sets a flash notice" do
           post_valid
@@ -46,7 +46,7 @@ RSpec.describe "Users admin", type: :request do
       end
 
       context "with valid params" do
-        let(:params) { {user: {"email" => "shopper@example.org", name: "Shopper", password: "topsecret", password_confirmation: "topsecret"}} }
+        let(:params) { {user: {"email" => "shopper@example.org", :name => "Shopper", :password => "topsecret", :password_confirmation => "topsecret"}} }
         it "updates the user" do
           perform
         end
