@@ -54,7 +54,7 @@ class Discount < ApplicationRecord
     if valid_from.nil? || valid_to.nil?
       true
     else
-      Time.current >= valid_from && Time.current <= valid_to
+      Time.current.between?(valid_from, valid_to)
     end
   end
 end
