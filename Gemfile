@@ -89,7 +89,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "brakeman", "~> 7.1.0"
+  gem "brakeman", "~> 7.1.2"
 
   gem "guard-rspec", require: false
 

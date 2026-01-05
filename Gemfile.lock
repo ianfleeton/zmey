@@ -100,7 +100,7 @@ GEM
     bootstrap_form (5.4.0)
       actionpack (>= 6.1)
       activemodel (>= 6.1)
-    brakeman (7.1.0)
+    brakeman (7.1.2)
       racc
     builder (3.3.0)
     capybara (3.40.0)
@@ -608,7 +608,7 @@ DEPENDENCIES
   bootstrap (~> 5.3)
   bootstrap-will_paginate
   bootstrap_form (~> 5.4)
-  brakeman (~> 7.1.0)
+  brakeman (~> 7.1.2)
   capybara
   curb
   dartsass-rails
