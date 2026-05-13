@@ -57,7 +57,7 @@ module Importers
         importer.import(rows)
 
         expect(importer.error_text).to eq(
-          '[2] Failed to create: {"sku"=>"", "name"=>"NAME1"}'
+          '[2] Failed to create: {"sku" => "", "name" => "NAME1"}'
         )
       end
 
@@ -69,9 +69,9 @@ module Importers
         importer.import(rows)
 
         expect(importer.error_text).to eq(
-          '[2] Failed to create: {"sku"=>"", "name"=>"NAME1"}' \
+          '[2] Failed to create: {"sku" => "", "name" => "NAME1"}' \
           "\n" \
-          '[3] Failed to create: {"sku"=>"", "name"=>"NAME2"}'
+          '[3] Failed to create: {"sku" => "", "name" => "NAME2"}'
         )
       end
 
@@ -83,7 +83,7 @@ module Importers
         importer.import(rows)
 
         expect(importer.error_text).to eq(
-          '[2] Failed to update: {"sku"=>"S1", "name"=>""}'
+          '[2] Failed to update: {"sku" => "S1", "name" => ""}'
         )
       end
     end

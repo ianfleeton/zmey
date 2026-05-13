@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.6"
+ruby "3.4.8"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 8.1.2"
@@ -74,6 +74,9 @@ gem "thruster", require: false
 gem "bootsnap", require: false
 
 gem "dartsass-rails"
+
+# CSV parsing and creation
+gem "csv"
 
 group :development, :test do
   gem "rspec-rails"

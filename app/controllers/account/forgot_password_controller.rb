@@ -1,6 +1,7 @@
 module Account
   class ForgotPasswordController < ApplicationController
     include UserAuthenticated
+
     before_action :set_user, only: %i[new change]
 
     def index

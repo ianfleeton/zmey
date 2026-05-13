@@ -3,6 +3,7 @@
 module Shipping
   class ShippingClassShoppingMatch
     include ActiveModel::Model
+
     attr_accessor :shipping_class, :shopping
 
     validate :shipping_class_present

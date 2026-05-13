@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "products/show", type: :view do
   include ProductsHelper
+
   let(:website) { FactoryBot.build(:website) }
 
   before(:each) do

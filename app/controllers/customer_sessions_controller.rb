@@ -1,5 +1,6 @@
 class CustomerSessionsController < ApplicationController
   include UserAuthenticated
+
   before_action :admin_required, only: [:switch_user]
 
   def new
