@@ -21,7 +21,7 @@ gem "whenever", require: false
 
 # Bootstrap for admin area
 gem "bootstrap", "~> 5.3"
-gem "bootstrap_form", "~> 5.4"
+gem "bootstrap_form", "~> 5.6"
 
 # Authentication and related security policies
 gem "devise"
