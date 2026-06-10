@@ -541,7 +541,9 @@ GEM
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.2.0)
-    stripe (18.3.1)
+    stripe (19.2.0)
+      bigdecimal
+      logger
     strscan (3.1.8)
     temple (0.10.3)
     thor (1.5.0)
