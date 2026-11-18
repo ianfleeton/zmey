@@ -10,19 +10,11 @@ module Payments
       @user = user
     end
 
-    def add_source(token)
-      if existing_customer?
-        attach_source(token, nil)
-      else
-        create_customer(token)
-      end
-    end
-
     def add_payment_method(payment_method_id)
       if existing_customer?
         attach_payment_method(payment_method_id)
       else
-        create_customer(nil, payment_method_id)
+        create_customer(payment_method_id)
       end
     end
 
@@ -32,12 +24,6 @@ module Payments
 
     def existing_customer?
       customer_id.present?
-    end
-
-    def sources
-      return [] unless existing_customer?
-
-      retrieve_customer.sources.map { |s| ::Payments::StripeSource.new(s) }
     end
 
     def payment_methods
@@ -52,19 +38,13 @@ module Payments
 
     private
 
-    def create_customer(token, payment_method_id)
+    def create_customer(payment_method_id)
       customer = ::Stripe::Customer.create(
         email: user.email,
-        payment_method: payment_method_id,
-        source: token
+        payment_method: payment_method_id
       )
       user.stripe_customer_id = customer.id
       user.save
-    end
-
-    def attach_source(token)
-      customer = retrieve_customer
-      customer.sources.create(source: token)
     end
 
     def attach_payment_method(payment_method_id)

@@ -171,6 +171,10 @@ class Order < ApplicationRecord
     order_number
   end
 
+  # Returns the email_address attribute.
+  # For duck typing compatibility with User, e.g. in Payments::StripeCustomer.
+  def email = email_address
+
   # Returns truthy if the customer can update a basket associated with this
   # order.
   def can_update_basket?
