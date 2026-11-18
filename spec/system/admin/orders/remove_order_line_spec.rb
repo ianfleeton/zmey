@@ -12,10 +12,7 @@ RSpec.describe "Remove order line", type: :system do
 
     visit edit_admin_order_path(order)
 
-    click_link "Delete #{ol}"
-
-    a = page.driver.browser.switch_to.alert
-    a.accept
+    accept_confirm { click_link "Delete #{ol}" }
 
     expect(page).to have_content "Order line removed."
 
