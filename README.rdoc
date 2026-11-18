@@ -52,6 +52,12 @@ advantage of multiple cores. Create a test database per process first:
 
 See https://github.com/grosser/parallel_tests for more.
 
+Specs tagged <tt>:full_network_access</tt> talk to third party APIs for real
+and are excluded from the default run. Run them, with a Stripe test mode key,
+before merging a stripe gem update:
+
+  STRIPE_TEST_API_KEY=sk_test_... bin/full-network-access-test
+
 === REST API documentation
 
 Zmey can be accessed remotely using its REST API:

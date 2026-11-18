@@ -26,7 +26,19 @@ require "webmock/rspec"
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  WebMock.disable_net_connect!(allow_localhost: true)
+  # Two modes, chosen once per process because WebMock's switch is process wide:
+  #
+  #   * Default run: no outbound network, deterministic. Specs tagged
+  #     :full_network_access are excluded.
+  #   * Full network run (bin/full-network-access-test, which sets
+  #     FULL_NETWORK_ACCESS=1): real network for the whole process, running only
+  #     the :full_network_access specs, which talk to third parties for real.
+  if ENV["FULL_NETWORK_ACCESS"] == "1"
+    WebMock.allow_net_connect!
+  else
+    WebMock.disable_net_connect!(allow_localhost: true)
+    config.filter_run_excluding :full_network_access
+  end
   config.order = :random
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

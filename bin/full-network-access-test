@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Runs the full network access suite: specs tagged :full_network_access, which
+# talk to third party APIs for real rather than through WebMock stubs. They are
+# excluded from the default suite and run here, serially, in their own process
+# with net connect enabled process wide. The switch is set once via
+# FULL_NETWORK_ACCESS=1 and never toggled mid-run, because WebMock's switch is
+# process wide and flipping it partway through makes the suite flaky.
+#
+# The Stripe specs need a test mode secret key, from STRIPE_TEST_API_KEY or the
+# stripe_api_key credential, so they create objects in a Stripe test account
+# and never touch live data:
+#
+#   STRIPE_TEST_API_KEY=sk_test_... bin/full-network-access-test
+#
+# Pass through any rspec options, e.g. bin/full-network-access-test --seed 1
+options = ARGV.join(" ")
+
+exit_status = system(
+  "RAILS_ENV=test FULL_NETWORK_ACCESS=1 bundle exec rspec --tag full_network_access #{options}"
+)
+
+exit(exit_status ? 0 : 1)
