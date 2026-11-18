@@ -1,5 +1,7 @@
 class EnquiriesController < ApplicationController
-  include SpamProtection
+  include FormRateLimiting
+
+  limit_submissions only: :create, to: 5, within: 15.minutes
 
   def new
     @title = "Enquiry"
@@ -15,15 +17,14 @@ class EnquiriesController < ApplicationController
     @title = "Enquiry"
     @enquiry = Enquiry.new(enquiry_params)
 
-    unless good_token?
-      render action: "new", layout: "application"
+    # Pretend a bot's submission succeeded so it doesn't try again.
+    if params[:contact_me_by_fax_only].present?
+      redirect_to(action: "thank_you")
       return
     end
 
-    @enquiry.website = website
-
     if @enquiry.save
-      EnquiryNotifier.enquiry(@w, @enquiry).deliver
+      EnquiryNotifier.enquiry(website, @enquiry).deliver_later
       redirect_to(action: "thank_you")
     else
       render action: "new", layout: "application"

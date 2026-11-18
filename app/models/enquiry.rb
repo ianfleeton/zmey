@@ -19,11 +19,6 @@
 # Of these, +name+, +telephone+, +email+ and +enquiry+ are required. The
 # designer is free to customise the form view and leave out other fields that
 # are unnecessary.
-#
-# === Associations
-#
-# +website+::
-#   Website the customer was using to send the enquiry.
 class Enquiry < ApplicationRecord
   validates_presence_of :name, :telephone, :email, :enquiry
 end

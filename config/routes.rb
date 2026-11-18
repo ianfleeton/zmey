@@ -184,7 +184,6 @@ Rails.application.routes.draw do
 
   resources :enquiries, only: [:create, :new] do
     collection do
-      get 'current_time'
       get 'thank_you'
     end
   end
