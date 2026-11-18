@@ -47,6 +47,10 @@ RSpec.configure do |config|
   config.include DeviseRequestHelpers, type: :request
   config.before :suite do
     Warden.test_mode!
+    # Rails loads routes lazily in tests, but Devise only configures Warden's
+    # session serializers when routes load. Without this, the first request
+    # spec in a process stores the whole user record in the session cookie.
+    Rails.application.reload_routes_unless_loaded
   end
 
   config.include ControllerHelpers, type: :controller
