@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Order, type: :model do
-  FactoryBot.use_parent_strategy = false
-
   context "uniqueness" do
     before { FactoryBot.create(:order, order_number: "AB123") }
     it { should validate_uniqueness_of :order_number }

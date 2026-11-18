@@ -7,8 +7,6 @@ require_relative "shared_examples/check_updated_baskets"
 RSpec.describe CheckoutController, type: :controller do
   render_views
 
-  FactoryBot.use_parent_strategy = false
-
   def cookies
     ActionDispatch::Request.new(request.env).cookie_jar
   end
