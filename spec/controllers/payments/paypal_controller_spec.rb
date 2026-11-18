@@ -225,7 +225,7 @@ RSpec.describe Payments::PaypalController, type: :controller do
       end
 
       context "it cannot find an order" do
-        let(:order_number) { nil }
+        let(:order_number) { "" }
 
         it "logs to the console" do
           expect(Rails.logger).to receive(:error).with "Recieved PayPal dispute and could not find an order to comment on. Case ID: PP-D-85785153"
@@ -249,7 +249,7 @@ RSpec.describe Payments::PaypalController, type: :controller do
         expect(payment.email).to eq "buyer@example.org"
         expect(payment.installation_id).to eq "merchant@example.com"
         expect(payment.name).to eq "Lenina Crowne"
-        expect(payment.raw_auth_message).to start_with('{:address_city=>"Wolverhampton"')
+        expect(payment.raw_auth_message).to start_with('{address_city: "Wolverhampton"')
         expect(payment.service_provider).to eq "PayPal (IPN)"
         expect(payment.transaction_id).to eq "0TH37164C80937821"
         expect(payment.transaction_time).to eq "06:45:01 Jun 23, 2015 PDT"
