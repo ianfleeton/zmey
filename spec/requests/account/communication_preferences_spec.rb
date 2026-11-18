@@ -1,77 +1,68 @@
 require "rails_helper"
 
 RSpec.describe "Communication preferences", type: :request do
+  let(:user) { FactoryBot.create(:user, email: "user@a.com", opt_in: false) }
+  let(:token) { user.generate_token_for(:communication_preferences) }
+
   describe "GET /account/communication_preferences/unsubscribe" do
-    it "renders a form pointing to action: update" do
-      get account_communication_preferences_unsubscribe_path
+    it "renders a form pointing to action: update for a valid token" do
+      get account_communication_preferences_unsubscribe_path(token: token)
       assert_select(
         "form[action='#{account_communication_preferences_update_path}']"
       )
+      expect(response.body).to include("user@a.com")
+    end
+
+    it "shows an invalid link page without a valid token" do
+      get account_communication_preferences_unsubscribe_path(token: "forged")
+      expect(response).to have_http_status(:not_found)
+      assert_select "form", count: 0
+    end
+
+    it "rejects a token issued before the email address changed" do
+      old_token = token
+      user.update!(email: "new@a.com")
+      get account_communication_preferences_path(token: old_token)
+      expect(response).to have_http_status(:not_found)
     end
   end
 
   describe "POST /account/communication_preferences/update" do
-    let(:wanted) { nil }
+    def perform(wanted:, token: self.token)
+      post account_communication_preferences_update_path,
+        params: {token: token, wanted: wanted}
+    end
+
+    it "opts in and redirects to the updated screen" do
+      perform(wanted: "Yes Please")
+      expect(user.reload.opt_in).to be true
+      expect(user.explicit_opt_in_at).to be_present
+      expect(response).to redirect_to(account_communication_preferences_updated_path)
+    end
+
+    it "opts out" do
+      user.update!(opt_in: true)
+      perform(wanted: "No Thanks")
+      expect(user.reload.opt_in).to be false
+    end
+
+    it "does not change anything given only an email address" do
+      post account_communication_preferences_update_path,
+        params: {email: user.email, wanted: "Yes Please"}
+      expect(response).to have_http_status(:not_found)
+      expect(user.reload.opt_in).to be false
+    end
+  end
+
+  context "when signed in without a token" do
     before do
-      allow(User)
-        .to receive(:find_by).and_return(nil)
-      allow(User)
-        .to receive(:find_by).with(email: "user@a.com").and_return(user)
+      allow_any_instance_of(Account::CommunicationPreferencesController)
+        .to receive(:current_user).and_return(user)
     end
 
-    def perform
-      post(
-        account_communication_preferences_update_path(
-          params: {email: "user@a.com", wanted: wanted}
-        )
-      )
-    end
-
-    context "when user is found" do
-      let(:user) { instance_double(User, save: true) }
-
-      it "saves the user" do
-        allow(user).to receive(:update_explicit_opt_in)
-        expect(user).to receive(:save)
-        perform
-      end
-
-      it "sets redirects to the updated screen" do
-        allow(user).to receive(:update_explicit_opt_in)
-        perform
-        expect(response).to redirect_to(
-          account_communication_preferences_updated_path
-        )
-      end
-
-      context "when user wants to opt in" do
-        let(:wanted) { "Yes Please" }
-        it "updates the explict opt-it" do
-          expect(user).to receive(:update_explicit_opt_in).with(true)
-          perform
-        end
-      end
-
-      context "when user wants to opt out" do
-        let(:wanted) { "No Thanks" }
-        it "updates the explict opt-it" do
-          expect(user).to receive(:update_explicit_opt_in).with(false)
-          perform
-        end
-      end
-    end
-
-    context "when user not found" do
-      before { perform }
-      let(:user) { nil }
-      it "redirects to index" do
-        expect(response).to redirect_to(account_communication_preferences_path)
-      end
-      it "sets a flash notice" do
-        expect(flash[:notice]).to eq I18n.t(
-          "controllers.account.communication_preferences.update.unrecognised"
-        )
-      end
+    it "redirects to account details" do
+      get account_communication_preferences_path
+      expect(response).to redirect_to(account_edit_path)
     end
   end
 end

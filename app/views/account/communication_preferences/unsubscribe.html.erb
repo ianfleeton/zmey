@@ -7,10 +7,8 @@
 </p>
 
 <%= form_tag(action: :update) do %>
-<div class="field-group">
-  <label for="email">Email address</label>
-  <input id="email" type="email" name="email" value="<%= params[:email] %>" required>
-</div>
+<%= hidden_field_tag :token, params[:token] %>
+<p>Email address: <strong><%= @user.email %></strong></p>
 <div class="field-group">
   <p>
     I do not wish to receive special offers and product information by email

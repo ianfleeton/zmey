@@ -19,6 +19,12 @@ class User < ApplicationRecord
   validates_length_of :password, within: 8..72, allow_nil: true
   validates_confirmation_of :password, allow_nil: true
 
+  # Lets customers manage their preferences from a link in an email without
+  # signing in. Changing the email address invalidates existing tokens.
+  generates_token_for :communication_preferences do
+    email
+  end
+
   # callbacks
   before_create :set_email_verification_token
 

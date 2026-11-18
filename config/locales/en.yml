@@ -15,6 +15,10 @@ en:
     communication_preferences:
       index:
         title: "Communication preferences | %{website}"
+      invalid_link:
+        heading: "Communication preferences"
+        message: "This link is invalid or out of date. Please use the link from a recent email, or sign in to change your preferences."
+        title: "Communication preferences | %{website}"
       updated:
         title: "Communication preferences updated | %{website}"
     edit:
@@ -386,9 +390,6 @@ en:
 
   controllers:
     account:
-      communication_preferences:
-        update:
-          unrecognised: "Sorry we do not recognise your email address."
       create:
         created: "Your account has been created. A verification email has been sent to your email address. Please follow the link contained within it to complete registration."
       forgot_password:

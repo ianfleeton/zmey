@@ -3,10 +3,8 @@
 <h1>Your communication preferences</h1>
 
 <%= form_tag(action: :update) do %>
-<div class="field-group">
-  <label for="email">Email address</label>
-  <input id="email" type="email" name="email" value="<%= params[:email] %>" required>
-</div>
+<%= hidden_field_tag :token, params[:token] %>
+<p>Email address: <strong><%= @user.email %></strong></p>
 <div class="field-group">
   <p>
     Yes please send me emails, with special offers and information regarding our
