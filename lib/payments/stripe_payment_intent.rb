@@ -18,23 +18,27 @@ module Payments
       @stored = stored
     end
 
+    # Stripe errors that leave the payment unpaid and are reported to the
+    # customer rather than raised.
+    PAYMENT_ERRORS = [
+      ::Stripe::APIError, ::Stripe::IdempotencyError,
+      ::Stripe::CardError, ::Stripe::InvalidRequestError
+    ].freeze
+
     def attempt(service_provider: "Stripe Web")
       return if @order.payment_received?
 
-      begin
+      handling_payment_errors(service_provider) do
         @payment_intent ||= find_or_create_intent
-      rescue ::Stripe::APIError, ::Stripe::IdempotencyError,
-        ::Stripe::CardError, ::Stripe::InvalidRequestError => exception
-        @error = exception
-        add_order_comment(service_provider: service_provider)
-        return
       end
-      create_payment(service_provider: service_provider) if succeeded?
     end
 
+    # Confirms a payment intent that requires confirmation, such as after the
+    # customer completes 3D Secure authentication. On failure #error is set.
     def confirm(service_provider: "Stripe Web")
-      @payment_intent = ::Stripe::PaymentIntent.confirm(@payment_intent_id)
-      create_payment(service_provider: service_provider) if succeeded?
+      handling_payment_errors(service_provider) do
+        @payment_intent = ::Stripe::PaymentIntent.confirm(@payment_intent_id)
+      end
     end
 
     def requires_action?
@@ -76,6 +80,18 @@ module Payments
     end
 
     private
+
+    # Runs the Stripe request in the block, then records a payment if the
+    # intent succeeded. Payment errors are kept in #error and noted on the
+    # order instead of being raised.
+    def handling_payment_errors(service_provider)
+      yield
+    rescue *PAYMENT_ERRORS => exception
+      @error = exception
+      add_order_comment(service_provider: service_provider)
+    else
+      create_payment(service_provider: service_provider) if succeeded?
+    end
 
     def find_or_create_intent
       if @payment_intent_id

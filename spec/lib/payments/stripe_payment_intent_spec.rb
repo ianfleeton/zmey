@@ -395,6 +395,28 @@ module Payments
 
         expect(stub).to have_been_requested
       end
+
+      context "when the card is declined" do
+        let(:status) { 402 }
+        let(:response_body) do
+          {"error" => {"type" => "card_error", "message" => "Your card was declined."}}.to_json
+        end
+
+        it "sets the error and comments on the order instead of raising" do
+          stub_stripe
+          order = FactoryBot.create(:order, total: 10.55)
+          intent = Payments::StripePaymentIntent.new(
+            order: order, payment_intent_id: "pi_123", payment_method: nil, idempotency_key: "idem"
+          )
+
+          intent.confirm
+
+          expect(intent.error).to be_a(::Stripe::CardError)
+          expect(intent.payment).to be_nil
+          expect(order.order_comments.last.comment)
+            .to eq "Stripe Web payment failed: Your card was declined."
+        end
+      end
     end
 
     describe "#create_webhook_payment" do
