@@ -5,6 +5,11 @@ RSpec.describe Payment, type: :model do
     it { should belong_to(:order).optional }
   end
 
+  describe "validations" do
+    it { should validate_presence_of(:amount) }
+    it { should validate_presence_of(:service_provider) }
+  end
+
   describe "before_save" do
     let!(:order) { FactoryBot.create(:order) }
     let(:payment) do
@@ -25,7 +30,8 @@ RSpec.describe Payment, type: :model do
           :payment,
           service_provider: "PayPal Express",
           order: order,
-          transaction_id: "T1"
+          transaction_id: "T1",
+          accepted: true
         )
         payment.save
         expect(payment.accepted).to eq false
@@ -98,6 +104,43 @@ RSpec.describe Payment, type: :model do
         payment.save
         expect(cheque.accepted).to eq true
       end
+
+      it "unaccepts itself when the same PayPal payment was already accepted" do
+        FactoryBot.create(
+          :payment,
+          service_provider: "PayPal Express",
+          order: order,
+          transaction_id: "T1",
+          accepted: true
+        )
+        payment.save
+        expect(payment.accepted).to eq false
+      end
+
+      it "stays accepted when the earlier duplicate isn't accepted" do
+        FactoryBot.create(
+          :payment,
+          service_provider: "PayPal Express",
+          order: order,
+          transaction_id: "T1",
+          accepted: false
+        )
+        payment.save
+        expect(payment.accepted).to eq true
+      end
+
+      it "leaves refunds without a transaction ID accepted" do
+        FactoryBot.create(
+          :payment,
+          service_provider: "PayPal Express",
+          order: order,
+          transaction_id: nil,
+          accepted: true
+        )
+        payment.transaction_id = nil
+        payment.save
+        expect(payment.accepted).to eq true
+      end
     end
 
     context "when another method entirely" do
@@ -134,6 +177,16 @@ RSpec.describe Payment, type: :model do
       it "does not notify its order" do
         expect(order).not_to receive(:payment_accepted)
         payment.save
+      end
+    end
+
+    context "when an accepted payment is saved again without changes to " \
+    "its order or acceptance" do
+      let(:accepted) { true }
+      it "does not notify its order again" do
+        payment.save
+        expect(order).not_to receive(:payment_accepted)
+        payment.update!(transaction_id: "T9")
       end
     end
   end

@@ -164,6 +164,7 @@ FactoryBot.define do
 
   factory :payment do
     amount { 0 }
+    service_provider { "Test" }
   end
 
   factory :product do
