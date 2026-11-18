@@ -5,7 +5,10 @@ module Account
   # Reset links use the token from has_secure_password, which expires and
   # stops working once the password has been changed.
   class ForgotPasswordController < ApplicationController
+    include FormRateLimiting
     include UserAuthenticated
+
+    limit_submissions only: :send_email, to: 5, within: 15.minutes
 
     # Minimum time between reset emails to the same account.
     RESEND_INTERVAL = 5.minutes

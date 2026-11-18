@@ -1,6 +1,9 @@
 class BasketController < ApplicationController
   include Discounts
+  include FormRateLimiting
   include SuspendedShopping
+
+  limit_submissions only: :save_and_email, to: 5, within: 15.minutes
 
   layout "basket_checkout"
 

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :administrators
+  devise_for :administrators, controllers: {sessions: "administrators/sessions"}
 
   mount MissionControl::Jobs::Engine, at: "/jobs"
 

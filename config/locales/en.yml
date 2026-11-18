@@ -388,6 +388,8 @@ en:
       your_account: "Your Account"
   view_cart: View Basket
 
+  rate_limited: "Too many attempts. Please wait a few minutes and try again."
+
   controllers:
     account:
       create:

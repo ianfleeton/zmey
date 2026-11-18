@@ -2,7 +2,10 @@
 
 # Controller for handling user accounts.
 class AccountController < ApplicationController
+  include FormRateLimiting
   include UserAuthenticated
+
+  limit_submissions only: :create, to: 5, within: 1.hour
 
   before_action(
     :set_user,

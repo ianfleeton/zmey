@@ -1,5 +1,8 @@
 class CustomerSessionsController < ApplicationController
+  include FormRateLimiting
   include UserAuthenticated
+
+  limit_submissions only: :create, to: 10, within: 5.minutes, per_email: :email
 
   before_action :admin_required, only: [:switch_user]
 
