@@ -10,6 +10,8 @@ class CheckoutController < ApplicationController
   before_action :check_updated_basket
   before_action :require_basket, only: [:index, :billing, :delivery, :confirm]
   before_action :require_billing_and_delivery_addresses, only: [:confirm]
+  before_action :require_minimum_order_value,
+    only: %i[index details billing delivery delivery_instructions confirm]
 
   DETAILS_KEYS = [:name, :email, :mobile, :phone].freeze
 
@@ -184,6 +186,13 @@ class CheckoutController < ApplicationController
 
   def require_basket
     redirect_to(basket_path) && return if basket.basket_items.empty?
+  end
+
+  def require_minimum_order_value
+    return if performed? || administrator_signed_in?
+    return unless Checkout::MinimumOrderValue.below?(basket)
+
+    redirect_to basket_path, notice: Checkout::MinimumOrderValue.message
   end
 
   def advance_checkout

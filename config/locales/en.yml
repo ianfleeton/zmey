@@ -474,6 +474,7 @@ en:
       save_and_email:
         email_sent: "Your basket has been emailed to %{email_address}."
     checkout:
+      below_minimum_order_value: "Sorry, the minimum order value is %{amount} before delivery. Please add more items to your basket."
       save_billing:
         cannot_ship_to_country: "We cannot ship to the country you have selected."
     enquiries: Enquiries

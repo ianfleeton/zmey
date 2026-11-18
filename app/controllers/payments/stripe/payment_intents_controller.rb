@@ -7,6 +7,11 @@ module Payments
       before_action :set_order
 
       def create
+        if !administrator_signed_in? && Checkout::MinimumOrderValue.below?(@order)
+          attempt_failed(StandardError.new(Checkout::MinimumOrderValue.message))
+          return
+        end
+
         payment_intent_id = params[:payment_intent_id]
         payment_method = params[:payment_method_id]
         customer = nil
