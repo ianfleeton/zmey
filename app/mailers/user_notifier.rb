@@ -1,10 +1,13 @@
 class UserNotifier < ActionMailer::Base
   include EmailSetup
 
-  def token(website, user)
+  def password_reset(website, user)
     setup(website, user)
 
-    @token = user.forgot_password_token
+    @url = account_forgot_password_new_url(
+      t: user.password_reset_token,
+      host: website.domain, protocol: website.scheme
+    )
     mail(
       to: user.email,
       subject: "#{website.name}: how to change your password",

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_18_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_18_130000) do
   create_table "additional_products", force: :cascade do |t|
     t.integer "additional_product_id", null: false
     t.datetime "created_at", precision: nil
@@ -606,7 +606,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_18_120000) do
     t.datetime "email_verified_at", precision: nil
     t.datetime "explicit_opt_in_at", precision: nil
     t.datetime "forgot_password_sent_at", precision: nil
-    t.string "forgot_password_token", default: "", null: false
     t.string "name", default: "", null: false
     t.boolean "opt_in", default: true, null: false
     t.string "password_digest"

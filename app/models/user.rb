@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   # Accounts created automatically at checkout have no password until the
   # customer sets one, so presence isn't validated.
-  has_secure_password validations: false
+  has_secure_password validations: false, reset_token: {expires_in: 1.hour}
 
   validates_uniqueness_of :customer_reference, allow_blank: true
 

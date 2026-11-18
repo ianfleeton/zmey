@@ -1,71 +1,65 @@
 module Account
+  # Lets customers reset a forgotten password, or set one for an account that
+  # was created automatically at checkout.
+  #
+  # Reset links use the token from has_secure_password, which expires and
+  # stops working once the password has been changed.
   class ForgotPasswordController < ApplicationController
     include UserAuthenticated
 
-    before_action :set_user, only: %i[new change]
+    # Minimum time between reset emails to the same account.
+    RESEND_INTERVAL = 5.minutes
+
+    before_action :set_user_from_token, only: %i[new change]
 
     def index
     end
 
+    # Responds the same way whether or not the email address has an account,
+    # so the form can't be used to find out who is registered.
     def send_email
-      @user = User.find_by(email: params[:email])
-      if @user.nil?
-        flash[:notice] = "There is no user registered with that email address"
-        redirect_to action: "index"
-      else
-        @user.forgot_password_token = User.generate_token
-        @user.forgot_password_sent_at = Time.current
-        @user.save
-        UserNotifier.token(@w, @user).deliver_now
-        redirect_to action: "sent"
-      end
+      user = User.find_by(email: params[:email].to_s)
+      send_reset_email(user) if user && !recently_sent?(user)
+      redirect_to action: "sent"
     end
 
     def sent
     end
 
     def new
-      params_ok?
     end
 
     def change
-      return unless params_ok?
-      @user.password = params[:password]
-      @user.forgot_password_token = ""
+      @user.password = params[:password].to_s
       @user.email_verified_at ||= Time.current
-      @user.save
-      UserNotifier.password_changed(website, @user).deliver_later
-
-      @current_user = @user
-      user_authenticated
-      flash[:notice] = "Your password has been changed"
+      if @user.save
+        UserNotifier.password_changed(website, @user).deliver_later
+        @current_user = @user
+        flash[:notice] = "Your password has been changed"
+        user_authenticated
+      else
+        render :new, status: :unprocessable_content
+      end
     end
 
     private
 
-    def params_ok?
-      if @user.forgot_password_token.blank?
-        flash[:notice] = "Please enter your email address below"
-        redirect_to action: "index"
-      elsif params[:t].nil? || @user.forgot_password_token != params[:t]
-        flash[:notice] = "The link you entered was invalid. This can happen " \
-          "if you have re-requested a forgot password email or you have " \
-          "already reset and changed your password."
-        redirect_to action: "index"
-      elsif token_expired?
-        flash[:notice] = I18n.t("controllers.account.forgot_password.expired")
-        redirect_to action: "index"
-      end
-      !performed?
+    def recently_sent?(user)
+      user.forgot_password_sent_at.present? &&
+        user.forgot_password_sent_at > RESEND_INTERVAL.ago
     end
 
-    def token_expired?
-      @user.forgot_password_sent_at.present? &&
-        @user.forgot_password_sent_at <= Time.current - 1.hour
+    def send_reset_email(user)
+      user.update_column(:forgot_password_sent_at, Time.current)
+      UserNotifier.password_reset(website, user).deliver_later
     end
 
-    def set_user
-      @user = User.find(params[:id])
+    def set_user_from_token
+      @user = User.find_by_password_reset_token(params[:t].to_s)
+      return if @user
+
+      flash[:notice] = I18n.t("controllers.account.forgot_password.invalid_link")
+      redirect_to action: "index"
     end
   end
 end

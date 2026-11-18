@@ -393,7 +393,7 @@ en:
       create:
         created: "Your account has been created. A verification email has been sent to your email address. Please follow the link contained within it to complete registration."
       forgot_password:
-        expired: "Your password reset link has expired. Please request a new link using the form below."
+        invalid_link: "That password link is invalid or has expired. Links work for one hour and only until the password is changed. Please request a new link below."
       update:
         updated: "Your account details have been updated."
       update_password:
