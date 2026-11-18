@@ -110,6 +110,10 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    capybara-playwright-driver (0.5.14)
+      addressable
+      capybara
+      playwright-ruby-client (>= 1.16.0)
     childprocess (5.1.0)
       logger (~> 1.5)
     chronic (0.10.2)
@@ -266,6 +270,10 @@ GEM
     marcel (1.2.1)
     matrix (0.4.2)
     method_source (1.1.0)
+    mime-types (3.7.0)
+      logger
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2026.1103)
     mini_magick (5.2.0)
       benchmark
       logger
@@ -334,6 +342,10 @@ GEM
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
+    playwright-ruby-client (1.65.0)
+      base64
+      concurrent-ruby (>= 1.1.6)
+      mime-types (>= 3.0)
     popper_js (2.11.8)
     postcode_software (0.0.3)
       nokogiri (~> 1.6)
@@ -457,7 +469,6 @@ GEM
     ruby-vips (2.2.3)
       ffi (~> 1.12)
       logger
-    rubyzip (3.4.0)
     sass-embedded (1.89.0)
       google-protobuf (~> 4.31)
       rake (>= 13)
@@ -478,12 +489,6 @@ GEM
     sass-embedded (1.89.0-x86_64-linux-musl)
       google-protobuf (~> 4.31)
     securerandom (0.4.1)
-    selenium-webdriver (4.45.0)
-      base64 (~> 0.2)
-      logger (~> 1.4)
-      rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2, < 4.0)
-      websocket (~> 1.0)
     shellany (0.0.1)
     shoulda-matchers (8.0.1)
       activesupport (>= 7.2)
@@ -579,7 +584,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    websocket (1.2.11)
     websocket-driver (0.8.2)
       base64
       websocket-extensions (>= 0.1.0)
@@ -616,6 +620,7 @@ DEPENDENCIES
   bootstrap_form (~> 5.6)
   brakeman (~> 8.0.5)
   capybara
+  capybara-playwright-driver
   csv
   curb
   dartsass-rails
@@ -638,7 +643,6 @@ DEPENDENCIES
   rails (~> 8.1.2)
   render_anywhere
   rspec-rails
-  selenium-webdriver
   shoulda-matchers
   simplecov
   slim

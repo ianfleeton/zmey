@@ -33,17 +33,24 @@ Zmey runs on Ruby 4.0.9.
 
 === How to run the test suite
 
-You will need chromedriver to run the JavaScript tests with selenium-webdriver.
+JavaScript system tests run in Chromium through Playwright, and accessibility
+checks (<tt>be_axe_clean</tt>) use axe-core. Both come from npm, so you will
+need Node.js:
+
+  npm install
+  npx playwright install chromium
+
+Then run the suite:
 
   bin/rspec
 
 You can run the tests faster in parallel using parallel_tests which will take
-advantage of multiple cores:
+advantage of multiple cores. Create a test database per process first:
 
+  rake parallel:load_schema
   rake parallel:spec
 
-Be sure to set up multiple databases as described in the README
-https://github.com/grosser/parallel_tests
+See https://github.com/grosser/parallel_tests for more.
 
 === REST API documentation
 

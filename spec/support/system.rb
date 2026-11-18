@@ -1,16 +1,13 @@
 # Increase from the default of 2 seconds.
 Capybara.default_max_wait_time = 5
 
-Capybara.register_driver :selenium_chrome_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-
-  [
-    "headless",
-    "incognito", # Avoids Chrome's save card prompt
-    "window-size=1280,1280"
-  ].each { |arg| options.add_argument(arg) }
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+Capybara.register_driver :playwright do |app|
+  Capybara::Playwright::Driver.new(
+    app,
+    browser_type: :chromium,
+    headless: true,
+    viewport: {width: 1280, height: 1280}
+  )
 end
 
 RSpec.configure do |config|
@@ -19,6 +16,6 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system, js: true) do
-    driven_by :selenium_chrome_headless
+    driven_by :playwright
   end
 end

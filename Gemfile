@@ -109,7 +109,7 @@ group :test do
   gem "simplecov", require: false
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
+  gem "capybara-playwright-driver"
 
   # Allows stubbing HTTP requests and setting expectations on HTTP requests
   gem "webmock"
