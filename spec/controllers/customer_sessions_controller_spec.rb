@@ -4,27 +4,26 @@ require "rails_helper"
 
 RSpec.describe CustomerSessionsController, type: :controller do
   let(:email_verified_at) { Time.current }
-  let(:encrypted_password) { "topsecret" }
+  let(:password) { "topsecret" }
   let(:account_created_at) { Time.current }
   let(:customer) do
-    u = FactoryBot.create(
+    FactoryBot.create(
       :user,
       name: "Alice", email: "alice@example.com",
-      email_verified_at: email_verified_at, created_at: account_created_at
+      email_verified_at: email_verified_at, created_at: account_created_at,
+      password: password
     )
-    u.update_column(:encrypted_password, encrypted_password)
-    u
   end
 
   describe "POST #create" do
     it "authenticates the user" do
-      expect(User).to receive(:authenticate)
+      expect(User).to receive(:authenticate_by)
       post "create"
     end
 
     context "when the user authenticates" do
       before do
-        allow(User).to receive(:authenticate).and_return(customer)
+        allow(User).to receive(:authenticate_by).and_return(customer)
       end
 
       it "preserves their basket" do
@@ -98,7 +97,7 @@ RSpec.describe CustomerSessionsController, type: :controller do
 
     context "when authentication fails" do
       before do
-        allow(User).to receive(:authenticate).and_return(nil)
+        allow(User).to receive(:authenticate_by).and_return(nil)
       end
 
       context "redirection" do
@@ -114,7 +113,7 @@ RSpec.describe CustomerSessionsController, type: :controller do
 
         context "when customer account has its password unset" do
           let(:source) { nil }
-          let(:encrypted_password) { "unset" }
+          let(:password) { nil }
 
           context "when created before 19th August 2016" do
             let(:account_created_at) { Date.new(2016, 8, 18).in_time_zone }

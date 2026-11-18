@@ -150,7 +150,7 @@ RSpec.describe "Account", type: :request do
 
       it "updates the password" do
         post_update_password
-        expect(User.authenticate(user.email, "newpassword")).to eq user
+        expect(User.authenticate_by(email: user.email, password: "newpassword")).to eq user
       end
 
       it "sends an email alerting the user that the password has changed" do
@@ -201,7 +201,7 @@ RSpec.describe "Account", type: :request do
 
     context "when user is unverified, no password set" do
       let(:user) do
-        FactoryBot.create(:user, encrypted_password: User::UNSET, password: nil)
+        FactoryBot.create(:user, password: nil)
       end
       before do
         allow(User).to receive(:unverified_user).and_return(user)
@@ -224,7 +224,7 @@ RSpec.describe "Account", type: :request do
         it "sets the user's password" do
           stub_email
           perform
-          expect(User.authenticate(user.email, "supersecret")).to eq user
+          expect(User.authenticate_by(email: user.email, password: "supersecret")).to eq user
         end
 
         it "sets a flash notice" do

@@ -10,7 +10,7 @@ class CustomerSessionsController < ApplicationController
   end
 
   def create
-    @current_user = User.authenticate(params[:email], params[:password])
+    @current_user = User.authenticate_by(email: params[:email].to_s, password: params[:password].to_s)
     if @current_user
       user_authenticated
     else
@@ -44,7 +44,7 @@ class CustomerSessionsController < ApplicationController
   # Returns truthy if the customer has attempted to login to an account which
   # has an unset password, such as during automatic account creation.
   def account_password_unset?
-    User.exists?(email: params[:email], encrypted_password: "unset")
+    User.exists?(email: params[:email], password_digest: nil)
   end
 
   def account_created_before_new_system_launch?

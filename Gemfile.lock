@@ -608,6 +608,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_list
   acts_as_tree
+  bcrypt (~> 3.1)
   bootsnap
   bootstrap (~> 5.3)
   bootstrap-will_paginate

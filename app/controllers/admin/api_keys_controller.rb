@@ -19,7 +19,7 @@ module Admin
     end
 
     def retrieve
-      user = authenticate_with_http_basic { |u, p| User.authenticate(u, p) }
+      user = authenticate_with_http_basic { |u, p| User.authenticate_by(email: u, password: p) }
       if user
         @api_key = ApiKey.find_by(user_id: user.id, name: params[:name])
         if @api_key

@@ -16,7 +16,7 @@ RSpec.describe "Forgot password", type: :system do
     expect {
       click_button "Change"
       existing_user.reload
-    }.to(change { existing_user.encrypted_password })
+    }.to(change { existing_user.reload.password_digest })
   end
 
   def password_reset_path(user)

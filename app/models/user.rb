@@ -1,13 +1,12 @@
 class User < ApplicationRecord
-  UNSET = "unset"
-
   # Associations
   has_many :orders, -> { order "created_at DESC" }, dependent: :nullify
   has_many :addresses, dependent: :delete_all
   has_many :api_keys, -> { order :name }, dependent: :delete_all
 
-  # unencrypted password
-  attr_accessor :password
+  # Accounts created automatically at checkout have no password until the
+  # customer sets one, so presence isn't validated.
+  has_secure_password validations: false
 
   validates_uniqueness_of :customer_reference, allow_blank: true
 
@@ -16,29 +15,12 @@ class User < ApplicationRecord
   validates_uniqueness_of :email, case_sensitive: false, message: "has already been taken. If you have forgotten your password you can request a new one."
 
   validates_presence_of :name
-  validates_length_of :password, within: 8..40,
-    if: :password_required?
-  validates_confirmation_of :password, if: :password_required?
+  # bcrypt only uses the first 72 bytes of a password.
+  validates_length_of :password, within: 8..72, allow_nil: true
+  validates_confirmation_of :password, allow_nil: true
 
   # callbacks
   before_create :set_email_verification_token
-  before_save :encrypt_password
-
-  # encrypts given password using salt
-  def self.encrypt(pass, salt)
-    Digest::SHA1.hexdigest("--#{salt}--#{pass}--")
-  end
-
-  # authenticate by email/password
-  def self.authenticate(email, pass)
-    user = find_by(email: email)
-    user&.authenticated?(pass) ? user : nil
-  end
-
-  # does the given password match the stored encrypted password
-  def authenticated?(pass)
-    encrypted_password == User.encrypt(pass, salt)
-  end
 
   def self.generate_token
     charset = %w[2 3 4 6 7 9 A C D E F G H J K L M N P Q R T V W X Y Z]
@@ -49,7 +31,7 @@ class User < ApplicationRecord
   # creates and returns a new one if needed.
   def self.find_or_create_by_details(email:, name:)
     (email && User.find_by(email: email.downcase)) ||
-      User.create(email: email&.downcase, name: name, encrypted_password: UNSET)
+      User.create(email: email&.downcase, name: name)
   end
 
   # Returns an existing unverified user account with matching email address, or
@@ -99,22 +81,6 @@ class User < ApplicationRecord
   end
 
   def password_set?
-    encrypted_password != UNSET
-  end
-
-  protected
-
-  # before save - create salt, encrypt password
-  def encrypt_password
-    return if password.blank?
-    if new_record?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now}--#{email}--")
-    end
-    self.encrypted_password = User.encrypt(password, salt)
-  end
-
-  # no encrypted password yet OR password attribute is set
-  def password_required?
-    encrypted_password.blank? || !password.blank?
+    password_digest.present?
   end
 end
