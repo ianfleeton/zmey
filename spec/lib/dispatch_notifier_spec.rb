@@ -27,12 +27,39 @@ RSpec.describe DispatchNotifier do
     end
   end
 
-  describe "#record_sent" do
+  describe "#claim" do
     let(:shipment) { FactoryBot.create(:shipment, email_sent_at: nil) }
 
     it "sets the shipment's email_sent_at attribute and saves it" do
-      dn.record_sent(shipment)
+      expect(dn.claim(shipment)).to be true
       expect(shipment.reload.email_sent_at).to be
+    end
+
+    it "returns false if another run already claimed the shipment" do
+      stale_copy = Shipment.find(shipment.id)
+      dn.claim(shipment)
+      expect(dn.claim(stale_copy)).to be false
+    end
+  end
+
+  describe "#send_emails" do
+    before { FactoryBot.create(:website) }
+    let!(:shipment) { FactoryBot.create(:shipment, shipped_at: Date.today, email_sent_at: nil) }
+
+    it "sends one email even if the shipment is listed by two overlapping runs" do
+      first_run = DispatchNotifier.new
+      second_run = DispatchNotifier.new
+      allow(second_run).to receive(:pending_objects).and_return([Shipment.find(shipment.id)])
+      expect {
+        first_run.send_emails
+        second_run.send_emails
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+
+    it "releases the shipment for a later run if sending fails" do
+      allow(dn).to receive(:send_email).and_raise(IOError)
+      expect { dn.send_emails }.to raise_error(IOError)
+      expect(shipment.reload.email_sent_at).to be_nil
     end
   end
 end

@@ -4,12 +4,8 @@ class InvoiceNotifier < BackgroundNotifier
     OrderNotifier.invoice(Website.first, order).deliver_now
   end
 
-  # Records within <tt>order</tt> that the invoice notification email has
-  # been sent.
-  def record_sent(order)
-    # Skip validation because we don't want to spam the customer if there are
-    # any order validation problems.
-    order.update_attribute(:invoice_sent_at, Time.zone.now)
+  def sent_at_attribute
+    :invoice_sent_at
   end
 
   # Returns a list of orders that are requiring an invoice notification to be

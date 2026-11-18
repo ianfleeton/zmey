@@ -9,17 +9,17 @@ RSpec.describe BackgroundNotifier do
     context "for each pending_object" do
       before { allow(bn).to receive(:pending_objects).and_return([order]) }
 
-      it "calls send_email for each pending_object" do
-        allow(bn).to receive(:record_sent)
+      it "calls send_email for each pending_object it claims" do
+        allow(bn).to receive(:claim).with(order).and_return(true)
 
         expect(bn).to receive(:send_email).with(order)
         bn.send_emails
       end
 
-      it "calls record_sent for each pending_object" do
-        allow(bn).to receive(:send_email)
+      it "skips objects that another run has claimed" do
+        allow(bn).to receive(:claim).with(order).and_return(false)
 
-        expect(bn).to receive(:record_sent).with(order)
+        expect(bn).not_to receive(:send_email)
         bn.send_emails
       end
     end
@@ -31,5 +31,5 @@ RSpec.describe BackgroundNotifier do
   end
 
   it { should respond_to(:send_email) }
-  it { should respond_to(:record_sent) }
+  it { should respond_to(:sent_at_attribute) }
 end

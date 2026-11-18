@@ -90,6 +90,11 @@ RSpec.describe OrdersHelper, type: :helper do
       expect(conversion).to receive(:record!)
       record_sales_conversion(order)
     end
+
+    it "renders nothing if the conversion was already recorded" do
+      order.update!(sales_conversion_recorded_at: Time.current)
+      expect(record_sales_conversion(order)).to be_nil
+    end
   end
 
   describe "#delivery_amount_description" do

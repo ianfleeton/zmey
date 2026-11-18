@@ -37,16 +37,18 @@ module Orders
     end
 
     describe "#record!" do
-      let(:order) { FactoryBot.build(:order) }
+      let(:order) { FactoryBot.create(:order) }
 
-      it "updates sales_conversion_recorded_at" do
-        SalesConversion.new(order).record!
+      it "records sales_conversion_recorded_at and returns true" do
+        expect(SalesConversion.new(order).record!).to be true
         expect(order.sales_conversion_recorded_at).to be
+        expect(order.reload.sales_conversion_recorded_at).to be
       end
 
-      it "saves the order" do
+      it "returns false if the conversion was already recorded elsewhere" do
+        stale_copy = Order.find(order.id)
         SalesConversion.new(order).record!
-        expect(order.persisted?).to eq true
+        expect(SalesConversion.new(stale_copy).record!).to be false
       end
     end
   end

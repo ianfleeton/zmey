@@ -43,7 +43,6 @@
 
 <%= render partial: "view", locals: {order: @order} %>
 
-<% if @order.sales_conversion_recorded_at.nil? %>
-  <% Orders::SalesConversion.new(@order).record! %>
+<% if Orders::SalesConversion.new(@order).record! %>
   <%= render partial: "conversion_code", locals: {order: @order} %>
 <% end %>

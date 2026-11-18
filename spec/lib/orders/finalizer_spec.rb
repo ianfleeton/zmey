@@ -42,7 +42,7 @@ module Orders
 
       context "when the order has received payment and the payment is not a " \
       "PayPal IPN" do
-        let(:order) { instance_double(Order, payment_received?: true, discounts: []).as_null_object }
+        let(:order) { instance_double(Order, payment_received?: true, mobile_app?: false, discounts: []).as_null_object }
         let(:payment) do
           instance_double(
             Payment,

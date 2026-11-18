@@ -27,11 +27,11 @@ RSpec.describe InvoiceNotifier do
     end
   end
 
-  describe "#record_sent" do
+  describe "#claim" do
     let(:order) { FactoryBot.create(:order, invoice_sent_at: nil) }
 
     it "sets the order's invoice_sent_at attribute and saves it" do
-      notifier.record_sent(order)
+      expect(notifier.claim(order)).to be true
       expect(order.reload.invoice_sent_at).to be
     end
   end

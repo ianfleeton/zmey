@@ -46,8 +46,11 @@ module OrdersHelper
     "https://#{test_mode ? "test" : "live"}.sagepay.com/gateway/service/vspform-register.vsp"
   end
 
+  # Records the sales conversion and returns its tracking code, or nil if the
+  # conversion was already recorded.
   def record_sales_conversion(order)
-    Orders::SalesConversion.new(order).record!
+    return unless Orders::SalesConversion.new(order).record!
+
     render(partial: "orders/google_sales_conversion", locals: {order: order})
   end
 

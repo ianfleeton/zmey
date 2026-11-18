@@ -4,12 +4,8 @@ class DispatchNotifier < BackgroundNotifier
     OrderNotifier.dispatch(Website.first, shipment).deliver_now
   end
 
-  # Records within <tt>shipment</tt> that the dispatch notification email has
-  # been sent.
-  def record_sent(shipment)
-    # Skip validation because we don't want to spam the customer if there are
-    # any shipment validation problems.
-    shipment.update_attribute(:email_sent_at, Time.zone.now)
+  def sent_at_attribute
+    :email_sent_at
   end
 
   # Returns a list of shipments that are requiring a dispatch notification to be
