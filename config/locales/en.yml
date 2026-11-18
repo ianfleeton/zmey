@@ -473,6 +473,8 @@ en:
         removed: "Invalid coupon(s) have been removed from your basket."
       save_and_email:
         email_sent: "Your basket has been emailed to %{email_address}."
+        empty_basket: "Your basket is empty, so there is nothing to email."
+        invalid_email_address: "Please enter a valid email address to email your basket to."
     checkout:
       below_minimum_order_value: "Sorry, the minimum order value is %{amount} before delivery. Please add more items to your basket."
       save_billing:

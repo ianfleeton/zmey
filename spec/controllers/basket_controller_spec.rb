@@ -73,23 +73,25 @@ RSpec.describe BasketController, type: :controller do
   describe "POST save_and_email" do
     let(:website) { FactoryBot.create(:website, name: "www", email: "anon@example.org", domain: "example.org") }
     let(:email_address) { "shopper@example.org" }
+    let(:basket) { FactoryBot.create(:basket) }
+
+    before do
+      FactoryBot.create(:basket_item, basket: basket)
+      allow(controller).to receive(:basket).and_return(basket)
+    end
 
     it "clones the basket and its contents" do
-      basket = FactoryBot.create(:basket)
-      items = [FactoryBot.create(:basket_item, basket: basket)]
-      allow(controller).to receive(:basket).and_return basket
-      allow(basket).to receive(:basket_items).and_return(items)
       expect(basket).to receive(:deep_clone)
-        .and_return(Basket.new(token: "token"))
+        .and_return(FactoryBot.create(:basket))
       post :save_and_email, params: {email_address: email_address}
     end
 
     it "sends an email to params[:email_address] with the cloned basket" do
       cloned_basket = double(Basket)
-      allow_any_instance_of(Basket).to receive(:deep_clone).and_return(cloned_basket)
+      allow(basket).to receive(:deep_clone).and_return(cloned_basket)
       expect(BasketMailer).to receive(:saved_basket)
         .with(website, email_address, cloned_basket)
-        .and_return(double(BasketMailer, deliver_now: true))
+        .and_return(double(BasketMailer, deliver_later: true))
       post :save_and_email, params: {email_address: email_address}
     end
 
@@ -101,6 +103,20 @@ RSpec.describe BasketController, type: :controller do
     it "redirects to the basket" do
       post :save_and_email, params: {email_address: email_address}
       expect(response).to redirect_to(basket_path)
+    end
+
+    it "refuses an invalid email address" do
+      expect(BasketMailer).not_to receive(:saved_basket)
+      post :save_and_email, params: {email_address: "not an email"}
+      expect(flash[:notice]).to eq I18n.t("controllers.basket.save_and_email.invalid_email_address")
+      expect(response).to redirect_to(basket_path)
+    end
+
+    it "refuses an empty basket" do
+      basket.basket_items.destroy_all
+      expect(BasketMailer).not_to receive(:saved_basket)
+      post :save_and_email, params: {email_address: email_address}
+      expect(flash[:notice]).to eq I18n.t("controllers.basket.save_and_email.empty_basket")
     end
   end
 

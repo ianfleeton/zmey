@@ -115,10 +115,23 @@ class BasketController < ApplicationController
   # basket.
   #
   # The user is redirected to their current basket.
+  #
+  # Empty baskets and invalid email addresses are refused so the form can't be
+  # used to send arbitrary email.
   def save_and_email
-    cloned_basket = basket.deep_clone
-    BasketMailer.saved_basket(website, params[:email_address], cloned_basket).deliver_now
-    redirect_to basket_path, notice: I18n.t("controllers.basket.save_and_email.email_sent", email_address: params[:email_address])
+    email_address = params[:email_address].to_s.strip
+
+    if basket.empty?
+      notice = I18n.t("controllers.basket.save_and_email.empty_basket")
+    elsif !email_address.match?(URI::MailTo::EMAIL_REGEXP)
+      notice = I18n.t("controllers.basket.save_and_email.invalid_email_address")
+    else
+      cloned_basket = basket.deep_clone
+      BasketMailer.saved_basket(website, email_address, cloned_basket).deliver_later
+      notice = I18n.t("controllers.basket.save_and_email.email_sent", email_address: email_address)
+    end
+
+    redirect_to basket_path, notice: notice
   end
 
   # Loads a saved basket by its token provided in <tt>params[:token]</tt>.
