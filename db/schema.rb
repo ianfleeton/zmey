@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_18_130000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_18_140000) do
   create_table "additional_products", force: :cascade do |t|
     t.integer "additional_product_id", null: false
     t.datetime "created_at", precision: nil
@@ -376,6 +376,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_18_130000) do
     t.index ["basket_id"], name: "index_orders_on_basket_id"
     t.index ["created_at"], name: "index_orders_on_created_at"
     t.index ["email_address"], name: "index_orders_on_email_address"
+    t.index ["order_number"], name: "index_orders_on_order_number", unique: true
     t.index ["processed_at"], name: "index_orders_on_processed_at"
     t.index ["token"], name: "index_orders_on_token"
     t.index ["user_id"], name: "index_orders_on_user_id"

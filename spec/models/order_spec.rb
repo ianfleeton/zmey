@@ -4,6 +4,12 @@ RSpec.describe Order, type: :model do
   context "uniqueness" do
     before { FactoryBot.create(:order, order_number: "AB123") }
     it { should validate_uniqueness_of :order_number }
+
+    it "is unique in the database even when validation is skipped" do
+      duplicate = FactoryBot.build(:order, order_number: "AB123")
+      expect { duplicate.save(validate: false) }
+        .to raise_error(ActiveRecord::RecordNotUnique)
+    end
   end
 
   # Irish VAT numbers
